@@ -21,9 +21,9 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
       - name: Install Playwright Browsers
-        run: yarn playwright install --with-deps
+        run: yarn playwright install
       - name: Run Playwright tests
-        run: cd apps/web && yarn playwright test
+        run: yarn e2e
       - uses: actions/upload-artifact@v3
         if: always()
         with:
