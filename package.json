@@ -11,7 +11,8 @@
     "dev": "turbo run dev",
     "lint": "turbo run lint",
     "test": "turbo run test",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "commitlint": "commitlint --edit"
   },
   "dependencies": {
     "@next/bundle-analyzer": "^14.0.3",
@@ -48,9 +49,13 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@commitlint/cli": "^18.4.3",
+    "@commitlint/config-conventional": "^18.4.3",
+    "@enterprise-commerce/tsconfig": "*",
     "@jest/globals": "^29.7.0",
     "@testing-library/jest-dom": "^6.1.4",
     "@testing-library/react": "^14.1.2",
+    "@testing-library/user-event": "14.4.3",
     "@total-typescript/ts-reset": "^0.5.1",
     "@types/jest": "^29.5.10",
     "@types/node": "^20.10.0",
@@ -59,26 +64,22 @@
     "all-contributors-cli": "^6.26.1",
     "autoprefixer": "^10.4.16",
     "cross-env": "^7.0.3",
+    "eslint": "^8.48.0",
+    "husky": "^8.0.3",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "npm-only-allow": "^1.2.6",
     "patch-package": "^8.0.0",
     "postinstall-postinstall": "^2.1.0",
+    "prettier": "3.0.3",
+    "prettier-plugin-tailwindcss": "^0.5.7",
     "semantic-release": "^22.0.8",
     "ts-jest": "^29.1.1",
     "tsc": "^2.0.4",
-    "typescript": "5.3.2",
-    "webpack": "5.89.0",
-    "prettier": "3.0.3",
-    "prettier-plugin-tailwindcss": "^0.5.7",
-    "@commitlint/cli": "^18.2.0",
-    "@commitlint/config-conventional": "^18.1.0",
-    "@enterprise-commerce/tsconfig": "*",
-    "@testing-library/user-event": "14.4.3",
-    "eslint": "^8.48.0",
-    "husky": "^8.0.3",
     "tsup": "^7.2.0",
-    "turbo": "latest"
+    "turbo": "latest",
+    "typescript": "5.3.2",
+    "webpack": "5.89.0"
   },
   "engines": {
     "node": ">=18.17.0"
