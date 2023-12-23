@@ -14,7 +14,7 @@ on:
 defaults:
   run:
     # change this if your nextjs app does not live at the root of the repo
-    working-directory: ./
+    working-directory: ./apps/web/
 
 jobs:
   analyze:
@@ -23,11 +23,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: Set up node
+      - run: echo "node_version=$(cat .github/nodejs.version)" >> $GITHUB_ENV
+      - name: "Use node ${{ env.node_version }}"
         uses: actions/setup-node@v3
         with:
-          node-version: "18.x"
+          node-version: "${{ env.node_version }}"
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
@@ -46,7 +46,7 @@ jobs:
         env:
           SKIP_BUILD_PRODUCT_REDIRECTS: 1
         # change this if your site requires a custom build command
-        run: yarn build
+        run: yarn build -- --filter=@enterprise-commerce/web
 
       # Here's the first place where next-bundle-analysis' own script is used
       # This step pulls the raw bundle stats for the current bundle
