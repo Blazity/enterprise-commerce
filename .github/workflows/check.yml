@@ -1,0 +1,37 @@
+name: Check
+
+on:
+  push:
+    branches:
+      - main
+      - master
+      - develop
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  check:
+    name: Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "node_version=$(cat .github/nodejs.version)" >> $GITHUB_ENV
+      - name: "use node ${{ env.node_version }}"
+        uses: actions/setup-node@v3
+        with:
+          node-version: "${{ env.node_version }}"
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+      - name: Lint check
+        run: yarn lint
+      - name: Format check
+        run: yarn prettier
+      - name: Unit & Integration tests
+        run: yarn test
+      - name: Smoke & Acceptance tests
+        run: |
+          yarn build-storybook --quiet
+          yarn playwright install
+          npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
+            "npx http-server storybook-static --port 6006 --silent" \
+            "npx wait-on tcp:127.0.0.1:6006 && yarn test-storybook"
