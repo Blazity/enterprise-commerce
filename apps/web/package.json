@@ -52,6 +52,7 @@
     "lodash": "^4.17.21",
     "next": "^14.0.3",
     "next-compose-plugins": "^2.2.1",
+    "playwright": "^1.40.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "tailwind-merge": "^2.0.0",
@@ -62,6 +63,8 @@
     "@babel/plugin-syntax-flow": "^7.23.3",
     "@babel/plugin-transform-optional-chaining": "^7.23.4",
     "@babel/plugin-transform-react-jsx": "^7.23.4",
+    "@enterprise-commerce/eslint-config-custom": "*",
+    "@enterprise-commerce/tsconfig": "*",
     "@opentelemetry/api": "1.7.0",
     "@opentelemetry/resources": "1.18.1",
     "@opentelemetry/sdk-node": "0.45.1",
@@ -82,8 +85,6 @@
     "postcss": "^8.4.31",
     "postinstall-postinstall": "^2.1.0",
     "storybook": "^7.5.3",
-    "tailwindcss": "^3.3.5",
-    "@enterprise-commerce/tsconfig": "*",
-    "@enterprise-commerce/eslint-config-custom": "*"
+    "tailwindcss": "^3.3.5"
   }
 }
