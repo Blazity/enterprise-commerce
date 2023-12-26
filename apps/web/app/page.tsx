@@ -1,4 +1,4 @@
-import { Button } from "components/Button/Button"
+import { Button } from "@enterprise-commerce/design-system/button"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {

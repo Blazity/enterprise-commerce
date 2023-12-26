@@ -3,7 +3,7 @@
   "pipeline": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": [".next/**", "!.next/cache/**"]
+      "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
     },
     "deploy": {
       "dependsOn": ["build", "test", "lint"]
@@ -15,6 +15,9 @@
     "e2e": {
       "dependsOn": ["build"],
       "inputs": ["src/**/*.tsx", "**/*.ts", "**/*.spec.ts", "test/**/*.tsx"]
+    },
+    "clean": {
+      "cache": false
     },
     "lint": {},
     "dev": {

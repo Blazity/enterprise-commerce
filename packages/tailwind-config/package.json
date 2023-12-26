@@ -1,0 +1,11 @@
+{
+  "name": "@enterprise-commerce/tailwind-config",
+  "version": "1.0.0",
+  "private": true,
+  "exports": {
+    ".": "./tailwind.config.ts"
+  },
+  "devDependencies": {
+    "@enterprise-commerce/tsconfig": "*"
+  }
+}

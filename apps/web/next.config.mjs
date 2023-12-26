@@ -7,6 +7,7 @@ import { env } from "./env.mjs"
  */
 const config = withPlugins([[withBundleAnalyzer({ enabled: env.ANALYZE })]], {
   reactStrictMode: true,
+  transpilePackages: ["@enterprise-commerce/design-system"],
   experimental: { instrumentationHook: true },
   rewrites() {
     return [

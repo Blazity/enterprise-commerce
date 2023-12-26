@@ -1,4 +1,5 @@
-import "styles/tailwind.css"
+import "./globals.css"
+import "@enterprise-commerce/design-system/styles.css"
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
