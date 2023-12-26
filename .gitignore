@@ -15,6 +15,7 @@ build
 
 build/**
 dist/**
+**/dist/**
 .next/**
 
 # misc
