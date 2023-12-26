@@ -18,6 +18,7 @@ defaults:
 
 jobs:
   analyze:
+    environment: production
     env:
       SKIP_ENV_VALIDATION: true
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}

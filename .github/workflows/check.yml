@@ -8,6 +8,7 @@ on:
 
 jobs:
   build:
+    environment: production
     name: Build and Test
     timeout-minutes: 15
     runs-on: ubuntu-latest
