@@ -9,6 +9,9 @@ on:
   workflow_dispatch: null
 jobs:
   test:
+    env:
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:

@@ -20,6 +20,8 @@ jobs:
   analyze:
     env:
       SKIP_ENV_VALIDATION: true
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
