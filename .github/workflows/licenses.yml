@@ -8,7 +8,8 @@ on:
 
 jobs:
   license_check:
-    runs-on: ubuntu-lastest
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
     steps:
       - name: Checks licenses of all dependencies in lockfile
         run: npx license-checker-rseidelsohn --production  --excludePrivatePackages --onlyAllow "MIT;Apache;AAL;BSD;Artistic;CC0;ISC;ISCL;PostgreSQL License;Public Domain;Unlicense;UPL;W3C;WTFPL;Python;CC-;BlueOak"
