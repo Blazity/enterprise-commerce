@@ -9,6 +9,7 @@ on:
 jobs:
   license_check:
     timeout-minutes: 15
+    environment: production
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -17,6 +18,13 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "${{ env.node_version }}"
-          cache: "yarn"
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
       - name: Checks licenses of all dependencies in lockfile
-        run: npx --yes license-checker-rseidelsohn --production  --excludePrivatePackages --onlyAllow "MIT;Apache;AAL;BSD;Artistic;CC0;ISC;ISCL;PostgreSQL License;Public Domain;Unlicense;UPL;W3C;WTFPL;Python;CC-;BlueOak"
+        run: |
+          yarn global add license-checker-rseidelsohn
+          export PATH="$(yarn global bin):$PATH"
+          license-checker-rseidelsohn --onlyAllow "Apache;AAL;BSD;Artistic;" --production --excludePrivatePackages --json 
+          echo $?
