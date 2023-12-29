@@ -42,3 +42,7 @@ yarn-error.log*
 # Turbo
 
 .turbo
+
+.vitepress/cache/
+apps/docs/.vitepress/cache/
+apps/docs/.vitepress/dist/
