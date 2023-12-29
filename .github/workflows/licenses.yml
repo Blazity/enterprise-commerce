@@ -1,0 +1,14 @@
+name: Licenses Check
+
+on:
+  push:
+  pull_request:
+    types: [opened, synchronize]
+  workflow_dispatch: null
+
+jobs:
+  license_check:
+    runs-on: ubuntu-lastest
+    steps:
+      - name: Checks licenses of all dependencies in lockfile
+        run: npx license-checker-rseidelsohn --production  --excludePrivatePackages --onlyAllow "MIT;Apache;AAL;BSD;Artistic;CC0;ISC;ISCL;PostgreSQL License;Public Domain;Unlicense;UPL;W3C;WTFPL;Python;CC-;BlueOak"
