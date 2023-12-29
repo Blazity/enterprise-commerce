@@ -6,19 +6,41 @@ export default defineConfig({
   themeConfig: {
     nav: [
       { text: "Home", link: "/" },
-      { text: "Examples", link: "/markdown-examples" },
+      { text: "Get started", link: "/getting-started" },
     ],
 
     sidebar: [
       {
-        text: "Examples",
+        text: "Introduction",
         items: [
-          { text: "Markdown Examples", link: "/markdown-examples" },
-          { text: "Runtime API Examples", link: "/api-examples" },
+          { text: "Getting started", link: "/getting-started" },
+          { text: "Deploying your own", link: "/deployment" },
+          { text: "Benchmarks", link: "/benchmarks" },
+          { text: "Architecture overview", link: "/architecture-overview" },
+          { text: "Tech Stack", link: "/tech-stack" },
+        ],
+      },
+      {
+        text: "Features",
+        items: [
+          { text: "Shopify Backend", link: "/#" },
+          { text: "Instant Search", link: "/#" },
+          { text: "SEO Redirects", link: "/#" },
+          { text: "A/B Testing", link: "/#" },
+          { text: "CI Workflows", link: "/#" },
+          { text: "Automated Testing", link: "/#" },
+          { text: "Formatting", link: "/#" },
+        ],
+      },
+      {
+        text: "Recipes",
+        items: [
+          { text: "Affiliate Marketing", link: "/#" },
+          { text: "Tidio integration", link: "/#" },
         ],
       },
     ],
 
-    socialLinks: [{ icon: "github", link: "https://github.com/vuejs/vitepress" }],
+    socialLinks: [{ icon: "github", link: "https://github.com/Blazity/enterprise-commerce" }],
   },
 })
