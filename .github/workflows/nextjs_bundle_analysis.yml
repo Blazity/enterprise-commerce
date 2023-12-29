@@ -32,8 +32,13 @@ jobs:
         with:
           node-version: "${{ env.node_version }}"
 
+      - uses: actions/cache@v2
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: yarn install --frozen-lockfile --prefer-offline
 
       - name: Restore next build
         uses: actions/cache@v3
