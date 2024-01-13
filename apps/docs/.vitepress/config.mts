@@ -37,6 +37,7 @@ export default defineConfig({
         items: [
           { text: "Affiliate Marketing", link: "/#" },
           { text: "Tidio integration", link: "/#" },
+          { text: "Seeder", link: "/recipies/seeder" },
         ],
       },
     ],

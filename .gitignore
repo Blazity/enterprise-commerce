@@ -36,6 +36,8 @@ yarn-error.log*
 /test-results/
 /playwright-report/
 /playwright/.cache/
+**/**/.env.*
+**/**/.env
 
 /.npm-only-allow
 

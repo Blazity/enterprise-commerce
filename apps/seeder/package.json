@@ -1,0 +1,16 @@
+{
+  "name": "@enterprise-commerce/seeder",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "tsup-node index.ts --watch & npx --yes nodemon dist/index.js",
+    "build": "echo noop",
+    "test": "cross-env FORCE_COLOR=1 jest --passWithNoTests",
+    "start": "tsup-node index.ts"
+  },
+  "dependencies": {
+    "@shopify/admin-api-client": "^0.1.0",
+    "graphql": "^16.8.1",
+    "graphql-tag": "^2.12.6"
+  },
+  "devDependencies": {}
+}

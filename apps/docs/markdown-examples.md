@@ -16,7 +16,7 @@ export default {
       msg: 'Highlighted!'
     }
   }
-}
+
 ```
 ````
 
