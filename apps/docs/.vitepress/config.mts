@@ -14,7 +14,13 @@ export default defineConfig({
         text: "Introduction",
         items: [
           { text: "Getting started", link: "/getting-started" },
-          { text: "Deploying your own", link: "/deployment" },
+          {
+            text: "Deploying your own",
+            items: [
+              { text: "Through CLI (recommended)", link: "/setup-cli" },
+              { text: "Manual", link: "/setup-manual" },
+            ],
+          },
           { text: "Benchmarks", link: "/benchmarks" },
           { text: "Architecture overview", link: "/architecture-overview" },
           { text: "Tech Stack", link: "/tech-stack" },

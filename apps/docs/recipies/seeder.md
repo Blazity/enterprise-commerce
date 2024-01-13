@@ -21,10 +21,6 @@ Before you start, shut down all Next.js Enterprise stuff on your machine.
    SEEDER_ENABLED=false
    ```
 
-### Shopify Token
-
-To set up a custom Shopify app for your store, hit `CMD` + `K` in Shopify's store admin and search for `develop apps`. Click on the ![Build custom apps tab](image.png) tab. You'll see your custom apps and a button to make a new one. Hit that button, name your app. This is where you get your admin access token. Remember, you might have to set up the token's scopes to read and write products and collections.
-
 ### Uploading Data
 
 - Get your JSON data ready.
