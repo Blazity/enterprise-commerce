@@ -1,8 +1,8 @@
-import { StorefrontApiClient, createStorefrontApiClient } from "@shopify/storefront-api-client"
+import { createStorefrontApiClient, StorefrontApiClient } from "@shopify/storefront-api-client"
 import nodeFetch from "node-fetch"
 
 import { getMenuQuery } from "./queries/menu"
-import { getProductsByHandleQuery, getProductQuery } from "./queries/product"
+import { getProductQuery, getProductsByHandleQuery } from "./queries/product"
 
 import { MenuQuery, ProductsByHandleQuery, ProductsQuery } from "../../../../types/storefront.generated"
 
@@ -16,7 +16,7 @@ export function createShopifyClient({ accessToken, storeDomain }: CreateShopifyC
     storeDomain,
     privateAccessToken: accessToken,
     apiVersion: "2024-01",
-    customFetchApi: (url, init) => nodeFetch(url, init) as never,
+    customFetchApi: (url, init) => nodeFetch(url, init as never) as never,
   })
 
   return {
