@@ -3,6 +3,8 @@ import { z } from "zod"
 
 export const env = createEnv({
   server: {
+    SHOPIFY_ADMIN_ACCESS_TOKEN: z.string(),
+    SHOPIFY_STORE_DOMAIN: z.string(),
     ANALYZE: z
       .enum(["true", "false"])
       .optional()
@@ -10,6 +12,8 @@ export const env = createEnv({
   },
   client: {},
   runtimeEnv: {
+    SHOPIFY_ADMIN_ACCESS_TOKEN: process.env.SHOPIFY_ADMIN_ACCESS_TOKEN,
+    SHOPIFY_STORE_DOMAIN: process.env.SHOPIFY_STORE_DOMAIN,
     ANALYZE: process.env.ANALYZE,
   },
 })
