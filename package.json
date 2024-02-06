@@ -14,7 +14,7 @@
     "e2e": "turbo run e2e",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "commitlint": "commitlint --edit",
-    "codegen": "graphql-codegen"
+    "codegen": "graphql-codegen && graphql-codegen -p admin"
   },
   "dependencies": {
     "@next/bundle-analyzer": "^14.0.3",
@@ -39,7 +39,6 @@
     "@semantic-release/github": "^9.2.3",
     "@semantic-release/npm": "^11.0.1",
     "@semantic-release/release-notes-generator": "^12.1.0",
-    "@shopify/storefront-api-client": "^0.2.2",
     "@t3-oss/env-nextjs": "^0.7.1",
     "@vercel/otel": "^0.3.0",
     "autoprefixer": "^10.4.16",

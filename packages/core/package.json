@@ -18,6 +18,8 @@
     "test": "cross-env FORCE_COLOR=1 jest --passWithNoTests"
   },
   "dependencies": {
+    "@shopify/shopify-api": "^9.0.2",
+    "@shopify/storefront-api-client": "^0.2.2",
     "node-fetch": "^3.3.2"
   }
 }
