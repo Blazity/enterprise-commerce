@@ -1,7 +1,7 @@
 import { isNil } from "remeda"
 import { execa } from "execa"
 
-export async function getUserName() {
+export async function getSystemUserName() {
   const [{ stdout: gitConfigUserName }, { stdout: systemUserName }] = await Promise.all([
     execa("git", ["config", "user.name"], { encoding: "utf8" }),
     execa("whoami", undefined, { encoding: "utf8" }),

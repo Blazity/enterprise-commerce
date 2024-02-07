@@ -35,6 +35,7 @@ export function QuestionSelectInput({
     onEnter(selectedItem.value)
     if (nextFocusId) {
       focus(nextFocusId)
+      return
     }
   }
 

@@ -16,8 +16,8 @@
     "ink": "^4.4.1",
     "ink-select-input": "^5.0.0",
     "ink-text-input": "^5.0.1",
-    "react": "^18.2.0",
-    "zustand": "^4.5.0"
+    "jotai": "^2.6.4",
+    "react": "^18.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.23.9",
