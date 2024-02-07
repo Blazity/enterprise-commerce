@@ -42,7 +42,11 @@ export function QuestionTextInput({ question, nextFocusId, id, defaultValue, onE
   return (
     <Box padding={1}>
       <Box marginRight={1}>
-        <TextWithHorizontalPadding backgroundColor={terminalColors.blazity} bold>
+        <TextWithHorizontalPadding
+          backgroundColor={terminalColors.blazity}
+          color={terminalColors.textOnBrightBackground}
+          bold
+        >
           {question}
           {":"}
         </TextWithHorizontalPadding>
