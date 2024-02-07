@@ -84,6 +84,7 @@ function ShopifyStorefrontAPIToken() {
       id={stepName}
       nextFocusId="meilisearch-api-token"
       question="Shopify Storefront API Token"
+      secretInput
       onEnter={(value) => {
         setShopifyStorefrontApiToken(value)
       }}
@@ -100,6 +101,7 @@ function MeilisearchAPIToken() {
       id={stepName}
       nextFocusId="package-manager"
       question="Meilisearch API Token"
+      secretInput
       onEnter={(value) => {
         setMeilisearchApiToken(value)
       }}

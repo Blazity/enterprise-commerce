@@ -10,10 +10,11 @@ type QuestionTextInputProps = {
   question: string
   defaultValue?: string
   nextFocusId?: string
+  secretInput?: boolean
   onEnter: (value: string) => void
 } & ComponentWithId
 
-export function QuestionTextInput({ question, nextFocusId, id, defaultValue, onEnter }: QuestionTextInputProps) {
+export function QuestionTextInput({ question, nextFocusId, secretInput, id, defaultValue, onEnter }: QuestionTextInputProps) {
   const { isFocused } = useFocus({ id, autoFocus: true })
   const { focus } = useFocusManager()
 
@@ -51,7 +52,12 @@ export function QuestionTextInput({ question, nextFocusId, id, defaultValue, onE
           {":"}
         </TextWithHorizontalPadding>
       </Box>
-      <UncontrolledTextInput focus={isFocused} onSubmit={handleSubmit} placeholder={defaultValue} />
+      <UncontrolledTextInput
+        mask={secretInput ? "*" : undefined}
+        focus={isFocused}
+        onSubmit={handleSubmit}
+        placeholder={defaultValue}
+      />
     </Box>
   )
 }

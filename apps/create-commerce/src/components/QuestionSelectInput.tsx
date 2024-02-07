@@ -11,6 +11,7 @@ type SelectItem = { label: string; value: string }
 type QuestionSelectInputProps = {
   question: string
   defaultValue?: string
+  mask?: boolean
   items: SelectItem[]
   nextFocusId?: string
   onEnter: (value: string) => void

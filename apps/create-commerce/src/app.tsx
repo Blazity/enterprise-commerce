@@ -16,7 +16,6 @@ export function App({ systemData }: AppProps) {
   const [shouldShowProgressBar, setShouldShowProgressBar] = useState(false)
 
   const handleFormSubmit = (values: any) => {
-    console.log(values)
     setShouldShowProgressBar(true)
   }
 
