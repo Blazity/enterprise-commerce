@@ -1,0 +1,29 @@
+{
+  "name": "@enterprise-commerce/tui",
+  "version": "1.0.0",
+  "private": true,
+  "exports": {
+    "./helpers/system": "./src/helpers/system.ts",
+    "./terminal-colors": "./src/terminal-colors.ts"
+  },
+  "scripts": {
+    "build": "tsup-node src/* --format esm --clean",
+    "dev": "npm run build -- --watch"
+  },
+  "peerDependencies": {
+    "ink": "^4.4.1",
+    "react": "^18.2.0"
+  },
+  "devDependencies": {
+    "ink": "^4.4.1",
+    "react": "^18.2.0"
+  },
+  "dependencies": {
+    "execa": "^8.0.1",
+    "ink-text-input": "^5.0.1",
+    "remeda": "^1.39.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
