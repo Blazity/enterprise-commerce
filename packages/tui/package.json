@@ -4,6 +4,7 @@
   "private": true,
   "exports": {
     "./helpers/system": "./src/helpers/system.ts",
+    "./helpers/github": "./src/helpers/github.ts",
     "./terminal-colors": "./src/terminal-colors.ts"
   },
   "scripts": {
@@ -15,13 +16,14 @@
     "react": "^18.2.0"
   },
   "devDependencies": {
+    "@types/tar": "^6.1.11",
     "ink": "^4.4.1",
     "react": "^18.2.0"
   },
   "dependencies": {
     "execa": "^8.0.1",
-    "ink-text-input": "^5.0.1",
-    "remeda": "^1.39.0"
+    "remeda": "^1.39.0",
+    "tar": "^6.2.0"
   },
   "publishConfig": {
     "access": "public"
