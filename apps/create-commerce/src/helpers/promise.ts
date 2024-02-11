@@ -1,25 +1,29 @@
-export function trackPromiseArrayProgress(promises: Promise<unknown>[], progressCallback: (progress: number) => void) {
+export async function trackPromiseArrayProgressSequentially(
+  promiseHofs: (() => Promise<unknown>)[],
+  progressCallback: (progress: number) => void,
+  errorCallback?: (error: unknown) => void
+): Promise<unknown[]> {
   let done = 0
-  const total = promises.length
+  const total = promiseHofs.length
+  const results: unknown[] = []
 
-  const trackedPromises: Promise<unknown>[] = promises.map(
-    (promise) =>
-      new Promise<unknown>((resolve, reject) => {
-        promise
-          .then((value) => {
-            done++
-            // Multiply by 100 to convert to percentage
-            progressCallback((done / total) * 100)
-            resolve(value)
-          })
-          .catch((error) => {
-            done++
-            // Multiply by 100 to convert to percentage
-            progressCallback((done / total) * 100)
-            reject(error)
-          })
-      })
-  )
+  for (const promiseHof of promiseHofs) {
+    try {
+      const result = await promiseHof()
+      results.push(result)
+      done++
+      progressCallback((done / total) * 100)
+    } catch (error) {
+      if (errorCallback) {
+        errorCallback(error)
+        break
+      } else {
+        results.push(error)
+        done++
+        progressCallback((done / total) * 100)
+      }
+    }
+  }
 
-  return Promise.all(trackedPromises)
+  return results
 }

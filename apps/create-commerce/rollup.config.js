@@ -17,7 +17,7 @@ module.exports = {
     },
   ],
   plugins: [
-    resolve({ extensions: [".mjs", ".js", ".jsx", ".json", ".node", ".ts", ".tsx"] }),
+    resolve({ extensions: [".mjs", ".js", ".jsx", ".json", ".node", ".ts", ".tsx"], preferBuiltins: true }),
     commonjs(),
     babel({
       extensions: [".js", ".jsx", ".ts", ".tsx"],

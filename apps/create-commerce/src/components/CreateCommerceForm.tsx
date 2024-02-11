@@ -26,9 +26,11 @@ const completedStepsAtom = atom<Step[]>(
   (get) => Object.entries(get(formValuesAtom)).map(([step, value]) => (value ? step : undefined)) as Step[]
 )
 
+export type CreateCommerceFormValues = Record<Step, string>
+
 type CreateCommerceFormProps = {
   defaultPackageManager?: string
-  onFormSubmit: (formValues: Record<Step, string>) => void
+  onFormSubmit: (formValues: CreateCommerceFormValues) => void
 }
 
 export function CreateCommerceForm({ onFormSubmit, defaultPackageManager }: CreateCommerceFormProps) {

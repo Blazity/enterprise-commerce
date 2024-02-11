@@ -1,10 +1,12 @@
-import { Text, Box } from "ink"
+import { Text, Box, useApp, Newline } from "ink"
 import { useEffect, useState } from "react"
+import { downloadAndExtractRepository } from "@enterprise-commerce/tui/helpers/github"
 
-import { CreateCommerceForm } from "./components/CreateCommerceForm"
+import { CreateCommerceForm, type CreateCommerceFormValues } from "./components/CreateCommerceForm"
 import { ShopAnimation } from "./components/ShopAnimation"
 import { AnimatedProgressBar } from "./components/AnimatedProgressBar"
-import { trackPromiseArrayProgress } from "./helpers/promise"
+import { trackPromiseArrayProgressSequentially } from "./helpers/promise"
+import { gracefulDirectoryChange } from "./helpers/directory"
 
 type AppProps = {
   systemData: {
@@ -25,33 +27,38 @@ export function App({ systemData }: AppProps) {
   )
 }
 
-const getTestPromises = () => [
-  new Promise((resolve) => setTimeout(() => resolve("String"), 1000)),
-  new Promise((resolve) => setTimeout(() => resolve(10), 2000)),
-  new Promise((resolve) => setTimeout(() => resolve(true), 3000)),
-]
-
 function CreateCommerceFormWithProgressBar({ systemData }: AppProps) {
   const [progress, setProgress] = useState(0)
-  const [formValues, setFormValues] = useState({})
+  const [formValues, setFormValues] = useState<CreateCommerceFormValues>()
+  const [errorMessage, setErrorMessage] = useState<string>()
 
-  const isFormFilled = Object.keys(formValues).length > 0
-
-  const handleFormSubmit = (values) => {
-    setFormValues(values)
-  }
+  const isFormFilled = formValues ? Object.keys(formValues).length > 0 : false
 
   useEffect(() => {
-    if (!isFormFilled) {
+    if (!formValues || !isFormFilled || errorMessage) {
       return
     }
 
     let isCancelled = false
-    trackPromiseArrayProgress(getTestPromises(), (newProgress) => {
-      if (!isCancelled) {
-        setProgress(newProgress)
+
+    trackPromiseArrayProgressSequentially(
+      [
+        () => gracefulDirectoryChange(formValues["project-directory"]),
+        () => downloadAndExtractRepository({ owner: "blazity", name: "next-enterprise" }),
+      ],
+      (newProgress) => {
+        if (!isCancelled) {
+          setProgress(newProgress)
+        }
+      },
+      (error) => {
+        const typedError = error as Error
+        if (!isCancelled) {
+          setErrorMessage(typedError.message)
+          isCancelled = true
+        }
       }
-    })
+    )
 
     return () => {
       isCancelled = true
@@ -60,8 +67,47 @@ function CreateCommerceFormWithProgressBar({ systemData }: AppProps) {
 
   return (
     <>
-      <CreateCommerceForm defaultPackageManager={systemData.packageManager} onFormSubmit={handleFormSubmit} />
-      {isFormFilled ? <AnimatedProgressBar progress={progress} /> : null}
+      <CreateCommerceForm
+        defaultPackageManager={systemData.packageManager}
+        onFormSubmit={(values) => setFormValues(values)}
+      />
+      {isFormFilled && !errorMessage ? <AnimatedProgressBarWithStatusText progress={progress} /> : null}
+      {errorMessage ? <CriticalError message={errorMessage} /> : null}
     </>
+  )
+}
+
+type AnimatedProgressBarWithStatusTextProps = {
+  progress: number
+}
+
+function AnimatedProgressBarWithStatusText({ progress }: AnimatedProgressBarWithStatusTextProps) {
+  const [shouldShowStatusText, setShouldShowStatusText] = useState(false)
+
+  useEffect(() => {
+    if (progress === 100) {
+      setShouldShowStatusText(true)
+    }
+  }, [progress])
+
+  return (
+    <>
+      <AnimatedProgressBar progress={progress} />
+      {shouldShowStatusText ? <Text>Done!</Text> : null}
+    </>
+  )
+}
+
+function CriticalError({ message }: { message: string }) {
+  const { exit } = useApp()
+
+  useEffect(() => {
+    exit()
+  }, [])
+
+  return (
+    <Box marginBottom={1}>
+      <Text color="red">Critical Error Occured: {message}</Text>
+    </Box>
   )
 }
