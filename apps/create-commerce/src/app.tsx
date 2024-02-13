@@ -109,7 +109,7 @@ function CriticalError({ message }: { message: string }) {
 
   useEffect(() => {
     exit()
-    process.exit(1)
+    process.exit(0)
   }, [])
 
   return (
