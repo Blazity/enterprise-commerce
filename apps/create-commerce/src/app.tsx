@@ -1,12 +1,14 @@
-import { Text, Box, useApp, Newline } from "ink"
+import { Text, Box, useApp } from "ink"
 import { useEffect, useState } from "react"
 import { downloadAndExtractRepository } from "@enterprise-commerce/tui/helpers/github"
 
 import { CreateCommerceForm, type CreateCommerceFormValues } from "./components/CreateCommerceForm"
 import { ShopAnimation } from "./components/ShopAnimation"
 import { AnimatedProgressBar } from "./components/AnimatedProgressBar"
+
 import { trackPromiseArrayProgressSequentially } from "./helpers/promise"
-import { gracefulDirectoryChange } from "./helpers/directory"
+import { gracefullyChangeDirectory } from "./helpers/directory"
+import { type PackageManager, migrateCurrentDirectoryPackageManager } from "./helpers/migrate-pkg-manager"
 
 type AppProps = {
   systemData: {
@@ -43,8 +45,9 @@ function CreateCommerceFormWithProgressBar({ systemData }: AppProps) {
 
     trackPromiseArrayProgressSequentially(
       [
-        () => gracefulDirectoryChange(formValues["project-directory"]),
+        () => gracefullyChangeDirectory(formValues["project-directory"]),
         () => downloadAndExtractRepository({ owner: "blazity", name: "next-enterprise" }),
+        () => migrateCurrentDirectoryPackageManager({ to: formValues["package-manager"] as PackageManager }),
       ],
       (newProgress) => {
         if (!isCancelled) {

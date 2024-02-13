@@ -1,3 +1,5 @@
+import { isNil } from 'remeda"
+
 export async function trackPromiseArrayProgressSequentially(
   promiseHofs: (() => Promise<unknown>)[],
   progressCallback: (progress: number) => void,
@@ -14,7 +16,7 @@ export async function trackPromiseArrayProgressSequentially(
       done++
       progressCallback((done / total) * 100)
     } catch (error) {
-      if (errorCallback) {
+      if (!isNil(errorCallback)) {
         errorCallback(error)
         break
       } else {

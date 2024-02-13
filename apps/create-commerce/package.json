@@ -13,11 +13,13 @@
   "license": "MIT",
   "dependencies": {
     "@enterprise-commerce/tui": "*",
+    "fast-glob": "^3.3.2",
     "ink": "^4.4.1",
     "ink-select-input": "^5.0.0",
     "ink-text-input": "^5.0.1",
     "jotai": "^2.6.4",
-    "react": "^18.2.0"
+    "react": "^18.2.0",
+    "remeda": "^1.40.1"
   },
   "devDependencies": {
     "@babel/core": "^7.23.9",
@@ -31,6 +33,7 @@
     "@rollup/plugin-typescript": "^11.1.6",
     "react-devtools": "^5.0.0",
     "rollup": "^4.9.6",
-    "rollup-plugin-terser": "^7.0.2"
+    "rollup-plugin-terser": "^7.0.2",
+    "type-fest": "^4.10.2"
   }
 }
