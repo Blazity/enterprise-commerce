@@ -1,6 +1,6 @@
 import { mkdir, readdir } from "fs/promises"
 import process from "process"
-import { isEmpty } from "remeda" 
+import { isEmpty } from "remeda"
 
 export async function gracefullyChangeDirectory(directoryPath: string): Promise<void> {
   try {

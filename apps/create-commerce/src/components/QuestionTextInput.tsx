@@ -43,21 +43,12 @@ export function QuestionTextInput({ question, nextFocusId, secretInput, id, defa
   return (
     <Box padding={1}>
       <Box marginRight={1}>
-        <TextWithHorizontalPadding
-          backgroundColor={terminalColors.blazity}
-          color={terminalColors.textOnBrightBackground}
-          bold
-        >
+        <TextWithHorizontalPadding backgroundColor={terminalColors.blazity} color={terminalColors.textOnBrightBackground} bold>
           {question}
           {":"}
         </TextWithHorizontalPadding>
       </Box>
-      <UncontrolledTextInput
-        mask={secretInput ? "*" : undefined}
-        focus={isFocused}
-        onSubmit={handleSubmit}
-        placeholder={defaultValue}
-      />
+      <UncontrolledTextInput mask={secretInput ? "*" : undefined} focus={isFocused} onSubmit={handleSubmit} placeholder={defaultValue} />
     </Box>
   )
 }

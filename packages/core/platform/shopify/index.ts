@@ -9,12 +9,7 @@ import { createProductFeedMutation, fullSyncProductFeedMutation } from "./mutati
 
 import type { WebhookSubscriptionTopic } from "../../../../types/admin/admin.types"
 import type { MenuQuery, ProductsByHandleQuery, ProductsQuery } from "../../../../types/storefront.generated"
-import type {
-  LatestProductFeedsQuery,
-  ProductFeedCreateMutation,
-  ProductFullSyncMutation,
-  WebhookSubscriptionCreateMutation,
-} from "../../../../types/admin/admin.generated"
+import type { LatestProductFeedsQuery, ProductFeedCreateMutation, ProductFullSyncMutation, WebhookSubscriptionCreateMutation } from "../../../../types/admin/admin.generated"
 
 interface CreateShopifyClientProps {
   storeDomain: string
@@ -22,11 +17,7 @@ interface CreateShopifyClientProps {
   adminAccessToken?: string
 }
 
-export function createShopifyClient({
-  storefrontAccessToken,
-  adminAccessToken,
-  storeDomain,
-}: CreateShopifyClientProps) {
+export function createShopifyClient({ storefrontAccessToken, adminAccessToken, storeDomain }: CreateShopifyClientProps) {
   const client = createStorefrontApiClient({
     storeDomain,
     privateAccessToken: storefrontAccessToken,

@@ -70,10 +70,7 @@ function CreateCommerceFormWithProgressBar({ systemData }: AppProps) {
 
   return (
     <>
-      <CreateCommerceForm
-        defaultPackageManager={systemData.packageManager}
-        onFormSubmit={(values) => setFormValues(values)}
-      />
+      <CreateCommerceForm defaultPackageManager={systemData.packageManager} onFormSubmit={(values) => setFormValues(values)} />
       {isFormFilled && !errorMessage ? <AnimatedProgressBarWithStatusText progress={progress} /> : null}
       {errorMessage ? <CriticalError message={errorMessage} /> : null}
     </>

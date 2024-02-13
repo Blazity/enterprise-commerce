@@ -19,11 +19,7 @@ type DownloadAndExtractRepositoryOptions = {
   branch?: string
 }
 
-export async function downloadAndExtractRepository({
-  owner,
-  name,
-  branch = "main",
-}: DownloadAndExtractRepositoryOptions) {
+export async function downloadAndExtractRepository({ owner, name, branch = "main" }: DownloadAndExtractRepositoryOptions) {
   await pipeline(
     await downloadToStream(`https://codeload.github.com/${owner}/${name}/tar.gz/${branch}`),
     tar.x({

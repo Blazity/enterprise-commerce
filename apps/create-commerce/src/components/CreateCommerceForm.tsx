@@ -22,9 +22,7 @@ const formValuesAtom = atom((get) => {
   }
 })
 
-const completedStepsAtom = atom<Step[]>(
-  (get) => Object.entries(get(formValuesAtom)).map(([step, value]) => (value ? step : undefined)) as Step[]
-)
+const completedStepsAtom = atom<Step[]>((get) => Object.entries(get(formValuesAtom)).map(([step, value]) => (value ? step : undefined)) as Step[])
 
 export type CreateCommerceFormValues = Record<Step, string>
 
@@ -53,9 +51,7 @@ export function CreateCommerceForm({ onFormSubmit, defaultPackageManager }: Crea
 
       {completedSteps.includes("shopify-storefront-api-token") ? <MeilisearchAPIToken /> : null}
 
-      {completedSteps.includes("meilisearch-api-token") ? (
-        <PackageManager defaultPackageManager={defaultPackageManager} />
-      ) : null}
+      {completedSteps.includes("meilisearch-api-token") ? <PackageManager defaultPackageManager={defaultPackageManager} /> : null}
     </>
   )
 }

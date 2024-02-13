@@ -1,14 +1,7 @@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "components/ui/Accordion"
 import { Button } from "components/ui/Button"
 import { Checkbox } from "components/ui/Checkbox"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "components/ui/DropdownMenu"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "components/ui/DropdownMenu"
 import { Label } from "components/ui/Label"
 import Link from "next/link"
 
@@ -139,9 +132,7 @@ export function SearchView({ searchParams }: { searchParams: Record<string, stri
                       />
                       <div className="bg-white p-4 dark:bg-gray-950">
                         <h3 className="text-lg font-semibold md:text-xl">{singleResult.title}</h3>
-                        <h4 className="text-base font-semibold md:text-lg">
-                          ${singleResult?.variants?.edges?.find(Boolean)?.node.price.amount || 1337}
-                        </h4>
+                        <h4 className="text-base font-semibold md:text-lg">${singleResult?.variants?.edges?.find(Boolean)?.node.price.amount || 1337}</h4>
                         <Button className="mt-2" size="sm">
                           Add to Cart
                         </Button>

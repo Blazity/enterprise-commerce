@@ -21,9 +21,7 @@ export async function migrateCurrentDirectoryPackageManager({ to }: MigratePkgMa
 
   const packageJsonFiles = await glob("package.json", { ignore: ["node_modules"], absolute: true })
 
-  const packageJsonWithoutRoot = packageJsonFiles.filter(
-    (packageJsonFilePath) => !packageJsonFilePath.includes(path.join(process.cwd(), "package.json"))
-  )
+  const packageJsonWithoutRoot = packageJsonFiles.filter((packageJsonFilePath) => !packageJsonFilePath.includes(path.join(process.cwd(), "package.json")))
 
   const previousLockfiles = await glob(getSpecificPackageManagerLockfile(from), {
     ignore: ["node_modules"],
@@ -33,9 +31,7 @@ export async function migrateCurrentDirectoryPackageManager({ to }: MigratePkgMa
   const isMonorepo = packageJsonWithoutRoot.length > 1
 
   if (!isMonorepo) {
-    await Promise.all(
-      packageJsonFiles.map((packageJsonFilePath) => updateWorkspaceDependencies(packageJsonFilePath, to))
-    )
+    await Promise.all(packageJsonFiles.map((packageJsonFilePath) => updateWorkspaceDependencies(packageJsonFilePath, to)))
   }
 }
 

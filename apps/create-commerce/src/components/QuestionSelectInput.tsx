@@ -17,14 +17,7 @@ type QuestionSelectInputProps = {
   onEnter: (value: string) => void
 } & ComponentWithId
 
-export function QuestionSelectInput({
-  question,
-  items,
-  nextFocusId,
-  id,
-  defaultValue,
-  onEnter,
-}: QuestionSelectInputProps) {
+export function QuestionSelectInput({ question, items, nextFocusId, id, defaultValue, onEnter }: QuestionSelectInputProps) {
   const { isFocused } = useFocus({ id, autoFocus: true })
   const { focus } = useFocusManager()
 
@@ -43,21 +36,12 @@ export function QuestionSelectInput({
   return (
     <Box padding={1}>
       <Box marginRight={1}>
-        <TextWithHorizontalPadding
-          backgroundColor={terminalColors.blazity}
-          color={terminalColors.textOnBrightBackground}
-          bold
-        >
+        <TextWithHorizontalPadding backgroundColor={terminalColors.blazity} color={terminalColors.textOnBrightBackground} bold>
           {question}
           {":"}
         </TextWithHorizontalPadding>
       </Box>
-      <SelectInput
-        initialIndex={items.findIndex((item) => item.value === defaultValue)}
-        isFocused={isFocused}
-        items={items}
-        onSelect={handleSubmit}
-      />
+      <SelectInput initialIndex={items.findIndex((item) => item.value === defaultValue)} isFocused={isFocused} items={items} onSelect={handleSubmit} />
     </Box>
   )
 }

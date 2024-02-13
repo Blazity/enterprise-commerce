@@ -44,9 +44,7 @@ export function ShopAnimation() {
   }
 
   const renderScene = () => {
-    return SHOP_ART.map((line, index) => (
-      <Fragment key={line}>{renderStickmanPatternMatching({ index, renderStickmanPart, line })}</Fragment>
-    ))
+    return SHOP_ART.map((line, index) => <Fragment key={line}>{renderStickmanPatternMatching({ index, renderStickmanPart, line })}</Fragment>)
   }
 
   return <>{renderScene()}</>

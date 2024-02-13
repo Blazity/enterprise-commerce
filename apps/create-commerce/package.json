@@ -1,14 +1,13 @@
 {
   "name": "create-commerce",
   "version": "1.0.0",
-  "// TODO: Publish the package": "",
-  "private": true,
   "scripts": {
     "build": "cross-env FORCE_COLOR=1 rollup --config rollup.config.js",
     "build:prod": "cross-env FORCE_COLOR=1 NODE_ENV=production rollup --config rollup.config.js",
     "dev": "npm run build -- --watch",
     "start:dev": "cross-env DEV=true FORCE_COLOR=1 node dist/index.mjs"
   },
+  "bin": "dist/index.mjs",
   "main": "dist/index.mjs",
   "license": "MIT",
   "dependencies": {
