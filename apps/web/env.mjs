@@ -2,6 +2,7 @@ import { createEnv } from "@t3-oss/env-nextjs"
 import { z } from "zod"
 
 export const env = createEnv({
+  skipValidation: process.env.NODE_ENV !== "production",
   server: {
     SHOPIFY_STOREFRONT_ACCESS_TOKEN: z.string().default("demo"),
     SHOPIFY_ADMIN_ACCESS_TOKEN: z.string().optional(),
