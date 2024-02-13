@@ -1,0 +1,8 @@
+{
+  "extends": "@enterprise-commerce/tsconfig/react-library.json",
+  "compilerOptions": {
+    "noImplicitAny": false
+  },
+  "include": ["**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules", "rollup.config.js"]
+}
