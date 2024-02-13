@@ -9,9 +9,9 @@ on:
   workflow_dispatch: null
 jobs:
   test:
-    environment: e2e
+    environment: test
     env:
-      NODE_ENV: e2e
+      NODE_ENV: test
       SKIP_ENV_VALIDATION: true
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
