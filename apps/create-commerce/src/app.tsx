@@ -70,7 +70,10 @@ function CreateCommerceFormWithProgressBar({ systemData }: AppProps) {
 
   return (
     <>
-      <CreateCommerceForm defaultPackageManager={systemData.packageManager} onFormSubmit={(values) => setFormValues(values)} />
+      <CreateCommerceForm
+        defaultPackageManager={systemData.packageManager}
+        onFormSubmit={(values) => setFormValues(values)}
+      />
       {isFormFilled && !errorMessage ? <AnimatedProgressBarWithStatusText progress={progress} /> : null}
       {errorMessage ? <CriticalError message={errorMessage} /> : null}
     </>
@@ -83,10 +86,13 @@ type AnimatedProgressBarWithStatusTextProps = {
 
 function AnimatedProgressBarWithStatusText({ progress }: AnimatedProgressBarWithStatusTextProps) {
   const [shouldShowStatusText, setShouldShowStatusText] = useState(false)
+  const { exit } = useApp()
 
   useEffect(() => {
     if (progress === 100) {
       setShouldShowStatusText(true)
+      exit()
+      process.exit(0)
     }
   }, [progress])
 
@@ -103,6 +109,7 @@ function CriticalError({ message }: { message: string }) {
 
   useEffect(() => {
     exit()
+    process.exit(1)
   }, [])
 
   return (
