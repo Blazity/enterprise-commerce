@@ -13,15 +13,8 @@ import { Label } from "components/ui/Label"
 import Link from "next/link"
 
 import NextInstantSearch from "next-rsc-search"
-import { Product } from "shopify"
 import { createSearchParamsCache, parseAsString, parseAsInteger } from "nuqs/server"
 import { SearchBar } from "./SearchBar"
-
-export const revalidate = 3600
-
-export const dynamicParams = true
-
-export const dynamic = "force-static"
 
 const searchParamsCache = createSearchParamsCache({
   q: parseAsString.withDefault(" "),

@@ -1,4 +1,3 @@
-import nodeFetch from "node-fetch"
 import { createStorefrontApiClient, StorefrontApiClient } from "@shopify/storefront-api-client"
 import { createAdminApiClient, AdminApiClient } from "@shopify/admin-api-client"
 
@@ -10,7 +9,12 @@ import { createProductFeedMutation, fullSyncProductFeedMutation } from "./mutati
 
 import type { WebhookSubscriptionTopic } from "../../../../types/admin/admin.types"
 import type { MenuQuery, ProductsByHandleQuery, ProductsQuery } from "../../../../types/storefront.generated"
-import type { LatestProductFeedsQuery, ProductFeedCreateMutation, ProductFullSyncMutation, WebhookSubscriptionCreateMutation } from "../../../../types/admin/admin.generated"
+import type {
+  LatestProductFeedsQuery,
+  ProductFeedCreateMutation,
+  ProductFullSyncMutation,
+  WebhookSubscriptionCreateMutation,
+} from "../../../../types/admin/admin.generated"
 
 interface CreateShopifyClientProps {
   storeDomain: string
@@ -18,12 +22,16 @@ interface CreateShopifyClientProps {
   adminAccessToken?: string
 }
 
-export function createShopifyClient({ storefrontAccessToken, adminAccessToken, storeDomain }: CreateShopifyClientProps) {
+export function createShopifyClient({
+  storefrontAccessToken,
+  adminAccessToken,
+  storeDomain,
+}: CreateShopifyClientProps) {
   const client = createStorefrontApiClient({
     storeDomain,
     privateAccessToken: storefrontAccessToken,
     apiVersion: "2024-01",
-    customFetchApi: (url, init) => nodeFetch(url, init as never) as never,
+    customFetchApi: (url, init) => fetch(url, init as never) as never,
   })
 
   const adminClient = createAdminApiClient({

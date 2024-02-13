@@ -19,7 +19,6 @@
   },
   "dependencies": {
     "@shopify/admin-api-client": "0.2.3",
-    "@shopify/storefront-api-client": "0.2.3",
-    "node-fetch": "^3.3.2"
+    "@shopify/storefront-api-client": "0.2.3"
   }
 }
