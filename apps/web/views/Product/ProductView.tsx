@@ -41,17 +41,8 @@ export async function ProductView({ slug }) {
         </div>
         <div className="hidden flex-col items-start gap-3 md:flex">
           {product?.images.edges.map((image, index) => (
-            <button
-              key={image.node.url}
-              className="overflow-hidden rounded-lg border transition-colors hover:border-gray-900 dark:hover:border-gray-50"
-            >
-              <img
-                alt={image.node.altText || ""}
-                className="aspect-[5/6] object-cover"
-                height={120}
-                src={image.node.url}
-                width={100}
-              />
+            <button key={image.node.url} className="overflow-hidden rounded-lg border transition-colors hover:border-gray-900 dark:hover:border-gray-50">
+              <img alt={image.node.altText || ""} className="aspect-[5/6] object-cover" height={120} src={image.node.url} width={100} />
               <span className="sr-only">View Image {index + 1}</span>
             </button>
           ))}
@@ -105,10 +96,7 @@ export async function ProductView({ slug }) {
                 <RadioGroupItem id="color-white" value="white" />
                 White
               </Label>
-              <Label
-                className="flex cursor-pointer items-center gap-2 rounded-md border p-2 [&:has(:checked)]:bg-gray-100 dark:[&:has(:checked)]:bg-gray-800"
-                htmlFor="color-blue"
-              >
+              <Label className="flex cursor-pointer items-center gap-2 rounded-md border p-2 [&:has(:checked)]:bg-gray-100 dark:[&:has(:checked)]:bg-gray-800" htmlFor="color-blue">
                 <RadioGroupItem id="color-blue" value="blue" />
                 Blue
               </Label>
@@ -119,35 +107,20 @@ export async function ProductView({ slug }) {
               Size
             </Label>
             <RadioGroup className="flex items-center gap-2" defaultValue="m" id="size">
-              <Label
-                className="flex cursor-pointer items-center gap-2 rounded-md border p-2 [&:has(:checked)]:bg-gray-100 dark:[&:has(:checked)]:bg-gray-800"
-                htmlFor="size-xs"
-              >
+              <Label className="flex cursor-pointer items-center gap-2 rounded-md border p-2 [&:has(:checked)]:bg-gray-100 dark:[&:has(:checked)]:bg-gray-800" htmlFor="size-xs">
                 <RadioGroupItem id="size-xs" value="xs" />
                 XS
               </Label>
-              <Label
-                className="flex cursor-pointer items-center gap-2 rounded-md border p-2 [&:has(:checked)]:bg-gray-100 dark:[&:has(:checked)]:bg-gray-800"
-                htmlFor="size-s"
-              >
+              <Label className="flex cursor-pointer items-center gap-2 rounded-md border p-2 [&:has(:checked)]:bg-gray-100 dark:[&:has(:checked)]:bg-gray-800" htmlFor="size-s">
                 <RadioGroupItem id="size-s" value="s" />S{"\n                          "}
               </Label>
-              <Label
-                className="flex cursor-pointer items-center gap-2 rounded-md border p-2 [&:has(:checked)]:bg-gray-100 dark:[&:has(:checked)]:bg-gray-800"
-                htmlFor="size-m"
-              >
+              <Label className="flex cursor-pointer items-center gap-2 rounded-md border p-2 [&:has(:checked)]:bg-gray-100 dark:[&:has(:checked)]:bg-gray-800" htmlFor="size-m">
                 <RadioGroupItem id="size-m" value="m" />M{"\n                          "}
               </Label>
-              <Label
-                className="flex cursor-pointer items-center gap-2 rounded-md border p-2 [&:has(:checked)]:bg-gray-100 dark:[&:has(:checked)]:bg-gray-800"
-                htmlFor="size-l"
-              >
+              <Label className="flex cursor-pointer items-center gap-2 rounded-md border p-2 [&:has(:checked)]:bg-gray-100 dark:[&:has(:checked)]:bg-gray-800" htmlFor="size-l">
                 <RadioGroupItem id="size-l" value="l" />L{"\n                          "}
               </Label>
-              <Label
-                className="flex cursor-pointer items-center gap-2 rounded-md border p-2 [&:has(:checked)]:bg-gray-100 dark:[&:has(:checked)]:bg-gray-800"
-                htmlFor="size-xl"
-              >
+              <Label className="flex cursor-pointer items-center gap-2 rounded-md border p-2 [&:has(:checked)]:bg-gray-100 dark:[&:has(:checked)]:bg-gray-800" htmlFor="size-xl">
                 <RadioGroupItem id="size-xl" value="xl" />
                 XL
               </Label>

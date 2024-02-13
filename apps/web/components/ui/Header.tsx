@@ -16,18 +16,10 @@ export async function Header() {
       <nav className="ml-auto flex items-center gap-4 sm:gap-6">
         <div className="relative ml-4 w-64">
           <SearchIcon className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
-          <Input
-            className="w-full appearance-none bg-white pl-8 shadow-none"
-            placeholder="Search products..."
-            type="search"
-          />
+          <Input className="w-full appearance-none bg-white pl-8 shadow-none" placeholder="Search products..." type="search" />
         </div>
         {items.map((singleItem) => (
-          <Link
-            key={singleItem.url}
-            className="text-sm font-medium underline-offset-4 hover:underline"
-            href={singleItem.url}
-          >
+          <Link key={singleItem.url} className="text-sm font-medium underline-offset-4 hover:underline" href={singleItem.url}>
             {singleItem.title}
           </Link>
         ))}

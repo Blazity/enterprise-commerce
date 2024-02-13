@@ -5035,14 +5035,7 @@
     lodash-es "^4.17.21"
     read-pkg-up "^11.0.0"
 
-"@shopify/admin-api-client@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@shopify/admin-api-client/-/admin-api-client-0.1.0.tgz#9442357fd1b038b03a43ab93a5446f1076e79690"
-  integrity sha512-rUq60K5Zu4gmpjdpx3s1DRCRofZXhSNVB74i2rmqQSvPhLkHm8XC5GCfH+kUVO9DEmrVMFI5t3e9IBbz5oAYBw==
-  dependencies:
-    "@shopify/graphql-client" "^0.8.0"
-
-"@shopify/admin-api-client@^0.2.3":
+"@shopify/admin-api-client@0.2.3":
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/@shopify/admin-api-client/-/admin-api-client-0.2.3.tgz#4637b5708af0090db9eb3f34e184a43b03800762"
   integrity sha512-IYAKgaRoqTLlgAanvbgk3ifBWQoBaQIYAIZkMkZS7lk1ESi9tWsxYj+XHfBIhECv2/NlxQkdAzMjlR+etFiTUg==
@@ -5061,11 +5054,6 @@
     "@shopify/hydrogen-codegen" "^0.1.0"
     graphql "^16.8.1"
 
-"@shopify/graphql-client@^0.8.0":
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/@shopify/graphql-client/-/graphql-client-0.8.0.tgz#cfddbc913f56e7f3a1ad28d768013f6a4b598c20"
-  integrity sha512-YtEwYVUzV5n1fyQoc3Rsd5Y1F8OWP27dVe8/gQ3xNy7MLlRIOd3uT9/2LagUNM2cGw3tSrc8d35XG/cKFnCVyg==
-
 "@shopify/graphql-client@^0.9.3":
   version "0.9.3"
   resolved "https://registry.yarnpkg.com/@shopify/graphql-client/-/graphql-client-0.9.3.tgz#c5140d02948c827d3cb9fe634c0b2ab192d69aa9"
@@ -5080,7 +5068,7 @@
     "@graphql-codegen/typescript" "^4.0.1"
     "@graphql-codegen/typescript-operations" "^4.0.1"
 
-"@shopify/storefront-api-client@^0.2.3":
+"@shopify/storefront-api-client@0.2.3":
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/@shopify/storefront-api-client/-/storefront-api-client-0.2.3.tgz#828e3eee1a335975778c98a629fcd8d3da099ce3"
   integrity sha512-n1QITdbQnUFYQwRwYbZtjFQ6onFjdhmOeZw7Zl2K9iwXt7HjBYClMtgk3bbppAAzxDccpQBUimR2f9mt/oOgMg==
@@ -11879,7 +11867,7 @@ graphql-request@^6.0.0:
     "@graphql-typed-document-node/core" "^3.2.0"
     cross-fetch "^3.1.5"
 
-graphql-tag@^2.11.0, graphql-tag@^2.12.6:
+graphql-tag@^2.11.0:
   version "2.12.6"
   resolved "https://registry.yarnpkg.com/graphql-tag/-/graphql-tag-2.12.6.tgz#d441a569c1d2537ef10ca3d1633b48725329b5f1"
   integrity sha512-FdSNcu2QQcWnM2VNvSCCDCVS5PpPqpzgFT8+GXzqJuoDd0CBncxCY278u4mhRO7tMgo2JjgJA5aZ+nWSQ/Z+xg==

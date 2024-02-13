@@ -3,11 +3,11 @@ import { z } from "zod"
 
 export const env = createEnv({
   server: {
-    SHOPIFY_STOREFRONT_ACCESS_TOKEN: z.string().optional(),
+    SHOPIFY_STOREFRONT_ACCESS_TOKEN: z.string().default("demo"),
     SHOPIFY_ADMIN_ACCESS_TOKEN: z.string().optional(),
-    SHOPIFY_STORE_DOMAIN: z.string().optional(),
-    MEILISEARCH_MASTER_KEY: z.string().optional(),
-    MEILISEARCH_HOST: z.string().optional(),
+    SHOPIFY_STORE_DOMAIN: z.string().default("demo"),
+    MEILISEARCH_MASTER_KEY: z.string().optional().default("demo"),
+    MEILISEARCH_HOST: z.string().optional().default("demo"),
     ANALYZE: z
       .enum(["true", "false"])
       .optional()

@@ -1,10 +1,7 @@
 import { ApiType, shopifyApiProject } from "@shopify/api-codegen-preset"
 
 export default {
-  schema: [
-    "https://shopify.dev/storefront-graphql-direct-proxy/2024-01",
-    "https://shopify.dev/admin-graphql-direct-proxy/2024-01",
-  ],
+  schema: ["https://shopify.dev/storefront-graphql-direct-proxy/2024-01", "https://shopify.dev/admin-graphql-direct-proxy/2024-01"],
   documents: ["./packages/core/**/*.{js,ts,jsx,tsx}"],
   projects: {
     default: shopifyApiProject({

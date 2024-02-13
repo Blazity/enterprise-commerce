@@ -1,14 +1,7 @@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "components/ui/Accordion"
 import { Button } from "components/ui/Button"
 import { Checkbox } from "components/ui/Checkbox"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "components/ui/DropdownMenu"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "components/ui/DropdownMenu"
 import { Label } from "components/ui/Label"
 import Link from "next/link"
 

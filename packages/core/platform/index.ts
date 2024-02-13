@@ -9,12 +9,7 @@ interface CreateStorefrontClientProps {
   adminAccessToken?: string
 }
 
-export function createStorefrontClient({
-  storefrontAccessToken,
-  adminAccessToken,
-  storeDomain,
-  strategy,
-}: CreateStorefrontClientProps) {
+export function createStorefrontClient({ storefrontAccessToken, adminAccessToken, storeDomain, strategy }: CreateStorefrontClientProps) {
   switch (strategy) {
     case "shopify":
       return createShopifyClient({ storeDomain, storefrontAccessToken, adminAccessToken })
