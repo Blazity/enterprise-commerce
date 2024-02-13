@@ -11,6 +11,7 @@ jobs:
   test:
     environment: production
     env:
+      SKIP_ENV_VALIDATION: true
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
     timeout-minutes: 60
