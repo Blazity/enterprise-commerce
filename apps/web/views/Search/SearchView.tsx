@@ -1,16 +1,41 @@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "components/ui/Accordion"
 import { Button } from "components/ui/Button"
 import { Checkbox } from "components/ui/Checkbox"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "components/ui/DropdownMenu"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "components/ui/DropdownMenu"
 import { Label } from "components/ui/Label"
 import Link from "next/link"
 
-export function SearchView() {
+import NextInstantSearch from "next-rsc-search"
+import { Product } from "shopify"
+import { createSearchParamsCache, parseAsString, parseAsInteger } from "nuqs/server"
+import { SearchBar } from "./SearchBar"
+
+export const revalidate = 3600
+
+export const dynamicParams = true
+
+export const dynamic = "force-static"
+
+const searchParamsCache = createSearchParamsCache({
+  q: parseAsString.withDefault(" "),
+})
+
+export function SearchView({ searchParams }: { searchParams: Record<string, string | string[] | undefined> }) {
+  const parsedSearchParams = searchParamsCache.parse(searchParams)
+
   return (
     <div className="container mx-auto px-4 py-6 md:px-6 lg:px-8">
       <div className="grid gap-6 md:grid-cols-[240px_1fr]">
         <div>
           <h2 className="mb-4 text-lg font-semibold">Filters</h2>
+          <SearchBar />
           <Accordion className="w-full" collapsible type="single">
             <AccordionItem value="category">
               <AccordionTrigger className="text-base">Category</AccordionTrigger>
@@ -95,32 +120,45 @@ export function SearchView() {
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
-          <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4">
-            <div className="group relative overflow-hidden rounded-lg">
-              <Link className="absolute inset-0 z-10" href="#">
-                <span className="sr-only">View</span>
-              </Link>
-              <img
-                alt="Product 1"
-                className="h-60 w-full object-cover"
-                height={300}
-                src="https://placehold.co/400x300"
-                style={{
-                  aspectRatio: "400/300",
-                  objectFit: "cover",
-                }}
-                width={400}
-              />
-              <div className="bg-white p-4 dark:bg-gray-950">
-                <h3 className="text-lg font-semibold md:text-xl">Stylish Sunglasses</h3>
-                <p className="text-sm text-gray-500 dark:text-gray-400">UV protection</p>
-                <h4 className="text-base font-semibold md:text-lg">$29.99</h4>
-                <Button className="mt-2" size="sm">
-                  Add to Cart
-                </Button>
-              </div>
-            </div>
-          </div>
+          <NextInstantSearch
+            searchParams={{ ...parsedSearchParams, q: parsedSearchParams.q || " " }}
+            options={{ revalidate: 60 }}
+            indexName="products"
+            render={({ hits }: any) => (
+              <>
+                {/* <pre>xdxd {JSON.stringify(payload.hits, null, 2)}</pre> */}
+                <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                  {hits.map((singleResult) => (
+                    <div className="group relative overflow-hidden rounded-lg" key={singleResult.id}>
+                      <Link className="absolute inset-0 z-10" href={`/products/${singleResult.handle}`}>
+                        <span className="sr-only">View</span>
+                      </Link>
+                      <img
+                        alt="Product 1"
+                        className="h-60 w-full object-cover"
+                        height={singleResult.images.edges[0].node.height || 300}
+                        src={singleResult.images.edges[0].node.url}
+                        style={{
+                          aspectRatio: "400/300",
+                          objectFit: "cover",
+                        }}
+                        width={singleResult.images.edges[0].node.width || 400}
+                      />
+                      <div className="bg-white p-4 dark:bg-gray-950">
+                        <h3 className="text-lg font-semibold md:text-xl">{singleResult.title}</h3>
+                        <h4 className="text-base font-semibold md:text-lg">
+                          ${singleResult?.variants?.edges?.find(Boolean)?.node.price.amount || 1337}
+                        </h4>
+                        <Button className="mt-2" size="sm">
+                          Add to Cart
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
+          />
         </div>
       </div>
     </div>
