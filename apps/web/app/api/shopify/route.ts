@@ -2,7 +2,7 @@ import { meilisearch } from "client/meilisearch"
 import { Root } from "shopify"
 
 export async function POST(req: Request) {
-  const { product } = (await req.json()) as Root
+  const { product, metadata } = (await req.json()) as Root
 
   let index = await meilisearch.getIndex("products")
 
@@ -11,9 +11,17 @@ export async function POST(req: Request) {
     index = await meilisearch.getIndex("products")
   }
 
-  await index.updateDocuments([{ ...product, id: product.id.replace("gid://shopify/Product/", "") }], {
-    primaryKey: "id",
-  })
+  const normalizedProduct = { ...product, id: product.id.replace("gid://shopify/Product/", "") }
+
+  if (metadata.action === "DELETE") {
+    await index.deleteDocument(normalizedProduct.id)
+  }
+
+  if (metadata.action === "UPDATE" || metadata.action === "CREATE") {
+    await index.updateDocuments([normalizedProduct], {
+      primaryKey: "id",
+    })
+  }
 
   return Response.json({ status: "ok" })
 }
