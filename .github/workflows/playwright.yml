@@ -11,6 +11,7 @@ jobs:
   test:
     environment: production
     env:
+      NODE_ENV: e2e
       SKIP_ENV_VALIDATION: true
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
