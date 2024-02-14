@@ -8,6 +8,7 @@ export async function POST(req: Request) {
 
   if (!index.uid) {
     await meilisearch.createIndex("products")
+    // TODO: wait 5 seconds or so
     index = await meilisearch.getIndex("products")
   }
 

@@ -32,7 +32,7 @@ async function abc() {
 
     const fetchedWebhookMutation = await client.subscribeWebhook(
       "PRODUCT_FEEDS_FULL_SYNC",
-      "https://c370-2a02-a311-813b-8880-b95b-ce26-df22-691e.ngrok-free.app/api/shopify"
+      "https://enterprise-commerce-web.vercel.app/api/shopify"
     )
     const webhookServerError = fetchedWebhookMutation?.errors?.graphQLErrors?.find(Boolean)?.message
     const webhookUserErrror =
@@ -62,7 +62,7 @@ async function abc() {
 
     const incrementalWebhook = await client.subscribeWebhook(
       "PRODUCT_FEEDS_INCREMENTAL_SYNC",
-      "https://c370-2a02-a311-813b-8880-b95b-ce26-df22-691e.ngrok-free.app/api/shopify"
+      "https://enterprise-commerce-web.vercel.app/api/shopify"
     )
 
     console.log("Subscribing for incremental sync...")

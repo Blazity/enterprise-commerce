@@ -4,7 +4,7 @@ import { MeiliSearch } from "meilisearch"
 const meilisearchClientSingleton = () => {
   return new MeiliSearch({
     host: env.MEILISEARCH_HOST || "",
-    apiKey: env.MEILISEARCH_MASTER_KEY,
+    apiKey: env.MEILISEARCH_MASTER_KEY || "",
   })
 }
 
