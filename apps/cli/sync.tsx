@@ -87,7 +87,7 @@ export function Sync() {
 
       setProgress(30)
       updateFeedback({ status: "INFO", message: "Subscribing PRODUCT_FEEDS_FULL_SYNC webhook..." })
-      const fetchedWebhookMutation = await client.subscribeWebhook("PRODUCT_FEEDS_FULL_SYNC", `${formValues["live-app-url"]}/api/shopify`)
+      const fetchedWebhookMutation = await client.subscribeWebhook("PRODUCT_FEEDS_FULL_SYNC", `${formValues["live-app-url"]}/api/sync`)
       const webhookServerError = fetchedWebhookMutation?.errors?.graphQLErrors?.find(Boolean)?.message
       const webhookUserErrror = fetchedWebhookMutation?.data?.webhookSubscriptionCreate?.userErrors?.find(Boolean)?.message
 
@@ -125,7 +125,7 @@ export function Sync() {
       setProgress(85)
       updateFeedback({ status: "INFO", message: "Subscribing PRODUCT_FEEDS_INCREMENTAL_SYNC webhook..." })
 
-      const incrementalWebhook = await client.subscribeWebhook("PRODUCT_FEEDS_INCREMENTAL_SYNC", `${formValues["live-app-url"]}/api/shopify`)
+      const incrementalWebhook = await client.subscribeWebhook("PRODUCT_FEEDS_INCREMENTAL_SYNC", `${formValues["live-app-url"]}/api/sync`)
 
       setProgress(95)
       updateFeedback({ status: "SUCCESS", message: "Successfully subscribed to PRODUCT_FEEDS_INCREMENTAL_SYNC webhook" })
