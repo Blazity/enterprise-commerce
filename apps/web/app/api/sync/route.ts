@@ -11,11 +11,12 @@ export async function POST(req: Request) {
     return new Response(JSON.stringify({ message: "Not all credentials were provided for the deployment" }), { status: 500, headers: { "Content-Type": "application/json" } })
   }
 
-  if (!isWebhookVerified(await req.text(), hmac!)) {
+  const rawPayload = await req.text()
+  if (!isWebhookVerified(rawPayload, hmac!)) {
     return new Response(JSON.stringify({ message: "Could not verify request." }), { status: 401, headers: { "Content-Type": "application/json" } })
   }
 
-  const { product, metadata } = (await req.json()) as Root
+  const { product, metadata } = JSON.parse(rawPayload) as Root
 
   let index = await getMeilisearchIndex("products")
 
