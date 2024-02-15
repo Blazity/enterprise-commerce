@@ -9,7 +9,7 @@ import { getProductQuery, getProductsByHandleQuery } from "./queries/product.sto
 
 import type { LatestProductFeedsQuery, ProductFeedCreateMutation, ProductFullSyncMutation, WebhookSubscriptionCreateMutation } from "../../../../types/admin/admin.generated"
 import type { WebhookSubscriptionTopic } from "../../../../types/admin/admin.types"
-import type { MenuQuery, ProductsByHandleQuery, ProductsQuery } from "../../../../types/storefront.generated"
+import type { MenuQuery, ProductsByHandleQuery, SingleProductQuery } from "../../../../types/storefront.generated"
 
 interface CreateShopifyClientProps {
   storeDomain: string
@@ -48,8 +48,8 @@ async function getMenu(client: StorefrontApiClient, handle: string = "main-menu"
   return client.request<MenuQuery>(getMenuQuery, { variables: { handle } })
 }
 
-async function getProduct(client: StorefrontApiClient, handle: string) {
-  return client.request<ProductsQuery>(getProductQuery, { variables: { id: handle } })
+async function getProduct(client: StorefrontApiClient, id: string) {
+  return client.request<SingleProductQuery>(getProductQuery, { variables: { id } })
 }
 
 async function getProductsByHandle(client: StorefrontApiClient, handle: string) {

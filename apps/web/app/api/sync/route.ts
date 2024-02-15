@@ -1,8 +1,11 @@
 import { meilisearch } from "client/meilisearch"
+import { storefrontClient } from "client/storefrontClient"
 import { env } from "env.mjs"
 import { FailedAttemptError } from "p-retry"
-import { Product, Root } from "shopify"
+import { Root } from "shopify-webhooks"
 import { createHmac } from "crypto"
+
+import { SingleProductQuery } from "../../../../../types/storefront.generated"
 
 export async function POST(req: Request) {
   const hmac = req.headers.get("X-Shopify-Hmac-Sha256")
@@ -20,30 +23,53 @@ export async function POST(req: Request) {
 
   let index = await getMeilisearchIndex("products")
 
-  const normalizedProduct = normalizeProduct(product)
-
-  if (!normalizedProduct?.id) {
+  if (!product?.id) {
     return Response.json({ status: "error", message: "Could not create product" })
   }
 
   if (metadata.action === "DELETE") {
-    await index.deleteDocument(normalizedProduct.id)
+    await index.deleteDocument(normalizeId(product.id))
   }
 
   if (metadata.action === "UPDATE" || metadata.action === "CREATE") {
-    await index.updateDocuments([normalizedProduct], {
-      primaryKey: "id",
-    })
+    const originalProduct = await storefrontClient.getProduct("gid://shopify/Product/9005142966556")
+    const normalizedProduct = normalizeProduct(originalProduct.data?.product)
+
+    if (normalizedProduct) {
+      await index.updateDocuments([normalizedProduct], {
+        primaryKey: "id",
+      })
+    }
   }
 
   return Response.json({ status: "ok" })
 }
 
-function normalizeProduct(product: Product | undefined | null) {
+function normalizeProduct(product: SingleProductQuery["product"] | undefined | null) {
   if (!product) return product
 
+  return {
+    ...product,
+    id: normalizeId(product.id),
+    title: product.title,
+    descriptionHtml: product.descriptionHtml,
+    priceRange: product.priceRange,
+    featuredImage: product.featuredImage,
+    seo: product.seo,
+    updatedAt: product.updatedAt,
+    handle: product.handle,
+    description: product.description,
+    options: product.options,
+    tags: product.tags,
+    images: product?.images?.edges?.map((image) => image?.node),
+    variants: product?.variants?.edges?.map((variant) => variant?.node),
+    collections: product?.collections?.nodes?.map((collection) => collection),
+  }
+}
+
+function normalizeId(id: string) {
   const shopifyIdPrefix = "gid://shopify/Product/"
-  return { ...product, id: product.id.replace(shopifyIdPrefix, "") }
+  return id.replace(shopifyIdPrefix, "")
 }
 
 async function getMeilisearchIndex(indexName: string) {

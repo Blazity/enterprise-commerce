@@ -4,6 +4,14 @@ export const getProductQuery = `#graphql
   query SingleProduct($id: ID!) {
     product(id: $id) {
       ...singleProduct
+      collections(first: 15) {
+        nodes {
+          handle
+          title
+          description
+          updatedAt
+        }
+      }
     }
   }
   ${productFragment}
