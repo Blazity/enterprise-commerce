@@ -1,9 +1,9 @@
 import { createStorefrontApiClient, StorefrontApiClient } from "@shopify/storefront-api-client"
 import { createAdminApiClient, AdminApiClient } from "@shopify/admin-api-client"
 
-import { getMenuQuery } from "./queries/menu"
+import { getMenuQuery } from "./queries/menu.storefront"
 import { getLatestProductFeedQuery } from "./queries/product-feed.admin"
-import { getProductQuery, getProductsByHandleQuery } from "./queries/product"
+import { getProductQuery, getProductsByHandleQuery } from "./queries/product.storefront"
 import { subscribeWebhookMutation } from "./mutations/webhook.admin"
 import { createProductFeedMutation, fullSyncProductFeedMutation } from "./mutations/product-feed.admin"
 
@@ -13,14 +13,14 @@ import type { LatestProductFeedsQuery, ProductFeedCreateMutation, ProductFullSyn
 
 interface CreateShopifyClientProps {
   storeDomain: string
-  storefrontAccessToken: string
+  storefrontAccessToken?: string
   adminAccessToken?: string
 }
 
 export function createShopifyClient({ storefrontAccessToken, adminAccessToken, storeDomain }: CreateShopifyClientProps) {
   const client = createStorefrontApiClient({
     storeDomain,
-    privateAccessToken: storefrontAccessToken,
+    privateAccessToken: storefrontAccessToken || "_BOGUS_TOKEN_",
     apiVersion: "2024-01",
     customFetchApi: (url, init) => fetch(url, init as never) as never,
   })
@@ -34,9 +34,9 @@ export function createShopifyClient({ storefrontAccessToken, adminAccessToken, s
   // To prevent prettier from wrapping pretty one liners and making them unreadable
   // prettier-ignore
   return {
-    getMenu: async (handle?: string) => getMenu(client, handle),
-    getProduct: async (id: string) => getProduct(client, id),
-    getProductsByHandle: async (handle: string) => getProductsByHandle(client, handle),
+    getMenu: async (handle?: string) => getMenu(client!, handle),
+    getProduct: async (id: string) => getProduct(client!, id),
+    getProductsByHandle: async (handle: string) => getProductsByHandle(client!, handle),
     subscribeWebhook: async (topic: `${WebhookSubscriptionTopic}`, callbackUrl: string) => subscribeWebhook(adminClient, topic, callbackUrl),
     createProductFeed: async () => createProductFeed(adminClient),
     fullSyncProductFeed: async (id: string) => fullSyncProductFeed(adminClient, id),

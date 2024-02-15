@@ -5,7 +5,7 @@ type Strategy = "shopify"
 interface CreateStorefrontClientProps {
   strategy: Strategy
   storeDomain: string
-  storefrontAccessToken: string
+  storefrontAccessToken?: string
   adminAccessToken?: string
 }
 

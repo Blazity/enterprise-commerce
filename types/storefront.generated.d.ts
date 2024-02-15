@@ -3,139 +3,6 @@
 /* eslint-disable */
 import * as StorefrontTypes from "./storefront.types.d.ts"
 
-export type MenuQueryVariables = StorefrontTypes.Exact<{
-  handle: StorefrontTypes.Scalars["String"]["input"]
-}>
-
-export type MenuQuery = { menu?: StorefrontTypes.Maybe<{ items: Array<Pick<StorefrontTypes.MenuItem, "title" | "url">> }> }
-
-export type SingleImageFragment = Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height">
-
-export type SeoFragment = Pick<StorefrontTypes.Seo, "description" | "title">
-
-export type SingleProductFragment = Pick<StorefrontTypes.Product, "id" | "handle" | "title" | "description" | "descriptionHtml" | "tags" | "updatedAt"> & {
-  options: Array<Pick<StorefrontTypes.ProductOption, "id" | "name" | "values">>
-  priceRange: { maxVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">; minVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode"> }
-  variants: {
-    edges: Array<{
-      node: Pick<StorefrontTypes.ProductVariant, "id" | "title" | "availableForSale"> & {
-        selectedOptions: Array<Pick<StorefrontTypes.SelectedOption, "name" | "value">>
-        price: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
-      }
-    }>
-  }
-  featuredImage?: StorefrontTypes.Maybe<Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height">>
-  images: { edges: Array<{ node: Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height"> }> }
-  seo: Pick<StorefrontTypes.Seo, "description" | "title">
-}
-
-export type SingleProductQueryVariables = StorefrontTypes.Exact<{
-  id: StorefrontTypes.Scalars["ID"]["input"]
-}>
-
-export type SingleProductQuery = {
-  product?: StorefrontTypes.Maybe<
-    Pick<StorefrontTypes.Product, "id" | "handle" | "title" | "description" | "descriptionHtml" | "tags" | "updatedAt"> & {
-      options: Array<Pick<StorefrontTypes.ProductOption, "id" | "name" | "values">>
-      priceRange: { maxVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">; minVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode"> }
-      variants: {
-        edges: Array<{
-          node: Pick<StorefrontTypes.ProductVariant, "id" | "title" | "availableForSale"> & {
-            selectedOptions: Array<Pick<StorefrontTypes.SelectedOption, "name" | "value">>
-            price: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
-          }
-        }>
-      }
-      featuredImage?: StorefrontTypes.Maybe<Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height">>
-      images: { edges: Array<{ node: Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height"> }> }
-      seo: Pick<StorefrontTypes.Seo, "description" | "title">
-    }
-  >
-}
-
-export type ProductsByHandleQueryVariables = StorefrontTypes.Exact<{
-  query: StorefrontTypes.Scalars["String"]["input"]
-}>
-
-export type ProductsByHandleQuery = {
-  products: {
-    edges: Array<{
-      node: Pick<StorefrontTypes.Product, "id" | "handle" | "title" | "description" | "descriptionHtml" | "tags" | "updatedAt"> & {
-        options: Array<Pick<StorefrontTypes.ProductOption, "id" | "name" | "values">>
-        priceRange: { maxVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">; minVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode"> }
-        variants: {
-          edges: Array<{
-            node: Pick<StorefrontTypes.ProductVariant, "id" | "title" | "availableForSale"> & {
-              selectedOptions: Array<Pick<StorefrontTypes.SelectedOption, "name" | "value">>
-              price: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
-            }
-          }>
-        }
-        featuredImage?: StorefrontTypes.Maybe<Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height">>
-        images: { edges: Array<{ node: Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height"> }> }
-        seo: Pick<StorefrontTypes.Seo, "description" | "title">
-      }
-    }>
-  }
-}
-
-export type ProductsQueryVariables = StorefrontTypes.Exact<{
-  sortKey?: StorefrontTypes.InputMaybe<StorefrontTypes.ProductSortKeys>
-  reverse?: StorefrontTypes.InputMaybe<StorefrontTypes.Scalars["Boolean"]["input"]>
-  query?: StorefrontTypes.InputMaybe<StorefrontTypes.Scalars["String"]["input"]>
-  numProducts: StorefrontTypes.Scalars["Int"]["input"]
-  cursor?: StorefrontTypes.InputMaybe<StorefrontTypes.Scalars["String"]["input"]>
-}>
-
-export type ProductsQuery = {
-  products: {
-    edges: Array<{
-      node: Pick<StorefrontTypes.Product, "id" | "handle" | "title" | "description" | "descriptionHtml" | "tags" | "updatedAt"> & {
-        options: Array<Pick<StorefrontTypes.ProductOption, "id" | "name" | "values">>
-        priceRange: { maxVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">; minVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode"> }
-        variants: {
-          edges: Array<{
-            node: Pick<StorefrontTypes.ProductVariant, "id" | "title" | "availableForSale"> & {
-              selectedOptions: Array<Pick<StorefrontTypes.SelectedOption, "name" | "value">>
-              price: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
-            }
-          }>
-        }
-        featuredImage?: StorefrontTypes.Maybe<Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height">>
-        images: { edges: Array<{ node: Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height"> }> }
-        seo: Pick<StorefrontTypes.Seo, "description" | "title">
-      }
-    }>
-    pageInfo: Pick<StorefrontTypes.PageInfo, "hasNextPage" | "endCursor">
-  }
-}
-
-export type ProductRecommendationsQueryVariables = StorefrontTypes.Exact<{
-  productId: StorefrontTypes.Scalars["ID"]["input"]
-}>
-
-export type ProductRecommendationsQuery = {
-  productRecommendations?: StorefrontTypes.Maybe<
-    Array<
-      Pick<StorefrontTypes.Product, "id" | "handle" | "title" | "description" | "descriptionHtml" | "tags" | "updatedAt"> & {
-        options: Array<Pick<StorefrontTypes.ProductOption, "id" | "name" | "values">>
-        priceRange: { maxVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">; minVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode"> }
-        variants: {
-          edges: Array<{
-            node: Pick<StorefrontTypes.ProductVariant, "id" | "title" | "availableForSale"> & {
-              selectedOptions: Array<Pick<StorefrontTypes.SelectedOption, "name" | "value">>
-              price: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
-            }
-          }>
-        }
-        featuredImage?: StorefrontTypes.Maybe<Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height">>
-        images: { edges: Array<{ node: Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height"> }> }
-        seo: Pick<StorefrontTypes.Seo, "description" | "title">
-      }
-    >
-  >
-}
-
 export type SingleCartFragment = Pick<StorefrontTypes.Cart, "id" | "checkoutUrl" | "totalQuantity"> & {
   cost: {
     subtotalAmount: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
@@ -173,9 +40,29 @@ export type SingleCollectionFragment = Pick<StorefrontTypes.Collection, "handle"
   seo: Pick<StorefrontTypes.Seo, "description" | "title">
 }
 
+export type SingleImageFragment = Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height">
+
 export type SinglePageFragment = Pick<StorefrontTypes.Page, "id" | "title" | "handle" | "body" | "bodySummary" | "createdAt" | "updatedAt"> & {
   seo?: StorefrontTypes.Maybe<Pick<StorefrontTypes.Seo, "description" | "title">>
 }
+
+export type SingleProductFragment = Pick<StorefrontTypes.Product, "id" | "handle" | "title" | "description" | "descriptionHtml" | "tags" | "updatedAt"> & {
+  options: Array<Pick<StorefrontTypes.ProductOption, "id" | "name" | "values">>
+  priceRange: { maxVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">; minVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode"> }
+  variants: {
+    edges: Array<{
+      node: Pick<StorefrontTypes.ProductVariant, "id" | "title" | "availableForSale"> & {
+        selectedOptions: Array<Pick<StorefrontTypes.SelectedOption, "name" | "value">>
+        price: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
+      }
+    }>
+  }
+  featuredImage?: StorefrontTypes.Maybe<Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height">>
+  images: { edges: Array<{ node: Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height"> }> }
+  seo: Pick<StorefrontTypes.Seo, "description" | "title">
+}
+
+export type SeoFragment = Pick<StorefrontTypes.Seo, "description" | "title">
 
 export type CreateCartLineMutationVariables = StorefrontTypes.Exact<{
   cartId: StorefrontTypes.Scalars["ID"]["input"]
@@ -453,6 +340,12 @@ export type CollectionProductsQuery = {
   }>
 }
 
+export type MenuQueryVariables = StorefrontTypes.Exact<{
+  handle: StorefrontTypes.Scalars["String"]["input"]
+}>
+
+export type MenuQuery = { menu?: StorefrontTypes.Maybe<{ items: Array<Pick<StorefrontTypes.MenuItem, "title" | "url">> }> }
+
 export type SinglePageQueryVariables = StorefrontTypes.Exact<{
   handle: StorefrontTypes.Scalars["String"]["input"]
 }>
@@ -477,27 +370,114 @@ export type PagesQuery = {
   }
 }
 
+export type SingleProductQueryVariables = StorefrontTypes.Exact<{
+  id: StorefrontTypes.Scalars["ID"]["input"]
+}>
+
+export type SingleProductQuery = {
+  product?: StorefrontTypes.Maybe<
+    Pick<StorefrontTypes.Product, "id" | "handle" | "title" | "description" | "descriptionHtml" | "tags" | "updatedAt"> & {
+      options: Array<Pick<StorefrontTypes.ProductOption, "id" | "name" | "values">>
+      priceRange: { maxVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">; minVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode"> }
+      variants: {
+        edges: Array<{
+          node: Pick<StorefrontTypes.ProductVariant, "id" | "title" | "availableForSale"> & {
+            selectedOptions: Array<Pick<StorefrontTypes.SelectedOption, "name" | "value">>
+            price: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
+          }
+        }>
+      }
+      featuredImage?: StorefrontTypes.Maybe<Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height">>
+      images: { edges: Array<{ node: Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height"> }> }
+      seo: Pick<StorefrontTypes.Seo, "description" | "title">
+    }
+  >
+}
+
+export type ProductsByHandleQueryVariables = StorefrontTypes.Exact<{
+  query: StorefrontTypes.Scalars["String"]["input"]
+}>
+
+export type ProductsByHandleQuery = {
+  products: {
+    edges: Array<{
+      node: Pick<StorefrontTypes.Product, "id" | "handle" | "title" | "description" | "descriptionHtml" | "tags" | "updatedAt"> & {
+        options: Array<Pick<StorefrontTypes.ProductOption, "id" | "name" | "values">>
+        priceRange: { maxVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">; minVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode"> }
+        variants: {
+          edges: Array<{
+            node: Pick<StorefrontTypes.ProductVariant, "id" | "title" | "availableForSale"> & {
+              selectedOptions: Array<Pick<StorefrontTypes.SelectedOption, "name" | "value">>
+              price: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
+            }
+          }>
+        }
+        featuredImage?: StorefrontTypes.Maybe<Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height">>
+        images: { edges: Array<{ node: Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height"> }> }
+        seo: Pick<StorefrontTypes.Seo, "description" | "title">
+      }
+    }>
+  }
+}
+
+export type ProductsQueryVariables = StorefrontTypes.Exact<{
+  sortKey?: StorefrontTypes.InputMaybe<StorefrontTypes.ProductSortKeys>
+  reverse?: StorefrontTypes.InputMaybe<StorefrontTypes.Scalars["Boolean"]["input"]>
+  query?: StorefrontTypes.InputMaybe<StorefrontTypes.Scalars["String"]["input"]>
+  numProducts: StorefrontTypes.Scalars["Int"]["input"]
+  cursor?: StorefrontTypes.InputMaybe<StorefrontTypes.Scalars["String"]["input"]>
+}>
+
+export type ProductsQuery = {
+  products: {
+    edges: Array<{
+      node: Pick<StorefrontTypes.Product, "id" | "handle" | "title" | "description" | "descriptionHtml" | "tags" | "updatedAt"> & {
+        options: Array<Pick<StorefrontTypes.ProductOption, "id" | "name" | "values">>
+        priceRange: { maxVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">; minVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode"> }
+        variants: {
+          edges: Array<{
+            node: Pick<StorefrontTypes.ProductVariant, "id" | "title" | "availableForSale"> & {
+              selectedOptions: Array<Pick<StorefrontTypes.SelectedOption, "name" | "value">>
+              price: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
+            }
+          }>
+        }
+        featuredImage?: StorefrontTypes.Maybe<Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height">>
+        images: { edges: Array<{ node: Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height"> }> }
+        seo: Pick<StorefrontTypes.Seo, "description" | "title">
+      }
+    }>
+    pageInfo: Pick<StorefrontTypes.PageInfo, "hasNextPage" | "endCursor">
+  }
+}
+
+export type ProductRecommendationsQueryVariables = StorefrontTypes.Exact<{
+  productId: StorefrontTypes.Scalars["ID"]["input"]
+}>
+
+export type ProductRecommendationsQuery = {
+  productRecommendations?: StorefrontTypes.Maybe<
+    Array<
+      Pick<StorefrontTypes.Product, "id" | "handle" | "title" | "description" | "descriptionHtml" | "tags" | "updatedAt"> & {
+        options: Array<Pick<StorefrontTypes.ProductOption, "id" | "name" | "values">>
+        priceRange: { maxVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">; minVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode"> }
+        variants: {
+          edges: Array<{
+            node: Pick<StorefrontTypes.ProductVariant, "id" | "title" | "availableForSale"> & {
+              selectedOptions: Array<Pick<StorefrontTypes.SelectedOption, "name" | "value">>
+              price: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
+            }
+          }>
+        }
+        featuredImage?: StorefrontTypes.Maybe<Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height">>
+        images: { edges: Array<{ node: Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height"> }> }
+        seo: Pick<StorefrontTypes.Seo, "description" | "title">
+      }
+    >
+  >
+}
+
 interface GeneratedQueryTypes {
-  "#graphql\n  query Menu($handle: String!) {\n    menu(handle: $handle) {\n      items {\n        title\n        url\n      }\n    }\n  }\n": {
-    return: MenuQuery
-    variables: MenuQueryVariables
-  }
-  "#graphql\n  query SingleProduct($id: ID!) {\n    product(id: $id) {\n      ...singleProduct\n    }\n  }\n  #graphql\n  fragment singleProduct on Product {\n    id\n    handle\n    title\n    description\n    descriptionHtml\n    options {\n      id\n      name\n      values\n    }\n    priceRange {\n      maxVariantPrice {\n        amount\n        currencyCode\n      }\n      minVariantPrice {\n        amount\n        currencyCode\n      }\n    }\n    variants(first: 250) {\n      edges {\n        node {\n          id\n          title\n          availableForSale\n          selectedOptions {\n            name\n            value\n          }\n          price {\n            amount\n            currencyCode\n          }\n        }\n      }\n    }\n    featuredImage {\n      ...singleImage\n    }\n    images(first: 20) {\n      edges {\n        node {\n          ...singleImage\n        }\n      }\n    }\n    seo {\n      ...seo\n    }\n    tags\n    updatedAt\n  }\n  #graphql\n  fragment singleImage on Image {\n    url\n    altText\n    width\n    height\n  }\n\n  #graphql\n  fragment seo on SEO {\n    description\n    title\n  }\n\n\n": {
-    return: SingleProductQuery
-    variables: SingleProductQueryVariables
-  }
-  "#graphql\n  query ProductsByHandle($query: String!) {\n    products(first: 1, query: $query) {\n      edges {\n        node {\n         ...singleProduct\n        }\n      }\n    }\n  }\n  #graphql\n  fragment singleProduct on Product {\n    id\n    handle\n    title\n    description\n    descriptionHtml\n    options {\n      id\n      name\n      values\n    }\n    priceRange {\n      maxVariantPrice {\n        amount\n        currencyCode\n      }\n      minVariantPrice {\n        amount\n        currencyCode\n      }\n    }\n    variants(first: 250) {\n      edges {\n        node {\n          id\n          title\n          availableForSale\n          selectedOptions {\n            name\n            value\n          }\n          price {\n            amount\n            currencyCode\n          }\n        }\n      }\n    }\n    featuredImage {\n      ...singleImage\n    }\n    images(first: 20) {\n      edges {\n        node {\n          ...singleImage\n        }\n      }\n    }\n    seo {\n      ...seo\n    }\n    tags\n    updatedAt\n  }\n  #graphql\n  fragment singleImage on Image {\n    url\n    altText\n    width\n    height\n  }\n\n  #graphql\n  fragment seo on SEO {\n    description\n    title\n  }\n\n\n": {
-    return: ProductsByHandleQuery
-    variables: ProductsByHandleQueryVariables
-  }
-  "#graphql\n  query Products($sortKey: ProductSortKeys, $reverse: Boolean, $query: String, $numProducts: Int!, $cursor: String) {\n    products(sortKey: $sortKey, reverse: $reverse, query: $query, first: $numProducts, after: $cursor ) {\n      edges {\n        node {\n          ...singleProduct\n        }\n      }\n      pageInfo {\n        hasNextPage\n        endCursor\n      }\n    }\n  }\n  #graphql\n  fragment singleProduct on Product {\n    id\n    handle\n    title\n    description\n    descriptionHtml\n    options {\n      id\n      name\n      values\n    }\n    priceRange {\n      maxVariantPrice {\n        amount\n        currencyCode\n      }\n      minVariantPrice {\n        amount\n        currencyCode\n      }\n    }\n    variants(first: 250) {\n      edges {\n        node {\n          id\n          title\n          availableForSale\n          selectedOptions {\n            name\n            value\n          }\n          price {\n            amount\n            currencyCode\n          }\n        }\n      }\n    }\n    featuredImage {\n      ...singleImage\n    }\n    images(first: 20) {\n      edges {\n        node {\n          ...singleImage\n        }\n      }\n    }\n    seo {\n      ...seo\n    }\n    tags\n    updatedAt\n  }\n  #graphql\n  fragment singleImage on Image {\n    url\n    altText\n    width\n    height\n  }\n\n  #graphql\n  fragment seo on SEO {\n    description\n    title\n  }\n\n\n": {
-    return: ProductsQuery
-    variables: ProductsQueryVariables
-  }
-  "#graphql\n  query ProductRecommendations($productId: ID!) {\n    productRecommendations(productId: $productId) {\n      ...singleProduct\n    }\n  }\n  #graphql\n  fragment singleProduct on Product {\n    id\n    handle\n    title\n    description\n    descriptionHtml\n    options {\n      id\n      name\n      values\n    }\n    priceRange {\n      maxVariantPrice {\n        amount\n        currencyCode\n      }\n      minVariantPrice {\n        amount\n        currencyCode\n      }\n    }\n    variants(first: 250) {\n      edges {\n        node {\n          id\n          title\n          availableForSale\n          selectedOptions {\n            name\n            value\n          }\n          price {\n            amount\n            currencyCode\n          }\n        }\n      }\n    }\n    featuredImage {\n      ...singleImage\n    }\n    images(first: 20) {\n      edges {\n        node {\n          ...singleImage\n        }\n      }\n    }\n    seo {\n      ...seo\n    }\n    tags\n    updatedAt\n  }\n  #graphql\n  fragment singleImage on Image {\n    url\n    altText\n    width\n    height\n  }\n\n  #graphql\n  fragment seo on SEO {\n    description\n    title\n  }\n\n\n": {
-    return: ProductRecommendationsQuery
-    variables: ProductRecommendationsQueryVariables
-  }
   "#graphql\n  query SingleCart($cartId: ID!) {\n    cart(id: $cartId) {\n      ...singleCart\n    }\n  }\n  #graphql \n  fragment singleCart on Cart {\n    id\n    checkoutUrl\n    cost {\n      subtotalAmount {\n        amount\n        currencyCode\n      }\n      totalAmount {\n        amount\n        currencyCode\n      }\n      totalTaxAmount {\n        amount\n        currencyCode\n      }\n    }\n    lines(first: 100) {\n      edges {\n        node {\n          id\n          quantity\n          cost {\n            totalAmount {\n              amount\n              currencyCode\n            }\n          }\n          merchandise {\n            ... on ProductVariant {\n              id\n              title\n              selectedOptions {\n                name\n                value\n              }\n              product {\n                ...singleProduct\n              }\n            }\n          }\n        }\n      }\n    }\n    totalQuantity\n  }\n  #graphql\n  fragment singleProduct on Product {\n    id\n    handle\n    title\n    description\n    descriptionHtml\n    options {\n      id\n      name\n      values\n    }\n    priceRange {\n      maxVariantPrice {\n        amount\n        currencyCode\n      }\n      minVariantPrice {\n        amount\n        currencyCode\n      }\n    }\n    variants(first: 250) {\n      edges {\n        node {\n          id\n          title\n          availableForSale\n          selectedOptions {\n            name\n            value\n          }\n          price {\n            amount\n            currencyCode\n          }\n        }\n      }\n    }\n    featuredImage {\n      ...singleImage\n    }\n    images(first: 20) {\n      edges {\n        node {\n          ...singleImage\n        }\n      }\n    }\n    seo {\n      ...seo\n    }\n    tags\n    updatedAt\n  }\n  #graphql\n  fragment singleImage on Image {\n    url\n    altText\n    width\n    height\n  }\n\n  #graphql\n  fragment seo on SEO {\n    description\n    title\n  }\n\n\n\n": {
     return: SingleCartQuery
     variables: SingleCartQueryVariables
@@ -514,6 +494,10 @@ interface GeneratedQueryTypes {
     return: CollectionProductsQuery
     variables: CollectionProductsQueryVariables
   }
+  "#graphql\n  query Menu($handle: String!) {\n    menu(handle: $handle) {\n      items {\n        title\n        url\n      }\n    }\n  }\n": {
+    return: MenuQuery
+    variables: MenuQueryVariables
+  }
   "#graphql\n  query SinglePage($handle: String!) {\n    page(handle: $handle) {\n      ...singlePage\n    }\n  }\n  #graphql\n  fragment singlePage on Page {\n    ... on Page {\n      id\n      title\n      handle\n      body\n      bodySummary\n      seo {\n        ...seo\n      }\n      createdAt\n      updatedAt\n    }\n  }\n  #graphql\n  fragment seo on SEO {\n    description\n    title\n  }\n\n\n": {
     return: SinglePageQuery
     variables: SinglePageQueryVariables
@@ -521,6 +505,22 @@ interface GeneratedQueryTypes {
   "#graphql\n  query Pages {\n    pages(first: 100) {\n      edges {\n        node {\n          ...singlePage\n        }\n      }\n    }\n  }\n  #graphql\n  fragment singlePage on Page {\n    ... on Page {\n      id\n      title\n      handle\n      body\n      bodySummary\n      seo {\n        ...seo\n      }\n      createdAt\n      updatedAt\n    }\n  }\n  #graphql\n  fragment seo on SEO {\n    description\n    title\n  }\n\n\n": {
     return: PagesQuery
     variables: PagesQueryVariables
+  }
+  "#graphql\n  query SingleProduct($id: ID!) {\n    product(id: $id) {\n      ...singleProduct\n    }\n  }\n  #graphql\n  fragment singleProduct on Product {\n    id\n    handle\n    title\n    description\n    descriptionHtml\n    options {\n      id\n      name\n      values\n    }\n    priceRange {\n      maxVariantPrice {\n        amount\n        currencyCode\n      }\n      minVariantPrice {\n        amount\n        currencyCode\n      }\n    }\n    variants(first: 250) {\n      edges {\n        node {\n          id\n          title\n          availableForSale\n          selectedOptions {\n            name\n            value\n          }\n          price {\n            amount\n            currencyCode\n          }\n        }\n      }\n    }\n    featuredImage {\n      ...singleImage\n    }\n    images(first: 20) {\n      edges {\n        node {\n          ...singleImage\n        }\n      }\n    }\n    seo {\n      ...seo\n    }\n    tags\n    updatedAt\n  }\n  #graphql\n  fragment singleImage on Image {\n    url\n    altText\n    width\n    height\n  }\n\n  #graphql\n  fragment seo on SEO {\n    description\n    title\n  }\n\n\n": {
+    return: SingleProductQuery
+    variables: SingleProductQueryVariables
+  }
+  "#graphql\n  query ProductsByHandle($query: String!) {\n    products(first: 1, query: $query) {\n      edges {\n        node {\n         ...singleProduct\n        }\n      }\n    }\n  }\n  #graphql\n  fragment singleProduct on Product {\n    id\n    handle\n    title\n    description\n    descriptionHtml\n    options {\n      id\n      name\n      values\n    }\n    priceRange {\n      maxVariantPrice {\n        amount\n        currencyCode\n      }\n      minVariantPrice {\n        amount\n        currencyCode\n      }\n    }\n    variants(first: 250) {\n      edges {\n        node {\n          id\n          title\n          availableForSale\n          selectedOptions {\n            name\n            value\n          }\n          price {\n            amount\n            currencyCode\n          }\n        }\n      }\n    }\n    featuredImage {\n      ...singleImage\n    }\n    images(first: 20) {\n      edges {\n        node {\n          ...singleImage\n        }\n      }\n    }\n    seo {\n      ...seo\n    }\n    tags\n    updatedAt\n  }\n  #graphql\n  fragment singleImage on Image {\n    url\n    altText\n    width\n    height\n  }\n\n  #graphql\n  fragment seo on SEO {\n    description\n    title\n  }\n\n\n": {
+    return: ProductsByHandleQuery
+    variables: ProductsByHandleQueryVariables
+  }
+  "#graphql\n  query Products($sortKey: ProductSortKeys, $reverse: Boolean, $query: String, $numProducts: Int!, $cursor: String) {\n    products(sortKey: $sortKey, reverse: $reverse, query: $query, first: $numProducts, after: $cursor ) {\n      edges {\n        node {\n          ...singleProduct\n        }\n      }\n      pageInfo {\n        hasNextPage\n        endCursor\n      }\n    }\n  }\n  #graphql\n  fragment singleProduct on Product {\n    id\n    handle\n    title\n    description\n    descriptionHtml\n    options {\n      id\n      name\n      values\n    }\n    priceRange {\n      maxVariantPrice {\n        amount\n        currencyCode\n      }\n      minVariantPrice {\n        amount\n        currencyCode\n      }\n    }\n    variants(first: 250) {\n      edges {\n        node {\n          id\n          title\n          availableForSale\n          selectedOptions {\n            name\n            value\n          }\n          price {\n            amount\n            currencyCode\n          }\n        }\n      }\n    }\n    featuredImage {\n      ...singleImage\n    }\n    images(first: 20) {\n      edges {\n        node {\n          ...singleImage\n        }\n      }\n    }\n    seo {\n      ...seo\n    }\n    tags\n    updatedAt\n  }\n  #graphql\n  fragment singleImage on Image {\n    url\n    altText\n    width\n    height\n  }\n\n  #graphql\n  fragment seo on SEO {\n    description\n    title\n  }\n\n\n": {
+    return: ProductsQuery
+    variables: ProductsQueryVariables
+  }
+  "#graphql\n  query ProductRecommendations($productId: ID!) {\n    productRecommendations(productId: $productId) {\n      ...singleProduct\n    }\n  }\n  #graphql\n  fragment singleProduct on Product {\n    id\n    handle\n    title\n    description\n    descriptionHtml\n    options {\n      id\n      name\n      values\n    }\n    priceRange {\n      maxVariantPrice {\n        amount\n        currencyCode\n      }\n      minVariantPrice {\n        amount\n        currencyCode\n      }\n    }\n    variants(first: 250) {\n      edges {\n        node {\n          id\n          title\n          availableForSale\n          selectedOptions {\n            name\n            value\n          }\n          price {\n            amount\n            currencyCode\n          }\n        }\n      }\n    }\n    featuredImage {\n      ...singleImage\n    }\n    images(first: 20) {\n      edges {\n        node {\n          ...singleImage\n        }\n      }\n    }\n    seo {\n      ...seo\n    }\n    tags\n    updatedAt\n  }\n  #graphql\n  fragment singleImage on Image {\n    url\n    altText\n    width\n    height\n  }\n\n  #graphql\n  fragment seo on SEO {\n    description\n    title\n  }\n\n\n": {
+    return: ProductRecommendationsQuery
+    variables: ProductRecommendationsQueryVariables
   }
 }
 

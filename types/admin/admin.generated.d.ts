@@ -7,7 +7,7 @@ export type ProductFeedCreateMutationVariables = AdminTypes.Exact<{ [key: string
 
 export type ProductFeedCreateMutation = {
   productFeedCreate?: AdminTypes.Maybe<{
-    productFeed?: AdminTypes.Maybe<Pick<AdminTypes.ProductFeed, "status">>
+    productFeed?: AdminTypes.Maybe<Pick<AdminTypes.ProductFeed, "status" | "id">>
     userErrors: Array<Pick<AdminTypes.ProductFeedCreateUserError, "field" | "message">>
   }>
 }
@@ -16,11 +16,7 @@ export type ProductFullSyncMutationVariables = AdminTypes.Exact<{
   id: AdminTypes.Scalars["ID"]["input"]
 }>
 
-export type ProductFullSyncMutation = {
-  productFullSync?: AdminTypes.Maybe<{
-    userErrors: Array<Pick<AdminTypes.ProductFullSyncUserError, "field" | "message">>
-  }>
-}
+export type ProductFullSyncMutation = { productFullSync?: AdminTypes.Maybe<{ userErrors: Array<Pick<AdminTypes.ProductFullSyncUserError, "field" | "message">> }> }
 
 export type WebhookSubscriptionCreateMutationVariables = AdminTypes.Exact<{
   topic: AdminTypes.WebhookSubscriptionTopic
@@ -36,9 +32,7 @@ export type WebhookSubscriptionCreateMutation = {
 
 export type LatestProductFeedsQueryVariables = AdminTypes.Exact<{ [key: string]: never }>
 
-export type LatestProductFeedsQuery = {
-  productFeeds: { nodes: Array<Pick<AdminTypes.ProductFeed, "id" | "country" | "status">> }
-}
+export type LatestProductFeedsQuery = { productFeeds: { nodes: Array<Pick<AdminTypes.ProductFeed, "id" | "country" | "status">> } }
 
 interface GeneratedQueryTypes {
   "#graphql\n  query LatestProductFeeds {\n    productFeeds(reverse: true, first: 1) {\n      nodes {\n        id\n        country\n        status\n      }\n    }\n  }\n": {
@@ -48,7 +42,7 @@ interface GeneratedQueryTypes {
 }
 
 interface GeneratedMutationTypes {
-  "#graphql\n  mutation ProductFeedCreate {\n    productFeedCreate {\n      productFeed {\n        status\n      }\n      userErrors {\n        field\n        message\n      }\n    }\n  }\n": {
+  "#graphql\n  mutation ProductFeedCreate {\n    productFeedCreate {\n      productFeed {\n        status\n        id\n      }\n      userErrors {\n        field\n        message\n      }\n    }\n  }\n": {
     return: ProductFeedCreateMutation
     variables: ProductFeedCreateMutationVariables
   }

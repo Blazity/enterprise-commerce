@@ -62,7 +62,7 @@
     "@graphql-codegen/cli": "5.0.0",
     "@graphql-codegen/client-preset": "4.1.0",
     "@jest/globals": "^29.7.0",
-    "@shopify/api-codegen-preset": "^0.0.1",
+    "@shopify/api-codegen-preset": "0.0.1",
     "@t3-oss/env-core": "^0.7.1",
     "@testing-library/jest-dom": "^6.1.4",
     "@testing-library/react": "^14.1.2",
@@ -98,5 +98,5 @@
   "engines": {
     "node": ">=18.17.0"
   },
-  "packageManager": "yarn@1.22.19"
+  "packageManager": "yarn@1.19.1"
 }

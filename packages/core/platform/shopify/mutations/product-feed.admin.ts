@@ -3,6 +3,7 @@ export const createProductFeedMutation = `#graphql
     productFeedCreate {
       productFeed {
         status
+        id
       }
       userErrors {
         field

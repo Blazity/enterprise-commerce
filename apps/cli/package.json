@@ -1,0 +1,44 @@
+{
+  "name": "commerce-cli",
+  "version": "1.0.1",
+  "scripts": {
+    "build": "cross-env FORCE_COLOR=1 rollup --config rollup.config.js",
+    "build:prod": "cross-env FORCE_COLOR=1 NODE_ENV=production rollup --config rollup.config.js",
+    "dev": "yarn build -- --watch",
+    "start:dev": "cross-env DEV=true FORCE_COLOR=1 node dist/index.mjs",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+  },
+  "bin": "dist/index.mjs",
+  "main": "dist/index.mjs",
+  "license": "MIT",
+  "dependencies": {
+    "@inkjs/ui": "^1.0.0",
+    "commander": "^12.0.0",
+    "cross-env": "^7.0.3",
+    "execa": "^8.0.1",
+    "fast-glob": "^3.3.2",
+    "ink": "^4.4.1",
+    "ink-select-input": "^5.0.0",
+    "ink-text-input": "^5.0.1",
+    "jotai": "^2.6.4",
+    "react": "^18.2.0",
+    "react-devtools-core": "^5.0.0",
+    "remeda": "^1.40.1",
+    "@enterprise-commerce/core": "*",
+    "tar": "^6.2.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.23.9",
+    "@babel/preset-env": "^7.23.9",
+    "@babel/preset-react": "^7.23.3",
+    "@babel/preset-typescript": "^7.23.3",
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-typescript": "^11.1.6",
+    "prettier": "^3.2.5",
+    "rollup": "^4.9.6",
+    "rollup-plugin-terser": "^7.0.2",
+    "type-fest": "^4.10.2"
+  }
+}

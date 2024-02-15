@@ -7,7 +7,7 @@ export default {
     default: shopifyApiProject({
       apiType: ApiType.Storefront,
       apiVersion: "2024-01",
-      documents: ["./packages/core/**/*.{js,ts,jsx,tsx}", "!./packages/core/**/*.admin.{js,ts,jsx,tsx}"],
+      documents: ["./packages/core/**/*.storefront.{js,ts,jsx,tsx}", "./packages/core/**/fragments/*.{js,ts,jsx,tsx}"],
       outputDir: "./types",
     }),
     admin: shopifyApiProject({
