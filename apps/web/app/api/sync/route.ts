@@ -32,7 +32,7 @@ export async function POST(req: Request) {
   }
 
   if (metadata.action === "UPDATE" || metadata.action === "CREATE") {
-    const originalProduct = await storefrontClient.getProduct("gid://shopify/Product/9005142966556")
+    const originalProduct = await storefrontClient.getProduct(product.id)
     const normalizedProduct = normalizeProduct(originalProduct.data?.product)
 
     if (normalizedProduct) {
