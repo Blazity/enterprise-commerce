@@ -1,7 +1,7 @@
+import { storefrontClient } from "client/storefrontClient"
 import { env } from "env.mjs"
 import { unstable_cache } from "next/cache"
 import Link from "next/link"
-import { storefrontClient } from "utils/storefrontClient"
 import { Input } from "./Input"
 
 export async function Header() {
@@ -10,12 +10,12 @@ export async function Header() {
   return (
     <header className="container mx-auto flex h-14 items-center justify-center px-4 lg:px-6">
       <Link className="flex items-center justify-center" href="/">
-        <MountainIcon className="h-6 w-6" />
+        <MountainIcon className="size-6" />
         <span className="sr-only">Acme Inc</span>
       </Link>
       <nav className="ml-auto flex items-center gap-4 sm:gap-6">
         <div className="relative ml-4 w-64">
-          <SearchIcon className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
+          <SearchIcon className="absolute left-2.5 top-2.5 size-4 text-gray-500" />
           <Input className="w-full appearance-none bg-white pl-8 shadow-none" placeholder="Search products..." type="search" />
         </div>
         {items.map((singleItem) => (

@@ -7,7 +7,7 @@ import { Label } from "components/ui/Label"
 import { RadioGroup, RadioGroupItem } from "components/ui/RadioGroup"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/ui/Select"
 import { notFound } from "next/navigation"
-import { storefrontClient } from "utils/storefrontClient"
+import { storefrontClient } from "client/storefrontClient"
 
 export async function ProductView({ slug }) {
   const queriedProducts = await storefrontClient.getProductsByHandle(slug)
