@@ -6,7 +6,7 @@ import { Label } from "components/ui/Label"
 import Link from "next/link"
 
 import NextInstantSearch from "next-rsc-search"
-import { createSearchParamsCache, parseAsString, parseAsInteger } from "nuqs/server"
+import { createSearchParamsCache, parseAsString } from "nuqs/server"
 import { SearchBar } from "./SearchBar"
 
 const searchParamsCache = createSearchParamsCache({
@@ -92,7 +92,7 @@ export function SearchView({ searchParams }: { searchParams: Record<string, stri
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button size="sm" variant="outline">
-                  <ArrowUpDownIcon className="mr-2 h-4 w-4" />
+                  <ArrowUpDownIcon className="mr-2 size-4" />
                   Sort by
                 </Button>
               </DropdownMenuTrigger>
@@ -122,17 +122,17 @@ export function SearchView({ searchParams }: { searchParams: Record<string, stri
                       <img
                         alt="Product 1"
                         className="h-60 w-full object-cover"
-                        height={singleResult.images.edges[0].node.height || 300}
-                        src={singleResult.images.edges[0].node.url}
+                        height={singleResult.images[0].height || 300}
+                        src={singleResult.images[0].url}
                         style={{
                           aspectRatio: "400/300",
                           objectFit: "cover",
                         }}
-                        width={singleResult.images.edges[0].node.width || 400}
+                        width={singleResult.images[0].width || 400}
                       />
                       <div className="bg-white p-4 dark:bg-gray-950">
                         <h3 className="text-lg font-semibold md:text-xl">{singleResult.title}</h3>
-                        <h4 className="text-base font-semibold md:text-lg">${singleResult?.variants?.edges?.find(Boolean)?.node.price.amount || 1337}</h4>
+                        <h4 className="text-base font-semibold md:text-lg">${singleResult?.variants?.find(Boolean)?.price.amount || 1337}</h4>
                         <Button className="mt-2" size="sm">
                           Add to Cart
                         </Button>
