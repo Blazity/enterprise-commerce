@@ -5,7 +5,8 @@ import { env } from "./env.mjs"
 /**
  * @type {import('next').NextConfig}
  */
-const config = withPlugins([[withBundleAnalyzer({ enabled: env.ANALYZE })]], {
+// TODO: enable it back when it starts working
+const config = withPlugins([[withBundleAnalyzer({ enabled: false })]], {
   reactStrictMode: true,
   transpilePackages: ["@enterprise-commerce/design-system"],
   experimental: { instrumentationHook: true },

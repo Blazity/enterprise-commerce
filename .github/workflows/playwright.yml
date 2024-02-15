@@ -19,7 +19,8 @@ jobs:
       SHOPIFY_ADMIN_ACCESS_TOKEN: ${{ secrets.SHOPIFY_ADMIN_ACCESS_TOKEN }}
       SHOPIFY_STORE_DOMAIN: ${{ secrets.SHOPIFY_STORE_DOMAIN }}
       MEILISEARCH_MASTER_KEY: ${{ secrets.MEILISEARCH_MASTER_KEY }}
-      MEILISEARCH_HOST: ${{ secrets.MEILISEARCH_HOST }}      
+      MEILISEARCH_HOST: ${{ secrets.MEILISEARCH_HOST }}
+      SHOPIFY_APP_API_KEY: ${{ secrets.SHOPIFY_APP_API_KEY }}
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:

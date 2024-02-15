@@ -6,6 +6,7 @@ export const env = createEnv({
   server: {
     SHOPIFY_STOREFRONT_ACCESS_TOKEN: z.string().default("demo"),
     SHOPIFY_ADMIN_ACCESS_TOKEN: z.string().optional(),
+    SHOPIFY_APP_API_KEY: z.string().optional(),
     SHOPIFY_STORE_DOMAIN: z.string().default("demo"),
     MEILISEARCH_MASTER_KEY: z.string().optional().default("demo"),
     MEILISEARCH_HOST: z.string().optional().default("demo"),
@@ -18,6 +19,7 @@ export const env = createEnv({
   runtimeEnv: {
     SHOPIFY_STOREFRONT_ACCESS_TOKEN: process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN,
     SHOPIFY_ADMIN_ACCESS_TOKEN: process.env.SHOPIFY_ADMIN_ACCESS_TOKEN,
+    SHOPIFY_APP_API_KEY: process.env.SHOPIFY_APP_API_KEY,
     SHOPIFY_STORE_DOMAIN: process.env.SHOPIFY_STORE_DOMAIN,
     MEILISEARCH_MASTER_KEY: process.env.MEILISEARCH_MASTER_KEY,
     MEILISEARCH_HOST: process.env.MEILISEARCH_HOST,
