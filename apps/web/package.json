@@ -54,7 +54,7 @@
     "lucide-react": "^0.312.0",
     "meilisearch": "^0.37.0",
     "next-compose-plugins": "^2.2.1",
-    "next-rsc-search": "^1.0.3",
+    "next-rsc-search": "1.0.4",
     "nuqs": "^1.17.0",
     "p-retry": "^6.2.0",
     "playwright": "^1.40.1",

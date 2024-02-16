@@ -13945,10 +13945,10 @@ next-compose-plugins@^2.2.1:
   resolved "https://registry.yarnpkg.com/next-compose-plugins/-/next-compose-plugins-2.2.1.tgz#020fc53f275a7e719d62521bef4300fbb6fde5ab"
   integrity sha512-OjJ+fV15FXO2uQXQagLD4C0abYErBjyjE0I0FHpOEIB8upw0hg1ldFP6cqHTJBH1cZqy96OeR3u1dJ+Ez2D4Bg==
 
-next-rsc-search@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/next-rsc-search/-/next-rsc-search-1.0.3.tgz#d85912b553b35c9d46210ccc6e67248cee2af515"
-  integrity sha512-QxOOk0F4eBHgUpxstr3+m3x4wY8PbW3wNTV+WRyd4PQpa1lyyXvlahthpfzW6/4lfYsasDAGpt0DIvkAhD208Q==
+next-rsc-search@1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/next-rsc-search/-/next-rsc-search-1.0.4.tgz#8219140a180c4753a0a5ba4ac4c7524f38875f8a"
+  integrity sha512-6sdJQMrPQ1uDXX62eoMCSIQ7nu69PKiLEPIY8xeUpUBhHSF6o5yLdCaBcpyRjSxd8fHp8GqpQDv7gflrd18Hyw==
   dependencies:
     deepmerge "^4.3.1"
     meilisearch "^0.37.0"
