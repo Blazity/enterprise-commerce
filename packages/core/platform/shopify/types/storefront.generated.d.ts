@@ -17,6 +17,18 @@ export type SingleCartFragment = (
                 ) }> }, featuredImage?: StorefrontTypes.Maybe<Pick<StorefrontTypes.Image, 'url' | 'altText' | 'width' | 'height'>>, images: { edges: Array<{ node: Pick<StorefrontTypes.Image, 'url' | 'altText' | 'width' | 'height'> }> }, seo: Pick<StorefrontTypes.Seo, 'description' | 'title'> }
           ) }
         ) }
+      ) | (
+        Pick<StorefrontTypes.ComponentizableCartLine, 'id' | 'quantity'>
+        & { cost: { totalAmount: Pick<StorefrontTypes.MoneyV2, 'amount' | 'currencyCode'> }, merchandise: (
+          Pick<StorefrontTypes.ProductVariant, 'id' | 'title'>
+          & { selectedOptions: Array<Pick<StorefrontTypes.SelectedOption, 'name' | 'value'>>, product: (
+            Pick<StorefrontTypes.Product, 'id' | 'handle' | 'title' | 'description' | 'descriptionHtml' | 'tags' | 'updatedAt'>
+            & { options: Array<Pick<StorefrontTypes.ProductOption, 'id' | 'name' | 'values'>>, priceRange: { maxVariantPrice: Pick<StorefrontTypes.MoneyV2, 'amount' | 'currencyCode'>, minVariantPrice: Pick<StorefrontTypes.MoneyV2, 'amount' | 'currencyCode'> }, variants: { edges: Array<{ node: (
+                  Pick<StorefrontTypes.ProductVariant, 'id' | 'title' | 'availableForSale'>
+                  & { selectedOptions: Array<Pick<StorefrontTypes.SelectedOption, 'name' | 'value'>>, price: Pick<StorefrontTypes.MoneyV2, 'amount' | 'currencyCode'> }
+                ) }> }, featuredImage?: StorefrontTypes.Maybe<Pick<StorefrontTypes.Image, 'url' | 'altText' | 'width' | 'height'>>, images: { edges: Array<{ node: Pick<StorefrontTypes.Image, 'url' | 'altText' | 'width' | 'height'> }> }, seo: Pick<StorefrontTypes.Seo, 'description' | 'title'> }
+          ) }
+        ) }
       ) }> } }
 );
 
@@ -62,6 +74,18 @@ export type CreateCartLineMutation = { cartLinesAdd?: StorefrontTypes.Maybe<{ ca
                     ) }> }, featuredImage?: StorefrontTypes.Maybe<Pick<StorefrontTypes.Image, 'url' | 'altText' | 'width' | 'height'>>, images: { edges: Array<{ node: Pick<StorefrontTypes.Image, 'url' | 'altText' | 'width' | 'height'> }> }, seo: Pick<StorefrontTypes.Seo, 'description' | 'title'> }
               ) }
             ) }
+          ) | (
+            Pick<StorefrontTypes.ComponentizableCartLine, 'id' | 'quantity'>
+            & { cost: { totalAmount: Pick<StorefrontTypes.MoneyV2, 'amount' | 'currencyCode'> }, merchandise: (
+              Pick<StorefrontTypes.ProductVariant, 'id' | 'title'>
+              & { selectedOptions: Array<Pick<StorefrontTypes.SelectedOption, 'name' | 'value'>>, product: (
+                Pick<StorefrontTypes.Product, 'id' | 'handle' | 'title' | 'description' | 'descriptionHtml' | 'tags' | 'updatedAt'>
+                & { options: Array<Pick<StorefrontTypes.ProductOption, 'id' | 'name' | 'values'>>, priceRange: { maxVariantPrice: Pick<StorefrontTypes.MoneyV2, 'amount' | 'currencyCode'>, minVariantPrice: Pick<StorefrontTypes.MoneyV2, 'amount' | 'currencyCode'> }, variants: { edges: Array<{ node: (
+                      Pick<StorefrontTypes.ProductVariant, 'id' | 'title' | 'availableForSale'>
+                      & { selectedOptions: Array<Pick<StorefrontTypes.SelectedOption, 'name' | 'value'>>, price: Pick<StorefrontTypes.MoneyV2, 'amount' | 'currencyCode'> }
+                    ) }> }, featuredImage?: StorefrontTypes.Maybe<Pick<StorefrontTypes.Image, 'url' | 'altText' | 'width' | 'height'>>, images: { edges: Array<{ node: Pick<StorefrontTypes.Image, 'url' | 'altText' | 'width' | 'height'> }> }, seo: Pick<StorefrontTypes.Seo, 'description' | 'title'> }
+              ) }
+            ) }
           ) }> } }
     )> }> };
 
@@ -74,6 +98,18 @@ export type CreateCartMutation = { cartCreate?: StorefrontTypes.Maybe<{ cart?: S
       Pick<StorefrontTypes.Cart, 'id' | 'checkoutUrl' | 'totalQuantity'>
       & { cost: { subtotalAmount: Pick<StorefrontTypes.MoneyV2, 'amount' | 'currencyCode'>, totalAmount: Pick<StorefrontTypes.MoneyV2, 'amount' | 'currencyCode'>, totalTaxAmount?: StorefrontTypes.Maybe<Pick<StorefrontTypes.MoneyV2, 'amount' | 'currencyCode'>> }, lines: { edges: Array<{ node: (
             Pick<StorefrontTypes.CartLine, 'id' | 'quantity'>
+            & { cost: { totalAmount: Pick<StorefrontTypes.MoneyV2, 'amount' | 'currencyCode'> }, merchandise: (
+              Pick<StorefrontTypes.ProductVariant, 'id' | 'title'>
+              & { selectedOptions: Array<Pick<StorefrontTypes.SelectedOption, 'name' | 'value'>>, product: (
+                Pick<StorefrontTypes.Product, 'id' | 'handle' | 'title' | 'description' | 'descriptionHtml' | 'tags' | 'updatedAt'>
+                & { options: Array<Pick<StorefrontTypes.ProductOption, 'id' | 'name' | 'values'>>, priceRange: { maxVariantPrice: Pick<StorefrontTypes.MoneyV2, 'amount' | 'currencyCode'>, minVariantPrice: Pick<StorefrontTypes.MoneyV2, 'amount' | 'currencyCode'> }, variants: { edges: Array<{ node: (
+                      Pick<StorefrontTypes.ProductVariant, 'id' | 'title' | 'availableForSale'>
+                      & { selectedOptions: Array<Pick<StorefrontTypes.SelectedOption, 'name' | 'value'>>, price: Pick<StorefrontTypes.MoneyV2, 'amount' | 'currencyCode'> }
+                    ) }> }, featuredImage?: StorefrontTypes.Maybe<Pick<StorefrontTypes.Image, 'url' | 'altText' | 'width' | 'height'>>, images: { edges: Array<{ node: Pick<StorefrontTypes.Image, 'url' | 'altText' | 'width' | 'height'> }> }, seo: Pick<StorefrontTypes.Seo, 'description' | 'title'> }
+              ) }
+            ) }
+          ) | (
+            Pick<StorefrontTypes.ComponentizableCartLine, 'id' | 'quantity'>
             & { cost: { totalAmount: Pick<StorefrontTypes.MoneyV2, 'amount' | 'currencyCode'> }, merchandise: (
               Pick<StorefrontTypes.ProductVariant, 'id' | 'title'>
               & { selectedOptions: Array<Pick<StorefrontTypes.SelectedOption, 'name' | 'value'>>, product: (
@@ -107,6 +143,18 @@ export type EditCartLineMutation = { cartLinesUpdate?: StorefrontTypes.Maybe<{ c
                     ) }> }, featuredImage?: StorefrontTypes.Maybe<Pick<StorefrontTypes.Image, 'url' | 'altText' | 'width' | 'height'>>, images: { edges: Array<{ node: Pick<StorefrontTypes.Image, 'url' | 'altText' | 'width' | 'height'> }> }, seo: Pick<StorefrontTypes.Seo, 'description' | 'title'> }
               ) }
             ) }
+          ) | (
+            Pick<StorefrontTypes.ComponentizableCartLine, 'id' | 'quantity'>
+            & { cost: { totalAmount: Pick<StorefrontTypes.MoneyV2, 'amount' | 'currencyCode'> }, merchandise: (
+              Pick<StorefrontTypes.ProductVariant, 'id' | 'title'>
+              & { selectedOptions: Array<Pick<StorefrontTypes.SelectedOption, 'name' | 'value'>>, product: (
+                Pick<StorefrontTypes.Product, 'id' | 'handle' | 'title' | 'description' | 'descriptionHtml' | 'tags' | 'updatedAt'>
+                & { options: Array<Pick<StorefrontTypes.ProductOption, 'id' | 'name' | 'values'>>, priceRange: { maxVariantPrice: Pick<StorefrontTypes.MoneyV2, 'amount' | 'currencyCode'>, minVariantPrice: Pick<StorefrontTypes.MoneyV2, 'amount' | 'currencyCode'> }, variants: { edges: Array<{ node: (
+                      Pick<StorefrontTypes.ProductVariant, 'id' | 'title' | 'availableForSale'>
+                      & { selectedOptions: Array<Pick<StorefrontTypes.SelectedOption, 'name' | 'value'>>, price: Pick<StorefrontTypes.MoneyV2, 'amount' | 'currencyCode'> }
+                    ) }> }, featuredImage?: StorefrontTypes.Maybe<Pick<StorefrontTypes.Image, 'url' | 'altText' | 'width' | 'height'>>, images: { edges: Array<{ node: Pick<StorefrontTypes.Image, 'url' | 'altText' | 'width' | 'height'> }> }, seo: Pick<StorefrontTypes.Seo, 'description' | 'title'> }
+              ) }
+            ) }
           ) }> } }
     )> }> };
 
@@ -130,6 +178,18 @@ export type RemoveCartLineMutation = { cartLinesRemove?: StorefrontTypes.Maybe<{
                     ) }> }, featuredImage?: StorefrontTypes.Maybe<Pick<StorefrontTypes.Image, 'url' | 'altText' | 'width' | 'height'>>, images: { edges: Array<{ node: Pick<StorefrontTypes.Image, 'url' | 'altText' | 'width' | 'height'> }> }, seo: Pick<StorefrontTypes.Seo, 'description' | 'title'> }
               ) }
             ) }
+          ) | (
+            Pick<StorefrontTypes.ComponentizableCartLine, 'id' | 'quantity'>
+            & { cost: { totalAmount: Pick<StorefrontTypes.MoneyV2, 'amount' | 'currencyCode'> }, merchandise: (
+              Pick<StorefrontTypes.ProductVariant, 'id' | 'title'>
+              & { selectedOptions: Array<Pick<StorefrontTypes.SelectedOption, 'name' | 'value'>>, product: (
+                Pick<StorefrontTypes.Product, 'id' | 'handle' | 'title' | 'description' | 'descriptionHtml' | 'tags' | 'updatedAt'>
+                & { options: Array<Pick<StorefrontTypes.ProductOption, 'id' | 'name' | 'values'>>, priceRange: { maxVariantPrice: Pick<StorefrontTypes.MoneyV2, 'amount' | 'currencyCode'>, minVariantPrice: Pick<StorefrontTypes.MoneyV2, 'amount' | 'currencyCode'> }, variants: { edges: Array<{ node: (
+                      Pick<StorefrontTypes.ProductVariant, 'id' | 'title' | 'availableForSale'>
+                      & { selectedOptions: Array<Pick<StorefrontTypes.SelectedOption, 'name' | 'value'>>, price: Pick<StorefrontTypes.MoneyV2, 'amount' | 'currencyCode'> }
+                    ) }> }, featuredImage?: StorefrontTypes.Maybe<Pick<StorefrontTypes.Image, 'url' | 'altText' | 'width' | 'height'>>, images: { edges: Array<{ node: Pick<StorefrontTypes.Image, 'url' | 'altText' | 'width' | 'height'> }> }, seo: Pick<StorefrontTypes.Seo, 'description' | 'title'> }
+              ) }
+            ) }
           ) }> } }
     )> }> };
 
@@ -142,6 +202,18 @@ export type SingleCartQuery = { cart?: StorefrontTypes.Maybe<(
     Pick<StorefrontTypes.Cart, 'id' | 'checkoutUrl' | 'totalQuantity'>
     & { cost: { subtotalAmount: Pick<StorefrontTypes.MoneyV2, 'amount' | 'currencyCode'>, totalAmount: Pick<StorefrontTypes.MoneyV2, 'amount' | 'currencyCode'>, totalTaxAmount?: StorefrontTypes.Maybe<Pick<StorefrontTypes.MoneyV2, 'amount' | 'currencyCode'>> }, lines: { edges: Array<{ node: (
           Pick<StorefrontTypes.CartLine, 'id' | 'quantity'>
+          & { cost: { totalAmount: Pick<StorefrontTypes.MoneyV2, 'amount' | 'currencyCode'> }, merchandise: (
+            Pick<StorefrontTypes.ProductVariant, 'id' | 'title'>
+            & { selectedOptions: Array<Pick<StorefrontTypes.SelectedOption, 'name' | 'value'>>, product: (
+              Pick<StorefrontTypes.Product, 'id' | 'handle' | 'title' | 'description' | 'descriptionHtml' | 'tags' | 'updatedAt'>
+              & { options: Array<Pick<StorefrontTypes.ProductOption, 'id' | 'name' | 'values'>>, priceRange: { maxVariantPrice: Pick<StorefrontTypes.MoneyV2, 'amount' | 'currencyCode'>, minVariantPrice: Pick<StorefrontTypes.MoneyV2, 'amount' | 'currencyCode'> }, variants: { edges: Array<{ node: (
+                    Pick<StorefrontTypes.ProductVariant, 'id' | 'title' | 'availableForSale'>
+                    & { selectedOptions: Array<Pick<StorefrontTypes.SelectedOption, 'name' | 'value'>>, price: Pick<StorefrontTypes.MoneyV2, 'amount' | 'currencyCode'> }
+                  ) }> }, featuredImage?: StorefrontTypes.Maybe<Pick<StorefrontTypes.Image, 'url' | 'altText' | 'width' | 'height'>>, images: { edges: Array<{ node: Pick<StorefrontTypes.Image, 'url' | 'altText' | 'width' | 'height'> }> }, seo: Pick<StorefrontTypes.Seo, 'description' | 'title'> }
+            ) }
+          ) }
+        ) | (
+          Pick<StorefrontTypes.ComponentizableCartLine, 'id' | 'quantity'>
           & { cost: { totalAmount: Pick<StorefrontTypes.MoneyV2, 'amount' | 'currencyCode'> }, merchandise: (
             Pick<StorefrontTypes.ProductVariant, 'id' | 'title'>
             & { selectedOptions: Array<Pick<StorefrontTypes.SelectedOption, 'name' | 'value'>>, product: (

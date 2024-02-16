@@ -5,8 +5,6 @@ import { FailedAttemptError } from "p-retry"
 import { Root } from "shopify-webhooks"
 import { createHmac } from "crypto"
 
-import { SingleProductQuery } from "../../../../../types/storefront.generated"
-
 export async function POST(req: Request) {
   const hmac = req.headers.get("X-Shopify-Hmac-Sha256")
 
@@ -45,7 +43,8 @@ export async function POST(req: Request) {
   return Response.json({ status: "ok" })
 }
 
-function normalizeProduct(product: SingleProductQuery["product"] | undefined | null) {
+// TODO: provide agnostic type
+function normalizeProduct(product: any | undefined | null) {
   if (!product) return product
 
   return {

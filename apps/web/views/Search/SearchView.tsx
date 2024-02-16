@@ -107,6 +107,7 @@ export function SearchView({ searchParams }: { searchParams: Record<string, stri
             </DropdownMenu>
           </div>
           <NextInstantSearch
+            meilisearchOptions={{}}
             searchParams={{ ...parsedSearchParams, q: parsedSearchParams.q || " " }}
             options={{ revalidate: 60 }}
             indexName="products"

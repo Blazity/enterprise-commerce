@@ -3453,36 +3453,67 @@ export type CheckoutBrandingControlInput = {
   labelPosition?: InputMaybe<CheckoutBrandingLabelPosition>;
 };
 
-/** Possible values for the corner radius. */
+/**
+ * The options for customizing the corner radius of checkout-related objects. Examples include the primary
+ * button, the name text fields and the sections within the main area (if they have borders).
+ * Refer to this complete [list](https://shopify.dev/docs/api/admin-graphql/latest/enums/CheckoutBrandingCornerRadius#fieldswith)
+ * for objects with customizable corner radii.
+ *
+ * The design system defines the corner radius pixel size for each option. Modify the defaults by setting the
+ * [designSystem.cornerRadius](https://shopify.dev/docs/api/admin-graphql/latest/input-objects/CheckoutBrandingDesignSystemInput#field-checkoutbrandingdesignsysteminput-cornerradius)
+ * input fields.
+ *
+ */
 export enum CheckoutBrandingCornerRadius {
-  /** The Base corner radius. */
+  /**
+   * The corner radius with a pixel value defined by designSystem.cornerRadius.base.
+   *
+   */
   Base = 'BASE',
-  /** The Large corner radius. */
+  /**
+   * The corner radius with a pixel value defined by designSystem.cornerRadius.large.
+   *
+   */
   Large = 'LARGE',
-  /** The None corner radius. */
+  /** The 0px corner radius (square corners). */
   None = 'NONE',
-  /** The Small corner radius. */
+  /**
+   * The corner radius with a pixel value defined by designSystem.cornerRadius.small.
+   *
+   */
   Small = 'SMALL'
 }
 
-/** The corner radius variables. */
+/**
+ * Define the pixel size of corner radius options.
+ *
+ */
 export type CheckoutBrandingCornerRadiusVariables = {
   __typename?: 'CheckoutBrandingCornerRadiusVariables';
-  /** The pixel value for base corner radiuses. */
+  /** The value in pixels for base corner radii. Example: 5. */
   base?: Maybe<Scalars['Int']['output']>;
-  /** The pixel value for large corner radiuses. */
+  /** The value in pixels for large corner radii. Example: 10. */
   large?: Maybe<Scalars['Int']['output']>;
-  /** The pixel value for small corner radiuses. */
+  /** The value in pixels for small corner radii. Example: 3. */
   small?: Maybe<Scalars['Int']['output']>;
 };
 
 /** The input fields used to update the corner radius variables. */
 export type CheckoutBrandingCornerRadiusVariablesInput = {
-  /** The pixel value for base corner radiuses. It should be strictly positive. */
+  /**
+   * The value in pixels for base corner radii. It should be greater than zero. Example: 5.
+   *
+   */
   base?: InputMaybe<Scalars['Int']['input']>;
-  /** The pixel value for large corner radiuses. It should be strictly positive. */
+  /**
+   * The value in pixels for large corner radii. It should be greater than zero. Example: 10.
+   *
+   */
   large?: InputMaybe<Scalars['Int']['input']>;
-  /** The pixel value for small corner radiuses. It should be strictly positive. */
+  /**
+   * The value in pixels for small corner radii. It should be greater than zero. Example: 3.
+   *
+   */
   small?: InputMaybe<Scalars['Int']['input']>;
 };
 
@@ -3626,7 +3657,12 @@ export type CheckoutBrandingFont = {
   weight?: Maybe<Scalars['Int']['output']>;
 };
 
-/** A font group. */
+/**
+ * A font group. To learn more about updating fonts, refer to the
+ * [checkoutBrandingUpsert](https://shopify.dev/api/admin-graphql/unstable/mutations/checkoutBrandingUpsert)
+ * mutation and the checkout branding [tutorial](https://shopify.dev/docs/apps/checkout/styling).
+ *
+ */
 export type CheckoutBrandingFontGroup = {
   __typename?: 'CheckoutBrandingFontGroup';
   /** The base font. */
@@ -3639,7 +3675,12 @@ export type CheckoutBrandingFontGroup = {
   name?: Maybe<Scalars['String']['output']>;
 };
 
-/** The input fields used to update a font group. */
+/**
+ * The input fields used to update a font group. To learn more about updating fonts, refer to the
+ * [checkoutBrandingUpsert](https://shopify.dev/api/admin-graphql/unstable/mutations/checkoutBrandingUpsert)
+ * mutation and the checkout branding [tutorial](https://shopify.dev/docs/apps/checkout/styling).
+ *
+ */
 export type CheckoutBrandingFontGroupInput = {
   /** A custom font group. */
   customFontGroup?: InputMaybe<CheckoutBrandingCustomFontGroupInput>;
@@ -3685,21 +3726,36 @@ export type CheckoutBrandingFontSizeInput = {
 /** The global customizations. */
 export type CheckoutBrandingGlobal = {
   __typename?: 'CheckoutBrandingGlobal';
-  /** The global corner radius. */
+  /**
+   * The global corner radius setting that overrides all other [corner radius](https://shopify.dev/docs/api/admin-graphql/latest/enums/CheckoutBrandingCornerRadius)
+   * customizations.
+   *
+   */
   cornerRadius?: Maybe<CheckoutBrandingGlobalCornerRadius>;
   /** The global typography customizations. */
   typography?: Maybe<CheckoutBrandingTypographyStyleGlobal>;
 };
 
-/** Possible values for the corner radius. */
+/**
+ * Possible choices to override corner radius customizations on all applicable objects. Note that this selection
+ * can only be used to set the override to `NONE` (0px).
+ *
+ * For more customizations options, set the [corner radius](https://shopify.dev/docs/api/admin-graphql/latest/enums/CheckoutBrandingCornerRadius)
+ * selection on specific objects while leaving the global corner radius unset.
+ *
+ */
 export enum CheckoutBrandingGlobalCornerRadius {
-  /** The None corner radius. */
+  /** Set the global corner radius override to 0px (square corners). */
   None = 'NONE'
 }
 
 /** The input fields used to update the global customizations. */
 export type CheckoutBrandingGlobalInput = {
-  /** The global corner radius. */
+  /**
+   * Select a global corner radius setting that overrides all other [corner radii](https://shopify.dev/docs/api/admin-graphql/latest/enums/CheckoutBrandingCornerRadius)
+   * customizations.
+   *
+   */
   cornerRadius?: InputMaybe<CheckoutBrandingGlobalCornerRadius>;
   /** The global typography customizations. */
   typography?: InputMaybe<CheckoutBrandingTypographyStyleGlobalInput>;
@@ -3976,14 +4032,21 @@ export type CheckoutBrandingTextFieldInput = {
   typography?: InputMaybe<CheckoutBrandingTypographyStyleInput>;
 };
 
-/** The typography settings. */
+/**
+ * The typography settings used for checkout-related text. Use these settings to customize the
+ * font family and size for primary and secondary text elements.
+ *
+ * Refer to the [typography tutorial](https://shopify.dev/docs/apps/checkout/styling/customize-typography)
+ * for further information on typography customization.
+ *
+ */
 export type CheckoutBrandingTypography = {
   __typename?: 'CheckoutBrandingTypography';
   /** A font group used for most components such as text, buttons and form controls. */
   primary?: Maybe<CheckoutBrandingFontGroup>;
   /** A font group used for heading components by default. */
   secondary?: Maybe<CheckoutBrandingFontGroup>;
-  /** The font size. */
+  /** The font size design system (base size in pixels and scaling between different sizes). */
   size?: Maybe<CheckoutBrandingFontSize>;
 };
 
@@ -3995,7 +4058,11 @@ export enum CheckoutBrandingTypographyFont {
   Secondary = 'SECONDARY'
 }
 
-/** The input fields used to update the typography. */
+/**
+ * The input fields used to update the typography. Refer to the [typography tutorial](https://shopify.dev/docs/apps/checkout/styling/customize-typography)
+ * for more information on how to set these fields.
+ *
+ */
 export type CheckoutBrandingTypographyInput = {
   /** A font group used for most components such as text, buttons and form controls. */
   primary?: InputMaybe<CheckoutBrandingFontGroupInput>;
@@ -4027,21 +4094,29 @@ export enum CheckoutBrandingTypographyLetterCase {
   Upper = 'UPPER'
 }
 
-/** Possible values for the font size. */
+/**
+ * Possible choices for the font size.
+ *
+ * Note that the value in pixels of these settings can be customized with the
+ * [typography size](https://shopify.dev/docs/api/admin-graphql/latest/input-objects/CheckoutBrandingFontSizeInput)
+ * object. Refer to the [typography tutorial](https://shopify.dev/docs/apps/checkout/styling/customize-typography)
+ * for more information.
+ *
+ */
 export enum CheckoutBrandingTypographySize {
-  /** The base font size. */
+  /** The base font size. Example: 14px. */
   Base = 'BASE',
-  /** The extra extra large font size. */
+  /** The extra extra large font size. Example: 24px. */
   ExtraExtraLarge = 'EXTRA_EXTRA_LARGE',
-  /** The extra large font size. */
+  /** The extra large font size. Example: 21px. */
   ExtraLarge = 'EXTRA_LARGE',
-  /** The extra small font size. */
+  /** The extra small font size. Example: 10px. */
   ExtraSmall = 'EXTRA_SMALL',
-  /** The large font size. */
+  /** The large font size. Example: 17px. */
   Large = 'LARGE',
-  /** The medium font size. */
+  /** The medium font size. Example: 15px. */
   Medium = 'MEDIUM',
-  /** The small font size. */
+  /** The small font size. Example: 12px. */
   Small = 'SMALL'
 }
 
@@ -10269,7 +10344,7 @@ export type DeliveryMethodDefinition = Node & {
   __typename?: 'DeliveryMethodDefinition';
   /** Whether this method definition is active. */
   active: Scalars['Boolean']['output'];
-  /** The description of the method definition. */
+  /** The description of the method definition. Only available on shipping rates that are custom. */
   description?: Maybe<Scalars['String']['output']>;
   /** A globally-unique ID. */
   id: Scalars['ID']['output'];
@@ -17429,6 +17504,11 @@ export type FulfillmentService = {
   /**
    * Whether the fulfillment service uses the [fulfillment order based workflow](https://shopify.dev/apps/fulfillment/fulfillment-service-apps/manage-fulfillments) for managing fulfillments.
    *
+   * As the migration is now finished, the `fulfillmentOrdersOptIn` property is [deprecated](
+   * https://shopify.dev/changelog/deprecation-of-the-fulfillmentservice-fulfillmentordersoptin-field)
+   * and is always set to `true` on correctly functioning fulfillment services.
+   *
+   * @deprecated Migration period ended. All correctly functioning fulfillment services have `fulfillmentOrdersOptIn` set to `true`.
    */
   fulfillmentOrdersOptIn: Scalars['Boolean']['output'];
   /** Human-readable unique identifier for this fulfillment service. */
@@ -23876,6 +23956,8 @@ export enum MetafieldOwnerType {
   Article = 'ARTICLE',
   /** The Blog metafield owner type. */
   Blog = 'BLOG',
+  /** The Cart Transform metafield owner type. */
+  Carttransform = 'CARTTRANSFORM',
   /** The Collection metafield owner type. */
   Collection = 'COLLECTION',
   /** The Company metafield owner type. */
@@ -25188,7 +25270,18 @@ export type Mutation = {
   catalogDelete?: Maybe<CatalogDeletePayload>;
   /** Updates an existing catalog. */
   catalogUpdate?: Maybe<CatalogUpdatePayload>;
-  /** Updates the checkout branding settings for a [checkout profile](https://shopify.dev/api/admin-graphql/unstable/queries/checkoutProfile). If the settings don't exist, then new settings are created. The checkout branding settings applied to a published checkout profile will be immediately visible within the store's checkout. The checkout branding settings applied to a draft checkout profile could be previewed within the admin checkout editor. */
+  /**
+   * Updates the checkout branding settings for a
+   * [checkout profile](https://shopify.dev/api/admin-graphql/unstable/queries/checkoutProfile).
+   *
+   * If the settings don't exist, then new settings are created. The checkout branding settings applied to a
+   * published checkout profile will be immediately visible within the store's checkout. The checkout branding
+   * settings applied to a draft checkout profile could be previewed within the admin checkout editor.
+   *
+   * To learn more about updating checkout branding settings, refer to the checkout branding
+   * [tutorial](https://shopify.dev/docs/apps/checkout/styling).
+   *
+   */
   checkoutBrandingUpsert?: Maybe<CheckoutBrandingUpsertPayload>;
   /** Adds products to a collection. */
   collectionAddProducts?: Maybe<CollectionAddProductsPayload>;
@@ -25905,7 +25998,10 @@ export type Mutation = {
   orderEditCommit?: Maybe<OrderEditCommitPayload>;
   /** Removes a discount on the current order edit. For more information on how to use the GraphQL Admin API to edit an existing order, refer to [Edit existing orders](https://shopify.dev/apps/fulfillment/order-management-apps/order-editing). */
   orderEditRemoveDiscount?: Maybe<OrderEditRemoveDiscountPayload>;
-  /** Removes a line item discount that was applied as part of an order edit. */
+  /**
+   * Removes a line item discount that was applied as part of an order edit.
+   * @deprecated Use generic OrderEditRemoveDiscount mutation instead.
+   */
   orderEditRemoveLineItemDiscount?: Maybe<OrderEditRemoveLineItemDiscountPayload>;
   /** Sets the quantity of a line item on an order that is being edited. For more information on how to use the GraphQL Admin API to edit an existing order, refer to [Edit existing orders](https://shopify.dev/apps/fulfillment/order-management-apps/order-editing). */
   orderEditSetQuantity?: Maybe<OrderEditSetQuantityPayload>;
@@ -27775,7 +27871,6 @@ export type MutationFulfillmentServiceDeleteArgs = {
 /** The schema's entry point for all mutation operations. */
 export type MutationFulfillmentServiceUpdateArgs = {
   callbackUrl?: InputMaybe<Scalars['URL']['input']>;
-  fulfillmentOrdersOptIn?: InputMaybe<Scalars['Boolean']['input']>;
   id: Scalars['ID']['input'];
   name?: InputMaybe<Scalars['String']['input']>;
   permitsSkuSharing?: InputMaybe<Scalars['Boolean']['input']>;
@@ -29906,6 +30001,7 @@ export type Order = CommentEventSubject & HasEvents & HasLocalizationExtensions 
    * Use the [`FulfillmentOrder`](https://shopify.dev/api/admin-graphql/latest/objects/fulfillmentorder)
    * object for up to date fulfillment location information.
    *
+   * @deprecated Use `fulfillmentOrders` to get the fulfillment location for the order
    */
   physicalLocation?: Maybe<Location>;
   /** The PO number associated with the order. */
@@ -29981,9 +30077,15 @@ export type Order = CommentEventSubject & HasEvents & HasLocalizationExtensions 
   returnStatus: OrderReturnStatus;
   /** A list of returns for the order. */
   returns: ReturnConnection;
-  /** The fraud risk level of the order. */
+  /**
+   * The fraud risk level of the order.
+   * @deprecated This field is deprecated in version 2024-04. Please use OrderRiskAssessment.riskLevel
+   */
   riskLevel: OrderRiskLevel;
-  /** A list of risks associated with the order. */
+  /**
+   * A list of risks associated with the order.
+   * @deprecated This field is deprecated in version 2024-04. Please use OrderRiskAssessment
+   */
   risks: Array<OrderRisk>;
   /** The mailing address of the customer. */
   shippingAddress?: Maybe<MailingAddress>;
@@ -31180,19 +31282,31 @@ export enum OrderReturnStatus {
   ReturnRequested = 'RETURN_REQUESTED'
 }
 
-/** Represents a fraud check on an order. */
+/**
+ * Represents a fraud check on an order.
+ * As of version 2024-04 this resource is deprecated. Risk Assessments can be queried via the
+ * [OrderRisk Assessments API](https://shopify.dev/api/admin-graphql/2024-04/objects/OrderRiskAssessment).
+ *
+ */
 export type OrderRisk = {
   __typename?: 'OrderRisk';
-  /** Whether the risk level is shown in the Shopify admin. If false, then this order risk is ignored when Shopify determines the overall risk level for the order. */
+  /**
+   * Whether the risk level is shown in the Shopify admin. If false, then this order risk is ignored when Shopify determines the overall risk level for the order.
+   * @deprecated This field is deprecated in version 2024-04
+   */
   display: Scalars['Boolean']['output'];
   /**
    * The likelihood that an order is fraudulent, based on this order risk.
    *
    * The level can be set by Shopify risk analysis or by an app.
    *
+   * @deprecated This field is deprecated in version 2024-04. Please use OrderRiskAssessment.riskLevel
    */
   level?: Maybe<OrderRiskLevel>;
-  /** The risk message that's shown to the merchant in the Shopify admin. */
+  /**
+   * The risk message that's shown to the merchant in the Shopify admin.
+   * @deprecated This field is deprecated in version 2024-04
+   */
   message?: Maybe<Scalars['String']['output']>;
 };
 
@@ -37172,7 +37286,14 @@ export type QueryRoot = {
    * @deprecated Use `publications` instead.
    */
   channels: ChannelConnection;
-  /** Returns the checkout branding settings for a checkout profile. */
+  /**
+   * Returns the visual customizations for checkout for a given checkout profile.
+   *
+   * To learn more about updating checkout branding settings, refer to the
+   * [checkoutBrandingUpsert](https://shopify.dev/api/admin-graphql/unstable/mutations/checkoutBrandingUpsert)
+   * mutation and the checkout branding [tutorial](https://shopify.dev/docs/apps/checkout/styling).
+   *
+   */
   checkoutBranding?: Maybe<CheckoutBranding>;
   /** A checkout profile on a shop. */
   checkoutProfile?: Maybe<CheckoutProfile>;
@@ -49328,9 +49449,10 @@ export enum WebhookSubscriptionSortKeys {
  * The supported topics for webhook subscriptions. You can use webhook subscriptions to receive
  * notifications about particular events in a shop.
  *
- * You don't create webhook subscriptions to
- * [mandatory webhooks](https://shopify.dev/apps/webhooks/configuration/mandatory-webhooks).
- * Instead, you configure mandatory webhooks in your Partner Dashboard as part of your app setup.
+ * You create mandatory webhooks either via the
+ * [Partner Dashboard](https://shopify.dev/apps/webhooks/configuration/mandatory-webhooks#subscribe-to-privacy-webhooks)
+ * or by updating the
+ * [app configuration TOML](https://shopify.dev/apps/tools/cli/configuration#app-configuration-file-example).
  *
  */
 export enum WebhookSubscriptionTopic {
@@ -49468,27 +49590,27 @@ export enum WebhookSubscriptionTopic {
   FulfillmentEventsCreate = 'FULFILLMENT_EVENTS_CREATE',
   /** The webhook topic for `fulfillment_events/delete` events. Occurs whenever a fulfillment event is deleted. Requires the `read_fulfillments` scope. */
   FulfillmentEventsDelete = 'FULFILLMENT_EVENTS_DELETE',
-  /** The webhook topic for `fulfillment_orders/cancellation_request_accepted` events. Occurs when a 3PL accepts a fulfillment cancellation request, received from a merchant. Requires at least one of the following scopes: read_merchant_managed_fulfillment_orders, read_assigned_fulfillment_orders, read_third_party_fulfillment_orders. */
+  /** The webhook topic for `fulfillment_orders/cancellation_request_accepted` events. Occurs when a 3PL accepts a fulfillment cancellation request, received from a merchant. Requires at least one of the following scopes: read_merchant_managed_fulfillment_orders, read_assigned_fulfillment_orders, read_third_party_fulfillment_orders, read_marketplace_fulfillment_orders. */
   FulfillmentOrdersCancellationRequestAccepted = 'FULFILLMENT_ORDERS_CANCELLATION_REQUEST_ACCEPTED',
-  /** The webhook topic for `fulfillment_orders/cancellation_request_rejected` events. Occurs when a 3PL rejects a fulfillment cancellation request, received from a merchant. Requires at least one of the following scopes: read_merchant_managed_fulfillment_orders, read_assigned_fulfillment_orders, read_third_party_fulfillment_orders. */
+  /** The webhook topic for `fulfillment_orders/cancellation_request_rejected` events. Occurs when a 3PL rejects a fulfillment cancellation request, received from a merchant. Requires at least one of the following scopes: read_merchant_managed_fulfillment_orders, read_assigned_fulfillment_orders, read_third_party_fulfillment_orders, read_marketplace_fulfillment_orders. */
   FulfillmentOrdersCancellationRequestRejected = 'FULFILLMENT_ORDERS_CANCELLATION_REQUEST_REJECTED',
-  /** The webhook topic for `fulfillment_orders/cancellation_request_submitted` events. Occurs when a merchant requests a fulfillment request to be cancelled after that request was approved by a 3PL. Requires at least one of the following scopes: read_merchant_managed_fulfillment_orders, read_assigned_fulfillment_orders, read_third_party_fulfillment_orders. */
+  /** The webhook topic for `fulfillment_orders/cancellation_request_submitted` events. Occurs when a merchant requests a fulfillment request to be cancelled after that request was approved by a 3PL. Requires at least one of the following scopes: read_merchant_managed_fulfillment_orders, read_assigned_fulfillment_orders, read_third_party_fulfillment_orders, read_marketplace_fulfillment_orders. */
   FulfillmentOrdersCancellationRequestSubmitted = 'FULFILLMENT_ORDERS_CANCELLATION_REQUEST_SUBMITTED',
-  /** The webhook topic for `fulfillment_orders/cancelled` events. Occurs when a fulfillment order is cancelled. Requires at least one of the following scopes: read_merchant_managed_fulfillment_orders, read_assigned_fulfillment_orders, read_third_party_fulfillment_orders. */
+  /** The webhook topic for `fulfillment_orders/cancelled` events. Occurs when a fulfillment order is cancelled. Requires at least one of the following scopes: read_merchant_managed_fulfillment_orders, read_assigned_fulfillment_orders, read_third_party_fulfillment_orders, read_marketplace_fulfillment_orders. */
   FulfillmentOrdersCancelled = 'FULFILLMENT_ORDERS_CANCELLED',
-  /** The webhook topic for `fulfillment_orders/fulfillment_request_accepted` events. Occurs when a fulfillment service accepts a request to fulfill a fulfillment order. Requires at least one of the following scopes: read_merchant_managed_fulfillment_orders, read_assigned_fulfillment_orders, read_third_party_fulfillment_orders. */
+  /** The webhook topic for `fulfillment_orders/fulfillment_request_accepted` events. Occurs when a fulfillment service accepts a request to fulfill a fulfillment order. Requires at least one of the following scopes: read_merchant_managed_fulfillment_orders, read_assigned_fulfillment_orders, read_third_party_fulfillment_orders, read_marketplace_fulfillment_orders. */
   FulfillmentOrdersFulfillmentRequestAccepted = 'FULFILLMENT_ORDERS_FULFILLMENT_REQUEST_ACCEPTED',
-  /** The webhook topic for `fulfillment_orders/fulfillment_request_rejected` events. Occurs when a 3PL rejects a fulfillment request that was sent by a merchant. Requires at least one of the following scopes: read_merchant_managed_fulfillment_orders, read_assigned_fulfillment_orders, read_third_party_fulfillment_orders. */
+  /** The webhook topic for `fulfillment_orders/fulfillment_request_rejected` events. Occurs when a 3PL rejects a fulfillment request that was sent by a merchant. Requires at least one of the following scopes: read_merchant_managed_fulfillment_orders, read_assigned_fulfillment_orders, read_third_party_fulfillment_orders, read_marketplace_fulfillment_orders. */
   FulfillmentOrdersFulfillmentRequestRejected = 'FULFILLMENT_ORDERS_FULFILLMENT_REQUEST_REJECTED',
-  /** The webhook topic for `fulfillment_orders/fulfillment_request_submitted` events. Occurs when a merchant submits a fulfillment request to a 3PL. Requires at least one of the following scopes: read_merchant_managed_fulfillment_orders, read_assigned_fulfillment_orders, read_third_party_fulfillment_orders, read_buyer_membership_orders. */
+  /** The webhook topic for `fulfillment_orders/fulfillment_request_submitted` events. Occurs when a merchant submits a fulfillment request to a 3PL. Requires at least one of the following scopes: read_merchant_managed_fulfillment_orders, read_assigned_fulfillment_orders, read_third_party_fulfillment_orders, read_buyer_membership_orders, read_marketplace_fulfillment_orders. */
   FulfillmentOrdersFulfillmentRequestSubmitted = 'FULFILLMENT_ORDERS_FULFILLMENT_REQUEST_SUBMITTED',
-  /** The webhook topic for `fulfillment_orders/fulfillment_service_failed_to_complete` events. Occurs when a fulfillment service intends to close an in_progress fulfillment order. Requires at least one of the following scopes: read_merchant_managed_fulfillment_orders, read_assigned_fulfillment_orders, read_third_party_fulfillment_orders. */
+  /** The webhook topic for `fulfillment_orders/fulfillment_service_failed_to_complete` events. Occurs when a fulfillment service intends to close an in_progress fulfillment order. Requires at least one of the following scopes: read_merchant_managed_fulfillment_orders, read_assigned_fulfillment_orders, read_third_party_fulfillment_orders, read_marketplace_fulfillment_orders. */
   FulfillmentOrdersFulfillmentServiceFailedToComplete = 'FULFILLMENT_ORDERS_FULFILLMENT_SERVICE_FAILED_TO_COMPLETE',
-  /** The webhook topic for `fulfillment_orders/hold_released` events. Occurs whenever a fulfillment order hold is released. Requires at least one of the following scopes: read_merchant_managed_fulfillment_orders, read_assigned_fulfillment_orders, read_third_party_fulfillment_orders. */
+  /** The webhook topic for `fulfillment_orders/hold_released` events. Occurs whenever a fulfillment order hold is released. Requires at least one of the following scopes: read_merchant_managed_fulfillment_orders, read_assigned_fulfillment_orders, read_third_party_fulfillment_orders, read_marketplace_fulfillment_orders. */
   FulfillmentOrdersHoldReleased = 'FULFILLMENT_ORDERS_HOLD_RELEASED',
-  /** The webhook topic for `fulfillment_orders/line_items_prepared_for_local_delivery` events. Occurs whenever a fulfillment order's line items are prepared for local delivery. Requires at least one of the following scopes: read_merchant_managed_fulfillment_orders, read_assigned_fulfillment_orders, read_third_party_fulfillment_orders. */
+  /** The webhook topic for `fulfillment_orders/line_items_prepared_for_local_delivery` events. Occurs whenever a fulfillment order's line items are prepared for local delivery. Requires at least one of the following scopes: read_merchant_managed_fulfillment_orders, read_assigned_fulfillment_orders, read_third_party_fulfillment_orders, read_marketplace_fulfillment_orders. */
   FulfillmentOrdersLineItemsPreparedForLocalDelivery = 'FULFILLMENT_ORDERS_LINE_ITEMS_PREPARED_FOR_LOCAL_DELIVERY',
-  /** The webhook topic for `fulfillment_orders/line_items_prepared_for_pickup` events. Triggers when one or more of the line items for a fulfillment order are prepared for pickup Requires at least one of the following scopes: read_merchant_managed_fulfillment_orders, read_assigned_fulfillment_orders, read_third_party_fulfillment_orders. */
+  /** The webhook topic for `fulfillment_orders/line_items_prepared_for_pickup` events. Triggers when one or more of the line items for a fulfillment order are prepared for pickup Requires at least one of the following scopes: read_merchant_managed_fulfillment_orders, read_assigned_fulfillment_orders, read_third_party_fulfillment_orders, read_marketplace_fulfillment_orders. */
   FulfillmentOrdersLineItemsPreparedForPickup = 'FULFILLMENT_ORDERS_LINE_ITEMS_PREPARED_FOR_PICKUP',
   /** The webhook topic for `fulfillment_orders/merged` events. Occurs when multiple fulfillment orders are merged into a single fulfillment order. Requires at least one of the following scopes: read_merchant_managed_fulfillment_orders, read_assigned_fulfillment_orders, read_third_party_fulfillment_orders. */
   FulfillmentOrdersMerged = 'FULFILLMENT_ORDERS_MERGED',
@@ -49505,12 +49627,12 @@ export enum WebhookSubscriptionTopic {
    * If you need to determine the originally assigned location, then you should refer to the `source_location`.
    *
    * [Learn more about moving line items](https://shopify.dev/docs/api/admin-graphql/latest/mutations/fulfillmentOrderMove).
-   *  Requires at least one of the following scopes: read_merchant_managed_fulfillment_orders, read_assigned_fulfillment_orders, read_third_party_fulfillment_orders.
+   *  Requires at least one of the following scopes: read_merchant_managed_fulfillment_orders, read_assigned_fulfillment_orders, read_third_party_fulfillment_orders, read_marketplace_fulfillment_orders.
    */
   FulfillmentOrdersMoved = 'FULFILLMENT_ORDERS_MOVED',
-  /** The webhook topic for `fulfillment_orders/order_routing_complete` events. Occurs when an order has finished being routed and it's fulfillment orders assigned to a fulfillment service's location. Requires at least one of the following scopes: read_merchant_managed_fulfillment_orders, read_assigned_fulfillment_orders, read_third_party_fulfillment_orders, read_buyer_membership_orders. */
+  /** The webhook topic for `fulfillment_orders/order_routing_complete` events. Occurs when an order has finished being routed and it's fulfillment orders assigned to a fulfillment service's location. Requires at least one of the following scopes: read_merchant_managed_fulfillment_orders, read_assigned_fulfillment_orders, read_third_party_fulfillment_orders, read_buyer_membership_orders, read_marketplace_fulfillment_orders. */
   FulfillmentOrdersOrderRoutingComplete = 'FULFILLMENT_ORDERS_ORDER_ROUTING_COMPLETE',
-  /** The webhook topic for `fulfillment_orders/placed_on_hold` events. Occurs when a fulfillment order is placed on hold. Requires at least one of the following scopes: read_merchant_managed_fulfillment_orders, read_assigned_fulfillment_orders, read_third_party_fulfillment_orders. */
+  /** The webhook topic for `fulfillment_orders/placed_on_hold` events. Occurs when a fulfillment order is placed on hold. Requires at least one of the following scopes: read_merchant_managed_fulfillment_orders, read_assigned_fulfillment_orders, read_third_party_fulfillment_orders, read_marketplace_fulfillment_orders. */
   FulfillmentOrdersPlacedOnHold = 'FULFILLMENT_ORDERS_PLACED_ON_HOLD',
   /**
    * The webhook topic for `fulfillment_orders/rescheduled` events. Triggers when a fulfillment order is rescheduled.
@@ -49518,10 +49640,10 @@ export enum WebhookSubscriptionTopic {
    * Fulfillment orders may be merged if they have the same `fulfillAt` datetime.
    * If the fulfillment order is merged then the resulting fulfillment order will be indicated in the webhook body.
    * Otherwise it will be the original fulfillment order with an updated `fulfill_at` datetime.
-   *  Requires at least one of the following scopes: read_merchant_managed_fulfillment_orders, read_assigned_fulfillment_orders, read_third_party_fulfillment_orders.
+   *  Requires at least one of the following scopes: read_merchant_managed_fulfillment_orders, read_assigned_fulfillment_orders, read_third_party_fulfillment_orders, read_marketplace_fulfillment_orders.
    */
   FulfillmentOrdersRescheduled = 'FULFILLMENT_ORDERS_RESCHEDULED',
-  /** The webhook topic for `fulfillment_orders/scheduled_fulfillment_order_ready` events. Occurs whenever a fulfillment order which was scheduled becomes due. Requires at least one of the following scopes: read_merchant_managed_fulfillment_orders, read_assigned_fulfillment_orders, read_third_party_fulfillment_orders. */
+  /** The webhook topic for `fulfillment_orders/scheduled_fulfillment_order_ready` events. Occurs whenever a fulfillment order which was scheduled becomes due. Requires at least one of the following scopes: read_merchant_managed_fulfillment_orders, read_assigned_fulfillment_orders, read_third_party_fulfillment_orders, read_marketplace_fulfillment_orders. */
   FulfillmentOrdersScheduledFulfillmentOrderReady = 'FULFILLMENT_ORDERS_SCHEDULED_FULFILLMENT_ORDER_READY',
   /** The webhook topic for `fulfillment_orders/split` events. Occurs when a fulfillment order is split into multiple fulfillment orders. Requires at least one of the following scopes: read_merchant_managed_fulfillment_orders, read_assigned_fulfillment_orders, read_third_party_fulfillment_orders. */
   FulfillmentOrdersSplit = 'FULFILLMENT_ORDERS_SPLIT',

@@ -8,13 +8,13 @@ export default {
       apiType: ApiType.Storefront,
       apiVersion: "2024-01",
       documents: ["./packages/core/**/*.storefront.{js,ts,jsx,tsx}", "./packages/core/**/fragments/*.{js,ts,jsx,tsx}"],
-      outputDir: "./types",
+      outputDir: "./packages/core/platform/shopify/types",
     }),
     admin: shopifyApiProject({
       apiType: ApiType.Admin,
       apiVersion: "2024-01",
       documents: ["./packages/core/**/*.admin.{js,ts,jsx,tsx}"],
-      outputDir: "./types/admin",
+      outputDir: "./packages/core/platform/shopify/types/admin",
     }),
   },
 }

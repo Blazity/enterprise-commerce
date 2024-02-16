@@ -96,7 +96,7 @@ export type AppliedGiftCard = Node & {
 };
 
 /** An article in an online store blog. */
-export type Article = HasMetafields & Node & OnlineStorePublishable & {
+export type Article = HasMetafields & Node & OnlineStorePublishable & Trackable & {
   __typename?: 'Article';
   /**
    * The article's author.
@@ -140,6 +140,8 @@ export type Article = HasMetafields & Node & OnlineStorePublishable & {
   tags: Array<Scalars['String']['output']>;
   /** The article’s name. */
   title: Scalars['String']['output'];
+  /** A URL parameters to be added to a page URL when it is linked from a GraphQL result. This allows for tracking the origin of the traffic. */
+  trackingParameters?: Maybe<Scalars['String']['output']>;
 };
 
 
@@ -168,7 +170,7 @@ export type ArticleExcerptArgs = {
 /** An article in an online store blog. */
 export type ArticleMetafieldArgs = {
   key: Scalars['String']['input'];
-  namespace: Scalars['String']['input'];
+  namespace?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -396,7 +398,7 @@ export type BlogArticlesArgs = {
 /** An online store blog. */
 export type BlogMetafieldArgs = {
   key: Scalars['String']['input'];
-  namespace: Scalars['String']['input'];
+  namespace?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -613,7 +615,7 @@ export type CartLinesArgs = {
  */
 export type CartMetafieldArgs = {
   key: Scalars['String']['input'];
-  namespace: Scalars['String']['input'];
+  namespace?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -957,7 +959,9 @@ export enum CartErrorCode {
   /** Missing note. */
   MissingNote = 'MISSING_NOTE',
   /** The payment method is not supported. */
-  PaymentMethodNotSupported = 'PAYMENT_METHOD_NOT_SUPPORTED'
+  PaymentMethodNotSupported = 'PAYMENT_METHOD_NOT_SUPPORTED',
+  /** Validation failed. */
+  ValidationCustom = 'VALIDATION_CUSTOM'
 }
 
 /** The estimated costs that the buyer will pay at checkout. The estimated cost uses [`CartBuyerIdentity`](https://shopify.dev/api/storefront/reference/cart/cartbuyeridentity) to determine [international pricing](https://shopify.dev/custom-storefronts/internationalization/international-pricing). */
@@ -1943,7 +1947,7 @@ export type CheckoutUserError = DisplayableError & {
  * organize them or make their shops easier to browse.
  *
  */
-export type Collection = HasMetafields & Node & OnlineStorePublishable & {
+export type Collection = HasMetafields & Node & OnlineStorePublishable & Trackable & {
   __typename?: 'Collection';
   /** Stripped description of the collection, single line with HTML tags removed. */
   description: Scalars['String']['output'];
@@ -1971,6 +1975,8 @@ export type Collection = HasMetafields & Node & OnlineStorePublishable & {
   seo: Seo;
   /** The collection’s name. Limit of 255 characters. */
   title: Scalars['String']['output'];
+  /** A URL parameters to be added to a page URL when it is linked from a GraphQL result. This allows for tracking the origin of the traffic. */
+  trackingParameters?: Maybe<Scalars['String']['output']>;
   /** The date and time when the collection was last modified. */
   updatedAt: Scalars['DateTime']['output'];
 };
@@ -1993,7 +1999,7 @@ export type CollectionDescriptionArgs = {
  */
 export type CollectionMetafieldArgs = {
   key: Scalars['String']['input'];
-  namespace: Scalars['String']['input'];
+  namespace?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -2034,6 +2040,8 @@ export type CollectionConnection = {
   nodes: Array<Collection>;
   /** Information to aid in pagination. */
   pageInfo: PageInfo;
+  /** The total count of Collections. */
+  totalCount: Scalars['UnsignedInt64']['output'];
 };
 
 /**
@@ -2150,6 +2158,40 @@ export enum CompletionErrorCode {
   PaymentInvalidPaymentMethod = 'PAYMENT_INVALID_PAYMENT_METHOD',
   PaymentTransientError = 'PAYMENT_TRANSIENT_ERROR'
 }
+
+/** Represents information about the grouped merchandise in the cart. */
+export type ComponentizableCartLine = BaseCartLine & Node & {
+  __typename?: 'ComponentizableCartLine';
+  /** An attribute associated with the cart line. */
+  attribute?: Maybe<Attribute>;
+  /** The attributes associated with the cart line. Attributes are represented as key-value pairs. */
+  attributes: Array<Attribute>;
+  /** The cost of the merchandise that the buyer will pay for at checkout. The costs are subject to change and changes will be reflected at checkout. */
+  cost: CartLineCost;
+  /** The discounts that have been applied to the cart line. */
+  discountAllocations: Array<CartDiscountAllocation>;
+  /**
+   * The estimated cost of the merchandise that the buyer will pay for at checkout. The estimated costs are subject to change and changes will be reflected at checkout.
+   * @deprecated Use `cost` instead.
+   */
+  estimatedCost: CartLineEstimatedCost;
+  /** A globally-unique ID. */
+  id: Scalars['ID']['output'];
+  /** The components of the line item. */
+  lineComponents: Array<CartLine>;
+  /** The merchandise that the buyer intends to purchase. */
+  merchandise: Merchandise;
+  /** The quantity of the merchandise that the customer intends to purchase. */
+  quantity: Scalars['Int']['output'];
+  /** The selling plan associated with the cart line and the effect that each selling plan has on variants when they're purchased. */
+  sellingPlanAllocation?: Maybe<SellingPlanAllocation>;
+};
+
+
+/** Represents information about the grouped merchandise in the cart. */
+export type ComponentizableCartLineAttributeArgs = {
+  key: Scalars['String']['input'];
+};
 
 /** A country. */
 export type Country = {
@@ -3129,7 +3171,7 @@ export type CustomerAddressesArgs = {
 /** A customer represents a customer account with the shop. Customer accounts store contact information for the customer, saving logged-in customers the trouble of having to provide it at every checkout. */
 export type CustomerMetafieldArgs = {
   key: Scalars['String']['input'];
-  namespace: Scalars['String']['input'];
+  namespace?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -3840,7 +3882,7 @@ export type HasMetafields = {
 /** Represents information about the metafields associated to the specified resource. */
 export type HasMetafieldsMetafieldArgs = {
   key: Scalars['String']['input'];
-  namespace: Scalars['String']['input'];
+  namespace?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -3853,8 +3895,8 @@ export type HasMetafieldsMetafieldsArgs = {
 export type HasMetafieldsIdentifier = {
   /** The identifier for the metafield. */
   key: Scalars['String']['input'];
-  /** The container the metafield belongs to. */
-  namespace: Scalars['String']['input'];
+  /** The container the metafield belongs to. If omitted, the app-reserved namespace will be used. */
+  namespace?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Represents an image resource. */
@@ -4348,7 +4390,7 @@ export type Location = HasMetafields & Node & {
 /** Represents a location where product inventory is held. */
 export type LocationMetafieldArgs = {
   key: Scalars['String']['input'];
-  namespace: Scalars['String']['input'];
+  namespace?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -4611,7 +4653,7 @@ export type Market = HasMetafields & Node & {
 /** A group of one or more regions of the world that a merchant is targeting for sales. To learn more about markets, refer to [the Shopify Markets conceptual overview](/docs/apps/markets). */
 export type MarketMetafieldArgs = {
   key: Scalars['String']['input'];
-  namespace: Scalars['String']['input'];
+  namespace?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -4624,6 +4666,8 @@ export type MarketMetafieldsArgs = {
 export type Media = {
   /** A word or phrase to share the nature or contents of a media. */
   alt?: Maybe<Scalars['String']['output']>;
+  /** A globally-unique ID. */
+  id: Scalars['ID']['output'];
   /** The media content type. */
   mediaContentType: MediaContentType;
   /** The presentation for a media. */
@@ -4744,6 +4788,8 @@ export type MenuItem = Node & {
   id: Scalars['ID']['output'];
   /** The menu item's child items. */
   items: Array<MenuItem>;
+  /** The linked resource. */
+  resource?: Maybe<MenuItemResource>;
   /** The ID of the linked resource. */
   resourceId?: Maybe<Scalars['ID']['output']>;
   /** The menu item's tags to filter a collection. */
@@ -4755,6 +4801,12 @@ export type MenuItem = Node & {
   /** The menu item's URL. */
   url?: Maybe<Scalars['URL']['output']>;
 };
+
+/**
+ * The list of possible resources a `MenuItem` can reference.
+ *
+ */
+export type MenuItemResource = Article | Blog | Collection | Page | Product | ShopPolicy;
 
 /** A menu item type. */
 export enum MenuItemType {
@@ -4942,7 +4994,7 @@ export enum MetafieldsSetUserErrorCode {
 }
 
 /** An instance of a user-defined model based on a MetaobjectDefinition. */
-export type Metaobject = Node & {
+export type Metaobject = Node & OnlineStorePublishable & {
   __typename?: 'Metaobject';
   /** Accesses a field of the object by key. */
   field?: Maybe<MetaobjectField>;
@@ -4956,6 +5008,14 @@ export type Metaobject = Node & {
   handle: Scalars['String']['output'];
   /** A globally-unique ID. */
   id: Scalars['ID']['output'];
+  /** The URL used for viewing the metaobject on the shop's Online Store. Returns `null` if the metaobject definition doesn't have the `online_store` capability. */
+  onlineStoreUrl?: Maybe<Scalars['URL']['output']>;
+  /**
+   * The metaobject's SEO information. Returns `null` if the metaobject definition
+   * doesn't have the `renderable` capability.
+   *
+   */
+  seo?: Maybe<MetaobjectSeo>;
   /** The type of the metaobject. Defines the namespace of its associated metafields. */
   type: Scalars['String']['output'];
   /** The date and time when the metaobject was last updated. */
@@ -5028,6 +5088,15 @@ export type MetaobjectHandleInput = {
   handle: Scalars['String']['input'];
   /** The type of the metaobject. */
   type: Scalars['String']['input'];
+};
+
+/** SEO information for a metaobject. */
+export type MetaobjectSeo = {
+  __typename?: 'MetaobjectSEO';
+  /** The meta description. */
+  description?: Maybe<MetaobjectField>;
+  /** The SEO title. */
+  title?: Maybe<MetaobjectField>;
 };
 
 /** Represents a Shopify hosted 3D model. */
@@ -5689,7 +5758,7 @@ export type OrderLineItemsArgs = {
 /** An order is a customer’s completed request to purchase one or more products from a shop. An order is created when a customer completes the checkout process, during which time they provides an email address, billing address and payment information. */
 export type OrderMetafieldArgs = {
   key: Scalars['String']['input'];
-  namespace: Scalars['String']['input'];
+  namespace?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -5715,7 +5784,9 @@ export enum OrderCancelReason {
   /** There was insufficient inventory. */
   Inventory = 'INVENTORY',
   /** The order was canceled for an unlisted reason. */
-  Other = 'OTHER'
+  Other = 'OTHER',
+  /** Staff made an error. */
+  Staff = 'STAFF'
 }
 
 /**
@@ -5850,7 +5921,7 @@ export enum OrderSortKeys {
 }
 
 /** Shopify merchants can create pages to hold static HTML content. Each Page object represents a custom page on the online store. */
-export type Page = HasMetafields & Node & OnlineStorePublishable & {
+export type Page = HasMetafields & Node & OnlineStorePublishable & Trackable & {
   __typename?: 'Page';
   /** The description of the page, complete with HTML formatting. */
   body: Scalars['HTML']['output'];
@@ -5872,6 +5943,8 @@ export type Page = HasMetafields & Node & OnlineStorePublishable & {
   seo?: Maybe<Seo>;
   /** The title of the page. */
   title: Scalars['String']['output'];
+  /** A URL parameters to be added to a page URL when it is linked from a GraphQL result. This allows for tracking the origin of the traffic. */
+  trackingParameters?: Maybe<Scalars['String']['output']>;
   /** The timestamp of the latest page update. */
   updatedAt: Scalars['DateTime']['output'];
 };
@@ -5880,7 +5953,7 @@ export type Page = HasMetafields & Node & OnlineStorePublishable & {
 /** Shopify merchants can create pages to hold static HTML content. Each Page object represents a custom page on the online store. */
 export type PageMetafieldArgs = {
   key: Scalars['String']['input'];
-  namespace: Scalars['String']['input'];
+  namespace?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -6023,6 +6096,47 @@ export enum PaymentTokenType {
   Vault = 'VAULT'
 }
 
+/** Decides the distribution of results. */
+export enum PredictiveSearchLimitScope {
+  /** Return results up to limit across all types. */
+  All = 'ALL',
+  /** Return results up to limit per type. */
+  Each = 'EACH'
+}
+
+/**
+ * A predictive search result represents a list of products, collections, pages, articles, and query suggestions
+ * that matches the predictive search query.
+ *
+ */
+export type PredictiveSearchResult = {
+  __typename?: 'PredictiveSearchResult';
+  /** The articles that match the search query. */
+  articles: Array<Article>;
+  /** The articles that match the search query. */
+  collections: Array<Collection>;
+  /** The pages that match the search query. */
+  pages: Array<Page>;
+  /** The products that match the search query. */
+  products: Array<Product>;
+  /** The query suggestions that are relevant to the search query. */
+  queries: Array<SearchQuerySuggestion>;
+};
+
+/** The types of search items to perform predictive search on. */
+export enum PredictiveSearchType {
+  /** Returns matching articles. */
+  Article = 'ARTICLE',
+  /** Returns matching collections. */
+  Collection = 'COLLECTION',
+  /** Returns matching pages. */
+  Page = 'PAGE',
+  /** Returns matching products. */
+  Product = 'PRODUCT',
+  /** Returns matching query strings. */
+  Query = 'QUERY'
+}
+
 /**
  * The input fields for a filter used to view a subset of products in a collection matching a specific price range.
  *
@@ -6051,7 +6165,7 @@ export type PricingValue = MoneyV2 | PricingPercentageValue;
  * customization of another product or an extended warranty).
  *
  */
-export type Product = HasMetafields & Node & OnlineStorePublishable & {
+export type Product = HasMetafields & Node & OnlineStorePublishable & Trackable & {
   __typename?: 'Product';
   /** Indicates if at least one product variant is available for sale. */
   availableForSale: Scalars['Boolean']['output'];
@@ -6116,6 +6230,8 @@ export type Product = HasMetafields & Node & OnlineStorePublishable & {
   title: Scalars['String']['output'];
   /** The total quantity of inventory in stock for this Product. */
   totalInventory?: Maybe<Scalars['Int']['output']>;
+  /** A URL parameters to be added to a page URL when it is linked from a GraphQL result. This allows for tracking the origin of the traffic. */
+  trackingParameters?: Maybe<Scalars['String']['output']>;
   /**
    * The date and time when the product was last modified.
    * A product's `updatedAt` value can change for different reasons. For example, if an order
@@ -6209,7 +6325,7 @@ export type ProductMediaArgs = {
  */
 export type ProductMetafieldArgs = {
   key: Scalars['String']['input'];
-  namespace: Scalars['String']['input'];
+  namespace?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -6518,7 +6634,7 @@ export type ProductVariant = HasMetafields & Node & {
  */
 export type ProductVariantMetafieldArgs = {
   key: Scalars['String']['input'];
-  namespace: Scalars['String']['input'];
+  namespace?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -6672,6 +6788,8 @@ export type QueryRoot = {
   pageByHandle?: Maybe<Page>;
   /** List of the shop's pages. */
   pages: PageConnection;
+  /** List of the predictive search results. */
+  predictiveSearch?: Maybe<PredictiveSearchResult>;
   /** Fetch a specific `Product` by one of its unique attributes. */
   product?: Maybe<Product>;
   /**
@@ -6698,6 +6816,8 @@ export type QueryRoot = {
   products: ProductConnection;
   /** The list of public Storefront API versions, including supported, release candidate and unstable versions. */
   publicApiVersions: Array<ApiVersion>;
+  /** List of the search results. */
+  search: SearchResultItemConnection;
   /** The shop associated with the storefront access token. */
   shop: Shop;
   /** A list of redirects for a shop. */
@@ -6866,6 +6986,17 @@ export type QueryRootPagesArgs = {
 
 
 /** The schema’s entry-point for queries. This acts as the public, top-level API from which all queries must start. */
+export type QueryRootPredictiveSearchArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  limitScope?: InputMaybe<PredictiveSearchLimitScope>;
+  query: Scalars['String']['input'];
+  searchableFields?: InputMaybe<Array<SearchableField>>;
+  types?: InputMaybe<Array<PredictiveSearchType>>;
+  unavailableProducts?: InputMaybe<SearchUnavailableProductsType>;
+};
+
+
+/** The schema’s entry-point for queries. This acts as the public, top-level API from which all queries must start. */
 export type QueryRootProductArgs = {
   handle?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['ID']['input']>;
@@ -6910,6 +7041,22 @@ export type QueryRootProductsArgs = {
 
 
 /** The schema’s entry-point for queries. This acts as the public, top-level API from which all queries must start. */
+export type QueryRootSearchArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  prefix?: InputMaybe<SearchPrefixQueryType>;
+  productFilters?: InputMaybe<Array<ProductFilter>>;
+  query: Scalars['String']['input'];
+  reverse?: InputMaybe<Scalars['Boolean']['input']>;
+  sortKey?: InputMaybe<SearchSortKeys>;
+  types?: InputMaybe<Array<SearchType>>;
+  unavailableProducts?: InputMaybe<SearchUnavailableProductsType>;
+};
+
+
+/** The schema’s entry-point for queries. This acts as the public, top-level API from which all queries must start. */
 export type QueryRootUrlRedirectsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
@@ -6946,6 +7093,111 @@ export type ScriptDiscountApplication = DiscountApplication & {
   /** The value of the discount application. */
   value: PricingValue;
 };
+
+/** Specifies whether to perform a partial word match on the last search term. */
+export enum SearchPrefixQueryType {
+  /** Perform a partial word match on the last search term. */
+  Last = 'LAST',
+  /** Don't perform a partial word match on the last search term. */
+  None = 'NONE'
+}
+
+/** A search query suggestion. */
+export type SearchQuerySuggestion = Trackable & {
+  __typename?: 'SearchQuerySuggestion';
+  /** The text of the search query suggestion with highlighted HTML tags. */
+  styledText: Scalars['String']['output'];
+  /** The text of the search query suggestion. */
+  text: Scalars['String']['output'];
+  /** A URL parameters to be added to a page URL when it is linked from a GraphQL result. This allows for tracking the origin of the traffic. */
+  trackingParameters?: Maybe<Scalars['String']['output']>;
+};
+
+/**
+ * A search result that matches the search query.
+ *
+ */
+export type SearchResultItem = Article | Page | Product;
+
+/**
+ * An auto-generated type for paginating through multiple SearchResultItems.
+ *
+ */
+export type SearchResultItemConnection = {
+  __typename?: 'SearchResultItemConnection';
+  /** A list of edges. */
+  edges: Array<SearchResultItemEdge>;
+  /** A list of the nodes contained in SearchResultItemEdge. */
+  nodes: Array<SearchResultItem>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** A list of available filters. */
+  productFilters: Array<Filter>;
+  /** The total number of results. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/**
+ * An auto-generated type which holds one SearchResultItem and a cursor during pagination.
+ *
+ */
+export type SearchResultItemEdge = {
+  __typename?: 'SearchResultItemEdge';
+  /** A cursor for use in pagination. */
+  cursor: Scalars['String']['output'];
+  /** The item at the end of SearchResultItemEdge. */
+  node: SearchResultItem;
+};
+
+/** The set of valid sort keys for the search query. */
+export enum SearchSortKeys {
+  /** Sort by the `price` value. */
+  Price = 'PRICE',
+  /** Sort by relevance to the search terms. */
+  Relevance = 'RELEVANCE'
+}
+
+/** The types of search items to perform search within. */
+export enum SearchType {
+  /** Returns matching articles. */
+  Article = 'ARTICLE',
+  /** Returns matching pages. */
+  Page = 'PAGE',
+  /** Returns matching products. */
+  Product = 'PRODUCT'
+}
+
+/** Specifies whether to display results for unavailable products. */
+export enum SearchUnavailableProductsType {
+  /** Exclude unavailable products. */
+  Hide = 'HIDE',
+  /** Show unavailable products after all other matching results. This is the default. */
+  Last = 'LAST',
+  /** Show unavailable products in the order that they're found. */
+  Show = 'SHOW'
+}
+
+/** Specifies the list of resource fields to search. */
+export enum SearchableField {
+  /** Author of the page or article. */
+  Author = 'AUTHOR',
+  /** Body of the page or article or product description or collection description. */
+  Body = 'BODY',
+  /** Product type. */
+  ProductType = 'PRODUCT_TYPE',
+  /** Tag associated with the product or article. */
+  Tag = 'TAG',
+  /** Title of the page or article or product title or collection title. */
+  Title = 'TITLE',
+  /** Variant barcode. */
+  VariantsBarcode = 'VARIANTS_BARCODE',
+  /** Variant SKU. */
+  VariantsSku = 'VARIANTS_SKU',
+  /** Variant title. */
+  VariantsTitle = 'VARIANTS_TITLE',
+  /** Product vendor. */
+  Vendor = 'VENDOR'
+}
 
 /**
  * Properties used by customers to select a product variant.
@@ -7251,7 +7503,7 @@ export type Shop = HasMetafields & Node & {
 /** Shop represents a collection of the general settings and information about the shop. */
 export type ShopMetafieldArgs = {
   key: Scalars['String']['input'];
-  namespace: Scalars['String']['input'];
+  namespace?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -7319,6 +7571,8 @@ export type StoreAvailability = {
   location: Location;
   /** Returns the estimated amount of time it takes for pickup to be ready (Example: Usually ready in 24 hours). */
   pickUpTime: Scalars['String']['output'];
+  /** The quantity of the product variant in-stock at this location. */
+  quantityAvailable: Scalars['Int']['output'];
 };
 
 /**
@@ -7532,6 +7786,12 @@ export type TokenizedPaymentInputV3 = {
   test?: InputMaybe<Scalars['Boolean']['input']>;
   /** The type of payment token. */
   type: PaymentTokenType;
+};
+
+/** Represents a resource that you can track the origin of the search traffic. */
+export type Trackable = {
+  /** A URL parameters to be added to a page URL when it is linked from a GraphQL result. This allows for tracking the origin of the traffic. */
+  trackingParameters?: Maybe<Scalars['String']['output']>;
 };
 
 /** An object representing exchange of money for a product or service. */

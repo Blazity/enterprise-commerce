@@ -7,9 +7,9 @@ import { getMenuQuery } from "./queries/menu.storefront"
 import { getLatestProductFeedQuery } from "./queries/product-feed.admin"
 import { getProductQuery, getProductsByHandleQuery } from "./queries/product.storefront"
 
-import type { LatestProductFeedsQuery, ProductFeedCreateMutation, ProductFullSyncMutation, WebhookSubscriptionCreateMutation } from "../../../../types/admin/admin.generated"
-import type { WebhookSubscriptionTopic } from "../../../../types/admin/admin.types"
-import type { MenuQuery, ProductsByHandleQuery, SingleProductQuery } from "../../../../types/storefront.generated"
+import type { LatestProductFeedsQuery, ProductFeedCreateMutation, ProductFullSyncMutation, WebhookSubscriptionCreateMutation } from "./types/admin/admin.generated"
+import type { WebhookSubscriptionTopic } from "./types/admin/admin.types"
+import type { MenuQuery, ProductsByHandleQuery, SingleProductQuery } from "./types/storefront.generated"
 
 interface CreateShopifyClientProps {
   storeDomain: string
