@@ -22,7 +22,15 @@ export const getProductsByHandleQuery = `#graphql
     products(first: 1, query: $query) {
       edges {
         node {
-         ...singleProduct
+          ...singleProduct
+          collections(first: 15) {
+            nodes {
+              handle
+              title
+              description
+              updatedAt
+            }
+          }
         }
       }
     }

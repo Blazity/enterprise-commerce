@@ -3,6 +3,7 @@ import { createStorefrontApiClient, StorefrontApiClient } from "@shopify/storefr
 
 import { createProductFeedMutation, fullSyncProductFeedMutation } from "./mutations/product-feed.admin"
 import { subscribeWebhookMutation } from "./mutations/webhook.admin"
+import { normalizeProduct } from "./normalize"
 import { getMenuQuery } from "./queries/menu.storefront"
 import { getLatestProductFeedQuery } from "./queries/product-feed.admin"
 import { getProductQuery, getProductsByHandleQuery } from "./queries/product.storefront"
@@ -10,6 +11,7 @@ import { getProductQuery, getProductsByHandleQuery } from "./queries/product.sto
 import type { LatestProductFeedsQuery, ProductFeedCreateMutation, ProductFullSyncMutation, WebhookSubscriptionCreateMutation } from "./types/admin/admin.generated"
 import type { WebhookSubscriptionTopic } from "./types/admin/admin.types"
 import type { MenuQuery, ProductsByHandleQuery, SingleProductQuery } from "./types/storefront.generated"
+import { PlatformMenu, PlatformProduct } from "../types"
 
 interface CreateShopifyClientProps {
   storeDomain: string
@@ -36,7 +38,7 @@ export function createShopifyClient({ storefrontAccessToken, adminAccessToken, s
   return {
     getMenu: async (handle?: string) => getMenu(client!, handle),
     getProduct: async (id: string) => getProduct(client!, id),
-    getProductsByHandle: async (handle: string) => getProductsByHandle(client!, handle),
+    getProductByHandle: async (handle: string) => getProductByHandle(client!, handle),
     subscribeWebhook: async (topic: `${WebhookSubscriptionTopic}`, callbackUrl: string) => subscribeWebhook(adminClient, topic, callbackUrl),
     createProductFeed: async () => createProductFeed(adminClient),
     fullSyncProductFeed: async (id: string) => fullSyncProductFeed(adminClient, id),
@@ -44,16 +46,30 @@ export function createShopifyClient({ storefrontAccessToken, adminAccessToken, s
   }
 }
 
-async function getMenu(client: StorefrontApiClient, handle: string = "main-menu") {
-  return client.request<MenuQuery>(getMenuQuery, { variables: { handle } })
+async function getMenu(client: StorefrontApiClient, handle: string = "main-menu"): Promise<PlatformMenu> {
+  const response = await client.request<MenuQuery>(getMenuQuery, { variables: { handle } })
+  const mappedItems = response.data?.menu?.items?.map((item) => ({
+    title: item.title,
+    url: item.url,
+  }))
+
+  return {
+    items: mappedItems || [],
+  }
 }
 
-async function getProduct(client: StorefrontApiClient, id: string) {
-  return client.request<SingleProductQuery>(getProductQuery, { variables: { id } })
+async function getProduct(client: StorefrontApiClient, id: string): Promise<PlatformProduct | null> {
+  const response = await client.request<SingleProductQuery>(getProductQuery, { variables: { id } })
+  const product = response.data?.product
+
+  return normalizeProduct(product)
 }
 
-async function getProductsByHandle(client: StorefrontApiClient, handle: string) {
-  return client.request<ProductsByHandleQuery>(getProductsByHandleQuery, { variables: { query: `'${handle}'` } })
+async function getProductByHandle(client: StorefrontApiClient, handle: string) {
+  const response = await client.request<ProductsByHandleQuery>(getProductsByHandleQuery, { variables: { query: `'${handle}'` } })
+  const product = response.data?.products?.edges?.find(Boolean)?.node
+
+  return normalizeProduct(product)
 }
 
 async function subscribeWebhook(client: AdminApiClient, topic: `${WebhookSubscriptionTopic}`, callbackUrl: string) {

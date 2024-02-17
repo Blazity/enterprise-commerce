@@ -44,9 +44,7 @@ const getCachedMenuItems = unstable_cache(async () => getMenuItems(), ["menu"], 
 
 async function getMenuItems() {
   const menu = await storefrontClient.getMenu()
-  const items = menu.data?.menu?.items
-
-  if (!items || menu.errors?.graphQLErrors) return []
+  const items = menu.items
 
   return items?.map((singleItem) => ({
     ...singleItem,

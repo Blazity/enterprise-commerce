@@ -31,39 +31,15 @@ export async function POST(req: Request) {
 
   if (metadata.action === "UPDATE" || metadata.action === "CREATE") {
     const originalProduct = await storefrontClient.getProduct(product.id)
-    const normalizedProduct = normalizeProduct(originalProduct.data?.product)
 
-    if (normalizedProduct) {
-      await index.updateDocuments([normalizedProduct], {
+    if (originalProduct) {
+      await index.updateDocuments([originalProduct], {
         primaryKey: "id",
       })
     }
   }
 
   return Response.json({ status: "ok" })
-}
-
-// TODO: provide agnostic type
-function normalizeProduct(product: any | undefined | null) {
-  if (!product) return product
-
-  return {
-    ...product,
-    id: normalizeId(product.id),
-    title: product.title,
-    descriptionHtml: product.descriptionHtml,
-    priceRange: product.priceRange,
-    featuredImage: product.featuredImage,
-    seo: product.seo,
-    updatedAt: product.updatedAt,
-    handle: product.handle,
-    description: product.description,
-    options: product.options,
-    tags: product.tags,
-    images: product?.images?.edges?.map((image) => image?.node),
-    variants: product?.variants?.edges?.map((variant) => variant?.node),
-    collections: product?.collections?.nodes?.map((collection) => collection),
-  }
 }
 
 function normalizeId(id: string) {
