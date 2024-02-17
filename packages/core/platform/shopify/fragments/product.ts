@@ -8,6 +8,7 @@ const productFragment = `#graphql
     title
     description
     descriptionHtml
+    vendor
     options {
       id
       name

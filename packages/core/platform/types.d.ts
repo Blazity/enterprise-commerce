@@ -14,6 +14,7 @@ export interface PlatformProduct {
   featuredImage: PlatformImage | undefined | null
   images: PlatformImage[]
   tags: string[]
+  vendor: string
   minPrice: number
   updatedAt: string
   createdAt: string
