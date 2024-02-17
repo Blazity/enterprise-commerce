@@ -1,6 +1,7 @@
 import { meilisearch } from "client/meilisearch"
 import { storefrontClient } from "client/storefrontClient"
 import { env } from "env.mjs"
+import { Index } from "meilisearch"
 import { FailedAttemptError } from "p-retry"
 import { Root } from "shopify-webhooks"
 import { createHmac } from "crypto"
@@ -20,6 +21,8 @@ export async function POST(req: Request) {
   const { product, metadata } = JSON.parse(rawPayload) as Root
 
   let index = await getMeilisearchIndex("products")
+
+  await updateAttributesSettings(index)
 
   if (!product?.id) {
     return Response.json({ status: "error", message: "Could not create product" })
@@ -45,6 +48,19 @@ export async function POST(req: Request) {
 function normalizeId(id: string) {
   const shopifyIdPrefix = "gid://shopify/Product/"
   return id.replace(shopifyIdPrefix, "")
+}
+
+async function updateAttributesSettings(index: Index) {
+  const sortableAttributes = await index.getSortableAttributes()
+  const filterableAttributes = await index.getFilterableAttributes()
+
+  if (!sortableAttributes.includes("minPrice") || !sortableAttributes.includes("updatedAt")) {
+    await index.updateSortableAttributes(["minPrice", "updatedAt"])
+  }
+
+  if (!filterableAttributes.includes("tags") || !sortableAttributes.includes("collections")) {
+    await index.updateFilterableAttributes(["tags", "collections"])
+  }
 }
 
 async function getMeilisearchIndex(indexName: string) {
