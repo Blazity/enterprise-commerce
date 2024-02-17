@@ -1,6 +1,6 @@
 import { ComparisonOperators, FilterBuilder, LogicalOperators, SpecialOperators } from "./filter-builder"
 
-describe("MeiliSearchFilterBuilder", () => {
+describe("FilterBuilder", () => {
   test("should create a basic condition", () => {
     const filter = new FilterBuilder().where("genres", ComparisonOperators.Equal, "horror").build()
 
