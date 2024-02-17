@@ -22,7 +22,7 @@ export async function POST(req: Request) {
 
   let index = await getMeilisearchIndex("products")
 
-  await updateAttributesSettings(index)
+  // await updateAttributesSettings(index)
 
   if (!product?.id) {
     return Response.json({ status: "error", message: "Could not create product" })
@@ -50,6 +50,7 @@ function normalizeId(id: string) {
   return id.replace(shopifyIdPrefix, "")
 }
 
+// TODO: remove, move to docs
 async function updateAttributesSettings(index: Index) {
   const sortableAttributes = await index.getSortableAttributes()
   const filterableAttributes = await index.getFilterableAttributes()
