@@ -9,7 +9,6 @@
       "dependsOn": ["build", "test", "lint"]
     },
     "test": {
-      "dependsOn": ["build"],
       "inputs": ["src/**/*.tsx", "**/*.ts", "test/**/*.ts", "test/**/*.tsx"]
     },
     "e2e": {

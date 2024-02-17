@@ -19,7 +19,15 @@ export async function SearchView({ searchParams }: { searchParams: Record<string
 
   const index = await meilisearch?.getIndex("products")
 
-  const hits = await (await index.search(parsedSearchParams.q, { sort: parsedSearchParams.sortBy ? [parsedSearchParams.sortBy] : undefined, limit: 50 })).hits
+  const meilisearchResults = await index.search(parsedSearchParams.q, {
+    sort: parsedSearchParams.sortBy ? [parsedSearchParams.sortBy] : undefined,
+    limit: 50,
+    facets: ["collections.title", "tags", "vendor"],
+  })
+  const hits = await meilisearchResults.hits
+
+  const collections = meilisearchResults.facetDistribution?.["collections.title"]
+  const tags = meilisearchResults.facetDistribution?.["tags"]
 
   return (
     <div className="container mx-auto px-4 py-6 md:px-6 lg:px-8">
@@ -27,23 +35,32 @@ export async function SearchView({ searchParams }: { searchParams: Record<string
         <div>
           <h2 className="mb-4 text-lg font-semibold">Filters</h2>
           <SearchBar />
-          <Accordion className="w-full" collapsible type="single">
+          <Accordion collapsible className="w-full" type="single">
             <AccordionItem value="category">
               <AccordionTrigger className="text-base">Category</AccordionTrigger>
               <AccordionContent>
                 <div className="grid gap-2">
-                  <Label className="flex items-center gap-2 font-normal">
-                    <Checkbox id="category-clothing" />
-                    Clothing{"\n                              "}
-                  </Label>
-                  <Label className="flex items-center gap-2 font-normal">
-                    <Checkbox id="category-electronics" />
-                    Electronics{"\n                              "}
-                  </Label>
-                  <Label className="flex items-center gap-2 font-normal">
-                    <Checkbox id="category-home" />
-                    Home & Garden{"\n                              "}
-                  </Label>
+                  {Object.entries(collections || {}).map(([collection, noOfItems], index) => (
+                    <Label key={collection} className="flex items-center gap-2 font-normal">
+                      <Checkbox id="category-clothing" />
+                      {collection}
+                      {"\n                              "}({noOfItems} items)
+                    </Label>
+                  ))}
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="tags">
+              <AccordionTrigger className="text-base">Tags</AccordionTrigger>
+              <AccordionContent>
+                <div className="grid gap-2">
+                  {Object.entries(tags || {}).map(([tag, noOfItems], index) => (
+                    <Label key={tag} className="flex items-center gap-2 font-normal">
+                      <Checkbox id="category-clothing" />
+                      {tag}
+                      {"\n                              "}({noOfItems} items)
+                    </Label>
+                  ))}
                 </div>
               </AccordionContent>
             </AccordionItem>
@@ -51,40 +68,13 @@ export async function SearchView({ searchParams }: { searchParams: Record<string
               <AccordionTrigger className="text-base">Price Range</AccordionTrigger>
               <AccordionContent>
                 <div className="grid gap-2">
-                  <Label className="flex items-center gap-2 font-normal">
-                    <Checkbox id="price-under50" />
-                    Under $50{"\n                              "}
+                  <Label>
+                    Min price
+                    <input className="ml-2 inline-flex" type="number" />
                   </Label>
-                  <Label className="flex items-center gap-2 font-normal">
-                    <Checkbox id="price-50to100" />
-                    $50 to $100{"\n                              "}
-                  </Label>
-                  <Label className="flex items-center gap-2 font-normal">
-                    <Checkbox id="price-100to200" />
-                    $100 to $200{"\n                              "}
-                  </Label>
-                  <Label className="flex items-center gap-2 font-normal">
-                    <Checkbox id="price-over200" />
-                    Over $200{"\n                              "}
-                  </Label>
-                </div>
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="rating">
-              <AccordionTrigger className="text-base">Rating</AccordionTrigger>
-              <AccordionContent>
-                <div className="grid gap-2">
-                  <Label className="flex items-center gap-2 font-normal">
-                    <Checkbox id="rating-5stars" />5 Stars{"\n                              "}
-                  </Label>
-                  <Label className="flex items-center gap-2 font-normal">
-                    <Checkbox id="rating-4stars" />4 Stars & Up{"\n                              "}
-                  </Label>
-                  <Label className="flex items-center gap-2 font-normal">
-                    <Checkbox id="rating-3stars" />3 Stars & Up{"\n                              "}
-                  </Label>
-                  <Label className="flex items-center gap-2 font-normal">
-                    <Checkbox id="rating-2stars" />2 Stars & Up{"\n                              "}
+                  <Label>
+                    Max price
+                    <input className="ml-2 inline-flex" type="number" />
                   </Label>
                 </div>
               </AccordionContent>
