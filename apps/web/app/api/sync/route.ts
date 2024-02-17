@@ -36,7 +36,7 @@ export async function POST(req: Request) {
     const originalProduct = await storefrontClient.getProduct(product.id)
 
     if (originalProduct) {
-      await index.updateDocuments([originalProduct], {
+      await index.updateDocuments([{ ...originalProduct, id: normalizeId(originalProduct.id) }], {
         primaryKey: "id",
       })
     }
