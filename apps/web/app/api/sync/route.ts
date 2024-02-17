@@ -54,8 +54,8 @@ async function updateAttributesSettings(index: Index) {
   const sortableAttributes = await index.getSortableAttributes()
   const filterableAttributes = await index.getFilterableAttributes()
 
-  if (!sortableAttributes.includes("minPrice") || !sortableAttributes.includes("updatedAt")) {
-    await index.updateSortableAttributes(["minPrice", "updatedAt"])
+  if (!sortableAttributes.includes("minPrice") || !sortableAttributes.includes("updatedAtTimestamp")) {
+    await index.updateSortableAttributes(["minPrice", "updatedAtTimestamp"])
   }
 
   if (!filterableAttributes.includes("tags") || !sortableAttributes.includes("collections")) {

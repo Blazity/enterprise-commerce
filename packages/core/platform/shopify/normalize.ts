@@ -3,7 +3,7 @@ import { PlatformProduct } from "../types"
 
 export function normalizeProduct(product: SingleProductQuery["product"]): PlatformProduct | null {
   if (!product) return null
-  const { id, handle, title, description, descriptionHtml, options, priceRange, variants, featuredImage, images, tags, updatedAt, collections, seo } = product
+  const { id, handle, title, description, descriptionHtml, options, priceRange, variants, featuredImage, images, tags, updatedAt, createdAt, collections, seo } = product
 
   return {
     id,
@@ -17,6 +17,10 @@ export function normalizeProduct(product: SingleProductQuery["product"]): Platfo
     updatedAt,
     featuredImage,
     seo,
+    createdAt,
+    updatedAtTimestamp: +new Date(updatedAt).toString() / 1000,
+    createdAtTimestamp: +new Date(createdAt).toString() / 1000,
+    minPrice: priceRange?.minVariantPrice?.amount || 0,
     variants: variants?.edges?.map(({ node }) => node) || [],
     images: images?.edges?.map(({ node }) => node) || [],
     collections: collections?.nodes || [],

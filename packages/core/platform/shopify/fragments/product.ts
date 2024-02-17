@@ -55,6 +55,7 @@ const productFragment = `#graphql
     }
     tags
     updatedAt
+    createdAt
   }
   ${imageFragment}
   ${seoFragment}

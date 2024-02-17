@@ -1,16 +1,17 @@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "components/ui/Accordion"
 import { Button } from "components/ui/Button"
 import { Checkbox } from "components/ui/Checkbox"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "components/ui/DropdownMenu"
 import { Label } from "components/ui/Label"
 import Link from "next/link"
 
 import NextInstantSearch from "next-rsc-search"
-import { createSearchParamsCache, parseAsString } from "nuqs/server"
+import { createSearchParamsCache, parseAsString, parseAsStringEnum } from "nuqs/server"
 import { SearchBar } from "./SearchBar"
+import { Sorter, Sorting } from "./Sorter"
 
 const searchParamsCache = createSearchParamsCache({
   q: parseAsString.withDefault(" "),
+  sortBy: parseAsStringEnum(Object.values(Sorting)),
 })
 
 export function SearchView({ searchParams }: { searchParams: Record<string, string | string[] | undefined> }) {
@@ -89,26 +90,11 @@ export function SearchView({ searchParams }: { searchParams: Record<string, stri
         <div>
           <div className="mb-6 flex items-center justify-between">
             <h1 className="text-2xl font-semibold">Products</h1>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button size="sm" variant="outline">
-                  <ArrowUpDownIcon className="mr-2 size-4" />
-                  Sort by
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuLabel>Sort by</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>Price: Low to High</DropdownMenuItem>
-                <DropdownMenuItem>Price: High to Low</DropdownMenuItem>
-                <DropdownMenuItem>Popularity</DropdownMenuItem>
-                <DropdownMenuItem>Newest</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <Sorter />
           </div>
           <NextInstantSearch
-            meilisearchOptions={{}}
-            searchParams={{ ...parsedSearchParams, q: parsedSearchParams.q || " " }}
+            meilisearchOptions={{ sort: parsedSearchParams.sortBy ? [parsedSearchParams.sortBy] : [] }}
+            searchParams={{ q: parsedSearchParams.q || " " }}
             options={{ revalidate: 60 }}
             indexName="products"
             render={({ hits }: any) => (

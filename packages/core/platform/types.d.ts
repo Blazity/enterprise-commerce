@@ -14,7 +14,11 @@ export interface PlatformProduct {
   featuredImage: PlatformImage | undefined | null
   images: PlatformImage[]
   tags: string[]
+  minPrice: number
   updatedAt: string
+  createdAt: string
+  updatedAtTimestamp: number
+  createdAtTimestamp: number
   collections: PlatformCollection[]
   seo: {
     description?: string | null | undefined
