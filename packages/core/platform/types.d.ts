@@ -20,6 +20,7 @@ export interface PlatformProduct {
   createdAt: string
   updatedAtTimestamp: number
   createdAtTimestamp: number
+  flatOptions: Record<string, string[]>
   collections: PlatformCollection[]
   seo: {
     description?: string | null | undefined

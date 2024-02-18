@@ -19,6 +19,7 @@ export function normalizeProduct(product: SingleProductQuery["product"]): Platfo
     seo,
     updatedAt,
     createdAt,
+    flatOptions: Object.fromEntries(options?.map((option) => [option.name, option.values])),
     updatedAtTimestamp: new Date(updatedAt).getTime() / 1000,
     createdAtTimestamp: new Date(createdAt).getTime() / 1000,
     minPrice: priceRange?.minVariantPrice?.amount || 0,
