@@ -16,6 +16,7 @@ export function Sorter() {
   const [sortBy, setSortBy] = useQueryState("sortBy", {
     ...parseAsStringEnum<Sorting>(Object.values(Sorting)).withDefault(Sorting.DATE_DESC),
     shallow: false,
+    history: "push",
   })
 
   return (

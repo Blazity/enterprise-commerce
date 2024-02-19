@@ -2,14 +2,18 @@ import { meilisearch } from "client/meilisearch"
 import { Button } from "components/ui/Button"
 import Link from "next/link"
 
-import { createSearchParamsCache, parseAsArrayOf, parseAsString } from "nuqs/server"
-import { ComparisonOperators, FilterBuilder } from "utils/filter-builder"
+import { createSearchParamsCache, parseAsArrayOf, parseAsInteger, parseAsString } from "nuqs/server"
+import { ComparisonOperators, FilterBuilder, SpecialOperators } from "utils/filter-builder"
 import { Facets } from "./Facets"
+import { PaginationSection } from "./Pagination"
 import { SearchBar } from "./SearchBar"
 import { Sorter } from "./Sorter"
 
 const searchParamsCache = createSearchParamsCache({
-  q: parseAsString.withDefault(" "),
+  q: parseAsString.withDefault(""),
+  page: parseAsInteger.withDefault(1),
+  minPrice: parseAsInteger,
+  maxPrice: parseAsInteger,
   sortBy: parseAsString.withDefault(""),
   categories: parseAsArrayOf(parseAsString).withDefault([]),
   vendors: parseAsArrayOf(parseAsString).withDefault([]),
@@ -55,16 +59,28 @@ export async function SearchView({ searchParams }: { searchParams: Record<string
     })
   }
 
+  if (parsedSearchParams.minPrice) {
+    filter.and().where("minPrice", ComparisonOperators.GreaterThan, parsedSearchParams.minPrice)
+  }
+
+  if (parsedSearchParams.maxPrice) {
+    filter.and().where("minPrice", ComparisonOperators.LessThan, parsedSearchParams.maxPrice)
+  }
+
   console.log(filter.build())
 
   const meilisearchResults = await index.search(parsedSearchParams.q, {
     sort: parsedSearchParams.sortBy ? [parsedSearchParams.sortBy] : undefined,
-    limit: 50,
-    facets: ["collections.title", "tags", "vendor", "variants.availableForSale", "flatOptions.Size", "flatOptions.Color"],
-    filter: filter.build(),
+    hitsPerPage: 25,
+    facets: ["collections.title", "tags", "vendor", "variants.availableForSale", "flatOptions.Size", "flatOptions.Color", "minPrice"],
+    // filter: "minPrice < 94.0",
+    page: parsedSearchParams.page,
   })
+
+  console.log(meilisearchResults)
   const hits = meilisearchResults.hits
 
+  const totalPages = meilisearchResults.totalPages
   const availableForSale = meilisearchResults.facetDistribution?.["variants.availableForSale"]
 
   return (
@@ -114,6 +130,8 @@ export async function SearchView({ searchParams }: { searchParams: Record<string
           {/* </> */}
           {/* )}
           /> */}
+
+          <PaginationSection totalPages={totalPages} />
         </div>
       </div>
     </div>

@@ -1,10 +1,11 @@
 "use client"
 
 import { Input } from "components/ui/Input"
-import { useQueryState } from "nuqs"
+import { parseAsInteger, useQueryState } from "nuqs"
 
 export function SearchBar() {
   const [query, setQuery] = useQueryState("q", { shallow: false })
+  const [_, setPage] = useQueryState("page", { ...parseAsInteger, defaultValue: 1, shallow: false, history: "push", clearOnDefault: true })
 
   return (
     <Input
@@ -14,6 +15,7 @@ export function SearchBar() {
       value={query || ""}
       onChange={(event) => {
         setQuery(event.target.value)
+        setPage(1)
       }}
     />
   )

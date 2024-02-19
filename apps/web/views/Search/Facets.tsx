@@ -3,8 +3,8 @@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "components/ui/Accordion"
 import { Checkbox } from "components/ui/Checkbox"
 import { Label } from "components/ui/Label"
-import { parseAsArrayOf, parseAsString, useQueryState, useQueryStates } from "nuqs"
-import { ChangeEvent } from "react"
+import { parseAsArrayOf, parseAsInteger, parseAsString, useQueryState, useQueryStates } from "nuqs"
+import { ChangeEvent, useEffect } from "react"
 
 export function Facets({ facetDistribution }: any) {
   const collections = facetDistribution?.["collections.title"]
@@ -13,11 +13,16 @@ export function Facets({ facetDistribution }: any) {
   const sizes = facetDistribution?.["flatOptions.Size"]
   const colors = facetDistribution?.["flatOptions.Color"]
 
-  const [selectedCategories, setSelectedCategories] = useQueryState("categories", { ...parseAsArrayOf(parseAsString), defaultValue: [], shallow: false })
-  const [selectedVendors, setSelectedVendors] = useQueryState("vendors", { ...parseAsArrayOf(parseAsString), defaultValue: [], shallow: false })
-  const [selectedTags, setSelectedTags] = useQueryState("tags", { ...parseAsArrayOf(parseAsString), defaultValue: [], shallow: false })
-  const [selectedColors, setSelectedColors] = useQueryState("colors", { ...parseAsArrayOf(parseAsString), defaultValue: [], shallow: false })
-  const [selectedSizes, setSelectedSizes] = useQueryState("sizes", { ...parseAsArrayOf(parseAsString), defaultValue: [], shallow: false })
+  const [selectedCategories, setSelectedCategories] = useQueryState("categories", { ...parseAsArrayOf(parseAsString), defaultValue: [], shallow: false, history: "push" })
+  const [selectedVendors, setSelectedVendors] = useQueryState("vendors", { ...parseAsArrayOf(parseAsString), defaultValue: [], shallow: false, history: "push" })
+  const [selectedTags, setSelectedTags] = useQueryState("tags", { ...parseAsArrayOf(parseAsString), defaultValue: [], shallow: false, history: "push" })
+  const [selectedColors, setSelectedColors] = useQueryState("colors", { ...parseAsArrayOf(parseAsString), defaultValue: [], shallow: false, history: "push" })
+  const [selectedSizes, setSelectedSizes] = useQueryState("sizes", { ...parseAsArrayOf(parseAsString), defaultValue: [], shallow: false, history: "push" })
+
+  const [_, setPage] = useQueryState("page", { ...parseAsInteger, defaultValue: 1, shallow: false, history: "push", clearOnDefault: true })
+
+  const [minPrice, setMinPrice] = useQueryState("minPrice", { ...parseAsInteger, shallow: false })
+  const [maxPrice, setMaxPrice] = useQueryState("maxPrice", { ...parseAsInteger, shallow: false })
 
   return (
     <Accordion collapsible className="w-full" type="single">
@@ -33,6 +38,7 @@ export function Facets({ facetDistribution }: any) {
                   checked={selectedCategories?.includes(collection)}
                   onChange={(e: any) => {
                     setSelectedCategories((prev) => (e.target.checked ? [...prev, collection] : prev.filter((cat) => cat !== collection)))
+                    setPage(1)
                   }}
                 />
                 {collection}
@@ -54,6 +60,7 @@ export function Facets({ facetDistribution }: any) {
                   checked={selectedTags?.includes(tag)}
                   onChange={(e: any) => {
                     setSelectedTags((prev) => (e.target.checked ? [...prev, tag] : prev.filter((cat) => cat !== tag)))
+                    setPage(1)
                   }}
                 />
                 {tag}
@@ -75,6 +82,7 @@ export function Facets({ facetDistribution }: any) {
                   checked={selectedVendors?.includes(vendor)}
                   onChange={(e: any) => {
                     setSelectedVendors((prev) => (e.target.checked ? [...prev, vendor] : prev.filter((cat) => cat !== vendor)))
+                    setPage(1)
                   }}
                 />
                 {vendor}
@@ -96,6 +104,7 @@ export function Facets({ facetDistribution }: any) {
                   checked={selectedSizes?.includes(size)}
                   onChange={(e: any) => {
                     setSelectedSizes((prev) => (e.target.checked ? [...prev, size] : prev.filter((cat) => cat !== size)))
+                    setPage(1)
                   }}
                 />
                 {size}
@@ -117,6 +126,7 @@ export function Facets({ facetDistribution }: any) {
                   checked={selectedColors?.includes(color)}
                   onChange={(e: any) => {
                     setSelectedColors((prev) => (e.target.checked ? [...prev, color] : prev.filter((cat) => cat !== color)))
+                    setPage(1)
                   }}
                 />
                 {color}
@@ -132,11 +142,11 @@ export function Facets({ facetDistribution }: any) {
           <div className="grid gap-2">
             <Label>
               Min price
-              <input className="ml-2 inline-flex" type="number" />
+              <input className="ml-2 inline-flex" type="number" value={minPrice || undefined} onChange={(e) => setMinPrice(+e.target.value)} />
             </Label>
             <Label>
               Max price
-              <input className="ml-2 inline-flex" type="number" />
+              <input className="ml-2 inline-flex" type="number" value={maxPrice || undefined} onChange={(e) => setMaxPrice(+e.target.value)} />
             </Label>
           </div>
         </AccordionContent>

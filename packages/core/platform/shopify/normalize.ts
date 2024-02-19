@@ -22,7 +22,7 @@ export function normalizeProduct(product: SingleProductQuery["product"]): Platfo
     flatOptions: Object.fromEntries(options?.map((option) => [option.name, option.values])),
     updatedAtTimestamp: new Date(updatedAt).getTime() / 1000,
     createdAtTimestamp: new Date(createdAt).getTime() / 1000,
-    minPrice: priceRange?.minVariantPrice?.amount || 0,
+    minPrice: +priceRange?.minVariantPrice?.amount || 0,
     variants: variants?.edges?.map(({ node }) => node) || [],
     images: images?.edges?.map(({ node }) => node) || [],
     collections: collections?.nodes || [],
