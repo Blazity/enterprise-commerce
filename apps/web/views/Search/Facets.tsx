@@ -142,11 +142,27 @@ export function Facets({ facetDistribution }: any) {
           <div className="grid gap-2">
             <Label>
               Min price
-              <input className="ml-2 inline-flex" type="number" value={minPrice || undefined} onChange={(e) => setMinPrice(+e.target.value)} />
+              <input
+                className="ml-2 inline-flex"
+                type="number"
+                value={minPrice || undefined}
+                onChange={(e) => {
+                  setMinPrice(+e.target.value)
+                  setPage(1)
+                }}
+              />
             </Label>
             <Label>
               Max price
-              <input className="ml-2 inline-flex" type="number" value={maxPrice || undefined} onChange={(e) => setMaxPrice(+e.target.value)} />
+              <input
+                className="ml-2 inline-flex"
+                type="number"
+                value={maxPrice || undefined}
+                onChange={(e) => {
+                  setMaxPrice(+e.target.value)
+                  setPage(1)
+                }}
+              />
             </Label>
           </div>
         </AccordionContent>

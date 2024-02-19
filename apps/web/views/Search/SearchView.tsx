@@ -67,13 +67,11 @@ export async function SearchView({ searchParams }: { searchParams: Record<string
     filter.and().where("minPrice", ComparisonOperators.LessThan, parsedSearchParams.maxPrice)
   }
 
-  console.log(filter.build())
-
   const meilisearchResults = await index.search(parsedSearchParams.q, {
     sort: parsedSearchParams.sortBy ? [parsedSearchParams.sortBy] : undefined,
     hitsPerPage: 25,
     facets: ["collections.title", "tags", "vendor", "variants.availableForSale", "flatOptions.Size", "flatOptions.Color", "minPrice"],
-    // filter: "minPrice < 94.0",
+    filter: filter.build(),
     page: parsedSearchParams.page,
   })
 
