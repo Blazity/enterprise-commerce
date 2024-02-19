@@ -2,7 +2,6 @@
 
 import { Button } from "components/ui/Button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "components/ui/DropdownMenu"
-import { ArrowUpDownIcon } from "lucide-react"
 import { parseAsStringEnum, useQueryState } from "nuqs"
 
 export enum Sorting {
@@ -23,7 +22,6 @@ export function Sorter() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button size="sm" variant="outline">
-          <ArrowUpDownIcon className="mr-2 size-4" />
           Sort by {sortBy}
         </Button>
       </DropdownMenuTrigger>

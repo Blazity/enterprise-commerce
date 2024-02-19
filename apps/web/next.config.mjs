@@ -1,12 +1,11 @@
 import withBundleAnalyzer from "@next/bundle-analyzer"
 import withPlugins from "next-compose-plugins"
-import { env } from "./env.mjs"
 
 /**
  * @type {import('next').NextConfig}
  */
 // TODO: enable it back when it starts working
-const config = withPlugins([[withBundleAnalyzer({ enabled: false })]], {
+const config = withPlugins([[withBundleAnalyzer({ enabled: process.env.ANALYZE === "true" })]], {
   reactStrictMode: true,
   transpilePackages: ["@enterprise-commerce/design-system"],
   experimental: { instrumentationHook: true },

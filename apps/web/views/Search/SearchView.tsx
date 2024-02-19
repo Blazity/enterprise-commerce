@@ -22,17 +22,19 @@ export async function SearchView({ searchParams }: { searchParams: Record<string
   const meilisearchResults = await index.search(parsedSearchParams.q, {
     sort: parsedSearchParams.sortBy ? [parsedSearchParams.sortBy] : undefined,
     limit: 50,
-    facets: ["collections.title", "tags", "vendor", "variants.availableForSale", "variants.title", "options"],
+    facets: ["collections.title", "tags", "vendor", "variants.availableForSale", "flatOptions"],
   })
   const hits = meilisearchResults.hits
 
   const availableForSale = meilisearchResults.facetDistribution?.["variants.availableForSale"]
   const collections = meilisearchResults.facetDistribution?.["collections.title"]
   const tags = meilisearchResults.facetDistribution?.["tags"]
-  const variants = meilisearchResults.facetDistribution?.["variants.title"]
   const vendors = meilisearchResults.facetDistribution?.["vendor"]
 
-  console.log(meilisearchResults.facetDistribution)
+  const sizes = meilisearchResults.facetDistribution?.["flatOptions.Size"]
+  const colors = meilisearchResults.facetDistribution?.["flatOptions.Color"]
+
+  console.log({ sizes, colors, availableForSale, vendors })
 
   return (
     <div className="container mx-auto px-4 py-6 md:px-6 lg:px-8">
