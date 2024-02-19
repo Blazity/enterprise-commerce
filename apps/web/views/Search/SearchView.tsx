@@ -1,17 +1,21 @@
 import { meilisearch } from "client/meilisearch"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "components/ui/Accordion"
 import { Button } from "components/ui/Button"
-import { Checkbox } from "components/ui/Checkbox"
-import { Label } from "components/ui/Label"
 import Link from "next/link"
 
-import { createSearchParamsCache, parseAsString } from "nuqs/server"
+import { createSearchParamsCache, parseAsArrayOf, parseAsString } from "nuqs/server"
+import { ComparisonOperators, FilterBuilder } from "utils/filter-builder"
+import { Facets } from "./Facets"
 import { SearchBar } from "./SearchBar"
 import { Sorter } from "./Sorter"
 
 const searchParamsCache = createSearchParamsCache({
   q: parseAsString.withDefault(" "),
   sortBy: parseAsString.withDefault(""),
+  categories: parseAsArrayOf(parseAsString).withDefault([]),
+  vendors: parseAsArrayOf(parseAsString).withDefault([]),
+  tags: parseAsArrayOf(parseAsString).withDefault([]),
+  colors: parseAsArrayOf(parseAsString).withDefault([]),
+  sizes: parseAsArrayOf(parseAsString).withDefault([]),
 })
 
 export async function SearchView({ searchParams }: { searchParams: Record<string, string | string[] | undefined> }) {
@@ -19,22 +23,49 @@ export async function SearchView({ searchParams }: { searchParams: Record<string
 
   const index = await meilisearch?.getIndex("products")
 
+  const filter = new FilterBuilder()
+
+  if (parsedSearchParams.categories.length > 0) {
+    filter.and().group((sub) => {
+      sub.in("collections.title", parsedSearchParams.categories)
+    })
+  }
+
+  if (parsedSearchParams.vendors.length > 0) {
+    filter.and().group((sub) => {
+      sub.in("vendor", parsedSearchParams.vendors)
+    })
+  }
+
+  if (parsedSearchParams.tags.length > 0) {
+    filter.and().group((sub) => {
+      sub.in("tags", parsedSearchParams.tags)
+    })
+  }
+
+  if (parsedSearchParams.colors.length > 0) {
+    filter.and().group((sub) => {
+      sub.in("flatOptions.Color", parsedSearchParams.colors)
+    })
+  }
+
+  if (parsedSearchParams.sizes.length > 0) {
+    filter.and().group((sub) => {
+      sub.in("flatOptions.Size", parsedSearchParams.sizes)
+    })
+  }
+
+  console.log(filter.build())
+
   const meilisearchResults = await index.search(parsedSearchParams.q, {
     sort: parsedSearchParams.sortBy ? [parsedSearchParams.sortBy] : undefined,
     limit: 50,
-    facets: ["collections.title", "tags", "vendor", "variants.availableForSale", "flatOptions"],
+    facets: ["collections.title", "tags", "vendor", "variants.availableForSale", "flatOptions.Size", "flatOptions.Color"],
+    filter: filter.build(),
   })
   const hits = meilisearchResults.hits
 
   const availableForSale = meilisearchResults.facetDistribution?.["variants.availableForSale"]
-  const collections = meilisearchResults.facetDistribution?.["collections.title"]
-  const tags = meilisearchResults.facetDistribution?.["tags"]
-  const vendors = meilisearchResults.facetDistribution?.["vendor"]
-
-  const sizes = meilisearchResults.facetDistribution?.["flatOptions.Size"]
-  const colors = meilisearchResults.facetDistribution?.["flatOptions.Color"]
-
-  console.log({ sizes, colors, availableForSale, vendors })
 
   return (
     <div className="container mx-auto px-4 py-6 md:px-6 lg:px-8">
@@ -42,66 +73,14 @@ export async function SearchView({ searchParams }: { searchParams: Record<string
         <div>
           <h2 className="mb-4 text-lg font-semibold">Filters</h2>
           <SearchBar />
-          <Accordion collapsible className="w-full" type="single">
-            <AccordionItem value="category">
-              <AccordionTrigger className="text-base">Category</AccordionTrigger>
-              <AccordionContent>
-                <div className="grid gap-2">
-                  {Object.entries(collections || {}).map(([collection, noOfItems], index) => (
-                    <Label key={collection} className="flex items-center gap-2 font-normal">
-                      <Checkbox id="category-clothing" />
-                      {collection}
-                      {"\n                              "}({noOfItems} items)
-                    </Label>
-                  ))}
-                </div>
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="tags">
-              <AccordionTrigger className="text-base">Tags</AccordionTrigger>
-              <AccordionContent>
-                <div className="grid gap-2">
-                  {Object.entries(tags || {}).map(([tag, noOfItems], index) => (
-                    <Label key={tag} className="flex items-center gap-2 font-normal">
-                      <Checkbox id="category-clothing" />
-                      {tag}
-                      {"\n                              "}({noOfItems} items)
-                    </Label>
-                  ))}
-                </div>
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="price">
-              <AccordionTrigger className="text-base">Price Range</AccordionTrigger>
-              <AccordionContent>
-                <div className="grid gap-2">
-                  <Label>
-                    Min price
-                    <input className="ml-2 inline-flex" type="number" />
-                  </Label>
-                  <Label>
-                    Max price
-                    <input className="ml-2 inline-flex" type="number" />
-                  </Label>
-                </div>
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
+          <Facets facetDistribution={meilisearchResults.facetDistribution} />
         </div>
         <div>
           <div className="mb-6 flex items-center justify-between">
             <h1 className="text-2xl font-semibold">Products</h1>
             <Sorter />
           </div>
-          {/* <NextInstantSearch
-            meilisearchOptions={{ sort: parsedSearchParams.sortBy ? [parsedSearchParams.sortBy] : [] }}
-            searchParams={{ q: parsedSearchParams.q || " " }}
-            options={{ revalidate: 60 }}
-            cacheKey={parsedSearchParams.sortBy || ""}
-            indexName="products"
-            render={({ hits }: any) => (
-              <> */}
-          {/* <pre>xdxd {JSON.stringify(payload.hits, null, 2)}</pre> */}
+
           <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {hits.map((singleResult) => (
               <div className="group relative overflow-hidden rounded-lg" key={singleResult.id}>
@@ -129,6 +108,9 @@ export async function SearchView({ searchParams }: { searchParams: Record<string
               </div>
             ))}
           </div>
+
+          {/* <label>Available for sales ({console.log(availableForSale)})</label>
+          <input type="checkbox" name="availableForSale" /> */}
           {/* </> */}
           {/* )}
           /> */}

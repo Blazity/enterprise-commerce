@@ -176,4 +176,33 @@ describe("FilterBuilder", () => {
 
     expect(filter).toBe("((rating > 9) AND director EXISTS)")
   })
+
+  test("should not start with a logical operator", () => {
+    const query = new FilterBuilder().and().where("field", ComparisonOperators.Equal, "value").build()
+
+    expect(query).not.toMatch(/^\s*AND\s+/)
+  })
+
+  test("should not end with a logical operator", () => {
+    const query = new FilterBuilder().where("field", ComparisonOperators.Equal, "value").and().build()
+
+    expect(query).not.toMatch(/\s+AND\s*$/)
+  })
+
+  test("should handle complex expressions without starting or ending with a logical operator", () => {
+    const query = new FilterBuilder()
+      .and()
+      .where("field1", ComparisonOperators.Equal, "value")
+      .and()
+      .group((builder) => {
+        builder.where("field2", ComparisonOperators.GreaterThan, 10).or().where("field3", ComparisonOperators.LessThan, 20)
+      })
+      .or()
+      .build()
+
+    expect(query).toMatch(/^field1 = "value" AND/)
+    expect(query).toMatch(/\(field2 > 10 OR field3 < 20\)$/)
+    expect(query).not.toMatch(/^\s*AND\s+/)
+    expect(query).not.toMatch(/\s+OR\s*$/)
+  })
 })

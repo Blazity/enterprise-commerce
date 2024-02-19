@@ -93,6 +93,16 @@ export class FilterBuilder {
   }
 
   build(): string {
+    const isConnectingOperatorFirst = this.expression.length > 0 && this.isConnectingOperator(this.expression[0])
+    const isConnectingOperatorLast = this.expression.length > 0 && this.isConnectingOperator(this.expression[this.expression.length - 1])
+
+    if (isConnectingOperatorFirst) this.expression.shift()
+    if (isConnectingOperatorLast) this.expression.pop()
+
     return this.expression.join(" ")
+  }
+
+  private isConnectingOperator(value: string): boolean {
+    return value === LogicalOperators.And || value === LogicalOperators.Or
   }
 }
