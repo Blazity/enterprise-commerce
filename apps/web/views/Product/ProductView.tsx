@@ -3,10 +3,10 @@
  * @see https://v0.dev/t/J1swfBP3ZeH
  */
 import { storefrontClient } from "client/storefrontClient"
-import { Button } from "components/ui/Button"
-import { Label } from "components/ui/Label"
-import { RadioGroup, RadioGroupItem } from "components/ui/RadioGroup"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/ui/Select"
+import { Button } from "components/Button"
+import { Label } from "components/Label"
+import { RadioGroup, RadioGroupItem } from "components/RadioGroup"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/Select"
 import { notFound } from "next/navigation"
 
 export async function ProductView({ slug }) {

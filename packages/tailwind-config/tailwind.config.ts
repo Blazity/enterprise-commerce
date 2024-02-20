@@ -68,6 +68,11 @@ const config: Omit<Config, "content"> = {
       minHeight: {
         ...defaultTheme.height,
       },
+      maxWidth: {
+        ...defaultTheme.width,
+        "container-lg": "1440px",
+        "container-md": "1280px",
+      },
       minWidth: {
         ...defaultTheme.width,
       },

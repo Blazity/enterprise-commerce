@@ -1,6 +1,6 @@
 "use client"
 
-import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "components/ui/Pagination"
+import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "components/Pagination"
 import { parseAsInteger, useQueryState } from "nuqs"
 
 export function PaginationSection({ totalPages }: { totalPages: number }) {

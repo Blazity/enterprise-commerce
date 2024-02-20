@@ -1,8 +1,8 @@
 "use client"
 
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "components/ui/Accordion"
-import { Checkbox } from "components/ui/Checkbox"
-import { Label } from "components/ui/Label"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "components/Accordion"
+import { Checkbox } from "components/Checkbox"
+import { Label } from "components/Label"
 import { parseAsArrayOf, parseAsInteger, parseAsString, useQueryState, useQueryStates } from "nuqs"
 import { ChangeEvent, useEffect } from "react"
 

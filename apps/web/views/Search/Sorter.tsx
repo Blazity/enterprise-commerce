@@ -1,7 +1,7 @@
 "use client"
 
-import { Button } from "components/ui/Button"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "components/ui/DropdownMenu"
+import { Button } from "components/Button"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "components/DropdownMenu"
 import { parseAsStringEnum, useQueryState } from "nuqs"
 
 export enum Sorting {

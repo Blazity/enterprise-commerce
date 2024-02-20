@@ -1,5 +1,5 @@
 import { meilisearch } from "client/meilisearch"
-import { Button } from "components/ui/Button"
+import { Button } from "components/Button"
 import Link from "next/link"
 
 import { createSearchParamsCache, parseAsArrayOf, parseAsInteger, parseAsString } from "nuqs/server"

@@ -1,6 +1,6 @@
 "use client"
 
-import { Input } from "components/ui/Input"
+import { Input } from "components/Input"
 import { parseAsInteger, useQueryState } from "nuqs"
 
 export function SearchBar() {
