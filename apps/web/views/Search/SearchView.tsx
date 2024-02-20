@@ -75,7 +75,6 @@ export async function SearchView({ searchParams }: { searchParams: Record<string
     page: parsedSearchParams.page,
   })
 
-  console.log(meilisearchResults)
   const hits = meilisearchResults.hits
 
   const totalPages = meilisearchResults.totalPages

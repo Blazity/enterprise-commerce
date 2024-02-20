@@ -1,11 +1,18 @@
+import { meilisearch } from "client/meilisearch"
 import { storefrontClient } from "client/storefrontClient"
 import { env } from "env.mjs"
 import { unstable_cache } from "next/cache"
 import Link from "next/link"
-import { Input } from "./Input"
+import Autocomplete from "./Autocomplete"
 
 export async function Header() {
   const items = await getCachedMenuItems()
+
+  async function searchProducts(query: string) {
+    "use server"
+
+    return (await meilisearch?.getIndex("products"))?.search(query, { limit: 5 })
+  }
 
   return (
     <header className="container mx-auto flex h-14 items-center justify-center px-4 lg:px-6">
@@ -14,10 +21,7 @@ export async function Header() {
         <span className="sr-only">Acme Inc</span>
       </Link>
       <nav className="ml-auto flex items-center gap-4 sm:gap-6">
-        <div className="relative ml-4 w-64">
-          <SearchIcon className="absolute left-2.5 top-2.5 size-4 text-gray-500" />
-          <Input className="w-full appearance-none bg-white pl-8 shadow-none" placeholder="Search products..." type="search" />
-        </div>
+        <Autocomplete searchProducts={searchProducts} />
         {items.map((singleItem) => (
           <Link key={singleItem.url} className="text-sm font-medium underline-offset-4 hover:underline" href={singleItem.url}>
             {singleItem.title}
