@@ -9,6 +9,25 @@ const config = withPlugins([[withBundleAnalyzer({ enabled: process.env.ANALYZE =
   reactStrictMode: true,
   transpilePackages: ["@enterprise-commerce/design-system"],
   experimental: { instrumentationHook: true },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "plus.unsplash.com",
+        port: "",
+      },
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+        port: "",
+      },
+      {
+        protocol: "https",
+        hostname: "picsum.photos",
+        port: "",
+      },
+    ],
+  },
   rewrites() {
     return [
       { source: "/healthz", destination: "/api/health" },
