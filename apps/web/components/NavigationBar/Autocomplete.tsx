@@ -6,8 +6,9 @@ import { useClickAway, useDebounce } from "@uidotdev/usehooks"
 import { searchProducts } from "app/actions"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { ChangeEvent, KeyboardEvent, useEffect, useState } from "react"
+import { ChangeEvent, KeyboardEvent, useEffect, useState, useTransition } from "react"
 import { cn } from "utils/cn"
+import { getHighlightedText } from "utils/highlighted-text"
 
 interface AutocompleteProps {
   className?: string
@@ -95,18 +96,5 @@ export function Autocomplete({ className }: AutocompleteProps) {
         {resultsMarkup}
       </div>
     </div>
-  )
-}
-
-function getHighlightedText(text, highlight) {
-  const parts = text.split(new RegExp(`(${highlight})`, "gi"))
-  return (
-    <span>
-      {parts.map((part, i) => (
-        <span key={i} className={cn({ "font-bold": part.toLowerCase() === highlight.toLowerCase() })}>
-          {part}
-        </span>
-      ))}{" "}
-    </span>
   )
 }
