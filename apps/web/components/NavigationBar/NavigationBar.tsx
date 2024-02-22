@@ -1,3 +1,4 @@
+import { ChevronIcon } from "components/Icons/ChevronIcon"
 import Script from "next/script"
 
 import { cn } from "utils/cn"
@@ -9,7 +10,6 @@ import { ImageGridItem, NavItem, TextGridItem, TextImageGridItem } from "./types
 import { ImageGridVariant } from "./variants/ImageGridVariant"
 import { TextGridVariant } from "./variants/TextGridVariant"
 import { TextImageGridVariant } from "./variants/TextImageGridVariant"
-import { ChevronIcon } from "components/Icons/ChevronIcon"
 
 interface NavigationBarProps {
   items: NavItem[]

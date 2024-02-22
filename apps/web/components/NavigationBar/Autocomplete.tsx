@@ -1,13 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
 "use client"
 
-import { searchProducts } from "app/actions"
+import { PlatformProduct } from "@enterprise-commerce/core/platform/types"
 import { useClickAway, useDebounce } from "@uidotdev/usehooks"
+import { searchProducts } from "app/actions"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { ChangeEvent, KeyboardEvent, useEffect, useState } from "react"
 import { cn } from "utils/cn"
-import { PlatformProduct } from "@enterprise-commerce/core/platform/types"
-import Link from "next/link"
 
 interface AutocompleteProps {
   className?: string
@@ -28,7 +28,7 @@ export function Autocomplete({ className }: AutocompleteProps) {
   useEffect(() => {
     async function handler() {
       if (debouncedQuery) {
-        const searchResults = await searchProducts(query)
+        const searchResults = await searchProducts(debouncedQuery)
         setIsOpen(true)
         setResults(searchResults)
       }
