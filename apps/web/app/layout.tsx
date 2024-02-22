@@ -128,7 +128,7 @@ const navigationItems: NavItem[] = [
     },
   },
   {
-    text: "Home Improvement",
+    text: "Kids",
     href: "#",
   },
 ]
@@ -139,7 +139,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <Topbar />
         <NavigationBar items={navigationItems} />
-        {/* <Header /> */}
         {children}
       </body>
     </html>
