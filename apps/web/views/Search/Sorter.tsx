@@ -22,9 +22,7 @@ export function Sorter() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button size="sm" variant="outline">
-          Sort by {sortBy}
-        </Button>
+        <Button>Sort by {sortBy}</Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="bg-white" align="end">
         <DropdownMenuLabel>Sort by</DropdownMenuLabel>

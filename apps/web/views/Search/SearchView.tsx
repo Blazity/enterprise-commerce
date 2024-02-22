@@ -114,9 +114,7 @@ export async function SearchView({ searchParams }: { searchParams: Record<string
                 <div className="bg-white p-4 dark:bg-gray-950">
                   <h3 className="text-lg font-semibold md:text-xl">{singleResult.title}</h3>
                   <h4 className="text-base font-semibold md:text-lg">${singleResult.minPrice || 1337}</h4>
-                  <Button className="mt-2" size="sm">
-                    Add to Cart
-                  </Button>
+                  <Button className="mt-2">Add to Cart</Button>
                 </div>
               </div>
             ))}

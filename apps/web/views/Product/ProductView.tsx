@@ -141,7 +141,7 @@ export async function ProductView({ slug }) {
               </SelectContent>
             </Select>
           </div>
-          <Button size="lg">Add to cart</Button>
+          <Button>Add to cart</Button>
         </form>
       </div>
     </div>
