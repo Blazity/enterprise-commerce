@@ -17,25 +17,24 @@ interface AutocompleteProps {
 export function Autocomplete({ className }: AutocompleteProps) {
   const [query, setQuery] = useState("")
   const [isOpen, setIsOpen] = useState(false)
+  const [isPending, startTransition] = useTransition()
   const [results, setResults] = useState<PlatformProduct[] | null>(null)
   const router = useRouter()
 
-  const debouncedQuery = useDebounce(query, 250)
+  const debouncedQuery = useDebounce(query, 300)
 
   const ref = useClickAway<HTMLDivElement>(() => {
     setIsOpen(false)
   })
 
   useEffect(() => {
-    async function handler() {
-      if (debouncedQuery) {
+    if (debouncedQuery) {
+      startTransition(async () => {
         const searchResults = await searchProducts(debouncedQuery)
         setIsOpen(true)
         setResults(searchResults)
-      }
+      })
     }
-
-    handler()
   }, [debouncedQuery])
 
   async function handleOnInputChange(e: ChangeEvent<HTMLInputElement>) {
@@ -77,6 +76,9 @@ export function Autocomplete({ className }: AutocompleteProps) {
   return (
     <div className="relative hidden lg:block">
       <div className={cn("relative block w-[240px] overflow-hidden rounded-[66px]", className)}>
+        {!!isPending && (
+          <div className="pointer-events-none absolute inset-y-1.5 right-2 size-5 animate-spin rounded-full border-4 border-solid border-blue-200 border-t-transparent" />
+        )}
         <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5">
           <svg aria-hidden="true" className="size-4 text-gray-400 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
             <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd"></path>

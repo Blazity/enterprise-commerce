@@ -18,14 +18,16 @@ export function TextImageGridVariant({ items }: TextImageGridVariantProps) {
         <ul>
           {textItems.map((item) => (
             <li key={item.text} className="text-[22px] hover:underline">
-              <Link href={item.href || "#"}>{item.text}</Link>
+              <Link prefetch={false} href={item.href || "#"}>
+                {item.text}
+              </Link>
             </li>
           ))}
         </ul>
       </div>
       <div className="grid w-full grid-cols-[repeat(_auto-fit,minmax(160px,1fr)_)] gap-8 md:w-1/2">
         {imageItems.map((singleCategory) => (
-          <Link href={singleCategory.href || "#"} className="submenu__inner flex flex-col items-center gap-4" key={singleCategory.text}>
+          <Link prefetch={false} href={singleCategory.href || "#"} className="submenu__inner flex flex-col items-center gap-4" key={singleCategory.text}>
             <Image
               className="h-[200px] w-[160px] rounded-md bg-gray-200 object-cover transition-transform hover:scale-105"
               src={singleCategory.image!}
