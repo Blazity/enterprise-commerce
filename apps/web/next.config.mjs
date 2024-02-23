@@ -8,6 +8,11 @@ import withPlugins from "next-compose-plugins"
 const config = withPlugins([[withBundleAnalyzer({ enabled: process.env.ANALYZE === "true" })]], {
   reactStrictMode: true,
   transpilePackages: ["@enterprise-commerce/design-system"],
+  logging: {
+    fetches: {
+      fullUrl: true,
+    },
+  },
   experimental: { instrumentationHook: true },
   images: {
     remotePatterns: [
