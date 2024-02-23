@@ -1,9 +1,10 @@
 import "./globals.css"
 import "@enterprise-commerce/design-system/styles.css"
 
+import { Modals } from "components/Modals/Modals"
 import { NavigationBar } from "components/NavigationBar/NavigationBar"
 import { NavItem } from "components/NavigationBar/types"
-import { Topbar } from "components/Topbar"
+import { TopBar } from "components/TopBar/TopBar"
 
 const navigationItems: NavItem[] = [
   {
@@ -137,9 +138,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
-        <Topbar />
+        <TopBar />
         <NavigationBar items={navigationItems} />
         {children}
+        <Modals />
       </body>
     </html>
   )

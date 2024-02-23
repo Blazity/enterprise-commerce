@@ -3,14 +3,15 @@ import { cva, type VariantProps } from "class-variance-authority"
 import * as React from "react"
 import { cn } from "utils/cn"
 
-const buttonVariants = cva("inline-flex text-[11px] border border-black rounded-md text-center overflow-hidden group relative", {
+const buttonVariants = cva("inline-flex  border border-black rounded-md text-center overflow-hidden group relative", {
   variants: {
     variant: {
       primary: "hover:text-white text-black",
       secondary: "hover:text-black text-white bg-black",
     },
     size: {
-      default: "px-10 py-2",
+      default: "px-10 py-2 text-[11px]",
+      lg: "px-6 py-3 text-[13px]",
     },
   },
   defaultVariants: {

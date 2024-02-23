@@ -1,7 +1,7 @@
 "use server"
 
 import { PlatformProduct } from "@enterprise-commerce/core/platform/types"
-import { meilisearch } from "client/meilisearch"
+import { meilisearch } from "clients/meilisearch"
 import { unstable_cache } from "next/cache"
 
 export const searchProducts = unstable_cache(uncached_searchProducts, ["autocomplete-search"], { revalidate: 3600 })

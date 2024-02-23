@@ -1,5 +1,5 @@
-import { meilisearch } from "client/meilisearch"
-import { storefrontClient } from "client/storefrontClient"
+import { meilisearch } from "clients/meilisearch"
+import { storefrontClient } from "clients/storefrontClient"
 import { env } from "env.mjs"
 import { Index } from "meilisearch"
 import { FailedAttemptError } from "p-retry"

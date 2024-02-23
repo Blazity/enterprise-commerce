@@ -1,4 +1,4 @@
-import { meilisearch } from "client/meilisearch"
+import { meilisearch } from "clients/meilisearch"
 import { Button } from "components/Button"
 import Link from "next/link"
 

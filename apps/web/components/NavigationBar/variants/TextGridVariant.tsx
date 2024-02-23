@@ -16,7 +16,9 @@ export function TextGridVariant({ items }: TextGridVariantProps) {
           <ul className="submenu__list flex flex-col items-start justify-start gap-2 text-left">
             {singleCategory?.items?.map((item) => (
               <li key={item.text} className="hover:underline">
-                <Link href={item.href} prefetch={false}>{item.text}</Link>
+                <Link href={item.href} prefetch={false}>
+                  {item.text}
+                </Link>
               </li>
             ))}
           </ul>

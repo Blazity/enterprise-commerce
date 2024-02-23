@@ -1,8 +1,8 @@
-import sharedConfig from "../../packages/tailwind-config/tailwind.config.js"
 import type { Config } from "tailwindcss"
+import sharedConfig from "../../packages/tailwind-config/tailwind.config.js"
 
 /** @type {import('tailwindcss').Config} */
-const config: Pick<Config, "content" | "presets"> = {
+const config: Pick<Config, "content" | "presets" | "corePlugins"> = {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -14,6 +14,9 @@ const config: Pick<Config, "content" | "presets"> = {
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
     "../../packages/design-system/**/*{.js,.ts,.jsx,.tsx}",
   ],
+  corePlugins: {
+    preflight: false,
+  },
   presets: [sharedConfig],
 }
 
