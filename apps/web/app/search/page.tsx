@@ -13,6 +13,10 @@ import { composeFilters } from "views/Search/composeFilters"
 
 export const runtime = "edge"
 
+export const revalidate = 3600
+
+export const fetchCache = "default-cache"
+
 const searchParamsCache = createSearchParamsCache({
   q: parseAsString.withDefault(""),
   page: parseAsInteger.withDefault(1),
@@ -41,8 +45,9 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
 }
 
 async function SearchView({ searchParams }: SearchPageProps) {
-  const parsedSearchParams = searchParamsCache.parse(searchParams)
-  const meilisearchResults = await searchProducts(parsedSearchParams)
+  const { q, sortBy, page, ...rest } = searchParamsCache.parse(searchParams)
+
+  const meilisearchResults = await searchProducts(q, sortBy, page, composeFilters(rest).build())
 
   if (!meilisearchResults) return <></>
 
@@ -68,17 +73,17 @@ async function SearchView({ searchParams }: SearchPageProps) {
 }
 
 const searchProducts = unstable_cache(
-  async (parsedSearchParams: ReturnType<typeof searchParamsCache.all>) => {
+  async (query: string, sortBy: string, page: number, filter: string) => {
     const index = await meilisearch?.getIndex<PlatformProduct>("products")
 
     if (!index) return null
 
-    const results = await index.search(parsedSearchParams.q, {
-      sort: parsedSearchParams.sortBy ? [parsedSearchParams.sortBy] : undefined,
+    const results = await index.search(query, {
+      sort: sortBy ? [sortBy] : undefined,
       hitsPerPage: 25,
       facets: ["collections.title", "tags", "vendor", "variants.availableForSale", "flatOptions.Size", "flatOptions.Color", "minPrice"],
-      filter: composeFilters(parsedSearchParams).build(),
-      page: parsedSearchParams.page,
+      filter,
+      page,
     })
 
     return results
