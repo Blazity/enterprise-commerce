@@ -13,7 +13,7 @@ const config = withPlugins([[withBundleAnalyzer({ enabled: process.env.ANALYZE =
       fullUrl: true,
     },
   },
-  experimental: { instrumentationHook: true },
+  experimental: { ppr: true },
   images: {
     remotePatterns: [
       {

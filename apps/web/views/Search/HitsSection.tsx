@@ -6,9 +6,9 @@ interface HitsSectionProps {
   hits: PlatformProduct[]
 }
 
-export function HitsSection({ hits }: HitsSectionProps) {
+export async function HitsSection({ hits }: HitsSectionProps) {
   return (
-    <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+    <div className="mt-6 grid w-full max-w-[950px] grid-cols-[repeat(_auto-fit,minmax(300px,1fr)_)] items-center gap-4">
       {hits.map((singleResult) => (
         <div className="group relative overflow-hidden rounded-lg" key={singleResult.id}>
           <Link className="absolute inset-0 z-10" href={`/products/${singleResult.handle}`}>

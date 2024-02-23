@@ -2,9 +2,11 @@ import { PlatformProduct } from "@enterprise-commerce/core/platform/types"
 import { meilisearch } from "clients/meilisearch"
 import { unstable_cache } from "next/cache"
 import { createSearchParamsCache, parseAsArrayOf, parseAsInteger, parseAsString } from "nuqs/server"
+import { Suspense } from "react"
 
 import { FacetsSection } from "views/Search/FacetsSection"
 import { HitsSection } from "views/Search/HitsSection"
+import { HitsSectionSkeleton } from "views/Search/HitsSectionSkeleton"
 import { PaginationSection } from "views/Search/PaginationSection"
 import { Sorter } from "views/Search/Sorter"
 import { composeFilters } from "views/Search/composeFilters"
@@ -24,13 +26,24 @@ const searchParamsCache = createSearchParamsCache({
   sizes: parseAsArrayOf(parseAsString).withDefault([]),
 })
 
-export default async function SearchPage({ searchParams }: { searchParams: Record<string, string | string[] | undefined> }) {
-  const parsedSearchParams = searchParamsCache.parse(searchParams)
-  const index = await meilisearch?.getIndex("products")
+interface SearchPageProps {
+  searchParams: Record<string, string | string[] | undefined>
+}
 
+export default async function SearchPage({ searchParams }: SearchPageProps) {
+  return (
+    <div className="container mx-auto px-4 py-6 md:px-6 lg:px-8">
+      <Suspense fallback={<HitsSectionSkeleton />}>
+        <SearchView searchParams={searchParams} />
+      </Suspense>
+    </div>
+  )
+}
+
+async function SearchView({ searchParams }: SearchPageProps) {
+  const parsedSearchParams = searchParamsCache.parse(searchParams)
   const meilisearchResults = await searchProducts(parsedSearchParams)
 
-  // Skeleton
   if (!meilisearchResults) return <></>
 
   const hits = meilisearchResults.hits
@@ -38,18 +51,17 @@ export default async function SearchPage({ searchParams }: { searchParams: Recor
   // const availableForSale = meilisearchResults.facetDistribution?.["variants.availableForSale"]
 
   return (
-    <div className="container mx-auto px-4 py-6 md:px-6 lg:px-8">
-      <div className="grid gap-6 md:grid-cols-[240px_1fr]">
-        <FacetsSection facetDistribution={meilisearchResults.facetDistribution} />
-        <div>
-          <div className="mb-6 flex items-center justify-between">
-            <h1 className="text-2xl font-semibold">Products</h1>
-            <Sorter />
-          </div>
-
-          <HitsSection hits={hits} />
-          <PaginationSection totalPages={totalPages} />
+    <div className="grid gap-6 md:grid-cols-[240px_1fr]">
+      <FacetsSection facetDistribution={meilisearchResults.facetDistribution} />
+      <div>
+        <div className="mb-6 flex items-center justify-between">
+          <h1 className="text-2xl font-semibold">Products</h1>
+          <Sorter />
         </div>
+
+        <HitsSection hits={hits} />
+
+        <PaginationSection totalPages={totalPages} />
       </div>
     </div>
   )
