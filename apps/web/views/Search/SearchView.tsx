@@ -3,7 +3,7 @@ import { Button } from "components/Button"
 import Link from "next/link"
 
 import { createSearchParamsCache, parseAsArrayOf, parseAsInteger, parseAsString } from "nuqs/server"
-import { ComparisonOperators, FilterBuilder, SpecialOperators } from "utils/filter-builder"
+import { ComparisonOperators, FilterBuilder, SpecialOperators } from "utils/filterBuilder"
 import { Facets } from "./Facets"
 import { PaginationSection } from "./Pagination"
 import { SearchBar } from "./SearchBar"
@@ -24,48 +24,44 @@ const searchParamsCache = createSearchParamsCache({
 
 export async function SearchView({ searchParams }: { searchParams: Record<string, string | string[] | undefined> }) {
   const parsedSearchParams = searchParamsCache.parse(searchParams)
-
   const index = await meilisearch?.getIndex("products")
 
   const filter = new FilterBuilder()
 
-  if (parsedSearchParams.categories.length > 0) {
-    filter.and().group((sub) => {
-      sub.in("collections.title", parsedSearchParams.categories)
-    })
-  }
+  const filterConditions = [
+    {
+      predicate: parsedSearchParams.categories.length > 0,
+      action: () => filter.and().group((sub) => sub.in("collections.title", parsedSearchParams.categories)),
+    },
+    {
+      predicate: parsedSearchParams.vendors.length > 0,
+      action: () => filter.and().group((sub) => sub.in("vendor", parsedSearchParams.vendors)),
+    },
+    {
+      predicate: parsedSearchParams.tags.length > 0,
+      action: () => filter.and().group((sub) => sub.in("tags", parsedSearchParams.tags)),
+    },
+    {
+      predicate: parsedSearchParams.colors.length > 0,
+      action: () => filter.and().group((sub) => sub.in("flatOptions.Color", parsedSearchParams.colors)),
+    },
+    {
+      predicate: parsedSearchParams.sizes.length > 0,
+      action: () => filter.and().group((sub) => sub.in("flatOptions.Size", parsedSearchParams.sizes)),
+    },
+    {
+      predicate: !!parsedSearchParams.minPrice,
+      action: () => filter.and().where("minPrice", ComparisonOperators.GreaterThan, parsedSearchParams.minPrice!),
+    },
+    {
+      predicate: !!parsedSearchParams.maxPrice,
+      action: () => filter.and().where("minPrice", ComparisonOperators.LessThan, parsedSearchParams.maxPrice!),
+    },
+  ]
 
-  if (parsedSearchParams.vendors.length > 0) {
-    filter.and().group((sub) => {
-      sub.in("vendor", parsedSearchParams.vendors)
-    })
-  }
+  filterConditions.forEach(({ predicate, action }) => predicate && action())
 
-  if (parsedSearchParams.tags.length > 0) {
-    filter.and().group((sub) => {
-      sub.in("tags", parsedSearchParams.tags)
-    })
-  }
-
-  if (parsedSearchParams.colors.length > 0) {
-    filter.and().group((sub) => {
-      sub.in("flatOptions.Color", parsedSearchParams.colors)
-    })
-  }
-
-  if (parsedSearchParams.sizes.length > 0) {
-    filter.and().group((sub) => {
-      sub.in("flatOptions.Size", parsedSearchParams.sizes)
-    })
-  }
-
-  if (parsedSearchParams.minPrice) {
-    filter.and().where("minPrice", ComparisonOperators.GreaterThan, parsedSearchParams.minPrice)
-  }
-
-  if (parsedSearchParams.maxPrice) {
-    filter.and().where("minPrice", ComparisonOperators.LessThan, parsedSearchParams.maxPrice)
-  }
+  console.log(filter.build())
 
   const meilisearchResults = await index.search(parsedSearchParams.q, {
     sort: parsedSearchParams.sortBy ? [parsedSearchParams.sortBy] : undefined,
@@ -76,7 +72,6 @@ export async function SearchView({ searchParams }: { searchParams: Record<string
   })
 
   const hits = meilisearchResults.hits
-
   const totalPages = meilisearchResults.totalPages
   const availableForSale = meilisearchResults.facetDistribution?.["variants.availableForSale"]
 

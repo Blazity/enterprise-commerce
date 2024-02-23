@@ -8,7 +8,7 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { ChangeEvent, KeyboardEvent, useEffect, useState, useTransition } from "react"
 import { cn } from "utils/cn"
-import { getHighlightedText } from "utils/highlighted-text"
+import { getHighlightedText } from "utils/highlightedText"
 
 interface AutocompleteProps {
   className?: string

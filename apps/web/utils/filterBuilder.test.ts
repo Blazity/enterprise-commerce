@@ -1,4 +1,4 @@
-import { ComparisonOperators, FilterBuilder, LogicalOperators, SpecialOperators } from "./filter-builder"
+import { ComparisonOperators, FilterBuilder, LogicalOperators, SpecialOperators } from "./filterBuilder"
 
 describe("FilterBuilder", () => {
   test("should create a basic condition", () => {
