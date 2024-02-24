@@ -24,7 +24,7 @@ export async function HitsSection({ hits }: HitsSectionProps) {
               aspectRatio: "400/300",
               objectFit: "contain",
             }}
-            sizes="400px"
+            sizes="300px"
             width={400}
             priority={idx === 0}
           />

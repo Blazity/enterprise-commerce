@@ -15,7 +15,8 @@ const config = withPlugins([[withBundleAnalyzer({ enabled: process.env.ANALYZE =
   },
   experimental: { ppr: true },
   images: {
-    deviceSizes: [640, 750, 828, 1080, 1200],
+    deviceSizes: [320, 640, 750, 828, 1080, 1200],
+    minimumCacheTTL: 31_556_926,
     formats: ["image/avif", "image/webp"],
     remotePatterns: [
       {
