@@ -1,5 +1,6 @@
 import { PlatformProduct } from "@enterprise-commerce/core/platform/types"
 import { Button } from "components/Button"
+import Image from "next/image"
 import Link from "next/link"
 
 interface HitsSectionProps {
@@ -8,13 +9,13 @@ interface HitsSectionProps {
 
 export async function HitsSection({ hits }: HitsSectionProps) {
   return (
-    <div className="mt-6 grid w-full max-w-[950px] grid-cols-[repeat(_auto-fit,minmax(300px,1fr)_)] items-center gap-4">
-      {hits.map((singleResult) => (
+    <div className="grid w-full grid-cols-[repeat(_auto-fit,minmax(300px,1fr)_)] items-center gap-4">
+      {hits.map((singleResult, idx) => (
         <div className="group relative overflow-hidden rounded-lg" key={singleResult.id}>
           <Link className="absolute inset-0 z-10" href={`/products/${singleResult.handle}`}>
             <span className="sr-only">View</span>
           </Link>
-          <img
+          <Image
             alt="Product 1"
             className="h-60 w-full object-cover"
             height={singleResult.images[0].height || 300}
@@ -23,7 +24,9 @@ export async function HitsSection({ hits }: HitsSectionProps) {
               aspectRatio: "400/300",
               objectFit: "cover",
             }}
+            sizes="350px"
             width={singleResult.images[0].width || 400}
+            priority={idx === 0}
           />
           <div className="bg-white p-4 dark:bg-gray-950">
             <h3 className="text-lg font-semibold md:text-xl">{singleResult.title}</h3>

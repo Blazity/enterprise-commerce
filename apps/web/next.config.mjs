@@ -15,6 +15,8 @@ const config = withPlugins([[withBundleAnalyzer({ enabled: process.env.ANALYZE =
   },
   experimental: { ppr: true },
   images: {
+    deviceSizes: [640, 750, 828, 1080, 1200],
+    formats: ["image/avif", "image/webp"],
     remotePatterns: [
       {
         protocol: "https",
@@ -29,6 +31,11 @@ const config = withPlugins([[withBundleAnalyzer({ enabled: process.env.ANALYZE =
       {
         protocol: "https",
         hostname: "picsum.photos",
+        port: "",
+      },
+      {
+        protocol: "https",
+        hostname: "cdn.shopify.com",
         port: "",
       },
     ],

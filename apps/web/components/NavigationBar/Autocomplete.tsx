@@ -4,6 +4,7 @@
 import { PlatformProduct } from "@enterprise-commerce/core/platform/types"
 import { useClickAway, useDebounce } from "@uidotdev/usehooks"
 import { searchProducts } from "app/actions"
+import { SearchIcon } from "components/Icons/SearchIcon"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { ChangeEvent, KeyboardEvent, useEffect, useState, useTransition } from "react"
@@ -80,12 +81,10 @@ export function Autocomplete({ className }: AutocompleteProps) {
           <div className="pointer-events-none absolute inset-y-1.5 right-2 size-5 animate-spin rounded-full border-4 border-solid border-blue-200 border-t-transparent" />
         )}
         <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5">
-          <svg aria-hidden="true" className="size-4 text-gray-400 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-            <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd"></path>
-          </svg>
+          <SearchIcon className="size-4 text-gray-400" />
         </div>
         <input
-          type="text"
+          type="search"
           className="block w-full rounded-[66px] border border-gray-300 bg-gray-100 px-2.5 py-1.5 pl-10 text-[12px] text-black focus:border-blue-500 focus:ring-blue-500  "
           placeholder="Search..."
           onChange={handleOnInputChange}

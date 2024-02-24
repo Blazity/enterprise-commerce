@@ -6,7 +6,7 @@ import { cn } from "utils/cn"
 const buttonVariants = cva("inline-flex  border border-black rounded-md text-center overflow-hidden group relative", {
   variants: {
     variant: {
-      primary: "hover:text-white text-black",
+      primary: "hover:text-white text-black bg-white",
       secondary: "hover:text-black text-white bg-black",
     },
     size: {

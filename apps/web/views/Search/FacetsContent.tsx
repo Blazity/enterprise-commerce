@@ -1,11 +1,18 @@
 "use client"
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "components/Accordion"
-import { Input } from "components/Input"
+import { Checkbox } from "components/Checkbox"
+import { SearchIcon } from "components/Icons/SearchIcon"
 import { Label } from "components/Label"
+import type { CategoriesDistribution } from "meilisearch"
 import { parseAsArrayOf, parseAsInteger, parseAsString, useQueryState } from "nuqs"
 
-export function FacetsSection({ facetDistribution }: any) {
+interface FacetsContentProps {
+  facetDistribution: Record<string, CategoriesDistribution> | undefined
+  className?: string
+}
+
+export function FacetsContent({ facetDistribution, className }: FacetsContentProps) {
   const collections = facetDistribution?.["collections.title"]
   const tags = facetDistribution?.["tags"]
   const vendors = facetDistribution?.["vendor"]
@@ -25,18 +32,22 @@ export function FacetsSection({ facetDistribution }: any) {
   const [maxPrice, setMaxPrice] = useQueryState("maxPrice", { ...parseAsInteger, shallow: false })
 
   return (
-    <div>
-      <h2 className="mb-4 text-lg font-semibold">Filters</h2>
-      <Input
-        className="w-full appearance-none bg-white pl-8 shadow-none "
-        placeholder="Search for products..."
-        type="search"
-        value={query || ""}
-        onChange={(event) => {
-          setQuery(event.target.value)
-          setPage(1)
-        }}
-      />
+    <div className={className}>
+      <div className={"relative mb-6 block overflow-hidden rounded-md"}>
+        <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5">
+          <SearchIcon className="size-4 text-gray-400" />
+        </div>
+        <input
+          className="block w-full rounded-md border border-gray-300 bg-gray-100 px-2.5 py-1.5 pl-10 text-[14px] text-black focus:border-blue-500 focus:ring-blue-500  "
+          placeholder="Search..."
+          type="search"
+          value={query || ""}
+          onChange={(event) => {
+            setQuery(event.target.value)
+            setPage(1)
+          }}
+        />
+      </div>
       <Accordion collapsible className="w-full" type="single">
         <AccordionItem value="category">
           <AccordionTrigger className="text-base">Category</AccordionTrigger>
@@ -44,12 +55,11 @@ export function FacetsSection({ facetDistribution }: any) {
             <div className="grid gap-2">
               {Object.entries(collections || {}).map(([collection, noOfItems], index) => (
                 <Label key={collection} className="flex items-center gap-2 font-normal">
-                  <input
-                    type="checkbox"
+                  <Checkbox
                     name={collection}
                     checked={selectedCategories?.includes(collection)}
-                    onChange={(e: any) => {
-                      setSelectedCategories((prev) => (e.target.checked ? [...prev, collection] : prev.filter((cat) => cat !== collection)))
+                    onCheckedChange={(checked) => {
+                      setSelectedCategories((prev) => (checked ? [...prev, collection] : prev.filter((cat) => cat !== collection)))
                       setPage(1)
                     }}
                   />
@@ -66,12 +76,11 @@ export function FacetsSection({ facetDistribution }: any) {
             <div className="grid gap-2">
               {Object.entries(tags || {}).map(([tag, noOfItems], index) => (
                 <Label key={tag} className="flex items-center gap-2 font-normal">
-                  <input
-                    type="checkbox"
+                  <Checkbox
                     name={tag}
                     checked={selectedTags?.includes(tag)}
-                    onChange={(e: any) => {
-                      setSelectedTags((prev) => (e.target.checked ? [...prev, tag] : prev.filter((cat) => cat !== tag)))
+                    onCheckedChange={(checked) => {
+                      setSelectedTags((prev) => (checked ? [...prev, tag] : prev.filter((cat) => cat !== tag)))
                       setPage(1)
                     }}
                   />
@@ -88,12 +97,11 @@ export function FacetsSection({ facetDistribution }: any) {
             <div className="grid gap-2">
               {Object.entries(vendors || {}).map(([vendor, noOfItems], index) => (
                 <Label key={vendor} className="flex items-center gap-2 font-normal">
-                  <input
-                    type="checkbox"
+                  <Checkbox
                     name={vendor}
                     checked={selectedVendors?.includes(vendor)}
-                    onChange={(e: any) => {
-                      setSelectedVendors((prev) => (e.target.checked ? [...prev, vendor] : prev.filter((cat) => cat !== vendor)))
+                    onCheckedChange={(checked) => {
+                      setSelectedVendors((prev) => (checked ? [...prev, vendor] : prev.filter((cat) => cat !== vendor)))
                       setPage(1)
                     }}
                   />
@@ -110,12 +118,11 @@ export function FacetsSection({ facetDistribution }: any) {
             <div className="grid gap-2">
               {Object.entries(sizes || {}).map(([size, noOfItems], index) => (
                 <Label key={size} className="flex items-center gap-2 font-normal">
-                  <input
-                    type="checkbox"
+                  <Checkbox
                     name={size}
                     checked={selectedSizes?.includes(size)}
-                    onChange={(e: any) => {
-                      setSelectedSizes((prev) => (e.target.checked ? [...prev, size] : prev.filter((cat) => cat !== size)))
+                    onCheckedChange={(checked) => {
+                      setSelectedSizes((prev) => (checked ? [...prev, size] : prev.filter((cat) => cat !== size)))
                       setPage(1)
                     }}
                   />
@@ -132,12 +139,11 @@ export function FacetsSection({ facetDistribution }: any) {
             <div className="grid gap-2">
               {Object.entries(colors || {}).map(([color, noOfItems], index) => (
                 <Label key={color} className="flex items-center gap-2 font-normal">
-                  <input
-                    type="checkbox"
+                  <Checkbox
                     name={color}
                     checked={selectedColors?.includes(color)}
-                    onChange={(e: any) => {
-                      setSelectedColors((prev) => (e.target.checked ? [...prev, color] : prev.filter((cat) => cat !== color)))
+                    onCheckedChange={(checked) => {
+                      setSelectedColors((prev) => (checked ? [...prev, color] : prev.filter((cat) => cat !== color)))
                       setPage(1)
                     }}
                   />
