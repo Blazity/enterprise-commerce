@@ -18,14 +18,14 @@ export async function HitsSection({ hits }: HitsSectionProps) {
           <Image
             alt="Product 1"
             className="h-60 w-full object-cover"
-            height={singleResult.images[0].height || 300}
+            height={300}
             src={singleResult.images[0].url}
             style={{
               aspectRatio: "400/300",
-              objectFit: "cover",
+              objectFit: "contain",
             }}
-            sizes="350px"
-            width={singleResult.images[0].width || 400}
+            sizes="400px"
+            width={400}
             priority={idx === 0}
           />
           <div className="bg-white p-4 dark:bg-gray-950">

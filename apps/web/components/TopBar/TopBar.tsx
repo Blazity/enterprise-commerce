@@ -12,7 +12,7 @@ export function TopBar() {
 
         <div className="flex items-center space-x-6">
           <div className="size-8 rounded-full bg-gray-300">
-            <Image priority src="/gb-flag.png" width={32} height={32} alt="GB flag" />
+            <Image src="/gb-flag.png" width={32} height={32} alt="GB flag" />
           </div>
           <Actions />
         </div>
