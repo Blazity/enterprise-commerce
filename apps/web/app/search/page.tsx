@@ -59,7 +59,7 @@ async function SearchView({ searchParams }: SearchPageProps) {
           </div>
 
           <HitsSection hits={hits} />
-          <PaginationSection totalPages={totalPages} />
+          <PaginationSection queryParams={searchParams} totalPages={totalPages} />
         </div>
       </div>
     </div>

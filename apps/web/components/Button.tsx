@@ -3,11 +3,12 @@ import { cva, type VariantProps } from "class-variance-authority"
 import * as React from "react"
 import { cn } from "utils/cn"
 
-const buttonVariants = cva("inline-flex  border border-black rounded-md text-center overflow-hidden group relative", {
+const buttonVariants = cva("inline-flex border border-black rounded-md text-center overflow-hidden group relative", {
   variants: {
     variant: {
       primary: "hover:text-white text-black bg-white",
       secondary: "hover:text-black text-white bg-black",
+      ghost: "hover:bg-accent hover:text-accent-foreground border-0 bg-transparent",
     },
     size: {
       default: "px-10 py-2 text-[11px]",
@@ -25,6 +26,8 @@ const overlayVariants = cva("absolute inset-0 w-0 transition-all duration-[250ms
     variant: {
       primary: "bg-black text-white",
       secondary: "bg-white text-black",
+      ghost: "bg-white text-black",
+      outline: "bg-white text-black",
     },
     size: {},
   },

@@ -1,7 +1,9 @@
+import Link, { LinkProps } from "next/link"
 import * as React from "react"
 
 import { cn } from "utils/cn"
-import { buttonVariants } from "./Button"
+import { ButtonProps, buttonVariants } from "./Button"
+import { ChevronIcon } from "./Icons/ChevronIcon"
 
 const Pagination = ({ className, ...props }: React.ComponentProps<"nav">) => (
   <nav role="navigation" aria-label="pagination" className={cn("mx-auto flex w-full justify-center", className)} {...props} />
@@ -9,7 +11,7 @@ const Pagination = ({ className, ...props }: React.ComponentProps<"nav">) => (
 Pagination.displayName = "Pagination"
 
 const PaginationContent = React.forwardRef<HTMLUListElement, React.ComponentProps<"ul">>(({ className, ...props }, ref) => (
-  <ul ref={ref} className={cn("flex flex-row items-center gap-1", className)} {...props} />
+  <ul ref={ref} className={cn("flex flex-row items-center gap-6", className)} {...props} />
 ))
 PaginationContent.displayName = "PaginationContent"
 
@@ -18,27 +20,63 @@ PaginationItem.displayName = "PaginationItem"
 
 type PaginationLinkProps = {
   isActive?: boolean
-} & React.ComponentProps<"button">
+  className?: string
+  children?: React.ReactNode
+  disabled?: boolean
+} & Pick<ButtonProps, "size"> &
+  LinkProps
 
-const PaginationLink = ({ className, isActive, ...props }: PaginationLinkProps) => (
-  <button aria-current={isActive ? "page" : undefined} className={cn(buttonVariants({}), className)} {...props} />
+const PaginationLink = ({ className, isActive, children, href, disabled }: PaginationLinkProps) => (
+  <Link
+    prefetch={false}
+    scroll={false}
+    aria-current={isActive ? "page" : undefined}
+    className={cn(
+      buttonVariants({
+        variant: "ghost",
+      }),
+      "flex size-9 items-center justify-center rounded-full border border-black bg-white px-0 py-0 text-[16px] text-slate-800 transition-colors hover:bg-black hover:text-white",
+      { "bg-black font-bold text-white": isActive },
+      { "pointer-events-none cursor-not-allowed opacity-50": disabled },
+      className
+    )}
+    href={href}
+  >
+    {children}
+  </Link>
 )
 PaginationLink.displayName = "PaginationLink"
 
-const PaginationPrevious = ({ className, ...props }: React.ComponentProps<typeof PaginationLink>) => (
-  <PaginationLink aria-label="Go to previous page" className={cn("gap-1 pl-2.5", className)} {...props}>
-    {"<"}
-    <span>Previous</span>
+const PaginationPrevious = ({ className, disabled, ...props }: React.ComponentProps<typeof PaginationLink>) => (
+  <PaginationLink
+    aria-label="Go to previous page"
+    size="default"
+    className={cn(
+      "flex size-8 items-center justify-center rounded-full border-0 px-0 py-0 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50",
+      className
+    )}
+    disabled={disabled}
+    {...props}
+  >
+    <ChevronIcon className="size-3 rotate-90" />
   </PaginationLink>
 )
 PaginationPrevious.displayName = "PaginationPrevious"
 
-const PaginationNext = ({ className, ...props }: React.ComponentProps<typeof PaginationLink>) => (
-  <PaginationLink aria-label="Go to next page" className={cn("gap-1 pr-2.5", className)} {...props}>
-    <span>Next</span>
-    {">"}
+const PaginationNext = ({ className, disabled, ...props }: React.ComponentProps<typeof PaginationLink>) => (
+  <PaginationLink
+    aria-label="Go to next page"
+    size="default"
+    className={cn(
+      "flex size-8 items-center justify-center rounded-full border-0 px-0 py-0 transition-transform disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50",
+      className
+    )}
+    disabled={disabled}
+    {...props}
+  >
+    <ChevronIcon className="size-3 -rotate-90" />
   </PaginationLink>
 )
 PaginationNext.displayName = "PaginationNext"
 
-export { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious }
+export { Pagination, PaginationContent, PaginationLink, PaginationItem, PaginationPrevious, PaginationNext }
