@@ -33,6 +33,20 @@ export function FacetsContent({ facetDistribution, className }: FacetsContentPro
   const [minPrice, setMinPrice] = useQueryState("minPrice", { ...parseAsInteger, shallow: false })
   const [maxPrice, setMaxPrice] = useQueryState("maxPrice", { ...parseAsInteger, shallow: false })
 
+  const filtersCount = [selectedCategories, selectedVendors, selectedTags, selectedColors, selectedSizes, minPrice, maxPrice].filter((v) =>
+    Array.isArray(v) ? v.length !== 0 : !!v
+  ).length
+
+  function resetAllFilters() {
+    setSelectedCategories(null)
+    setSelectedVendors(null)
+    setSelectedTags(null)
+    setSelectedColors(null)
+    setSelectedSizes(null)
+    setMinPrice(null)
+    setMaxPrice(null)
+  }
+
   return (
     <div className={className}>
       <div className={"relative mb-6 block overflow-hidden rounded-md"}>
@@ -132,6 +146,12 @@ export function FacetsContent({ facetDistribution, className }: FacetsContentPro
           </AccordionContent>
         </AccordionItem>
       </Accordion>
+
+      {!!filtersCount ? (
+        <div className="mt-10 inline-flex cursor-pointer text-[15px] text-black underline" onClick={() => resetAllFilters()}>
+          Reset all filters {filtersCount}
+        </div>
+      ) : null}
     </div>
   )
 }
