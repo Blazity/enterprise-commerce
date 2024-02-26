@@ -21,6 +21,8 @@ export const metadata: Metadata = {
 
 export const runtime = "edge"
 
+export const revalidate = 3600
+
 const searchParamsCache = createSearchParamsCache({
   q: parseAsString.withDefault(""),
   page: parseAsInteger.withDefault(1),
