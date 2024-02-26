@@ -1,12 +1,13 @@
 "use client"
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "components/Accordion"
-import { Checkbox } from "components/Checkbox"
 import { SearchIcon } from "components/Icons/SearchIcon"
 import { Input } from "components/Input"
 import { Label } from "components/Label"
 import type { CategoriesDistribution } from "meilisearch"
 import { parseAsArrayOf, parseAsInteger, parseAsString, useQueryState } from "nuqs"
+import { Facet } from "./Facet"
+import { ChangeEvent } from "react"
 
 interface FacetsContentProps {
   facetDistribution: Record<string, CategoriesDistribution> | undefined
@@ -39,7 +40,7 @@ export function FacetsContent({ facetDistribution, className }: FacetsContentPro
           <SearchIcon className="size-4 text-gray-400" />
         </div>
         <input
-          className="block w-full rounded-md border border-gray-300 bg-gray-100 px-2.5 py-1.5 pl-10 text-[14px] text-black focus:border-blue-500 focus:ring-blue-500  "
+          className="block w-full rounded-md border border-gray-300 bg-gray-100 px-2.5 py-1.5 pl-10 text-[14px] text-black focus:border-blue-500 focus:ring-blue-500"
           placeholder="Search..."
           type="search"
           value={query || ""}
@@ -109,31 +110,24 @@ export function FacetsContent({ facetDistribution, className }: FacetsContentPro
         <AccordionItem value="price">
           <AccordionTrigger className="text-base">Price Range</AccordionTrigger>
           <AccordionContent>
-            <div className="grid gap-2">
-              <Label>
-                Min price
-                <Input
-                  className="ml-2 inline-flex"
-                  type="number"
-                  value={minPrice || undefined}
-                  onChange={(e) => {
-                    setMinPrice(+e.target.value)
-                    setPage(1)
-                  }}
-                />
-              </Label>
-              <Label>
-                Max price
-                <Input
-                  className="ml-2 inline-flex"
-                  type="number"
-                  value={maxPrice || undefined}
-                  onChange={(e) => {
-                    setMaxPrice(+e.target.value)
-                    setPage(1)
-                  }}
-                />
-              </Label>
+            <div className="flex justify-between gap-4">
+              <PriceInput
+                label="Min price"
+                value={minPrice || undefined}
+                onChange={(e) => {
+                  setMinPrice(+e.target.value)
+                  setPage(1)
+                }}
+              />
+
+              <PriceInput
+                label="Max price"
+                value={maxPrice || undefined}
+                onChange={(e) => {
+                  setMaxPrice(+e.target.value)
+                  setPage(1)
+                }}
+              />
             </div>
           </AccordionContent>
         </AccordionItem>
@@ -142,36 +136,23 @@ export function FacetsContent({ facetDistribution, className }: FacetsContentPro
   )
 }
 
-interface FacetProps {
-  id: string
-  title: string
-  distribution: Record<string, number> | undefined
-  isChecked: (value: string) => boolean
-  onCheckedChange: (checked: boolean, value: string) => void
+interface PriceInputProps {
+  value: number | undefined
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void
+  label: string
 }
 
-function Facet({ id, title, distribution, isChecked, onCheckedChange }: FacetProps) {
-  const distributionsEntries = Object.entries(distribution || {})
-
-  const hasNoResults = distributionsEntries.length === 0
-
+function PriceInput({ value, onChange, label }: PriceInputProps) {
   return (
-    <AccordionItem value={id}>
-      <AccordionTrigger className="text-base">{title}</AccordionTrigger>
-      <AccordionContent>
-        {hasNoResults ? (
-          <p className="text-[14px] text-slate-600">No {title.toLowerCase()} found</p>
-        ) : (
-          <div className="grid gap-2">
-            {distributionsEntries.map(([value, noOfItems], index) => (
-              <Label key={value + index} className="flex items-center gap-2 font-normal">
-                <Checkbox name={value} checked={isChecked(value)} onCheckedChange={(checked) => onCheckedChange(!!checked, value)} />
-                {value} ({noOfItems} items)
-              </Label>
-            ))}
-          </div>
-        )}
-      </AccordionContent>
-    </AccordionItem>
+    <Label className="flex w-full min-w-[90px] flex-col gap-2">
+      Min price
+      <Input
+        placeholder="10.0"
+        className="block h-auto w-full rounded-md border border-gray-300 bg-gray-100 px-2.5 py-1.5 text-[14px] text-black focus:border-blue-500 focus:ring-blue-500  "
+        type="number"
+        value={value}
+        onChange={onChange}
+      />
+    </Label>
   )
 }
