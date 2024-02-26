@@ -1,8 +1,11 @@
 import "./globals.css"
 import "@enterprise-commerce/design-system/styles.css"
 
+import Script from "next/script"
+
 import { Modals } from "components/Modals/Modals"
 import { NavigationBar } from "components/NavigationBar/NavigationBar"
+import { mobileInlineScript } from "components/NavigationBar/mobileInlineScript"
 import { NavItem } from "components/NavigationBar/types"
 import { TopBar } from "components/TopBar/TopBar"
 
@@ -138,6 +141,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
+        <Script id="mobileMegaMenuLogic" strategy="beforeInteractive">{`${mobileInlineScript}`}</Script>
+
         <TopBar />
         <NavigationBar items={navigationItems} />
         {children}

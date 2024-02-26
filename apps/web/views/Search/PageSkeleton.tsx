@@ -7,16 +7,17 @@ export function PageSkeleton() {
         <Skeleton className="mb-6 flex h-[35px] min-w-[250px] md:block" />
         <Skeleton className="flex h-[400px] min-w-[250px] md:block" />
       </div>
+
       <div className="flex w-full flex-col">
         <div className="mb-6 flex w-full flex-wrap items-center justify-between">
-          <div className="flex h-[112px] w-full flex-col gap-2 pb-8">
+          <div className="flex h-[144px] w-full flex-col gap-2 pb-8 md:h-[112px]">
             <h1 className="text-[32px] font-semibold text-black">Products</h1>
-            <div className="hidden size-8 bg-red-400" />
+            <div className="block h-[24px] md:hidden" />
           </div>
 
-          <section className="grid w-full grid-cols-[repeat(_auto-fill,minmax(300px,1fr)_)] items-center gap-4">
+          <section className="grid w-full grid-cols-[repeat(_auto-fill,minmax(280px,1fr)_)] items-center gap-4">
             {Array.from({ length: 6 }).map((_, index) => (
-              <Skeleton className="h-[401px] w-[300px]" key={index} />
+              <Skeleton className="h-[430px] w-full md:h-[401px] md:w-[280px]" key={index} />
             ))}
           </section>
         </div>

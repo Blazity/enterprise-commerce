@@ -1,11 +1,9 @@
 import { ChevronIcon } from "components/Icons/ChevronIcon"
-import Script from "next/script"
 
 import { cn } from "utils/cn"
 import { Autocomplete } from "./Autocomplete"
 import { Checkout } from "./Checkout"
 import { Favorites } from "./Favorites"
-import { mobileInlineScript } from "./mobileInlineScript"
 import { ImageGridItem, NavItem, TextGridItem, TextImageGridItem } from "./types"
 import { ImageGridVariant } from "./variants/ImageGridVariant"
 import { TextGridVariant } from "./variants/TextGridVariant"
@@ -38,7 +36,6 @@ export function NavigationBar({ items }: NavigationBarProps) {
   return (
     <nav className="mega-navbar relative mx-auto my-0 flex w-full flex-wrap content-center items-center justify-between border-b border-black py-6 md:border-y ">
       <div className="md:max-w-container-md flex justify-start px-4 md:mx-auto md:w-full md:px-0">
-        <Script id="mobileMegaMenuLogic">{`${mobileInlineScript}`}</Script>
         <section className="navbar__left flex w-full justify-between md:hidden">
           <a href="/" className="brand flex items-center text-xl font-bold">
             Blazity
