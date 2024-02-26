@@ -2,6 +2,7 @@
 
 import { Button } from "components/Button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "components/DropdownMenu"
+import { ChevronIcon } from "components/Icons/ChevronIcon"
 import { parseAsStringEnum, useQueryState } from "nuqs"
 
 export enum Sorting {
@@ -10,6 +11,14 @@ export enum Sorting {
   DATE_ASC = "updatedAtTimestamp:asc",
   DATE_DESC = "updatedAtTimestamp:desc",
   RELEVANCY = "",
+}
+
+const LABELS = {
+  [Sorting.PRICE_DESC]: "Price: High to Low",
+  [Sorting.PRICE_ASC]: "Price: Low to High",
+  [Sorting.DATE_ASC]: "Newest",
+  [Sorting.DATE_DESC]: "Oldest",
+  [Sorting.RELEVANCY]: "Relevancy",
 }
 
 interface SorterProps {
@@ -27,26 +36,17 @@ export function Sorter({ className }: SorterProps) {
     <div className={className}>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button>Sort by {sortBy}</Button>
+          <div className="inline-flex cursor-pointer items-center justify-center gap-1.5 text-[15px] text-black">
+            Sort by <span className="text-gray-400 underline">{LABELS[sortBy]}</span>
+            <ChevronIcon />
+          </div>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="bg-white" align="end">
-          <DropdownMenuLabel>Sort by</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem className="cursor-pointer" onClick={() => setSortBy(Sorting.RELEVANCY)}>
-            Relevancy
-          </DropdownMenuItem>
-          <DropdownMenuItem className="cursor-pointer" onClick={() => setSortBy(Sorting.PRICE_ASC)}>
-            Price: Low to High
-          </DropdownMenuItem>
-          <DropdownMenuItem className="cursor-pointer" onClick={() => setSortBy(Sorting.PRICE_DESC)}>
-            Price: High to Low
-          </DropdownMenuItem>
-          <DropdownMenuItem className="cursor-pointer" onClick={() => setSortBy(Sorting.DATE_DESC)}>
-            Oldest
-          </DropdownMenuItem>
-          <DropdownMenuItem className="cursor-pointer" onClick={() => setSortBy(Sorting.DATE_ASC)}>
-            Newest
-          </DropdownMenuItem>
+        <DropdownMenuContent className="w-[240px] rounded-b-md bg-white px-0 text-gray-400 shadow-lg" align="end">
+          {Object.entries(LABELS).map(([key, label]) => (
+            <DropdownMenuItem key={label} className="cursor-pointer border-b border-gray-200 py-2 last:border-b-0 hover:bg-gray-50" onClick={() => setSortBy(key as Sorting)}>
+              {label}
+            </DropdownMenuItem>
+          ))}
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

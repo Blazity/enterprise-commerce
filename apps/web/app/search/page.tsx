@@ -4,13 +4,13 @@ import { unstable_cache } from "next/cache"
 import { createSearchParamsCache, parseAsArrayOf, parseAsInteger, parseAsString } from "nuqs/server"
 import { Suspense } from "react"
 
+import { composeFilters } from "views/Search/composeFilters"
 import { FacetsDesktop } from "views/Search/FacetsDesktop"
 import { FacetsMobile } from "views/Search/FacetsMobile"
 import { HitsSection } from "views/Search/HitsSection"
 import { PageSkeleton } from "views/Search/PageSkeleton"
 import { PaginationSection } from "views/Search/PaginationSection"
 import { Sorter } from "views/Search/Sorter"
-import { composeFilters } from "views/Search/composeFilters"
 
 export const runtime = "edge"
 
@@ -72,7 +72,7 @@ const searchProducts = unstable_cache(
 
     const results = await index?.search(query, {
       sort: sortBy ? [sortBy] : undefined,
-      hitsPerPage: 25,
+      hitsPerPage: 24,
       facets: ["collections.title", "tags", "vendor", "variants.availableForSale", "flatOptions.Size", "flatOptions.Color", "minPrice"],
       filter,
       page,

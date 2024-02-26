@@ -66,7 +66,7 @@ export function Autocomplete({ className }: AutocompleteProps) {
     results.map((singleProduct) => (
       <Link
         href={`/products/${singleProduct.handle}`}
-        className="flex h-[70px] cursor-pointer items-center gap-4 border-b border-gray-400 p-4 last:rounded-b-md last:border-0 hover:bg-gray-50"
+        className="flex h-[70px] cursor-pointer items-center gap-4 border-b border-gray-200 p-4 last:rounded-b-md last:border-0 hover:bg-gray-50"
         key={singleProduct.id}
         onClick={() => setIsOpen(false)}
       >

@@ -3,6 +3,7 @@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "components/Accordion"
 import { Checkbox } from "components/Checkbox"
 import { SearchIcon } from "components/Icons/SearchIcon"
+import { Input } from "components/Input"
 import { Label } from "components/Label"
 import type { CategoriesDistribution } from "meilisearch"
 import { parseAsArrayOf, parseAsInteger, parseAsString, useQueryState } from "nuqs"
@@ -48,119 +49,70 @@ export function FacetsContent({ facetDistribution, className }: FacetsContentPro
           }}
         />
       </div>
+
       <Accordion collapsible className="w-full" type="single">
-        <AccordionItem value="category">
-          <AccordionTrigger className="text-base">Category</AccordionTrigger>
-          <AccordionContent>
-            <div className="grid gap-2">
-              {Object.entries(collections || {}).map(([collection, noOfItems], index) => (
-                <Label key={collection} className="flex items-center gap-2 font-normal">
-                  <Checkbox
-                    name={collection}
-                    checked={selectedCategories?.includes(collection)}
-                    onCheckedChange={(checked) => {
-                      setSelectedCategories((prev) => (checked ? [...prev, collection] : prev.filter((cat) => cat !== collection)))
-                      setPage(1)
-                    }}
-                  />
-                  {collection}
-                  {"\n                              "}({noOfItems as any} items)
-                </Label>
-              ))}
-            </div>
-          </AccordionContent>
-        </AccordionItem>
-        <AccordionItem value="tags">
-          <AccordionTrigger className="text-base">Tags</AccordionTrigger>
-          <AccordionContent>
-            <div className="grid gap-2">
-              {Object.entries(tags || {}).map(([tag, noOfItems], index) => (
-                <Label key={tag} className="flex items-center gap-2 font-normal">
-                  <Checkbox
-                    name={tag}
-                    checked={selectedTags?.includes(tag)}
-                    onCheckedChange={(checked) => {
-                      setSelectedTags((prev) => (checked ? [...prev, tag] : prev.filter((cat) => cat !== tag)))
-                      setPage(1)
-                    }}
-                  />
-                  {tag}
-                  {"\n                              "}({noOfItems as any} items)
-                </Label>
-              ))}
-            </div>
-          </AccordionContent>
-        </AccordionItem>
-        <AccordionItem value="vendors">
-          <AccordionTrigger className="text-base">Vendors</AccordionTrigger>
-          <AccordionContent>
-            <div className="grid gap-2">
-              {Object.entries(vendors || {}).map(([vendor, noOfItems], index) => (
-                <Label key={vendor} className="flex items-center gap-2 font-normal">
-                  <Checkbox
-                    name={vendor}
-                    checked={selectedVendors?.includes(vendor)}
-                    onCheckedChange={(checked) => {
-                      setSelectedVendors((prev) => (checked ? [...prev, vendor] : prev.filter((cat) => cat !== vendor)))
-                      setPage(1)
-                    }}
-                  />
-                  {vendor}
-                  {"\n                              "}({noOfItems as any} items)
-                </Label>
-              ))}
-            </div>
-          </AccordionContent>
-        </AccordionItem>
-        <AccordionItem value="sizes">
-          <AccordionTrigger className="text-base">Sizes</AccordionTrigger>
-          <AccordionContent>
-            <div className="grid gap-2">
-              {Object.entries(sizes || {}).map(([size, noOfItems], index) => (
-                <Label key={size} className="flex items-center gap-2 font-normal">
-                  <Checkbox
-                    name={size}
-                    checked={selectedSizes?.includes(size)}
-                    onCheckedChange={(checked) => {
-                      setSelectedSizes((prev) => (checked ? [...prev, size] : prev.filter((cat) => cat !== size)))
-                      setPage(1)
-                    }}
-                  />
-                  {size}
-                  {"\n                              "}({noOfItems as any} items)
-                </Label>
-              ))}
-            </div>
-          </AccordionContent>
-        </AccordionItem>
-        <AccordionItem value="colors">
-          <AccordionTrigger className="text-base">Colors</AccordionTrigger>
-          <AccordionContent>
-            <div className="grid gap-2">
-              {Object.entries(colors || {}).map(([color, noOfItems], index) => (
-                <Label key={color} className="flex items-center gap-2 font-normal">
-                  <Checkbox
-                    name={color}
-                    checked={selectedColors?.includes(color)}
-                    onCheckedChange={(checked) => {
-                      setSelectedColors((prev) => (checked ? [...prev, color] : prev.filter((cat) => cat !== color)))
-                      setPage(1)
-                    }}
-                  />
-                  {color}
-                  {"\n                              "}({noOfItems as any} items)
-                </Label>
-              ))}
-            </div>
-          </AccordionContent>
-        </AccordionItem>
+        <Facet
+          id="category"
+          title="Category"
+          distribution={collections}
+          isChecked={(category) => selectedCategories.includes(category)}
+          onCheckedChange={(checked, category) => {
+            setSelectedCategories((prev) => (checked ? [...prev, category] : prev.filter((cat) => cat !== category)))
+            setPage(1)
+          }}
+        />
+
+        <Facet
+          id="tags"
+          title="Tags"
+          distribution={tags}
+          isChecked={(tag) => selectedTags.includes(tag)}
+          onCheckedChange={(checked, tag) => {
+            setSelectedTags((prev) => (checked ? [...prev, tag] : prev.filter((cat) => cat !== tag)))
+            setPage(1)
+          }}
+        />
+
+        <Facet
+          id="vendors"
+          title="Vendors"
+          distribution={vendors}
+          isChecked={(vendor) => selectedVendors.includes(vendor)}
+          onCheckedChange={(checked, vendor) => {
+            setSelectedVendors((prev) => (checked ? [...prev, vendor] : prev.filter((cat) => cat !== vendor)))
+            setPage(1)
+          }}
+        />
+
+        <Facet
+          id="sizes"
+          title="Sizes"
+          distribution={sizes}
+          isChecked={(size) => selectedSizes.includes(size)}
+          onCheckedChange={(checked, size) => {
+            setSelectedSizes((prev) => (checked ? [...prev, size] : prev.filter((cat) => cat !== size)))
+            setPage(1)
+          }}
+        />
+
+        <Facet
+          id="colors"
+          title="Colors"
+          distribution={colors}
+          isChecked={(color) => selectedColors.includes(color)}
+          onCheckedChange={(checked, color) => {
+            setSelectedColors((prev) => (checked ? [...prev, color] : prev.filter((cat) => cat !== color)))
+            setPage(1)
+          }}
+        />
+
         <AccordionItem value="price">
           <AccordionTrigger className="text-base">Price Range</AccordionTrigger>
           <AccordionContent>
             <div className="grid gap-2">
               <Label>
                 Min price
-                <input
+                <Input
                   className="ml-2 inline-flex"
                   type="number"
                   value={minPrice || undefined}
@@ -172,7 +124,7 @@ export function FacetsContent({ facetDistribution, className }: FacetsContentPro
               </Label>
               <Label>
                 Max price
-                <input
+                <Input
                   className="ml-2 inline-flex"
                   type="number"
                   value={maxPrice || undefined}
@@ -187,5 +139,39 @@ export function FacetsContent({ facetDistribution, className }: FacetsContentPro
         </AccordionItem>
       </Accordion>
     </div>
+  )
+}
+
+interface FacetProps {
+  id: string
+  title: string
+  distribution: Record<string, number> | undefined
+  isChecked: (value: string) => boolean
+  onCheckedChange: (checked: boolean, value: string) => void
+}
+
+function Facet({ id, title, distribution, isChecked, onCheckedChange }: FacetProps) {
+  const distributionsEntries = Object.entries(distribution || {})
+
+  const hasNoResults = distributionsEntries.length === 0
+
+  return (
+    <AccordionItem value={id}>
+      <AccordionTrigger className="text-base">{title}</AccordionTrigger>
+      <AccordionContent>
+        {hasNoResults ? (
+          <p className="text-[14px] text-slate-600">No {title.toLowerCase()} found</p>
+        ) : (
+          <div className="grid gap-2">
+            {distributionsEntries.map(([value, noOfItems], index) => (
+              <Label key={value + index} className="flex items-center gap-2 font-normal">
+                <Checkbox name={value} checked={isChecked(value)} onCheckedChange={(checked) => onCheckedChange(!!checked, value)} />
+                {value} ({noOfItems} items)
+              </Label>
+            ))}
+          </div>
+        )}
+      </AccordionContent>
+    </AccordionItem>
   )
 }
