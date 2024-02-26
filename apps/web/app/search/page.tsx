@@ -1,3 +1,5 @@
+import type { Metadata } from "next"
+
 import { PlatformProduct } from "@enterprise-commerce/core/platform/types"
 import { meilisearch } from "clients/meilisearch"
 import { unstable_cache } from "next/cache"
@@ -11,6 +13,11 @@ import { HitsSection } from "views/Search/HitsSection"
 import { PageSkeleton } from "views/Search/PageSkeleton"
 import { PaginationSection } from "views/Search/PaginationSection"
 import { Sorter } from "views/Search/Sorter"
+
+export const metadata: Metadata = {
+  title: "Search | Enterprise Commerce",
+  description: "In excepteur elit mollit in.",
+}
 
 export const runtime = "edge"
 
