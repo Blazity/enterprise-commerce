@@ -23,14 +23,16 @@ type PaginationLinkProps = {
   className?: string
   children?: React.ReactNode
   disabled?: boolean
+  "aria-label"?: string
 } & Pick<ButtonProps, "size"> &
   LinkProps
 
-const PaginationLink = ({ className, isActive, children, href, disabled }: PaginationLinkProps) => (
+const PaginationLink = ({ className, isActive, children, href, disabled, "aria-label": ariaLabel }: PaginationLinkProps) => (
   <Link
     prefetch={false}
     scroll={false}
     aria-current={isActive ? "page" : undefined}
+    aria-label={ariaLabel}
     className={cn(
       buttonVariants({
         variant: "ghost",

@@ -28,7 +28,7 @@ export async function HitsSection({ hits }: HitsSectionProps) {
           </Link>
 
           <div className="mt-4 flex flex-col gap-0.5 text-slate-700">
-            <h4 className="line-clamp-2 text-[19px]">{singleResult.title}</h4>
+            <div className="line-clamp-2 text-[19px]">{singleResult.title}</div>
             <p className="text-[23px]">${singleResult.minPrice || 1337}</p>
           </div>
         </div>
