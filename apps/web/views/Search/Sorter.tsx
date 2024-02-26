@@ -37,7 +37,7 @@ export function Sorter({ className }: SorterProps) {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <div className="inline-flex cursor-pointer items-center justify-center gap-1.5 text-[15px] text-black">
-            Sort by <span className="text-gray-400 underline">{LABELS[sortBy]}</span>
+            Sort by <span className="text-slate-700 underline">{LABELS[sortBy]}</span>
             <ChevronIcon />
           </div>
         </DropdownMenuTrigger>

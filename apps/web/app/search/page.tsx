@@ -52,7 +52,7 @@ async function SearchView({ searchParams }: SearchPageProps) {
         <div className="mb-6 flex w-full flex-wrap items-center justify-between">
           <div className="flex w-full flex-col gap-2 pb-8">
             <h1 className="text-[32px] font-semibold text-black">
-              Products <span className="text-[21px] font-normal text-slate-700/70">(All {totalHits})</span>
+              Products <span className="text-[21px] font-normal text-slate-700">(All {totalHits})</span>
             </h1>
             <FacetsMobile className="block md:hidden" />
             <Sorter className="ml-auto" />
