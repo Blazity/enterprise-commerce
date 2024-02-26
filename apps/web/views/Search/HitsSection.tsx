@@ -15,10 +15,10 @@ export async function HitsSection({ hits }: HitsSectionProps) {
             <Image
               alt={singleResult.featuredImage?.altText || ""}
               className="z-10 size-[250px] object-contain transition-transform group-hover:scale-105"
-              height={300}
+              height={250}
               src={singleResult.images[0].url}
-              sizes="300px"
-              width={400}
+              sizes="280px"
+              width={250}
               priority={[0, 1].includes(idx)}
             />
           </div>
