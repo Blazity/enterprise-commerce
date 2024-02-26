@@ -9,14 +9,14 @@ export function PageSkeleton() {
       </div>
       <div className="flex w-full flex-col">
         <div className="mb-6 flex w-full flex-wrap items-center justify-between">
-          <div className="flex h-[125px] w-full flex-col gap-2 pb-8">
+          <div className="flex h-[112px] w-full flex-col gap-2 pb-8">
             <h1 className="text-[32px] font-semibold text-black">Products</h1>
             <div className="hidden size-8 bg-red-400" />
           </div>
 
           <section className="grid w-full grid-cols-[repeat(_auto-fill,minmax(300px,1fr)_)] items-center gap-4">
             {Array.from({ length: 6 }).map((_, index) => (
-              <Skeleton className="h-[380px] w-[300px]" key={index} />
+              <Skeleton className="h-[401px] w-[300px]" key={index} />
             ))}
           </section>
         </div>

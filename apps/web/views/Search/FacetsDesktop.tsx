@@ -12,7 +12,7 @@ interface FacetsDesktopProps {
   className?: string
 }
 
-const FacetsContent = dynamic(() => import("views/Search/FacetsContent").then((m) => m.FacetsContent), { loading: FacetsContentSkeleton, ssr: true })
+const FacetsContent = dynamic(() => import("views/Search/FacetsContent").then((m) => m.FacetsContent), { loading: FacetsContentSkeleton })
 
 export function FacetsDesktop({ facetDistribution, className }: FacetsDesktopProps) {
   const { width = 0 } = useWindowSize()
