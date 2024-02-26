@@ -19,7 +19,7 @@ export async function HitsSection({ hits }: HitsSectionProps) {
               src={singleResult.images[0].url}
               sizes="300px"
               width={400}
-              priority={idx === 0}
+              priority={[0, 1].includes(idx)}
             />
           </div>
 
