@@ -3,7 +3,7 @@ import { Skeleton } from "components/Skeleton"
 export function PageSkeleton() {
   return (
     <div className="max-w-container-md mx-auto flex min-h-screen w-full flex-col gap-12 px-4 py-12 md:flex-row md:gap-24 md:py-24 xl:px-0 ">
-      <div className="hidden flex-col gap-0 md:mt-16 md:flex">
+      <div className="hidden flex-col gap-0 md:mt-16 lg:flex">
         <Skeleton className="mb-6 flex h-[35px] min-w-[250px] md:block" />
         <Skeleton className="flex h-[400px] min-w-[250px] md:block" />
       </div>
@@ -13,9 +13,9 @@ export function PageSkeleton() {
           <div className="flex h-[112px] w-full flex-col gap-2 pb-8 ">
             <div className="flex items-center justify-between">
               <h1 className="text-[32px] font-semibold text-black">Products</h1>
-              <Skeleton className="size-5 md:hidden" />
+              <Skeleton className="size-5 lg:hidden" />
             </div>
-            <div className="block h-[24px] md:hidden" />
+            <div className="block h-[24px] lg:hidden" />
           </div>
 
           <section className="grid w-full grid-cols-[repeat(_auto-fill,minmax(280px,1fr)_)] items-start gap-4 gap-y-8">

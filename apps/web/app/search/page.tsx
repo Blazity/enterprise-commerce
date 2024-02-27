@@ -56,7 +56,7 @@ async function SearchView({ searchParams }: SearchPageProps) {
 
   return (
     <div className="max-w-container-md mx-auto flex min-h-screen w-full flex-col gap-12 px-4 py-12 md:flex-row md:gap-24 md:py-24 xl:px-0 ">
-      <FacetsDesktop className="hidden min-w-[250px] max-w-[250px] md:mt-16 md:block" facetDistribution={facetDistribution} />
+      <FacetsDesktop className="hidden min-w-[250px] max-w-[250px] md:mt-16 lg:block" facetDistribution={facetDistribution} />
       <div className="flex w-full flex-col">
         <div className="mb-6 flex w-full flex-wrap items-center justify-between">
           <div className="flex w-full flex-col gap-2 pb-8">
@@ -64,7 +64,7 @@ async function SearchView({ searchParams }: SearchPageProps) {
               <h1 className="text-[32px] font-semibold text-black">
                 Products <span className="hidden text-[21px] font-normal text-slate-700 md:inline-flex">(All {totalHits})</span>
               </h1>
-              <FacetsMobile facetDistribution={facetDistribution} className="block md:hidden" />
+              <FacetsMobile facetDistribution={facetDistribution} className="block lg:hidden" />
             </div>
             <Sorter className="ml-auto" />
           </div>
@@ -91,7 +91,6 @@ const searchProducts = unstable_cache(
     })
 
     const hits = results?.hits || []
-    console.log(hits[0])
     const totalPages = results?.totalPages || 0
     const facetDistribution = results?.facetDistribution || {}
     const totalHits = results.totalHits

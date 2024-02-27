@@ -16,7 +16,7 @@ const FacetsContent = dynamic(() => import("views/Search/FacetsContent").then((m
 
 export function FacetsDesktop({ facetDistribution, className }: FacetsDesktopProps) {
   const { width = 0 } = useWindowSize()
-  const isMobile = width! <= 768 && !!width
+  const isMobile = width! < 1024 && !!width
 
   return isMobile ? null : <FacetsContent facetDistribution={facetDistribution} className={cn(className, "sticky top-20 h-full")} />
 }

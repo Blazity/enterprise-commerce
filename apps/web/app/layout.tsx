@@ -10,6 +10,8 @@ import { NavItem } from "components/NavigationBar/types"
 import { TopBar } from "components/TopBar/TopBar"
 import { CallToAction } from "components/CallToAction"
 import Footer from "components/Footer"
+import { AnnouncementBar } from "views/AnnouncementBar"
+import Link from "next/link"
 
 export const revalidate = 3600
 
@@ -149,6 +151,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         <TopBar />
         <NavigationBar items={navigationItems} />
+        <AnnouncementBar />
         {children}
         <CallToAction />
         <Footer />
