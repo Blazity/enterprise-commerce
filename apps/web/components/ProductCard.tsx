@@ -14,8 +14,8 @@ export function ProductCard(props: ProductCardProps) {
           alt={props.featuredImage?.altText || ""}
           className="z-10 size-[250px] object-contain transition-transform group-hover:scale-105"
           height={250}
-          src={props.images[0].url}
-          sizes="280px"
+          src={props.featuredImage?.url || "/default-product-image.svg"}
+          sizes="250px"
           width={250}
           priority={props.priority}
         />

@@ -87,9 +87,11 @@ const searchProducts = unstable_cache(
       facets: ["collections.title", "tags", "vendor", "variants.availableForSale", "flatOptions.Size", "flatOptions.Color", "minPrice"],
       filter,
       page,
+      attributesToRetrieve: ["id", "handle", "title", "priceRange", "featuredImage", "minPrice"],
     })
 
     const hits = results?.hits || []
+    console.log(hits[0])
     const totalPages = results?.totalPages || 0
     const facetDistribution = results?.facetDistribution || {}
     const totalHits = results.totalHits
