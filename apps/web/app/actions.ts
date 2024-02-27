@@ -10,7 +10,7 @@ export const searchProducts = unstable_cache(
 
     if (!index) return []
 
-    return (await index?.search(query, { limit })).hits
+    return (await index?.search(query, { limit, attributesToRetrieve: ["id", "handle", "title"] })).hits
   },
   ["autocomplete-search"],
   { revalidate: 3600 }
