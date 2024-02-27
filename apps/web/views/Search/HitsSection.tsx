@@ -9,7 +9,7 @@ export async function HitsSection({ hits }: HitsSectionProps) {
   return (
     <div className="grid w-full grid-cols-[repeat(_auto-fill,minmax(280px,1fr)_)] items-start gap-4 gap-y-8">
       {hits.map((singleResult, idx) => (
-        <ProductCard key={singleResult.id} {...singleResult} />
+        <ProductCard key={singleResult.id} priority={[0, 1].includes(idx)} {...singleResult} />
       ))}
     </div>
   )
