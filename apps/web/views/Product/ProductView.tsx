@@ -4,10 +4,12 @@
  */
 import { storefrontClient } from "clients/storefrontClient"
 import { Button } from "components/Button"
+import { ChevronIcon } from "components/Icons/ChevronIcon"
 import { Label } from "components/Label"
 import { RadioGroup, RadioGroupItem } from "components/RadioGroup"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/Select"
 import { notFound } from "next/navigation"
+import { Gallery } from "./Gallery"
 
 export async function ProductView({ slug }) {
   const product = await storefrontClient.getProductByHandle(slug)
@@ -17,134 +19,127 @@ export async function ProductView({ slug }) {
   }
 
   return (
-    <div className="mx-auto grid max-w-6xl items-start gap-6 px-4 py-6 md:grid-cols-2 lg:gap-12">
-      <div className="grid items-start gap-3 md:grid-cols-5">
-        <div className="flex items-start md:hidden">
-          <div className="grid gap-4">
-            <h1 className="text-2xl font-bold sm:text-3xl">{product?.title}</h1>
-            <div>
-              <p>{product?.description}</p>
-            </div>
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-0.5">
-                <StarIcon className="fill-primary size-5" />
-                <StarIcon className="fill-primary size-5" />
-                <StarIcon className="fill-primary size-5" />
-                <StarIcon className="fill-muted stroke-muted-foreground size-5" />
-                <StarIcon className="fill-muted stroke-muted-foreground size-5" />
-              </div>
-            </div>
+    <main className="container mx-auto px-4 py-8">
+      <nav aria-label="Breadcrumb" className="mb-4">
+        <ol className="flex items-center space-x-1 text-sm">
+          <li>
+            <a className="text-gray-600 hover:underline" href="#">
+              Home
+            </a>
+          </li>
+          <li>{`>`}</li>
+          <li>
+            <a className="text-gray-600 hover:underline" href="#">
+              Electronics
+            </a>
+          </li>
+          <li>{`>`}</li>
+          <li aria-current="page" className="font-medium">
+            Product A
+          </li>
+        </ol>
+      </nav>
+      <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+        <Gallery />
+        <div>
+          <h1 className="mb-2 text-3xl font-bold">Product A</h1>
+          <div className="mb-4 flex items-center">
+            <StarIcon className="h-5 w-5 text-yellow-400" />
+            <StarIcon className="h-5 w-5 text-yellow-400" />
+            <StarIcon className="h-5 w-5 text-yellow-400" />
+            <StarIcon className="h-5 w-5 text-yellow-400" />
+            <span className="ml-2 text-sm text-gray-600">26 Reviews</span>
           </div>
-          <div className="ml-auto text-4xl font-bold">$99</div>
+          <p className="mb-4">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur.
+          </p>
+          <div className="mb-4 flex items-center space-x-2">
+            <span className="h-6 w-6 rounded-full bg-gray-400" />
+            <span className="h-6 w-6 rounded-full bg-gray-400" />
+            <span className="h-6 w-6 rounded-full bg-red-500" />
+          </div>
+          <div className="mb-4 text-3xl font-bold">50,99€</div>
+          <Button className="w-full">Add to Cart</Button>
         </div>
-        <div className="hidden flex-col items-start gap-3 md:flex">
-          {product?.images.map((image, index) => (
-            <button key={image.url} className="overflow-hidden rounded-lg border transition-colors hover:border-gray-900 dark:hover:border-gray-50">
-              <img alt={image.altText || ""} className="aspect-[5/6] object-cover" height={120} src={image.url} width={100} />
-              <span className="sr-only">View Image {index + 1}</span>
+      </div>
+      <section aria-labelledby="also-like-heading" className="mt-16">
+        <h2 className="mb-4 text-2xl font-bold" id="also-like-heading">
+          You might also like
+        </h2>
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-5">
+          <div>
+            <img
+              alt="Product B"
+              className="h-auto w-full"
+              height="200"
+              src="/placeholder.svg"
+              style={{
+                aspectRatio: "200/200",
+                objectFit: "cover",
+              }}
+              width="200"
+            />
+            <h3 className="mt-2 text-lg font-medium">Product B</h3>
+            <p className="mb-2">67,98€</p>
+          </div>
+          <div>
+            <img
+              alt="Product C"
+              className="h-auto w-full"
+              height="200"
+              src="/placeholder.svg"
+              style={{
+                aspectRatio: "200/200",
+                objectFit: "cover",
+              }}
+              width="200"
+            />
+            <h3 className="mt-2 text-lg font-medium">Product C</h3>
+            <p className="mb-2">67,98€</p>
+          </div>
+          <div>
+            <img
+              alt="Product D"
+              className="h-auto w-full"
+              height="200"
+              src="/placeholder.svg"
+              style={{
+                aspectRatio: "200/200",
+                objectFit: "cover",
+              }}
+              width="200"
+            />
+            <h3 className="mt-2 text-lg font-medium">Product D</h3>
+            <p className="mb-2">67,98€</p>
+          </div>
+          <div>
+            <img
+              alt="Product E"
+              className="h-auto w-full"
+              height="200"
+              src="/placeholder.svg"
+              style={{
+                aspectRatio: "200/200",
+                objectFit: "cover",
+              }}
+              width="200"
+            />
+            <h3 className="mt-2 text-lg font-medium">Product E</h3>
+            <p className="mb-2">67,98€</p>
+          </div>
+          <div className="flex items-center justify-center">
+            <button aria-label="Previous product">
+              <ChevronIcon className="h-6 w-6" />
             </button>
-          ))}
+            <button aria-label="Next product">
+              <ChevronIcon className="h-6 w-6" />
+            </button>
+          </div>
         </div>
-        <div className="md:col-span-4">
-          <img
-            alt={product?.featuredImage?.altText || ""}
-            className="aspect-[2/3] w-full overflow-hidden rounded-lg border border-gray-200 object-cover dark:border-gray-800"
-            height={900}
-            src={product?.featuredImage?.url}
-            width={600}
-          />
-        </div>
-      </div>
-      <div className="grid items-start gap-4 md:gap-10">
-        <div className="hidden items-start md:flex">
-          <div className="grid gap-4">
-            <h1 className="text-3xl font-bold lg:text-4xl">{product?.title}</h1>
-            <div>
-              <p>{product?.description}</p>
-            </div>
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-0.5">
-                <StarIcon className="fill-primary size-5" />
-                <StarIcon className="fill-primary size-5" />
-                <StarIcon className="fill-primary size-5" />
-                <StarIcon className="fill-muted stroke-muted-foreground size-5" />
-                <StarIcon className="fill-muted stroke-muted-foreground size-5" />
-              </div>
-            </div>
-          </div>
-          <div className="ml-auto text-4xl font-bold">{product?.variants?.[0]?.price.amount}</div>
-        </div>
-        <form className="grid gap-4 md:gap-10">
-          <div className="grid gap-2">
-            <Label className="text-base" htmlFor="color">
-              Color
-            </Label>
-            <RadioGroup className="flex items-center gap-2" defaultValue="black" id="color">
-              <Label
-                className="flex cursor-pointer items-center gap-2 rounded-md border p-2 [&:has(:checked)]:bg-gray-100 dark:[&:has(:checked)]:bg-gray-800"
-                htmlFor="color-black"
-              >
-                <RadioGroupItem id="color-black" value="black" />
-                Black
-              </Label>
-              <Label
-                className="flex cursor-pointer items-center gap-2 rounded-md border p-2 [&:has(:checked)]:bg-gray-100 dark:[&:has(:checked)]:bg-gray-800"
-                htmlFor="color-white"
-              >
-                <RadioGroupItem id="color-white" value="white" />
-                White
-              </Label>
-              <Label className="flex cursor-pointer items-center gap-2 rounded-md border p-2 [&:has(:checked)]:bg-gray-100 dark:[&:has(:checked)]:bg-gray-800" htmlFor="color-blue">
-                <RadioGroupItem id="color-blue" value="blue" />
-                Blue
-              </Label>
-            </RadioGroup>
-          </div>
-          <div className="grid gap-2">
-            <Label className="text-base" htmlFor="size">
-              Size
-            </Label>
-            <RadioGroup className="flex items-center gap-2" defaultValue="m" id="size">
-              <Label className="flex cursor-pointer items-center gap-2 rounded-md border p-2 [&:has(:checked)]:bg-gray-100 dark:[&:has(:checked)]:bg-gray-800" htmlFor="size-xs">
-                <RadioGroupItem id="size-xs" value="xs" />
-                XS
-              </Label>
-              <Label className="flex cursor-pointer items-center gap-2 rounded-md border p-2 [&:has(:checked)]:bg-gray-100 dark:[&:has(:checked)]:bg-gray-800" htmlFor="size-s">
-                <RadioGroupItem id="size-s" value="s" />S{"\n                          "}
-              </Label>
-              <Label className="flex cursor-pointer items-center gap-2 rounded-md border p-2 [&:has(:checked)]:bg-gray-100 dark:[&:has(:checked)]:bg-gray-800" htmlFor="size-m">
-                <RadioGroupItem id="size-m" value="m" />M{"\n                          "}
-              </Label>
-              <Label className="flex cursor-pointer items-center gap-2 rounded-md border p-2 [&:has(:checked)]:bg-gray-100 dark:[&:has(:checked)]:bg-gray-800" htmlFor="size-l">
-                <RadioGroupItem id="size-l" value="l" />L{"\n                          "}
-              </Label>
-              <Label className="flex cursor-pointer items-center gap-2 rounded-md border p-2 [&:has(:checked)]:bg-gray-100 dark:[&:has(:checked)]:bg-gray-800" htmlFor="size-xl">
-                <RadioGroupItem id="size-xl" value="xl" />
-                XL
-              </Label>
-            </RadioGroup>
-          </div>
-          <div className="grid gap-2">
-            <Label className="text-base" htmlFor="quantity">
-              Quantity
-            </Label>
-            <Select defaultValue="1">
-              <SelectTrigger className="w-24">
-                <SelectValue placeholder="Select" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="1">1</SelectItem>
-                <SelectItem value="2">2</SelectItem>
-                <SelectItem value="3">3</SelectItem>
-                <SelectItem value="4">4</SelectItem>
-                <SelectItem value="5">5</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          <Button>Add to cart</Button>
-        </form>
-      </div>
-    </div>
+      </section>
+    </main>
   )
 }
 
