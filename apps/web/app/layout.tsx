@@ -8,6 +8,7 @@ import { NavigationBar } from "components/NavigationBar/NavigationBar"
 import { mobileInlineScript } from "components/NavigationBar/mobileInlineScript"
 import { NavItem } from "components/NavigationBar/types"
 import { TopBar } from "components/TopBar/TopBar"
+import { CallToAction } from "views/CallToAction"
 
 const navigationItems: NavItem[] = [
   {
@@ -146,6 +147,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <TopBar />
         <NavigationBar items={navigationItems} />
         {children}
+        <CallToAction />
         <Modals />
       </body>
     </html>
