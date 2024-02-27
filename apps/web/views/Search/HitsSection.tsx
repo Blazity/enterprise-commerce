@@ -1,7 +1,5 @@
 import { PlatformProduct } from "@enterprise-commerce/core/platform/types"
 import { ProductCard } from "components/ProductCard"
-import Image from "next/image"
-import Link from "next/link"
 
 interface HitsSectionProps {
   hits: PlatformProduct[]

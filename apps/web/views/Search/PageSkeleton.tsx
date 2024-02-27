@@ -18,9 +18,15 @@ export function PageSkeleton() {
             <div className="block h-[24px] md:hidden" />
           </div>
 
-          <section className="grid w-full grid-cols-[repeat(_auto-fill,minmax(280px,1fr)_)] items-center gap-4">
+          <section className="grid w-full grid-cols-[repeat(_auto-fill,minmax(280px,1fr)_)] items-start gap-4 gap-y-8">
             {Array.from({ length: 6 }).map((_, index) => (
-              <Skeleton className="h-[430px] w-full md:h-[401px]" key={index} />
+              <div className="flex w-full flex-col gap-4 md:h-[430px]">
+                <Skeleton className="h-[320px]" key={index} />
+                <div>
+                  <Skeleton className="h-[25px] w-3/4" />
+                  <Skeleton className="mt-1 h-[32px] w-12" />
+                </div>
+              </div>
             ))}
           </section>
         </div>
