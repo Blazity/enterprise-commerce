@@ -5,141 +5,123 @@
 import { storefrontClient } from "clients/storefrontClient"
 import { Button } from "components/Button"
 import { ChevronIcon } from "components/Icons/ChevronIcon"
-import { Label } from "components/Label"
-import { RadioGroup, RadioGroupItem } from "components/RadioGroup"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/Select"
 import { notFound } from "next/navigation"
+import { ArrowIcon } from "components/Icons/ArrowIcon"
 import { Gallery } from "./Gallery"
+import { BackButton } from "./BackButton"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "components/Accordion"
+import { Carousel, CarouselContent } from "components/Carousel"
+import { Skeleton } from "components/Skeleton"
+
+const ACCORDIONS = {
+  "Product Details": (
+    <ul>
+      <li>* 20L capacity</li>
+      <li>* 700W output power</li>
+      <li>* 6 power levels</li>
+      <li>* 30 minuter timer</li>
+      <li>* Cooking end signal</li>
+    </ul>
+  ),
+  "Size and Fit": (
+    <p>
+      Est veniam qui aute nisi occaecat ad non velit anim commodo sit proident. Labore sint officia nostrud eu est fugiat nulla velit sint commodo. Excepteur sit ut anim pariatur
+      minim adipisicing dolore sit dolore cupidatat. Amet reprehenderit ipsum aute minim incididunt adipisicing est.
+    </p>
+  ),
+  "Free Delivery and Returns": (
+    <p>
+      Aliqua Lorem ullamco officia cupidatat cupidatat. Nostrud occaecat ex in Lorem. Et occaecat adipisicing do aliquip duis aliquip enim culpa nulla. Nulla quis aute ex eu est
+      ullamco enim incididunt fugiat proident laboris. Laboris sint ad et nostrud velit fugiat fugiat proident enim sit irure elit. Ut amet elit labore cupidatat id consectetur
+      sint fugiat esse excepteur pariatur. Tempor pariatur dolor eiusmod proident ad incididunt officia labore fugiat consectetur. Sunt veniam officia officia eiusmod minim
+      incididunt est sit esse excepteur non cupidatat voluptate ea. Do excepteur sunt nostrud eu do id nisi dolore laboris ea ullamco magna eu. Eiusmod irure dolore amet velit
+      laboris excepteur cupidatat est cupidatat minim ut anim id. Deserunt velit ex exercitation consequat quis magna pariatur laboris elit minim eiusmod anim.
+    </p>
+  ),
+  "Supplier Information": (
+    <p>
+      Aliqua ut ex irure eu officia dolore velit et occaecat pariatur excepteur nostrud ad. Ea reprehenderit sint culpa excepteur adipisicing ipsum esse excepteur officia culpa
+      adipisicing nostrud. Nulla Lorem voluptate tempor officia id mollit do est amet dolor nulla. Sint sunt consequat non in reprehenderit Lorem velit enim cillum enim. Consequat
+      occaecat exercitation consequat nisi veniam. Ipsum est reprehenderit cupidatat nulla minim anim deserunt consequat ipsum anim ea tempor.
+    </p>
+  ),
+}
 
 export async function ProductView({ slug }) {
-  const product = await storefrontClient.getProductByHandle(slug)
+  // const product = await storefrontClient.getProductByHandle(slug)
 
-  if (!product) {
-    return notFound()
-  }
+  // if (!product) {
+  //   return notFound()
+  // }
 
   return (
-    <main className="container mx-auto px-4 py-8">
-      <nav aria-label="Breadcrumb" className="mb-4">
-        <ol className="flex items-center space-x-1 text-sm">
-          <li>
-            <a className="text-gray-600 hover:underline" href="#">
-              Home
-            </a>
-          </li>
-          <li>{`>`}</li>
-          <li>
-            <a className="text-gray-600 hover:underline" href="#">
-              Electronics
-            </a>
-          </li>
-          <li>{`>`}</li>
-          <li aria-current="page" className="font-medium">
-            Product A
-          </li>
-        </ol>
-      </nav>
-      <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-        <Gallery />
-        <div>
-          <h1 className="mb-2 text-3xl font-bold">Product A</h1>
-          <div className="mb-4 flex items-center">
-            <StarIcon className="h-5 w-5 text-yellow-400" />
-            <StarIcon className="h-5 w-5 text-yellow-400" />
-            <StarIcon className="h-5 w-5 text-yellow-400" />
-            <StarIcon className="h-5 w-5 text-yellow-400" />
-            <span className="ml-2 text-sm text-gray-600">26 Reviews</span>
-          </div>
-          <p className="mb-4">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur.
-          </p>
-          <div className="mb-4 flex items-center space-x-2">
-            <span className="h-6 w-6 rounded-full bg-gray-400" />
-            <span className="h-6 w-6 rounded-full bg-gray-400" />
-            <span className="h-6 w-6 rounded-full bg-red-500" />
-          </div>
-          <div className="mb-4 text-3xl font-bold">50,99€</div>
-          <Button className="w-full">Add to Cart</Button>
-        </div>
+    <div className="max-w-container-md relative mx-auto px-4 xl:px-0">
+      <div className="mb:pb-8 relative pb-4 pt-4 md:pt-12">
+        <BackButton className="hidden md:block" />
       </div>
-      <section aria-labelledby="also-like-heading" className="mt-16">
-        <h2 className="mb-4 text-2xl font-bold" id="also-like-heading">
-          You might also like
-        </h2>
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-5">
-          <div>
-            <img
-              alt="Product B"
-              className="h-auto w-full"
-              height="200"
-              src="/placeholder.svg"
-              style={{
-                aspectRatio: "200/200",
-                objectFit: "cover",
-              }}
-              width="200"
-            />
-            <h3 className="mt-2 text-lg font-medium">Product B</h3>
-            <p className="mb-2">67,98€</p>
-          </div>
-          <div>
-            <img
-              alt="Product C"
-              className="h-auto w-full"
-              height="200"
-              src="/placeholder.svg"
-              style={{
-                aspectRatio: "200/200",
-                objectFit: "cover",
-              }}
-              width="200"
-            />
-            <h3 className="mt-2 text-lg font-medium">Product C</h3>
-            <p className="mb-2">67,98€</p>
-          </div>
-          <div>
-            <img
-              alt="Product D"
-              className="h-auto w-full"
-              height="200"
-              src="/placeholder.svg"
-              style={{
-                aspectRatio: "200/200",
-                objectFit: "cover",
-              }}
-              width="200"
-            />
-            <h3 className="mt-2 text-lg font-medium">Product D</h3>
-            <p className="mb-2">67,98€</p>
-          </div>
-          <div>
-            <img
-              alt="Product E"
-              className="h-auto w-full"
-              height="200"
-              src="/placeholder.svg"
-              style={{
-                aspectRatio: "200/200",
-                objectFit: "cover",
-              }}
-              width="200"
-            />
-            <h3 className="mt-2 text-lg font-medium">Product E</h3>
-            <p className="mb-2">67,98€</p>
-          </div>
-          <div className="flex items-center justify-center">
-            <button aria-label="Previous product">
-              <ChevronIcon className="h-6 w-6" />
-            </button>
-            <button aria-label="Next product">
-              <ChevronIcon className="h-6 w-6" />
-            </button>
+      <main className="max-w-container-sm mx-auto">
+        <nav aria-label="Breadcrumb" className="mb-8">
+          <ol className="flex items-center gap-1.5 text-[16px] tracking-[-0.64px]">
+            <li>
+              <a className="text-slate-600 hover:underline" href="#">
+                Home
+              </a>
+            </li>
+            <li>{`>`}</li>
+            <li>
+              <a className="text-slate-600 hover:underline" href="#">
+                Electronics
+              </a>
+            </li>
+            <li>{`>`}</li>
+            <li aria-current="page" className="font-medium">
+              Product A
+            </li>
+          </ol>
+        </nav>
+        <div className="grid grid-cols-1 justify-center gap-10 md:grid-cols-2 lg:gap-20">
+          <Gallery />
+          <div className="flex flex-col items-start pt-12">
+            <h1 className="mb-6 text-[36px] tracking-[-1.44px]">Product A</h1>
+            <p className="text-[17px] leading-tight tracking-normal text-slate-600">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+              exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+              pariatur.
+            </p>
+
+            <div className="mb-16 mt-10 text-[36px] font-bold tracking-[-1.44px]">50,99€</div>
+            <Button variant="secondary" size="xl" isAnimated={false} className="w-fit rounded-xl transition-transform hover:scale-105 hover:text-white">
+              Add to Cart
+            </Button>
+
+            <Accordion type="multiple" className="mt-12 w-full">
+              {Object.entries(ACCORDIONS).map(([title, content]) => (
+                <AccordionItem value={title} key={title}>
+                  <AccordionTrigger className="border px-5 py-3 text-base">{title}</AccordionTrigger>
+                  <AccordionContent>{content}</AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
           </div>
         </div>
+      </main>
+      <section className="py-40">
+        <h2 className="mb-10 text-[26px] font-normal tracking-[-0.78px]">You might also like</h2>
+        <Carousel opts={{ containScroll: "keepSnaps", dragFree: true }}>
+          <CarouselContent className="ml-0 justify-start gap-6">
+            {Array.from({ length: 10 }).map((_, index) => (
+              <div className="flex w-[280px] shrink-0 flex-col gap-4 md:h-[430px]">
+                <Skeleton className="h-[320px]" key={index} />
+                <div>
+                  <Skeleton className="h-[25px] w-3/4" />
+                  <Skeleton className="mt-1 h-[32px] w-12" />
+                </div>
+              </div>
+            ))}
+          </CarouselContent>
+        </Carousel>
       </section>
-    </main>
+    </div>
   )
 }
 

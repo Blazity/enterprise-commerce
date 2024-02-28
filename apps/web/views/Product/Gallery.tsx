@@ -6,7 +6,11 @@ import Image from "next/image"
 import { useCallback, useEffect, useState } from "react"
 import { cn } from "utils/cn"
 
-export function Gallery() {
+interface GalleryProps {
+  className?: string
+}
+
+export function Gallery({ className }: GalleryProps) {
   const [api, setApi] = useState<CarouselApi>()
   const [thumbsApi, setThumbsApi] = useState<CarouselApi>()
   const [current, setCurrent] = useState(0)
@@ -32,7 +36,7 @@ export function Gallery() {
   )
 
   return (
-    <div className="flex max-w-[480px] flex-col gap-10">
+    <div className={cn("flex max-w-full flex-col gap-10 md:max-w-[480px]", className)}>
       <Carousel setApi={setApi} className="relative min-h-[600px] w-full  bg-gray-100">
         <CarouselContent className="size-full">
           {Array.from({ length: 5 }).map((_, index) => (

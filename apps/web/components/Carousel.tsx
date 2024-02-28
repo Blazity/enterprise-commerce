@@ -5,7 +5,7 @@ import * as React from "react"
 
 import { cn } from "utils/cn"
 import { Button } from "./Button"
-import { ArrowIcon } from "./Icons/ArrowIcon"
+import { ChevronIcon } from "./Icons/ChevronIcon"
 
 type CarouselApi = UseEmblaCarouselType[1]
 type UseCarouselParameters = Parameters<typeof useEmblaCarousel>
@@ -161,12 +161,12 @@ const CarouselPrevious = React.forwardRef<HTMLButtonElement, React.ComponentProp
       variant="secondary"
       isAnimated={false}
       size="lg"
-      className={cn("absolute flex size-12 items-center justify-center rounded-full transition-transform hover:scale-105 hover:text-white", className)}
+      className={cn("absolute flex size-12 rotate-90 items-center justify-center rounded-full transition-transform hover:scale-105 hover:text-white", className)}
       disabled={!canScrollPrev}
       onClick={scrollPrev}
       {...props}
     >
-      <ArrowIcon className="size-4" />
+      <ChevronIcon className="size-4" />
       <span className="sr-only">Previous slide</span>
     </Button>
   )
@@ -182,12 +182,12 @@ const CarouselNext = React.forwardRef<HTMLButtonElement, React.ComponentProps<ty
       isAnimated={false}
       variant="secondary"
       size="lg"
-      className={cn("absolute flex size-12 items-center justify-center rounded-full transition-transform hover:scale-105 hover:text-white", className)}
+      className={cn("absolute flex size-12 rotate-90 items-center justify-center rounded-full transition-transform hover:scale-105 hover:text-white", className)}
       disabled={!canScrollNext}
       onClick={scrollNext}
       {...props}
     >
-      <ArrowIcon className="m-auto size-4 rotate-180" />
+      <ChevronIcon className="m-auto size-4 rotate-180" />
       <span className="sr-only">Next slide</span>
     </Button>
   )

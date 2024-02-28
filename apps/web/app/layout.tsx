@@ -11,7 +11,8 @@ import { TopBar } from "components/TopBar/TopBar"
 import { CallToAction } from "views/CallToAction"
 import Footer from "views/Footer"
 import { AnnouncementBar } from "views/AnnouncementBar"
-import Link from "next/link"
+import { NavigationEvents } from "views/NavigationEvents"
+import { Suspense } from "react"
 
 export const revalidate = 3600
 
@@ -156,6 +157,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <CallToAction />
         <Footer />
         <Modals />
+
+        <Suspense fallback={null}>
+          <NavigationEvents />
+        </Suspense>
       </body>
     </html>
   )

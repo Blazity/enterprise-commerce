@@ -89,6 +89,7 @@ const config: Omit<Config, "content"> = {
         ...defaultTheme.width,
         "container-lg": "1440px",
         "container-md": "1280px",
+        "container-sm": "1024px",
       },
       minWidth: {
         ...defaultTheme.width,
