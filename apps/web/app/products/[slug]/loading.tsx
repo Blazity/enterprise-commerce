@@ -1,3 +1,5 @@
+import { PageSkeleton } from "views/Product/PageSkeleton"
+
 export default function Loading() {
-  return <p>Loading...</p>
+  return <PageSkeleton />
 }

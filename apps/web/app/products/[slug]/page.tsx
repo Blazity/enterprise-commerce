@@ -12,6 +12,7 @@ import { BackButton } from "views/Product/BackButton"
 import { FaqSection } from "views/Product/FaqSection"
 import { GallerySection } from "views/Product/GallerySection"
 import { InfoSection } from "views/Product/InfoSection"
+import { PageSkeleton } from "views/Product/PageSkeleton"
 import { SimilarProductsSection } from "views/Product/SimilarProductsSection"
 import VariantsSection from "views/Product/VariantsSection"
 
@@ -27,7 +28,7 @@ interface ProductProps {
 
 export default async function Product({ params: { slug } }: ProductProps) {
   return (
-    <Suspense fallback={null}>
+    <Suspense fallback={<PageSkeleton />}>
       <ProductView slug={slug} />
     </Suspense>
   )
@@ -61,7 +62,7 @@ async function ProductView({ slug }: { slug: string }) {
             <InfoSection className="pb-10" title={product.title} description={product.descriptionHtml} price={price} />
             <VariantsSection flatOptions={product.flatOptions} variants={product.variants} />
             <AddToCartButton className="my-8" />
-            <FaqSection />
+            <FaqSection className="mt-12" />
           </div>
         </div>
       </main>

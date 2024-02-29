@@ -1,4 +1,5 @@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "components/Accordion"
+import { cn } from "utils/cn"
 
 const ACCORDIONS = {
   "Product Details": (
@@ -34,9 +35,9 @@ const ACCORDIONS = {
   ),
 }
 
-export function FaqSection() {
+export function FaqSection({ className }: { className?: string }) {
   return (
-    <Accordion type="multiple" className="mt-12 w-full">
+    <Accordion type="multiple" className={cn("w-full", className)}>
       {Object.entries(ACCORDIONS).map(([title, content]) => (
         <AccordionItem value={title} key={title}>
           <AccordionTrigger className="border px-5 py-3 text-base">{title}</AccordionTrigger>
