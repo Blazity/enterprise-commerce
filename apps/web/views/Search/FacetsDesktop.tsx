@@ -4,7 +4,6 @@ import { useWindowSize } from "@uidotdev/usehooks"
 import { Skeleton } from "components/Skeleton"
 import type { CategoriesDistribution } from "meilisearch"
 import dynamic from "next/dynamic"
-import { parseAsArrayOf, parseAsInteger, parseAsString, useQueryState } from "nuqs"
 import { cn } from "utils/cn"
 
 interface FacetsDesktopProps {

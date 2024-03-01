@@ -43,7 +43,11 @@ export function Sorter({ className }: SorterProps) {
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-[240px] rounded-b-md bg-white px-0 text-gray-400 shadow-lg" align="end">
           {Object.entries(LABELS).map(([key, label]) => (
-            <DropdownMenuItem key={label} className="cursor-pointer border-b border-gray-200 py-2 last:border-b-0 hover:bg-gray-50" onClick={() => setSortBy(key as Sorting)}>
+            <DropdownMenuItem
+              key={label}
+              className="cursor-pointer border-b border-gray-200 py-2 last:border-b-0 hover:bg-gray-50 focus:bg-gray-50 active:bg-gray-50"
+              onClick={() => setSortBy(key as Sorting)}
+            >
               {label}
             </DropdownMenuItem>
           ))}

@@ -6,8 +6,8 @@ import { Input } from "components/Input"
 import { Label } from "components/Label"
 import type { CategoriesDistribution } from "meilisearch"
 import { parseAsArrayOf, parseAsInteger, parseAsString, useQueryState } from "nuqs"
-import { Facet } from "./Facet"
 import { ChangeEvent } from "react"
+import { Facet } from "./Facet"
 
 interface FacetsContentProps {
   facetDistribution: Record<string, CategoriesDistribution> | undefined

@@ -8,8 +8,8 @@ export function SimilarProductsSection() {
       <Carousel opts={{ containScroll: "keepSnaps", dragFree: true }}>
         <CarouselContent className="ml-0 justify-start gap-6">
           {Array.from({ length: 10 }).map((_, index) => (
-            <div className="flex w-[280px] shrink-0 flex-col gap-4 md:h-[430px]">
-              <Skeleton className="h-[320px]" key={index} />
+            <div key={index} className="flex w-[280px] shrink-0 flex-col gap-4 md:h-[430px]">
+              <Skeleton className="h-[320px]" />
               <div>
                 <Skeleton className="h-[25px] w-3/4" />
                 <Skeleton className="mt-1 h-[32px] w-12" />
