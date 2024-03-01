@@ -55,7 +55,7 @@ async function ProductView({ slug }: { slug: string }) {
       </div>
       <main className="max-w-container-sm mx-auto">
         {/* TODO: xd */}
-        <Breadcrumbs className="mb-8 hidden md:block" items={{ Home: "/", [product.collections[0].title]: "/", [product.title]: "" }} />
+        <Breadcrumbs className="mb-8 hidden md:block" items={{ Home: "/", [product.collections?.[0]?.title || "Products"]: "/", [product.title]: "" }} />
         <div className="grid grid-cols-1 justify-center gap-10 md:grid-cols-2 lg:gap-20">
           <GallerySection images={product.images} />
           <div className="flex flex-col items-start pt-12">
