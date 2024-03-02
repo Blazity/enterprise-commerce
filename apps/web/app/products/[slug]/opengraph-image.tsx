@@ -15,25 +15,28 @@ export const size = {
 export const contentType = "image/png"
 
 export default async function Image({ params: { slug } }: { params: { slug: string } }) {
-  const product = await getProduct(removeOptionsFromUrl(slug))
+  const interRegular = fetch(new URL("../../../public/fonts/Inter-Regular.ttf", import.meta.url)).then((res) => res.arrayBuffer())
+  const interSemiBold = fetch(new URL("../../../public/fonts/Inter-SemiBold.ttf", import.meta.url)).then((res) => res.arrayBuffer())
+  const interBold = fetch(new URL("../../../public/fonts/Inter-Bold.ttf", import.meta.url)).then((res) => res.arrayBuffer())
 
-  const hasNoPriceRange = product?.priceRange.minVariantPrice.amount === product?.priceRange.maxVariantPrice.amount
+  const product = await getProduct(removeOptionsFromUrl(slug))
 
   return new ImageResponse(
     (
       <div
         style={{
+          border: "10px solid black",
           display: "flex",
           height: "100%",
           width: "100%",
-          fontWeight: 700,
+          fontWeight: 400,
           background: "white",
         }}
       >
         <div
           style={{
             left: 120,
-            top: 60,
+            top: 40,
             position: "absolute",
             display: "flex",
             alignItems: "center",
@@ -48,7 +51,7 @@ export default async function Image({ params: { slug } }: { params: { slug: stri
         <div
           style={{
             left: 120,
-            top: 510,
+            top: 490,
             position: "absolute",
             display: "flex",
             width: "380px",
@@ -68,14 +71,65 @@ export default async function Image({ params: { slug } }: { params: { slug: stri
             ))}
         </div>
 
-        <div style={{ maxWidth: "500px", fontSize: "48px", lineHeight: 1, position: "absolute", left: 600, top: 120, letterSpacing: "-0.05em" }}>{product?.title}</div>
-        <div style={{ fontSize: "60px", fontWeight: "bold", lineHeight: 1, position: "absolute", left: 600, bottom: 120, textAlign: "left", letterSpacing: "-0.05em" }}>
+        <div
+          style={{
+            height: "180px",
+            overflow: "hidden",
+            maxWidth: "450px",
+            fontWeight: 400,
+            fontSize: "48px",
+            lineHeight: 1,
+            position: "absolute",
+            left: 600,
+            top: 40,
+            letterSpacing: "-0.05em",
+          }}
+        >
+          {product?.title}
+        </div>
+
+        <div
+          style={{
+            height: "180px",
+            overflow: "hidden",
+            maxWidth: "500px",
+            fontWeight: 400,
+            fontSize: "21px",
+            position: "absolute",
+            left: 600,
+            color: "#565656",
+            top: 230,
+          }}
+        >
+          {product?.description}
+        </div>
+        <div style={{ fontSize: "70px", fontWeight: 900, lineHeight: 1, position: "absolute", left: 600, bottom: 60, textAlign: "left", letterSpacing: "-0.05em" }}>
           {product?.priceRange.minVariantPrice.amount + " " + product?.priceRange.minVariantPrice.currencyCode}
         </div>
       </div>
     ),
     {
       ...size,
+      fonts: [
+        {
+          name: "Inter",
+          data: await interRegular,
+          style: "normal",
+          weight: 400,
+        },
+        {
+          name: "Inter",
+          data: await interSemiBold,
+          style: "normal",
+          weight: 500,
+        },
+        {
+          name: "Inter",
+          data: await interBold,
+          style: "normal",
+          weight: 900,
+        },
+      ],
     }
   )
 }
