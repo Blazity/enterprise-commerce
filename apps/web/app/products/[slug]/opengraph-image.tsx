@@ -72,7 +72,7 @@ export default async function Image({ params: { slug } }: { params: { slug: stri
 
         <div
           style={{
-            height: "180px",
+            height: "145px",
             overflow: "hidden",
             maxWidth: "450px",
             fontWeight: 400,
