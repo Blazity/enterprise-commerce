@@ -4,7 +4,6 @@ import withPlugins from "next-compose-plugins"
 /**
  * @type {import('next').NextConfig}
  */
-// TODO: enable it back when it starts working
 const config = withPlugins([[withBundleAnalyzer({ enabled: process.env.ANALYZE === "true" })]], {
   reactStrictMode: true,
   transpilePackages: ["@enterprise-commerce/design-system"],

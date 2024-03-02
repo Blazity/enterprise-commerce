@@ -1,14 +1,16 @@
 import { PlatformProduct } from "@enterprise-commerce/core/platform/types"
 import Image from "next/image"
 import Link from "next/link"
+import { cn } from "utils/cn"
 
 interface ProductCardProps extends PlatformProduct {
   priority?: boolean
+  className?: string
 }
 
 export function ProductCard(props: ProductCardProps) {
   return (
-    <div className="group relative" key={props.id}>
+    <div className={cn("group relative", props.className)}>
       <div className="relative flex min-h-[320px] items-center justify-center bg-gray-100">
         <Image
           alt={props.featuredImage?.altText || ""}

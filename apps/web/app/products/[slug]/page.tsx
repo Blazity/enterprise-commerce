@@ -14,6 +14,7 @@ import { GallerySection } from "views/Product/GallerySection"
 import { InfoSection } from "views/Product/InfoSection"
 import { PageSkeleton } from "views/Product/PageSkeleton"
 import { SimilarProductsSection } from "views/Product/SimilarProductsSection"
+import { SimilarProductsSectionSkeleton } from "views/Product/SimilarProductsSectionSkeleton"
 import VariantsSection from "views/Product/VariantsSection"
 
 export const revalidate = 3600
@@ -47,6 +48,7 @@ async function ProductView({ slug }: { slug: string }) {
   const defaultColor = product.flatOptions?.["Color"]?.find(Boolean) ?? null
   const defaultSize = product.flatOptions?.["Size"]?.find(Boolean) ?? null
   const price = getProductPrice(product.variants, size ?? defaultSize, color ?? defaultColor)
+  const lastCollection = product.collections.findLast(Boolean)
 
   return (
     <div className="max-w-container-md relative mx-auto px-4 xl:px-0">
@@ -54,8 +56,7 @@ async function ProductView({ slug }: { slug: string }) {
         <BackButton className="mb-8 hidden md:block" />
       </div>
       <main className="max-w-container-sm mx-auto">
-        {/* TODO: xd */}
-        <Breadcrumbs className="mb-8 hidden md:block" items={{ Home: "/", [product.collections?.[0]?.title || "Products"]: "/", [product.title]: "" }} />
+        <Breadcrumbs className="mb-8 hidden md:block" items={makeBreadcrumbs(product)} />
         <div className="grid grid-cols-1 justify-center gap-10 md:grid-cols-2 lg:gap-20">
           <GallerySection images={product.images} />
           <div className="flex flex-col items-start pt-12">
@@ -66,9 +67,21 @@ async function ProductView({ slug }: { slug: string }) {
           </div>
         </div>
       </main>
-      <SimilarProductsSection />
+      <Suspense fallback={<SimilarProductsSectionSkeleton />}>
+        <SimilarProductsSection collection={lastCollection?.title} slug={slug} />
+      </Suspense>
     </div>
   )
+}
+
+function makeBreadcrumbs(product: PlatformProduct) {
+  const lastCollection = product.collections.findLast(Boolean)
+
+  return {
+    Home: "/",
+    [lastCollection?.title || "Products"]: lastCollection?.handle ? `/categories/${lastCollection.handle}` : "/search",
+    [product.title]: "",
+  }
 }
 
 export async function generateStaticParams() {
