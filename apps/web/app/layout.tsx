@@ -158,6 +158,8 @@ export const metadata = {
     yandex: "yandex",
     yahoo: "yahoo",
   },
+  generator: "Next.js",
+  applicationName: "Next.js",
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

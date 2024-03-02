@@ -5,12 +5,13 @@ import { createProductFeedMutation, fullSyncProductFeedMutation } from "./mutati
 import { subscribeWebhookMutation } from "./mutations/webhook.admin"
 import { normalizeProduct } from "./normalize"
 import { getMenuQuery } from "./queries/menu.storefront"
+import { getPageQuery, getPagesQuery } from "./queries/page.storefront"
 import { getLatestProductFeedQuery } from "./queries/product-feed.admin"
 import { getProductQuery, getProductsByHandleQuery } from "./queries/product.storefront"
 
 import type { LatestProductFeedsQuery, ProductFeedCreateMutation, ProductFullSyncMutation, WebhookSubscriptionCreateMutation } from "./types/admin/admin.generated"
 import type { WebhookSubscriptionTopic } from "./types/admin/admin.types"
-import type { MenuQuery, ProductsByHandleQuery, SingleProductQuery } from "./types/storefront.generated"
+import type { MenuQuery, PagesQuery, ProductsByHandleQuery, SinglePageQuery, SingleProductQuery } from "./types/storefront.generated"
 import { PlatformMenu, PlatformProduct } from "../types"
 
 interface CreateShopifyClientProps {
@@ -43,6 +44,8 @@ export function createShopifyClient({ storefrontAccessToken, adminAccessToken, s
     createProductFeed: async () => createProductFeed(adminClient),
     fullSyncProductFeed: async (id: string) => fullSyncProductFeed(adminClient, id),
     getLatestProductFeed: async () => getLatestProductFeed(adminClient),
+    getPage: async (handle: string) => getPage(client!, handle),
+    getAllPages: async () => getAllPages(client!),
   }
 }
 
@@ -94,4 +97,12 @@ async function fullSyncProductFeed(client: AdminApiClient, id: string) {
 
 async function getLatestProductFeed(client: AdminApiClient) {
   return client.request<LatestProductFeedsQuery>(getLatestProductFeedQuery)
+}
+
+async function getPage(client: StorefrontApiClient, handle: string) {
+  return client.request<SinglePageQuery>(getPageQuery, { variables: { handle } })
+}
+
+async function getAllPages(client: StorefrontApiClient) {
+  return client.request<PagesQuery>(getPagesQuery)
 }

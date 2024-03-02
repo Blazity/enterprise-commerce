@@ -51,6 +51,7 @@
     "@uidotdev/usehooks": "^2.4.1",
     "@vercel/otel": "^0.3.0",
     "class-variance-authority": "^0.7.0",
+    "date-fns": "^3.3.1",
     "embla-carousel-react": "^8.0.0",
     "lodash": "^4.17.21",
     "meilisearch": "^0.37.0",

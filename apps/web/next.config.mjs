@@ -52,6 +52,11 @@ const config = withPlugins([[withBundleAnalyzer({ enabled: process.env.ANALYZE =
         source: "/search/:second",
         destination: "/search?second=:second",
       },
+      { source: "/privacy-policy", destination: "/pages/privacy-policy" },
+      { source: "/faq", destination: "/pages/frequently-asked-questions" },
+      { source: "/about", destination: "/pages/about" },
+      { source: "/terms-conditions", destination: "/pages/terms-conditions" },
+      { source: "/shipping-return-policy", destination: "/pages/shipping-return-policy" },
     ]
   },
 })
