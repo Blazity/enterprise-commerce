@@ -13,20 +13,17 @@ interface VariantsSectionProps {
   className?: string
 }
 
-export default function VariantsSection({ variants, flatOptions }: VariantsSectionProps) {
+export function VariantsSection({ variants, flatOptions }: VariantsSectionProps) {
   const router = useRouter()
   const pathname = usePathname()
 
   const urlOptions = getOptionsFromUrl(pathname)
   const combinations = getAllCombinations(variants)
-  const hasOneVariant = variants.length <= 1
 
   const defaultColor = flatOptions?.["Color"]?.find(Boolean) ?? null
   const defaultSize = flatOptions?.["Size"]?.find(Boolean) ?? null
   const selectedColor = urlOptions.color ?? defaultColor
   const selectedSize = urlOptions.size ?? defaultSize
-
-  if (hasOneVariant) return null
 
   return (
     <div

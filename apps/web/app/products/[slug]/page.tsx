@@ -3,6 +3,7 @@ import { getProduct } from "app/actions"
 import { Breadcrumbs } from "components/Breadcrumbs"
 import { env } from "env.mjs"
 import { Metadata } from "next"
+import nextDynamic from "next/dynamic"
 import { notFound } from "next/navigation"
 import { Suspense } from "react"
 import { makeKeywords } from "utils/makeKeywords"
@@ -13,10 +14,11 @@ import { BackButton } from "views/Product/BackButton"
 import { FaqSection } from "views/Product/FaqSection"
 import { GallerySection } from "views/Product/GallerySection"
 import { InfoSection } from "views/Product/InfoSection"
-import { PageSkeleton } from "views/Product/PageSkeleton"
+import { PageSkeleton, VariantsSectionSkeleton } from "views/Product/PageSkeleton"
 import { SimilarProductsSection } from "views/Product/SimilarProductsSection"
 import { SimilarProductsSectionSkeleton } from "views/Product/SimilarProductsSectionSkeleton"
-import VariantsSection from "views/Product/VariantsSection"
+
+const VariantsSection = nextDynamic(() => import("views/Product/VariantsSection").then((mod) => mod.VariantsSection), { loading: VariantsSectionSkeleton })
 
 export const revalidate = 3600
 
@@ -71,6 +73,7 @@ async function ProductView({ slug }: { slug: string }) {
     return notFound()
   }
 
+  const hasOnlyOneVariant = product.variants.length <= 1
   const defaultColor = product.flatOptions?.["Color"]?.find(Boolean) ?? null
   const defaultSize = product.flatOptions?.["Size"]?.find(Boolean) ?? null
   const price = getProductPrice(product.variants, size ?? defaultSize, color ?? defaultColor)
@@ -87,7 +90,7 @@ async function ProductView({ slug }: { slug: string }) {
           <GallerySection images={product.images} />
           <div className="flex flex-col items-start pt-12">
             <InfoSection className="pb-10" title={product.title} description={product.descriptionHtml} price={price} />
-            <VariantsSection flatOptions={product.flatOptions} variants={product.variants} />
+            {hasOnlyOneVariant ? null : <VariantsSection flatOptions={product.flatOptions} variants={product.variants} />}
             <AddToCartButton className="my-8" />
             <FaqSection className="mt-12" />
           </div>

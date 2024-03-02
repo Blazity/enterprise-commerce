@@ -10,11 +10,11 @@ interface ProductCardProps extends PlatformProduct {
 
 export function ProductCard(props: ProductCardProps) {
   return (
-    <div className={cn("group relative", props.className)}>
-      <div className="relative flex min-h-[320px] items-center justify-center bg-gray-100">
+    <div className={cn("group relative bg-gray-100 p-4 md:bg-transparent md:p-0", props.className)}>
+      <div className="relative flex min-h-[100px] items-center justify-center bg-gray-100 md:min-h-[320px]">
         <Image
           alt={props.featuredImage?.altText || ""}
-          className="z-10 size-[250px] object-contain transition-transform group-hover:scale-105"
+          className="z-10 size-[150px] object-contain transition-transform group-hover:scale-105 md:size-[250px]"
           height={250}
           src={props.featuredImage?.url || "/default-product-image.svg"}
           sizes="250px"
@@ -28,8 +28,8 @@ export function ProductCard(props: ProductCardProps) {
       </Link>
 
       <div className="mt-4 flex flex-col gap-0.5 text-slate-700">
-        <div className="line-clamp-2 text-[19px]">{props.title}</div>
-        {props.minPrice ? <p className="text-[23px]">${props.minPrice}</p> : null}
+        <div className="line-clamp-2 text-[13px] md:text-[19px]">{props.title}</div>
+        {props.minPrice ? <p className="text-[13px] font-bold md:text-[23px] md:font-normal">${props.minPrice}</p> : null}
       </div>
     </div>
   )

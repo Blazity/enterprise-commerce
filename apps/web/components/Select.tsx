@@ -1,11 +1,11 @@
 "use client"
 
-import * as React from "react"
 import * as SelectPrimitive from "@radix-ui/react-select"
+import * as React from "react"
 import { cn } from "utils/cn"
 import { CaretSortIcon } from "./Icons/CaretSortIcon"
-import { ChevronIcon } from "./Icons/ChevronIcon"
 import { CheckIcon } from "./Icons/CheckIcon"
+import { ChevronIcon } from "./Icons/ChevronIcon"
 
 const Select = SelectPrimitive.Root
 
@@ -25,7 +25,7 @@ const SelectTrigger = React.forwardRef<React.ElementRef<typeof SelectPrimitive.T
     >
       {children}
       <SelectPrimitive.Icon asChild>
-        <CaretSortIcon className="h-4 w-4 opacity-50" />
+        <CaretSortIcon className="size-4 opacity-50" />
       </SelectPrimitive.Icon>
     </SelectPrimitive.Trigger>
   )
@@ -89,7 +89,7 @@ const SelectItem = React.forwardRef<React.ElementRef<typeof SelectPrimitive.Item
       )}
       {...props}
     >
-      <span className="absolute right-2 flex h-3.5 w-3.5 items-center justify-center">
+      <span className="absolute right-2 flex size-3.5 items-center justify-center">
         <SelectPrimitive.ItemIndicator>
           <CheckIcon />
         </SelectPrimitive.ItemIndicator>

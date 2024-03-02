@@ -20,16 +20,7 @@ export function PageSkeleton() {
               <Skeleton className="h-[148px] w-[95%] text-[17px] leading-tight tracking-normal text-slate-600" />
               <Skeleton className="mt-4 h-[54px] w-[200px] text-[36px] font-bold tracking-[-1.44px]" />
             </div>
-            <div className="flex w-full flex-wrap gap-6">
-              <div className="flex flex-col gap-2">
-                <Skeleton className="h-[14px] w-[50px]" />
-                <Skeleton className="h-[36px] w-[180px]" />
-              </div>
-              <div className="flex flex-col gap-2">
-                <Skeleton className="h-[14px] w-[50px]" />
-                <Skeleton className="h-[36px] w-[180px]" />
-              </div>
-            </div>
+            <VariantsSectionSkeleton />
             <Skeleton className="my-8 h-[61px] w-[250px]" />
             <div className="mt-12  w-full">
               <Skeleton className="my-2 h-[50px] w-full" />
@@ -41,6 +32,21 @@ export function PageSkeleton() {
         </div>
       </main>
       <SimilarProductsSectionSkeleton />
+    </div>
+  )
+}
+
+export function VariantsSectionSkeleton() {
+  return (
+    <div className="flex w-full flex-wrap gap-6">
+      <div className="flex flex-col gap-2">
+        <Skeleton className="h-[14px] w-[50px]" />
+        <Skeleton className="h-[36px] w-[180px]" />
+      </div>
+      <div className="flex flex-col gap-2">
+        <Skeleton className="h-[14px] w-[50px]" />
+        <Skeleton className="h-[36px] w-[180px]" />
+      </div>
     </div>
   )
 }

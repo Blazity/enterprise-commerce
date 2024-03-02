@@ -1,7 +1,6 @@
-import type { Metadata } from "next"
-
 import { PlatformProduct } from "@enterprise-commerce/core/platform/types"
 import { meilisearch } from "clients/meilisearch"
+import type { Metadata } from "next"
 import { unstable_cache } from "next/cache"
 import { createSearchParamsCache, parseAsArrayOf, parseAsInteger, parseAsString } from "nuqs/server"
 import { Suspense } from "react"
@@ -52,7 +51,6 @@ async function SearchView({ searchParams }: SearchPageProps) {
   const { q, sortBy, page, ...rest } = searchParamsCache.parse(searchParams)
 
   const { totalHits, facetDistribution, hits, totalPages } = await searchProducts(q, sortBy, page, composeFilters(rest).build())
-  // const availableForSale = meilisearchResults.facetDistribution?.["variants.availableForSale"]
 
   return (
     <div className="max-w-container-md mx-auto flex min-h-screen w-full flex-col gap-12 px-4 py-12 md:flex-row md:gap-24 md:py-24 xl:px-0 ">
