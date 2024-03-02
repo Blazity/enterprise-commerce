@@ -1,3 +1,5 @@
+"use client"
+
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "components/Accordion"
 import { cn } from "utils/cn"
 
