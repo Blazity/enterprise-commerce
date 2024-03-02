@@ -1,18 +1,17 @@
 import "./globals.css"
 import "@enterprise-commerce/design-system/styles.css"
 
-import Script from "next/script"
-
 import { Modals } from "components/Modals/Modals"
-import { NavigationBar } from "components/NavigationBar/NavigationBar"
 import { mobileInlineScript } from "components/NavigationBar/mobileInlineScript"
+import { NavigationBar } from "components/NavigationBar/NavigationBar"
 import { NavItem } from "components/NavigationBar/types"
 import { TopBar } from "components/TopBar/TopBar"
+import Script from "next/script"
+import { Suspense } from "react"
+import { AnnouncementBar } from "views/AnnouncementBar"
 import { CallToAction } from "views/CallToAction"
 import Footer from "views/Footer"
-import { AnnouncementBar } from "views/AnnouncementBar"
 import { NavigationEvents } from "views/NavigationEvents"
-import { Suspense } from "react"
 
 export const revalidate = 3600
 
@@ -143,6 +142,23 @@ const navigationItems: NavItem[] = [
     href: "#",
   },
 ]
+
+export const metadata = {
+  title: "Demo Store | Blazity",
+  description: "An intuitive navigation to captivate your audience and drive conversions effortlessly. Start boosting your sales.",
+  twitter: {
+    card: "summary_large_image",
+    title: "Demo Store | Blazity",
+    description: "An intuitive navigation to captivate your audience and drive conversions effortlessly. Start boosting your sales.",
+    creator: "@blazity",
+    images: ["https://nextjs.org/og.png"],
+  },
+  verification: {
+    google: "google",
+    yandex: "yandex",
+    yahoo: "yahoo",
+  },
+}
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

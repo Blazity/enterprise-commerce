@@ -1,10 +1,14 @@
 import { PlatformProduct } from "@enterprise-commerce/core/platform/types"
+import { getProduct } from "app/actions"
 import { meilisearch } from "clients/meilisearch"
 import { Breadcrumbs } from "components/Breadcrumbs"
+import { env } from "env.mjs"
+import { Metadata } from "next"
 import { unstable_cache } from "next/cache"
 import { notFound } from "next/navigation"
 import { Suspense } from "react"
 import { ComparisonOperators, FilterBuilder } from "utils/filterBuilder"
+import { makeKeywords } from "utils/makeKeywords"
 
 import { getOptionsFromUrl, getProductPrice, hasValidOption, removeOptionsFromUrl } from "utils/productOptionsUtils"
 import { AddToCartButton } from "views/Product/AddToCartButton"
@@ -25,6 +29,31 @@ export const dynamic = "force-static"
 
 interface ProductProps {
   params: { slug: string }
+}
+
+export async function generateMetadata({ params: { slug } }: ProductProps): Promise<Metadata> {
+  const product = await getProduct(removeOptionsFromUrl(slug))
+
+  const originalDescription = product?.seo.description
+  const originalTitle = product?.seo.title
+  const keywords = makeKeywords(product?.title)
+  const lastCollection = product?.collections.findLast(Boolean)
+
+  return {
+    metadataBase: new URL(env.LIVE_URL),
+    title: `${originalTitle || product?.title} | Blazity`,
+    description: originalDescription || product?.description,
+    generator: "Next.js",
+    applicationName: "Next.js",
+    referrer: "origin-when-cross-origin",
+    keywords: keywords,
+    category: lastCollection?.title,
+    creator: "Blazity",
+    alternates: {
+      canonical: "/products/vans-old-skool-butterfly-true-white-black-size_9-color_white",
+    },
+    publisher: "Blazity",
+  }
 }
 
 export default async function Product({ params: { slug } }: ProductProps) {
@@ -87,14 +116,3 @@ function makeBreadcrumbs(product: PlatformProduct) {
 export async function generateStaticParams() {
   return []
 }
-
-const getProduct = unstable_cache(
-  async (handle: string) => {
-    const index = await meilisearch?.getIndex<PlatformProduct>("products")
-    const documents = await index?.getDocuments({ filter: new FilterBuilder().where("handle", ComparisonOperators.Equal, handle).build(), limit: 1 })
-
-    return documents.results.find(Boolean) || null
-  },
-  ["product-by-handle"],
-  { revalidate: 3600 }
-)

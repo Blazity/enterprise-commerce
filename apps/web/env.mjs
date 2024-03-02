@@ -10,6 +10,7 @@ export const env = createEnv({
     SHOPIFY_STORE_DOMAIN: z.string().default("demo"),
     MEILISEARCH_MASTER_KEY: z.string().optional().default("demo"),
     MEILISEARCH_HOST: z.string().optional().default("demo"),
+    LIVE_URL: z.string().optional().default("https://enterprise-commerce-web.vercel.app"),
     ANALYZE: z
       .enum(["true", "false"])
       .optional()
@@ -23,6 +24,7 @@ export const env = createEnv({
     SHOPIFY_STORE_DOMAIN: process.env.SHOPIFY_STORE_DOMAIN,
     MEILISEARCH_MASTER_KEY: process.env.MEILISEARCH_MASTER_KEY,
     MEILISEARCH_HOST: process.env.MEILISEARCH_HOST,
+    LIVE_URL: process.env.LIVE_URL,
     ANALYZE: process.env.ANALYZE,
   },
 })

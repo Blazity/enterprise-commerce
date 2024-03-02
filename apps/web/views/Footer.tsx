@@ -26,7 +26,7 @@ export default function Footer() {
           </Link>
         </header>
         <main className="py-32">
-          <h1 className="text-6xl font-bold">Lorem Ipsum</h1>
+          <p className="text-6xl font-bold">Lorem Ipsum</p>
           <p className="mt-4 text-xl">Your daily trendsetting deals.</p>
         </main>
         <footer className="mt-auto flex flex-col items-center justify-between pb-8 text-gray-400 md:flex-row">

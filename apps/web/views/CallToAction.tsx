@@ -7,7 +7,7 @@ export function CallToAction() {
       <div className="max-w-container-md mx-auto my-0 w-full px-4 py-16 xl:px-0">
         <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-2">
           <div>
-            <h4 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Become a member and receive our special discounts.</h4>
+            <p className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Become a member and receive our special discounts.</p>
           </div>
           <div>
             <form className="ml-0 flex max-w-md flex-col gap-4 md:ml-auto">
