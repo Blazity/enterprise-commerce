@@ -16,7 +16,6 @@ export const contentType = "image/png"
 
 export default async function Image({ params: { slug } }: { params: { slug: string } }) {
   const interRegular = fetch(new URL("../../../public/fonts/Inter-Regular.ttf", import.meta.url)).then((res) => res.arrayBuffer())
-  const interSemiBold = fetch(new URL("../../../public/fonts/Inter-SemiBold.ttf", import.meta.url)).then((res) => res.arrayBuffer())
   const interBold = fetch(new URL("../../../public/fonts/Inter-Bold.ttf", import.meta.url)).then((res) => res.arrayBuffer())
 
   const product = await getProduct(removeOptionsFromUrl(slug))
@@ -116,12 +115,6 @@ export default async function Image({ params: { slug } }: { params: { slug: stri
           data: await interRegular,
           style: "normal",
           weight: 400,
-        },
-        {
-          name: "Inter",
-          data: await interSemiBold,
-          style: "normal",
-          weight: 500,
         },
         {
           name: "Inter",
