@@ -63,7 +63,7 @@ function VariantOption({ title, initialValue, values, onClick, isDisabledHandler
     <div key={title} className="flex flex-col gap-2">
       <Label>{title}</Label>
       <Select value={initialValue ?? undefined} onValueChange={(option) => onClick(option)}>
-        <SelectTrigger className="w-[180px]">
+        <SelectTrigger className="w-[180px]" aria-label={`Select a ${title}`}>
           <SelectValue placeholder={`Select a ${title.toLowerCase()}`} />
         </SelectTrigger>
         <SelectContent>

@@ -5,23 +5,23 @@ export default function Footer() {
     <div className="bg-black text-white">
       <div className="max-w-container-md mx-auto flex w-full flex-col justify-between px-4 xl:px-0">
         <header className="flex justify-end gap-4 pt-8">
-          <Link prefetch={false} target="_blank" href={"https://www.facebook.com/blazity/"}>
+          <Link prefetch={false} target="_blank" href={"https://www.facebook.com/blazity/"} aria-label="Facebook link">
             <FacebookIcon className="text-white" />
           </Link>
 
-          <Link prefetch={false} target="_blank" href={"https://twitter.com/blazity"}>
+          <Link prefetch={false} target="_blank" href={"https://twitter.com/blazity"} aria-label="Twitter link">
             <TwitterIcon className="text-white" />
           </Link>
 
-          <Link prefetch={false} target="_blank" href={"https://www.instagram.com/blazitysoftware/"}>
+          <Link prefetch={false} target="_blank" href={"https://www.instagram.com/blazitysoftware/"} aria-label="Instagram link">
             <InstagramIcon className="text-white" />
           </Link>
 
-          <Link prefetch={false} target="_blank" href={"https://www.linkedin.com/company/blazity"}>
+          <Link prefetch={false} target="_blank" href={"https://www.linkedin.com/company/blazity"} aria-label="Linkedin link">
             <LinkedinIcon className="text-white" />
           </Link>
 
-          <Link prefetch={false} target="_blank" href={"https://www.youtube.com/channel/UCYDeWaSWiOHn_lUHY-u1VYw/videos"}>
+          <Link prefetch={false} target="_blank" href={"https://www.youtube.com/channel/UCYDeWaSWiOHn_lUHY-u1VYw/videos"} aria-label="Youtube link">
             <YoutubeIcon className="text-white" />
           </Link>
         </header>
