@@ -32,11 +32,11 @@ export default function Footer() {
         <footer className="mt-auto flex flex-col items-center justify-between pb-8 text-gray-400 md:flex-row">
           <span className="text-sm">2024 © Lorem Ipsum. All Rights Reserved.</span>
           <div className="mt-4 flex space-x-4 md:mt-0">
-            <Link prefetch={false} className="text-sm hover:underline" href="#">
+            <Link prefetch={false} className="text-sm hover:underline" href="/privacy-policy">
               Privacy and Cookie Policy
             </Link>
-            <Link prefetch={false} className="text-sm hover:underline" href="#">
-              Terms of Sale
+            <Link prefetch={false} className="text-sm hover:underline" href="/terms-conditions">
+              Terms & Conditions
             </Link>
           </div>
         </footer>
