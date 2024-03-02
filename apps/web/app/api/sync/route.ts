@@ -28,17 +28,23 @@ export async function POST(req: Request) {
     return Response.json({ status: "error", message: "Could not create product" })
   }
 
+  const originalProduct = await storefrontClient.getProduct(product.id)
+
   if (metadata.action === "DELETE") {
+    // Shopify sends a DELETE webhook not only when a product is deleted, but also when a product is unpublished or product variant is deleted.
+    // Because of this, we need to first check if the product is REALLY deleted.
+
+    if (originalProduct?.id) {
+      await index.updateDocuments([{ ...originalProduct, id: normalizeId(originalProduct.id) }], { primaryKey: "id" })
+      return Response.json({ status: "ok" })
+    }
+
     await index.deleteDocument(normalizeId(product.id))
   }
 
   if (metadata.action === "UPDATE" || metadata.action === "CREATE") {
-    const originalProduct = await storefrontClient.getProduct(product.id)
-
     if (originalProduct) {
-      await index.updateDocuments([{ ...originalProduct, id: normalizeId(originalProduct.id) }], {
-        primaryKey: "id",
-      })
+      await index.updateDocuments([{ ...originalProduct, id: normalizeId(originalProduct.id) }], { primaryKey: "id" })
     }
   }
 
