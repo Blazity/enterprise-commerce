@@ -29,12 +29,16 @@ export default function VariantsSection({ variants, flatOptions }: VariantsSecti
   if (hasOneVariant) return null
 
   return (
-    <div className="flex w-full flex-wrap gap-6">
+    <div
+      className="flex w-full flex-wrap gap-6"
+      onMouseOver={() => {
+        combinations.map((combination) => router.prefetch(createOptionfulUrl(pathname, combination.size, combination.color)))
+      }}
+    >
       <VariantOption
         title="Size"
         initialValue={selectedSize}
         values={flatOptions["Size"]}
-        onPrefetch={(option) => router.prefetch(createOptionfulUrl(pathname, option, selectedColor))}
         onClick={(option) => router.replace(createOptionfulUrl(pathname, option, selectedColor), { scroll: false })}
         isDisabledHandler={(option) => !combinations?.find((combination) => combination["size"] === option && combination["color"] === selectedColor)?.availableForSale}
       />
@@ -42,7 +46,6 @@ export default function VariantsSection({ variants, flatOptions }: VariantsSecti
         title="Color"
         initialValue={selectedColor}
         values={flatOptions["Color"]}
-        onPrefetch={(option) => router.prefetch(createOptionfulUrl(pathname, selectedSize, option))}
         onClick={(option) => router.replace(createOptionfulUrl(pathname, selectedSize, option), { scroll: false })}
         isDisabledHandler={(option) => !combinations?.find((combination) => combination["size"] === selectedSize && combination["color"] === option)?.availableForSale}
       />
@@ -55,11 +58,10 @@ interface VariantOptionProps {
   initialValue: string | null
   values: string[]
   onClick: (option: string) => void
-  onPrefetch: (option: string) => void
   isDisabledHandler: (option: string) => boolean
 }
 
-function VariantOption({ title, initialValue, values, onClick, onPrefetch, isDisabledHandler }: VariantOptionProps) {
+function VariantOption({ title, initialValue, values, onClick, isDisabledHandler }: VariantOptionProps) {
   return (
     <div key={title} className="flex flex-col gap-2">
       <Label>{title}</Label>
@@ -72,13 +74,7 @@ function VariantOption({ title, initialValue, values, onClick, onPrefetch, isDis
             const isDisabled = isDisabledHandler(option)
 
             return (
-              <SelectItem
-                onMouseOver={(event) => onPrefetch((event.target as HTMLSelectElement).value)}
-                disabled={isDisabled}
-                className={cn("hover:bg-gray-50 focus:bg-gray-50 active:bg-gray-50")}
-                key={option}
-                value={option}
-              >
+              <SelectItem disabled={isDisabled} className={cn("hover:bg-gray-50 focus:bg-gray-50 active:bg-gray-50")} key={option} value={option}>
                 <span className={cn({ "cursor-not-allowed line-through": isDisabled })}>{option}</span>
                 {isDisabled ? " (Not available)" : null}
               </SelectItem>

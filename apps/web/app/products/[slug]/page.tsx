@@ -1,13 +1,10 @@
 import { PlatformProduct } from "@enterprise-commerce/core/platform/types"
 import { getProduct } from "app/actions"
-import { meilisearch } from "clients/meilisearch"
 import { Breadcrumbs } from "components/Breadcrumbs"
 import { env } from "env.mjs"
 import { Metadata } from "next"
-import { unstable_cache } from "next/cache"
 import { notFound } from "next/navigation"
 import { Suspense } from "react"
-import { ComparisonOperators, FilterBuilder } from "utils/filterBuilder"
 import { makeKeywords } from "utils/makeKeywords"
 
 import { getOptionsFromUrl, getProductPrice, hasValidOption, removeOptionsFromUrl } from "utils/productOptionsUtils"
