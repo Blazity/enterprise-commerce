@@ -38,9 +38,9 @@ export default async function StaticPage({ params: { slug } }: { params: { slug:
 }
 
 export async function generateStaticParams() {
-  const pages = await getAllPages()
+  const pages = (await getAllPages()) || []
 
-  return pages?.map((page) => ({
+  return pages.map((page) => ({
     slug: page.node.handle,
   }))
 }
