@@ -2,6 +2,7 @@ import "./globals.css"
 import "@enterprise-commerce/design-system/styles.css"
 
 import { Modals } from "components/Modals/Modals"
+import { Analytics } from "@vercel/analytics/next"
 import { mobileInlineScript } from "components/NavigationBar/mobileInlineScript"
 import { NavigationBar } from "components/NavigationBar/NavigationBar"
 import { NavItem } from "components/NavigationBar/types"
@@ -184,6 +185,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Suspense fallback={null}>
           <DraftToolbar />
         </Suspense>
+
+        <Analytics />
       </body>
     </html>
   )
