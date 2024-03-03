@@ -69,7 +69,9 @@ export default async function Product({ params: { slug } }: ProductProps) {
 async function ProductView({ slug }: { slug: string }) {
   const draft = draftMode()
 
-  let product = draft.isEnabled ? await storefrontClient.getAdminProduct(removeOptionsFromUrl(slug)) : await getProduct(removeOptionsFromUrl(slug))
+  let product = await getProduct(removeOptionsFromUrl(slug))
+
+  if (draft.isEnabled && product) product = await storefrontClient.getAdminProduct(product?.id)
 
   const { color, size } = getOptionsFromUrl(slug)
   const hasInvalidOptions = !hasValidOption(product?.variants, "color", color) || !hasValidOption(product?.variants, "size", size)
