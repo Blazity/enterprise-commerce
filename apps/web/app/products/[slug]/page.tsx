@@ -1,5 +1,6 @@
 import { PlatformProduct } from "@enterprise-commerce/core/platform/types"
 import { getProduct } from "app/actions"
+import { storefrontClient } from "clients/storefrontClient"
 import { Breadcrumbs } from "components/Breadcrumbs"
 import { env } from "env.mjs"
 import { Metadata } from "next"
@@ -66,10 +67,9 @@ export default async function Product({ params: { slug } }: ProductProps) {
 }
 
 async function ProductView({ slug }: { slug: string }) {
-  const product = await getProduct(removeOptionsFromUrl(slug))
-  const { isEnabled } = draftMode()
+  const draft = draftMode()
 
-  console.log({ isEnabled })
+  let product = draft.isEnabled ? await storefrontClient.getAdminProduct(removeOptionsFromUrl(slug)) : await getProduct(removeOptionsFromUrl(slug))
 
   const { color, size } = getOptionsFromUrl(slug)
   const hasInvalidOptions = !hasValidOption(product?.variants, "color", color) || !hasValidOption(product?.variants, "size", size)

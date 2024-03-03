@@ -12,6 +12,14 @@ export const getAdminProductQuery = `#graphql
         name
         values
       }
+      collections(first: 15) {
+        nodes {
+          handle
+          title
+          description
+          updatedAt
+        }
+      }
       priceRange {
         maxVariantPrice {
           amount
@@ -27,6 +35,7 @@ export const getAdminProductQuery = `#graphql
           node {
             id
             title
+            price
             availableForSale
             selectedOptions {
               name

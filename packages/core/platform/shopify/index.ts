@@ -20,6 +20,7 @@ import type { WebhookSubscriptionTopic } from "./types/admin/admin.types"
 import type { MenuQuery, PagesQuery, ProductsByHandleQuery, SinglePageQuery, SingleProductQuery } from "./types/storefront.generated"
 import { PlatformMenu, PlatformProduct } from "../types"
 import { getAdminProductQuery } from "./queries/product.admin"
+import { CurrencyCode } from "./types/storefront.types"
 
 interface CreateShopifyClientProps {
   storeDomain: string
@@ -116,5 +117,12 @@ async function getAllPages(client: StorefrontApiClient) {
 }
 
 async function getAdminProduct(client: AdminApiClient, id: string) {
-  return client.request<SingleAdminProductQuery>(getAdminProductQuery, { variables: { id } })
+  const response = await client.request<SingleAdminProductQuery>(getAdminProductQuery, { variables: { id } })
+
+  if (!response.data?.product) return null
+
+  const variants = {
+    edges: response.data?.product?.variants?.edges.map((edge) => ({ node: { ...edge.node, price: { amount: edge.node.price, currencyCode: "" as CurrencyCode } } })),
+  }
+  return normalizeProduct({ ...response.data?.product, variants })
 }
