@@ -12,7 +12,6 @@ const config: Pick<Config, "content" | "presets" | "corePlugins"> = {
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
-    "../../packages/design-system/**/*{.js,.ts,.jsx,.tsx}",
   ],
   corePlugins: {
     preflight: false,

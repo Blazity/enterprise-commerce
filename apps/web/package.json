@@ -74,7 +74,6 @@
     "@babel/plugin-syntax-flow": "^7.23.3",
     "@babel/plugin-transform-optional-chaining": "^7.23.4",
     "@babel/plugin-transform-react-jsx": "^7.23.4",
-    "@enterprise-commerce/design-system": "*",
     "@enterprise-commerce/eslint-config-custom": "*",
     "@enterprise-commerce/tailwind-config": "*",
     "@enterprise-commerce/tsconfig": "*",

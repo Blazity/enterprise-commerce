@@ -1,9 +1,0 @@
-{
-  "extends": "@enterprise-commerce/tsconfig/react-library.json",
-  "compilerOptions": {
-    "plugins": [{ "name": "next" }],
-    "baseUrl": "."
-  },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["dist", "build", "node_modules"]
-}
