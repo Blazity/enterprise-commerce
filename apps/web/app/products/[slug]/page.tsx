@@ -71,6 +71,7 @@ async function ProductView({ slug }: { slug: string }) {
 
   const { color, size } = getOptionsFromUrl(slug)
   const hasInvalidOptions = !hasValidOption(product?.variants, "color", color) || !hasValidOption(product?.variants, "size", size)
+  const hasDraftParam = slug.endsWith("-draft")
 
   if (!product || hasInvalidOptions) {
     return notFound()
@@ -102,7 +103,7 @@ async function ProductView({ slug }: { slug: string }) {
       <Suspense fallback={<SimilarProductsSectionSkeleton />}>
         <SimilarProductsSection collection={lastCollection?.title} slug={slug} />
       </Suspense>
-      <VercelToolbar />
+      {hasDraftParam ? <VercelToolbar /> : null}
     </div>
   )
 }
