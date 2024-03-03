@@ -9,10 +9,17 @@ import { getPageQuery, getPagesQuery } from "./queries/page.storefront"
 import { getLatestProductFeedQuery } from "./queries/product-feed.admin"
 import { getProductQuery, getProductsByHandleQuery } from "./queries/product.storefront"
 
-import type { LatestProductFeedsQuery, ProductFeedCreateMutation, ProductFullSyncMutation, WebhookSubscriptionCreateMutation } from "./types/admin/admin.generated"
+import type {
+  LatestProductFeedsQuery,
+  ProductFeedCreateMutation,
+  ProductFullSyncMutation,
+  SingleAdminProductQuery,
+  WebhookSubscriptionCreateMutation,
+} from "./types/admin/admin.generated"
 import type { WebhookSubscriptionTopic } from "./types/admin/admin.types"
 import type { MenuQuery, PagesQuery, ProductsByHandleQuery, SinglePageQuery, SingleProductQuery } from "./types/storefront.generated"
 import { PlatformMenu, PlatformProduct } from "../types"
+import { getAdminProductQuery } from "./queries/product.admin"
 
 interface CreateShopifyClientProps {
   storeDomain: string
@@ -46,6 +53,7 @@ export function createShopifyClient({ storefrontAccessToken, adminAccessToken, s
     getLatestProductFeed: async () => getLatestProductFeed(adminClient),
     getPage: async (handle: string) => getPage(client!, handle),
     getAllPages: async () => getAllPages(client!),
+    getAdminProduct: async (id: string) => getAdminProduct(adminClient, id),
   }
 }
 
@@ -105,4 +113,8 @@ async function getPage(client: StorefrontApiClient, handle: string) {
 
 async function getAllPages(client: StorefrontApiClient) {
   return client.request<PagesQuery>(getPagesQuery)
+}
+
+async function getAdminProduct(client: AdminApiClient, id: string) {
+  return client.request<SingleAdminProductQuery>(getAdminProductQuery, { variables: { id } })
 }

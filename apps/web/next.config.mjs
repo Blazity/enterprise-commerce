@@ -1,10 +1,11 @@
 import withBundleAnalyzer from "@next/bundle-analyzer"
 import withPlugins from "next-compose-plugins"
+import withVercelToolbar from "@vercel/toolbar/plugins/next"
 
 /**
  * @type {import('next').NextConfig}
  */
-const config = withPlugins([[withBundleAnalyzer({ enabled: process.env.ANALYZE === "true" })]], {
+const config = withPlugins([[withVercelToolbar(), withBundleAnalyzer({ enabled: process.env.ANALYZE === "true" })]], {
   reactStrictMode: true,
   transpilePackages: ["@enterprise-commerce/design-system"],
   logging: {

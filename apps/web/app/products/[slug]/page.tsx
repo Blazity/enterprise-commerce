@@ -4,6 +4,7 @@ import { Breadcrumbs } from "components/Breadcrumbs"
 import { env } from "env.mjs"
 import { Metadata } from "next"
 import nextDynamic from "next/dynamic"
+import { draftMode } from "next/headers"
 import { notFound } from "next/navigation"
 import { Suspense } from "react"
 import { makeKeywords } from "utils/makeKeywords"
@@ -19,6 +20,7 @@ import { SimilarProductsSection } from "views/Product/SimilarProductsSection"
 import { SimilarProductsSectionSkeleton } from "views/Product/SimilarProductsSectionSkeleton"
 
 const VariantsSection = nextDynamic(() => import("views/Product/VariantsSection").then((mod) => mod.VariantsSection), { loading: VariantsSectionSkeleton })
+const VercelToolbar = nextDynamic(() => import("@vercel/toolbar/next").then((mod) => mod.VercelToolbar))
 
 export const revalidate = 3600
 
@@ -65,6 +67,9 @@ export default async function Product({ params: { slug } }: ProductProps) {
 
 async function ProductView({ slug }: { slug: string }) {
   const product = await getProduct(removeOptionsFromUrl(slug))
+  const { isEnabled } = draftMode()
+
+  console.log({ isEnabled })
 
   const { color, size } = getOptionsFromUrl(slug)
   const hasInvalidOptions = !hasValidOption(product?.variants, "color", color) || !hasValidOption(product?.variants, "size", size)
@@ -99,6 +104,7 @@ async function ProductView({ slug }: { slug: string }) {
       <Suspense fallback={<SimilarProductsSectionSkeleton />}>
         <SimilarProductsSection collection={lastCollection?.title} slug={slug} />
       </Suspense>
+      <VercelToolbar />
     </div>
   )
 }

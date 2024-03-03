@@ -1,6 +1,6 @@
 {
   "name": "enterprise-commerce",
-  "version": "0.0.0",
+  "version": "link",
   "private": true,
   "workspaces": [
     "packages/**",
