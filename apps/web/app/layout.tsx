@@ -185,7 +185,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <DraftToolbar />
         </Suspense>
 
-        <Analytics />
+        <Suspense fallback={null}>
+          <Analytics />
+        </Suspense>
       </body>
     </html>
   )

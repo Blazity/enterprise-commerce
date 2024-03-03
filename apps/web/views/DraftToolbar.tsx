@@ -1,9 +1,7 @@
 "use client"
 
-import dynamic from "next/dynamic"
 import { usePathname } from "next/navigation"
-
-const VercelToolbar = dynamic(() => import("@vercel/toolbar/next").then((mod) => mod.VercelToolbar))
+import { VercelToolbar } from "@vercel/toolbar/next"
 
 export function DraftToolbar() {
   const pathname = usePathname()
