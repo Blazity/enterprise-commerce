@@ -41,9 +41,9 @@ export async function generateStaticParams() {
   const pages = (await getAllPages()) || []
 
   return pages.map((page) => ({
-    slug: page.node.handle,
+    slug: page.handle,
   }))
 }
 
-const getPage = unstable_cache(async (handle: string) => (await storefrontClient.getPage(handle)).data?.page, ["page"], { revalidate: 3600 })
-const getAllPages = unstable_cache(async () => (await storefrontClient.getAllPages()).data?.pages.edges, ["page"], { revalidate: 3600 })
+const getPage = unstable_cache(async (handle: string) => await storefrontClient.getPage(handle), ["page"], { revalidate: 3600 })
+const getAllPages = unstable_cache(async () => await storefrontClient.getAllPages(), ["page"], { revalidate: 3600 })

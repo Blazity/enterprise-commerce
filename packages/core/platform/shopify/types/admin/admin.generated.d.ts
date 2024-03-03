@@ -41,9 +41,17 @@ export type SingleAdminProductQuery = { product?: AdminTypes.Maybe<(
         ) }> }, featuredImage?: AdminTypes.Maybe<Pick<AdminTypes.Image, 'url' | 'altText' | 'width' | 'height'>>, images: { edges: Array<{ node: Pick<AdminTypes.Image, 'url' | 'altText' | 'width' | 'height'> }> }, seo: Pick<AdminTypes.Seo, 'title' | 'description'> }
   )> };
 
+export type ProductStatusQueryVariables = AdminTypes.Exact<{
+  id: AdminTypes.Scalars['ID']['input'];
+}>;
+
+
+export type ProductStatusQuery = { product?: AdminTypes.Maybe<Pick<AdminTypes.Product, 'id' | 'handle' | 'status'>> };
+
 interface GeneratedQueryTypes {
   "#graphql\n  query LatestProductFeeds {\n    productFeeds(reverse: true, first: 1) {\n      nodes {\n        id\n        country\n        status\n      }\n    }\n  }\n": {return: LatestProductFeedsQuery, variables: LatestProductFeedsQueryVariables},
   "#graphql\n  query SingleAdminProduct($id: ID!) {\n    product(id: $id) {\n      id\n      handle\n      title\n      description\n      descriptionHtml\n      vendor\n      options {\n        id\n        name\n        values\n      }\n      collections(first: 15) {\n        nodes {\n          handle\n          title\n          description\n          updatedAt\n        }\n      }\n      priceRange {\n        maxVariantPrice {\n          amount\n          currencyCode\n        }\n        minVariantPrice {\n          amount\n          currencyCode\n        }\n      }\n      variants(first: 250) {\n        edges {\n          node {\n            id\n            title\n            price\n            availableForSale\n            selectedOptions {\n              name\n              value\n            }\n          }\n        }\n      }\n      featuredImage {\n        url\n        altText\n        width\n        height\n      }\n      images(first: 20) {\n        edges {\n          node {\n            url\n            altText\n            width\n            height\n          }\n        }\n      }\n      seo {\n        title\n        description\n      }\n      tags\n      updatedAt\n      createdAt\n    }\n  }\n": {return: SingleAdminProductQuery, variables: SingleAdminProductQueryVariables},
+  "#graphql\n  query ProductStatus($id: ID!) {\n    product(id: $id) {\n      id\n      handle\n      status\n    }\n  }\n": {return: ProductStatusQuery, variables: ProductStatusQueryVariables},
 }
 
 interface GeneratedMutationTypes {

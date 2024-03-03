@@ -13,13 +13,14 @@ import type {
   LatestProductFeedsQuery,
   ProductFeedCreateMutation,
   ProductFullSyncMutation,
+  ProductStatusQuery,
   SingleAdminProductQuery,
   WebhookSubscriptionCreateMutation,
 } from "./types/admin/admin.generated"
 import type { WebhookSubscriptionTopic } from "./types/admin/admin.types"
 import type { MenuQuery, PagesQuery, ProductsByHandleQuery, SinglePageQuery, SingleProductQuery } from "./types/storefront.generated"
-import { PlatformMenu, PlatformProduct } from "../types"
-import { getAdminProductQuery } from "./queries/product.admin"
+import { PlatformMenu, PlatformPage, PlatformProduct, PlatformProductStatus } from "../types"
+import { getAdminProductQuery, getProductStatusQuery } from "./queries/product.admin"
 import { CurrencyCode } from "./types/storefront.types"
 
 interface CreateShopifyClientProps {
@@ -54,6 +55,7 @@ export function createShopifyClient({ storefrontAccessToken, adminAccessToken, s
     getLatestProductFeed: async () => getLatestProductFeed(adminClient),
     getPage: async (handle: string) => getPage(client!, handle),
     getAllPages: async () => getAllPages(client!),
+    getProductStatus: async (id: string) => getProductStatus(adminClient!, id),
     getAdminProduct: async (id: string) => getAdminProduct(adminClient, id),
   }
 }
@@ -108,12 +110,21 @@ async function getLatestProductFeed(client: AdminApiClient) {
   return client.request<LatestProductFeedsQuery>(getLatestProductFeedQuery)
 }
 
-async function getPage(client: StorefrontApiClient, handle: string) {
-  return client.request<SinglePageQuery>(getPageQuery, { variables: { handle } })
+async function getPage(client: StorefrontApiClient, handle: string): Promise<PlatformPage | undefined | null> {
+  const page = await client.request<SinglePageQuery>(getPageQuery, { variables: { handle } })
+  return page.data?.page
 }
 
-async function getAllPages(client: StorefrontApiClient) {
-  return client.request<PagesQuery>(getPagesQuery)
+async function getAllPages(client: StorefrontApiClient): Promise<PlatformPage[] | null> {
+  const pages = await client.request<PagesQuery>(getPagesQuery)
+
+  return pages.data?.pages?.edges?.map((edge) => edge.node) || []
+}
+
+async function getProductStatus(client: AdminApiClient, id: string): Promise<PlatformProductStatus | undefined | null> {
+  const status = await client.request<ProductStatusQuery>(getProductStatusQuery, { variables: { id } })
+
+  return status.data?.product
 }
 
 async function getAdminProduct(client: AdminApiClient, id: string) {

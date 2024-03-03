@@ -70,3 +70,13 @@ export const getAdminProductQuery = `#graphql
     }
   }
 `
+
+export const getProductStatusQuery = `#graphql
+  query ProductStatus($id: ID!) {
+    product(id: $id) {
+      id
+      handle
+      status
+    }
+  }
+`

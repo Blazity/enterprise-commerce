@@ -72,3 +72,24 @@ export interface PlatformImage {
   width?: number | undefined | null
   height?: number | undefined | null
 }
+
+export interface PlatformPage {
+  id: string
+  title: string
+  handle: string
+  body: any
+  bodySummary: string
+  createdAt: any
+  updatedAt: any
+  seo?:
+    | {
+        description?: string | null | undefined
+        title?: string | null | undefined
+      }
+    | undefined
+    | null
+}
+
+export interface PlatformProductStatus {
+  status: "ACTIVE" | "ARCHIVED" | "DRAFT"
+}

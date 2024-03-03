@@ -33,6 +33,11 @@ export async function POST(req: Request) {
   if (metadata.action === "DELETE") {
     // Shopify sends a DELETE webhook not only when a product is deleted, but also when a product is unpublished or product variant is deleted.
     // Because of this, we need to first check if the product is REALLY deleted.
+    const productStatus = await storefrontClient.getProductStatus(denormalizeId(product.id))
+
+    if (productStatus?.status === "DRAFT") {
+      return Response.json({ status: "ok", message: "Product drafted" })
+    }
 
     if (originalProduct?.id) {
       await index.updateDocuments([{ ...originalProduct, id: normalizeId(originalProduct.id) }], { primaryKey: "id" })
@@ -54,6 +59,10 @@ export async function POST(req: Request) {
 function normalizeId(id: string) {
   const shopifyIdPrefix = "gid://shopify/Product/"
   return id.replace(shopifyIdPrefix, "")
+}
+
+function denormalizeId(id: string) {
+  return id.startsWith("gid://shopify/Product/") ? id : `gid://shopify/Product/${id}`
 }
 
 // TODO: remove, move to docs
