@@ -21,7 +21,6 @@ import { SimilarProductsSection } from "views/Product/SimilarProductsSection"
 import { SimilarProductsSectionSkeleton } from "views/Product/SimilarProductsSectionSkeleton"
 
 const VariantsSection = nextDynamic(() => import("views/Product/VariantsSection").then((mod) => mod.VariantsSection), { loading: VariantsSectionSkeleton })
-const VercelToolbar = nextDynamic(() => import("@vercel/toolbar/next").then((mod) => mod.VercelToolbar))
 
 export const revalidate = 3600
 
@@ -71,7 +70,6 @@ async function ProductView({ slug }: { slug: string }) {
 
   const { color, size } = getOptionsFromUrl(slug)
   const hasInvalidOptions = !hasValidOption(product?.variants, "color", color) || !hasValidOption(product?.variants, "size", size)
-  const hasDraftParam = slug.endsWith("-draft")
 
   if (!product || hasInvalidOptions) {
     return notFound()
@@ -103,7 +101,6 @@ async function ProductView({ slug }: { slug: string }) {
       <Suspense fallback={<SimilarProductsSectionSkeleton />}>
         <SimilarProductsSection collection={lastCollection?.title} slug={slug} />
       </Suspense>
-      {hasDraftParam ? <VercelToolbar /> : null}
     </div>
   )
 }

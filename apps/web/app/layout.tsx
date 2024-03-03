@@ -10,6 +10,7 @@ import Script from "next/script"
 import { Suspense } from "react"
 import { AnnouncementBar } from "views/AnnouncementBar"
 import { CallToAction } from "views/CallToAction"
+import { DraftToolbar } from "views/DraftToolbar"
 import Footer from "views/Footer"
 import { NavigationEvents } from "views/NavigationEvents"
 
@@ -178,6 +179,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         <Suspense fallback={null}>
           <NavigationEvents />
+        </Suspense>
+
+        <Suspense fallback={null}>
+          <DraftToolbar />
         </Suspense>
       </body>
     </html>
