@@ -67,11 +67,7 @@ export default async function Product({ params: { slug } }: ProductProps) {
 }
 
 async function ProductView({ slug }: { slug: string }) {
-  const draft = draftMode()
-
-  let product = await getProduct(removeOptionsFromUrl(slug))
-
-  if (draft.isEnabled && product) product = await storefrontClient.getAdminProduct(product?.id)
+  const product = await getDraftAwareProduct(slug)
 
   const { color, size } = getOptionsFromUrl(slug)
   const hasInvalidOptions = !hasValidOption(product?.variants, "color", color) || !hasValidOption(product?.variants, "size", size)
@@ -109,6 +105,15 @@ async function ProductView({ slug }: { slug: string }) {
       <VercelToolbar />
     </div>
   )
+}
+
+async function getDraftAwareProduct(slug: string) {
+  const draft = draftMode()
+
+  let product = await getProduct(removeOptionsFromUrl(slug))
+  if (draft.isEnabled && product) product = await storefrontClient.getAdminProduct(product?.id)
+
+  return product
 }
 
 function makeBreadcrumbs(product: PlatformProduct) {

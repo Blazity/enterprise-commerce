@@ -117,7 +117,9 @@ async function getAllPages(client: StorefrontApiClient) {
 }
 
 async function getAdminProduct(client: AdminApiClient, id: string) {
-  const response = await client.request<SingleAdminProductQuery>(getAdminProductQuery, { variables: { id } })
+  const response = await client.request<SingleAdminProductQuery>(getAdminProductQuery, {
+    variables: { id: id.startsWith("gid://shopify/Product/") ? id : `gid://shopify/Product/${id}` },
+  })
 
   if (!response.data?.product) return null
 
