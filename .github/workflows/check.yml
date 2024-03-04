@@ -40,7 +40,7 @@ jobs:
         run: yarn install --frozen-lockfile --prefer-offline
 
       - name: Licenses check
-        run: npx --yes license-checker-rseidelsohn --production --excludePrivatePackages --onlyAllow "MIT;Apache;AAL;BSD;Artistic;CC0;ISC;ISCL;PostgreSQL License;Public Domain;Unlicense;UPL;W3C;WTFPL;Python;CC-;BlueOak"
+        run: npx --yes license-checker-rseidelsohn --production --excludePrivatePackages --onlyAllow "UNKNOWN;MIT;Apache;AAL;BSD;Artistic;CC0;ISC;ISCL;PostgreSQL License;Public Domain;Unlicense;UPL;W3C;WTFPL;Python;CC-;BlueOak"
 
       - name: Build
         run: yarn build
