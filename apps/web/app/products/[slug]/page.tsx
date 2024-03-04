@@ -51,7 +51,7 @@ export async function generateMetadata({ params: { slug } }: ProductProps): Prom
     category: lastCollection?.title,
     creator: "Blazity",
     alternates: {
-      canonical: "/products/vans-old-skool-butterfly-true-white-black-size_9-color_white",
+      canonical: `/products/${slug}`,
     },
     publisher: "Blazity",
   }
