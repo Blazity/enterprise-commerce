@@ -3,6 +3,7 @@ import { PlatformVariant } from "@enterprise-commerce/core/platform/types"
 export interface Combination {
   id: string
   availableForSale: boolean
+  quantityAvailable: number
   price: PlatformVariant["price"] | undefined
   title: string
   size?: string
@@ -12,19 +13,13 @@ export interface Combination {
 type Option = keyof Pick<Combination, "color" | "size">
 type ProductPrice = PlatformVariant["price"] | undefined
 
-export function getProductPrice(variants: PlatformVariant[], size: string | null | undefined, color: string | null | undefined): ProductPrice {
-  const hasOnePrice = variants.length <= 1
-  const combination = getAllCombinations(variants).find((combination) => combination.size === size && combination.color === color)
-
-  return hasOnePrice ? variants.find(Boolean)?.price : combination?.price
-}
-
 export function getAllCombinations(variants: PlatformVariant[]): Combination[] {
   return variants.map((variant) => ({
     id: variant.id,
     availableForSale: variant.availableForSale,
     price: variant.price,
     title: variant.title,
+    quantityAvailable: variant.quantityAvailable,
     ...variant.selectedOptions.reduce((accumulator, option) => ({ ...accumulator, [option.name.toLowerCase()]: option.value }), {}),
   }))
 }

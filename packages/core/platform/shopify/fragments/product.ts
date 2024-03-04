@@ -24,11 +24,20 @@ const productFragment = `#graphql
         currencyCode
       }
     }
+    collections(first: 15) {
+      nodes {
+        handle
+        title
+        description
+        updatedAt
+      }
+    }
     variants(first: 250) {
       edges {
         node {
           id
           title
+          quantityAvailable
           availableForSale
           selectedOptions {
             name

@@ -10,7 +10,7 @@ import { notFound } from "next/navigation"
 import { Suspense } from "react"
 import { makeKeywords } from "utils/makeKeywords"
 
-import { getOptionsFromUrl, getProductPrice, hasValidOption, removeOptionsFromUrl } from "utils/productOptionsUtils"
+import { getAllCombinations, getOptionsFromUrl, hasValidOption, removeOptionsFromUrl } from "utils/productOptionsUtils"
 import { AddToCartButton } from "views/Product/AddToCartButton"
 import { BackButton } from "views/Product/BackButton"
 import { FaqSection } from "views/Product/FaqSection"
@@ -78,7 +78,10 @@ async function ProductView({ slug }: { slug: string }) {
   const hasOnlyOneVariant = product.variants.length <= 1
   const defaultColor = product.flatOptions?.["Color"]?.find(Boolean) ?? null
   const defaultSize = product.flatOptions?.["Size"]?.find(Boolean) ?? null
-  const price = getProductPrice(product.variants, size ?? defaultSize, color ?? defaultColor)
+  const combination = hasOnlyOneVariant
+    ? product.variants.find(Boolean)
+    : getAllCombinations(product.variants).find((combination) => (combination.size === size ?? defaultSize) && (combination.color === color ?? defaultColor))
+
   const lastCollection = product.collections.findLast(Boolean)
 
   return (
@@ -91,9 +94,9 @@ async function ProductView({ slug }: { slug: string }) {
         <div className="grid grid-cols-1 justify-center gap-10 md:grid-cols-2 lg:gap-20">
           <GallerySection images={product.images} />
           <div className="flex flex-col items-start pt-12">
-            <InfoSection className="pb-10" title={product.title} description={product.descriptionHtml} price={price} />
+            <InfoSection className="pb-10" title={product.title} description={product.descriptionHtml} combination={combination} />
             {hasOnlyOneVariant ? null : <VariantsSection flatOptions={product.flatOptions} variants={product.variants} />}
-            <AddToCartButton className="my-8" />
+            <AddToCartButton className="my-8" combination={combination} />
             <FaqSection className="mt-12" />
           </div>
         </div>

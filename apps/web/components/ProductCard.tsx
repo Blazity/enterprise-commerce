@@ -9,6 +9,8 @@ interface ProductCardProps extends PlatformProduct {
 }
 
 export function ProductCard(props: ProductCardProps) {
+  const variant = props.variants.find(Boolean)?.price
+
   return (
     <div className={cn("group relative bg-gray-100 p-4 md:bg-transparent md:p-0", props.className)}>
       <div className="relative flex min-h-[100px] items-center justify-center bg-gray-100 md:min-h-[320px]">
@@ -29,7 +31,7 @@ export function ProductCard(props: ProductCardProps) {
 
       <div className="mt-4 flex flex-col gap-0.5 text-slate-700">
         <div className="line-clamp-2 text-[13px] md:text-[19px]">{props.title}</div>
-        {props.minPrice ? <p className="text-[13px] font-bold md:text-[23px] md:font-normal">${props.minPrice}</p> : null}
+        {variant ? <p className="text-[13px] font-bold md:text-[23px] md:font-normal">{variant.amount + " " + variant.currencyCode}</p> : null}
       </div>
     </div>
   )

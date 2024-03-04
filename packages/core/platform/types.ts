@@ -42,28 +42,20 @@ export interface PlatformCollection {
 }
 
 export interface PlatformPriceRange {
-  maxVariantPrice: {
-    amount: number
-    currencyCode: string
-  }
-  minVariantPrice: {
-    amount: number
-    currencyCode: string
-  }
+  maxVariantPrice: PlatformPrice
+  minVariantPrice: PlatformPrice
 }
 
 export interface PlatformVariant {
   id: string
   title: string
+  quantityAvailable: number
   availableForSale: boolean
   selectedOptions: {
     name: string
     value: string
   }[]
-  price: {
-    amount: string
-    currencyCode: string
-  }
+  price: PlatformPrice
 }
 
 export interface PlatformImage {
@@ -92,4 +84,36 @@ export interface PlatformPage {
 
 export interface PlatformProductStatus {
   status: "ACTIVE" | "ARCHIVED" | "DRAFT"
+}
+
+export interface PlatformCart {
+  id: string
+  checkoutUrl: string
+  cost: {
+    subtotalAmount?: PlatformPrice | null | undefined
+    totalAmount?: PlatformPrice | null | undefined
+    totalTaxAmount?: PlatformPrice | null | undefined
+  }
+  items: PlatformCartItem[]
+  totalQuantity: number
+}
+
+export interface PlatformCartItem {
+  id: string
+  cost: { totalAmount?: PlatformPrice | null | undefined }
+  quantity: number
+  merchandise: Omit<PlatformVariant, "availableForSale" | "title"> & { product: PlatformProduct }
+}
+
+export interface PlatformItemInput {
+  id?: string
+  merchandiseId: string
+  attributes?: Record<string, string>
+  quantity: number
+  sellingPlanId?: string
+}
+
+export interface PlatformPrice {
+  amount: string
+  currencyCode: string
 }

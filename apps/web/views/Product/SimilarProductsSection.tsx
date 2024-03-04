@@ -18,8 +18,8 @@ export async function SimilarProductsSection({ slug, collection }: SimilarProduc
       <h2 className="mb-10 text-[26px] font-normal tracking-[-0.78px]">You might also like</h2>
       <Carousel opts={{ containScroll: "keepSnaps", dragFree: true }}>
         <CarouselContent className="ml-0 justify-start gap-6">
-          {items.map((product) => (
-            <ProductCard className="min-w-[280px] max-w-[280px]" key={product.id} {...product} />
+          {items.map((product, idx) => (
+            <ProductCard className="min-w-[280px] max-w-[280px]" key={"featured_" + product.id + idx} {...product} />
           ))}
         </CarouselContent>
       </Carousel>

@@ -1,5 +1,5 @@
-import { SingleProductQuery } from "./types/storefront.generated"
-import { PlatformProduct } from "../types"
+import { SingleCartQuery, SingleProductQuery } from "./types/storefront.generated"
+import { PlatformCart, PlatformCartItem, PlatformProduct } from "../types"
 
 export function normalizeProduct(product: SingleProductQuery["product"]): PlatformProduct | null {
   if (!product) return null
@@ -26,5 +26,18 @@ export function normalizeProduct(product: SingleProductQuery["product"]): Platfo
     variants: variants?.edges?.map(({ node }) => node) || [],
     images: images?.edges?.map(({ node }) => node) || [],
     collections: collections?.nodes || [],
+  }
+}
+
+export function normalizeCart(cart: SingleCartQuery["cart"]): PlatformCart | null {
+  if (!cart) return null
+  const { id, checkoutUrl, cost, lines, totalQuantity } = cart
+
+  return {
+    id,
+    checkoutUrl,
+    cost,
+    totalQuantity,
+    items: lines.edges.map(({ node }) => ({ ...node, merchandise: { ...node.merchandise, product: { ...normalizeProduct(node.merchandise.product) } } })) as PlatformCartItem[],
   }
 }

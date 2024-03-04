@@ -3,7 +3,7 @@ import { createStorefrontApiClient, StorefrontApiClient } from "@shopify/storefr
 
 import { createProductFeedMutation, fullSyncProductFeedMutation } from "./mutations/product-feed.admin"
 import { subscribeWebhookMutation } from "./mutations/webhook.admin"
-import { normalizeProduct } from "./normalize"
+import { normalizeCart, normalizeProduct } from "./normalize"
 import { getMenuQuery } from "./queries/menu.storefront"
 import { getPageQuery, getPagesQuery } from "./queries/page.storefront"
 import { getLatestProductFeedQuery } from "./queries/product-feed.admin"
@@ -18,10 +18,23 @@ import type {
   WebhookSubscriptionCreateMutation,
 } from "./types/admin/admin.generated"
 import type { WebhookSubscriptionTopic } from "./types/admin/admin.types"
-import type { MenuQuery, PagesQuery, ProductsByHandleQuery, SinglePageQuery, SingleProductQuery } from "./types/storefront.generated"
-import { PlatformMenu, PlatformPage, PlatformProduct, PlatformProductStatus } from "../types"
+import type {
+  CreateCartItemMutation,
+  CreateCartMutation,
+  DeleteCartItemsMutation,
+  MenuQuery,
+  PagesQuery,
+  ProductsByHandleQuery,
+  SingleCartQuery,
+  SinglePageQuery,
+  SingleProductQuery,
+  UpdateCartItemsMutation,
+} from "./types/storefront.generated"
+import { PlatformCart, PlatformCartItem, PlatformItemInput, PlatformMenu, PlatformPage, PlatformProduct, PlatformProductStatus } from "../types"
 import { getAdminProductQuery, getProductStatusQuery } from "./queries/product.admin"
 import { CurrencyCode } from "./types/storefront.types"
+import { createCartItemMutation, createCartMutation, deleteCartItemsMutation, updateCartItemsMutation } from "./mutations/cart.storefront"
+import { getCartQuery } from "./queries/cart.storefront"
 
 interface CreateShopifyClientProps {
   storeDomain: string
@@ -57,6 +70,11 @@ export function createShopifyClient({ storefrontAccessToken, adminAccessToken, s
     getAllPages: async () => getAllPages(client!),
     getProductStatus: async (id: string) => getProductStatus(adminClient!, id),
     getAdminProduct: async (id: string) => getAdminProduct(adminClient, id),
+    createCart: async (items: PlatformItemInput[]) => createCart(client!, items),
+    createCartItem: async (cartId: string, items: PlatformItemInput[]) => createCartItem(client!,cartId, items),
+    updateCartItem: async (cartId: string, items: PlatformItemInput[]) => updateCartItem(client!,cartId, items),
+    deleteCartItem: async (cartId: string, itemIds: string[]) => deleteCartItem(client!, cartId, itemIds),
+    getCart: async (cartId: string) => getCart(client!, cartId),
   }
 }
 
@@ -125,6 +143,36 @@ async function getProductStatus(client: AdminApiClient, id: string): Promise<Pla
   const status = await client.request<ProductStatusQuery>(getProductStatusQuery, { variables: { id } })
 
   return status.data?.product
+}
+
+async function createCart(client: StorefrontApiClient, items: PlatformItemInput[]): Promise<PlatformCart | undefined | null> {
+  const cart = await client.request<CreateCartMutation>(createCartMutation, { variables: { items } })
+
+  return normalizeCart(cart.data?.cartCreate?.cart)
+}
+
+async function createCartItem(client: StorefrontApiClient, cartId: string, items: PlatformItemInput[]): Promise<PlatformCart | undefined | null> {
+  const cart = await client.request<CreateCartItemMutation>(createCartItemMutation, { variables: { cartId, items } })
+
+  return normalizeCart(cart.data?.cartLinesAdd?.cart)
+}
+
+async function updateCartItem(client: StorefrontApiClient, cartId: string, items: PlatformItemInput[]): Promise<PlatformCart | undefined | null> {
+  const cart = await client.request<UpdateCartItemsMutation>(updateCartItemsMutation, { variables: { cartId, items } })
+
+  return normalizeCart(cart.data?.cartLinesUpdate?.cart)
+}
+
+async function deleteCartItem(client: StorefrontApiClient, cartId: string, itemIds: string[]): Promise<PlatformCart | undefined | null> {
+  const cart = await client.request<DeleteCartItemsMutation>(deleteCartItemsMutation, { variables: { itemIds, cartId } })
+
+  return normalizeCart(cart.data?.cartLinesRemove?.cart)
+}
+
+async function getCart(client: StorefrontApiClient, cartId: string): Promise<PlatformCart | undefined | null> {
+  const cart = await client.request<SingleCartQuery>(getCartQuery, { variables: { cartId } })
+
+  return normalizeCart(cart.data?.cart)
 }
 
 async function getAdminProduct(client: AdminApiClient, id: string) {

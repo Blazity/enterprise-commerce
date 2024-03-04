@@ -1,6 +1,7 @@
 "use client"
 
 import dynamic from "next/dynamic"
+import React from "react"
 import { useModalStore } from "stores/modalStore"
 
 const LoginModal = dynamic(() => import("./LoginModal").then((m) => m.LoginModal), { loading: Placeholder })
@@ -14,11 +15,11 @@ export function Modals() {
     <>
       {Object.entries(modals).map(([key, value]) => {
         return (
-          <>
-            {key === "login" && !!value ? <LoginModal /> : null}
-            {key === "signup" && !!value ? <SignupModal /> : null}
-            {key === "cart" && !!value ? <CartSheet /> : null}
-          </>
+          <React.Fragment key={key}>
+            {key === "login" && !!value ? <LoginModal key="login" /> : null}
+            {key === "signup" && !!value ? <SignupModal key="signup" /> : null}
+            {key === "cart" && !!value ? <CartSheet key="cart" /> : null}
+          </React.Fragment>
         )
       })}
     </>
