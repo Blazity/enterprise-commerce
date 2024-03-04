@@ -4,7 +4,7 @@ import { Combination } from "utils/productOptionsUtils"
 interface InfoSectionProps {
   title: string
   description: string
-  combination: Combination | undefined
+  combination: Combination | PlatformVariant | undefined
   className?: string
 }
 

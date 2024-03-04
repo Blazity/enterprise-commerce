@@ -3,7 +3,7 @@ import { PlatformVariant } from "@enterprise-commerce/core/platform/types"
 export interface Combination {
   id: string
   availableForSale: boolean
-  quantityAvailable: number
+  quantityAvailable?: number | null | undefined
   price: PlatformVariant["price"] | undefined
   title: string
   size?: string
@@ -11,7 +11,6 @@ export interface Combination {
 }
 
 type Option = keyof Pick<Combination, "color" | "size">
-type ProductPrice = PlatformVariant["price"] | undefined
 
 export function getAllCombinations(variants: PlatformVariant[]): Combination[] {
   return variants.map((variant) => ({

@@ -7,8 +7,9 @@ import { addCartItem, getCart } from "app/actions"
 import { useEffect, useState, useTransition } from "react"
 import { Combination } from "utils/productOptionsUtils"
 import { usePathname } from "next/navigation"
+import { PlatformVariant } from "@enterprise-commerce/core/platform/types"
 
-export function AddToCartButton({ className, combination }: { className?: string; combination: Combination | undefined }) {
+export function AddToCartButton({ className, combination }: { className?: string; combination: Combination | PlatformVariant | undefined }) {
   const pathname = usePathname()
   const [cartQuantity, setCartQuantity] = useState<number | null>(null)
   const [isPending, startTransition] = useTransition()

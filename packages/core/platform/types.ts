@@ -49,7 +49,7 @@ export interface PlatformPriceRange {
 export interface PlatformVariant {
   id: string
   title: string
-  quantityAvailable: number
+  quantityAvailable?: number | null | undefined
   availableForSale: boolean
   selectedOptions: {
     name: string
