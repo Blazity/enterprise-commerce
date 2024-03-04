@@ -2,7 +2,7 @@ import { ChevronIcon } from "components/Icons/ChevronIcon"
 
 import { cn } from "utils/cn"
 import { Autocomplete } from "./Autocomplete"
-import { Checkout } from "./Checkout"
+import { Cart } from "./Cart"
 import { Favorites } from "./Favorites"
 import { ImageGridItem, NavItem, TextGridItem, TextImageGridItem } from "./types"
 import { ImageGridVariant } from "./variants/ImageGridVariant"
@@ -63,7 +63,7 @@ export function NavigationBar({ items }: NavigationBarProps) {
                 <Autocomplete className="mr-6" />
                 <div className="flex gap-2">
                   <Favorites />
-                  <Checkout />
+                  <Cart />
                 </div>
               </div>
             </div>
