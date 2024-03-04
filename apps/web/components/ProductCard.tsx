@@ -9,7 +9,7 @@ interface ProductCardProps extends PlatformProduct {
 }
 
 export function ProductCard(props: ProductCardProps) {
-  const variant = props.variants.find(Boolean)?.price
+  const variant = props.variants?.find(Boolean)?.price
 
   return (
     <div className={cn("group relative bg-gray-100 p-4 md:bg-transparent md:p-0", props.className)}>
