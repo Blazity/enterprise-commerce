@@ -5,6 +5,7 @@ import { useModalStore } from "stores/modalStore"
 
 const LoginModal = dynamic(() => import("./LoginModal").then((m) => m.LoginModal), { loading: Placeholder })
 const SignupModal = dynamic(() => import("./SignupModal").then((m) => m.SignupModal), { loading: Placeholder })
+const CartSheet = dynamic(() => import("./CartSheet").then((m) => m.CartSheet), { loading: Placeholder })
 
 export function Modals() {
   const modals = useModalStore((s) => s.modals)
@@ -16,6 +17,7 @@ export function Modals() {
           <>
             {key === "login" && !!value ? <LoginModal /> : null}
             {key === "signup" && !!value ? <SignupModal /> : null}
+            {key === "cart" && !!value ? <CartSheet /> : null}
           </>
         )
       })}

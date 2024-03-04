@@ -1,6 +1,6 @@
 import { create } from "zustand"
 
-type Modal = "login" | "signup"
+type Modal = "login" | "signup" | "cart"
 
 interface ModalStore {
   modals: Partial<Record<Modal, boolean>>
