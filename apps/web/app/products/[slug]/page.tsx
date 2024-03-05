@@ -126,3 +126,7 @@ function makeBreadcrumbs(product: PlatformProduct) {
     [product.title]: "",
   }
 }
+
+export async function generateStaticParams() {
+  return [{ slug: "dinotrux-diecast-dragonflopter-vehicle" }]
+}

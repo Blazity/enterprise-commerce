@@ -12,7 +12,7 @@ const config = withPlugins([[withVercelToolbar(), withBundleAnalyzer({ enabled: 
       fullUrl: true,
     },
   },
-  experimental: { ppr: true },
+  experimental: { ppr: false },
   images: {
     imageSizes: [256, 384],
     deviceSizes: [320, 640, 750, 1080, 1200],
