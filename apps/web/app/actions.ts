@@ -48,13 +48,10 @@ export async function addCartItem(prevState: any, variantId: string) {
     revalidateTag("cart")
   }
 
-  const createCartItemResults = await storefrontClient.createCartItem(cartId!, [{ merchandiseId: variantId, quantity: 1 }])
-  const cartItem = createCartItemResults?.items?.find((item) => item.merchandise.id === variantId)
-  const hasAnyLeftInInventory = (cartItem?.quantity ?? 0) < (cartItem?.merchandise.quantityAvailable ?? Infinity)
-
+  await storefrontClient.createCartItem(cartId!, [{ merchandiseId: variantId, quantity: 1 }])
   revalidateTag("cart")
 
-  return { ok: hasAnyLeftInInventory }
+  return { ok: true }
 }
 
 export async function getItemAvailability(cartId: string | null | undefined, variantId: string | null | undefined) {

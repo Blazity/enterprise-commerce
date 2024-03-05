@@ -5,6 +5,7 @@ import { addCartItem, getItemAvailability } from "app/actions"
 import { Button } from "components/Button"
 import { useEffect, useState, useTransition } from "react"
 import { useFormState, useFormStatus } from "react-dom"
+import { useCartStore } from "stores/cartStore"
 import { cn } from "utils/cn"
 import { getCookie } from "utils/getCookie"
 import { Combination } from "utils/productOptionsUtils"
@@ -13,8 +14,13 @@ export function AddToCartButton({ className, combination }: { className?: string
   const [isPending, startTransition] = useTransition()
   const [state, formAction] = useFormState(addCartItem, { ok: false })
   const [hasAnyAvailable, setHasAnyAvailable] = useState(false)
+  const openCart = useCartStore((s) => s.openCart)
 
   const actionWithParams = formAction.bind(null, combination?.id)
+
+  useEffect(() => {
+    state.ok && openCart()
+  }, [openCart, state])
 
   useEffect(() => {
     startTransition(async () => {
@@ -24,8 +30,6 @@ export function AddToCartButton({ className, combination }: { className?: string
       itemAvailability && setHasAnyAvailable(itemAvailability.inCartQuantity < itemAvailability.inStockQuantity)
     })
   }, [combination?.id, state])
-
-  console.log(combination)
 
   return (
     <form className={className} action={actionWithParams}>
