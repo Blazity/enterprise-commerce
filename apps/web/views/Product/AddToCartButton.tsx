@@ -1,37 +1,54 @@
 "use client"
 
 import { PlatformVariant } from "@enterprise-commerce/core/platform/types"
-import { addCartItem } from "app/actions"
+import { addCartItem, getItemAvailability } from "app/actions"
 import { Button } from "components/Button"
-import { useTransition } from "react"
-import { useModalStore } from "stores/modalStore"
+import { useEffect, useState, useTransition } from "react"
+import { useFormState, useFormStatus } from "react-dom"
 import { cn } from "utils/cn"
+import { getCookie } from "utils/getCookie"
 import { Combination } from "utils/productOptionsUtils"
 
 export function AddToCartButton({ className, combination }: { className?: string; combination: Combination | PlatformVariant | undefined }) {
   const [isPending, startTransition] = useTransition()
-  const openModal = useModalStore((s) => s.openModal)
+  const [state, formAction] = useFormState(addCartItem, { ok: false })
+  const [hasAnyAvailable, setHasAnyAvailable] = useState(false)
 
-  const handleOnClick = async () => {
+  const actionWithParams = formAction.bind(null, combination?.id)
+
+  useEffect(() => {
     startTransition(async () => {
-      if (combination?.id) {
-        await addCartItem(combination?.id)
-        openModal("cart")
-      }
+      const cartId = getCookie("ecom_cartId")
+      const itemAvailability = await getItemAvailability(cartId, combination?.id)
+
+      itemAvailability && setHasAnyAvailable(itemAvailability.inCartQuantity < itemAvailability.inStockQuantity)
     })
-  }
+  }, [combination?.id, state])
+
+  console.log(combination)
+
+  return (
+    <form className={className} action={actionWithParams}>
+      <Submit disabled={!hasAnyAvailable || isPending}>{combination?.availableForSale ? "Add to Cart" : "Out Of Stock"}</Submit>
+    </form>
+  )
+}
+
+function Submit({ children, disabled }) {
+  const { pending } = useFormStatus()
 
   return (
     <Button
-      onClick={handleOnClick}
+      type="submit"
+      onClick={(e) => pending && e.preventDefault()}
       variant="secondary"
       size="xl"
       isAnimated={false}
-      className={cn("relative w-fit rounded-xl transition-transform hover:scale-105 hover:text-white", className)}
-      isLoading={isPending}
-      disabled={isPending}
+      className={cn("relative w-fit rounded-xl transition-transform hover:scale-105 hover:text-white")}
+      isLoading={pending}
+      disabled={pending || disabled}
     >
-      Add to Cart
+      {children}
     </Button>
   )
 }

@@ -26,8 +26,6 @@ export const revalidate = 3600
 
 export const dynamicParams = true
 
-export const dynamic = "force-static"
-
 interface ProductProps {
   params: { slug: string }
 }
@@ -76,11 +74,13 @@ async function ProductView({ slug }: { slug: string }) {
   }
 
   const hasOnlyOneVariant = product.variants.length <= 1
+
   const defaultColor = product.flatOptions?.["Color"]?.find(Boolean) ?? null
   const defaultSize = product.flatOptions?.["Size"]?.find(Boolean) ?? null
+
   const combination = hasOnlyOneVariant
     ? product.variants.find(Boolean)
-    : getAllCombinations(product.variants).find((combination) => (combination.size === size ?? defaultSize) && (combination.color === color ?? defaultColor))
+    : getAllCombinations(product.variants).find((combination) => combination.size === (size ?? defaultSize) && combination.color === (color ?? defaultColor))
 
   const lastCollection = product.collections.findLast(Boolean)
 
@@ -125,8 +125,4 @@ function makeBreadcrumbs(product: PlatformProduct) {
     [lastCollection?.title || "Products"]: lastCollection?.handle ? `/categories/${lastCollection.handle}` : "/search",
     [product.title]: "",
   }
-}
-
-export async function generateStaticParams() {
-  return []
 }

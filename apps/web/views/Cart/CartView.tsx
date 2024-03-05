@@ -1,64 +1,47 @@
 "use client"
 
 import { PlatformCart } from "@enterprise-commerce/core/platform/types"
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "components/Sheets"
-import { useEffect, useRef, useState, useTransition } from "react"
-import { useModalStore } from "stores/modalStore"
-import { getCart } from "app/actions"
+import { removeCartItem } from "app/actions"
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from "components/Sheets"
 import Image from "next/image"
 import Link from "next/link"
-import { Skeleton } from "components/Skeleton"
+import { useEffect, useRef, useState } from "react"
+import { useFormState, useFormStatus } from "react-dom"
 
-export function CartSheet() {
-  const [cart, setCart] = useState<PlatformCart | null>(null)
-  const [isPending, startTransition] = useTransition()
-
-  useEffect(() => {
-    startTransition(async () => {
-      const cart = await getCart()
-
-      if (cart) setCart(cart)
-    })
-  }, [])
-
-  return <CartView cart={cart} isPending={isPending} />
-}
-
-function CartView({ cart, isPending }: { cart: PlatformCart | null; isPending: boolean }) {
-  const modals = useModalStore((s) => s.modals)
-  const closeModal = useModalStore((s) => s.closeModal)
-  const openModal = useModalStore((s) => s.openModal)
+export function CartView({ cart }: { cart: PlatformCart | null }) {
+  const [isOpen, setIsOpen] = useState(false)
+  const openCart = () => setIsOpen(true)
+  const closeCart = () => setIsOpen(false)
 
   const quantityRef = useRef(cart?.totalQuantity)
 
   useEffect(() => {
     if (cart?.totalQuantity !== quantityRef.current) {
-      if (!modals["cart"]) {
-        openModal("cart")
+      if (!isOpen) {
+        openCart()
       }
 
       quantityRef.current = cart?.totalQuantity
     }
-  }, [modals["cart"], cart?.totalQuantity, quantityRef])
+  }, [cart?.totalQuantity, isOpen, quantityRef])
 
   return (
-    <Sheet open={modals["cart"]} onOpenChange={() => closeModal("cart")}>
-      <SheetContent className="bg-white">
+    <Sheet open={isOpen} onOpenChange={() => closeCart()}>
+      <SheetContent className="overflow-auto bg-white">
         <SheetHeader>
           <SheetTitle>My Cart</SheetTitle>
         </SheetHeader>
-        {isPending ? <Skeleton className="h-40 w-full" /> : null}
 
-        {!isPending && cart ? (
+        {cart ? (
           <>
             {cart?.items.map((singleItem) => (
               <li key={singleItem.merchandise.product.id} className="flex w-full flex-col border-b border-neutral-300 dark:border-neutral-700">
-                <div className="relative flex w-full flex-row justify-between px-1 py-4">
+                <div className="relative flex w-full flex-row justify-between px-1 py-8">
                   <div className="absolute z-40 -mt-2 ml-[55px]">{/* <DeleteItemButton item={item} /> */}</div>
-                  <Link href={`products/${singleItem.merchandise.product.handle}`} onClick={() => closeModal("cart")} className="z-30 flex flex-row space-x-4">
-                    <div className="relative h-16 w-16 cursor-pointer overflow-hidden rounded-md border border-neutral-300 bg-neutral-300 dark:border-neutral-700 dark:bg-neutral-900 dark:hover:bg-neutral-800">
+                  <Link href={`/products/${singleItem.merchandise.product.handle}`} onClick={() => closeCart()} className="z-30 flex flex-row space-x-4">
+                    <div className="relative size-16 cursor-pointer overflow-hidden rounded-md border border-neutral-300 bg-neutral-300 dark:border-neutral-700 dark:bg-neutral-900 dark:hover:bg-neutral-800">
                       <Image
-                        className="h-full w-full object-cover"
+                        className="size-full object-cover"
                         width={64}
                         height={64}
                         alt=""
@@ -72,29 +55,37 @@ function CartView({ cart, isPending }: { cart: PlatformCart | null; isPending: b
                     </div>
                   </Link>
                   <div className="flex h-16 flex-col justify-between">
-                    {/* <Price className="flex justify-end space-y-2 text-right text-sm" amount={item.cost.totalAmount.amount} currencyCode={item.cost.totalAmount.currencyCode} /> */}
+                    <p className="flex justify-end space-y-2 text-right text-sm">{singleItem?.cost?.totalAmount?.amount + " " + singleItem?.cost?.totalAmount?.currencyCode}</p>
+
                     <div className="ml-auto flex h-9 flex-row items-center rounded-full border border-neutral-200 dark:border-neutral-700">
-                      {/* <EditItemQuantityButton item={item} type="minus" /> */}
+                      <button
+                        type="button"
+                        onClick={() => {
+                          // await editItem
+                        }}
+                      >
+                        ➖
+                      </button>
                       <p className="w-6 text-center">
                         <span className="w-full text-sm">{singleItem.quantity}</span>
                       </p>
-                      {/* <EditItemQuantityButton item={item} type="plus" /> */}
+                      <button type="button">➕</button>
                     </div>
+                    <DeleteButton id={singleItem.id} />
                   </div>
                 </div>
               </li>
             ))}
-
             <div className="py-4 text-sm text-neutral-500 dark:text-neutral-400">
               <div className="mb-3 flex items-center justify-between border-b border-neutral-200 pb-1 dark:border-neutral-700">
-                <p>Taxes</p>
-                <p className="text-right text-base text-black dark:text-white">{cart?.cost?.totalTaxAmount?.amount + " " + cart?.cost?.totalTaxAmount?.currencyCode}</p>
+                <p>Subtotal</p>
+                <p className="text-right text-base text-black dark:text-white">{cart?.cost?.subtotalAmount?.amount + " " + cart?.cost?.subtotalAmount?.currencyCode}</p>
               </div>
-              <div className="mb-3 flex items-center justify-between border-b border-neutral-200 pb-1 pt-1 dark:border-neutral-700">
+              <div className="mb-3 flex items-center justify-between border-b border-neutral-200 py-1 dark:border-neutral-700">
                 <p>Shipping</p>
                 <p className="text-right">Calculated at checkout</p>
               </div>
-              <div className="mb-3 flex items-center justify-between border-b border-neutral-200 pb-1 pt-1 dark:border-neutral-700">
+              <div className="mb-3 flex items-center justify-between border-b border-neutral-200 py-1 dark:border-neutral-700">
                 <p>Total</p>
                 <p className="text-right text-base text-black dark:text-white">{cart?.cost?.totalAmount?.amount + " " + cart?.cost?.totalAmount?.currencyCode}</p>
               </div>
@@ -106,5 +97,27 @@ function CartView({ cart, isPending }: { cart: PlatformCart | null; isPending: b
         ) : null}
       </SheetContent>
     </Sheet>
+  )
+}
+
+function DeleteButton({ id }) {
+  const [state, formAction] = useFormState(removeCartItem, { ok: false })
+
+  const actionWithParams = formAction.bind(null, id)
+
+  return (
+    <form onClick={actionWithParams}>
+      <Submit />
+    </form>
+  )
+}
+
+function Submit() {
+  const { pending } = useFormStatus()
+
+  return (
+    <button type="submit" onClick={(e) => e.preventDefault()}>
+      ❌{pending && " loading..."}
+    </button>
   )
 }

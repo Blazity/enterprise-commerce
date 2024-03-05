@@ -37,6 +37,7 @@ const cartFragment = `#graphql
                 amount
                 currencyCode
               }
+              quantityAvailable
               selectedOptions {
                 name
                 value

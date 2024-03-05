@@ -2,10 +2,10 @@
 
 import { PlatformProduct } from "@enterprise-commerce/core/platform/types"
 import { meilisearch } from "clients/meilisearch"
+import { storefrontClient } from "clients/storefrontClient"
 import { revalidateTag, unstable_cache } from "next/cache"
 import { cookies } from "next/headers"
 import { ComparisonOperators, FilterBuilder } from "utils/filterBuilder"
-import { storefrontClient } from "clients/storefrontClient"
 
 export const searchProducts = unstable_cache(
   async (query: string, limit: number = 4) => {
@@ -29,16 +29,10 @@ export const getProduct = unstable_cache(
   { revalidate: 3600 }
 )
 
-export async function getCart() {
-  const cookieName = "ecom_cartId"
-  let cartId = cookies().get(cookieName)?.value
+export const getCart = unstable_cache(async (cartId: string) => storefrontClient.getCart(cartId), ["cart"], { revalidate: 60 * 15, tags: ["cart"] })
 
-  if (!cartId) return null
-  return storefrontClient.getCart(cartId)
-}
-
-export async function addCartItem(variantId: string) {
-  if (!variantId) return null
+export async function addCartItem(prevState: any, variantId: string) {
+  if (!variantId) return { ok: false }
 
   const cookieName = "ecom_cartId"
   let cartId = cookies().get(cookieName)?.value
@@ -50,30 +44,52 @@ export async function addCartItem(variantId: string) {
     cart = await storefrontClient.createCart([])
     cartId = cart.id
     cartId && cookies().set(cookieName, cartId)
+
+    revalidateTag("cart")
   }
 
-  await storefrontClient.createCartItem(cartId!, [{ merchandiseId: variantId, quantity: 1 }])
+  const createCartItemResults = await storefrontClient.createCartItem(cartId!, [{ merchandiseId: variantId, quantity: 1 }])
+  const cartItem = createCartItemResults?.items?.find((item) => item.merchandise.id === variantId)
+  const hasAnyLeftInInventory = (cartItem?.quantity ?? 0) < (cartItem?.merchandise.quantityAvailable ?? Infinity)
+
+  revalidateTag("cart")
+
+  return { ok: hasAnyLeftInInventory }
 }
 
-export async function removeCartItem(lineId: string) {
+export async function getItemAvailability(cartId: string | null | undefined, variantId: string | null | undefined) {
+  if (!cartId || !variantId) return null
+
+  const cart = await storefrontClient.getCart(cartId)
+  const cartItem = cart?.items?.find((item) => item.merchandise.id === variantId)
+
+  return { inCartQuantity: cartItem?.quantity ?? 0, inStockQuantity: cartItem?.merchandise.quantityAvailable ?? Infinity }
+}
+
+export async function removeCartItem(prevState: any, itemId: string) {
   const cartId = cookies().get("ecom_cartId")?.value
 
   if (!cartId) return null
 
-  await storefrontClient.deleteCartItem(cartId!, [lineId])
+  await storefrontClient.deleteCartItem(cartId!, [itemId])
+  revalidateTag("cart")
+
+  return {}
 }
 
-export async function updateItemQuantity(payload: { lineId: string; variantId: string; quantity: number }) {
+export async function updateItemQuantity(prevState: any, payload: { itemId: string; variantId: string; quantity: number }) {
   const cartId = cookies().get("ecom_cartId")?.value
 
   if (!cartId) return null
 
-  const { lineId, variantId, quantity } = payload
+  const { itemId, variantId, quantity } = payload
 
   if (quantity === 0) {
-    await storefrontClient.deleteCartItem(cartId, [lineId])
+    await storefrontClient.deleteCartItem(cartId, [itemId])
+    revalidateTag("cart")
     return
   }
 
-  await storefrontClient.updateCartItem(cartId, [{ id: lineId, merchandiseId: variantId, quantity }])
+  await storefrontClient.updateCartItem(cartId, [{ id: itemId, merchandiseId: variantId, quantity }])
+  revalidateTag("cart")
 }
