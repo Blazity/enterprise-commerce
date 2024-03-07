@@ -12,8 +12,8 @@ export function ProductCard(props: ProductCardProps) {
   const variant = props.variants?.find(Boolean)?.price
 
   return (
-    <div className={cn("group relative bg-gray-100 p-4 md:bg-transparent md:p-0", props.className)}>
-      <div className="relative flex min-h-[100px] items-center justify-center bg-gray-100 md:min-h-[320px]">
+    <div className={cn("group relative bg-neutral-100 p-4 md:bg-transparent md:p-0", props.className)}>
+      <div className="relative flex min-h-[100px] items-center justify-center bg-neutral-100 md:min-h-[320px]">
         <Image
           alt={props.featuredImage?.altText || ""}
           className="size-[150px] object-contain transition-transform group-hover:scale-105 md:size-[250px]"

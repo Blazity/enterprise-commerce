@@ -13,7 +13,7 @@ export async function HomepageView() {
   return (
     <>
       <div className="max-w-container-lg mx-auto flex w-full flex-col-reverse justify-between lg:flex-row">
-        <div className="shrink-1 flex basis-1/2 items-center justify-center bg-gray-100 p-24">
+        <div className="shrink-1 flex basis-1/2 items-center justify-center bg-neutral-100 p-24">
           <Image width={400} height={400} sizes="400px" alt="Homepage featured image" priority src={"/default-product-image.svg"} />
         </div>
         <div className="flex basis-1/2 flex-col items-center justify-start gap-16 px-4 py-20 md:items-start md:p-24">
@@ -60,10 +60,14 @@ export async function HomepageView() {
         </div>
         <div className="group mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {Array.from({ length: 6 }, (_, index) => (
-            <div key={index} className="relative h-[260px] w-full overflow-hidden rounded-2xl ">
-              <div className="absolute inset-0 size-full bg-neutral-100 transition-all hover:bg-neutral-50 hover:blur"></div>
-              <h3 className="absolute bottom-8 left-8 text-[26px] leading-none tracking-tight text-black">Fashion</h3>
-            </div>
+            <Link key={index} href={`/category/abc`}>
+              <div className="relative h-[260px] w-full overflow-hidden rounded-2xl ">
+                <div className="absolute inset-0 size-full bg-neutral-100 transition-all hover:bg-neutral-50 hover:blur">
+                  <img src={`/category-placeholder-${index + 1}.svg`} className="absolute right-0 top-0 h-full" />
+                </div>
+                <h3 className="absolute bottom-8 left-8 text-2xl leading-none tracking-tight text-black">Fashion</h3>
+              </div>
+            </Link>
           ))}
         </div>
       </div>

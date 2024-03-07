@@ -71,7 +71,7 @@ function VariantOption({ title, initialValue, values, onClick, isDisabledHandler
             const isDisabled = isDisabledHandler(option)
 
             return (
-              <SelectItem disabled={isDisabled} className={cn("hover:bg-gray-50 focus:bg-gray-50 active:bg-gray-50")} key={option} value={option}>
+              <SelectItem disabled={isDisabled} className={cn("hover:bg-neutral-50 focus:bg-neutral-50 active:bg-neutral-50")} key={option} value={option}>
                 <span className={cn({ "cursor-not-allowed line-through": isDisabled })}>{option}</span>
                 {isDisabled ? " (Not available)" : null}
               </SelectItem>

@@ -38,7 +38,7 @@ export function GallerySection({ className, images }: GallerySectionProps) {
 
   return (
     <div className={cn("flex max-w-full flex-col gap-10 md:max-w-[480px]", className)}>
-      <Carousel setApi={setApi} className="relative min-h-[600px] w-full  bg-gray-100">
+      <Carousel setApi={setApi} className="relative min-h-[600px] w-full  bg-neutral-100">
         <CarouselContent className="size-full">
           {images.map((image, index) => (
             <CarouselItem className="flex size-full h-[600px] flex-col items-center justify-center" key={image.url}>
@@ -66,7 +66,7 @@ export function GallerySection({ className, images }: GallerySectionProps) {
             <div
               key={"thumbnail_" + image.url}
               onClick={() => onThumbClick(index)}
-              className={cn("flex size-24 shrink-0 items-center justify-center border border-white bg-gray-100", { "border-black": index === current - 1 })}
+              className={cn("flex size-24 shrink-0 items-center justify-center border border-white bg-neutral-100", { "border-black": index === current - 1 })}
             >
               <Image alt={image.altText || ""} src={image.url || `/default-product-image.svg`} width={100} height={100} sizes="100px" />
             </div>

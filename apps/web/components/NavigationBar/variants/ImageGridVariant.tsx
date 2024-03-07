@@ -14,7 +14,7 @@ export function ImageGridVariant({ items }: ImageGridVariantProps) {
       {items.map((singleCategory) => (
         <Link prefetch={false} href={singleCategory.href} className="submenu__inner flex flex-col items-center gap-4" key={singleCategory.text}>
           <Image
-            className="h-[150px] w-[200px] rounded-md bg-gray-200 object-cover transition-transform hover:scale-105"
+            className="h-[150px] w-[200px] rounded-md bg-neutral-200 object-cover transition-transform hover:scale-105"
             src={singleCategory.image}
             width={200}
             height={150}

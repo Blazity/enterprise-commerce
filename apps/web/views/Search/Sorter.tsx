@@ -45,7 +45,7 @@ export function Sorter({ className }: SorterProps) {
           {Object.entries(LABELS).map(([key, label]) => (
             <DropdownMenuItem
               key={label}
-              className="cursor-pointer border-b border-gray-200 py-2 last:border-b-0 hover:bg-gray-50 focus:bg-gray-50 active:bg-gray-50"
+              className="cursor-pointer border-b border-neutral-200 py-2 last:border-b-0 hover:bg-neutral-50 focus:bg-neutral-50 active:bg-neutral-50"
               onClick={() => setSortBy(key as Sorting)}
             >
               {label}

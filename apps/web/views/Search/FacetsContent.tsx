@@ -54,7 +54,7 @@ export function FacetsContent({ facetDistribution, className }: FacetsContentPro
           <SearchIcon className="size-4 text-neutral-500" />
         </div>
         <input
-          className="block w-full rounded-md border border-gray-300 bg-gray-100 px-2.5 py-1.5 pl-10 text-[14px] text-black focus:border-blue-500 focus:ring-blue-500"
+          className="block w-full rounded-md border border-neutral-300 bg-neutral-100 px-2.5 py-1.5 pl-10 text-[14px] text-black focus:border-blue-500 focus:ring-blue-500"
           placeholder="Search..."
           type="search"
           value={query || ""}
@@ -168,7 +168,7 @@ function PriceInput({ value, onChange, label }: PriceInputProps) {
       Min price
       <Input
         placeholder="10.0"
-        className="block h-auto w-full rounded-md border border-gray-300 bg-gray-100 px-2.5 py-1.5 text-[14px] text-black focus:border-blue-500 focus:ring-blue-500  "
+        className="block h-auto w-full rounded-md border border-neutral-300 bg-neutral-100 px-2.5 py-1.5 text-[14px] text-black focus:border-blue-500 focus:ring-blue-500  "
         type="number"
         value={value}
         onChange={onChange}

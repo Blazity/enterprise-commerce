@@ -67,7 +67,7 @@ export function Autocomplete({ className }: AutocompleteProps) {
     results.map((singleProduct) => (
       <Link
         href={`/products/${singleProduct.handle}`}
-        className="flex h-[70px] cursor-pointer items-center gap-4 border-b border-gray-200 p-4 last:rounded-b-md last:border-0 hover:bg-gray-50"
+        className="flex h-[70px] cursor-pointer items-center gap-4 border-b border-neutral-200 p-4 last:rounded-b-md last:border-0 hover:bg-neutral-50"
         key={singleProduct.id}
         onClick={() => setIsOpen(false)}
       >
@@ -84,7 +84,7 @@ export function Autocomplete({ className }: AutocompleteProps) {
         </div>
         <input
           type="search"
-          className="block w-full rounded-[66px] border border-gray-300 bg-gray-100 px-2.5 py-1.5 pl-10 text-[12px] text-black focus:border-blue-500 focus:ring-blue-500  "
+          className="block w-full rounded-[66px] border border-neutral-300 bg-neutral-100 px-2.5 py-1.5 pl-10 text-[12px] text-black focus:border-blue-500 focus:ring-blue-500  "
           placeholder="Search..."
           onChange={handleOnInputChange}
           onFocus={handleOnInputFocus}

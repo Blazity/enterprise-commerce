@@ -29,7 +29,7 @@ export function TextImageGridVariant({ items }: TextImageGridVariantProps) {
         {imageItems.map((singleCategory) => (
           <Link prefetch={false} href={singleCategory.href || "#"} className="submenu__inner flex flex-col items-center gap-4" key={singleCategory.text}>
             <Image
-              className="h-[200px] w-[160px] rounded-md bg-gray-200 object-cover transition-transform hover:scale-105"
+              className="h-[200px] w-[160px] rounded-md bg-neutral-200 object-cover transition-transform hover:scale-105"
               src={singleCategory.image!}
               width={160}
               height={200}

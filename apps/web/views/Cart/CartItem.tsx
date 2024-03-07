@@ -14,7 +14,7 @@ interface CartItemProps extends PlatformCartItem {
 export function CartItem(props: CartItemProps) {
   return (
     <li className={cn("flex items-center justify-between gap-6 py-2")}>
-      <div className="flex h-[115px] w-[90px] shrink-0 items-center bg-gray-100">
+      <div className="flex h-[115px] w-[90px] shrink-0 items-center bg-neutral-100">
         <Image
           src={props.merchandise.product.featuredImage?.url || "/default-product-image.svg"}
           alt={props.merchandise.product.featuredImage?.altText || ""}
