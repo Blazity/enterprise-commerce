@@ -75,16 +75,20 @@ export async function removeCartItem(prevState: any, itemId: string) {
 export async function updateItemQuantity(prevState: any, payload: { itemId: string; variantId: string; quantity: number }) {
   const cartId = cookies().get("ecom_cartId")?.value
 
-  if (!cartId) return null
+  if (!cartId) return { ok: false }
 
   const { itemId, variantId, quantity } = payload
 
   if (quantity === 0) {
     await storefrontClient.deleteCartItem(cartId, [itemId])
     revalidateTag("cart")
-    return
+    return { ok: true }
   }
 
-  await storefrontClient.updateCartItem(cartId, [{ id: itemId, merchandiseId: variantId, quantity }])
+  const updatedItemResults = await storefrontClient.updateCartItem(cartId, [{ id: itemId, merchandiseId: variantId, quantity }])
+  const cartItem = updatedItemResults?.items?.find((item) => item.merchandise.id === variantId)
+  const hasAnyLeftInInventory = (cartItem?.quantity ?? 0) < (cartItem?.merchandise.quantityAvailable ?? Infinity)
+
   revalidateTag("cart")
+  return { ok: hasAnyLeftInInventory, message: "This product is out of stock" }
 }

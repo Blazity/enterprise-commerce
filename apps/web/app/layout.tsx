@@ -8,6 +8,7 @@ import { NavItem } from "components/NavigationBar/types"
 import { TopBar } from "components/TopBar/TopBar"
 import Script from "next/script"
 import { Suspense } from "react"
+import { Toaster } from "sonner"
 import { AnnouncementBar } from "views/AnnouncementBar"
 import { CallToAction } from "views/CallToAction"
 import { Cart } from "views/Cart/Cart"
@@ -193,6 +194,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Suspense fallback={null}>
           <Analytics />
         </Suspense>
+
+        <Toaster position="bottom-left" />
       </body>
     </html>
   )

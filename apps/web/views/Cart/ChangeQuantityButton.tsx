@@ -1,6 +1,8 @@
 import { updateItemQuantity } from "app/actions"
 import { Spinner } from "components/Spinner"
+import { useEffect } from "react"
 import { useFormState, useFormStatus } from "react-dom"
+import { toast } from "sonner"
 
 interface ChangeQuantityButtonProps {
   id: string
@@ -13,6 +15,12 @@ export function ChangeQuantityButton({ id, variantId, quantity, children }: Chan
   const [state, formAction] = useFormState(updateItemQuantity, { ok: false })
 
   const actionWithParams = formAction.bind(null, { itemId: id, variantId, quantity })
+
+  useEffect(() => {
+    if (!state.ok && state.message) {
+      toast(state.message)
+    }
+  }, [state])
 
   return (
     <form action={actionWithParams}>
