@@ -30,8 +30,8 @@ export function ProductCard(props: ProductCardProps) {
       </Link>
 
       <div className="mt-4 flex flex-col gap-0.5 text-slate-700">
-        <div className="line-clamp-2 text-[13px] md:text-[19px]">{props.title}</div>
-        {variant ? <p className="text-[13px] font-bold md:text-[23px] md:font-normal">{variant.amount + " " + variant.currencyCode}</p> : null}
+        <div className="line-clamp-2 text-[13px] tracking-tight md:text-[19px]">{props.title}</div>
+        {variant ? <p className="text-[13px] font-bold tracking-tight text-black md:text-[23px] md:font-normal">{variant.amount + " " + variant.currencyCode}</p> : null}
       </div>
     </div>
   )

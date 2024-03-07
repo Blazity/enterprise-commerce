@@ -1,27 +1,31 @@
-import { Metadata } from "next"
-import { HomepageView } from "views/Homepage/HomepageView"
+import { Suspense } from "react"
+import { BestOffersSection } from "views/Homepage/BestOffersSection"
+import { CarouselSectionSkeleton } from "views/Homepage/CarouselSection"
+import { CategoriesSection, CategoriesSectionSkeleton } from "views/Homepage/CategoriesSection"
+import { EverythingUnderSection } from "views/Homepage/EverythingUnderSection"
+import { HeroSection } from "views/Homepage/HeroSection"
+import { ProductsWeekSection, ProductsWeekSectionSkeleton } from "views/Homepage/ProductsWeekSection"
 
-export const metadata: Metadata = {
-  title: "Next.js Enterprise Boilerplate",
-  twitter: {
-    card: "summary_large_image",
-  },
-  openGraph: {
-    url: "https://next-enterprise.vercel.app/",
-    images: [
-      {
-        width: 1200,
-        height: 630,
-        url: "https://raw.githubusercontent.com/Blazity/next-enterprise/main/project-logo.png",
-      },
-    ],
-  },
-}
-
-export default function Web() {
+export default function Homepage() {
   return (
     <>
-      <HomepageView />
+      <HeroSection />
+
+      <Suspense fallback={<ProductsWeekSectionSkeleton />}>
+        <ProductsWeekSection />
+      </Suspense>
+
+      <Suspense fallback={<CategoriesSectionSkeleton />}>
+        <CategoriesSection />
+      </Suspense>
+
+      <Suspense fallback={<CarouselSectionSkeleton />}>
+        <BestOffersSection />
+      </Suspense>
+
+      <Suspense fallback={<CarouselSectionSkeleton />}>
+        <EverythingUnderSection />
+      </Suspense>
     </>
   )
 }
