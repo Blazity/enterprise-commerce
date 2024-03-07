@@ -17105,6 +17105,11 @@ socks@^2.7.1:
     ip-address "^9.0.5"
     smart-buffer "^4.2.0"
 
+sonner@^1.4.3:
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/sonner/-/sonner-1.4.3.tgz#b0c1cc175a0e9184460911ca9c396daec5311ae9"
+  integrity sha512-SArYlHbkjqRuLiR0iGY2ZSr09oOrxw081ZZkQPfXrs8aZQLIBOLOdzTYxGJB5yIZ7qL56UEPmrX1YqbODwG0Lw==
+
 sort-object-keys@^1.1.3:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/sort-object-keys/-/sort-object-keys-1.1.3.tgz#bff833fe85cab147b34742e45863453c1e190b45"

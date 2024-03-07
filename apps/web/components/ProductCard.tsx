@@ -16,7 +16,7 @@ export function ProductCard(props: ProductCardProps) {
       <div className="relative flex min-h-[100px] items-center justify-center bg-gray-100 md:min-h-[320px]">
         <Image
           alt={props.featuredImage?.altText || ""}
-          className="z-10 size-[150px] object-contain transition-transform group-hover:scale-105 md:size-[250px]"
+          className="size-[150px] object-contain transition-transform group-hover:scale-105 md:size-[250px]"
           height={250}
           src={props.featuredImage?.url || "/default-product-image.svg"}
           sizes="250px"
