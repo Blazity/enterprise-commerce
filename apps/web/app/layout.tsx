@@ -1,6 +1,7 @@
 import "./globals.css"
 
 import { Analytics } from "@vercel/analytics/next"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Modals } from "components/Modals/Modals"
 import { mobileInlineScript } from "components/NavigationBar/mobileInlineScript"
 import { NavigationBar } from "components/NavigationBar/NavigationBar"
@@ -196,6 +197,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </Suspense>
 
         <Toaster position="bottom-left" />
+        <SpeedInsights />
       </body>
     </html>
   )
