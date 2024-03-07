@@ -130,7 +130,3 @@ function getCombination(product: PlatformProduct, color: string | null, size: st
     ? product.variants.find(Boolean)
     : getAllCombinations(product.variants).find((combination) => combination.size === (size ?? defaultSize) && combination.color === (color ?? defaultColor))
 }
-
-export async function generateStaticParams() {
-  return [{ slug: "dinotrux-diecast-dragonflopter-vehicle" }]
-}
