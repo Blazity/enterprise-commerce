@@ -24,10 +24,10 @@ export async function ProductsWeekSection() {
                     <Image
                       alt={product.featuredImage?.altText || ""}
                       className="size-[150px] object-contain py-2 transition-transform hover:scale-110 group-hover:scale-105 md:size-[250px] md:py-16"
-                      height={250}
+                      height={150}
                       src={product.featuredImage?.url || "/default-product-image.svg"}
-                      sizes="250px"
-                      width={250}
+                      sizes="150px"
+                      width={150}
                     />
                   </div>
                 </Link>
