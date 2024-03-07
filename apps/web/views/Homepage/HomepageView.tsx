@@ -21,7 +21,7 @@ export function HomepageView() {
               <div className="flex flex-col justify-center space-y-4">
                 <div className="space-y-2">
                   <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">The complete platform for building the Web</h1>
-                  <p className="max-w-[600px] text-gray-500 md:text-xl dark:text-gray-400">
+                  <p className="max-w-[600px] text-neutral-500 md:text-xl dark:text-neutral-500">
                     Give your team the toolkit to stop configuring and start innovating. Securely build, deploy, and scale the best web experiences.
                   </p>
                 </div>
@@ -49,7 +49,7 @@ export function HomepageView() {
               <div className="space-y-2">
                 <div className="inline-block rounded-lg bg-gray-100 px-3 py-1 text-sm dark:bg-gray-800">New Features</div>
                 <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">Faster iteration. More innovation.</h2>
-                <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+                <p className="max-w-[900px] text-neutral-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-neutral-500">
                   The platform for rapid progress. Let your team focus on shipping features instead of managing infrastructure with automated CI/CD, built-in testing, and
                   integrated collaboration.
                 </p>
@@ -68,19 +68,19 @@ export function HomepageView() {
                   <li>
                     <div className="grid gap-1">
                       <h3 className="text-xl font-bold">Collaboration</h3>
-                      <p className="text-gray-500 dark:text-gray-400">Make collaboration seamless with built-in code review tools.</p>
+                      <p className="text-neutral-500 dark:text-neutral-500">Make collaboration seamless with built-in code review tools.</p>
                     </div>
                   </li>
                   <li>
                     <div className="grid gap-1">
                       <h3 className="text-xl font-bold">Automation</h3>
-                      <p className="text-gray-500 dark:text-gray-400">Automate your workflow with continuous integration.</p>
+                      <p className="text-neutral-500 dark:text-neutral-500">Automate your workflow with continuous integration.</p>
                     </div>
                   </li>
                   <li>
                     <div className="grid gap-1">
                       <h3 className="text-xl font-bold">Scale</h3>
-                      <p className="text-gray-500 dark:text-gray-400">Deploy to the cloud with a single click and scale with ease.</p>
+                      <p className="text-neutral-500 dark:text-neutral-500">Deploy to the cloud with a single click and scale with ease.</p>
                     </div>
                   </li>
                 </ul>
@@ -92,7 +92,7 @@ export function HomepageView() {
           <div className="container grid items-center gap-6 px-4 md:px-6 lg:grid-cols-2 lg:gap-10">
             <div className="space-y-2">
               <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">Experience the workflow the best frontend teams love.</h2>
-              <p className="max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+              <p className="max-w-[600px] text-neutral-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-neutral-500">
                 Let your team focus on shipping features instead of managing infrastructure with automated CI/CD.
               </p>
             </div>
@@ -129,7 +129,7 @@ export function HomepageView() {
               </div>
               <div className="flex flex-col items-start space-y-4">
                 <div className="inline-block rounded-lg bg-gray-100 px-3 py-1 text-sm dark:bg-gray-800">Security</div>
-                <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl/relaxed dark:text-gray-400">
+                <p className="mx-auto max-w-[700px] text-neutral-500 md:text-xl/relaxed dark:text-neutral-500">
                   Fully managed infrastructure designed to scale dynamically with your traffic, a global edge to ensure your site is fast for every customer, and the tools to
                   monitor every aspect of your app.
                 </p>

@@ -102,7 +102,7 @@ export interface PlatformCartItem {
   id: string
   cost: { totalAmount?: PlatformPrice | null | undefined }
   quantity: number
-  merchandise: Omit<PlatformVariant, "availableForSale" | "title"> & { product: PlatformProduct }
+  merchandise: Omit<PlatformVariant, "availableForSale"> & { product: PlatformProduct }
 }
 
 export interface PlatformItemInput {

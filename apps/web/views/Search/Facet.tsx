@@ -20,7 +20,7 @@ export function Facet({ id, title, distribution, isChecked, onCheckedChange }: F
       <AccordionTrigger className="text-base">{title}</AccordionTrigger>
       <AccordionContent>
         {hasNoResults ? (
-          <p className="text-[14px] text-slate-600">No {title.toLowerCase()} found</p>
+          <p className="text-[14px] text-neutral-500">No {title.toLowerCase()} found</p>
         ) : (
           <div className="grid gap-2">
             {distributionsEntries.map(([value, noOfItems], index) => (

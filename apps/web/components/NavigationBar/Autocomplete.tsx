@@ -5,6 +5,7 @@ import { PlatformProduct } from "@enterprise-commerce/core/platform/types"
 import { useClickAway, useDebounce } from "@uidotdev/usehooks"
 import { searchProducts } from "app/actions"
 import { SearchIcon } from "components/Icons/SearchIcon"
+import { Spinner } from "components/Spinner"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { ChangeEvent, KeyboardEvent, useEffect, useState, useTransition } from "react"
@@ -77,11 +78,9 @@ export function Autocomplete({ className }: AutocompleteProps) {
   return (
     <div className="relative hidden lg:block">
       <div className={cn("relative block w-[240px] overflow-hidden rounded-[66px]", className)}>
-        {!!isPending && (
-          <div className="pointer-events-none absolute inset-y-1.5 right-2 size-5 animate-spin rounded-full border-4 border-solid border-blue-200 border-t-transparent" />
-        )}
+        {!!isPending && <Spinner className="absolute inset-y-1.5 right-2" />}
         <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5">
-          <SearchIcon className="size-4 text-gray-400" />
+          <SearchIcon className="size-4 text-neutral-500" />
         </div>
         <input
           type="search"

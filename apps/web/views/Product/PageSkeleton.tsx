@@ -17,7 +17,7 @@ export function PageSkeleton() {
           <div className="flex flex-col items-start pt-12">
             <div className="w-full pb-10">
               <Skeleton className="mb-6 h-[45px] w-[85%] text-[36px] leading-tight tracking-[-1.44px]" />
-              <Skeleton className="h-[148px] w-[95%] text-[17px] leading-tight tracking-normal text-slate-600" />
+              <Skeleton className="h-[148px] w-[95%] text-[17px] leading-tight tracking-normal text-neutral-500" />
               <Skeleton className="mt-4 h-[54px] w-[200px] text-[36px] font-bold tracking-[-1.44px]" />
             </div>
             <VariantsSectionSkeleton />

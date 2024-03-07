@@ -55,7 +55,7 @@ export async function addCartItem(prevState: any, variantId: string) {
 }
 
 export async function getItemAvailability(cartId: string | null | undefined, variantId: string | null | undefined) {
-  if (!cartId || !variantId) return null
+  if (!cartId || !variantId) return { inCartQuantity: 0, inStockQuantity: Infinity }
 
   const cart = await storefrontClient.getCart(cartId)
   const cartItem = cart?.items?.find((item) => item.merchandise.id === variantId)
@@ -70,8 +70,6 @@ export async function removeCartItem(prevState: any, itemId: string) {
 
   await storefrontClient.deleteCartItem(cartId!, [itemId])
   revalidateTag("cart")
-
-  return {}
 }
 
 export async function updateItemQuantity(prevState: any, payload: { itemId: string; variantId: string; quantity: number }) {

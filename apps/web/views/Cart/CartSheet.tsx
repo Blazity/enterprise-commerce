@@ -1,10 +1,9 @@
 import { PlatformCart } from "@enterprise-commerce/core/platform/types"
-import { removeCartItem } from "app/actions"
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from "components/Sheets"
-import Image from "next/image"
-import Link from "next/link"
-import { useEffect, useRef } from "react"
-import { useFormState, useFormStatus } from "react-dom"
+import { Button } from "components/Button"
+import { CloseIcon } from "components/Icons/CloseIcon"
+import { Sheet, SheetClose, SheetContent, SheetFooter, SheetHeader, SheetTitle } from "components/Sheets"
+import { useRouter } from "next/navigation"
+import { CartItem } from "./CartItem"
 
 interface CartSheetProps {
   cart: PlatformCart
@@ -14,111 +13,48 @@ interface CartSheetProps {
 }
 
 export function CartSheet({ cart, isOpen, onCartOpen, onCartClose }: CartSheetProps) {
-  const quantityRef = useRef(cart?.totalQuantity)
+  const router = useRouter()
 
-  useEffect(() => {
-    if (cart?.totalQuantity !== quantityRef.current) {
-      if (!isOpen) {
-        onCartOpen()
-      }
+  if (!cart) return null
 
-      quantityRef.current = cart?.totalQuantity
-    }
-  }, [cart?.totalQuantity, isOpen, onCartOpen, quantityRef])
+  const subtotalFormatted = cart?.cost?.subtotalAmount?.amount + " " + cart?.cost?.subtotalAmount?.currencyCode
+  const totalFomatted = cart?.cost?.totalAmount?.amount + " " + cart?.cost?.totalAmount?.currencyCode
 
   return (
     <Sheet open={isOpen} onOpenChange={() => onCartClose()}>
-      <SheetContent className="overflow-auto bg-white">
-        <SheetHeader>
-          <SheetTitle>My Cart</SheetTitle>
+      <SheetContent className="h-full min-h-[100vh] bg-white p-0 ">
+        <SheetHeader className="mb-4 flex w-full flex-row items-center justify-between border-b border-black">
+          <SheetTitle className="p-4 text-[20px] font-normal">Review your cart</SheetTitle>
+          <SheetClose className="ring-offset-background focus:ring-ring data-[state=open]:bg-secondary absolute right-4 top-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:pointer-events-none">
+            <CloseIcon className="size-4" />
+            <span className="sr-only">Close</span>
+          </SheetClose>
         </SheetHeader>
 
-        {cart ? (
-          <>
-            {cart?.items.map((singleItem) => (
-              <li key={singleItem.merchandise.product.id} className="flex w-full flex-col border-b border-neutral-300 dark:border-neutral-700">
-                <div className="relative flex w-full flex-row justify-between px-1 py-8">
-                  <div className="absolute z-40 -mt-2 ml-[55px]">{/* <DeleteItemButton item={item} /> */}</div>
-                  <Link href={`/products/${singleItem.merchandise.product.handle}`} onClick={() => onCartClose()} className="z-30 flex flex-row space-x-4">
-                    <div className="relative size-16 cursor-pointer overflow-hidden rounded-md border border-neutral-300 bg-neutral-300 dark:border-neutral-700 dark:bg-neutral-900 dark:hover:bg-neutral-800">
-                      <Image
-                        className="size-full object-cover"
-                        width={64}
-                        height={64}
-                        alt=""
-                        // alt={item.merchandise.product.featuredImage.altText || item.merchandise.product.title}
-                        src={singleItem.merchandise.product.featuredImage?.url || ""}
-                      />
-                    </div>
+        <div className="mb-4 flex h-[63%] w-full flex-col gap-4 overflow-x-hidden p-4">
+          {cart?.items.map((singleItem) => <CartItem {...singleItem} key={singleItem.id + "_" + singleItem.merchandise.id} onProductClick={() => onCartClose()} />)}
+        </div>
 
-                    <div className="flex flex-1 flex-col text-base">
-                      <span className="leading-tight">{singleItem.merchandise.product.title}</span>
-                    </div>
-                  </Link>
-                  <div className="flex h-16 flex-col justify-between">
-                    <p className="flex justify-end space-y-2 text-right text-sm">{singleItem?.cost?.totalAmount?.amount + " " + singleItem?.cost?.totalAmount?.currencyCode}</p>
-
-                    <div className="ml-auto flex h-9 flex-row items-center rounded-full border border-neutral-200 dark:border-neutral-700">
-                      <button
-                        type="button"
-                        onClick={() => {
-                          // await editItem
-                        }}
-                      >
-                        ➖
-                      </button>
-                      <p className="w-6 text-center">
-                        <span className="w-full text-sm">{singleItem.quantity}</span>
-                      </p>
-                      <button type="button">➕</button>
-                    </div>
-                    <DeleteButton id={singleItem.id} />
-                  </div>
-                </div>
-              </li>
-            ))}
-            <div className="py-4 text-sm text-neutral-500 dark:text-neutral-400">
-              <div className="mb-3 flex items-center justify-between border-b border-neutral-200 pb-1 dark:border-neutral-700">
-                <p>Subtotal</p>
-                <p className="text-right text-base text-black dark:text-white">{cart?.cost?.subtotalAmount?.amount + " " + cart?.cost?.subtotalAmount?.currencyCode}</p>
-              </div>
-              <div className="mb-3 flex items-center justify-between border-b border-neutral-200 py-1 dark:border-neutral-700">
-                <p>Shipping</p>
-                <p className="text-right">Calculated at checkout</p>
-              </div>
-              <div className="mb-3 flex items-center justify-between border-b border-neutral-200 py-1 dark:border-neutral-700">
-                <p>Total</p>
-                <p className="text-right text-base text-black dark:text-white">{cart?.cost?.totalAmount?.amount + " " + cart?.cost?.totalAmount?.currencyCode}</p>
-              </div>
+        <SheetFooter className="border-t border-black p-4">
+          <div className="w-full bg-white py-4 text-sm text-neutral-500">
+            <div className="mb-3 flex items-center justify-between border-b border-neutral-200 pb-1 ">
+              <p>Subtotal</p>
+              <p className="text-right text-base text-black ">{subtotalFormatted}</p>
             </div>
-            <a href={cart?.checkoutUrl} className="block w-full rounded-full bg-blue-600 p-3 text-center text-sm font-medium text-white opacity-90 hover:opacity-100">
+            <div className="mb-3 flex items-center justify-between border-b border-neutral-200 py-1 ">
+              <p>Shipping</p>
+              <p className="text-right">Calculated at checkout</p>
+            </div>
+            <div className="mb-3 flex items-center justify-between border-b border-neutral-200 py-1 ">
+              <p>Total</p>
+              <p className="text-right text-base text-black ">{totalFomatted}</p>
+            </div>
+            <Button variant="secondary" isAnimated={false} className="w-full justify-center text-center hover:text-white" size="lg" onClick={() => router.push(cart?.checkoutUrl)}>
               Proceed to Checkout
-            </a>
-          </>
-        ) : null}
+            </Button>
+          </div>
+        </SheetFooter>
       </SheetContent>
     </Sheet>
-  )
-}
-
-function DeleteButton({ id }) {
-  const [state, formAction] = useFormState(removeCartItem, { ok: false })
-
-  const actionWithParams = formAction.bind(null, id)
-
-  return (
-    <form onClick={actionWithParams}>
-      <Submit />
-    </form>
-  )
-}
-
-function Submit() {
-  const { pending } = useFormStatus()
-
-  return (
-    <button type="submit" onClick={(e) => e.preventDefault()}>
-      ❌{pending && " loading..."}
-    </button>
   )
 }

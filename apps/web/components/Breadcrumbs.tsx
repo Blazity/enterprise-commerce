@@ -16,7 +16,7 @@ export function Breadcrumbs({ items, className }: BreadcrumbsProps) {
           return (
             <>
               <li>
-                <Link prefetch={false} aria-current={isLast ? "page" : undefined} className={cn("text-slate-600 hover:underline", { "font-medium": isLast })} href={href}>
+                <Link prefetch={false} aria-current={isLast ? "page" : undefined} className={cn("text-neutral-500 hover:underline", { "font-medium": isLast })} href={href}>
                   {title}
                 </Link>
               </li>

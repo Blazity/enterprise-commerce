@@ -74,15 +74,8 @@ async function ProductView({ slug }: { slug: string }) {
   }
 
   const hasOnlyOneVariant = product.variants.length <= 1
-
-  const defaultColor = product.flatOptions?.["Color"]?.find(Boolean) ?? null
-  const defaultSize = product.flatOptions?.["Size"]?.find(Boolean) ?? null
-
-  const combination = hasOnlyOneVariant
-    ? product.variants.find(Boolean)
-    : getAllCombinations(product.variants).find((combination) => combination.size === (size ?? defaultSize) && combination.color === (color ?? defaultColor))
-
-  const lastCollection = product.collections.findLast(Boolean)
+  const combination = getCombination(product, color, size)
+  const lastCollection = product?.collections?.findLast(Boolean)
 
   return (
     <div className="max-w-container-md relative mx-auto px-4 xl:px-0">
@@ -125,6 +118,17 @@ function makeBreadcrumbs(product: PlatformProduct) {
     [lastCollection?.title || "Products"]: lastCollection?.handle ? `/categories/${lastCollection.handle}` : "/search",
     [product.title]: "",
   }
+}
+
+function getCombination(product: PlatformProduct, color: string | null, size: string | null) {
+  const hasOnlyOneVariant = product.variants.length <= 1
+
+  const defaultColor = product.flatOptions?.["Color"]?.find(Boolean) ?? null
+  const defaultSize = product.flatOptions?.["Size"]?.find(Boolean) ?? null
+
+  return hasOnlyOneVariant
+    ? product.variants.find(Boolean)
+    : getAllCombinations(product.variants).find((combination) => combination.size === (size ?? defaultSize) && combination.color === (color ?? defaultColor))
 }
 
 export async function generateStaticParams() {

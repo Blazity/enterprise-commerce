@@ -8,7 +8,7 @@ export function CategoryView() {
           <div className="mx-auto grid max-w-[1300px] gap-4 px-4 sm:px-6 md:grid-cols-2 md:gap-16 md:px-10">
             <div className="flex flex-col items-start justify-start gap-6">
               <h1 className="lg:leading-tighter text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl xl:text-[3.4rem] 2xl:text-[3.75rem]">Discover the best products</h1>
-              <p className="max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400">Shop the latest and most popular items at the best prices.</p>
+              <p className="max-w-[700px] text-neutral-500 md:text-xl dark:text-neutral-500">Shop the latest and most popular items at the best prices.</p>
               <Link
                 className="inline-flex h-9 items-center justify-center rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300"
                 href="#"
@@ -29,37 +29,37 @@ export function CategoryView() {
             <div className="grid gap-1">
               <img alt="Product Image" className="mx-auto aspect-square overflow-hidden rounded-xl object-cover" height="300" src="https://placehold.co/300x300" width="300" />
               <h3 className="text-lg font-bold">Product 1</h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400">$99.99</p>
+              <p className="text-sm text-neutral-500 dark:text-neutral-500">$99.99</p>
               <div className="flex items-center gap-0.5">
-                <StarIcon className="fill-primary h-4 w-4" />
-                <StarIcon className="fill-primary h-4 w-4" />
-                <StarIcon className="fill-primary h-4 w-4" />
-                <StarIcon className="fill-primary h-4 w-4" />
-                <StarIcon className="fill-muted stroke-muted-foreground h-4 w-4" />
+                <StarIcon className="fill-primary size-4" />
+                <StarIcon className="fill-primary size-4" />
+                <StarIcon className="fill-primary size-4" />
+                <StarIcon className="fill-primary size-4" />
+                <StarIcon className="fill-muted stroke-muted-foreground size-4" />
               </div>
             </div>
             <div className="grid gap-1">
               <img alt="Product Image" className="mx-auto aspect-square overflow-hidden rounded-xl object-cover" height="300" src="https://placehold.co/300x300" width="300" />
               <h3 className="text-lg font-bold">Product 2</h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400">$79.99</p>
+              <p className="text-sm text-neutral-500 dark:text-neutral-500">$79.99</p>
               <div className="flex items-center gap-0.5">
-                <StarIcon className="fill-primary h-4 w-4" />
-                <StarIcon className="fill-primary h-4 w-4" />
-                <StarIcon className="fill-primary h-4 w-4" />
-                <StarIcon className="fill-primary h-4 w-4" />
-                <StarIcon className="fill-muted stroke-muted-foreground h-4 w-4" />
+                <StarIcon className="fill-primary size-4" />
+                <StarIcon className="fill-primary size-4" />
+                <StarIcon className="fill-primary size-4" />
+                <StarIcon className="fill-primary size-4" />
+                <StarIcon className="fill-muted stroke-muted-foreground size-4" />
               </div>
             </div>
             <div className="grid gap-1">
               <img alt="Product Image" className="mx-auto aspect-square overflow-hidden rounded-xl object-cover" height="300" src="https://placehold.co/300x300" width="300" />
               <h3 className="text-lg font-bold">Product 3</h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400">$59.99</p>
+              <p className="text-sm text-neutral-500 dark:text-neutral-500">$59.99</p>
               <div className="flex items-center gap-0.5">
-                <StarIcon className="fill-primary h-4 w-4" />
-                <StarIcon className="fill-primary h-4 w-4" />
-                <StarIcon className="fill-primary h-4 w-4" />
-                <StarIcon className="fill-primary h-4 w-4" />
-                <StarIcon className="fill-muted stroke-muted-foreground h-4 w-4" />
+                <StarIcon className="fill-primary size-4" />
+                <StarIcon className="fill-primary size-4" />
+                <StarIcon className="fill-primary size-4" />
+                <StarIcon className="fill-primary size-4" />
+                <StarIcon className="fill-muted stroke-muted-foreground size-4" />
               </div>
             </div>
           </div>

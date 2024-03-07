@@ -41,7 +41,7 @@ export function Sorter({ className }: SorterProps) {
             <ChevronIcon />
           </div>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-[240px] rounded-b-md bg-white px-0 text-gray-400 shadow-lg" align="end">
+        <DropdownMenuContent className="w-[240px] rounded-b-md bg-white px-0 text-neutral-500 shadow-lg" align="end">
           {Object.entries(LABELS).map(([key, label]) => (
             <DropdownMenuItem
               key={label}

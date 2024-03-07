@@ -51,7 +51,7 @@ export function FacetsContent({ facetDistribution, className }: FacetsContentPro
     <div className={className}>
       <div className={"relative mb-6 block overflow-hidden rounded-md"}>
         <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5">
-          <SearchIcon className="size-4 text-gray-400" />
+          <SearchIcon className="size-4 text-neutral-500" />
         </div>
         <input
           className="block w-full rounded-md border border-gray-300 bg-gray-100 px-2.5 py-1.5 pl-10 text-[14px] text-black focus:border-blue-500 focus:ring-blue-500"
