@@ -17,10 +17,10 @@ export function ProductCard(props: ProductCardProps) {
         <Image
           alt={props.featuredImage?.altText || ""}
           className="size-[150px] object-contain transition-transform group-hover:scale-105 md:size-[250px]"
-          height={250}
+          height={150}
           src={props.featuredImage?.url || "/default-product-image.svg"}
-          sizes="250px"
-          width={250}
+          sizes="150px"
+          width={150}
           priority={props.priority}
         />
       </div>
