@@ -6574,6 +6574,13 @@
   dependencies:
     server-only "^0.0.1"
 
+"@vercel/flags@^2.2.1":
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/@vercel/flags/-/flags-2.2.1.tgz#0989621c359a7def294777e974a435f637d20ca7"
+  integrity sha512-BJoSbCJmaOY5iw08jNZ0Nq/bor1DYKzVRUv72eiXMLnsX7ABpxLaoQSoVziW5zo0qp1l1YwqfB3Xl5D57XscXg==
+  dependencies:
+    jose "5.2.1"
+
 "@vercel/otel@^0.3.0":
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/@vercel/otel/-/otel-0.3.0.tgz#48fcac8fe7e0c4735a586be916930922cba0106c"
@@ -13058,6 +13065,11 @@ joi@^17.3.0:
     "@sideway/address" "^4.1.5"
     "@sideway/formula" "^3.0.1"
     "@sideway/pinpoint" "^2.0.0"
+
+jose@5.2.1:
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/jose/-/jose-5.2.1.tgz#ec3befe173896e592e2d9ef5f267d061ffb203c5"
+  integrity sha512-qiaQhtQRw6YrOaOj0v59h3R6hUY9NvxBmmnMfKemkqYmBB0tEc97NbLP7ix44VP5p9/0YHG8Vyhzuo5YBNwviA==
 
 jose@^5.0.0:
   version "5.2.2"

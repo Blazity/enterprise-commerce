@@ -1,6 +1,7 @@
 import "./globals.css"
 
 import { Analytics } from "@vercel/analytics/next"
+import { FlagValues } from "@vercel/flags/react"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Modals } from "components/Modals/Modals"
 import { mobileInlineScript } from "components/NavigationBar/mobileInlineScript"
@@ -198,6 +199,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         <Toaster position="bottom-left" />
         <SpeedInsights />
+        <FlagValues values={{ fasterCheckoutPage: true, landingPageRedesign: true }} />
       </body>
     </html>
   )
