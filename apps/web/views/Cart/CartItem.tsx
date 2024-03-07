@@ -12,8 +12,6 @@ interface CartItemProps extends PlatformCartItem {
 }
 
 export function CartItem(props: CartItemProps) {
-  if (!props.merchandise.product) return null
-
   return (
     <li className={cn("flex items-center justify-between gap-6 py-2")}>
       <div className="flex h-[115px] w-[90px] shrink-0 items-center bg-gray-100">
