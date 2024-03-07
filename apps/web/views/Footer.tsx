@@ -29,7 +29,7 @@ export default function Footer() {
           <p className="text-6xl font-bold">Lorem Ipsum</p>
           <p className="mt-4 text-xl">Your daily trendsetting deals.</p>
         </main>
-        <footer className="mt-auto flex flex-col items-center justify-between pb-8 text-neutral-500 md:flex-row">
+        <footer className="mt-auto flex flex-col items-center justify-between pb-8 text-neutral-300 md:flex-row">
           <span className="text-sm">2024 © Lorem Ipsum. All Rights Reserved.</span>
           <div className="mt-4 flex space-x-4 md:mt-0">
             <Link prefetch={false} className="text-sm hover:underline" href="/privacy-policy">
