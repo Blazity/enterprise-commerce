@@ -4,6 +4,7 @@ import { Carousel, CarouselContent } from "components/Carousel"
 import { ProductCard } from "components/ProductCard"
 import { unstable_cache } from "next/cache"
 import { ComparisonOperators, FilterBuilder } from "utils/filterBuilder"
+import { MEILISEARCH_INDEX } from "constants/index"
 
 interface SimilarProductsSectionProps {
   slug: string
@@ -30,7 +31,7 @@ export async function SimilarProductsSection({ slug, collection }: SimilarProduc
 const getSimilarProducts = unstable_cache(
   async (handle: string, collection: string | undefined) => {
     const limit = 8
-    const index = await meilisearch?.getIndex<PlatformProduct>("products")
+    const index = await meilisearch?.getIndex<PlatformProduct>(MEILISEARCH_INDEX)
     const similarSearchResults = await index.search(handle, { matchingStrategy: "last", limit })
 
     let collectionSearchResults = { hits: [] }

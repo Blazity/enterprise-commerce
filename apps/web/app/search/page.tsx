@@ -12,6 +12,7 @@ import { HitsSection } from "views/Search/HitsSection"
 import { PageSkeleton } from "views/Search/PageSkeleton"
 import { PaginationSection } from "views/Search/PaginationSection"
 import { Sorter } from "views/Search/Sorter"
+import { MEILISEARCH_INDEX } from "constants/index"
 
 export const metadata: Metadata = {
   title: "Search | Enterprise Commerce",
@@ -77,7 +78,7 @@ async function SearchView({ searchParams }: SearchPageProps) {
 
 const searchProducts = unstable_cache(
   async (query: string, sortBy: string, page: number, filter: string) => {
-    const index = await meilisearch?.getIndex<PlatformProduct>("products")
+    const index = await meilisearch?.getIndex<PlatformProduct>(MEILISEARCH_INDEX)
 
     const results = await index?.search(query, {
       sort: sortBy ? [sortBy] : undefined,

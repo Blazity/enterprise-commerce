@@ -4,6 +4,7 @@ import { env } from "env.mjs"
 import { Index } from "meilisearch"
 import { FailedAttemptError } from "p-retry"
 import { Root } from "shopify-webhooks"
+import { MEILISEARCH_INDEX } from "constants/index"
 import { createHmac } from "crypto"
 
 export async function POST(req: Request) {
@@ -20,7 +21,7 @@ export async function POST(req: Request) {
 
   const { product, metadata } = JSON.parse(rawPayload) as Root
 
-  let index = await getMeilisearchIndex("products")
+  let index = await getMeilisearchIndex(MEILISEARCH_INDEX)
 
   // await updateAttributesSettings(index)
 

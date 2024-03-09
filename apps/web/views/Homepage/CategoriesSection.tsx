@@ -3,6 +3,7 @@ import { meilisearch } from "clients/meilisearch"
 import { Skeleton } from "components/Skeleton"
 import { unstable_cache } from "next/cache"
 import Link from "next/link"
+import { MEILISEARCH_INDEX } from "constants/index"
 
 export async function CategoriesSection() {
   const categories = await getCategories()
@@ -32,7 +33,7 @@ export async function CategoriesSection() {
 
 const getCategories = unstable_cache(
   async () => {
-    const index = await meilisearch?.getIndex<PlatformProduct>("products")
+    const index = await meilisearch?.getIndex<PlatformProduct>(MEILISEARCH_INDEX)
     const results = await index.searchForFacetValues({ facetName: "collections.title", limit: 6 })
 
     return [...results.facetHits.sort((a, b) => b.count - a.count).slice(0, 6)]

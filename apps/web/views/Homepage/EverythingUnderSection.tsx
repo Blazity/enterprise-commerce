@@ -2,6 +2,7 @@ import { PlatformProduct } from "@enterprise-commerce/core/platform/types"
 import { meilisearch } from "clients/meilisearch"
 import { unstable_cache } from "next/cache"
 import { ComparisonOperators, FilterBuilder } from "utils/filterBuilder"
+import { MEILISEARCH_INDEX } from "constants/index"
 import { CarouselSection } from "./CarouselSection"
 
 export async function EverythingUnderSection() {
@@ -12,7 +13,7 @@ export async function EverythingUnderSection() {
 
 const getPriceRangedProducts = unstable_cache(
   async () => {
-    const index = await meilisearch?.getIndex<PlatformProduct>("products")
+    const index = await meilisearch?.getIndex<PlatformProduct>(MEILISEARCH_INDEX)
     const results = await index.search("", {
       matchingStrategy: "last",
       limit: 8,
