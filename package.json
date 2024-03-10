@@ -44,7 +44,7 @@
     "class-variance-authority": "^0.7.0",
     "graphql": "^16.8.1",
     "lodash": "^4.17.21",
-    "next": "^14.1.1-canary.70",
+    "next": "^14.2.0-canary.12",
     "next-compose-plugins": "^2.2.1",
     "postcss": "^8.4.31",
     "react": "^18.2.0",
