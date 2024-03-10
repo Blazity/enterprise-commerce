@@ -6,6 +6,11 @@ interface HitsSectionProps {
 }
 
 export async function HitsSection({ hits }: HitsSectionProps) {
+  console.log(hits.length)
+  if (!hits.length) {
+    return <p>No results for this query</p>
+  }
+
   return (
     <div className="grid w-full grid-cols-[repeat(_auto-fill,minmax(140px,1fr)_)] items-start gap-4 gap-y-8 md:grid-cols-[repeat(_auto-fill,minmax(280px,1fr)_)]">
       {hits.map((singleResult, idx) => (
