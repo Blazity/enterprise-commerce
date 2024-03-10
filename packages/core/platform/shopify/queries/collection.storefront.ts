@@ -1,5 +1,4 @@
 import { collectionFragment } from "../fragments/collection"
-import { productFragment } from "../fragments/product"
 
 export const getCollectionQuery = `#graphql
   query SingleCollection($handle: String!) {
@@ -11,8 +10,8 @@ export const getCollectionQuery = `#graphql
 `
 
 export const getCollectionsQuery = `#graphql
-  query Collections {
-    collections(first: 100, sortKey: TITLE) {
+  query Collections($limit: Int = 250) {
+    collections(first: $limit, sortKey: TITLE) {
       edges {
         node {
           ...singleCollection
@@ -21,19 +20,4 @@ export const getCollectionsQuery = `#graphql
     }
   }
   ${collectionFragment}
-`
-
-export const getCollectionProductsQuery = `#graphql
-  query CollectionProducts($handle: String!, $sortKey: ProductCollectionSortKeys, $reverse: Boolean) {
-    collection(handle: $handle) {
-      products(sortKey: $sortKey, reverse: $reverse, first: 100) {
-        edges {
-          node {
-            ...singleProduct
-          }
-        }
-      }
-    }
-  }
-  ${productFragment}
 `

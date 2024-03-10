@@ -1,9 +1,7 @@
-import { PlatformProduct } from "@enterprise-commerce/core/platform/types"
-import { meilisearch } from "clients/meilisearch"
+import { storefrontClient } from "clients/storefrontClient"
 import { Skeleton } from "components/Skeleton"
 import { unstable_cache } from "next/cache"
 import Link from "next/link"
-import { MEILISEARCH_INDEX } from "constants/index"
 
 export async function CategoriesSection() {
   const categories = await getCategories()
@@ -15,14 +13,12 @@ export async function CategoriesSection() {
       </div>
       <div className="group mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {categories.map((singleCategory, index) => (
-          <Link key={singleCategory.value + index} href={`/category/${singleCategory.value}`}>
+          <Link key={singleCategory.handle + index} href={`/category/${singleCategory.handle}`}>
             <div className="relative h-[260px] w-full overflow-hidden rounded-2xl ">
               <div className="absolute inset-0 size-full bg-neutral-100 transition-all hover:bg-neutral-50 hover:blur">
                 <img alt="" src={`/category-placeholder-${index + 1}.svg`} className="absolute right-0 top-0 h-full" />
               </div>
-              <h3 className="absolute bottom-8 left-8 text-2xl leading-none tracking-tight text-black">
-                {singleCategory.value} ({singleCategory.count})
-              </h3>
+              <h3 className="absolute bottom-8 left-8 text-2xl leading-none tracking-tight text-black">{singleCategory.title}</h3>
             </div>
           </Link>
         ))}
@@ -33,12 +29,10 @@ export async function CategoriesSection() {
 
 const getCategories = unstable_cache(
   async () => {
-    const index = await meilisearch?.getIndex<PlatformProduct>(MEILISEARCH_INDEX)
-    const results = await index.searchForFacetValues({ facetName: "collections.title", limit: 6 })
-
-    return [...results.facetHits.sort((a, b) => b.count - a.count).slice(0, 6)]
+    const results = await storefrontClient.getCollections(6)
+    return results || []
   },
-  ["relevant-products"],
+  ["categories-section"],
   { revalidate: 3600 }
 )
 

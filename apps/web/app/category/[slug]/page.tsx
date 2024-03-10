@@ -1,16 +1,19 @@
 import { PlatformProduct } from "@enterprise-commerce/core/platform/types"
 import { meilisearch } from "clients/meilisearch"
+import { storefrontClient } from "clients/storefrontClient"
 import type { Metadata } from "next"
 import { unstable_cache } from "next/cache"
+import { notFound } from "next/navigation"
 import { createSearchParamsCache, parseAsArrayOf, parseAsInteger, parseAsString } from "nuqs/server"
 import { Suspense } from "react"
 
-import { FilterBuilder } from "utils/filterBuilder"
+import { ComparisonOperators, FilterBuilder } from "utils/filterBuilder"
+import { HeroSection } from "views/Category/HeroSection"
+import { PageSkeleton } from "views/Category/PageSkeleton"
 import { composeFilters } from "views/Listing/composeFilters"
 import { FacetsDesktop } from "views/Listing/FacetsDesktop"
 import { FacetsMobile } from "views/Listing/FacetsMobile"
 import { HitsSection } from "views/Listing/HitsSection"
-import { PageSkeleton } from "views/Listing/PageSkeleton"
 import { PaginationSection } from "views/Listing/PaginationSection"
 import { Sorter } from "views/Listing/Sorter"
 import { MEILISEARCH_INDEX } from "constants/index"
@@ -37,43 +40,50 @@ const searchParamsCache = createSearchParamsCache({
   sizes: parseAsArrayOf(parseAsString).withDefault([]),
 })
 
-interface SearchPageProps {
+interface CategoryPageProps {
   searchParams: Record<string, string | string[] | undefined>
+  params: { slug: string }
 }
 
-export default async function SearchPage({ searchParams }: SearchPageProps) {
+export default async function CategoryPage({ searchParams, params }: CategoryPageProps) {
   return (
     <Suspense fallback={<PageSkeleton />}>
-      <SearchView searchParams={searchParams} />
+      <SearchView searchParams={searchParams} params={params} />
     </Suspense>
   )
 }
 
-async function SearchView({ searchParams }: SearchPageProps) {
+async function SearchView({ searchParams, params }: CategoryPageProps) {
   const { q, sortBy, page, ...rest } = searchParamsCache.parse(searchParams)
+  const collection = await storefrontClient.getCollection(params.slug)
 
-  const { totalHits, facetDistribution, hits, totalPages } = await searchProducts(q, sortBy, page, composeFilters(new FilterBuilder(), rest).build())
+  if (!collection) return notFound()
+
+  const filterBuilder = new FilterBuilder().where("collections.title", ComparisonOperators.Equal, collection.title)
+  const { facetDistribution, hits, totalPages } = await searchProducts(q, sortBy, page, composeFilters(filterBuilder, rest).build())
+
+  const disabledFacets = ["category", "tags"]
 
   return (
-    <div className="max-w-container-md mx-auto flex min-h-screen w-full flex-col gap-12 px-4 py-12 md:flex-row md:gap-24 md:py-24 xl:px-0 ">
-      <FacetsDesktop className="hidden min-w-[250px] max-w-[250px] md:mt-16 lg:block" facetDistribution={facetDistribution} />
-      <div className="flex w-full flex-col">
-        <div className="mb-6 flex w-full flex-wrap items-center justify-between">
-          <div className="flex w-full flex-col gap-2 pb-8">
-            <div className="flex items-center justify-between">
-              <h1 className="text-[32px] font-semibold text-black">
-                Products <span className="hidden text-[21px] font-normal text-slate-700 md:inline-flex">(All {totalHits})</span>
-              </h1>
-              <FacetsMobile facetDistribution={facetDistribution} className="block lg:hidden" />
+    <>
+      <HeroSection title={collection.title} description={collection.description} image={collection.image} />
+      <div className="max-w-container-md mx-auto flex min-h-screen w-full flex-col gap-12 px-4 py-12 md:flex-row md:gap-24 md:py-24 xl:px-0 ">
+        <FacetsDesktop disabledFacets={disabledFacets} className="hidden min-w-[250px] max-w-[250px] md:mt-16 lg:block" facetDistribution={facetDistribution} />
+        <div className="flex w-full flex-col">
+          <div className="mb-6 flex w-full flex-wrap items-center justify-between">
+            <div className="flex w-full flex-col gap-2 pb-8">
+              <div className="flex items-center justify-between">
+                <FacetsMobile disabledFacets={disabledFacets} facetDistribution={facetDistribution} className="block lg:hidden" />
+              </div>
+              <Sorter className="ml-auto" />
             </div>
-            <Sorter className="ml-auto" />
-          </div>
 
-          <HitsSection hits={hits} />
-          <PaginationSection queryParams={searchParams} totalPages={totalPages} />
+            <HitsSection hits={hits} />
+            <PaginationSection queryParams={searchParams} totalPages={totalPages} />
+          </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 

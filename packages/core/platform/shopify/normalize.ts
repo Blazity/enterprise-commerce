@@ -1,5 +1,5 @@
-import { SingleCartQuery, SingleProductQuery } from "./types/storefront.generated"
-import { PlatformCart, PlatformCartItem, PlatformProduct } from "../types"
+import { SingleCartQuery, SingleCollectionQuery, SingleProductQuery } from "./types/storefront.generated"
+import { PlatformCart, PlatformCartItem, PlatformCollection, PlatformProduct } from "../types"
 
 export function normalizeProduct(product: SingleProductQuery["product"]): PlatformProduct | null {
   if (!product) return null
@@ -25,7 +25,7 @@ export function normalizeProduct(product: SingleProductQuery["product"]): Platfo
     minPrice: +priceRange?.minVariantPrice?.amount || 0,
     variants: variants?.edges?.map(({ node }) => node) || [],
     images: images?.edges?.map(({ node }) => node) || [],
-    collections: collections?.nodes || [],
+    collections: (collections?.nodes as PlatformCollection[]) || [],
   }
 }
 
@@ -40,4 +40,11 @@ export function normalizeCart(cart: SingleCartQuery["cart"]): PlatformCart | nul
     totalQuantity,
     items: lines.edges.map(({ node }) => ({ ...node, merchandise: { ...node.merchandise, product: { ...normalizeProduct(node.merchandise.product) } } })) as PlatformCartItem[],
   }
+}
+
+export function normalizeCollection(collection: SingleCollectionQuery["collection"]): PlatformCollection | null {
+  if (!collection) return null
+  const { id, handle, title, descriptionHtml, seo, image, updatedAt, description } = collection
+
+  return { id, handle, title, descriptionHtml, seo, image, updatedAt, description }
 }

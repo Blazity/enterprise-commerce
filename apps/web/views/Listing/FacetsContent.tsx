@@ -12,9 +12,10 @@ import { Facet } from "./Facet"
 interface FacetsContentProps {
   facetDistribution: Record<string, CategoriesDistribution> | undefined
   className?: string
+  disabledFacets?: string[]
 }
 
-export function FacetsContent({ facetDistribution, className }: FacetsContentProps) {
+export function FacetsContent({ facetDistribution, className, disabledFacets }: FacetsContentProps) {
   const collections = facetDistribution?.["collections.title"]
   const tags = facetDistribution?.["tags"]
   const vendors = facetDistribution?.["vendor"]
@@ -66,60 +67,70 @@ export function FacetsContent({ facetDistribution, className }: FacetsContentPro
       </div>
 
       <Accordion collapsible className="w-full" type="single">
-        <Facet
-          id="category"
-          title="Category"
-          distribution={collections}
-          isChecked={(category) => selectedCategories.includes(category)}
-          onCheckedChange={(checked, category) => {
-            setSelectedCategories((prev) => (checked ? [...prev, category] : prev.filter((cat) => cat !== category)))
-            setPage(1)
-          }}
-        />
+        {!disabledFacets?.includes("category") ? (
+          <Facet
+            id="category"
+            title="Category"
+            distribution={collections}
+            isChecked={(category) => selectedCategories.includes(category)}
+            onCheckedChange={(checked, category) => {
+              setSelectedCategories((prev) => (checked ? [...prev, category] : prev.filter((cat) => cat !== category)))
+              setPage(1)
+            }}
+          />
+        ) : null}
 
-        <Facet
-          id="tags"
-          title="Tags"
-          distribution={tags}
-          isChecked={(tag) => selectedTags.includes(tag)}
-          onCheckedChange={(checked, tag) => {
-            setSelectedTags((prev) => (checked ? [...prev, tag] : prev.filter((cat) => cat !== tag)))
-            setPage(1)
-          }}
-        />
+        {!disabledFacets?.includes("tags") ? (
+          <Facet
+            id="tags"
+            title="Tags"
+            distribution={tags}
+            isChecked={(tag) => selectedTags.includes(tag)}
+            onCheckedChange={(checked, tag) => {
+              setSelectedTags((prev) => (checked ? [...prev, tag] : prev.filter((cat) => cat !== tag)))
+              setPage(1)
+            }}
+          />
+        ) : null}
 
-        <Facet
-          id="vendors"
-          title="Vendors"
-          distribution={vendors}
-          isChecked={(vendor) => selectedVendors.includes(vendor)}
-          onCheckedChange={(checked, vendor) => {
-            setSelectedVendors((prev) => (checked ? [...prev, vendor] : prev.filter((cat) => cat !== vendor)))
-            setPage(1)
-          }}
-        />
+        {!disabledFacets?.includes("vendors") ? (
+          <Facet
+            id="vendors"
+            title="Vendors"
+            distribution={vendors}
+            isChecked={(vendor) => selectedVendors.includes(vendor)}
+            onCheckedChange={(checked, vendor) => {
+              setSelectedVendors((prev) => (checked ? [...prev, vendor] : prev.filter((cat) => cat !== vendor)))
+              setPage(1)
+            }}
+          />
+        ) : null}
 
-        <Facet
-          id="sizes"
-          title="Sizes"
-          distribution={sizes}
-          isChecked={(size) => selectedSizes.includes(size)}
-          onCheckedChange={(checked, size) => {
-            setSelectedSizes((prev) => (checked ? [...prev, size] : prev.filter((cat) => cat !== size)))
-            setPage(1)
-          }}
-        />
+        {!disabledFacets?.includes("sizes") ? (
+          <Facet
+            id="sizes"
+            title="Sizes"
+            distribution={sizes}
+            isChecked={(size) => selectedSizes.includes(size)}
+            onCheckedChange={(checked, size) => {
+              setSelectedSizes((prev) => (checked ? [...prev, size] : prev.filter((cat) => cat !== size)))
+              setPage(1)
+            }}
+          />
+        ) : null}
 
-        <Facet
-          id="colors"
-          title="Colors"
-          distribution={colors}
-          isChecked={(color) => selectedColors.includes(color)}
-          onCheckedChange={(checked, color) => {
-            setSelectedColors((prev) => (checked ? [...prev, color] : prev.filter((cat) => cat !== color)))
-            setPage(1)
-          }}
-        />
+        {!disabledFacets?.includes("colors") ? (
+          <Facet
+            id="colors"
+            title="Colors"
+            distribution={colors}
+            isChecked={(color) => selectedColors.includes(color)}
+            onCheckedChange={(checked, color) => {
+              setSelectedColors((prev) => (checked ? [...prev, color] : prev.filter((cat) => cat !== color)))
+              setPage(1)
+            }}
+          />
+        ) : null}
 
         <AccordionItem value="price">
           <AccordionTrigger className="text-base">Price Range</AccordionTrigger>
@@ -165,7 +176,7 @@ interface PriceInputProps {
 function PriceInput({ value, onChange, label }: PriceInputProps) {
   return (
     <Label className="flex w-full min-w-[90px] flex-col gap-2">
-      Min price
+      {label}
       <Input
         placeholder="10.0"
         className="block h-auto w-full rounded-md border border-neutral-300 bg-neutral-100 px-2.5 py-1.5 text-[14px] text-black focus:border-blue-500 focus:ring-blue-500  "

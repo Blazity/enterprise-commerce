@@ -9,15 +9,16 @@ import { cn } from "utils/cn"
 interface FacetsDesktopProps {
   facetDistribution: Record<string, CategoriesDistribution> | undefined
   className?: string
+  disabledFacets?: string[]
 }
 
-const FacetsContent = dynamic(() => import("views/Search/FacetsContent").then((m) => m.FacetsContent), { loading: FacetsContentSkeleton })
+const FacetsContent = dynamic(() => import("views/Listing/FacetsContent").then((m) => m.FacetsContent), { loading: FacetsContentSkeleton })
 
-export function FacetsDesktop({ facetDistribution, className }: FacetsDesktopProps) {
+export function FacetsDesktop({ facetDistribution, className, disabledFacets }: FacetsDesktopProps) {
   const { width = 0 } = useWindowSize()
   const isMobile = width! < 1024 && !!width
 
-  return isMobile ? null : <FacetsContent facetDistribution={facetDistribution} className={cn(className, "sticky top-20 h-full")} />
+  return isMobile ? null : <FacetsContent facetDistribution={facetDistribution} className={cn(className, "sticky top-20 h-full")} disabledFacets={disabledFacets} />
 }
 
 function FacetsContentSkeleton() {

@@ -15,9 +15,21 @@ export const getAdminProductQuery = `#graphql
       collections(first: 15) {
         nodes {
           handle
+          image {
+            url
+            altText
+            width
+            height
+          }
           title
+          descriptionHtml
+          id
           description
-          updatedAt
+          seo {
+            title
+            description
+          }
+          updatedAt 
         }
       }
       priceRange {

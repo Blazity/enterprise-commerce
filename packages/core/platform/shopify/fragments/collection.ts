@@ -1,9 +1,15 @@
+import { imageFragment } from "./image"
 import { seoFragment } from "./seo"
 
 const collectionFragment = `#graphql
   fragment singleCollection on Collection {
     handle
+    image {
+      ...singleImage
+    }
     title
+    descriptionHtml
+    id
     description
     seo {
       ...seo
@@ -11,6 +17,7 @@ const collectionFragment = `#graphql
     updatedAt
   }
   ${seoFragment}
+  ${imageFragment}
 `
 
 export { collectionFragment }

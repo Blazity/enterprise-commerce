@@ -37,8 +37,18 @@ export interface PlatformProductOptions {
 export interface PlatformCollection {
   handle: string
   title: string
-  description: string
-  updatedAt: string
+  id: string
+  description?: string
+  descriptionHtml: string
+  updatedAt?: string
+  image: PlatformImage | undefined | null
+  seo?:
+    | {
+        description?: string | null | undefined
+        title?: string | null | undefined
+      }
+    | undefined
+    | null
 }
 
 export interface PlatformPriceRange {

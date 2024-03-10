@@ -30,6 +30,11 @@ const productFragment = `#graphql
         title
         description
         updatedAt
+        id
+        descriptionHtml
+        image {
+          ...singleImage
+        }
       }
     }
     variants(first: 250) {

@@ -10,9 +10,7 @@ interface MakeFilterProps {
   sizes: string[]
 }
 
-export function composeFilters(parsedSearchParams: MakeFilterProps) {
-  const filter = new FilterBuilder()
-
+export function composeFilters(filter: FilterBuilder, parsedSearchParams: MakeFilterProps) {
   const filterConditions = [
     {
       predicate: parsedSearchParams.categories.length > 0,
