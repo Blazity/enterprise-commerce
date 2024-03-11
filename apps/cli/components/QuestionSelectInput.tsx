@@ -1,6 +1,6 @@
-import { Box, Text, useFocus, useFocusManager } from "ink"
+import { Box, useFocus, useFocusManager } from "ink"
 import SelectInput from "ink-select-input"
-import { terminalColors } from "../terminal-colors"
+import { terminalColors } from "../helpers/terminal-colors"
 import { useEffect } from "react"
 
 import { TextWithHorizontalPadding } from "./TextWithHorizontalPadding"

@@ -1,10 +1,11 @@
 import { Box, Newline, Text, useApp } from "ink"
-import { SyncFormValues, SyncForm } from "./components/SyncForm"
-import { ShopAnimation } from "./components/ShopAnimation"
+import { SyncFormValues, SyncForm } from "../components/SyncForm"
+import { ShopAnimation } from "../components/ShopAnimation"
 import { useEffect, useState } from "react"
-import { AnimatedProgressBar } from "./components/AnimatedProgressBar"
+import { AnimatedProgressBar } from "../components/AnimatedProgressBar"
 import { Alert, Badge } from "@inkjs/ui"
 import { createStorefrontClient } from "@enterprise-commerce/core"
+import { CriticalError } from "../components/CriticalError"
 
 interface Feedback {
   message: string
@@ -191,20 +192,5 @@ function AnimatedProgressBarWithStatusText({ progress }: AnimatedProgressBarWith
       <AnimatedProgressBar progress={progress} />
       {shouldShowStatusText ? <Text>Done!</Text> : null}
     </>
-  )
-}
-
-function CriticalError({ message }: { message: string }) {
-  const { exit } = useApp()
-
-  useEffect(() => {
-    exit()
-    process.exit(0)
-  }, [])
-
-  return (
-    <Box marginBottom={1}>
-      <Alert variant="error">Critical Error Occured: {message}</Alert>
-    </Box>
   )
 }

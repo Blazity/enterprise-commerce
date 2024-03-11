@@ -10,7 +10,6 @@ export type Step = "live-app-url" | "shopify-store-url" | "shopify-admin-access-
 const liveAppUrlAtom = atom("")
 const shopifyStoreUrlAtom = atom("")
 const shopifyAdminAccessTokenAtom = atom("")
-
 const submittedAtom = atom(false)
 
 const formValuesAtom = atom((get) => {
