@@ -127,3 +127,25 @@ export interface PlatformPrice {
   amount: string
   currencyCode: string
 }
+
+export interface PlatformUser {
+  acceptsMarketing: boolean
+  createdAt: string
+  updatedAt: string
+  displayName: string
+  email?: string | null | undefined
+  firstName?: string | null | undefined
+  lastName?: string | null | undefined
+  id: string
+  phone?: string | null | undefined
+  tags: string[]
+}
+
+export interface PlatformUserCreateInput extends Pick<PlatformUser, "email" | "firstName" | "lastName" | "phone"> {
+  password: string
+}
+
+export interface PlatformAccessToken {
+  accessToken: string
+  expiresAt: string
+}

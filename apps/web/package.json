@@ -66,6 +66,7 @@
     "playwright": "^1.40.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.51.0",
     "sharp": "^0.33.2",
     "sonner": "^1.4.3",
     "swr": "^2.2.5",

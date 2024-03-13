@@ -9,6 +9,7 @@ import { useCartStore } from "stores/cartStore"
 import { cn } from "utils/cn"
 import { getCookie } from "utils/getCookie"
 import { Combination } from "utils/productOptionsUtils"
+import { COOKIE_CART_ID } from "constants/index"
 
 export function AddToCartButton({ className, combination }: { className?: string; combination: Combination | PlatformVariant | undefined }) {
   const [isPending, startTransition] = useTransition()
@@ -24,7 +25,7 @@ export function AddToCartButton({ className, combination }: { className?: string
 
   useEffect(() => {
     startTransition(async () => {
-      const cartId = getCookie("ecom_cartId")
+      const cartId = getCookie(COOKIE_CART_ID)
       const itemAvailability = await getItemAvailability(cartId, combination?.id)
 
       itemAvailability && setHasAnyAvailable(itemAvailability.inCartQuantity < itemAvailability.inStockQuantity)

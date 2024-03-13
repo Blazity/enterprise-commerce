@@ -6,7 +6,7 @@ import { storefrontClient } from "clients/storefrontClient"
 import { revalidateTag, unstable_cache } from "next/cache"
 import { cookies } from "next/headers"
 import { ComparisonOperators, FilterBuilder } from "utils/filterBuilder"
-import { MEILISEARCH_INDEX } from "constants/index"
+import { COOKIE_ACCESS_TOKEN, COOKIE_CART_ID, MEILISEARCH_INDEX } from "constants/index"
 
 export const searchProducts = unstable_cache(
   async (query: string, limit: number = 4) => {
@@ -35,8 +35,7 @@ export const getCart = unstable_cache(async (cartId: string) => storefrontClient
 export async function addCartItem(prevState: any, variantId: string) {
   if (!variantId) return { ok: false }
 
-  const cookieName = "ecom_cartId"
-  let cartId = cookies().get(cookieName)?.value
+  let cartId = cookies().get(COOKIE_CART_ID)?.value
   let cart
 
   if (cartId) cart = await storefrontClient.getCart(cartId)
@@ -44,7 +43,7 @@ export async function addCartItem(prevState: any, variantId: string) {
   if (!cartId || !cart) {
     cart = await storefrontClient.createCart([])
     cartId = cart.id
-    cartId && cookies().set(cookieName, cartId)
+    cartId && cookies().set(COOKIE_CART_ID, cartId)
 
     revalidateTag("cart")
   }
@@ -65,7 +64,7 @@ export async function getItemAvailability(cartId: string | null | undefined, var
 }
 
 export async function removeCartItem(prevState: any, itemId: string) {
-  const cartId = cookies().get("ecom_cartId")?.value
+  const cartId = cookies().get(COOKIE_CART_ID)?.value
 
   if (!cartId) return null
 
@@ -74,7 +73,7 @@ export async function removeCartItem(prevState: any, itemId: string) {
 }
 
 export async function updateItemQuantity(prevState: any, payload: { itemId: string; variantId: string; quantity: number }) {
-  const cartId = cookies().get("ecom_cartId")?.value
+  const cartId = cookies().get(COOKIE_CART_ID)?.value
 
   if (!cartId) return { ok: false }
 
@@ -92,4 +91,15 @@ export async function updateItemQuantity(prevState: any, payload: { itemId: stri
 
   revalidateTag("cart")
   return { ok: hasAnyLeftInInventory, message: "This product is out of stock" }
+}
+
+export async function signupUser({ email, password }: { email: string; password: string }) {
+  const user = await storefrontClient.createUser({ email, password })
+  return user
+}
+
+export async function loginUser({ email, password }: { email: string; password: string }) {
+  const user = await storefrontClient.createUserAccessToken({ email, password })
+  cookies().set(COOKIE_ACCESS_TOKEN, user?.accessToken || "", { expires: new Date(user?.expiresAt || "") })
+  return user
 }
