@@ -2,7 +2,7 @@ import { AdminApiClient, createAdminApiClient } from "@shopify/admin-api-client"
 import { createStorefrontApiClient, StorefrontApiClient } from "@shopify/storefront-api-client"
 
 import { createCartItemMutation, createCartMutation, deleteCartItemsMutation, updateCartItemsMutation } from "./mutations/cart.storefront"
-import { createAccessTokenMutation, createCustomerMutation } from "./mutations/customer.storefront"
+import { createAccessTokenMutation, createCustomerMutation, updateCustomerMutation } from "./mutations/customer.storefront"
 import { createProductFeedMutation, fullSyncProductFeedMutation } from "./mutations/product-feed.admin"
 import { subscribeWebhookMutation } from "./mutations/webhook.admin"
 import { normalizeCart, normalizeCollection, normalizeProduct } from "./normalize"
@@ -40,6 +40,7 @@ import type {
   SinglePageQuery,
   SingleProductQuery,
   UpdateCartItemsMutation,
+  UpdateCustomerMutation,
 } from "./types/storefront.generated"
 import { CurrencyCode } from "./types/storefront.types"
 import {
@@ -98,6 +99,7 @@ export function createShopifyClient({ storefrontAccessToken, adminAccessToken, s
     getCollection: async (handle: string) => getCollection(client!, handle),
     createUser: async (input: PlatformUserCreateInput) => createUser(client!, input),
     getUser: async (accessToken: string) => getUser(client!, accessToken),
+    updateUser: async (accessToken: string, input: Omit<PlatformUserCreateInput, "password">) => updateUser(client!, accessToken, input),
     createUserAccessToken: async (input: Pick<PlatformUserCreateInput, "password" | "email">) => createUserAccessToken(client!, input)
   }
 }
@@ -227,6 +229,12 @@ async function getUser(client: StorefrontApiClient, customerAccessToken: string)
   const user = await client.request<SingleCustomerQuery>(getCustomerQuery, { variables: { customerAccessToken } })
 
   return user.data?.customer
+}
+
+async function updateUser(client: StorefrontApiClient, customerAccessToken: string, input: Omit<PlatformUserCreateInput, "password">) {
+  const user = await client.request<UpdateCustomerMutation>(updateCustomerMutation, { variables: { customer: input, customerAccessToken } })
+
+  return user.data?.customerUpdate?.customer
 }
 
 async function getAdminProduct(client: AdminApiClient, id: string) {

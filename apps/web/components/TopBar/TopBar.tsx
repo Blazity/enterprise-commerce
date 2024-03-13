@@ -1,11 +1,12 @@
 import { storefrontClient } from "clients/storefrontClient"
+import { Skeleton } from "components/Skeleton"
 import dynamic from "next/dynamic"
 import { cookies } from "next/headers"
 import Link from "next/link"
 import { COOKIE_ACCESS_TOKEN } from "constants/index"
 import Actions from "./Actions"
 
-const ProfileBar = dynamic(() => import("./ProfileBar").then((mod) => mod.ProfileBar), { ssr: false })
+const ProfileBar = dynamic(() => import("./ProfileBar").then((mod) => mod.ProfileBar), { ssr: false, loading: ActionsSkeleton })
 
 export async function TopBar() {
   const accessToken = cookies().get(COOKIE_ACCESS_TOKEN)
@@ -28,4 +29,8 @@ export async function TopBar() {
       </div>
     </header>
   )
+}
+
+function ActionsSkeleton() {
+  return <Skeleton className="h-[35px] w-[250px]" />
 }

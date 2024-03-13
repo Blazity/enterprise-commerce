@@ -1,6 +1,6 @@
 "use server"
 
-import { PlatformProduct } from "@enterprise-commerce/core/platform/types"
+import { PlatformProduct, PlatformUserCreateInput } from "@enterprise-commerce/core/platform/types"
 import { meilisearch } from "clients/meilisearch"
 import { storefrontClient } from "clients/storefrontClient"
 import { revalidateTag, unstable_cache } from "next/cache"
@@ -102,4 +102,15 @@ export async function loginUser({ email, password }: { email: string; password: 
   const user = await storefrontClient.createUserAccessToken({ email, password })
   cookies().set(COOKIE_ACCESS_TOKEN, user?.accessToken || "", { expires: new Date(user?.expiresAt || "") })
   return user
+}
+
+export async function updateUser(input: Pick<PlatformUserCreateInput, "firstName" | "lastName" | "phone">) {
+  const accessToken = cookies().get(COOKIE_ACCESS_TOKEN)?.value
+
+  const user = await storefrontClient.updateUser(accessToken!, { ...input })
+  return user
+}
+
+export async function logoutUser() {
+  cookies().delete(COOKIE_ACCESS_TOKEN)
 }
