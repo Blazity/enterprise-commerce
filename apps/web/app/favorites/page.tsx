@@ -19,11 +19,11 @@ export default async function Favorites() {
 }
 
 async function FavoritesView() {
-  let favoritesHandles = []
+  let favoritesHandles: string[] = []
   const favoritesCookie = cookies().get(COOKIE_FAVORITES)?.value
 
   if (favoritesCookie) {
-    favoritesHandles = JSON.parse(favoritesCookie)
+    favoritesHandles = JSON.parse(favoritesCookie) as string[]
   }
 
   const products = await Promise.all(favoritesHandles.map((handle) => getProduct(handle)).filter(Boolean))
