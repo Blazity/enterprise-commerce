@@ -1,5 +1,6 @@
 import { ChevronIcon } from "components/Icons/ChevronIcon"
 
+import { Suspense } from "react"
 import { cn } from "utils/cn"
 import { Autocomplete } from "./Autocomplete"
 import { Cart } from "./Cart"
@@ -63,7 +64,9 @@ export function NavigationBar({ items }: NavigationBarProps) {
                 <Autocomplete className="mr-6" />
                 <div className="flex gap-2">
                   <Favorites />
-                  <Cart />
+                  <Suspense fallback={null}>
+                    <Cart />
+                  </Suspense>
                 </div>
               </div>
             </div>
