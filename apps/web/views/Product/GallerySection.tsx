@@ -9,9 +9,10 @@ import { cn } from "utils/cn"
 interface GallerySectionProps {
   className?: string
   images: PlatformImage[]
+  children?: React.ReactNode
 }
 
-export function GallerySection({ className, images }: GallerySectionProps) {
+export function GallerySection({ className, images, children }: GallerySectionProps) {
   const [api, setApi] = useState<CarouselApi>()
   const [thumbsApi, setThumbsApi] = useState<CarouselApi>()
   const [current, setCurrent] = useState(0)
@@ -37,7 +38,7 @@ export function GallerySection({ className, images }: GallerySectionProps) {
   )
 
   return (
-    <div className={cn("flex max-w-full flex-col gap-10 md:max-w-[480px]", className)}>
+    <div className={cn("relative flex max-w-full flex-col gap-10 md:max-w-[480px]", className)}>
       <Carousel setApi={setApi} className="relative min-h-[600px] w-full  bg-neutral-100">
         <CarouselContent className="size-full">
           {images.map((image, index) => (
@@ -73,6 +74,7 @@ export function GallerySection({ className, images }: GallerySectionProps) {
           ))}
         </CarouselContent>
       </Carousel>
+      {children}
     </div>
   )
 }

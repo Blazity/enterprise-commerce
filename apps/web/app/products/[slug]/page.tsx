@@ -14,6 +14,7 @@ import { getAllCombinations, getOptionsFromUrl, hasValidOption, removeOptionsFro
 import { AddToCartButton } from "views/Product/AddToCartButton"
 import { BackButton } from "views/Product/BackButton"
 import { FaqSection } from "views/Product/FaqSection"
+import { FavoriteMarker } from "views/Product/FavoriteMarker"
 import { GallerySection } from "views/Product/GallerySection"
 import { InfoSection } from "views/Product/InfoSection"
 import { PageSkeleton, VariantsSectionSkeleton } from "views/Product/PageSkeleton"
@@ -85,7 +86,9 @@ async function ProductView({ slug }: { slug: string }) {
       <main className="max-w-container-sm mx-auto">
         <Breadcrumbs className="mb-8 hidden md:block" items={makeBreadcrumbs(product)} />
         <div className="grid grid-cols-1 justify-center gap-10 md:grid-cols-2 lg:gap-20">
-          <GallerySection images={product.images} />
+          <GallerySection images={product.images}>
+            <FavoriteMarker handle={product.handle} />
+          </GallerySection>
           <div className="flex flex-col items-start pt-12">
             <InfoSection className="pb-10" title={product.title} description={product.descriptionHtml} combination={combination} />
             {hasOnlyOneVariant ? null : <VariantsSection flatOptions={product.flatOptions} variants={product.variants} />}

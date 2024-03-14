@@ -1,4 +1,3 @@
 {
-  "extends": "@enterprise-commerce/tsconfig/base.json",
+  "extends": "@enterprise-commerce/tsconfig/base.json"
 }
- 
