@@ -1,4 +1,4 @@
-import { FilterBuilder } from "utils/filterBuilder"
+import { FilterBuilder } from "../../utils/filterBuilder"
 import { composeFilters } from "./composeFilters"
 
 describe("composeFilters", () => {
