@@ -118,7 +118,7 @@ function makeBreadcrumbs(product: PlatformProduct) {
 
   return {
     Home: "/",
-    [lastCollection?.title || "Products"]: lastCollection?.handle ? `/categories/${lastCollection.handle}` : "/search",
+    [lastCollection?.title || "Products"]: lastCollection?.handle ? `/category/${lastCollection.handle}` : "/search",
     [product.title]: "",
   }
 }
