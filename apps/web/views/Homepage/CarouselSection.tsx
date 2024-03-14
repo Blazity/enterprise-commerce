@@ -1,6 +1,6 @@
 import { PlatformProduct } from "@enterprise-commerce/core/platform/types"
 import { Carousel, CarouselContent } from "components/Carousel"
-import { ProductCard } from "components/ProductCard"
+import { ProductCard } from "components/ProductCard/ProductCard"
 import { Skeleton } from "components/Skeleton"
 
 interface CarouselSectionProps {

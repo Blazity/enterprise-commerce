@@ -1,5 +1,5 @@
 import { PlatformProduct } from "@enterprise-commerce/core/platform/types"
-import { ProductCard } from "components/ProductCard"
+import { ProductCard } from "components/ProductCard/ProductCard"
 
 interface HitsSectionProps {
   hits: PlatformProduct[]

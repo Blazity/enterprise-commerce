@@ -17,8 +17,8 @@ export function FavoriteMarker({ handle }: { handle: string }) {
 
   return (
     <div className="absolute inset-4">
-      <form>
-        <button type="submit" formAction={toggleFavoriteProduct.bind(null, handle)}>
+      <form action={toggleFavoriteProduct.bind(null, handle)}>
+        <button type="submit">
           <HeartIcon className={cn("size-8 cursor-pointer transition-colors hover:fill-neutral-400", { "fill-black": isActive })} />
         </button>
       </form>

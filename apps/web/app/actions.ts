@@ -54,14 +54,21 @@ export async function addCartItem(prevState: any, variantId: string) {
   return { ok: true }
 }
 
-export async function getItemAvailability(cartId: string | null | undefined, variantId: string | null | undefined) {
-  if (!cartId || !variantId) return { inCartQuantity: 0, inStockQuantity: Infinity }
+export const getItemAvailability = unstable_cache(
+  async (cartId: string | null | undefined, variantId: string | null | undefined) => {
+    if (!cartId || !variantId) return { inCartQuantity: 0, inStockQuantity: Infinity }
 
-  const cart = await storefrontClient.getCart(cartId)
-  const cartItem = cart?.items?.find((item) => item.merchandise.id === variantId)
+    const cart = await storefrontClient.getCart(cartId)
+    const cartItem = cart?.items?.find((item) => item.merchandise.id === variantId)
 
-  return { inCartQuantity: cartItem?.quantity ?? 0, inStockQuantity: cartItem?.merchandise.quantityAvailable ?? Infinity }
-}
+    return { inCartQuantity: cartItem?.quantity ?? 0, inStockQuantity: cartItem?.merchandise.quantityAvailable ?? Infinity }
+  },
+  ["item-availability"],
+  {
+    revalidate: 60 * 15,
+    tags: ["item-availability"],
+  }
+)
 
 export async function removeCartItem(prevState: any, itemId: string) {
   const cartId = cookies().get(COOKIE_CART_ID)?.value
@@ -70,6 +77,7 @@ export async function removeCartItem(prevState: any, itemId: string) {
 
   await storefrontClient.deleteCartItem(cartId!, [itemId])
   revalidateTag("cart")
+  revalidateTag("item-availability")
 }
 
 export async function updateItemQuantity(prevState: any, payload: { itemId: string; variantId: string; quantity: number }) {
@@ -90,6 +98,7 @@ export async function updateItemQuantity(prevState: any, payload: { itemId: stri
   const hasAnyLeftInInventory = (cartItem?.quantity ?? 0) < (cartItem?.merchandise.quantityAvailable ?? Infinity)
 
   revalidateTag("cart")
+  revalidateTag("item-availability")
   return { ok: hasAnyLeftInInventory, message: "This product is out of stock" }
 }
 

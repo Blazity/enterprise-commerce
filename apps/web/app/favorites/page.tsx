@@ -1,5 +1,5 @@
 import { getProduct } from "app/actions"
-import { ProductCard } from "components/ProductCard"
+import { ProductCard } from "components/ProductCard/ProductCard"
 import { Skeleton } from "components/Skeleton"
 import { cookies } from "next/headers"
 import { Suspense } from "react"
