@@ -37,6 +37,8 @@ export function GallerySection({ className, images, children }: GallerySectionPr
     [api]
   )
 
+  const hasOnlyOneImage = images.length <= 1
+
   return (
     <div className={cn("relative flex max-w-full flex-col gap-10 md:max-w-[480px]", className)}>
       <Carousel setApi={setApi} className="relative min-h-[600px] w-full  bg-neutral-100">
@@ -56,8 +58,8 @@ export function GallerySection({ className, images, children }: GallerySectionPr
           ))}
         </CarouselContent>
         <div className="absolute bottom-0 left-1/2 flex -translate-x-1/2 gap-10 pb-6">
-          <CarouselPrevious className="relative" />
-          <CarouselNext className="relative" />
+          {hasOnlyOneImage ? null : <CarouselPrevious className="relative" />}
+          {hasOnlyOneImage ? null : <CarouselNext className="relative" />}
         </div>
       </Carousel>
 
