@@ -1,4 +1,5 @@
 import { getPage } from "app/actions"
+import { Metadata } from "next"
 
 export async function generateMetadata({ params: { slug } }: { params: { slug: string } }): Promise<Metadata> {
   const page = await getPage(slug)
