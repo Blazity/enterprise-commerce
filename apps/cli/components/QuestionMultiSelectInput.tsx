@@ -1,20 +1,34 @@
 import { Box, Text, useInput } from "ink"
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 import { TextWithHorizontalPadding } from "./TextWithHorizontalPadding"
 import { terminalColors } from "../helpers/terminal-colors"
 
 type SelectItem = { label: string; value: string }
 
 type QuestionMultiSelectInputProps = {
-  question: string
   helperText?: string
   items: SelectItem[]
-  onEnter: (value: string[]) => void
+  initialValues?: Record<string, boolean>
+  onEnter: (value: Record<string, boolean>) => void
 }
 
-export function QuestionMultiSelectInput({ question, items, onEnter, helperText }: QuestionMultiSelectInputProps) {
+export function QuestionMultiSelectInput({ items, onEnter, helperText, initialValues }: QuestionMultiSelectInputProps) {
   const [selectedIndexes, setSelectedIndexes] = useState<number[]>([])
   const [cursor, setCursor] = useState(0)
+  const isInitialMount = useRef(true)
+
+  useEffect(() => {
+    if (initialValues && isInitialMount.current) {
+      const initialSelectedIndexes = items.reduce((acc: number[], item, index) => {
+        if (initialValues[item.value]) {
+          acc.push(index)
+        }
+        return acc
+      }, [])
+      setSelectedIndexes(initialSelectedIndexes)
+      isInitialMount.current = false
+    }
+  }, [items, initialValues])
 
   useInput((input, key) => {
     if (input === " ") {
@@ -25,35 +39,33 @@ export function QuestionMultiSelectInput({ question, items, onEnter, helperText 
     } else if (key.downArrow) {
       setCursor((prev) => (prev < items.length - 1 ? prev + 1 : 0))
     } else if (key.return) {
-      onEnter(selectedIndexes.map((index) => items[index].value))
+      onEnter(Object.fromEntries(items.map((item, itemIndex) => [item.value, selectedIndexes.includes(itemIndex)])))
+      // Do not reset selectedIndexes here to prevent resetting to initial values after submission
     }
   })
 
   return (
-    <Box flexDirection="column" padding={1}>
-      <TextWithHorizontalPadding backgroundColor={terminalColors.blazity} color={terminalColors.textOnBrightBackground} bold>
-        {question}
-      </TextWithHorizontalPadding>
-      {helperText ? (
+    <Box flexDirection="column" paddingBottom={1}>
+      {helperText && (
         <Box width={70}>
           <Text color="white" dimColor>
             {helperText}
           </Text>
         </Box>
-      ) : null}
+      )}
       {items.map((item, index) => {
         const isSelected = selectedIndexes.includes(index)
         const isHovered = cursor === index
 
         return (
           <Box key={item.value}>
-            <Box>
-              <TextWithHorizontalPadding backgroundColor={isSelected ? "greenBright" : "redBright"} color={terminalColors.textOnBrightBackground} bold paddingX={1}>
+            <Box marginRight={1}>
+              <TextWithHorizontalPadding backgroundColor={isSelected ? "green" : "red"} color="white" bold paddingX={1}>
                 {isSelected ? "ENABLED" : "DISABLED"}
               </TextWithHorizontalPadding>
             </Box>
             <Box>
-              <TextWithHorizontalPadding backgroundColor={isHovered ? terminalColors.blazity : "black"} paddingX={1} bold>
+              <TextWithHorizontalPadding backgroundColor={isHovered ? terminalColors.blazity : "black"} color="white" paddingX={1} bold>
                 {item.label}
               </TextWithHorizontalPadding>
             </Box>

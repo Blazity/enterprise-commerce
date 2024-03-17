@@ -3,9 +3,12 @@ import { SyncFormValues, SyncForm } from "../components/SyncForm"
 import { ShopAnimation } from "../components/ShopAnimation"
 import { useEffect, useState } from "react"
 import { AnimatedProgressBar } from "../components/AnimatedProgressBar"
-import { Alert, Badge } from "@inkjs/ui"
+import { Badge } from "@inkjs/ui"
 import { createStorefrontClient } from "@enterprise-commerce/core"
 import { CriticalError } from "../components/CriticalError"
+import { DoneText } from "../components/DoneText"
+import { TextWithHorizontalPadding } from "../components/TextWithHorizontalPadding"
+import { terminalColors } from "../helpers/terminal-colors"
 
 interface Feedback {
   message: string
@@ -152,6 +155,11 @@ export function Sync() {
     <>
       <ShopAnimation />
       <Newline />
+      <Box marginBottom={1}>
+        <TextWithHorizontalPadding backgroundColor={terminalColors.blazity} color={terminalColors.textOnBrightBackground} bold>
+          Shopify synchronization
+        </TextWithHorizontalPadding>
+      </Box>
       <SyncForm onFormSubmit={(values) => setFormValues(values)} />
       <Newline />
       {isFormFilled && !errorMessage
@@ -177,20 +185,17 @@ type AnimatedProgressBarWithStatusTextProps = {
 
 function AnimatedProgressBarWithStatusText({ progress }: AnimatedProgressBarWithStatusTextProps) {
   const [shouldShowStatusText, setShouldShowStatusText] = useState(false)
-  const { exit } = useApp()
 
   useEffect(() => {
     if (progress === 100) {
       setShouldShowStatusText(true)
-      exit()
-      process.exit(0)
     }
   }, [progress])
 
   return (
     <>
       <AnimatedProgressBar progress={progress} />
-      {shouldShowStatusText ? <Text>Done!</Text> : null}
+      {shouldShowStatusText ? <DoneText /> : null}
     </>
   )
 }

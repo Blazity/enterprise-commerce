@@ -12,9 +12,11 @@
   "main": "dist/index.mjs",
   "license": "MIT",
   "dependencies": {
+    "@enterprise-commerce/core": "*",
     "@inkjs/ui": "^1.0.0",
     "commander": "^12.0.0",
     "cross-env": "^7.0.3",
+    "dotenv": "^16.4.5",
     "execa": "^8.0.1",
     "fast-glob": "^3.3.2",
     "ink": "^4.4.1",
@@ -24,7 +26,6 @@
     "react": "^18.2.0",
     "react-devtools-core": "^5.0.0",
     "remeda": "^1.40.1",
-    "@enterprise-commerce/core": "*",
     "tar": "^6.2.0"
   },
   "devDependencies": {

@@ -42,7 +42,7 @@ export function QuestionTextInput({ question, nextFocusId, secretInput, id, help
   }
 
   return (
-    <Box padding={1} width={70} display="flex" flexDirection="column">
+    <Box paddingBottom={1} width={70} display="flex" flexDirection="column">
       {helpText ? (
         <Text color={"white"} dimColor>
           {helpText}

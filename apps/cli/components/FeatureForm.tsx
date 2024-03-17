@@ -1,51 +1,43 @@
-import { atom, useAtom } from "jotai"
+import { writeFile } from "fs/promises"
 import { QuestionMultiSelectInput } from "./QuestionMultiSelectInput"
+import { ComponentProps, useState } from "react"
+import { DoneText } from "./DoneText"
 
-export type Step = "hello-feature"
+type ExternallyProvidedMultiselectProps = { originalEnvVars: Record<string, string>; envFilePath: string } & Pick<
+  ComponentProps<typeof QuestionMultiSelectInput>,
+  "initialValues" | "items"
+>
 
-const helloFeatureAtom = atom("")
+export function FeatureForm({ originalEnvVars, envFilePath, ...externallyProvidedMultiselectProps }: ExternallyProvidedMultiselectProps) {
+  const [shouldShowStatusText, setShouldShowStatusText] = useState(false)
 
-const formValuesAtom = atom((get) => {
-  return {
-    "hello-feature": get(helloFeatureAtom),
-  }
-})
-
-const completedStepsAtom = atom<Step[]>((get) => Object.entries(get(formValuesAtom)).map(([step, value]) => (value ? step : undefined)) as Step[])
-
-export function FeatureForm() {
-  return <HelloFeatureInput />
+  return (
+    <>
+      <QuestionMultiSelectInput
+        helperText="Select the features you want to use. Press space to toggle the selection. Press enter to submit. Use arrows to move between the items"
+        onEnter={async (value) => {
+          const envVars = Object.entries(value).reduce((acc, [key, value]) => ({ ...acc, [key]: value.toString() }), {})
+          await writeFile(envFilePath, stringifyEnv({ ...originalEnvVars, ...envVars }))
+          setShouldShowStatusText(true)
+        }}
+        {...externallyProvidedMultiselectProps}
+      />
+      {shouldShowStatusText ? <DoneText /> : null}
+    </>
+  )
 }
 
-function HelloFeatureInput() {
-  const stepName: Step = "hello-feature"
-  const [, setHelloFeature] = useAtom(helloFeatureAtom)
-  return (
-    <QuestionMultiSelectInput
-      question="Which features would you like to use?"
-      helperText="Select the features you want to use. Press space to toggle the selection. Press enter to submit. Use arrows to move between the items"
-      items={[
-        {
-          label: "Hello feature",
-          value: "hello-feature",
-        },
-        {
-          label: "Farewell feature",
-          value: "farewell-feature",
-        },
-        {
-          label: "a",
-          value: "a-feature",
-        },
-        {
-          label: "B",
-          value: "b-feature",
-        },
-      ]}
-      onEnter={(value) => {
-        console.log(value)
-        setHelloFeature(value[0])
-      }}
-    />
-  )
+function stringifyEnv(env: Record<string, string>): string {
+  const isValidKey = (key: string) => /^[a-zA-Z_]+[a-zA-Z0-9_]*$/.test(key)
+  const escapeNewLines = (str: string) => str.replace(/\n/g, "\\n")
+
+  const invalidKeys = Object.keys(env).filter((key) => !isValidKey(key))
+
+  if (invalidKeys.length > 0) {
+    throw new Error(`Invalid key(s) found: ${invalidKeys.join(", ")}. Keys must match the pattern [a-zA-Z_]+[a-zA-Z0-9_]*`)
+  }
+
+  return Object.entries(env)
+    .map(([key, value]) => `${key}=${escapeNewLines(value)}`)
+    .join("\n")
 }

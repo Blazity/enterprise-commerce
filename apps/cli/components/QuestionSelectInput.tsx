@@ -34,7 +34,7 @@ export function QuestionSelectInput({ question, items, nextFocusId, id, defaultV
   }
 
   return (
-    <Box padding={1}>
+    <Box>
       <Box marginRight={1}>
         <TextWithHorizontalPadding backgroundColor={terminalColors.blazity} color={terminalColors.textOnBrightBackground} bold>
           {question}
