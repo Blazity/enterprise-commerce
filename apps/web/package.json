@@ -70,6 +70,7 @@
     "sonner": "^1.4.3",
     "swr": "^2.2.5",
     "tailwind-merge": "^2.0.0",
+    "schema-dts": "^1.1.2",
     "zod": "^3.22.4",
     "zustand": "^4.5.1"
   },

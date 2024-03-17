@@ -7,8 +7,6 @@ export const revalidate = 3600
 
 export const dynamicParams = true
 
-export const dynamic = "force-static"
-
 export async function generateMetadata({ params: { slug } }: { params: { slug: string } }): Promise<Metadata> {
   const page = await getPage(slug)
 

@@ -12,3 +12,4 @@ Disallow: /*?*vendors=
 Disallow: /*?*tags=
 Disallow: /*?*colors=
 Disallow: /*?*sizes=
+Disallow: /*-draft

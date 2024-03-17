@@ -2,13 +2,10 @@ import { PlatformProduct } from "@enterprise-commerce/core/platform/types"
 import { getProduct } from "app/actions"
 import { storefrontClient } from "clients/storefrontClient"
 import { Breadcrumbs } from "components/Breadcrumbs"
-import { env } from "env.mjs"
-import { Metadata } from "next"
 import nextDynamic from "next/dynamic"
 import { draftMode } from "next/headers"
 import { notFound } from "next/navigation"
 import { Suspense } from "react"
-import { makeKeywords } from "utils/makeKeywords"
 
 import { getAllCombinations, getOptionsFromUrl, hasValidOption, removeOptionsFromUrl } from "utils/productOptionsUtils"
 import { AddToCartButton } from "views/Product/AddToCartButton"
@@ -20,6 +17,7 @@ import { InfoSection } from "views/Product/InfoSection"
 import { PageSkeleton, VariantsSectionSkeleton } from "views/Product/PageSkeleton"
 import { SimilarProductsSection } from "views/Product/SimilarProductsSection"
 import { SimilarProductsSectionSkeleton } from "views/Product/SimilarProductsSectionSkeleton"
+import { generateJsonLd } from "./metadata"
 
 const VariantsSection = nextDynamic(() => import("views/Product/VariantsSection").then((mod) => mod.VariantsSection), { loading: VariantsSectionSkeleton })
 
@@ -31,30 +29,7 @@ interface ProductProps {
   params: { slug: string }
 }
 
-export async function generateMetadata({ params: { slug } }: ProductProps): Promise<Metadata> {
-  const product = await getProduct(removeOptionsFromUrl(slug))
-
-  const originalDescription = product?.seo.description
-  const originalTitle = product?.seo.title
-  const keywords = makeKeywords(product?.title)
-  const lastCollection = product?.collections.findLast(Boolean)
-
-  return {
-    metadataBase: new URL(env.LIVE_URL),
-    title: `${originalTitle || product?.title} | Blazity`,
-    description: originalDescription || product?.description,
-    generator: "Next.js",
-    applicationName: "Next.js",
-    referrer: "origin-when-cross-origin",
-    keywords: keywords,
-    category: lastCollection?.title,
-    creator: "Blazity",
-    alternates: {
-      canonical: `/products/${slug}`,
-    },
-    publisher: "Blazity",
-  }
-}
+export { generateMetadata } from "./metadata"
 
 export default async function Product({ params: { slug } }: ProductProps) {
   return (
@@ -80,6 +55,7 @@ async function ProductView({ slug }: { slug: string }) {
 
   return (
     <div className="max-w-container-md relative mx-auto px-4 xl:px-0">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(generateJsonLd(product, slug)) }}></script>
       <div className="mb:pb-8 relative w-fit py-4 md:pt-12">
         <BackButton className="mb-8 hidden md:block" />
       </div>

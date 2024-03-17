@@ -6,6 +6,10 @@ import { EverythingUnderSection } from "views/Homepage/EverythingUnderSection"
 import { HeroSection } from "views/Homepage/HeroSection"
 import { ProductsWeekSection, ProductsWeekSectionSkeleton } from "views/Homepage/ProductsWeekSection"
 
+export const revalidate = 3600
+
+export const dynamicParams = true
+
 export default function Homepage() {
   return (
     <>
