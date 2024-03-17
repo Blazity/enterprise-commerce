@@ -34,18 +34,6 @@ export function App({ systemData }: AppProps) {
             <Text>
               <Text bold>feature</Text> - manage product's features
             </Text>
-            <UnorderedList>
-              <UnorderedList.Item>
-                <Text>
-                  <Text bold>toggle</Text> - toggle specific product feature
-                </Text>
-              </UnorderedList.Item>
-              <UnorderedList.Item>
-                <Text>
-                  <Text bold>list</Text> - list all product features along with its statuses
-                </Text>
-              </UnorderedList.Item>
-            </UnorderedList>
           </UnorderedList.Item>
         </UnorderedList>
       </Box>

@@ -47,20 +47,4 @@ const featureCommand = program
     render(<Feature />)
   })
 
-featureCommand
-  .command("toggle")
-  .alias("t")
-  .description("toggle product feature")
-  .action(() => {
-    console.log("toggle")
-  })
-
-featureCommand
-  .command("list")
-  .alias("l")
-  .description("list all product features")
-  .action(() => {
-    console.log("list")
-  })
-
 program.parse()
