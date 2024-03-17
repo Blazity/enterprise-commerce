@@ -114,3 +114,7 @@ export async function updateUser(input: Pick<PlatformUserCreateInput, "firstName
 export async function logoutUser() {
   cookies().delete(COOKIE_ACCESS_TOKEN)
 }
+
+export const getPage = unstable_cache(async (handle: string) => await storefrontClient.getPage(handle), ["page"], { revalidate: 3600 })
+
+export const getAllPages = unstable_cache(async () => await storefrontClient.getAllPages(), ["page"], { revalidate: 3600 })

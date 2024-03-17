@@ -1,23 +1,11 @@
-import { storefrontClient } from "clients/storefrontClient"
+import { getAllPages, getPage } from "app/actions"
 import { format } from "date-fns/format"
-import { Metadata } from "next"
-import { unstable_cache } from "next/cache"
 
 export const revalidate = 3600
 
 export const dynamicParams = true
 
-export async function generateMetadata({ params: { slug } }: { params: { slug: string } }): Promise<Metadata> {
-  const page = await getPage(slug)
-
-  return {
-    title: page?.seo?.title || page?.title,
-    description: page?.seo?.description || page?.bodySummary,
-    referrer: "origin-when-cross-origin",
-    creator: "Blazity",
-    publisher: "Blazity",
-  }
-}
+export { generateMetadata } from "./metadata"
 
 export default async function StaticPage({ params: { slug } }: { params: { slug: string } }) {
   const page = await getPage(slug)
@@ -42,6 +30,3 @@ export async function generateStaticParams() {
     slug: page.handle,
   }))
 }
-
-const getPage = unstable_cache(async (handle: string) => await storefrontClient.getPage(handle), ["page"], { revalidate: 3600 })
-const getAllPages = unstable_cache(async () => await storefrontClient.getAllPages(), ["page"], { revalidate: 3600 })

@@ -7,6 +7,10 @@ import { removeOptionsFromUrl } from "utils/productOptionsUtils"
 
 export const runtime = "edge"
 
+export const revalidate = 3600
+
+export const dynamic = "force-static"
+
 export const size = {
   width: 1200,
   height: 630,
