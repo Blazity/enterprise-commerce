@@ -10,7 +10,7 @@ export const env = createEnv({
     SHOPIFY_STORE_DOMAIN: z.string().default("demo"),
     MEILISEARCH_MASTER_KEY: z.string().optional().default("demo"),
     MEILISEARCH_HOST: z.string().optional().default("demo"),
-    REPLICATE_API_KEY: z.string().optional()
+    REPLICATE_API_KEY: z.string().optional(),
     LIVE_URL: z.string().optional().default("https://enterprise-commerce-web.vercel.app"),
     ANALYZE: z
       .enum(["true", "false"])
