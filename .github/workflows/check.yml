@@ -22,6 +22,7 @@ jobs:
       MEILISEARCH_MASTER_KEY: ${{ secrets.MEILISEARCH_MASTER_KEY }}
       MEILISEARCH_HOST: ${{ secrets.MEILISEARCH_HOST }}
       SHOPIFY_APP_API_KEY: ${{ secrets.SHOPIFY_APP_API_KEY }}
+      REPLICATE_API_KEY: ${{ secrets.REPLICATE_API_KEY }}
 
     steps:
       - uses: actions/checkout@v4

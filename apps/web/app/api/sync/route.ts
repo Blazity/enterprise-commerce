@@ -6,6 +6,9 @@ import { FailedAttemptError } from "p-retry"
 import { Root } from "shopify-webhooks"
 import { MEILISEARCH_INDEX } from "constants/index"
 import { createHmac } from "crypto"
+import Replicate from "replicate"
+
+import { PlatformProduct } from "@enterprise-commerce/core/platform/types"
 
 export async function POST(req: Request) {
   const hmac = req.headers.get("X-Shopify-Hmac-Sha256")
@@ -41,7 +44,8 @@ export async function POST(req: Request) {
     }
 
     if (originalProduct?.id) {
-      await index.updateDocuments([{ ...originalProduct, id: normalizeId(originalProduct.id) }], { primaryKey: "id" })
+      const newImages = await generateProductAltTags(originalProduct)
+      await index.updateDocuments([{ ...originalProduct, id: normalizeId(originalProduct.id), images: newImages }], { primaryKey: "id" })
       return Response.json({ status: "ok" })
     }
 
@@ -50,7 +54,8 @@ export async function POST(req: Request) {
 
   if (metadata.action === "UPDATE" || metadata.action === "CREATE") {
     if (originalProduct) {
-      await index.updateDocuments([{ ...originalProduct, id: normalizeId(originalProduct.id) }], { primaryKey: "id" })
+      const newImages = await generateProductAltTags(originalProduct)
+      await index.updateDocuments([{ ...originalProduct, id: normalizeId(originalProduct.id), images: newImages }], { primaryKey: "id" })
     }
   }
 
@@ -101,4 +106,27 @@ async function getMeilisearchIndex(indexName: string) {
 function isWebhookVerified(rawBody: string, hmac: string) {
   const genHash = createHmac("sha256", env.SHOPIFY_APP_API_KEY!).update(rawBody).digest("base64")
   return genHash === hmac
+}
+
+async function generateProductAltTags(product: PlatformProduct) {
+  if (!env.REPLICATE_API_KEY) return []
+
+  const replicate = new Replicate({
+    auth: env.REPLICATE_API_KEY || "",
+  })
+
+  const altTagAwareImages = await Promise.all(
+    product?.images?.filter(Boolean).map(async (image) => {
+      const output = (await replicate.run("salesforce/blip:2e1dddc8621f72155f24cf2e0adbde548458d3cab9f00c0139eea840d0ac4746", {
+        input: {
+          task: "image_captioning",
+          image: image.url,
+        },
+      })) as unknown as string
+
+      return { ...image, altText: output?.replace("Caption:", "") || "" }
+    })
+  )
+
+  return altTagAwareImages || []
 }
