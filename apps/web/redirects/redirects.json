@@ -1,0 +1,14 @@
+{
+  "/old": {
+    "destination": "/new",
+    "permanent": true
+  },
+  "/blog/post-old": {
+    "destination": "/blog/post-new",
+    "permanent": true
+  },
+  "/external": {
+    "destination": "https://example.com",
+    "permanent": true
+  }
+}

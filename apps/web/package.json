@@ -20,6 +20,7 @@
     "e2e:ui": "playwright test --ui",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "postinstall": "npx patch-package -y",
+    "generate-bloom-filter": "ts-node redirects/generate-bloom-filter.ts",
     "coupling-graph": "npx madge --extensions js,jsx,ts,tsx,css,md,mdx ./ --exclude '.next|tailwind.config.js|reset.d.ts|prettier.config.js|postcss.config.js|playwright.config.ts|next.config.js|next-env.d.ts|instrumentation.ts|e2e/|README.md|.storybook/|.eslintrc.js' --image graph.svg"
   },
   "dependencies": {
@@ -54,6 +55,7 @@
     "@vercel/speed-insights": "^1.0.10",
     "@vercel/toolbar": "^0.1.11",
     "ai": "^3.0.12",
+    "bloom-filters": "^3.0.1",
     "class-variance-authority": "^0.7.0",
     "date-fns": "^3.3.1",
     "embla-carousel-react": "^8.0.0",
@@ -101,6 +103,7 @@
     "@typescript-eslint/eslint-plugin": "^6.12.0",
     "@typescript-eslint/parser": "^6.12.0",
     "postinstall-postinstall": "^2.1.0",
-    "storybook": "^7.5.3"
+    "storybook": "^7.5.3",
+    "ts-node": "^10.9.2"
   }
 }
