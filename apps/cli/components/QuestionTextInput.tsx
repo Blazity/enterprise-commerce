@@ -1,6 +1,6 @@
 import { Box, Newline, Text, useFocus, useFocusManager } from "ink"
 import { UncontrolledTextInput } from "ink-text-input"
-import { terminalColors } from "../terminal-colors"
+import { terminalColors } from "../helpers/terminal-colors"
 import { useEffect } from "react"
 
 import { TextWithHorizontalPadding } from "./TextWithHorizontalPadding"
@@ -42,7 +42,7 @@ export function QuestionTextInput({ question, nextFocusId, secretInput, id, help
   }
 
   return (
-    <Box padding={1} display="flex" flexDirection="column">
+    <Box paddingBottom={1} width={70} display="flex" flexDirection="column">
       {helpText ? (
         <Text color={"white"} dimColor>
           {helpText}

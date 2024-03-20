@@ -1,7 +1,7 @@
 import { useState, useEffect, Fragment } from "react"
 import type { JSX } from "react"
 import { Text } from "ink"
-import { terminalColors } from "../terminal-colors"
+import { terminalColors } from "../helpers/terminal-colors"
 
 const SHOP_ART = [
   "           ┌───────────────┐  ",

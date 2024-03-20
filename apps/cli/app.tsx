@@ -29,6 +29,12 @@ export function App({ systemData }: AppProps) {
               <Text bold>sync</Text> - migrate all of your products to Shopify and enable incremental migration for future product updates
             </Text>
           </UnorderedList.Item>
+
+          <UnorderedList.Item>
+            <Text>
+              <Text bold>feature</Text> - manage product's features
+            </Text>
+          </UnorderedList.Item>
         </UnorderedList>
       </Box>
     </>

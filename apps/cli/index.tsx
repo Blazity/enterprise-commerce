@@ -5,7 +5,8 @@ import { render } from "ink"
 import { getPackageManager, getSystemUserName } from "./helpers/system"
 
 import { App } from "./app"
-import { Sync } from "./sync"
+import { Sync } from "./commands/sync"
+import { Feature } from "./commands/feature"
 
 const program = new commander.Command()
 
@@ -25,13 +26,25 @@ program.command("index", { isDefault: true, hidden: true }).action(async () => {
       }}
     />
   )
+
+  process.exit(0)
 })
 
 program
   .command("sync")
+  .alias("s")
   .description("migrate all of your products to Shopify and enable incremental migration for future product updates")
   .action(() => {
     render(<Sync />)
+  })
+
+const featureCommand = program
+  .command("feature")
+  .description("manage (toggle/list) product features")
+  .alias("f")
+  .alias("feat")
+  .action(() => {
+    render(<Feature />)
   })
 
 program.parse()
