@@ -1,7 +1,6 @@
 "use client"
 
 import { PlatformVariant } from "@enterprise-commerce/core/platform/types"
-import { addCartItem, getItemAvailability } from "app/actions"
 import { Button } from "components/Button"
 import { useEffect, useState, useTransition } from "react"
 import { useFormState, useFormStatus } from "react-dom"
@@ -10,6 +9,7 @@ import { cn } from "utils/cn"
 import { getCookie } from "utils/getCookie"
 import { Combination } from "utils/productOptionsUtils"
 import { COOKIE_CART_ID } from "constants/index"
+import { addCartItem, getItemAvailability } from "app/actions/cart.actions"
 
 export function AddToCartButton({ className, combination }: { className?: string; combination: Combination | PlatformVariant | undefined }) {
   const [isPending, startTransition] = useTransition()

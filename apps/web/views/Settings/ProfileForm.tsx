@@ -2,7 +2,7 @@
 
 import { PlatformUser } from "@enterprise-commerce/core/platform/types"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { updateUser } from "app/actions"
+import { updateUser } from "app/actions/user.actions"
 import { Button } from "components/Button"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "components/Card"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "components/Form/Form"

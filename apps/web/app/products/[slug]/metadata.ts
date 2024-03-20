@@ -1,5 +1,5 @@
 import { PlatformProduct } from "@enterprise-commerce/core/platform/types"
-import { getProduct } from "app/actions"
+import { getProduct } from "app/actions/product.actions"
 import { env } from "env.mjs"
 import { Metadata } from "next"
 import { Product } from "schema-dts"

@@ -1,7 +1,7 @@
 "use client"
 
 import { PlatformUser } from "@enterprise-commerce/core/platform/types"
-import { logoutUser } from "app/actions"
+import { logoutUser } from "app/actions/user.actions"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "components/DropdownMenu"
 import Link from "next/link"
 import { useRouter } from "next/navigation"

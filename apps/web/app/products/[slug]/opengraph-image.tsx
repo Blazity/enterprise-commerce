@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable jsx-a11y/alt-text */
 
-import { getProduct } from "app/actions"
+import { getProduct } from "app/actions/product.actions"
 import { ImageResponse } from "next/og"
 import { removeOptionsFromUrl } from "utils/productOptionsUtils"
 

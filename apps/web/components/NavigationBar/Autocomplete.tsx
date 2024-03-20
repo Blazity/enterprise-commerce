@@ -3,7 +3,7 @@
 
 import { PlatformProduct } from "@enterprise-commerce/core/platform/types"
 import { useClickAway, useDebounce } from "@uidotdev/usehooks"
-import { searchProducts } from "app/actions"
+import { searchProducts } from "app/actions/product.actions"
 import { SearchIcon } from "components/Icons/SearchIcon"
 import { Spinner } from "components/Spinner"
 import Link from "next/link"

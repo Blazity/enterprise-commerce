@@ -6,9 +6,9 @@ import { FailedAttemptError } from "p-retry"
 import { Root } from "shopify-webhooks"
 import { MEILISEARCH_INDEX } from "constants/index"
 import { createHmac } from "crypto"
-import Replicate from "replicate"
+import { replicate } from "clients/replicate"
 
-import { PlatformProduct } from "@enterprise-commerce/core/platform/types"
+import { PlatformImage, PlatformProduct } from "@enterprise-commerce/core/platform/types"
 
 export async function POST(req: Request) {
   const hmac = req.headers.get("X-Shopify-Hmac-Sha256")
@@ -109,24 +109,18 @@ function isWebhookVerified(rawBody: string, hmac: string) {
 }
 
 async function generateProductAltTags(product: PlatformProduct) {
-  if (!env.REPLICATE_API_KEY) return []
-
-  const replicate = new Replicate({
-    auth: env.REPLICATE_API_KEY || "",
-  })
-
-  const altTagAwareImages = await Promise.all(
-    product?.images?.filter(Boolean).map(async (image) => {
-      const output = (await replicate.run("salesforce/blip:2e1dddc8621f72155f24cf2e0adbde548458d3cab9f00c0139eea840d0ac4746", {
-        input: {
-          task: "image_captioning",
-          image: image.url,
-        },
-      })) as unknown as string
-
-      return { ...image, altText: output?.replace("Caption:", "") || "" }
-    })
-  )
-
+  const altTagAwareImages = await Promise.all(product?.images?.map(mapper).filter(Boolean))
   return altTagAwareImages || []
+
+  async function mapper(image: PlatformImage) {
+    if (!replicate) return
+    const output = (await replicate.run("salesforce/blip:2e1dddc8621f72155f24cf2e0adbde548458d3cab9f00c0139eea840d0ac4746", {
+      input: {
+        task: "image_captioning",
+        image: image.url,
+      },
+    })) as unknown as string
+
+    return { ...image, altText: output?.replace("Caption:", "") || "" }
+  }
 }

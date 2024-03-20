@@ -1,5 +1,4 @@
 import { PlatformProduct } from "@enterprise-commerce/core/platform/types"
-import { getProduct } from "app/actions"
 import { storefrontClient } from "clients/storefrontClient"
 import { Breadcrumbs } from "components/Breadcrumbs"
 import nextDynamic from "next/dynamic"
@@ -18,6 +17,7 @@ import { PageSkeleton, VariantsSectionSkeleton } from "views/Product/PageSkeleto
 import { SimilarProductsSection } from "views/Product/SimilarProductsSection"
 import { SimilarProductsSectionSkeleton } from "views/Product/SimilarProductsSectionSkeleton"
 import { generateJsonLd } from "./metadata"
+import { getProduct } from "app/actions/product.actions"
 
 const VariantsSection = nextDynamic(() => import("views/Product/VariantsSection").then((mod) => mod.VariantsSection), { loading: VariantsSectionSkeleton })
 

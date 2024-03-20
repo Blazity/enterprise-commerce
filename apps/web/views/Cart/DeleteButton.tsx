@@ -1,4 +1,4 @@
-import { removeCartItem } from "app/actions"
+import { removeCartItem } from "app/actions/cart.actions"
 import LoadingDots from "components/LoadingDots"
 import { useFormState, useFormStatus } from "react-dom"
 import { cn } from "utils/cn"

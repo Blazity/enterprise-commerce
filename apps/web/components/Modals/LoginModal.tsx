@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod"
-import { loginUser } from "app/actions"
+import { loginUser } from "app/actions/user.actions"
 import { Button } from "components/Button"
 import { DialogFooter } from "components/Dialog"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "components/Form/Form"

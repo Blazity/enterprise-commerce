@@ -1,4 +1,4 @@
-import { getAllPages, getPage } from "app/actions"
+import { getAllPages, getPage } from "app/actions/page.actions"
 import { format } from "date-fns/format"
 
 export const revalidate = 3600
