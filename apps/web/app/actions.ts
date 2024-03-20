@@ -6,7 +6,7 @@ import { storefrontClient } from "clients/storefrontClient"
 import { revalidateTag, unstable_cache } from "next/cache"
 import { cookies } from "next/headers"
 import { ComparisonOperators, FilterBuilder } from "utils/filterBuilder"
-import { COOKIE_ACCESS_TOKEN, COOKIE_CART_ID, MEILISEARCH_INDEX } from "constants/index"
+import { COOKIE_ACCESS_TOKEN, COOKIE_CART_ID, MEILISEARCH_INDEX, TAGS } from "constants/index"
 
 export const searchProducts = unstable_cache(
   async (query: string, limit: number = 4) => {
@@ -30,7 +30,7 @@ export const getProduct = unstable_cache(
   { revalidate: 3600 }
 )
 
-export const getCart = unstable_cache(async (cartId: string) => storefrontClient.getCart(cartId), ["cart"], { revalidate: 60 * 15, tags: ["cart"] })
+export const getCart = unstable_cache(async (cartId: string) => storefrontClient.getCart(cartId), [TAGS.CART], { revalidate: 60 * 15, tags: [TAGS.CART] })
 
 export async function addCartItem(prevState: any, variantId: string) {
   if (!variantId) return { ok: false }
@@ -45,11 +45,11 @@ export async function addCartItem(prevState: any, variantId: string) {
     cartId = cart.id
     cartId && cookies().set(COOKIE_CART_ID, cartId)
 
-    revalidateTag("cart")
+    revalidateTag(TAGS.CART)
   }
 
   await storefrontClient.createCartItem(cartId!, [{ merchandiseId: variantId, quantity: 1 }])
-  revalidateTag("cart")
+  revalidateTag(TAGS.CART)
 
   return { ok: true }
 }
@@ -69,7 +69,7 @@ export async function removeCartItem(prevState: any, itemId: string) {
   if (!cartId) return null
 
   await storefrontClient.deleteCartItem(cartId!, [itemId])
-  revalidateTag("cart")
+  revalidateTag(TAGS.CART)
 }
 
 export async function updateItemQuantity(prevState: any, payload: { itemId: string; variantId: string; quantity: number }) {
@@ -81,7 +81,7 @@ export async function updateItemQuantity(prevState: any, payload: { itemId: stri
 
   if (quantity === 0) {
     await storefrontClient.deleteCartItem(cartId, [itemId])
-    revalidateTag("cart")
+    revalidateTag(TAGS.CART)
     return { ok: true }
   }
 
@@ -89,7 +89,7 @@ export async function updateItemQuantity(prevState: any, payload: { itemId: stri
   const cartItem = updatedItemResults?.items?.find((item) => item.merchandise.id === variantId)
   const hasAnyLeftInInventory = (cartItem?.quantity ?? 0) < (cartItem?.merchandise.quantityAvailable ?? Infinity)
 
-  revalidateTag("cart")
+  revalidateTag(TAGS.CART)
   return { ok: hasAnyLeftInInventory, message: "This product is out of stock" }
 }
 
