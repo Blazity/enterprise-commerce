@@ -1,6 +1,6 @@
 import { PlatformProduct } from "@enterprise-commerce/core/platform/types"
 import { meilisearch } from "clients/meilisearch"
-import { Carousel, CarouselContent } from "components/Carousel"
+import { Carousel, CarouselContent } from "components/Carousel/Carousel"
 import { ProductCard } from "components/ProductCard/ProductCard"
 import { unstable_cache } from "next/cache"
 import { ComparisonOperators, FilterBuilder } from "utils/filterBuilder"

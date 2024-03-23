@@ -3,7 +3,7 @@
 import * as DialogPrimitive from "@radix-ui/react-dialog"
 import * as React from "react"
 import { cn } from "utils/cn"
-import { CloseIcon } from "./Icons/CloseIcon"
+import { CloseIcon } from "../Icons/CloseIcon"
 
 const Dialog = DialogPrimitive.Root
 

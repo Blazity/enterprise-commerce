@@ -1,5 +1,5 @@
 import { storefrontClient } from "clients/storefrontClient"
-import { Skeleton } from "components/Skeleton"
+import { Skeleton } from "components/Skeleton/Skeleton"
 import dynamic from "next/dynamic"
 import { cookies } from "next/headers"
 import Link from "next/link"

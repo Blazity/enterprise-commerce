@@ -1,6 +1,6 @@
 import { cn } from "utils/cn"
 
-export default function LoadingDots({ className }: { className?: string }) {
+export function LoadingDots({ className }: { className?: string }) {
   return (
     <div className={cn("flex items-center justify-center space-x-0.5 bg-white", className)}>
       <span className="sr-only">Loading...</span>

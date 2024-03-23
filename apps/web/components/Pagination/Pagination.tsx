@@ -2,8 +2,8 @@ import Link, { LinkProps } from "next/link"
 import * as React from "react"
 
 import { cn } from "utils/cn"
-import { ButtonProps, buttonVariants } from "./Button"
-import { ChevronIcon } from "./Icons/ChevronIcon"
+import { ButtonProps, buttonVariants } from "../Button/Button"
+import { ChevronIcon } from "../Icons/ChevronIcon"
 
 const Pagination = ({ className, ...props }: React.ComponentProps<"nav">) => (
   <nav role="navigation" aria-label="pagination" className={cn("mx-auto flex w-full justify-center", className)} {...props} />

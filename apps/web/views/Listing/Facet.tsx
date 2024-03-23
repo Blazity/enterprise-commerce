@@ -1,6 +1,6 @@
-import { AccordionContent, AccordionItem, AccordionTrigger } from "components/Accordion"
-import { Checkbox } from "components/Checkbox"
-import { Label } from "components/Label"
+import { AccordionContent, AccordionItem, AccordionTrigger } from "components/Accordion/Accordion"
+import { Checkbox } from "components/Checkbox/Checkbox"
+import { Label } from "components/Label/Label"
 
 interface FacetProps {
   id: string

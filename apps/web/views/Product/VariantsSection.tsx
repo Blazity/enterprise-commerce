@@ -1,8 +1,8 @@
 "use client"
 
 import { PlatformVariant } from "@enterprise-commerce/core/platform/types"
-import { Label } from "components/Label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/Select"
+import { Label } from "components/Label/Label"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/Select/Select"
 import { usePathname, useRouter } from "next/navigation"
 import { cn } from "utils/cn"
 import { createOptionfulUrl, getAllCombinations, getOptionsFromUrl } from "utils/productOptionsUtils"

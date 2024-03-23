@@ -5,7 +5,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 import * as React from "react"
 
 import { cn } from "utils/cn"
-import { CloseIcon } from "./Icons/CloseIcon"
+import { CloseIcon } from "../Icons/CloseIcon"
 
 const Sheet = SheetPrimitive.Root
 

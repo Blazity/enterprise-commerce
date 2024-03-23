@@ -1,7 +1,7 @@
 "use client"
 
-import { Button } from "components/Button"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "components/DropdownMenu"
+import { Button } from "components/Button/Button"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "components/DropdownMenu/DropdownMenu"
 import { ChevronIcon } from "components/Icons/ChevronIcon"
 import { parseAsStringEnum, useQueryState } from "nuqs"
 

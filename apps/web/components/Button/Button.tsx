@@ -9,6 +9,7 @@ const buttonVariants = cva("inline-flex border border-black rounded-md text-cent
       primary: "hover:text-white text-black bg-white",
       secondary: "hover:text-black text-white bg-black",
       ghost: "hover:bg-accent hover:text-accent-foreground border-0 bg-transparent",
+      outline: "bg-transparent",
     },
     size: {
       default: "px-10 py-2 text-[11px]",

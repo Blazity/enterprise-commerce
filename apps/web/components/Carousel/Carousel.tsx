@@ -4,8 +4,8 @@ import useEmblaCarousel, { type UseEmblaCarouselType } from "embla-carousel-reac
 
 import { createContext, forwardRef, useCallback, useContext, useEffect, useState } from "react"
 import { cn } from "utils/cn"
-import { Button } from "./Button"
-import { ChevronIcon } from "./Icons/ChevronIcon"
+import { Button } from "../Button/Button"
+import { ChevronIcon } from "../Icons/ChevronIcon"
 
 type CarouselApi = UseEmblaCarouselType[1]
 type UseCarouselParameters = Parameters<typeof useEmblaCarousel>

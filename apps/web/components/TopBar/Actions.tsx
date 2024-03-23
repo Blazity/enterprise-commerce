@@ -1,6 +1,6 @@
 "use client"
 
-import { Button } from "components/Button"
+import { Button } from "components/Button/Button"
 import { useModalStore } from "stores/modalStore"
 
 export default function Actions() {

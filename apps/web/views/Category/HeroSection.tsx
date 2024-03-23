@@ -1,5 +1,5 @@
 import { PlatformImage } from "@enterprise-commerce/core/platform/types"
-import { Skeleton } from "components/Skeleton"
+import { Skeleton } from "components/Skeleton/Skeleton"
 import Image from "next/image"
 
 interface HeroSectionProps {

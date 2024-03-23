@@ -1,4 +1,4 @@
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "components/Dialog"
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "components/Dialog/Dialog"
 import { cn } from "utils/cn"
 
 interface FacetsModalProps {

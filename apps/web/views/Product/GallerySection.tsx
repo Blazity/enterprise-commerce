@@ -1,7 +1,7 @@
 "use client"
 
 import { PlatformImage } from "@enterprise-commerce/core/platform/types"
-import { Carousel, CarouselApi, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "components/Carousel"
+import { Carousel, CarouselApi, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "components/Carousel/Carousel"
 import Image from "next/image"
 import { useCallback, useEffect, useState } from "react"
 import { cn } from "utils/cn"

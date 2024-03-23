@@ -1,6 +1,6 @@
 import { PlatformProduct } from "@enterprise-commerce/core/platform/types"
 import { storefrontClient } from "clients/storefrontClient"
-import { Breadcrumbs } from "components/Breadcrumbs"
+import { Breadcrumbs } from "components/Breadcrumbs/Breadcrumbs"
 import nextDynamic from "next/dynamic"
 import { draftMode } from "next/headers"
 import { notFound } from "next/navigation"

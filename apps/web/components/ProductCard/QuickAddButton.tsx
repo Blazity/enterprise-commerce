@@ -1,7 +1,7 @@
 "use client"
 
 import { addCartItem } from "app/actions/cart.actions"
-import { Spinner } from "components/Spinner"
+import { Spinner } from "components/Spinner/Spinner"
 import { useEffect } from "react"
 import { useFormState, useFormStatus } from "react-dom"
 import { useCartStore } from "stores/cartStore"

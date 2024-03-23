@@ -3,10 +3,10 @@
 import { PlatformUser } from "@enterprise-commerce/core/platform/types"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { updateUser } from "app/actions/user.actions"
-import { Button } from "components/Button"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "components/Card"
+import { Button } from "components/Button/Button"
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "components/Card/Card"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "components/Form/Form"
-import { Input } from "components/Input"
+import { Input } from "components/Input/Input"
 
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"

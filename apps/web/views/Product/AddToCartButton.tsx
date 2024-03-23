@@ -1,7 +1,7 @@
 "use client"
 
 import { PlatformVariant } from "@enterprise-commerce/core/platform/types"
-import { Button } from "components/Button"
+import { Button } from "components/Button/Button"
 import { useEffect, useState, useTransition } from "react"
 import { useFormState, useFormStatus } from "react-dom"
 import { useCartStore } from "stores/cartStore"

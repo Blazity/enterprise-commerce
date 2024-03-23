@@ -2,7 +2,7 @@
 
 import { PlatformUser } from "@enterprise-commerce/core/platform/types"
 import { logoutUser } from "app/actions/user.actions"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "components/DropdownMenu"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "components/DropdownMenu/DropdownMenu"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 

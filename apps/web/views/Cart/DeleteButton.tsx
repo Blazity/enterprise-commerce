@@ -1,5 +1,5 @@
 import { removeCartItem } from "app/actions/cart.actions"
-import LoadingDots from "components/LoadingDots"
+import { LoadingDots } from "components/LoadingDots/LoadingDots"
 import { useFormState, useFormStatus } from "react-dom"
 import { cn } from "utils/cn"
 
@@ -8,7 +8,7 @@ interface DeleteButtonProps {
 }
 
 export function DeleteButton({ id }: DeleteButtonProps) {
-  const [state, formAction] = useFormState(removeCartItem, { ok: false })
+  const [_, formAction] = useFormState(removeCartItem, { ok: false })
 
   const actionWithParams = formAction.bind(null, id)
 

@@ -1,9 +1,9 @@
 "use client"
 
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "components/Accordion"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "components/Accordion/Accordion"
 import { SearchIcon } from "components/Icons/SearchIcon"
-import { Input } from "components/Input"
-import { Label } from "components/Label"
+import { Input } from "components/Input/Input"
+import { Label } from "components/Label/Label"
 import type { CategoriesDistribution } from "meilisearch"
 import { parseAsArrayOf, parseAsInteger, parseAsString, useQueryState } from "nuqs"
 import { ChangeEvent } from "react"

@@ -1,5 +1,5 @@
 import { storefrontClient } from "clients/storefrontClient"
-import { Skeleton } from "components/Skeleton"
+import { Skeleton } from "components/Skeleton/Skeleton"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 import { ProfileForm } from "views/Settings/ProfileForm"

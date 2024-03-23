@@ -1,6 +1,6 @@
 import Link from "next/link"
 
-export default function Footer() {
+export function Footer() {
   return (
     <div className="bg-black text-white">
       <div className="max-w-container-md mx-auto flex w-full flex-col justify-between px-4 xl:px-0">

@@ -1,13 +1,13 @@
 "use client"
 
-import { Placeholder } from "components/GenericModal"
+import { Placeholder } from "components/GenericModal/GenericModal"
 import { FiltersIcon } from "components/Icons/FiltersIcon"
 import { CategoriesDistribution } from "meilisearch"
 import dynamic from "next/dynamic"
 import { useState } from "react"
 
 const FacetsContent = dynamic(() => import("views/Listing/FacetsContent").then((m) => m.FacetsContent))
-const GenericModal = dynamic(() => import("components/GenericModal").then((m) => m.GenericModal), { loading: Placeholder })
+const GenericModal = dynamic(() => import("components/GenericModal/GenericModal").then((m) => m.GenericModal), { loading: Placeholder })
 
 interface FacetsMobileProps {
   className?: string

@@ -1,7 +1,7 @@
 import { PlatformCart } from "@enterprise-commerce/core/platform/types"
-import { Button } from "components/Button"
+import { Button } from "components/Button/Button"
 import { CloseIcon } from "components/Icons/CloseIcon"
-import { Sheet, SheetClose, SheetContent, SheetFooter, SheetHeader, SheetTitle } from "components/Sheets"
+import { Sheet, SheetClose, SheetContent, SheetFooter, SheetHeader, SheetTitle } from "components/Sheet/Sheet"
 import { useRouter } from "next/navigation"
 import { CartItem } from "./CartItem"
 

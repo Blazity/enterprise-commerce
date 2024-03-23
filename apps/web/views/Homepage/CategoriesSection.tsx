@@ -1,5 +1,5 @@
 import { storefrontClient } from "clients/storefrontClient"
-import { Skeleton } from "components/Skeleton"
+import { Skeleton } from "components/Skeleton/Skeleton"
 import { unstable_cache } from "next/cache"
 import Link from "next/link"
 

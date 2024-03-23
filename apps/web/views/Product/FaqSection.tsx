@@ -1,6 +1,6 @@
 "use client"
 
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "components/Accordion"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "components/Accordion/Accordion"
 import { cn } from "utils/cn"
 
 const ACCORDIONS = {

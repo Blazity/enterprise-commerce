@@ -1,4 +1,4 @@
-import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "components/Pagination"
+import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "components/Pagination/Pagination"
 
 const PAGE_OFFSET = 2
 
