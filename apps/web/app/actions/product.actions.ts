@@ -2,9 +2,9 @@
 
 import { PlatformProduct } from "@enterprise-commerce/core/platform/types"
 import { meilisearch } from "clients/meilisearch"
-import { MEILISEARCH_INDEX } from "constants/index"
 import { unstable_cache } from "next/cache"
 import { ComparisonOperators, FilterBuilder } from "utils/filterBuilder"
+import { MEILISEARCH_INDEX } from "constants/index"
 
 export const searchProducts = unstable_cache(
   async (query: string, limit: number = 4) => {

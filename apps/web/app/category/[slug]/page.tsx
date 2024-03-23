@@ -97,7 +97,7 @@ const searchProducts = unstable_cache(
       facets: ["collections.title", "tags", "vendor", "variants.availableForSale", "flatOptions.Size", "flatOptions.Color", "minPrice"],
       filter,
       page,
-      attributesToRetrieve: ["id", "handle", "title", "priceRange", "featuredImage", "minPrice", "variants"],
+      attributesToRetrieve: ["id", "handle", "title", "priceRange", "featuredImage", "minPrice", "variants", "images"],
     })
 
     const hits = results?.hits || []

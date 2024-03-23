@@ -13,13 +13,14 @@ export function ProductCard(props: ProductCardProps) {
   const variant = props.variants?.find(Boolean)?.price
   const href = `/products/${props.handle}`
   const linkAria = `Visit product: ${props.title}`
+  const featuredImageAltTag = props.images.find((singleImage) => singleImage.url === props.featuredImage?.url)?.altText || ""
 
   return (
     <div className={cn("group relative bg-neutral-100 p-4 md:bg-transparent md:p-0", props.className)}>
       <div className="relative flex min-h-[100px] items-center justify-center bg-neutral-100 md:min-h-[320px]">
         <Link aria-label={linkAria} href={href} className="relative z-10">
           <Image
-            alt={props.featuredImage?.altText || ""}
+            alt={featuredImageAltTag}
             className="size-[150px] select-none object-contain transition-transform group-hover:scale-105 md:size-[250px]"
             height={150}
             src={props.featuredImage?.url || "/default-product-image.svg"}
