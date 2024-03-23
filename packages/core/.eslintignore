@@ -6,3 +6,7 @@ dist
 /dist
 dist/*
 dist/**/*
+
+**/types/**.*.d.ts
+**/types/*.d.ts
+platform/shopify/types
