@@ -1,3 +1,4 @@
+import { BUCKETS } from "constants/index"
 import { Suspense } from "react"
 import { BestOffersSection } from "views/Homepage/BestOffersSection"
 import { CarouselSectionSkeleton } from "views/Homepage/CarouselSection"
@@ -10,11 +11,15 @@ export const revalidate = 3600
 
 export const dynamicParams = true
 
-export default function Homepage() {
+export default function Homepage({ params: { bucket } }: { params: { bucket: string } }) {
+  const heroTitles = {
+    a: "Your daily trendsetting deals",
+    b: "Your daily top deals",
+  }
+
   return (
     <>
-      <HeroSection />
-
+      <HeroSection title={heroTitles[bucket]} />
       <Suspense fallback={<ProductsWeekSectionSkeleton />}>
         <ProductsWeekSection />
       </Suspense>
@@ -32,4 +37,8 @@ export default function Homepage() {
       </Suspense>
     </>
   )
+}
+
+export async function generateStaticParams() {
+  return BUCKETS.HOME.map((bucket) => ({ bucket }))
 }

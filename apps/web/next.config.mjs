@@ -44,6 +44,7 @@ const config = withPlugins([[withVercelToolbar(), withBundleAnalyzer({ enabled: 
   },
   rewrites() {
     return [
+      { source: "/", destination: "/home" },
       { source: "/healthz", destination: "/api/health" },
       { source: "/api/healthz", destination: "/api/health" },
       { source: "/health", destination: "/api/health" },
