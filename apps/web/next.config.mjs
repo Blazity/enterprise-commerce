@@ -22,6 +22,16 @@ const config = withPlugins([[withVercelToolbar(), withBundleAnalyzer({ enabled: 
     remotePatterns: [
       {
         protocol: "https",
+        hostname: "plus.unsplash.com",
+        port: "",
+      },
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+        port: "",
+      },
+      {
+        protocol: "https",
         hostname: "picsum.photos",
         port: "",
       },
