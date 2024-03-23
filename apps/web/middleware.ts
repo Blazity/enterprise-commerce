@@ -1,8 +1,8 @@
-import { NextResponse, NextRequest } from "next/server"
 import { ScalableBloomFilter } from "bloom-filters"
-import GeneratedBloomFilter from "./redirects/bloom-filter.json"
-import { BUCKETS } from "constants/index"
+import { NextRequest, NextResponse } from "next/server"
 import { getBucket } from "utils/abTesting"
+import { BUCKETS } from "constants/index"
+import GeneratedBloomFilter from "./redirects/bloom-filter.json"
 
 type RedirectEntry = {
   destination: string
@@ -49,7 +49,7 @@ async function handleRedirectsMiddleware(request: NextRequest) {
     const redirectData = await fetch(api)
 
     if (redirectData.ok) {
-      const redirectEntry: RedirectEntry | undefined = await redirectData.json()
+      const redirectEntry = (await redirectData.json()) as RedirectEntry | undefined
 
       if (redirectEntry) {
         const statusCode = redirectEntry.permanent ? 308 : 307
