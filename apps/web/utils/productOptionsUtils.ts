@@ -1,4 +1,4 @@
-import { PlatformVariant } from "@enterprise-commerce/core/platform/types"
+import { PlatformProduct, PlatformVariant } from "@enterprise-commerce/core/platform/types"
 
 export interface Combination {
   id: string
@@ -21,6 +21,17 @@ export function getAllCombinations(variants: PlatformVariant[]): Combination[] {
     quantityAvailable: variant.quantityAvailable,
     ...variant.selectedOptions.reduce((accumulator, option) => ({ ...accumulator, [option.name.toLowerCase()]: option.value }), {}),
   }))
+}
+
+export function getCombination(product: PlatformProduct, color: string | null, size: string | null) {
+  const hasOnlyOneVariant = product.variants.length <= 1
+
+  const defaultColor = product.flatOptions?.["Color"]?.find(Boolean) ?? null
+  const defaultSize = product.flatOptions?.["Size"]?.find(Boolean) ?? null
+
+  return hasOnlyOneVariant
+    ? product.variants.find(Boolean)
+    : getAllCombinations(product.variants).find((combination) => combination.size === (size ?? defaultSize) && combination.color === (color ?? defaultColor))
 }
 
 export function hasValidOption(variants: PlatformVariant[] | null | undefined, optionName: Option, optionValue: string | null): boolean {

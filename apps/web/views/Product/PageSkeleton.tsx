@@ -21,13 +21,8 @@ export function PageSkeleton() {
               <Skeleton className="mt-4 h-[54px] w-[200px] text-[36px] font-bold tracking-[-1.44px]" />
             </div>
             <VariantsSectionSkeleton />
-            <Skeleton className="my-8 h-[61px] w-[250px]" />
-            <div className="mt-12  w-full">
-              <Skeleton className="my-2 h-[50px] w-full" />
-              <Skeleton className="my-2 h-[50px] w-full" />
-              <Skeleton className="my-2 h-[50px] w-full" />
-              <Skeleton className="my-2 h-[50px] w-full" />
-            </div>
+            <AddToCartButtonSkeleton />
+            <FaqSectionSkeleton />
           </div>
         </div>
       </main>
@@ -49,4 +44,19 @@ export function VariantsSectionSkeleton() {
       </div>
     </div>
   )
+}
+
+export function FaqSectionSkeleton() {
+  return (
+    <div className="mt-12  w-full">
+      <Skeleton className="my-2 h-[50px] w-full" />
+      <Skeleton className="my-2 h-[50px] w-full" />
+      <Skeleton className="my-2 h-[50px] w-full" />
+      <Skeleton className="my-2 h-[50px] w-full" />
+    </div>
+  )
+}
+
+export function AddToCartButtonSkeleton() {
+  return <Skeleton className="my-8 h-[61px] w-[250px]" />
 }

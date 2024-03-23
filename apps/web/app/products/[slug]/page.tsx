@@ -1,25 +1,21 @@
 import { PlatformProduct } from "@enterprise-commerce/core/platform/types"
+import { getProduct } from "app/actions/product.actions"
 import { storefrontClient } from "clients/storefrontClient"
 import { Breadcrumbs } from "components/Breadcrumbs/Breadcrumbs"
-import nextDynamic from "next/dynamic"
 import { draftMode } from "next/headers"
 import { notFound } from "next/navigation"
 import { Suspense } from "react"
 
-import { getAllCombinations, getOptionsFromUrl, hasValidOption, removeOptionsFromUrl } from "utils/productOptionsUtils"
-import { AddToCartButton } from "views/Product/AddToCartButton"
+import { getCombination, getOptionsFromUrl, hasValidOption, removeOptionsFromUrl } from "utils/productOptionsUtils"
 import { BackButton } from "views/Product/BackButton"
-import { FaqSection } from "views/Product/FaqSection"
+import { DetailsSection } from "views/Product/DetailsSection"
 import { FavoriteMarker } from "views/Product/FavoriteMarker"
 import { GallerySection } from "views/Product/GallerySection"
 import { InfoSection } from "views/Product/InfoSection"
-import { PageSkeleton, VariantsSectionSkeleton } from "views/Product/PageSkeleton"
+import { PageSkeleton } from "views/Product/PageSkeleton"
 import { SimilarProductsSection } from "views/Product/SimilarProductsSection"
 import { SimilarProductsSectionSkeleton } from "views/Product/SimilarProductsSectionSkeleton"
 import { generateJsonLd } from "./metadata"
-import { getProduct } from "app/actions/product.actions"
-
-const VariantsSection = nextDynamic(() => import("views/Product/VariantsSection").then((mod) => mod.VariantsSection), { loading: VariantsSectionSkeleton })
 
 export const revalidate = 3600
 
@@ -49,7 +45,6 @@ async function ProductView({ slug }: { slug: string }) {
     return notFound()
   }
 
-  const hasOnlyOneVariant = product.variants.length <= 1
   const combination = getCombination(product, color, size)
   const lastCollection = product?.collections?.findLast(Boolean)
 
@@ -67,9 +62,7 @@ async function ProductView({ slug }: { slug: string }) {
           </GallerySection>
           <div className="flex flex-col items-start pt-12">
             <InfoSection className="pb-10" title={product.title} description={product.descriptionHtml} combination={combination} />
-            {hasOnlyOneVariant ? null : <VariantsSection flatOptions={product.flatOptions} variants={product.variants} />}
-            <AddToCartButton className="my-8" combination={combination} />
-            <FaqSection className="mt-12" />
+            <DetailsSection slug={slug} product={product} />
           </div>
         </div>
       </main>
@@ -97,15 +90,4 @@ function makeBreadcrumbs(product: PlatformProduct) {
     [lastCollection?.title || "Products"]: lastCollection?.handle ? `/category/${lastCollection.handle}` : "/search",
     [product.title]: "",
   }
-}
-
-function getCombination(product: PlatformProduct, color: string | null, size: string | null) {
-  const hasOnlyOneVariant = product.variants.length <= 1
-
-  const defaultColor = product.flatOptions?.["Color"]?.find(Boolean) ?? null
-  const defaultSize = product.flatOptions?.["Size"]?.find(Boolean) ?? null
-
-  return hasOnlyOneVariant
-    ? product.variants.find(Boolean)
-    : getAllCombinations(product.variants).find((combination) => combination.size === (size ?? defaultSize) && combination.color === (color ?? defaultColor))
 }
