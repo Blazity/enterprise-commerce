@@ -19,8 +19,8 @@ const formSchema = z.object({
 })
 
 const formFields = [
-  { label: "Email", name: "email", type: "text" },
-  { label: "Password", name: "password", type: "password" },
+  { label: "Email", name: "email", type: "text", placeholder: "Enter email..." },
+  { label: "Password", name: "password", type: "password", placeholder: "Enter password..." },
 ] as const
 
 export function SignupModal() {
@@ -58,7 +58,7 @@ export function SignupModal() {
                 <FormItem>
                   <FormLabel>{singleField.label}</FormLabel>
                   <FormControl>
-                    <Input type={singleField.type} className="text-sm" placeholder="shadcn" {...field} />
+                    <Input type={singleField.type} className="text-sm" placeholder={singleField.placeholder} {...field} />
                   </FormControl>
                   <FormMessage className="text-xs font-normal text-red-400" />
                 </FormItem>
