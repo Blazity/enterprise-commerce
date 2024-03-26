@@ -1,7 +1,7 @@
 "use client"
 
-import { usePathname } from "next/navigation"
 import { VercelToolbar } from "@vercel/toolbar/next"
+import { usePathname } from "next/navigation"
 
 export function DraftToolbar() {
   const pathname = usePathname()

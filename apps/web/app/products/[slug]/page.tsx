@@ -2,6 +2,7 @@ import { PlatformProduct } from "@enterprise-commerce/core/platform/types"
 import { getProduct } from "app/actions/product.actions"
 import { storefrontClient } from "clients/storefrontClient"
 import { Breadcrumbs } from "components/Breadcrumbs/Breadcrumbs"
+import { unstable_cache } from "next/cache"
 import { draftMode } from "next/headers"
 import { notFound } from "next/navigation"
 import { Suspense } from "react"
@@ -73,14 +74,20 @@ async function ProductView({ slug }: { slug: string }) {
   )
 }
 
+export async function generateStaticParams() {
+  return [{ slug: "hasbro-games-yahtzee-classic-draft" }]
+}
+
 async function getDraftAwareProduct(slug: string) {
   const draft = draftMode()
 
   let product = await getProduct(removeOptionsFromUrl(slug))
-  if (draft.isEnabled && product) product = await storefrontClient.getAdminProduct(product?.id)
+  if (draft.isEnabled && product) product = await getAdminProduct(product?.id)
 
   return product
 }
+
+const getAdminProduct = unstable_cache(async (id: string) => storefrontClient.getAdminProduct(id), ["admin-product-by-handle"], { revalidate: 1 })
 
 function makeBreadcrumbs(product: PlatformProduct) {
   const lastCollection = product.collections.findLast(Boolean)
