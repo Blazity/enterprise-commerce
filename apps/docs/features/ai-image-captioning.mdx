@@ -1,0 +1,23 @@
+---
+title: "AI Image Captioning"
+description: "Improve SEO and UX by captioning your images"
+icon: "microchip-ai"
+---
+
+<Note>
+  The feature is disabled by default because it requires you to provide `REPLICATE_API_KEY` in `.env` file. You can create your own API Token here
+  [https://replicate.com/account/api-tokens](https://replicate.com/account/api-tokens)
+</Note>
+
+Enterprise Commerce leverages the power of AI to automatically generate captions for product images.
+This feature utilizes the [Replicate API](https://replicate.com/) and the `salesforce/blip` model to analyze images and produce accurate and descriptive captions.
+These captions are then used to **populate alt tags**, enhancing SEO by providing search engines with valuable information about the image content. Additionally, the captions improve user experience by **enabling image search** functionality within the platform, allowing users to quickly and easily find the products they are looking for.
+
+To activate the AI Image Captioning feature, simply set the `IS_IMAGE_CAPTIONING_ENABLED` environment variable to true within your `.env` file. This can be done by adding the following lines:
+
+```bash .env
+IS_IMAGE_CAPTIONING_ENABLED=true
+REPLICATE_API_KEY="your api key"
+```
+
+Once this variable is set, the project won't automatically start generating captions. You have to run full sync migration (only once, after enabling), learn more in [CLI > Migration page](/cli#migration)

@@ -7,85 +7,68 @@
   },
   "favicon": "/favicon.svg",
   "colors": {
-    "primary": "#0D9373",
-    "light": "#07C983",
-    "dark": "#0D9373",
+    "primary": "#FF5F1F",
+    "light": "#F26C28",
+    "dark": "#FF5F1F",
     "anchors": {
-      "from": "#0D9373",
-      "to": "#07C983"
+      "from": "#FF5F1F",
+      "to": "#F26C28"
     }
   },
   "topbarLinks": [
     {
       "name": "Support",
-      "url": "mailto:hi@mintlify.com"
-    }
-  ],
-  "topbarCtaButton": {
-    "name": "Dashboard",
-    "url": "https://dashboard.mintlify.com"
-  },
-  "tabs": [
-    {
-      "name": "API Reference",
-      "url": "api-reference"
+      "url": "https://blazity.com/discord"
     }
   ],
   "anchors": [
     {
-      "name": "Documentation",
-      "icon": "book-open-cover",
-      "url": "https://mintlify.com/docs"
-    },
-    {
       "name": "Community",
-      "icon": "slack",
-      "url": "https://mintlify.com/community"
+      "icon": "discord",
+      "url": "https://blazity.com/discord"
     },
     {
       "name": "Blog",
       "icon": "newspaper",
-      "url": "https://mintlify.com/blog"
+      "url": "https://blazity.com/blog"
     }
   ],
   "navigation": [
     {
       "group": "Get Started",
+      "pages": ["introduction", "setup", "architecture"]
+    },
+    {
+      "group": "Features",
       "pages": [
-        "introduction",
-        "quickstart",
-        "development"
+        "features/vector-search",
+        "features/ai-image-captioning",
+        "features/og-images",
+        "features/seo",
+        "features/filtering",
+        "features/draft-mode",
+        "features/vercel-toolbar",
+        "features/cli",
+        "features/analytics",
+        "features/ab-tests",
+        "features/redirects",
+        "features/favorites",
+        "features/rich-pages",
+        "features/ci-cd",
+        "features/platform-agnostic",
+        "features/mega-menu",
+        "features/cookie-consent"
       ]
     },
     {
       "group": "Essentials",
-      "pages": [
-        "essentials/markdown",
-        "essentials/code",
-        "essentials/images",
-        "essentials/settings",
-        "essentials/navigation",
-        "essentials/reusable-snippets"
-      ]
-    },
-    {
-      "group": "API Documentation",
-      "pages": [
-        "api-reference/introduction"
-      ]
-    },
-    {
-      "group": "Endpoint Examples",
-      "pages": [
-        "api-reference/endpoint/get",
-        "api-reference/endpoint/create",
-        "api-reference/endpoint/delete"
-      ]
+      "pages": ["essentials/markdown", "essentials/code", "essentials/images", "essentials/settings", "essentials/navigation", "essentials/reusable-snippets"]
     }
   ],
   "footerSocials": {
-    "twitter": "https://twitter.com/mintlify",
-    "github": "https://github.com/mintlify",
-    "linkedin": "https://www.linkedin.com/company/mintsearch"
+    "twitter": "https://twitter.com/blazity",
+    "github": "https://github.com/blazity",
+    "facebook": "https://www.facebook.com/blazity/",
+    "linkedin": "https://www.linkedin.com/company/blazity"
   }
 }
