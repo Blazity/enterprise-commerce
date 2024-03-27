@@ -5,5 +5,5 @@ import { usePathname } from "next/navigation"
 
 export function DraftToolbar() {
   const pathname = usePathname()
-  return pathname.endsWith("-draft") ? <VercelToolbar /> : null
+  return pathname.endsWith("/draft") ? <VercelToolbar /> : null
 }

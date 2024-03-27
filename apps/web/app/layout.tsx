@@ -176,7 +176,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <TopBar />
         <NavigationBar items={navigationItems} />
         <AnnouncementBar />
+
         {children}
+
         <CallToAction />
         <Footer />
         <Modals />

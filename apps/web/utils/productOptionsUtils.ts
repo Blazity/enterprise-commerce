@@ -55,7 +55,7 @@ export function removeOptionsFromUrl(pathname: string) {
   const sizePattern = /-size_([0-9a-zA-Z]+)/
   const colorPattern = /-color_([0-9a-zA-Z]+)/
 
-  return pathname.replace(sizePattern, "").replace(colorPattern, "").replace("-draft", "")
+  return pathname.replace(sizePattern, "").replace(colorPattern, "")
 }
 
 export function getOptionsFromUrl(pathname: string) {
