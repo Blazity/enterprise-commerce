@@ -180,7 +180,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <CallToAction />
         <Footer />
         <Modals />
-
         <Suspense fallback={null}>
           <Cart />
         </Suspense>

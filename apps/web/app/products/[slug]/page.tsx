@@ -59,11 +59,15 @@ async function ProductView({ slug }: { slug: string }) {
         <Breadcrumbs className="mb-8 hidden md:block" items={makeBreadcrumbs(product)} />
         <div className="grid grid-cols-1 justify-center gap-10 md:grid-cols-2 lg:gap-20">
           <GallerySection images={product.images}>
-            <FavoriteMarker handle={product.handle} />
+            <Suspense fallback={null}>
+              <FavoriteMarker handle={product.handle} />
+            </Suspense>
           </GallerySection>
           <div className="flex flex-col items-start pt-12">
             <InfoSection className="pb-10" title={product.title} description={product.descriptionHtml} combination={combination} />
-            <DetailsSection slug={slug} product={product} />
+            <Suspense fallback={null}>
+              <DetailsSection slug={slug} product={product} />
+            </Suspense>
           </div>
         </div>
       </main>
@@ -72,10 +76,6 @@ async function ProductView({ slug }: { slug: string }) {
       </Suspense>
     </div>
   )
-}
-
-export async function generateStaticParams() {
-  return [{ slug: "hasbro-games-yahtzee-classic-draft" }]
 }
 
 async function getDraftAwareProduct(slug: string) {
