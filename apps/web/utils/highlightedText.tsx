@@ -1,7 +1,11 @@
 import { cn } from "./cn"
 
 export function getHighlightedText(text: string, highlight: string) {
-  const parts = text.split(new RegExp(`(${highlight})`, "gi"))
+  let parts = [""]
+  try {
+    parts = text.split(new RegExp(`(${escapeRegExp(highlight)})`, "gi"))
+  } catch (e) {}
+
   return (
     <span>
       {parts.map((part, i) => (
@@ -11,4 +15,8 @@ export function getHighlightedText(text: string, highlight: string) {
       ))}{" "}
     </span>
   )
+}
+
+function escapeRegExp(value: string) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") // $& means the whole matched string
 }
