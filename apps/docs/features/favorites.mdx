@@ -3,3 +3,15 @@ title: "Favorites"
 description: "Display inline code and code blocks"
 icon: "heart"
 ---
+
+The Favorites feature allows users to "like" products and save them for later viewing or purchase. This functionality is accessible without requiring user accounts or logins.
+
+**Technical Implementation:**
+
+Favorites data is stored exclusively within the user's browser, specifically in `localStorage`. This means that:
+
+- **No server-side storage or user accounts are involved.**
+- **Favorites data is specific to the browser and device used.**
+- **Data is not shared across devices or browsers.**
+
+**Note:** Due to the reliance on `localStorage`, clearing browser data or using a different browser will result in the loss of saved favorites.

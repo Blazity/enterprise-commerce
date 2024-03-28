@@ -3,3 +3,29 @@ title: "Analytics"
 description: "Display inline code and code blocks"
 icon: "chart-mixed"
 ---
+
+Enterprise Commerce provides built-in support for two powerful analytics tools: Vercel Analytics and Google Analytics. While you have the flexibility to integrate any third-party analytics solution of your choice, these two options are readily available out of the box.
+
+## Vercel Analytics (Recommended)
+
+Vercel Analytics is the recommended and default analytics solution in Enterprise Commerce. It offers several key advantages:
+
+- **Privacy-friendly**: Vercel Analytics respects user privacy and does not collect personally identifiable information (PII).
+- **Real-time insights**: Get instant visibility into your website's traffic and user behavior with real-time data updates.
+- **Minimal performance impact**: Unlike other analytics solutions, Vercel Analytics has negligible impact on your website's performance, ensuring optimal speed and user experience.
+
+To disable/enable Vercel Analytics, simply set the feature flag `IS_VERCEL_ANALYTICS_ENABLED` to `true` or `false` in your `.env` file:
+
+```bash .env
+IS_VERCEL_ANALYTICS_ENABLED=false
+```
+
+## Google Analytics
+
+Enterprise Commerce also supports Google Analytics integration through the official Next.js module. While it is disabled by default, you can easily enable it by setting the feature flag `IS_GTM_ENABLED` in your `.env` file:
+
+```bash .env
+IS_GTM_ENABLED=true
+```
+
+Once enabled, the Google Analytics tracking code will be automatically added to your website, allowing you to track and analyze user behavior and traffic data.

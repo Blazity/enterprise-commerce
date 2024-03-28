@@ -3,3 +3,49 @@ title: "SEO"
 description: "Display inline code and code blocks"
 icon: "sitemap"
 ---
+
+Enterprise Commerce prioritizes search engine optimization (SEO) with a comprehensive approach that includes:
+
+### Technical SEO
+
+- **Lighthouse Score:** We maintain a perfect 100 score in Lighthouse audits, ensuring optimal technical performance.
+- **Best Practices:** We adhere to SEO best practices, including canonicals, server-side pagination, and a well-defined URL structure.
+- **JSON-LD:** We implement structured data using JSON-LD for product pages, providing rich information to search engines and enhancing search visibility. JSON-LD is rendered as a `<script>` tag in the page component.
+
+### Metadata API
+
+If you want to customize the meta tags in your Next.js application, you have two options:
+
+1. **Static Metadata:** Export a constant `metadata` object in your `page.tsx` or `layout.tsx` file. This is suitable when the metadata values are static and don't require any dynamic processing.
+
+   Example:
+
+   ```typescript
+   export const metadata: Metadata = {
+     title: "Acme",
+     openGraph: {
+       title: "Acme",
+       description: "Acme is a...",
+     },
+   }
+   ```
+
+2. **Dynamic Metadata:** Export an async function called `generateMetadata` in your `page.tsx` or `layout.tsx` file. This function receives the route parameters as an argument and returns a `Promise<Metadata>`. Use this approach when you need to fetch data or perform dynamic operations before returning the metadata.
+
+   Example:
+
+   ```typescript
+   export async function generateMetadata({ params: { slug } }: { params: { slug: string } }): Promise<Metadata> {
+     const page = await getPage(slug)
+
+     return {
+       title: page?.seo?.title || page?.title,
+       description: page?.seo?.description || page?.bodySummary,
+       referrer: "origin-when-cross-origin",
+       creator: "Blazity",
+       publisher: "Blazity",
+     }
+   }
+   ```
+
+   In this example, the `generateMetadata` function receives the `slug` parameter from the route, fetches the corresponding page data using the `getPage` function, and returns the metadata object based on the fetched data.

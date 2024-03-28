@@ -3,3 +3,71 @@ title: "Platform Agnostic"
 description: "Display inline code and code blocks"
 icon: "cash-register"
 ---
+
+Enterprise Commerce is designed with a platform-agnostic architecture, allowing for seamless integration with various e-commerce engines.
+While the starter is integrated with Shopify by default, it is not tightly coupled to the platform.
+
+The key to this flexibility lies in the platform module, which utilizes the Factory pattern with different strategies.
+Shopify is set as the default strategy, but the architecture enables developers to integrate the starter with other e-commerce platforms, such as BigCommerce, by simply adding their own strategy to the platform layer.
+
+### Platform Module Structure
+
+At the core of this architecture is the `platform` module, which implements the Factory pattern to support different e-commerce platform strategies.
+The directory structure of the `platform` module is as follows:
+
+```yaml
+platform/
+├── index.ts           # Entry point for the platform module
+├── shopify/           # Shopify strategy implementation
+│   ├── index.ts       # Shopify strategy exports
+│   ├── normalize.ts   # Normalization logic for Shopify data
+│   ├── fragments/     # GraphQL fragments for Shopify
+│   ├── queries/       # GraphQL queries for Shopify
+│   ├── mutations/     # GraphQL mutations for Shopify
+│   └── types/         # TypeScript definitions for Shopify
+│       ├── admin/
+│       │   └── admin.types.d.ts  # Admin-specific types
+│       └── storefront.types.d.ts # Storefront-specific types
+└── types.ts           # Platform-agnostic types for the platform module
+```
+
+### Extending the Platform Module
+
+To integrate Enterprise Commerce with a different e-commerce engine, such as BigCommerce, developers simply need to extend the platform layer by adding their own strategy. This addition requires no changes to the frontend layer, maintaining a consistent API across different e-commerce backends.
+
+Here's a high-level overview of the steps to extend the platform module:
+
+1. Create a new directory within the `platform` module to house the new strategy, e.g., `bigcommerce`.
+2. Implement the necessary normalization logic, GraphQL fragments, queries, mutations, and TypeScript types similar to the existing `shopify` strategy.
+3. Update the `platform` module's `index.ts` to include and expose the new strategy through the Factory pattern.
+
+```typescript platform/your-custom-backend/index.ts
+export function createClient({ storefrontAccessToken, adminAccessToken, storeDomain }: CreateShopifyClientProps) {
+  const client = getYourCustomBackendClient()
+
+  return {
+    getMenu: async (handle?: string) void 0,
+    getProduct: async (id: string) void 0,
+    getProductByHandle: async (handle: string) void 0,
+    subscribeWebhook: async (topic: `${WebhookSubscriptionTopic}`, callbackUrl: string) void 0,
+    createProductFeed: async () void 0,
+    fullSyncProductFeed: async (id: string) void 0,
+    getLatestProductFeed: async () void 0,
+    getPage: async (handle: string) void 0,
+    getAllPages: async () void 0,
+    getProductStatus: async (id: string) void 0,
+    getAdminProduct: async (id: string) void 0,
+    createCart: async (items: PlatformItemInput[]) void 0,
+    createCartItem: async (cartId: string, items: PlatformItemInput[]) void 0,
+    updateCartItem: async (cartId: string, items: PlatformItemInput[]) void 0,
+    deleteCartItem: async (cartId: string, itemIds: string[]) void 0,
+    getCart: async (cartId: string) void 0,
+    getCollections: async (limit?: number) void 0,
+    getCollection: async (handle: string) void 0,
+    createUser: async (input: PlatformUserCreateInput) void 0,
+    getUser: async (accessToken: string) void 0,
+    updateUser: async (accessToken: string, input: Omit<PlatformUserCreateInput, "password">) void 0,
+    createUserAccessToken: async (input: Pick<PlatformUserCreateInput, "password" | "email">) void 0,
+  }
+}
+```

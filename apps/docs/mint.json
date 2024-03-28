@@ -57,7 +57,8 @@
         "features/ci-cd",
         "features/platform-agnostic",
         "features/mega-menu",
-        "features/cookie-consent"
+        "features/autocomplete",
+        "features/cart"
       ]
     },
     {

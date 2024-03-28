@@ -3,3 +3,35 @@ title: "CI/CD"
 description: "Display inline code and code blocks"
 icon: "circle-nodes"
 ---
+
+Enterprise Commerce utilizes a robust CI/CD pipeline to ensure code quality, maintainability, and performance. The pipeline is powered by GitHub Actions and consists of four main actions:
+
+## Actions
+
+### Check
+
+This action performs multiple checks to validate the health of the codebase. It:
+
+- Runs unit and integration tests to ensure code reliability.
+- Validates TypeScript type soundness to prevent type errors.
+- Parses the project for structural integrity.
+- Checks code formatting for consistency across the codebase.
+- **Verifies the permissiveness of the software license in use.**
+
+### Commitlint
+
+This action ensures all commit messages adhere to conventional commit standards, linting messages for consistency and readability.
+
+### Next.js Bundle Analysis
+
+This action compares the pull request (PR) branch with the main branch in terms of application bundle size. It is particularly valuable for teams with a **performance budget**, helping maintain an optimized bundle size and preventing accidental inclusion of large dependencies.
+
+### Playwright
+
+The Playwright action is responsible for running end-to-end tests in a headless browser environment during the CI process, ensuring that user flows work as expected before deployment.
+
+## Caching Strategies
+
+**All of the above-mentioned actions employ aggressive caching strategies**, which allow the actions to complete in approximately 1 minute if there are no changes to the `yarn.lock` file. The caching efficiency is enhanced by utilizing TurboRepo's remote caching functionality, which can be found at [TurboRepo Remote Caching Documentation](https://turbo.build/repo/docs/core-concepts/remote-caching).
+
+The adoption of these caching techniques significantly reduces the CI run time, optimizing the development cycle and resource usage.
