@@ -1,8 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable jsx-a11y/alt-text */
 
-import { getProduct } from "app/actions/product.actions"
 import { ImageResponse } from "next/og"
+import { getProduct } from "app/actions/product.actions"
 import { removeOptionsFromUrl } from "utils/productOptionsUtils"
 
 export const runtime = "edge"

@@ -1,5 +1,5 @@
-import { FavoritesIcon } from "components/Icons/FavoritesIcon"
 import Link from "next/link"
+import { FavoritesIcon } from "components/Icons/FavoritesIcon"
 import { cn } from "utils/cn"
 
 interface FavoritesProps {

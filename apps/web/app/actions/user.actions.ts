@@ -1,9 +1,9 @@
 "use server"
 
 import { PlatformUserCreateInput } from "@enterprise-commerce/core/platform/types"
+import { cookies } from "next/headers"
 import { storefrontClient } from "clients/storefrontClient"
 import { COOKIE_ACCESS_TOKEN } from "constants/index"
-import { cookies } from "next/headers"
 
 export async function signupUser({ email, password }: { email: string; password: string }) {
   const user = await storefrontClient.createUser({ email, password })

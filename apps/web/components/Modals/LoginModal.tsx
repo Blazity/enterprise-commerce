@@ -1,4 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { toast } from "sonner"
+import { z } from "zod"
 import { loginUser } from "app/actions/user.actions"
 import { Button } from "components/Button/Button"
 import { DialogFooter } from "components/Dialog/Dialog"
@@ -6,10 +9,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { GenericModal } from "components/GenericModal/GenericModal"
 import { Input } from "components/Input/Input"
 import { Logo } from "components/Logo/Logo"
-import { useForm } from "react-hook-form"
-import { toast } from "sonner"
 import { useModalStore } from "stores/modalStore"
-import { z } from "zod"
 
 const formSchema = z.object({
   email: z.string().email().min(3).max(64),

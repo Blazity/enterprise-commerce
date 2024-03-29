@@ -1,8 +1,8 @@
 import { PlatformCart } from "@enterprise-commerce/core/platform/types"
-import { getCart } from "app/actions/cart.actions"
 import { cookies } from "next/headers"
-import { cn } from "utils/cn"
+import { getCart } from "app/actions/cart.actions"
 import { COOKIE_CART_ID } from "constants/index"
+import { cn } from "utils/cn"
 import { OpenCartButton } from "./OpenCartButton"
 
 interface CartProps {

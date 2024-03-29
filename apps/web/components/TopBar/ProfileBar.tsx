@@ -1,10 +1,10 @@
 "use client"
 
 import { PlatformUser } from "@enterprise-commerce/core/platform/types"
-import { logoutUser } from "app/actions/user.actions"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "components/DropdownMenu/DropdownMenu"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { logoutUser } from "app/actions/user.actions"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "components/DropdownMenu/DropdownMenu"
 
 export function ProfileBar({ user }: { user: PlatformUser }) {
   const router = useRouter()

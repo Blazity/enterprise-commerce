@@ -1,10 +1,11 @@
 import { PlatformProduct } from "@enterprise-commerce/core/platform/types"
-import { meilisearch } from "clients/meilisearch"
 import type { Metadata } from "next"
 import { unstable_cache } from "next/cache"
 import { createSearchParamsCache, parseAsArrayOf, parseAsInteger, parseAsString } from "nuqs/server"
 import { Suspense } from "react"
+import { meilisearch } from "clients/meilisearch"
 
+import { MEILISEARCH_INDEX } from "constants/index"
 import { FilterBuilder } from "utils/filterBuilder"
 import { composeFilters } from "views/Listing/composeFilters"
 import { FacetsDesktop } from "views/Listing/FacetsDesktop"
@@ -13,7 +14,6 @@ import { HitsSection } from "views/Listing/HitsSection"
 import { PageSkeleton } from "views/Listing/PageSkeleton"
 import { PaginationSection } from "views/Listing/PaginationSection"
 import { Sorter } from "views/Listing/Sorter"
-import { MEILISEARCH_INDEX } from "constants/index"
 
 export const metadata: Metadata = {
   title: "Search | Enterprise Commerce",

@@ -1,6 +1,6 @@
+import { Suspense } from "react"
 import { ChevronIcon } from "components/Icons/ChevronIcon"
 
-import { Suspense } from "react"
 import { cn } from "utils/cn"
 import { Autocomplete } from "./Autocomplete"
 import { Cart } from "./Cart"

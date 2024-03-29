@@ -8,14 +8,7 @@ module.exports = {
     React: true,
     JSX: true,
   },
-  extends: [
-    "next",
-    "prettier",
-    "react-app",
-    "react-app/jest",
-    "plugin:storybook/recommended",
-    "plugin:tailwindcss/recommended",
-  ],
+  extends: ["next", "prettier", "react-app", "react-app/jest", "plugin:storybook/recommended", "plugin:tailwindcss/recommended"],
   parserOptions: {
     babelOptions: {
       presets: [require.resolve("next/babel")],
@@ -44,46 +37,5 @@ module.exports = {
       },
     ],
     "tailwindcss/classnames-order": "off",
-    "import/order": [
-      1,
-      {
-        groups: ["external", "builtin", "internal", "sibling", "parent", "index"],
-        pathGroups: [
-          ...getDirectoriesToSort().map((singleDir) => ({
-            pattern: `${singleDir}/**`,
-            group: "internal",
-          })),
-          {
-            pattern: "env",
-            group: "internal",
-          },
-          {
-            pattern: "theme",
-            group: "internal",
-          },
-          {
-            pattern: "public/**",
-            group: "internal",
-            position: "after",
-          },
-        ],
-        pathGroupsExcludedImportTypes: ["internal"],
-        alphabetize: {
-          order: "asc",
-          caseInsensitive: true,
-        },
-      },
-    ],
   },
-}
-
-function getDirectoriesToSort() {
-  const ignoredSortingDirectories = [".git", ".next", ".vscode", "node_modules"]
-  return getDirectories(process.cwd()).filter((f) => !ignoredSortingDirectories.includes(f))
-}
-
-function getDirectories(path) {
-  return fs.readdirSync(path).filter(function (file) {
-    return fs.statSync(path + "/" + file).isDirectory()
-  })
 }

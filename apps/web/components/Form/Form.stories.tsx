@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react"
+import { useForm } from "react-hook-form"
 import { Input } from "components/Input/Input"
 import { Logo } from "components/Logo/Logo"
-import { useForm } from "react-hook-form"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "./Form"
 
 const meta: Meta<typeof Form> = {

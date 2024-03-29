@@ -1,8 +1,8 @@
+import { cookies } from "next/headers"
+import { Suspense } from "react"
 import { getProduct } from "app/actions/product.actions"
 import { ProductCard } from "components/ProductCard/ProductCard"
 import { Skeleton } from "components/Skeleton/Skeleton"
-import { cookies } from "next/headers"
-import { Suspense } from "react"
 import { COOKIE_FAVORITES } from "constants/index"
 
 export const revalidate = 3600

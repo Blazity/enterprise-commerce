@@ -1,14 +1,13 @@
-import { meilisearch } from "clients/meilisearch"
-import { storefrontClient } from "clients/storefrontClient"
-import { env } from "env.mjs"
+import { PlatformImage, PlatformProduct } from "@enterprise-commerce/core/platform/types"
 import { Index } from "meilisearch"
 import { FailedAttemptError } from "p-retry"
-import { Root } from "shopify-webhooks"
-import { MEILISEARCH_INDEX } from "constants/index"
 import { createHmac } from "crypto"
+import { meilisearch } from "clients/meilisearch"
 import { replicate } from "clients/replicate"
-
-import { PlatformImage, PlatformProduct } from "@enterprise-commerce/core/platform/types"
+import { storefrontClient } from "clients/storefrontClient"
+import { MEILISEARCH_INDEX } from "constants/index"
+import { env } from "env.mjs"
+import { Root } from "shopify-webhooks"
 
 export async function POST(req: Request) {
   const hmac = req.headers.get("X-Shopify-Hmac-Sha256")

@@ -1,8 +1,8 @@
 import { PlatformProduct } from "@enterprise-commerce/core/platform/types"
-import { getProduct } from "app/actions/product.actions"
-import { Breadcrumbs } from "components/Breadcrumbs/Breadcrumbs"
 import { notFound } from "next/navigation"
 import { Suspense } from "react"
+import { getProduct } from "app/actions/product.actions"
+import { Breadcrumbs } from "components/Breadcrumbs/Breadcrumbs"
 
 import { getCombination, getOptionsFromUrl, hasValidOption, removeOptionsFromUrl } from "utils/productOptionsUtils"
 import { BackButton } from "views/Product/BackButton"

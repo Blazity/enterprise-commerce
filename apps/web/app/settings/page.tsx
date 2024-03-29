@@ -1,9 +1,9 @@
-import { storefrontClient } from "clients/storefrontClient"
-import { Skeleton } from "components/Skeleton/Skeleton"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
-import { ProfileForm } from "views/Settings/ProfileForm"
+import { storefrontClient } from "clients/storefrontClient"
+import { Skeleton } from "components/Skeleton/Skeleton"
 import { COOKIE_ACCESS_TOKEN } from "constants/index"
+import { ProfileForm } from "views/Settings/ProfileForm"
 
 export default async function Settings() {
   const accessToken = cookies().get(COOKIE_ACCESS_TOKEN)
