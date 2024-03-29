@@ -1,8 +1,5 @@
 import "./globals.css"
 
-import { Analytics } from "@vercel/analytics/next"
-import { FlagValues } from "@vercel/flags/react"
-import { SpeedInsights } from "@vercel/speed-insights/next"
 import { AnnouncementBar } from "components/AnnouncementBar/AnnouncementBar"
 import { CallToAction } from "components/CallToAction/CallToAction"
 import { Footer } from "components/Footer/Footer"
@@ -11,12 +8,16 @@ import { mobileInlineScript } from "components/NavigationBar/mobileInlineScript"
 import { NavigationBar } from "components/NavigationBar/NavigationBar"
 import { NavItem } from "components/NavigationBar/types"
 import { TopBar } from "components/TopBar/TopBar"
+import dynamic from "next/dynamic"
 import Script from "next/script"
 import { Suspense } from "react"
 import { Toaster } from "sonner"
 import { Cart } from "views/Cart/Cart"
-import { DraftToolbar } from "views/DraftToolbar"
+import { FlagValues } from "views/FlagValues"
 import { NavigationEvents } from "views/NavigationEvents"
+import { ThirdParties } from "views/ThirdParties"
+
+const DraftToolbar = dynamic(() => import("views/DraftToolbar"), { ssr: false })
 
 export const revalidate = 3600
 
@@ -190,17 +191,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <NavigationEvents />
         </Suspense>
 
-        <Suspense fallback={null}>
-          <DraftToolbar />
-        </Suspense>
-
-        <Suspense fallback={null}>
-          <Analytics />
-        </Suspense>
-
         <Toaster position="bottom-left" />
-        <SpeedInsights />
-        <FlagValues values={{ fasterCheckoutPage: true, landingPageRedesign: true }} />
+
+        <DraftToolbar />
+
+        <Suspense fallback={null}>
+          <FlagValues />
+        </Suspense>
+
+        <Suspense fallback={null}>
+          <ThirdParties />
+        </Suspense>
       </body>
     </html>
   )

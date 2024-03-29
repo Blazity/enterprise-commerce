@@ -36,7 +36,7 @@
   "navigation": [
     {
       "group": "Get Started",
-      "pages": ["introduction", "setup", "architecture"]
+      "pages": ["introduction", "setup", "architecture", "environment-variables"]
     },
     {
       "group": "Features",
@@ -58,7 +58,8 @@
         "features/platform-agnostic",
         "features/mega-menu",
         "features/autocomplete",
-        "features/cart"
+        "features/storybook",
+        "features/testing"
       ]
     },
     {
