@@ -158,12 +158,14 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Demo Store | Blazity",
     description: "An intuitive navigation to captivate your audience and drive conversions effortlessly. Start boosting your sales.",
+    images: ["/twitter-image.png"],
   },
   twitter: {
     card: "summary_large_image",
     title: "Demo Store | Blazity",
     description: "An intuitive navigation to captivate your audience and drive conversions effortlessly. Start boosting your sales.",
     creator: "@blazity",
+    images: ["/twitter-image.png"],
   },
   verification: {
     google: "google",
