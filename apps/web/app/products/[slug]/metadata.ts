@@ -19,7 +19,7 @@ export async function generateMetadata({ params: { slug } }: ProductProps): Prom
   const lastCollection = product?.collections.findLast(Boolean)
 
   return {
-    metadataBase: new URL(env.LIVE_URL),
+    metadataBase: new URL(env.LIVE_URL!),
     title: `${originalTitle || product?.title} | Blazity`,
     description: originalDescription || product?.description,
     generator: "Next.js",

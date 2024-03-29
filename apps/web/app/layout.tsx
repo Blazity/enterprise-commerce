@@ -159,7 +159,6 @@ export const metadata = {
     title: "Demo Store | Blazity",
     description: "An intuitive navigation to captivate your audience and drive conversions effortlessly. Start boosting your sales.",
     creator: "@blazity",
-    images: ["/opengraph-image.png"],
   },
   verification: {
     google: "google",
