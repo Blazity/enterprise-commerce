@@ -16,6 +16,7 @@ import { Cart } from "views/Cart/Cart"
 import { FlagValues } from "views/FlagValues"
 import { NavigationEvents } from "views/NavigationEvents"
 import { ThirdParties } from "views/ThirdParties"
+import { env } from "env.mjs"
 
 const DraftToolbar = dynamic(() => import("views/DraftToolbar"), { ssr: false })
 
@@ -152,6 +153,7 @@ const navigationItems: NavItem[] = [
 export const metadata = {
   title: "Demo Store | Blazity",
   description: "An intuitive navigation to captivate your audience and drive conversions effortlessly. Start boosting your sales.",
+  metadataBase: new URL(env.LIVE_URL!),
   twitter: {
     card: "summary_large_image",
     title: "Demo Store | Blazity",
