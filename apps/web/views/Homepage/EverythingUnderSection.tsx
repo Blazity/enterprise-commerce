@@ -4,6 +4,7 @@ import { unstable_cache } from "next/cache"
 import { ComparisonOperators, FilterBuilder } from "utils/filterBuilder"
 import { MEILISEARCH_INDEX } from "constants/index"
 import { CarouselSection } from "./CarouselSection"
+import { getDemoProducts, isDemoMode } from "utils/demoUtils"
 
 export async function EverythingUnderSection() {
   const items = await getPriceRangedProducts()
@@ -13,6 +14,8 @@ export async function EverythingUnderSection() {
 
 const getPriceRangedProducts = unstable_cache(
   async () => {
+    if (isDemoMode()) return getDemoProducts().hits.slice(0, 8)
+
     const index = await meilisearch?.getIndex<PlatformProduct>(MEILISEARCH_INDEX)
     const results = await index.search("", {
       matchingStrategy: "last",

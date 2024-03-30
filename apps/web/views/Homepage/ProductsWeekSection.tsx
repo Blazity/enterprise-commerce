@@ -6,6 +6,7 @@ import { unstable_cache } from "next/cache"
 import Image from "next/image"
 import Link from "next/link"
 import { MEILISEARCH_INDEX } from "constants/index"
+import { getDemoProducts, isDemoMode } from "utils/demoUtils"
 
 export async function ProductsWeekSection() {
   const items = await getNewestProducts()
@@ -43,6 +44,8 @@ export async function ProductsWeekSection() {
 
 const getNewestProducts = unstable_cache(
   async () => {
+    if (isDemoMode()) return getDemoProducts().hits.slice(0, 8)
+
     const index = await meilisearch?.getIndex<PlatformProduct>(MEILISEARCH_INDEX)
     const results = await index.search("", { matchingStrategy: "last", limit: 8, sort: ["updatedAtTimestamp:desc"] })
 

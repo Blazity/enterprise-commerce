@@ -1,4 +1,4 @@
-export default function GithubBadge() {
+export function GithubBadge() {
   return (
     <a href="https://git.new/commerce" className="github-corner hidden 2xl:block" aria-label="View source on GitHub">
       <svg

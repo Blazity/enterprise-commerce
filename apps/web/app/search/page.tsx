@@ -14,6 +14,7 @@ import { HitsSection } from "views/Listing/HitsSection"
 import { PageSkeleton } from "views/Listing/PageSkeleton"
 import { PaginationSection } from "views/Listing/PaginationSection"
 import { Sorter } from "views/Listing/Sorter"
+import { getDemoProducts, isDemoMode } from "utils/demoUtils"
 
 export const metadata: Metadata = {
   title: "Search | Enterprise Commerce",
@@ -79,6 +80,8 @@ async function SearchView({ searchParams }: SearchPageProps) {
 
 const searchProducts = unstable_cache(
   async (query: string, sortBy: string, page: number, filter: string) => {
+    if (isDemoMode()) return getDemoProducts()
+
     const index = await meilisearch?.getIndex<PlatformProduct>(MEILISEARCH_INDEX)
 
     const results = await index?.search(query, {

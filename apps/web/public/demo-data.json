@@ -1,0 +1,1662 @@
+{
+  "results": [
+    {
+      "id": "9010939986204",
+      "handle": "hasbro-games-yahtzee-classic",
+      "title": "Hasbro Games Yahtzee Classic",
+      "description": "Hasbro Games Yahtzee Classic",
+      "descriptionHtml": "Hasbro Games Yahtzee Classic",
+      "options": [
+        {
+          "id": "gid://shopify/ProductOption/11319677157660",
+          "name": "Title",
+          "values": ["Default Title"]
+        }
+      ],
+      "vendor": "HASBRO",
+      "priceRange": {
+        "maxVariantPrice": {
+          "amount": "13.0",
+          "currencyCode": "PLN"
+        },
+        "minVariantPrice": {
+          "amount": "13.0",
+          "currencyCode": "PLN"
+        }
+      },
+      "tags": ["egnition-sample-data", "hasbro", "toys"],
+      "featuredImage": {
+        "url": "https://cdn.shopify.com/s/files/1/0847/5616/8988/products/857450193becc45b851a5d3ea2a25c98.jpg?v=1708024047",
+        "altText": null,
+        "width": 550,
+        "height": 550
+      },
+      "seo": {
+        "description": null,
+        "title": null
+      },
+      "updatedAt": "2024-02-15T19:28:27Z",
+      "createdAt": "2024-02-15T19:07:27Z",
+      "flatOptions": {
+        "Title": ["Default Title"]
+      },
+      "updatedAtTimestamp": 1708025307,
+      "createdAtTimestamp": 1708024047,
+      "minPrice": 13,
+      "variants": [
+        {
+          "id": "gid://shopify/ProductVariant/47769041895708",
+          "title": "Default Title",
+          "quantityAvailable": 19,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Title",
+              "value": "Default Title"
+            }
+          ],
+          "price": {
+            "amount": "13.0",
+            "currencyCode": "PLN"
+          }
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0847/5616/8988/products/857450193becc45b851a5d3ea2a25c98.jpg?v=1708024047",
+          "altText": " a game of yahtze classic roll with it",
+          "width": 550,
+          "height": 550
+        }
+      ],
+      "collections": [
+        {
+          "handle": "hasbro",
+          "title": "HASBRO",
+          "description": "Hasbro Toys",
+          "updatedAt": "2024-02-17T21:52:10Z",
+          "id": "gid://shopify/Collection/468367802652",
+          "descriptionHtml": "Hasbro Toys",
+          "image": {
+            "url": "https://cdn.shopify.com/s/files/1/0847/5616/8988/collections/8dfb8a17c7d5e45e6d9bc3d1f21e5a9f.jpg?v=1708024983",
+            "altText": null,
+            "width": 332,
+            "height": 250
+          }
+        }
+      ]
+    },
+    {
+      "id": "9010949980444",
+      "handle": "hot-wheels-speedy-pizza-track-set",
+      "title": "Hot Wheels Speedy Pizza Track Set",
+      "description": "These Hot Wheels mission-based push-around themed playsets includes a variety of environments and opportunities for imaginative storytelling.",
+      "descriptionHtml": "These Hot Wheels mission-based push-around themed playsets includes a variety of environments and opportunities for imaginative storytelling.",
+      "options": [
+        {
+          "id": "gid://shopify/ProductOption/11319687610652",
+          "name": "Title",
+          "values": ["Default Title"]
+        }
+      ],
+      "vendor": "HOT WHEELS",
+      "priceRange": {
+        "maxVariantPrice": {
+          "amount": "14.99",
+          "currencyCode": "PLN"
+        },
+        "minVariantPrice": {
+          "amount": "14.99",
+          "currencyCode": "PLN"
+        }
+      },
+      "tags": ["egnition-sample-data", "hot-wheels", "toys"],
+      "featuredImage": {
+        "url": "https://cdn.shopify.com/s/files/1/0847/5616/8988/products/409bda8e8d75b7bc7317d754a6d3da93.jpg?v=1708024198",
+        "altText": null,
+        "width": 549,
+        "height": 549
+      },
+      "seo": {
+        "description": null,
+        "title": null
+      },
+      "updatedAt": "2024-02-15T19:27:54Z",
+      "createdAt": "2024-02-15T19:09:58Z",
+      "flatOptions": {
+        "Title": ["Default Title"]
+      },
+      "updatedAtTimestamp": 1708025274,
+      "createdAtTimestamp": 1708024198,
+      "minPrice": 14.99,
+      "variants": [
+        {
+          "id": "gid://shopify/ProductVariant/47769056051484",
+          "title": "Default Title",
+          "quantityAvailable": 2,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Title",
+              "value": "Default Title"
+            }
+          ],
+          "price": {
+            "amount": "14.99",
+            "currencyCode": "PLN"
+          }
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0847/5616/8988/products/409bda8e8d75b7bc7317d754a6d3da93.jpg?v=1708024198",
+          "altText": " a toy set with a car and a pizza stand",
+          "width": 549,
+          "height": 549
+        }
+      ],
+      "collections": [
+        {
+          "handle": "hot-wheels",
+          "title": "HOT WHEELS",
+          "description": "Hot wheels collection toys",
+          "updatedAt": "2024-02-17T21:52:09Z",
+          "id": "gid://shopify/Collection/468368097564",
+          "descriptionHtml": "Hot wheels collection toys",
+          "image": {
+            "url": "https://cdn.shopify.com/s/files/1/0847/5616/8988/collections/3df6c75b24bc4df6a1cdadb846fbac5f.png?v=1708024991",
+            "altText": null,
+            "width": 600,
+            "height": 302
+          }
+        }
+      ]
+    },
+    {
+      "id": "9010943361308",
+      "handle": "mega-bloks-big-building-bag",
+      "title": "Mega Bloks Big Building Bag",
+      "description": "Mega Bloks Big Building Bag",
+      "descriptionHtml": "Mega Bloks Big Building Bag",
+      "options": [
+        {
+          "id": "gid://shopify/ProductOption/11319680598300",
+          "name": "Title",
+          "values": ["Default Title"]
+        }
+      ],
+      "vendor": "MEGA BLOCKS",
+      "priceRange": {
+        "maxVariantPrice": {
+          "amount": "33.99",
+          "currencyCode": "PLN"
+        },
+        "minVariantPrice": {
+          "amount": "33.99",
+          "currencyCode": "PLN"
+        }
+      },
+      "tags": ["egnition-sample-data", "mega-blocks", "toys"],
+      "featuredImage": {
+        "url": "https://cdn.shopify.com/s/files/1/0847/5616/8988/products/3ee08adaeca9307cd820b7424ff80523.jpg?v=1708024103",
+        "altText": null,
+        "width": 488,
+        "height": 488
+      },
+      "seo": {
+        "description": null,
+        "title": null
+      },
+      "updatedAt": "2024-02-15T19:28:15Z",
+      "createdAt": "2024-02-15T19:08:23Z",
+      "flatOptions": {
+        "Title": ["Default Title"]
+      },
+      "updatedAtTimestamp": 1708025295,
+      "createdAtTimestamp": 1708024103,
+      "minPrice": 33.99,
+      "variants": [
+        {
+          "id": "gid://shopify/ProductVariant/47769048023324",
+          "title": "Default Title",
+          "quantityAvailable": 7,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Title",
+              "value": "Default Title"
+            }
+          ],
+          "price": {
+            "amount": "33.99",
+            "currencyCode": "PLN"
+          }
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0847/5616/8988/products/3ee08adaeca9307cd820b7424ff80523.jpg?v=1708024103",
+          "altText": " a large bag of toys with a baby playing with it",
+          "width": 488,
+          "height": 488
+        }
+      ],
+      "collections": []
+    },
+    {
+      "id": "9010943492380",
+      "handle": "mega-bloks-thomas-and-friends",
+      "title": "Mega Bloks Thomas and Friends",
+      "description": "Mega Bloks Thomas and Friends (Toby)",
+      "descriptionHtml": "Mega Bloks Thomas and Friends (Toby)",
+      "options": [
+        {
+          "id": "gid://shopify/ProductOption/11319680729372",
+          "name": "Title",
+          "values": ["Default Title"]
+        }
+      ],
+      "vendor": "MEGA BLOCKS",
+      "priceRange": {
+        "maxVariantPrice": {
+          "amount": "19.99",
+          "currencyCode": "PLN"
+        },
+        "minVariantPrice": {
+          "amount": "19.99",
+          "currencyCode": "PLN"
+        }
+      },
+      "tags": ["egnition-sample-data", "mega-blocks", "toys"],
+      "featuredImage": {
+        "url": "https://cdn.shopify.com/s/files/1/0847/5616/8988/products/d6f0787e9310733b4ffcd5366e4d62f7.jpg?v=1708024104",
+        "altText": null,
+        "width": 488,
+        "height": 488
+      },
+      "seo": {
+        "description": null,
+        "title": null
+      },
+      "updatedAt": "2024-02-15T19:28:14Z",
+      "createdAt": "2024-02-15T19:08:24Z",
+      "flatOptions": {
+        "Title": ["Default Title"]
+      },
+      "updatedAtTimestamp": 1708025294,
+      "createdAtTimestamp": 1708024104,
+      "minPrice": 19.99,
+      "variants": [
+        {
+          "id": "gid://shopify/ProductVariant/47769048121628",
+          "title": "Default Title",
+          "quantityAvailable": 14,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Title",
+              "value": "Default Title"
+            }
+          ],
+          "price": {
+            "amount": "19.99",
+            "currencyCode": "PLN"
+          }
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0847/5616/8988/products/d6f0787e9310733b4ffcd5366e4d62f7.jpg?v=1708024104",
+          "altText": " a set of legos with a thomas the train",
+          "width": 488,
+          "height": 488
+        }
+      ],
+      "collections": []
+    },
+    {
+      "id": "9010943852828",
+      "handle": "mega-bloks-freddy-firetruck",
+      "title": "Mega Bloks Freddy Firetruck",
+      "description": "Freddy Firetruck with raising ladder and small storage compartment. Includes one Firefighter Block Buddy and six blocks",
+      "descriptionHtml": "Freddy Firetruck with raising ladder and small storage compartment. Includes one Firefighter Block Buddy and six blocks",
+      "options": [
+        {
+          "id": "gid://shopify/ProductOption/11319681155356",
+          "name": "Title",
+          "values": ["Default Title"]
+        }
+      ],
+      "vendor": "MEGA BLOCKS",
+      "priceRange": {
+        "maxVariantPrice": {
+          "amount": "25.99",
+          "currencyCode": "PLN"
+        },
+        "minVariantPrice": {
+          "amount": "25.99",
+          "currencyCode": "PLN"
+        }
+      },
+      "tags": ["egnition-sample-data", "mega-blocks", "toys"],
+      "featuredImage": {
+        "url": "https://cdn.shopify.com/s/files/1/0847/5616/8988/products/50872c135836f9fb253fe2278e11a2a9.jpg?v=1708024110",
+        "altText": null,
+        "width": 450,
+        "height": 450
+      },
+      "seo": {
+        "description": null,
+        "title": null
+      },
+      "updatedAt": "2024-02-15T19:28:13Z",
+      "createdAt": "2024-02-15T19:08:30Z",
+      "flatOptions": {
+        "Title": ["Default Title"]
+      },
+      "updatedAtTimestamp": 1708025293,
+      "createdAtTimestamp": 1708024110,
+      "minPrice": 25.99,
+      "variants": [
+        {
+          "id": "gid://shopify/ProductVariant/47769048711452",
+          "title": "Default Title",
+          "quantityAvailable": 17,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Title",
+              "value": "Default Title"
+            }
+          ],
+          "price": {
+            "amount": "25.99",
+            "currencyCode": "PLN"
+          }
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0847/5616/8988/products/50872c135836f9fb253fe2278e11a2a9.jpg?v=1708024110",
+          "altText": " a red toy truck with a white top",
+          "width": 450,
+          "height": 450
+        }
+      ],
+      "collections": []
+    },
+    {
+      "id": "9010946703644",
+      "handle": "vtech-pull-n-learn-phone",
+      "title": "Vtech Pull 'n Learn Phone",
+      "description": "VTech Pull & Lights Phone. 10 light-up number buttons make fun light patterns. Learning toy has 3 activities - teaches animal/animal sounds, numbers, and music. Pull along to hear melodies and watch wiggling handset.",
+      "descriptionHtml": "VTech Pull &amp; Lights Phone. 10 light-up number buttons make fun light patterns. Learning toy has 3 activities - teaches animal/animal sounds, numbers, and music. Pull along to hear melodies and watch wiggling handset.",
+      "options": [
+        {
+          "id": "gid://shopify/ProductOption/11319684202780",
+          "name": "Title",
+          "values": ["Default Title"]
+        }
+      ],
+      "vendor": "VTECH",
+      "priceRange": {
+        "maxVariantPrice": {
+          "amount": "18.99",
+          "currencyCode": "PLN"
+        },
+        "minVariantPrice": {
+          "amount": "18.99",
+          "currencyCode": "PLN"
+        }
+      },
+      "tags": ["egnition-sample-data", "toys", "vtech"],
+      "featuredImage": {
+        "url": "https://cdn.shopify.com/s/files/1/0847/5616/8988/products/9dc6d80f2a97be82e2158705f0bb84af.jpg?v=1708024154",
+        "altText": null,
+        "width": 500,
+        "height": 500
+      },
+      "seo": {
+        "description": null,
+        "title": null
+      },
+      "updatedAt": "2024-02-15T19:28:02Z",
+      "createdAt": "2024-02-15T19:09:14Z",
+      "flatOptions": {
+        "Title": ["Default Title"]
+      },
+      "updatedAtTimestamp": 1708025282,
+      "createdAtTimestamp": 1708024154,
+      "minPrice": 18.99,
+      "variants": [
+        {
+          "id": "gid://shopify/ProductVariant/47769052184860",
+          "title": "Default Title",
+          "quantityAvailable": 13,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Title",
+              "value": "Default Title"
+            }
+          ],
+          "price": {
+            "amount": "18.99",
+            "currencyCode": "PLN"
+          }
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0847/5616/8988/products/9dc6d80f2a97be82e2158705f0bb84af.jpg?v=1708024154",
+          "altText": null,
+          "width": 500,
+          "height": 500
+        }
+      ],
+      "collections": [
+        {
+          "handle": "vtech",
+          "title": "VTECH",
+          "description": "VTech toys",
+          "updatedAt": "2024-02-17T21:52:00Z"
+        }
+      ]
+    },
+    {
+      "id": "9010946834716",
+      "handle": "vtech-baby-lullaby-bear-crib-projector",
+      "title": "VTech Baby Lullaby Bear Crib Projector",
+      "description": "The best way to incorporate learning at an early age is through play. Make sure your little one gets great learning toys that enhance his skills. The VTech Baby Lullaby Bear Crib Projector makes learning challenging and fun.",
+      "descriptionHtml": "The best way to incorporate learning at an early age is through play. Make sure your little one gets great learning toys that enhance his skills. The VTech Baby Lullaby Bear Crib Projector makes learning challenging and fun.",
+      "options": [
+        {
+          "id": "gid://shopify/ProductOption/11319684366620",
+          "name": "Title",
+          "values": ["Default Title"]
+        }
+      ],
+      "vendor": "VTECH",
+      "priceRange": {
+        "maxVariantPrice": {
+          "amount": "18.99",
+          "currencyCode": "PLN"
+        },
+        "minVariantPrice": {
+          "amount": "18.99",
+          "currencyCode": "PLN"
+        }
+      },
+      "tags": ["egnition-sample-data", "toys", "vtech"],
+      "featuredImage": {
+        "url": "https://cdn.shopify.com/s/files/1/0847/5616/8988/products/ee40ff740840c5995ed7d5f5ec45d8f6.jpg?v=1708024156",
+        "altText": null,
+        "width": 355,
+        "height": 354
+      },
+      "seo": {
+        "description": null,
+        "title": null
+      },
+      "updatedAt": "2024-02-15T19:28:02Z",
+      "createdAt": "2024-02-15T19:09:16Z",
+      "flatOptions": {
+        "Title": ["Default Title"]
+      },
+      "updatedAtTimestamp": 1708025282,
+      "createdAtTimestamp": 1708024156,
+      "minPrice": 18.99,
+      "variants": [
+        {
+          "id": "gid://shopify/ProductVariant/47769052348700",
+          "title": "Default Title",
+          "quantityAvailable": 20,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Title",
+              "value": "Default Title"
+            }
+          ],
+          "price": {
+            "amount": "18.99",
+            "currencyCode": "PLN"
+          }
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0847/5616/8988/products/ee40ff740840c5995ed7d5f5ec45d8f6.jpg?v=1708024156",
+          "altText": " a blue and white radio with a brown bear on it",
+          "width": 355,
+          "height": 354
+        }
+      ],
+      "collections": [
+        {
+          "handle": "vtech",
+          "title": "VTECH",
+          "description": "VTech toys",
+          "updatedAt": "2024-02-17T21:52:00Z",
+          "id": "gid://shopify/Collection/468368032028",
+          "descriptionHtml": "VTech toys",
+          "image": {
+            "url": "https://cdn.shopify.com/s/files/1/0847/5616/8988/collections/2f219f8aa2d495b938734b5edf60b76e.jpg?v=1708024989",
+            "altText": null,
+            "width": 195,
+            "height": 195
+          }
+        }
+      ]
+    },
+    {
+      "id": "9010947522844",
+      "handle": "tarmac-x-greenlight-nissan-gtr-r-35-falken",
+      "title": "Tarmac x Greenlight Nissan GTR R 35 FALKEN",
+      "description": "Tarmac x Greenlight Nissan GTR R 35 FALKEN",
+      "descriptionHtml": "Tarmac x Greenlight Nissan GTR R 35 FALKEN",
+      "options": [
+        {
+          "id": "gid://shopify/ProductOption/11319685087516",
+          "name": "Title",
+          "values": ["Default Title"]
+        }
+      ],
+      "vendor": "TOYS R US",
+      "priceRange": {
+        "maxVariantPrice": {
+          "amount": "9.99",
+          "currencyCode": "PLN"
+        },
+        "minVariantPrice": {
+          "amount": "9.99",
+          "currencyCode": "PLN"
+        }
+      },
+      "tags": ["egnition-sample-data", "toys-r-us"],
+      "featuredImage": {
+        "url": "https://cdn.shopify.com/s/files/1/0847/5616/8988/products/eb4c1eaad9f13bce4c8885b6e0ad84e4.jpg?v=1708024165",
+        "altText": null,
+        "width": 480,
+        "height": 360
+      },
+      "seo": {
+        "description": null,
+        "title": null
+      },
+      "updatedAt": "2024-02-15T19:28:00Z",
+      "createdAt": "2024-02-15T19:09:25Z",
+      "flatOptions": {
+        "Title": ["Default Title"]
+      },
+      "updatedAtTimestamp": 1708025280,
+      "createdAtTimestamp": 1708024165,
+      "minPrice": 9.99,
+      "variants": [
+        {
+          "id": "gid://shopify/ProductVariant/47769053102364",
+          "title": "Default Title",
+          "quantityAvailable": 3,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Title",
+              "value": "Default Title"
+            }
+          ],
+          "price": {
+            "amount": "9.99",
+            "currencyCode": "PLN"
+          }
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0847/5616/8988/products/eb4c1eaad9f13bce4c8885b6e0ad84e4.jpg?v=1708024165",
+          "altText": " a toy car with a number on the side of it",
+          "width": 480,
+          "height": 360
+        }
+      ],
+      "collections": []
+    },
+    {
+      "id": "9010956239132",
+      "handle": "barbie-skipper-babysitters-inc-doll-and-playset",
+      "title": "Barbie Skipper Babysitters Inc. Doll and Playset",
+      "description": "Barbie Skipper Babysitters Inc. dolls and playsets let kids be the babysitter with a Skipper or friend doll, a baby or toddler doll, furniture and accessories matched to classic childhood moments.",
+      "descriptionHtml": "Barbie Skipper Babysitters Inc. dolls and playsets let kids be the babysitter with a Skipper or friend doll, a baby or toddler doll, furniture and accessories matched to classic childhood moments.",
+      "options": [
+        {
+          "id": "gid://shopify/ProductOption/11319694164252",
+          "name": "Title",
+          "values": ["Default Title"]
+        }
+      ],
+      "vendor": "BARBIE",
+      "priceRange": {
+        "maxVariantPrice": {
+          "amount": "20.99",
+          "currencyCode": "PLN"
+        },
+        "minVariantPrice": {
+          "amount": "20.99",
+          "currencyCode": "PLN"
+        }
+      },
+      "tags": ["barbie", "dolls", "egnition-sample-data", "toys"],
+      "featuredImage": {
+        "url": "https://cdn.shopify.com/s/files/1/0847/5616/8988/products/d2d0f15d83801177487f7df4ab262ef3.jpg?v=1708024285",
+        "altText": null,
+        "width": 549,
+        "height": 549
+      },
+      "seo": {
+        "description": null,
+        "title": null
+      },
+      "updatedAt": "2024-02-15T19:27:38Z",
+      "createdAt": "2024-02-15T19:11:25Z",
+      "flatOptions": {
+        "Title": ["Default Title"]
+      },
+      "updatedAtTimestamp": 1708025258,
+      "createdAtTimestamp": 1708024285,
+      "minPrice": 20.99,
+      "variants": [
+        {
+          "id": "gid://shopify/ProductVariant/47769065816348",
+          "title": "Default Title",
+          "quantityAvailable": 7,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Title",
+              "value": "Default Title"
+            }
+          ],
+          "price": {
+            "amount": "20.99",
+            "currencyCode": "PLN"
+          }
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0847/5616/8988/products/d2d0f15d83801177487f7df4ab262ef3.jpg?v=1708024285",
+          "altText": " a doll with a stroller and a baby doll",
+          "width": 549,
+          "height": 549
+        }
+      ],
+      "collections": [
+        {
+          "handle": "barbie",
+          "title": "BARBIE",
+          "description": "Barbie collection toys",
+          "updatedAt": "2024-02-17T21:52:15Z",
+          "id": "gid://shopify/Collection/468368326940",
+          "descriptionHtml": "Barbie collection toys",
+          "image": {
+            "url": "https://cdn.shopify.com/s/files/1/0847/5616/8988/collections/52b00c5101a4832922e52f3afa5eaaa7.gif?v=1708024997",
+            "altText": null,
+            "width": 200,
+            "height": 200
+          }
+        },
+        {
+          "handle": "dolls",
+          "title": "Dolls",
+          "description": "A doll is a model of a human being, often used as a toy for children.",
+          "updatedAt": "2024-02-17T21:52:11Z",
+          "id": "gid://shopify/Collection/468369473820",
+          "descriptionHtml": "A doll is a model of a human being, often used as a toy for children.",
+          "image": {
+            "url": "https://cdn.shopify.com/s/files/1/0847/5616/8988/collections/4aff0ece3cc345988ba1289ee4e5cb12.jpg?v=1708025028",
+            "altText": null,
+            "width": 300,
+            "height": 300
+          }
+        }
+      ]
+    },
+    {
+      "id": "9010939363612",
+      "handle": "lego-mobile-command-center",
+      "title": "LEGO Mobile Command Center",
+      "description": "LEGO Mobile Command Center",
+      "descriptionHtml": "LEGO Mobile Command Center",
+      "options": [
+        {
+          "id": "gid://shopify/ProductOption/11319676502300",
+          "name": "Title",
+          "values": ["Default Title"]
+        }
+      ],
+      "vendor": "LEGO",
+      "priceRange": {
+        "maxVariantPrice": {
+          "amount": "75.0",
+          "currencyCode": "PLN"
+        },
+        "minVariantPrice": {
+          "amount": "75.0",
+          "currencyCode": "PLN"
+        }
+      },
+      "tags": ["building-sets", "egnition-sample-data", "lego", "toys"],
+      "featuredImage": {
+        "url": "https://cdn.shopify.com/s/files/1/0847/5616/8988/products/fd22f7965849f923e9f32e5cd1ad9577.jpg?v=1708024036",
+        "altText": null,
+        "width": 463,
+        "height": 463
+      },
+      "seo": {
+        "description": null,
+        "title": null
+      },
+      "updatedAt": "2024-02-15T19:28:29Z",
+      "createdAt": "2024-02-15T19:07:16Z",
+      "flatOptions": {
+        "Title": ["Default Title"]
+      },
+      "updatedAtTimestamp": 1708025309,
+      "createdAtTimestamp": 1708024036,
+      "minPrice": 75,
+      "variants": [
+        {
+          "id": "gid://shopify/ProductVariant/47769041207580",
+          "title": "Default Title",
+          "quantityAvailable": 8,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Title",
+              "value": "Default Title"
+            }
+          ],
+          "price": {
+            "amount": "75.0",
+            "currencyCode": "PLN"
+          }
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0847/5616/8988/products/fd22f7965849f923e9f32e5cd1ad9577.jpg?v=1708024036",
+          "altText": " a box of lego city police vehicles",
+          "width": 463,
+          "height": 463
+        }
+      ],
+      "collections": [
+        {
+          "handle": "lego",
+          "title": "LEGO",
+          "description": "Lego Toys",
+          "updatedAt": "2024-03-02T20:41:26Z",
+          "id": "gid://shopify/Collection/468367769884",
+          "descriptionHtml": "Lego Toys",
+          "image": {
+            "url": "https://cdn.shopify.com/s/files/1/0847/5616/8988/collections/4ce0d5944193567d2eb30e84ae8923d9.png?v=1708024982",
+            "altText": null,
+            "width": 220,
+            "height": 220
+          }
+        },
+        {
+          "handle": "building-sets",
+          "title": "Building Sets",
+          "description": "a set of standardized pieces that allow for the construction of a variety of different models.",
+          "updatedAt": "2024-03-02T20:41:26Z",
+          "id": "gid://shopify/Collection/468369506588",
+          "descriptionHtml": "a set of standardized pieces that allow for the construction of a variety of different models.",
+          "image": {
+            "url": "https://cdn.shopify.com/s/files/1/0847/5616/8988/collections/06bdd0164019bd4e1af85a453d269829.jpg?v=1708025029",
+            "altText": null,
+            "width": 300,
+            "height": 168
+          }
+        }
+      ]
+    },
+    {
+      "id": "9010949783836",
+      "handle": "minecraft-hot-wheels-track-blocks-nether-fortress-play-set",
+      "title": "Minecraft Hot Wheels Track Blocks Nether Fortress Play Set",
+      "description": "Minecraft and Hot Wheels connect for fast, fun adventures! With your trusty Minecart and almost any of your favorite Minecraft Mini-Figures explore the many worlds of Minecraft.",
+      "descriptionHtml": "Minecraft and Hot Wheels connect for fast, fun adventures! With your trusty Minecart and almost any of your favorite Minecraft Mini-Figures explore the many worlds of Minecraft.",
+      "options": [
+        {
+          "id": "gid://shopify/ProductOption/11319687381276",
+          "name": "Title",
+          "values": ["Default Title"]
+        }
+      ],
+      "vendor": "HOT WHEELS",
+      "priceRange": {
+        "maxVariantPrice": {
+          "amount": "19.99",
+          "currencyCode": "PLN"
+        },
+        "minVariantPrice": {
+          "amount": "19.99",
+          "currencyCode": "PLN"
+        }
+      },
+      "tags": ["egnition-sample-data", "hot-wheels", "toys"],
+      "featuredImage": {
+        "url": "https://cdn.shopify.com/s/files/1/0847/5616/8988/products/87d6a797debc417db942dba902277051.jpg?v=1708024195",
+        "altText": null,
+        "width": 549,
+        "height": 549
+      },
+      "seo": {
+        "description": null,
+        "title": null
+      },
+      "updatedAt": "2024-02-15T19:27:55Z",
+      "createdAt": "2024-02-15T19:09:55Z",
+      "flatOptions": {
+        "Title": ["Default Title"]
+      },
+      "updatedAtTimestamp": 1708025275,
+      "createdAtTimestamp": 1708024195,
+      "minPrice": 19.99,
+      "variants": [
+        {
+          "id": "gid://shopify/ProductVariant/47769055854876",
+          "title": "Default Title",
+          "quantityAvailable": 19,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Title",
+              "value": "Default Title"
+            }
+          ],
+          "price": {
+            "amount": "19.99",
+            "currencyCode": "PLN"
+          }
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0847/5616/8988/products/87d6a797debc417db942dba902277051.jpg?v=1708024195",
+          "altText": null,
+          "width": 549,
+          "height": 549
+        }
+      ],
+      "collections": [
+        {
+          "handle": "hot-wheels",
+          "title": "HOT WHEELS",
+          "description": "Hot wheels collection toys",
+          "updatedAt": "2024-02-17T21:52:09Z"
+        }
+      ]
+    },
+    {
+      "id": "9010946605340",
+      "handle": "vtech-baby-little-singing-cora",
+      "title": "VTech Baby Little Singing Cora",
+      "description": "Cuddle & Sing Cora by VTech is a cute plush toy that encourages learning in so many ways. Press the pocket-shaped buttons and watch them flash while introducing numbers, colors and objects to promote language development.",
+      "descriptionHtml": "Cuddle &amp; Sing Cora by VTech is a cute plush toy that encourages learning in so many ways. Press the pocket-shaped buttons and watch them flash while introducing numbers, colors and objects to promote language development.",
+      "options": [
+        {
+          "id": "gid://shopify/ProductOption/11319684104476",
+          "name": "Title",
+          "values": ["Default Title"]
+        }
+      ],
+      "vendor": "VTECH",
+      "priceRange": {
+        "maxVariantPrice": {
+          "amount": "18.99",
+          "currencyCode": "PLN"
+        },
+        "minVariantPrice": {
+          "amount": "18.99",
+          "currencyCode": "PLN"
+        }
+      },
+      "tags": ["egnition-sample-data", "toys", "vtech"],
+      "featuredImage": {
+        "url": "https://cdn.shopify.com/s/files/1/0847/5616/8988/products/694ee35f8a2b2871e53e3ce7feb52554.jpg?v=1708024153",
+        "altText": null,
+        "width": 522,
+        "height": 522
+      },
+      "seo": {
+        "description": null,
+        "title": null
+      },
+      "updatedAt": "2024-02-15T19:28:03Z",
+      "createdAt": "2024-02-15T19:09:13Z",
+      "flatOptions": {
+        "Title": ["Default Title"]
+      },
+      "updatedAtTimestamp": 1708025283,
+      "createdAtTimestamp": 1708024153,
+      "minPrice": 18.99,
+      "variants": [
+        {
+          "id": "gid://shopify/ProductVariant/47769052086556",
+          "title": "Default Title",
+          "quantityAvailable": 8,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Title",
+              "value": "Default Title"
+            }
+          ],
+          "price": {
+            "amount": "18.99",
+            "currencyCode": "PLN"
+          }
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0847/5616/8988/products/694ee35f8a2b2871e53e3ce7feb52554.jpg?v=1708024153",
+          "altText": " a pink teddy bear with a smile on its face",
+          "width": 522,
+          "height": 522
+        }
+      ],
+      "collections": [
+        {
+          "handle": "vtech",
+          "title": "VTECH",
+          "description": "VTech toys",
+          "updatedAt": "2024-02-17T21:52:00Z",
+          "id": "gid://shopify/Collection/468368032028",
+          "descriptionHtml": "VTech toys",
+          "image": {
+            "url": "https://cdn.shopify.com/s/files/1/0847/5616/8988/collections/2f219f8aa2d495b938734b5edf60b76e.jpg?v=1708024989",
+            "altText": null,
+            "width": 195,
+            "height": 195
+          }
+        }
+      ]
+    },
+    {
+      "id": "9010944114972",
+      "handle": "megablocks-halo-brute-chopper-raid",
+      "title": "MegaBlocks Halo Brute Chopper Raid",
+      "description": "Buildable Brute Chopper with camo finish and large double front wheel. Vehicle features articulated, swiveling design.",
+      "descriptionHtml": "Buildable Brute Chopper with camo finish and large double front wheel. Vehicle features articulated, swiveling design.",
+      "options": [
+        {
+          "id": "gid://shopify/ProductOption/11319681450268",
+          "name": "Title",
+          "values": ["Default Title"]
+        }
+      ],
+      "vendor": "MEGA BLOCKS",
+      "priceRange": {
+        "maxVariantPrice": {
+          "amount": "16.99",
+          "currencyCode": "PLN"
+        },
+        "minVariantPrice": {
+          "amount": "16.99",
+          "currencyCode": "PLN"
+        }
+      },
+      "tags": ["egnition-sample-data", "mega-blocks", "toys"],
+      "featuredImage": {
+        "url": "https://cdn.shopify.com/s/files/1/0847/5616/8988/products/92372c0e10704673850729bf02c77ace.jpg?v=1708024113",
+        "altText": null,
+        "width": 658,
+        "height": 565
+      },
+      "seo": {
+        "description": null,
+        "title": null
+      },
+      "updatedAt": "2024-02-15T19:28:13Z",
+      "createdAt": "2024-02-15T19:08:33Z",
+      "flatOptions": {
+        "Title": ["Default Title"]
+      },
+      "updatedAtTimestamp": 1708025293,
+      "createdAtTimestamp": 1708024113,
+      "minPrice": 16.99,
+      "variants": [
+        {
+          "id": "gid://shopify/ProductVariant/47769049006364",
+          "title": "Default Title",
+          "quantityAvailable": 14,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Title",
+              "value": "Default Title"
+            }
+          ],
+          "price": {
+            "amount": "16.99",
+            "currencyCode": "PLN"
+          }
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0847/5616/8988/products/92372c0e10704673850729bf02c77ace.jpg?v=1708024113",
+          "altText": " a box with a lego set inside of it",
+          "width": 658,
+          "height": 565
+        }
+      ],
+      "collections": []
+    },
+    {
+      "id": "9010939789596",
+      "handle": "lego-2016-sergeant-jyn-erso",
+      "title": "Lego 2016 Sergeant Jyn Erso",
+      "description": "Help the Rebel Alliance take on the Empire with this buildable and highly posable Jyn Erso figure.",
+      "descriptionHtml": "Help the Rebel Alliance take on the Empire with this buildable and highly posable Jyn Erso figure.",
+      "options": [
+        {
+          "id": "gid://shopify/ProductOption/11319676961052",
+          "name": "Title",
+          "values": ["Default Title"]
+        }
+      ],
+      "vendor": "LEGO",
+      "priceRange": {
+        "maxVariantPrice": {
+          "amount": "43.0",
+          "currencyCode": "PLN"
+        },
+        "minVariantPrice": {
+          "amount": "43.0",
+          "currencyCode": "PLN"
+        }
+      },
+      "tags": ["building-sets", "egnition-sample-data", "lego", "star-wars", "toys"],
+      "featuredImage": {
+        "url": "https://cdn.shopify.com/s/files/1/0847/5616/8988/products/acd84912908db6271d91232d09a0b353.jpg?v=1708024043",
+        "altText": null,
+        "width": 600,
+        "height": 600
+      },
+      "seo": {
+        "description": null,
+        "title": null
+      },
+      "updatedAt": "2024-02-15T19:28:27Z",
+      "createdAt": "2024-02-15T19:07:23Z",
+      "flatOptions": {
+        "Title": ["Default Title"]
+      },
+      "updatedAtTimestamp": 1708025307,
+      "createdAtTimestamp": 1708024043,
+      "minPrice": 43,
+      "variants": [
+        {
+          "id": "gid://shopify/ProductVariant/47769041666332",
+          "title": "Default Title",
+          "quantityAvailable": 4,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Title",
+              "value": "Default Title"
+            }
+          ],
+          "price": {
+            "amount": "43.0",
+            "currencyCode": "PLN"
+          }
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0847/5616/8988/products/acd84912908db6271d91232d09a0b353.jpg?v=1708024043",
+          "altText": " a lego star wars action figure with a gun",
+          "width": 600,
+          "height": 600
+        }
+      ],
+      "collections": [
+        {
+          "handle": "lego",
+          "title": "LEGO",
+          "description": "Lego Toys",
+          "updatedAt": "2024-03-02T20:41:26Z",
+          "id": "gid://shopify/Collection/468367769884",
+          "descriptionHtml": "Lego Toys",
+          "image": {
+            "url": "https://cdn.shopify.com/s/files/1/0847/5616/8988/collections/4ce0d5944193567d2eb30e84ae8923d9.png?v=1708024982",
+            "altText": null,
+            "width": 220,
+            "height": 220
+          }
+        },
+        {
+          "handle": "building-sets",
+          "title": "Building Sets",
+          "description": "a set of standardized pieces that allow for the construction of a variety of different models.",
+          "updatedAt": "2024-03-02T20:41:26Z",
+          "id": "gid://shopify/Collection/468369506588",
+          "descriptionHtml": "a set of standardized pieces that allow for the construction of a variety of different models.",
+          "image": {
+            "url": "https://cdn.shopify.com/s/files/1/0847/5616/8988/collections/06bdd0164019bd4e1af85a453d269829.jpg?v=1708025029",
+            "altText": null,
+            "width": 300,
+            "height": 168
+          }
+        }
+      ]
+    },
+    {
+      "id": "9010942705948",
+      "handle": "dinotrux-diecast-dragonflopter-vehicle",
+      "title": "Dinotrux Diecast Dragonflopter Vehicle",
+      "description": "Have a ferociously fun time with the half-dinosaur, half-construction vehicles from Dinotrux! This exciting assortment offers size and variety, giving fans the option to choose from either their favorite Dinotrux character in mid-sized scale or a 2-pack of smaller-scale Reptools!",
+      "descriptionHtml": "Have a ferociously fun time with the half-dinosaur, half-construction vehicles from Dinotrux! This exciting assortment offers size and variety, giving fans the option to choose from either their favorite Dinotrux character in mid-sized scale or a 2-pack of smaller-scale Reptools!",
+      "options": [
+        {
+          "id": "gid://shopify/ProductOption/11319679910172",
+          "name": "Title",
+          "values": ["Default Title"]
+        }
+      ],
+      "vendor": "MATTEL",
+      "priceRange": {
+        "maxVariantPrice": {
+          "amount": "59.99",
+          "currencyCode": "PLN"
+        },
+        "minVariantPrice": {
+          "amount": "59.99",
+          "currencyCode": "PLN"
+        }
+      },
+      "tags": ["egnition-sample-data", "mattel", "toys"],
+      "featuredImage": {
+        "url": "https://cdn.shopify.com/s/files/1/0847/5616/8988/products/3de36fac443469d268ed97aa7f21e07e.jpg?v=1708024090",
+        "altText": null,
+        "width": 560,
+        "height": 560
+      },
+      "seo": {
+        "description": null,
+        "title": null
+      },
+      "updatedAt": "2024-02-15T19:28:18Z",
+      "createdAt": "2024-02-15T19:08:10Z",
+      "flatOptions": {
+        "Title": ["Default Title"]
+      },
+      "updatedAtTimestamp": 1708025298,
+      "createdAtTimestamp": 1708024090,
+      "minPrice": 59.99,
+      "variants": [
+        {
+          "id": "gid://shopify/ProductVariant/47769047335196",
+          "title": "Default Title",
+          "quantityAvailable": 14,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Title",
+              "value": "Default Title"
+            }
+          ],
+          "price": {
+            "amount": "59.99",
+            "currencyCode": "PLN"
+          }
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0847/5616/8988/products/3de36fac443469d268ed97aa7f21e07e.jpg?v=1708024090",
+          "altText": " a toy that is in the shape of a helicopter",
+          "width": 560,
+          "height": 560
+        }
+      ],
+      "collections": []
+    },
+    {
+      "id": "9010955878684",
+      "handle": "barbie-and-ken-dolls",
+      "title": "Barbie and Ken Dolls",
+      "description": "Barbie doll and Ken doll have teamed up to open their own cafe, and they have all the ingredients for fun!",
+      "descriptionHtml": "Barbie doll and Ken doll have teamed up to open their own cafe, and they have all the ingredients for fun! ",
+      "options": [
+        {
+          "id": "gid://shopify/ProductOption/11319693803804",
+          "name": "Title",
+          "values": ["Default Title"]
+        }
+      ],
+      "vendor": "BARBIE",
+      "priceRange": {
+        "maxVariantPrice": {
+          "amount": "19.99",
+          "currencyCode": "PLN"
+        },
+        "minVariantPrice": {
+          "amount": "19.99",
+          "currencyCode": "PLN"
+        }
+      },
+      "tags": ["barbie", "dolls", "egnition-sample-data", "toys"],
+      "featuredImage": {
+        "url": "https://cdn.shopify.com/s/files/1/0847/5616/8988/products/b38ac11fce14bcde8c6b8ad0ad38e071.jpg?v=1708024280",
+        "altText": null,
+        "width": 549,
+        "height": 549
+      },
+      "seo": {
+        "description": null,
+        "title": null
+      },
+      "updatedAt": "2024-02-15T19:27:39Z",
+      "createdAt": "2024-02-15T19:11:20Z",
+      "flatOptions": {
+        "Title": ["Default Title"]
+      },
+      "updatedAtTimestamp": 1708025259,
+      "createdAtTimestamp": 1708024280,
+      "minPrice": 19.99,
+      "variants": [
+        {
+          "id": "gid://shopify/ProductVariant/47769065423132",
+          "title": "Default Title",
+          "quantityAvailable": 9,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Title",
+              "value": "Default Title"
+            }
+          ],
+          "price": {
+            "amount": "19.99",
+            "currencyCode": "PLN"
+          }
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0847/5616/8988/products/b38ac11fce14bcde8c6b8ad0ad38e071.jpg?v=1708024280",
+          "altText": " a couple of dolls standing next to each other",
+          "width": 549,
+          "height": 549
+        }
+      ],
+      "collections": [
+        {
+          "handle": "barbie",
+          "title": "BARBIE",
+          "description": "Barbie collection toys",
+          "updatedAt": "2024-02-17T21:52:15Z",
+          "id": "gid://shopify/Collection/468368326940",
+          "descriptionHtml": "Barbie collection toys",
+          "image": {
+            "url": "https://cdn.shopify.com/s/files/1/0847/5616/8988/collections/52b00c5101a4832922e52f3afa5eaaa7.gif?v=1708024997",
+            "altText": null,
+            "width": 200,
+            "height": 200
+          }
+        },
+        {
+          "handle": "dolls",
+          "title": "Dolls",
+          "description": "A doll is a model of a human being, often used as a toy for children.",
+          "updatedAt": "2024-02-17T21:52:11Z",
+          "id": "gid://shopify/Collection/468369473820",
+          "descriptionHtml": "A doll is a model of a human being, often used as a toy for children.",
+          "image": {
+            "url": "https://cdn.shopify.com/s/files/1/0847/5616/8988/collections/4aff0ece3cc345988ba1289ee4e5cb12.jpg?v=1708025028",
+            "altText": null,
+            "width": 300,
+            "height": 300
+          }
+        }
+      ]
+    },
+    {
+      "id": "9010941559068",
+      "handle": "nintendo-new-3ds-xl",
+      "title": "Nintendo New 3DS XL",
+      "description": "THE NEXT DIMENSION IN ENTERTAINMENT. The New Nintendo 3DS XL system combines next-generation portable gaming withsuper-stable 3D technology and added control features.",
+      "descriptionHtml": "THE NEXT DIMENSION IN ENTERTAINMENT. The New Nintendo 3DS XL system combines next-generation portable gaming withsuper-stable 3D technology and added control features.",
+      "options": [
+        {
+          "id": "gid://shopify/ProductOption/11319678763292",
+          "name": "Title",
+          "values": ["Default Title"]
+        }
+      ],
+      "vendor": "NINTENDO",
+      "priceRange": {
+        "maxVariantPrice": {
+          "amount": "389.0",
+          "currencyCode": "PLN"
+        },
+        "minVariantPrice": {
+          "amount": "389.0",
+          "currencyCode": "PLN"
+        }
+      },
+      "tags": ["egnition-sample-data", "new-realease", "nintendo", "toys", "video-games"],
+      "featuredImage": {
+        "url": "https://cdn.shopify.com/s/files/1/0847/5616/8988/products/715be2c760be8694a57bf2aaaa2abf26.jpg?v=1708024071",
+        "altText": null,
+        "width": 570,
+        "height": 570
+      },
+      "seo": {
+        "description": null,
+        "title": null
+      },
+      "updatedAt": "2024-02-15T19:28:22Z",
+      "createdAt": "2024-02-15T19:07:51Z",
+      "flatOptions": {
+        "Title": ["Default Title"]
+      },
+      "updatedAtTimestamp": 1708025302,
+      "createdAtTimestamp": 1708024071,
+      "minPrice": 389,
+      "variants": [
+        {
+          "id": "gid://shopify/ProductVariant/47769046155548",
+          "title": "Default Title",
+          "quantityAvailable": 6,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Title",
+              "value": "Default Title"
+            }
+          ],
+          "price": {
+            "amount": "389.0",
+            "currencyCode": "PLN"
+          }
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0847/5616/8988/products/715be2c760be8694a57bf2aaaa2abf26.jpg?v=1708024071",
+          "altText": " a nintendo 3ds with a black and white pattern",
+          "width": 570,
+          "height": 570
+        }
+      ],
+      "collections": [
+        {
+          "handle": "automated-collection",
+          "title": "Automated Collection",
+          "description": "",
+          "updatedAt": "2024-02-18T00:31:59Z",
+          "id": "gid://shopify/Collection/466061721884",
+          "descriptionHtml": "",
+          "image": null
+        },
+        {
+          "handle": "nintendo",
+          "title": "NINTENDO",
+          "description": "Nintendo games",
+          "updatedAt": "2024-02-17T21:52:05Z",
+          "id": "gid://shopify/Collection/468367835420",
+          "descriptionHtml": "Nintendo games",
+          "image": {
+            "url": "https://cdn.shopify.com/s/files/1/0847/5616/8988/collections/8babc3dfe6332443d316ee442c646677.jpg?v=1708024983",
+            "altText": null,
+            "width": 400,
+            "height": 400
+          }
+        },
+        {
+          "handle": "video-games",
+          "title": "Video Games",
+          "description": "A game played by electronically manipulating images produced by a computer program on a television screen or other display screen.",
+          "updatedAt": "2024-02-17T21:52:00Z",
+          "id": "gid://shopify/Collection/468370882844",
+          "descriptionHtml": "A game played by electronically manipulating images produced by a computer program on a television screen or other display screen.",
+          "image": {
+            "url": "https://cdn.shopify.com/s/files/1/0847/5616/8988/collections/c553abed1b5efa10648caea1f5429f65.jpg?v=1708025066",
+            "altText": null,
+            "width": 615,
+            "height": 409
+          }
+        }
+      ]
+    },
+    {
+      "id": "9010944344348",
+      "handle": "fisher-price-shimmer-and-shine-wish-and-wear-genie-necklace",
+      "title": "Fisher Price Shimmer and Shine - Wish and Wear Genie Necklace",
+      "description": "This beautiful jeweled necklace features a very special surprise your best friends Shimmer and Shine hiding inside! Press the gem at the top of the bottle to see the bottle light up and the genies appear! Fun phrases and a song add to the magic!",
+      "descriptionHtml": "This beautiful jeweled necklace features a very special surprise your best friends Shimmer and Shine hiding inside! Press the gem at the top of the bottle to see the bottle light up and the genies appear! Fun phrases and a song add to the magic!",
+      "options": [
+        {
+          "id": "gid://shopify/ProductOption/11319681712412",
+          "name": "Title",
+          "values": ["Default Title"]
+        }
+      ],
+      "vendor": "FISHER PRICE",
+      "priceRange": {
+        "maxVariantPrice": {
+          "amount": "24.99",
+          "currencyCode": "PLN"
+        },
+        "minVariantPrice": {
+          "amount": "24.99",
+          "currencyCode": "PLN"
+        }
+      },
+      "tags": ["egnition-sample-data", "fisher-price", "toys"],
+      "featuredImage": {
+        "url": "https://cdn.shopify.com/s/files/1/0847/5616/8988/products/4009165c3e8e7581bba22b37197028ee.jpg?v=1708024115",
+        "altText": null,
+        "width": 450,
+        "height": 450
+      },
+      "seo": {
+        "description": null,
+        "title": null
+      },
+      "updatedAt": "2024-02-15T19:28:12Z",
+      "createdAt": "2024-02-15T19:08:35Z",
+      "flatOptions": {
+        "Title": ["Default Title"]
+      },
+      "updatedAtTimestamp": 1708025292,
+      "createdAtTimestamp": 1708024115,
+      "minPrice": 24.99,
+      "variants": [
+        {
+          "id": "gid://shopify/ProductVariant/47769049235740",
+          "title": "Default Title",
+          "quantityAvailable": 18,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Title",
+              "value": "Default Title"
+            }
+          ],
+          "price": {
+            "amount": "24.99",
+            "currencyCode": "PLN"
+          }
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0847/5616/8988/products/4009165c3e8e7581bba22b37197028ee.jpg?v=1708024115",
+          "altText": null,
+          "width": 450,
+          "height": 450
+        }
+      ],
+      "collections": [
+        {
+          "handle": "fisher-price",
+          "title": "FISHER PRICE",
+          "description": "Fisher-price toys",
+          "updatedAt": "2024-03-03T18:01:31Z"
+        }
+      ]
+    },
+    {
+      "id": "9010948243740",
+      "handle": "tarmac-honda-civic-type-r-fk2-milano-red",
+      "title": "Tarmac Honda Civic Type R FK2 Milano Red",
+      "description": "Tarmac Honda Civic Type R FK2 Milano Red",
+      "descriptionHtml": "Tarmac Honda Civic Type R FK2 Milano Red",
+      "options": [
+        {
+          "id": "gid://shopify/ProductOption/11319685841180",
+          "name": "Title",
+          "values": ["Default Title"]
+        }
+      ],
+      "vendor": "TOYS R US",
+      "priceRange": {
+        "maxVariantPrice": {
+          "amount": "18.99",
+          "currencyCode": "PLN"
+        },
+        "minVariantPrice": {
+          "amount": "18.99",
+          "currencyCode": "PLN"
+        }
+      },
+      "tags": ["egnition-sample-data", "toys", "toys-r-us"],
+      "featuredImage": {
+        "url": "https://cdn.shopify.com/s/files/1/0847/5616/8988/products/abfde686f7a6033bea8dacf580745776.jpg?v=1708024173",
+        "altText": null,
+        "width": 700,
+        "height": 700
+      },
+      "seo": {
+        "description": null,
+        "title": null
+      },
+      "updatedAt": "2024-02-15T19:27:59Z",
+      "createdAt": "2024-02-15T19:09:33Z",
+      "flatOptions": {
+        "Title": ["Default Title"]
+      },
+      "updatedAtTimestamp": 1708025279,
+      "createdAtTimestamp": 1708024173,
+      "minPrice": 18.99,
+      "variants": [
+        {
+          "id": "gid://shopify/ProductVariant/47769053823260",
+          "title": "Default Title",
+          "quantityAvailable": 1,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Title",
+              "value": "Default Title"
+            }
+          ],
+          "price": {
+            "amount": "18.99",
+            "currencyCode": "PLN"
+          }
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0847/5616/8988/products/abfde686f7a6033bea8dacf580745776.jpg?v=1708024173",
+          "altText": null,
+          "width": 700,
+          "height": 700
+        }
+      ],
+      "collections": []
+    },
+    {
+      "id": "9010947129628",
+      "handle": "tobot-mini-r-toy",
+      "title": "Tobot Mini R Toy",
+      "description": "This Mini Tobot R action figure is an exact replica as the one in the series. Give way for him in your shelf as you complete your Tobot merch.",
+      "descriptionHtml": "This Mini Tobot R action figure is an exact replica as the one in the series. Give way for him in your shelf as you complete your Tobot merch.",
+      "options": [
+        {
+          "id": "gid://shopify/ProductOption/11319684661532",
+          "name": "Title",
+          "values": ["Default Title"]
+        }
+      ],
+      "vendor": "TOYS R US",
+      "priceRange": {
+        "maxVariantPrice": {
+          "amount": "7.5",
+          "currencyCode": "PLN"
+        },
+        "minVariantPrice": {
+          "amount": "7.5",
+          "currencyCode": "PLN"
+        }
+      },
+      "tags": ["egnition-sample-data", "toys", "toys-r-us"],
+      "featuredImage": {
+        "url": "https://cdn.shopify.com/s/files/1/0847/5616/8988/products/4f771d47480ee04727dc481a83065c29.jpg?v=1708024160",
+        "altText": null,
+        "width": 500,
+        "height": 500
+      },
+      "seo": {
+        "description": null,
+        "title": null
+      },
+      "updatedAt": "2024-02-15T19:28:01Z",
+      "createdAt": "2024-02-15T19:09:20Z",
+      "flatOptions": {
+        "Title": ["Default Title"]
+      },
+      "updatedAtTimestamp": 1708025281,
+      "createdAtTimestamp": 1708024160,
+      "minPrice": 7.5,
+      "variants": [
+        {
+          "id": "gid://shopify/ProductVariant/47769052545308",
+          "title": "Default Title",
+          "quantityAvailable": 18,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Title",
+              "value": "Default Title"
+            }
+          ],
+          "price": {
+            "amount": "7.5",
+            "currencyCode": "PLN"
+          }
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0847/5616/8988/products/4f771d47480ee04727dc481a83065c29.jpg?v=1708024160",
+          "altText": " a toy with a red and yellow color scheme",
+          "width": 500,
+          "height": 500
+        }
+      ],
+      "collections": []
+    }
+  ],
+  "offset": 0,
+  "limit": 20,
+  "total": 528
+}

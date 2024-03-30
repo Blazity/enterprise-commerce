@@ -17,6 +17,7 @@ import { FacetsMobile } from "views/Listing/FacetsMobile"
 import { HitsSection } from "views/Listing/HitsSection"
 import { PaginationSection } from "views/Listing/PaginationSection"
 import { Sorter } from "views/Listing/Sorter"
+import { getDemoProducts, getDemoSingleCategory, isDemoMode } from "utils/demoUtils"
 
 export const metadata: Metadata = {
   title: "Search | Enterprise Commerce",
@@ -55,7 +56,7 @@ export default async function CategoryPage({ searchParams, params }: CategoryPag
 
 async function SearchView({ searchParams, params }: CategoryPageProps) {
   const { q, sortBy, page, ...rest } = searchParamsCache.parse(searchParams)
-  const collection = await storefrontClient.getCollection(params.slug)
+  const collection = isDemoMode() ? getDemoSingleCategory(params.slug) : await storefrontClient.getCollection(params.slug)
 
   if (!collection) return notFound()
 
@@ -89,6 +90,8 @@ async function SearchView({ searchParams, params }: CategoryPageProps) {
 
 const searchProducts = unstable_cache(
   async (query: string, sortBy: string, page: number, filter: string) => {
+    if (isDemoMode()) return getDemoProducts()
+
     const index = await meilisearch?.getIndex<PlatformProduct>(MEILISEARCH_INDEX)
 
     const results = await index?.search(query, {

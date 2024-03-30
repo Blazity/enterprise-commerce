@@ -18,7 +18,8 @@ import { NavigationEvents } from "views/NavigationEvents"
 import { ThirdParties } from "views/ThirdParties"
 import { env } from "env.mjs"
 import { Metadata } from "next"
-import GithubBadge from "views/GithubBadge"
+import { GithubBadge } from "views/GithubBadge"
+import { DemoModeAlert } from "views/DemoModeAlert"
 
 const DraftToolbar = dynamic(() => import("views/DraftToolbar"), { ssr: false })
 
@@ -213,6 +214,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </Suspense>
 
         <GithubBadge />
+        <DemoModeAlert />
       </body>
     </html>
   )

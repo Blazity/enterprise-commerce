@@ -2,6 +2,7 @@ import { storefrontClient } from "clients/storefrontClient"
 import { Skeleton } from "components/Skeleton/Skeleton"
 import { unstable_cache } from "next/cache"
 import Link from "next/link"
+import { getDemoCategories, getDemoProducts, isDemoMode } from "utils/demoUtils"
 
 export async function CategoriesSection() {
   const categories = await getCategories()
@@ -29,7 +30,10 @@ export async function CategoriesSection() {
 
 const getCategories = unstable_cache(
   async () => {
+    if (isDemoMode()) return getDemoCategories().slice(0, 6)
+
     const results = await storefrontClient.getCollections(6)
+    console.log({ results })
     return results || []
   },
   ["categories-section"],
