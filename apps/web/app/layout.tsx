@@ -18,6 +18,7 @@ import { NavigationEvents } from "views/NavigationEvents"
 import { ThirdParties } from "views/ThirdParties"
 import { env } from "env.mjs"
 import { Metadata } from "next"
+import GithubBadge from "views/GithubBadge"
 
 const DraftToolbar = dynamic(() => import("views/DraftToolbar"), { ssr: false })
 
@@ -210,6 +211,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Suspense fallback={null}>
           <ThirdParties />
         </Suspense>
+
+        <GithubBadge />
       </body>
     </html>
   )

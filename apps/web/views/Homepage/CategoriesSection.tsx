@@ -16,7 +16,7 @@ export async function CategoriesSection() {
           <Link key={singleCategory.handle + index} href={`/category/${singleCategory.handle}`}>
             <div className="relative h-[260px] w-full overflow-hidden rounded-2xl ">
               <div className="absolute inset-0 size-full bg-neutral-100 transition-all hover:bg-neutral-50 hover:blur">
-                <img alt="" src={`/category-placeholder-${index + 1}.svg`} className="absolute right-0 top-0 h-full" />
+                <img alt="" src={`/category-placeholder-${index + 1}.svg`} className="absolute -top-8 right-0 h-full" />
               </div>
               <h3 className="absolute bottom-8 left-8 text-2xl leading-none tracking-tight text-black">{singleCategory.title}</h3>
             </div>
