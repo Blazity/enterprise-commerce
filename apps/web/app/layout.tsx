@@ -153,18 +153,18 @@ const navigationItems: NavItem[] = [
 ]
 
 export const metadata: Metadata = {
-  title: "Demo Store | Blazity",
-  description: "An intuitive navigation to captivate your audience and drive conversions effortlessly. Start boosting your sales.",
+  title: "Next.js Enterprise Commerce | Blazity",
+  description: "AI-FIRST NEXT.JS STOREFRONT FOR COMPOSABLE COMMERCE",
   metadataBase: new URL(env.LIVE_URL!),
   openGraph: {
-    title: "Demo Store | Blazity",
-    description: "An intuitive navigation to captivate your audience and drive conversions effortlessly. Start boosting your sales.",
+    title: "Next.js Enterprise Commerce | Blazity",
+    description: "AI-FIRST NEXT.JS STOREFRONT FOR COMPOSABLE COMMERCE",
     images: ["/twitter-image.png"],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Demo Store | Blazity",
-    description: "An intuitive navigation to captivate your audience and drive conversions effortlessly. Start boosting your sales.",
+    title: "Next.js Enterprise Commerce | Blazity",
+    description: "AI-FIRST NEXT.JS STOREFRONT FOR COMPOSABLE COMMERCE",
     creator: "@blazity",
     images: ["/twitter-image.png"],
   },
