@@ -10,7 +10,7 @@ export async function ThirdParties() {
   return (
     <>
       {flags?.isVercelAnalyticsEnabled ? <Analytics /> : null}
-      {flags?.isSpeedInsightsEnabled ? <SpeedInsights /> : null}
+      {flags?.isSpeedInsightsEnabled && process.env.NODE_ENV === "production" ? <SpeedInsights /> : null}
       {flags?.isGoogleTagManagerEnabled ? <GoogleTagManager gtmId={env.GTM_ID} /> : null}
     </>
   )
