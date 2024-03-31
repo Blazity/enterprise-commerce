@@ -36,7 +36,7 @@ const getSimilarProducts = unstable_cache(
     if (isDemoMode()) return getDemoProducts().hits.slice(0, limit)
 
     const index = await meilisearch?.getIndex<PlatformProduct>(MEILISEARCH_INDEX)
-    const similarSearchResults = await index.search(handle, { matchingStrategy: "last", limit })
+    const similarSearchResults = await index.search(handle, { matchingStrategy: "last", limit, hybrid: { semanticRatio: 1 } })
 
     let collectionSearchResults = { hits: [] }
     if (similarSearchResults.hits.length < limit) {

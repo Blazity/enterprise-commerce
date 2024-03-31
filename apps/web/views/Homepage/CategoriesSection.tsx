@@ -33,7 +33,6 @@ const getCategories = unstable_cache(
     if (isDemoMode()) return getDemoCategories().slice(0, 6)
 
     const results = await storefrontClient.getCollections(6)
-    console.log({ results })
     return results || []
   },
   ["categories-section"],
