@@ -28,7 +28,9 @@ export default function QuickAddButton({ combination, label, className }: QuickA
 
   return (
     <form action={actionWithParams}>
-      <Submit className={className}>{label || combination.title}</Submit>
+      <Submit className={className}>
+        <span className="truncate text-nowrap">{label || combination.title}</span>
+      </Submit>
     </form>
   )
 }
@@ -41,7 +43,7 @@ function Submit({ children, className }) {
       onClick={(e) => pending && e.preventDefault()}
       disabled={pending}
       className={cn(
-        "flex min-h-[30px] w-[70px] cursor-pointer justify-start overflow-hidden overflow-ellipsis text-nowrap border border-black bg-white p-1.5 text-left text-[11px] uppercase transition-colors hover:bg-neutral-800 hover:text-white disabled:cursor-not-allowed disabled:hover:text-black",
+        "relative flex min-h-[30px] w-[70px] cursor-pointer justify-center border border-black bg-white p-1.5 text-[11px] uppercase transition-colors hover:bg-neutral-800 hover:text-white disabled:cursor-not-allowed disabled:hover:text-black",
         className
       )}
     >
