@@ -111,7 +111,7 @@ function isWebhookVerified(rawBody: string, hmac: string) {
 
 async function generateProductAltTags(product: PlatformProduct) {
   const altTagAwareImages = await Promise.all(product?.images?.slice(0, 1).map(mapper).filter(Boolean))
-  return altTagAwareImages || []
+  return [...altTagAwareImages, product?.images?.slice(1)] || []
 
   async function mapper(image: PlatformImage) {
     if (!replicate) return
