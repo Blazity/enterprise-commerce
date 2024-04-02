@@ -63,7 +63,7 @@
     "react-hook-form": "^7.51.1",
     "replicate": "^0.29.1",
     "schema-dts": "^1.1.2",
-    "sharp": "^0.33.3",
+    "sharp": "0.32.6",
     "sonner": "^1.4.41",
     "zod": "^3.22.4",
     "zustand": "^4.5.2"

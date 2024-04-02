@@ -36,7 +36,7 @@
   "navigation": [
     {
       "group": "Get Started",
-      "pages": ["introduction", "setup", "architecture", "environment-variables"]
+      "pages": ["introduction", "setup", "architecture"]
     },
     {
       "group": "Features",
@@ -57,14 +57,8 @@
         "features/ci-cd",
         "features/platform-agnostic",
         "features/mega-menu",
-        "features/autocomplete",
-        "features/storybook",
-        "features/testing"
+        "features/autocomplete"
       ]
-    },
-    {
-      "group": "Essentials",
-      "pages": ["essentials/markdown", "essentials/code", "essentials/images", "essentials/settings", "essentials/navigation", "essentials/reusable-snippets"]
     }
   ],
   "footerSocials": {
