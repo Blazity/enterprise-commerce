@@ -184,9 +184,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <Script id="mobileMegaMenuLogic" strategy="beforeInteractive">{`${mobileInlineScript}`}</Script>
 
+        <AnnouncementBar />
         <TopBar />
         <NavigationBar items={navigationItems} />
-        <AnnouncementBar />
 
         {children}
 
