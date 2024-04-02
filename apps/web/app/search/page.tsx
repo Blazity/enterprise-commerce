@@ -93,8 +93,6 @@ const searchProducts = unstable_cache(
       attributesToRetrieve: ["id", "handle", "title", "priceRange", "featuredImage", "minPrice", "variants", "images"],
     })
 
-    console.log(results.hits.length)
-
     const hits = results?.hits || []
     const totalPages = results?.totalPages || 0
     const facetDistribution = results?.facetDistribution || {}
