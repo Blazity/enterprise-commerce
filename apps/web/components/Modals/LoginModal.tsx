@@ -11,9 +11,11 @@ import { Input } from "components/Input/Input"
 import { Logo } from "components/Logo/Logo"
 import { useModalStore } from "stores/modalStore"
 
+const passwordRegexp = new RegExp(/(?=.*\d)(?=.*\W)(?=.*[a-z])(?=.*[A-Z]).{8,20}$/)
+
 const formSchema = z.object({
   email: z.string().email().min(3).max(64),
-  password: z.string().min(3).max(64),
+  password: z.string().min(8).max(20).regex(passwordRegexp, "Password must have at least one number, one symbol, one uppercase letter, and be at least 8 characters"),
 })
 
 const formFields = [
