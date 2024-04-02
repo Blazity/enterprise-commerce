@@ -110,7 +110,7 @@ function isWebhookVerified(rawBody: string, hmac: string) {
 }
 
 async function generateProductAltTags(product: PlatformProduct) {
-  const altTagAwareImages = await Promise.all(product?.images?.map(mapper).filter(Boolean))
+  const altTagAwareImages = await Promise.all(product?.images?.slice(0, 1).map(mapper).filter(Boolean))
   return altTagAwareImages || []
 
   async function mapper(image: PlatformImage) {
