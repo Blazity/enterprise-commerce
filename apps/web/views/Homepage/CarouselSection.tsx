@@ -18,7 +18,7 @@ export function CarouselSection({ items, title }: CarouselSectionProps) {
         <Carousel opts={{ containScroll: "keepSnaps", dragFree: true }}>
           <CarouselContent className="ml-0 justify-start gap-8">
             {items.map((product, idx) => (
-              <ProductCard className="min-w-[280px] max-w-[280px]" {...product} key={"relevant_" + product.id + idx} />
+              <ProductCard className="min-w-[150px] max-w-[150px] overflow-hidden md:min-w-[280px] md:max-w-[280px]" {...product} key={"relevant_" + product.id + idx} />
             ))}
           </CarouselContent>
         </Carousel>

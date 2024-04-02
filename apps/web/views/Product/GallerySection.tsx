@@ -41,7 +41,7 @@ export function GallerySection({ className, images, children }: GallerySectionPr
 
   return (
     <div className={cn("relative flex max-w-full flex-col gap-10 md:max-w-[480px]", className)}>
-      <Carousel setApi={setApi} className="relative min-h-[600px] w-full  bg-neutral-100">
+      <Carousel setApi={setApi} className="relative min-h-[600px] w-full ">
         <CarouselContent className="size-full">
           {images.map((image, index) => (
             <CarouselItem className="flex size-full h-[600px] flex-col items-center justify-center" key={image.url}>
