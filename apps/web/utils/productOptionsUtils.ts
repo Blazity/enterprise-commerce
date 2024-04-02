@@ -19,15 +19,15 @@ export function getAllCombinations(variants: PlatformVariant[]): Combination[] {
     price: variant.price,
     title: variant.title,
     quantityAvailable: variant.quantityAvailable,
-    ...variant.selectedOptions.reduce((accumulator, option) => ({ ...accumulator, [option.name.toLowerCase()]: option.value }), {}),
+    ...variant.selectedOptions.reduce((accumulator, option) => ({ ...accumulator, [option.name.toLowerCase()]: option.value.toLowerCase() }), {}),
   }))
 }
 
 export function getCombination(product: PlatformProduct, color: string | null, size: string | null) {
   const hasOnlyOneVariant = product.variants.length <= 1
 
-  const defaultColor = product.flatOptions?.["Color"]?.find(Boolean) ?? null
-  const defaultSize = product.flatOptions?.["Size"]?.find(Boolean) ?? null
+  const defaultColor = product.flatOptions?.["Color"]?.find(Boolean)?.toLowerCase() ?? null
+  const defaultSize = product.flatOptions?.["Size"]?.find(Boolean)?.toLowerCase() ?? null
 
   return hasOnlyOneVariant
     ? product.variants.find(Boolean)

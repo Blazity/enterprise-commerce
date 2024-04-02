@@ -20,8 +20,8 @@ export function VariantsSection({ variants, flatOptions }: VariantsSectionProps)
   const urlOptions = getOptionsFromUrl(pathname)
   const combinations = getAllCombinations(variants)
 
-  const defaultColor = flatOptions?.["Color"]?.find(Boolean) ?? null
-  const defaultSize = flatOptions?.["Size"]?.find(Boolean) ?? null
+  const defaultColor = flatOptions?.["Color"]?.find(Boolean)?.toLowerCase() ?? null
+  const defaultSize = flatOptions?.["Size"]?.find(Boolean)?.toLowerCase() ?? null
   const selectedColor = urlOptions.color ?? defaultColor
   const selectedSize = urlOptions.size ?? defaultSize
 
