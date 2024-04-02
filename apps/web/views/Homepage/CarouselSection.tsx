@@ -1,5 +1,5 @@
 import { PlatformProduct } from "@enterprise-commerce/core/platform/types"
-import { Carousel, CarouselContent } from "components/Carousel/Carousel"
+import { Carousel, CarouselContent, CarouselNext, CarouselPrevious } from "components/Carousel/Carousel"
 import { ProductCard } from "components/ProductCard/ProductCard"
 import { Skeleton } from "components/Skeleton/Skeleton"
 
@@ -10,20 +10,24 @@ interface CarouselSectionProps {
 
 export function CarouselSection({ items, title }: CarouselSectionProps) {
   return (
-    <div className="max-w-container-md mx-auto flex flex-col gap-16 px-4 py-20 md:pb-32 md:pt-24 xl:px-0">
-      <div className="basis-1/3 text-center text-5xl font-normal tracking-tighter sm:min-w-[280px] md:text-left md:text-6xl">
-        <h2>{title}</h2>
-      </div>
-      <div className="w-full">
-        <Carousel opts={{ containScroll: "keepSnaps", dragFree: true }}>
+    <Carousel opts={{ containScroll: "keepSnaps", dragFree: true }}>
+      <div className="max-w-container-md mx-auto flex flex-col gap-16 px-4 py-20 md:pb-32 md:pt-24 xl:px-0">
+        <div className="flex basis-1/3 justify-between text-left text-5xl font-normal tracking-tighter sm:min-w-[280px] md:text-left md:text-6xl">
+          <h2>{title}</h2>
+          <div className="hidden gap-4 md:flex">
+            <CarouselPrevious className="relative" />
+            <CarouselNext className="relative" />
+          </div>
+        </div>
+        <div className="w-full">
           <CarouselContent className="ml-0 justify-start gap-8">
             {items.map((product, idx) => (
               <ProductCard className="min-w-[150px] max-w-[150px] overflow-hidden md:min-w-[280px] md:max-w-[280px]" {...product} key={"relevant_" + product.id + idx} />
             ))}
           </CarouselContent>
-        </Carousel>
+        </div>
       </div>
-    </div>
+    </Carousel>
   )
 }
 
