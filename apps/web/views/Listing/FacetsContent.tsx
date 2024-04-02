@@ -8,6 +8,7 @@ import type { CategoriesDistribution } from "meilisearch"
 import { parseAsArrayOf, parseAsInteger, parseAsString, useQueryState } from "nuqs"
 import { ChangeEvent } from "react"
 import { Facet } from "./Facet"
+import { CategoryFacet } from "./CategoryFacet"
 
 interface FacetsContentProps {
   facetDistribution: Record<string, CategoriesDistribution> | undefined
@@ -50,6 +51,22 @@ export function FacetsContent({ facetDistribution, className, disabledFacets }: 
 
   return (
     <div className={className}>
+      {!disabledFacets?.includes("category") ? (
+        <CategoryFacet
+          title="categories"
+          distribution={collections}
+          isChecked={(category) => selectedCategories.includes(category)}
+          onCheckedChange={(checked, category) => {
+            console.log({ checked, category })
+            setSelectedCategories((prev) => {
+              console.log({ prev })
+
+              return checked ? [...prev, category] : prev.filter((cat) => cat !== category)
+            })
+            setPage(1)
+          }}
+        />
+      ) : null}
       <div className={"relative mb-6 block overflow-hidden rounded-md"}>
         <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5">
           <SearchIcon className="size-4 text-neutral-500" />
@@ -67,19 +84,6 @@ export function FacetsContent({ facetDistribution, className, disabledFacets }: 
       </div>
 
       <Accordion collapsible className="w-full" type="single">
-        {!disabledFacets?.includes("category") ? (
-          <Facet
-            id="category"
-            title="Category"
-            distribution={collections}
-            isChecked={(category) => selectedCategories.includes(category)}
-            onCheckedChange={(checked, category) => {
-              setSelectedCategories((prev) => (checked ? [...prev, category] : prev.filter((cat) => cat !== category)))
-              setPage(1)
-            }}
-          />
-        ) : null}
-
         {!disabledFacets?.includes("tags") ? (
           <Facet
             id="tags"
