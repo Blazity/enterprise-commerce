@@ -87,12 +87,13 @@ const searchProducts = unstable_cache(
     const results = await index?.search(query, {
       sort: sortBy ? [sortBy] : undefined,
       hitsPerPage: 24,
-      hybrid: { semanticRatio: 0.5 },
       facets: ["collections.title", "tags", "vendor", "variants.availableForSale", "flatOptions.Size", "flatOptions.Color", "minPrice"],
       filter,
       page,
       attributesToRetrieve: ["id", "handle", "title", "priceRange", "featuredImage", "minPrice", "variants", "images"],
     })
+
+    console.log(results.hits.length)
 
     const hits = results?.hits || []
     const totalPages = results?.totalPages || 0
