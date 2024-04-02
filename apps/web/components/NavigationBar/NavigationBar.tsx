@@ -14,22 +14,35 @@ interface NavigationBarProps {
   items: NavItem[]
 }
 
+function VariantGrid({ variant, items }: { variant?: "text-grid" | "image-grid" | "text-image-grid"; items?: TextGridItem[] | ImageGridItem[] | TextImageGridItem[] }) {
+  if (!items) return null
+
+  switch (variant) {
+    case "text-grid":
+      return <TextGridVariant items={items as TextGridItem[]} />
+    case "image-grid":
+      return <ImageGridVariant items={items as ImageGridItem[]} />
+    case "text-image-grid":
+      return <TextImageGridVariant items={items as TextImageGridItem[]} />
+    default:
+      return null
+  }
+}
+
 export function NavigationBar({ items }: NavigationBarProps) {
   const itemsMarkup = items.map((singleMenuItem) => (
     <li className={cn("menu__item", { menu__dropdown: !!singleMenuItem.submenu })} key={singleMenuItem.text}>
-      <a href={singleMenuItem.href || "#"} className="menu__link text-[22px] hover:underline md:text-[16px]">
+      <a href={singleMenuItem.href || "#"} className="menu__link text-[22px] hover:underline md:text-sm/[18px]">
         {singleMenuItem.text}
-        {singleMenuItem.submenu ? (
+        {!!singleMenuItem.submenu && (
           <i>
             <ChevronIcon />
           </i>
-        ) : null}
+        )}
       </a>
 
       <div className="submenu megamenu__text w-full border-b border-black shadow-sm">
-        {singleMenuItem.submenu?.variant === "text-grid" && <TextGridVariant items={singleMenuItem.submenu.items as TextGridItem[]} />}
-        {singleMenuItem.submenu?.variant === "image-grid" && <ImageGridVariant items={singleMenuItem.submenu.items as ImageGridItem[]} />}
-        {singleMenuItem.submenu?.variant === "text-image-grid" && <TextImageGridVariant items={singleMenuItem.submenu.items as TextImageGridItem[]} />}
+        <VariantGrid items={singleMenuItem.submenu?.items} variant={singleMenuItem.submenu?.variant} />
       </div>
     </li>
   ))

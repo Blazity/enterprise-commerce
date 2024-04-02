@@ -53,7 +53,7 @@ async function ProductView({ slug }: { slug: string }) {
         <BackButton className="mb-8 hidden md:block" />
       </div>
       <main className="max-w-container-sm mx-auto">
-        <Breadcrumbs className="mb-8 hidden md:block" items={makeBreadcrumbs(product)} />
+        <Breadcrumbs className="mb-8" items={makeBreadcrumbs(product)} />
         <div className="grid grid-cols-1 justify-center gap-10 md:grid-cols-2 lg:gap-20">
           <GallerySection images={product.images}>
             <Suspense fallback={null}>

@@ -2,7 +2,7 @@ import { storefrontClient } from "clients/storefrontClient"
 import { Skeleton } from "components/Skeleton/Skeleton"
 import { unstable_cache } from "next/cache"
 import Link from "next/link"
-import { getDemoCategories, getDemoProducts, isDemoMode } from "utils/demoUtils"
+import { getDemoCategories, isDemoMode } from "utils/demoUtils"
 
 export async function CategoriesSection() {
   const categories = await getCategories()
@@ -19,7 +19,7 @@ export async function CategoriesSection() {
               <div className="absolute inset-0 size-full bg-neutral-100 transition-all hover:bg-neutral-50 hover:blur">
                 <img alt="" src={`/category-placeholder-${index + 1}.svg`} className="absolute -top-8 right-0 h-full" />
               </div>
-              <h3 className="absolute bottom-8 left-8 text-2xl leading-none tracking-tight text-black">{singleCategory.title}</h3>
+              <h3 className="absolute bottom-8 left-8 text-[29px]/[18px] tracking-tight text-black">{singleCategory.title}</h3>
             </div>
           </Link>
         ))}

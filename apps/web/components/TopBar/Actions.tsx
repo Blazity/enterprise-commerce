@@ -8,8 +8,10 @@ export default function Actions() {
 
   return (
     <div className="flex items-center space-x-4">
-      <Button onClick={() => openModal("login")}>Log In</Button>
-      <Button className="hover:text-white" variant="secondary" isAnimated={false} onClick={() => openModal("signup")}>
+      <Button className="leading-[18px]" onClick={() => openModal("login")}>
+        Log In
+      </Button>
+      <Button className="leading-[18px] hover:text-white" variant="secondary" isAnimated={false} onClick={() => openModal("signup")}>
         Sign In
       </Button>
     </div>

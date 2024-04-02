@@ -22,10 +22,10 @@ export function ProductCard(props: ProductCardProps) {
           <Image
             alt={featuredImageAltTag}
             className="size-[150px] select-none object-contain transition-transform group-hover:scale-105 md:size-[300px]"
+            width={300}
             height={300}
             src={props.featuredImage?.url || "/default-product-image.svg"}
             sizes="300px"
-            width={300}
             priority={props.priority}
           />
         </Link>
