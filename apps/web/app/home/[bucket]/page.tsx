@@ -4,6 +4,7 @@ import { BestOffersSection } from "views/Homepage/BestOffersSection"
 import { CarouselSectionSkeleton } from "views/Homepage/CarouselSection"
 import { CategoriesSection, CategoriesSectionSkeleton } from "views/Homepage/CategoriesSection"
 import { EverythingUnderSection } from "views/Homepage/EverythingUnderSection"
+import { AnnouncementBar } from "components/AnnouncementBar/AnnouncementBar"
 import { HeroSection } from "views/Homepage/HeroSection"
 
 export const revalidate = 3600
@@ -19,6 +20,7 @@ export default function Homepage({ params: { bucket } }: { params: { bucket: str
   return (
     <>
       <HeroSection title={heroTitles[bucket]} />
+      <AnnouncementBar />
 
       <Suspense fallback={<CategoriesSectionSkeleton />}>
         <CategoriesSection />

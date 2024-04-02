@@ -4,7 +4,6 @@ import dynamic from "next/dynamic"
 import Script from "next/script"
 import { Suspense } from "react"
 import { Toaster } from "sonner"
-import { AnnouncementBar } from "components/AnnouncementBar/AnnouncementBar"
 import { CallToAction } from "components/CallToAction/CallToAction"
 import { Footer } from "components/Footer/Footer"
 import { Modals } from "components/Modals/Modals"
@@ -184,7 +183,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <Script id="mobileMegaMenuLogic" strategy="beforeInteractive">{`${mobileInlineScript}`}</Script>
 
-        <AnnouncementBar />
         <TopBar />
         <NavigationBar items={navigationItems} />
 
