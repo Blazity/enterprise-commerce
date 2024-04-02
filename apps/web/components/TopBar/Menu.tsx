@@ -5,7 +5,7 @@ import { Skeleton } from "components/Skeleton/Skeleton"
 import { COOKIE_ACCESS_TOKEN } from "constants/index"
 import Actions from "./Actions"
 
-const ProfileBar = dynamic(() => import("./ProfileBar").then((mod) => mod.ProfileBar), { ssr: false, loading: ActionsSkeleton })
+const ProfileBar = dynamic(() => import("./ProfileBar"), { ssr: false, loading: ActionsSkeleton })
 
 export async function Menu() {
   const accessToken = cookies().get(COOKIE_ACCESS_TOKEN)

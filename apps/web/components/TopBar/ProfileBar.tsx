@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation"
 import { logoutUser } from "app/actions/user.actions"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "components/DropdownMenu/DropdownMenu"
 
-export function ProfileBar({ user }: { user: PlatformUser }) {
+export default function ProfileBar({ user }: { user: PlatformUser }) {
   const router = useRouter()
   const menuItemClass = "cursor-pointer border-b border-neutral-200 py-2 last:border-b-0 hover:bg-neutral-50 focus:bg-neutral-50 active:bg-neutral-50"
 
