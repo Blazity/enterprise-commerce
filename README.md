@@ -10,7 +10,7 @@ Below is the list of environment variables that you'll need to configure in your
 SHOPIFY_STORE_DOMAIN=your_store_domain.myshopify.com
 SHOPIFY_STOREFRONT_ACCESS_TOKEN=your_storefront_access_token
 SHOPIFY_ADMIN_ACCESS_TOKEN=your_admin_access_token
-SHOPIFY_APP_API_KEY=your_app_api_key
+SHOPIFY_APP_API_SECRET_KEY=your_app_api_key
 MEILISEARCH_MASTER_KEY=master_key
 MEILISEARCH_HOST=https://something.meilisearch.io
 ```
@@ -37,7 +37,7 @@ Replace `your_store_domain.myshopify.com`, `your_storefront_access_token`, `your
 
 ### 3. Private Admin App
 
-- **Variables Required:** `SHOPIFY_ADMIN_ACCESS_TOKEN`, `SHOPIFY_APP_API_KEY`
+- **Variables Required:** `SHOPIFY_ADMIN_ACCESS_TOKEN`, `SHOPIFY_APP_API_SECRET_KEY`
 - **Application Setup and Scopes Configuration:**
   1. Go to the Shopify admin dashboard, navigate to Settings > `Apps and sales channels` > `Develop Apps`, and click on `Create app`.
   2. After naming and creating your app, move to the `Configuration` tab.
@@ -58,7 +58,7 @@ Replace `your_store_domain.myshopify.com`, `your_storefront_access_token`, `your
      - `unauthenticated_read_bulk_operations`
   6. Lastly, navigate to the `API Credentials` section.
      - Copy the **Admin API access token** and place it in your `.env` file under `SHOPIFY_ADMIN_ACCESS_TOKEN`
-     - Also, copy the `SHOPIFY_APP_API_KEY` and place it in your `.env` file under `SHOPIFY_APP_API_KEY`
+     - Also, copy the `SHOPIFY_APP_API_SECRET_KEY` and place it in your `.env` file under `SHOPIFY_APP_API_SECRET_KEY`
 
 ### 4. Setting Up Meilisearch
 

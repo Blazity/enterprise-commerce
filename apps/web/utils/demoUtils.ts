@@ -30,7 +30,7 @@ export function isDemoMode() {
   return (
     !process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN ||
     !process.env.SHOPIFY_ADMIN_ACCESS_TOKEN ||
-    !process.env.SHOPIFY_APP_API_KEY ||
+    !process.env.SHOPIFY_APP_API_SECRET_KEY ||
     !process.env.SHOPIFY_STORE_DOMAIN ||
     !process.env.MEILISEARCH_HOST ||
     !process.env.MEILISEARCH_MASTER_KEY ||

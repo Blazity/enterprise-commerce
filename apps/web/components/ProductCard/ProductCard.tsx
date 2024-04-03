@@ -18,7 +18,7 @@ export function ProductCard(props: ProductCardProps) {
   return (
     <div className={cn("group relative p-0 md:bg-transparent md:p-0", props.className)}>
       <div className="relative flex min-h-[100px] items-center justify-center md:min-h-[320px]">
-        <Link aria-label={linkAria} href={href} className="relative z-10">
+        <Link aria-label={linkAria} href={href} className="relative z-[2]">
           <Image
             alt={featuredImageAltTag}
             className="size-[150px] select-none object-contain transition-transform group-hover:scale-105 md:size-[300px]"

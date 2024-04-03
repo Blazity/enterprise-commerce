@@ -14,11 +14,12 @@ export const maxDuration = 60
 export async function POST(req: Request) {
   const hmac = req.headers.get("X-Shopify-Hmac-Sha256")
 
-  if (!env.SHOPIFY_APP_API_KEY) {
+  if (!env.SHOPIFY_APP_API_SECRET_KEY) {
     return new Response(JSON.stringify({ message: "Not all credentials were provided for the deployment" }), { status: 500, headers: { "Content-Type": "application/json" } })
   }
 
   const rawPayload = await req.text()
+
   if (!isWebhookVerified(rawPayload, hmac!)) {
     return new Response(JSON.stringify({ message: "Could not verify request." }), { status: 401, headers: { "Content-Type": "application/json" } })
   }
@@ -105,7 +106,7 @@ async function getMeilisearchIndex(indexName: string) {
 }
 
 function isWebhookVerified(rawBody: string, hmac: string) {
-  const genHash = createHmac("sha256", env.SHOPIFY_APP_API_KEY!).update(rawBody).digest("base64")
+  const genHash = createHmac("sha256", env.SHOPIFY_APP_API_SECRET_KEY!).update(rawBody).digest("base64")
   return genHash === hmac
 }
 

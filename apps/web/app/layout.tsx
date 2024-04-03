@@ -30,7 +30,7 @@ const navigationItems: NavItem[] = [
     href: "/",
   },
   {
-    text: "Kitchen",
+    text: "Handheld",
     submenu: {
       variant: "text-grid",
       items: [
@@ -74,7 +74,7 @@ const navigationItems: NavItem[] = [
     },
   },
   {
-    text: "Fashion",
+    text: "Gaming",
     submenu: {
       variant: "image-grid",
       items: [
@@ -112,11 +112,11 @@ const navigationItems: NavItem[] = [
     },
   },
   {
-    text: "Electronics",
+    text: "Laptops",
     href: "#",
   },
   {
-    text: "Beauty",
+    text: "Accessories",
     submenu: {
       variant: "text-image-grid",
       items: [
@@ -147,7 +147,7 @@ const navigationItems: NavItem[] = [
     },
   },
   {
-    text: "Kids",
+    text: "Speakers",
     href: "#",
   },
 ]
