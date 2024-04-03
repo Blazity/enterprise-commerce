@@ -3,7 +3,7 @@
 import { Button } from "components/Button/Button"
 import { useModalStore } from "stores/modalStore"
 
-export default function Actions() {
+export function AuthActions() {
   const openModal = useModalStore((s) => s.openModal)
 
   return (

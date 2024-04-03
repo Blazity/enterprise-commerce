@@ -15,6 +15,7 @@ const menuArrow = menu?.querySelector(".menu__arrow")
 const menuTitle = menu?.querySelector(".menu__title")
 const burger = document.querySelector(".burger")
 const overlay = document.querySelector(".overlay")
+const closeButton = document.querySelector(".menu-close-button")
 let subMenu = null
 
 function toggleMenu() {
@@ -58,6 +59,7 @@ resizeObserver.observe(document.body)
 
 burger?.addEventListener("click", toggleMenu)
 overlay?.addEventListener("click", toggleMenu)
+closeButton?.addEventListener("click", toggleMenu)
 menuArrow?.addEventListener("click", hideSubMenu)
 menuTitle?.addEventListener("click", hideSubMenu)
 menuInner?.addEventListener("click", toggleSubMenu)

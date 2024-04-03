@@ -16,13 +16,13 @@ export function CategoryFacet({ distribution, isChecked, onCheckedChange }: Cate
   }
 
   return (
-    <div className="my-[72px] tracking-[-0.44px]">
+    <div className="mb-[50px] mt-[72px] tracking-[-0.44px]">
       {hasNoResults ? null : (
-        <div className="grid gap-9">
+        <div className="grid gap-[24px]">
           {distributionsEntries.map(([value], index) => (
             <button
               key={index + value}
-              className={cn("flex items-center gap-2 bg-transparent text-[22px]/[18px] font-normal", isChecked(value) && "font-bold")}
+              className={cn("flex items-center gap-2 bg-transparent text-[18px]/[18px] font-normal", isChecked(value) && "font-bold")}
               onClick={() => handleClick(value)}
             >
               {value}

@@ -4,7 +4,7 @@ export function PageSkeleton() {
   return (
     <div className="max-w-container-md mx-auto flex min-h-screen w-full flex-col gap-12 px-4 py-12 md:flex-row md:gap-24 md:py-24 xl:px-0 ">
       <div className="hidden flex-col gap-0 md:my-16 lg:flex">
-        <Skeleton className="my-[72px] h-[504px] min-w-[250px] md:block" />
+        <Skeleton className="mb-[50px] mt-[72px] h-[394px] min-w-[250px] md:block" />
         <Skeleton className="mb-6 flex h-[35px] min-w-[250px] md:block" />
         <Skeleton className="flex h-[400px] min-w-[250px] md:block" />
       </div>

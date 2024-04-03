@@ -24,7 +24,7 @@ export function FacetsDesktop({ facetDistribution, className, disabledFacets }: 
 function FacetsContentSkeleton() {
   return (
     <div className="my-16 hidden flex-col gap-0 md:flex">
-      <Skeleton className="my-[72px] h-[504px] min-w-[250px] md:block" />
+      <Skeleton className="mb-[50px] mt-[72px] h-[394px] min-w-[250px] md:block" />
       <Skeleton className="mb-6 flex h-[35px] min-w-[250px] md:block" />
       <Skeleton className="flex h-[400px] min-w-[250px] md:block" />
     </div>
