@@ -1,7 +1,6 @@
 "use client"
 
-import { Button } from "components/Button/Button"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "components/DropdownMenu/DropdownMenu"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "components/DropdownMenu/DropdownMenu"
 import { ChevronIcon } from "components/Icons/ChevronIcon"
 import { parseAsStringEnum, useQueryState } from "nuqs"
 
@@ -27,7 +26,7 @@ interface SorterProps {
 
 export function Sorter({ className }: SorterProps) {
   const [sortBy, setSortBy] = useQueryState("sortBy", {
-    ...parseAsStringEnum<Sorting>(Object.values(Sorting)).withDefault(Sorting.DATE_DESC),
+    ...parseAsStringEnum<Sorting>(Object.values(Sorting)).withDefault(Sorting.RELEVANCY),
     shallow: false,
     history: "push",
   })
