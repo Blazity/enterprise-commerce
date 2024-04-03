@@ -18,7 +18,7 @@ export function FacetsDesktop({ facetDistribution, className, disabledFacets }: 
   const { width = 0 } = useWindowSize()
   const isMobile = width! < 1024 && !!width
 
-  return isMobile ? null : <FacetsContent facetDistribution={facetDistribution} className={cn(className, "sticky top-20 h-full")} disabledFacets={disabledFacets} />
+  return isMobile ? null : <FacetsContent facetDistribution={facetDistribution} className={cn(className, "sticky top-20 overflow-auto")} disabledFacets={disabledFacets} />
 }
 
 function FacetsContentSkeleton() {
