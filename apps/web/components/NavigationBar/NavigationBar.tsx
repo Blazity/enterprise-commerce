@@ -12,8 +12,7 @@ import { TextImageGridVariant } from "./variants/TextImageGridVariant"
 import { Skeleton } from "components/Skeleton/Skeleton"
 import { CloseIcon } from "components/Icons/CloseIcon"
 import { ProfileMenu } from "components/ProfileMenu/ProfileMenu"
-import { ThinSearchIcon } from "components/Icons/ThinSearchIcon"
-import Link from "next/link"
+import { SearchButton } from "./SearchButton"
 
 interface NavigationBarProps {
   items: NavItem[]
@@ -64,14 +63,12 @@ export function NavigationBar({ items }: NavigationBarProps) {
           <a href="/" className="brand flex items-center text-xl font-bold">
             Blazity
           </a>
-          <div className="menu-actions absolute right-4 flex gap-2">
+          <div className="menu-actions absolute right-4 flex justify-center gap-2">
             <Favorites className="flex md:hidden" />
             <Suspense fallback={<Skeleton className="size-8" />}>
               <Cart className="flex md:hidden" />
             </Suspense>
-            <Link href="/search" className="ml-3" prefetch={false}>
-              <ThinSearchIcon className="size-6" />
-            </Link>
+            <SearchButton />
           </div>
         </section>
         <section className="navbar__center w-full md:justify-center">

@@ -4,7 +4,7 @@ import { cn } from "utils/cn"
 interface FacetsModalProps {
   open?: boolean
   onOpenChange?: () => void
-  title: string
+  title?: string
   children: React.ReactNode
   className?: string
 }
@@ -13,9 +13,7 @@ export function GenericModal({ open, onOpenChange, title, children, className }:
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className={cn("max-w-[90%] content-start bg-white sm:max-w-[425px] ", className)}>
-        <DialogHeader>
-          <DialogTitle>{title}</DialogTitle>
-        </DialogHeader>
+        <DialogHeader>{!!title && <DialogTitle>{title}</DialogTitle>}</DialogHeader>
         {children}
       </DialogContent>
     </Dialog>

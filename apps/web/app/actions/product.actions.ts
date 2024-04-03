@@ -9,12 +9,18 @@ import { getDemoSingleProduct, isDemoMode } from "utils/demoUtils"
 
 export const searchProducts = unstable_cache(
   async (query: string, limit: number = 4) => {
-    if (isDemoMode()) return []
+    if (isDemoMode())
+      return {
+        hits: [],
+        hasMore: false,
+      }
     const index = await meilisearch?.getIndex<PlatformProduct>(MEILISEARCH_INDEX)
 
-    if (!index) return []
+    if (!index) return { hits: [], hasMore: false }
 
-    return (await index?.search(query, { limit, attributesToRetrieve: ["id", "handle", "title"] })).hits
+    const res = await index?.search(query, { limit, attributesToRetrieve: ["id", "handle", "title"] })
+
+    return { hits: res.hits, hasMore: res.estimatedTotalHits > limit }
   },
   ["autocomplete-search"],
   { revalidate: 3600 }
