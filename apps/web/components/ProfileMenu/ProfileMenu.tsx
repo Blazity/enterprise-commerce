@@ -11,8 +11,6 @@ export async function ProfileMenu() {
   const accessToken = cookies().get(COOKIE_ACCESS_TOKEN)
   const user = await storefrontClient.getUser(accessToken?.value!)
 
-  console.log({ user })
-
   return (
     <>
       {user ? (

@@ -57,12 +57,7 @@ export function FacetsContent({ facetDistribution, className, disabledFacets }: 
           distribution={collections}
           isChecked={(category) => selectedCategories.includes(category)}
           onCheckedChange={(checked, category) => {
-            console.log({ checked, category })
-            setSelectedCategories((prev) => {
-              console.log({ prev })
-
-              return checked ? [...prev, category] : prev.filter((cat) => cat !== category)
-            })
+            setSelectedCategories((prev) => (checked ? [...prev, category] : prev.filter((cat) => cat !== category)))
             setPage(1)
           }}
         />
