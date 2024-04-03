@@ -13,7 +13,7 @@ export interface Combination {
 type Option = keyof Pick<Combination, "color" | "size">
 
 export function getAllCombinations(variants: PlatformVariant[]): Combination[] {
-  return variants.map((variant) => ({
+  return variants?.map((variant) => ({
     id: variant.id,
     availableForSale: variant.availableForSale,
     price: variant.price,

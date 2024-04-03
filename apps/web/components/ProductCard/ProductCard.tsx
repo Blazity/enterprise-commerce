@@ -13,7 +13,7 @@ export function ProductCard(props: ProductCardProps) {
   const variant = props.variants?.find(Boolean)?.price
   const href = `/products/${props.handle}`
   const linkAria = `Visit product: ${props.title}`
-  const featuredImageAltTag = props.images.find((singleImage) => singleImage.url === props.featuredImage?.url)?.altText || ""
+  const featuredImageAltTag = props.images?.find((singleImage) => singleImage.url === props.featuredImage?.url)?.altText || ""
 
   return (
     <div className={cn("group relative p-0 md:bg-transparent md:p-0", props.className)}>
