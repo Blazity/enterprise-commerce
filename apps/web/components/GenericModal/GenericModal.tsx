@@ -12,7 +12,7 @@ interface FacetsModalProps {
 export function GenericModal({ open, onOpenChange, title, children, className }: FacetsModalProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className={cn("max-w-[90%] bg-white sm:max-w-[425px] ", className)}>
+      <DialogContent className={cn("max-w-[90%] content-start bg-white sm:max-w-[425px] ", className)}>
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
