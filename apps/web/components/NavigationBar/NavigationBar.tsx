@@ -9,6 +9,7 @@ import { ImageGridItem, NavItem, TextGridItem, TextImageGridItem } from "./types
 import { ImageGridVariant } from "./variants/ImageGridVariant"
 import { TextGridVariant } from "./variants/TextGridVariant"
 import { TextImageGridVariant } from "./variants/TextImageGridVariant"
+import { Skeleton } from "components/Skeleton/Skeleton"
 
 interface NavigationBarProps {
   items: NavItem[]
@@ -77,7 +78,7 @@ export function NavigationBar({ items }: NavigationBarProps) {
                 <Autocomplete className="mr-6" />
                 <div className="flex gap-2">
                   <Favorites />
-                  <Suspense fallback={null}>
+                  <Suspense fallback={<Skeleton className="size-8" />}>
                     <Cart />
                   </Suspense>
                 </div>

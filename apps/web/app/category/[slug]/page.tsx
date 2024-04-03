@@ -66,9 +66,9 @@ async function SearchView({ searchParams, params }: CategoryPageProps) {
   const disabledFacets = ["category", "tags"]
 
   return (
-    <>
-      <HeroSection title={collection.title} description={collection.description} image={collection.image} />
-      <div className="max-w-container-md mx-auto flex min-h-screen w-full flex-col gap-12 px-4 py-12 md:flex-row md:gap-24 md:py-24 xl:px-0 ">
+    <div className="max-w-container-md mx-auto w-full px-4 py-12 md:py-24 xl:px-0">
+      <HeroSection handle={collection.handle} title={collection.title} description={collection.description} image={collection.image} />
+      <div className="flex min-h-screen w-full flex-col gap-12 md:flex-row md:gap-24">
         <FacetsDesktop disabledFacets={disabledFacets} className="hidden min-w-[250px] max-w-[250px] md:mt-16 lg:block" facetDistribution={facetDistribution} />
         <div className="flex w-full flex-col">
           <div className="mb-6 flex w-full flex-wrap items-center justify-between">
@@ -84,7 +84,7 @@ async function SearchView({ searchParams, params }: CategoryPageProps) {
           </div>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 
