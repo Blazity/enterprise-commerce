@@ -18,12 +18,13 @@ export function FacetsDesktop({ facetDistribution, className, disabledFacets }: 
   const { width = 0 } = useWindowSize()
   const isMobile = width! < 1024 && !!width
 
-  return isMobile ? null : <FacetsContent facetDistribution={facetDistribution} className={cn(className, "sticky top-20 overflow-auto")} disabledFacets={disabledFacets} />
+  return isMobile ? null : <FacetsContent facetDistribution={facetDistribution} className={cn(className, "sticky overflow-auto")} disabledFacets={disabledFacets} />
 }
 
 function FacetsContentSkeleton() {
   return (
-    <div className="hidden flex-col gap-0 md:mt-16 md:flex">
+    <div className="my-16 hidden flex-col gap-0 md:flex">
+      <Skeleton className="my-[72px] h-[504px] min-w-[250px] md:block" />
       <Skeleton className="mb-6 flex h-[35px] min-w-[250px] md:block" />
       <Skeleton className="flex h-[400px] min-w-[250px] md:block" />
     </div>
