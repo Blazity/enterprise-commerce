@@ -18,9 +18,9 @@ export default function Homepage({ params: { bucket } }: { params: { bucket: str
   }
 
   return (
-    <>
-      <HeroSection title={heroTitles[bucket]} />
-      <AnnouncementBar />
+    <div className="flex w-full flex-col">
+      <HeroSection className="-order-1 md:-order-2" title={heroTitles[bucket]} />
+      <AnnouncementBar className="-order-2 md:-order-1" />
 
       <Suspense fallback={<CategoriesSectionSkeleton />}>
         <CategoriesSection />
@@ -33,7 +33,7 @@ export default function Homepage({ params: { bucket } }: { params: { bucket: str
       <Suspense fallback={<CarouselSectionSkeleton />}>
         <EverythingUnderSection />
       </Suspense>
-    </>
+    </div>
   )
 }
 

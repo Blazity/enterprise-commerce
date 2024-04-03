@@ -12,9 +12,8 @@ import { TextImageGridVariant } from "./variants/TextImageGridVariant"
 import { Skeleton } from "components/Skeleton/Skeleton"
 import { CloseIcon } from "components/Icons/CloseIcon"
 import { ProfileMenu } from "components/ProfileMenu/ProfileMenu"
-import { SearchIcon } from "components/Icons/SearchIcon"
+import { ThinSearchIcon } from "components/Icons/ThinSearchIcon"
 import Link from "next/link"
-import ThinSearchIcon from "components/Icons/ThinSearchIcon"
 
 interface NavigationBarProps {
   items: NavItem[]

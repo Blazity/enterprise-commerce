@@ -1,4 +1,4 @@
-export default function ThinSearchIcon({ className }: { className?: string }) {
+export function ThinSearchIcon({ className }: { className?: string }) {
   return (
     <svg fill="#000000" className={className} version="1.1" id="Capa_1" viewBox="0 0 488.4 488.4">
       <g>
