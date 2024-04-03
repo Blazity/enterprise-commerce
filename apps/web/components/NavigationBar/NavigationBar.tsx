@@ -12,6 +12,9 @@ import { TextImageGridVariant } from "./variants/TextImageGridVariant"
 import { Skeleton } from "components/Skeleton/Skeleton"
 import { CloseIcon } from "components/Icons/CloseIcon"
 import { ProfileMenu } from "components/ProfileMenu/ProfileMenu"
+import { SearchIcon } from "components/Icons/SearchIcon"
+import Link from "next/link"
+import ThinSearchIcon from "components/Icons/ThinSearchIcon"
 
 interface NavigationBarProps {
   items: NavItem[]
@@ -67,6 +70,9 @@ export function NavigationBar({ items }: NavigationBarProps) {
             <Suspense fallback={<Skeleton className="size-8" />}>
               <Cart className="flex md:hidden" />
             </Suspense>
+            <Link href="/search" className="ml-3" prefetch={false}>
+              <ThinSearchIcon className="size-6" />
+            </Link>
           </div>
         </section>
         <section className="navbar__center w-full md:justify-center">
