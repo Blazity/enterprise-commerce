@@ -15,6 +15,7 @@ import { InfoSection } from "views/Product/InfoSection"
 import { PageSkeleton } from "views/Product/PageSkeleton"
 import { SimilarProductsSection } from "views/Product/SimilarProductsSection"
 import { SimilarProductsSectionSkeleton } from "views/Product/SimilarProductsSectionSkeleton"
+import { VariantsSection } from "views/Product/VariantsSection"
 
 export const dynamic = "force-static"
 
@@ -50,6 +51,7 @@ async function ProductView({ slug }: { slug: string }) {
 
   const combination = getCombination(product, color, size)
   const lastCollection = product?.collections?.findLast(Boolean)
+  const hasOnlyOneVariant = product.variants.length <= 1
 
   return (
     <div className="max-w-container-md relative mx-auto px-4 xl:px-0">
@@ -62,6 +64,7 @@ async function ProductView({ slug }: { slug: string }) {
           <GallerySection images={product.images} />
           <div className="flex flex-col items-start pt-12">
             <InfoSection className="pb-10" title={product.title} description={product.descriptionHtml} combination={combination} />
+            {hasOnlyOneVariant ? null : <VariantsSection handle={product.handle} variants={product.variants} />}
             <DetailsSection slug={slug} product={product} />
           </div>
         </div>

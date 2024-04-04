@@ -34,7 +34,7 @@ export function AddToCartButton({ className, combination }: { className?: string
 
   return (
     <form className={className} action={actionWithParams}>
-      <Submit disabled={!hasAnyAvailable || isPending}>{"Add to Cart"}</Submit>
+      <Submit disabled={!hasAnyAvailable || !combination?.availableForSale || isPending}>{"Add to Cart"}</Submit>
     </form>
   )
 }

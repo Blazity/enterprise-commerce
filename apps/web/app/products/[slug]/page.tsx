@@ -14,6 +14,7 @@ import { PageSkeleton } from "views/Product/PageSkeleton"
 import { SimilarProductsSection } from "views/Product/SimilarProductsSection"
 import { SimilarProductsSectionSkeleton } from "views/Product/SimilarProductsSectionSkeleton"
 import { generateJsonLd } from "./metadata"
+import { VariantsSection } from "views/Product/VariantsSection"
 
 export const revalidate = 3600
 
@@ -45,6 +46,7 @@ async function ProductView({ slug }: { slug: string }) {
 
   const combination = getCombination(product, color, size)
   const lastCollection = product?.collections?.findLast(Boolean)
+  const hasOnlyOneVariant = product.variants.length <= 1
 
   return (
     <div className="max-w-container-md relative mx-auto px-4 xl:px-0">
@@ -61,7 +63,9 @@ async function ProductView({ slug }: { slug: string }) {
             </Suspense>
           </GallerySection>
           <div className="flex flex-col items-start pt-12">
-            <InfoSection className="pb-10" title={product.title} description={product.descriptionHtml} combination={combination} />
+            <InfoSection className="pb-6" title={product.title} description={product.descriptionHtml} combination={combination} />
+            {hasOnlyOneVariant ? null : <VariantsSection handle={product.handle} className="pb-4" variants={product.variants} />}
+
             <Suspense fallback={null}>
               <DetailsSection slug={slug} product={product} />
             </Suspense>

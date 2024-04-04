@@ -19,7 +19,7 @@ export function getAllCombinations(variants: PlatformVariant[]): Combination[] {
     price: variant.price,
     title: variant.title,
     quantityAvailable: variant.quantityAvailable,
-    ...variant.selectedOptions.reduce((accumulator, option) => ({ ...accumulator, [option.name.toLowerCase()]: option.value.toLowerCase() }), {}),
+    ...variant.selectedOptions.reduce((accumulator, option) => ({ ...accumulator, [option.name.toLowerCase()]: decodeURIComponent(option.value.toLowerCase()) }), {}),
   }))
 }
 
@@ -52,10 +52,10 @@ export function createOptionfulUrl(originalUrl: string, size: string | null | un
 }
 
 export function removeOptionsFromUrl(pathname: string) {
-  const sizePattern = /-size_([0-9a-zA-Z]+)/
-  const colorPattern = /-color_([0-9a-zA-Z]+)/
+  const sizePattern = /-size_([0-9a-zA-Z\s]+)/
+  const colorPattern = /-color_([0-9a-zA-Z\s]+)/
 
-  return pathname.replace(sizePattern, "").replace(colorPattern, "")
+  return decodeURIComponent(pathname).replace(sizePattern, "").replace(colorPattern, "")
 }
 
 export function getOptionsFromUrl(pathname: string) {
@@ -64,11 +64,13 @@ export function getOptionsFromUrl(pathname: string) {
     color: null,
   }
 
-  const sizePattern = /-size_([0-9a-zA-Z]+)/
-  const colorPattern = /-color_([0-9a-zA-Z]+)/
+  const sizePattern = /-size_([0-9a-zA-Z\s]+)/
+  const colorPattern = /-color_([0-9a-zA-Z\s]+)/
 
-  const sizeMatch = pathname.match(sizePattern)
-  const colorMatch = pathname.match(colorPattern)
+  const decodedPathname = decodeURIComponent(pathname)
+
+  const sizeMatch = decodedPathname.match(sizePattern)
+  const colorMatch = decodedPathname.match(colorPattern)
 
   if (sizeMatch) result.size = sizeMatch[1].toLowerCase()
   if (colorMatch) result.color = colorMatch[1].toLowerCase()
