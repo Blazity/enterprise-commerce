@@ -15,7 +15,7 @@ const config = withPlugins([[withVercelToolbar(), withBundleAnalyzer({ enabled: 
   experimental: { ppr: false },
   images: {
     imageSizes: [256, 384],
-    deviceSizes: [320, 640, 750, 1080, 1200],
+    deviceSizes: [320, 500, 750, 1080, 1200],
     minimumCacheTTL: 31_556_926,
     // formats: ["image/avif", "image/webp"],
     formats: ["image/webp"],

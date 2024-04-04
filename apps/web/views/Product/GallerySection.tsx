@@ -52,7 +52,7 @@ export function GallerySection({ className, images, children }: GallerySectionPr
                 height={600}
                 priority={index === 0}
                 className="mx-auto object-contain px-4"
-                sizes="(max-width: 450) 350px, 480px"
+                sizes="(max-width: 450px) 300px, 480px"
               />
             </CarouselItem>
           ))}

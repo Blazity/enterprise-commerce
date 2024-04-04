@@ -18,14 +18,14 @@ export function ProductCard(props: ProductCardProps) {
   return (
     <div className={cn("group relative p-0 md:bg-transparent md:p-0", props.className)}>
       <div className="relative flex size-full min-h-[100px] items-center justify-center">
-        <Link aria-label={linkAria} href={href} className="transform-[translateZ(0)] overflow-hidden relative z-[2]">
+        <Link aria-label={linkAria} href={href} className="transform-[translateZ(0)] relative z-[2] overflow-hidden">
           <Image
             alt={featuredImageAltTag}
             className="z-0 aspect-square size-full w-full select-none object-contain transition-transform group-hover:scale-105"
             width={300}
             height={300}
             src={props.featuredImage?.url || "/default-product-image.svg"}
-            sizes="300px"
+            sizes="(max-width: 450px) 150px, 300px"
             priority={props.priority}
           />
         </Link>
