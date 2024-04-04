@@ -63,7 +63,7 @@ export function NavigationBar({ items }: NavigationBarProps) {
           <a href="/" className="brand flex items-center text-xl font-bold">
             Blazity
           </a>
-          <div className="menu-actions absolute right-4 flex justify-center gap-2">
+          <div className="menu-actions absolute right-4 flex items-center justify-center gap-2">
             <Favorites className="flex md:hidden" />
             <Suspense fallback={<Skeleton className="size-8" />}>
               <Cart className="flex md:hidden" />

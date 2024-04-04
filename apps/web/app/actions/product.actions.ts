@@ -18,7 +18,7 @@ export const searchProducts = unstable_cache(
 
     if (!index) return { hits: [], hasMore: false }
 
-    const res = await index?.search(query, { limit, attributesToRetrieve: ["id", "handle", "title"] })
+    const res = await index?.search(query, { limit, attributesToRetrieve: ["id", "handle", "title", "featuredImage", "images", "variants"] })
 
     return { hits: res.hits, hasMore: res.estimatedTotalHits > limit }
   },

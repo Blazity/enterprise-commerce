@@ -4,7 +4,7 @@ import Link from "next/link"
 import { cn } from "utils/cn"
 import { QuickAdd } from "./QuickAdd"
 
-interface ProductCardProps extends PlatformProduct {
+interface ProductCardProps extends Pick<PlatformProduct, "variants" | "handle" | "images" | "title" | "featuredImage"> {
   priority?: boolean
   className?: string
 }

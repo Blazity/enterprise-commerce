@@ -8,11 +8,11 @@ export function PageSkeleton() {
         <Skeleton className="mb-8 hidden size-8 md:block" />
       </div>
       <main className="max-w-container-sm mx-auto">
-        <Skeleton className="mb-8 hidden h-6 w-[350px] md:block" />
+        <Skeleton className="mb-2 h-6 w-3/5 md:mb-8 md:block md:w-[350px]" />
         <div className="grid grid-cols-1 justify-center gap-10 md:grid-cols-2 lg:gap-20">
-          <div className="flex flex-col gap-10">
-            <Skeleton className="h-[600px] w-[472px]" />
-            <Skeleton className="h-[100px] w-[472px]" />
+          <div className="flex flex-col gap-16">
+            <Skeleton className="h-[600px] w-full md:w-[472px]" />
+            <Skeleton className="h-[100px] w-full md:w-[472px]" />
           </div>
           <div className="flex flex-col items-start pt-12">
             <div className="w-full pb-10">

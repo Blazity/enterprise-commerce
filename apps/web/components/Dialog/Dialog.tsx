@@ -3,7 +3,6 @@
 import * as DialogPrimitive from "@radix-ui/react-dialog"
 import * as React from "react"
 import { cn } from "utils/cn"
-import { CloseIcon } from "../Icons/CloseIcon"
 
 const Dialog = DialogPrimitive.Root
 
@@ -40,10 +39,6 @@ const DialogContent = React.forwardRef<React.ElementRef<typeof DialogPrimitive.C
         {...props}
       >
         {children}
-        <DialogPrimitive.Close className="ring-offset-background focus:ring-ring absolute right-4 top-4 rounded-sm bg-white transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:pointer-events-none">
-          <CloseIcon />
-          <span className="sr-only">Close</span>
-        </DialogPrimitive.Close>
       </DialogPrimitive.Content>
     </DialogPortal>
   )
