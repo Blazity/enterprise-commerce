@@ -1,0 +1,8 @@
+{
+  "functions": {
+    "app/api/sync/route.ts": {
+      "memory": 1024,
+      "maxDuration": 180
+    }
+  }
+}
