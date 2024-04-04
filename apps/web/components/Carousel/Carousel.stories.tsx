@@ -14,7 +14,7 @@ type Story = StoryObj<typeof Carousel>
 
 export const Default: Story = {
   render: () => (
-    <Carousel opts={{ containScroll: "keepSnaps", dragFree: true }}>
+    <Carousel opts={{ skipSnaps: true }}>
       <CarouselContent className="ml-0 justify-start gap-8">
         {Array.from({ length: 8 }, (product, idx) => (
           <img src="https://picsum.photos/200/300" key={idx} alt="" />

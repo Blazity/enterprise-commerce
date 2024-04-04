@@ -49,6 +49,7 @@ const Carousel = forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>
       },
       plugins
     )
+
     const [canScrollPrev, setCanScrollPrev] = useState(false)
     const [canScrollNext, setCanScrollNext] = useState(false)
 

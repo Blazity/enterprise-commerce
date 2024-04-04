@@ -63,7 +63,7 @@ export function GallerySection({ className, images, children }: GallerySectionPr
         </div>
       </Carousel>
 
-      <Carousel setApi={setThumbsApi} opts={{ containScroll: "keepSnaps", dragFree: true }}>
+      <Carousel setApi={setThumbsApi} opts={{ skipSnaps: true }}>
         <CarouselContent className="ml-0 h-[100px] w-full justify-start gap-6">
           {images.map((image, index) => (
             <div

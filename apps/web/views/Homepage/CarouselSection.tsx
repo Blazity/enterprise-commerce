@@ -10,7 +10,7 @@ interface CarouselSectionProps {
 
 export function CarouselSection({ items, title }: CarouselSectionProps) {
   return (
-    <Carousel opts={{ containScroll: "keepSnaps", dragFree: true }}>
+    <Carousel opts={{ skipSnaps: true }}>
       <div className="max-w-container-md mx-auto flex flex-col gap-16 px-4 py-20 md:pb-32 md:pt-24 xl:px-0">
         <div className="flex basis-1/3 justify-between text-left text-5xl font-normal tracking-tighter sm:min-w-[280px] md:text-left md:text-6xl">
           <h2>{title}</h2>

@@ -18,7 +18,7 @@ export async function ProductsWeekSection() {
           <h2>Products of the week</h2>
         </div>
         <div className="w-full">
-          <Carousel opts={{ containScroll: "keepSnaps", dragFree: true }}>
+          <Carousel opts={{ skipSnaps: true }}>
             <CarouselContent className="ml-0 justify-start gap-8">
               {items.map((product, idx) => (
                 <Link aria-label={`Go to ${product.title}`} key={"newest_" + product.id + idx} href={`/products/${product.handle}`} prefetch={false}>
