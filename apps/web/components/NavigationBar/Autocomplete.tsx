@@ -1,53 +1,36 @@
 /* eslint-disable @next/next/no-img-element */
 "use client"
 
-import { PlatformProduct } from "@enterprise-commerce/core/platform/types"
-import { useClickAway, useDebounce } from "@uidotdev/usehooks"
+import { type KeyboardEvent, useState } from "react"
+
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { ChangeEvent, KeyboardEvent, useEffect, useState, useTransition } from "react"
-import { searchProducts } from "app/actions/product.actions"
-import { SearchIcon } from "components/Icons/SearchIcon"
-import { Spinner } from "components/Spinner/Spinner"
+
+import { useClickAway } from "@uidotdev/usehooks"
+
 import { cn } from "utils/cn"
 import { getHighlightedText } from "utils/highlightedText"
+import { useAutocomplete } from "utils/useAutocomplete"
+
+import { SearchIcon } from "components/Icons/SearchIcon"
+import { Spinner } from "components/Spinner/Spinner"
 
 interface AutocompleteProps {
   className?: string
 }
 
 export function Autocomplete({ className }: AutocompleteProps) {
-  const [query, setQuery] = useState("")
-  const [isOpen, setIsOpen] = useState(false)
-  const [isPending, startTransition] = useTransition()
-  const [results, setResults] = useState<PlatformProduct[] | null>(null)
   const router = useRouter()
 
-  const debouncedQuery = useDebounce(query, 300)
+  const [isOpen, setIsOpen] = useState(false)
+
+  const { query, results, isPending, onChange, status } = useAutocomplete({
+    callback: () => !isOpen && setIsOpen(true),
+  })
 
   const ref = useClickAway<HTMLDivElement>(() => {
     setIsOpen(false)
   })
-
-  useEffect(() => {
-    if (debouncedQuery) {
-      startTransition(async () => {
-        const searchResults = await searchProducts(debouncedQuery)
-        setIsOpen(true)
-        setResults(searchResults)
-      })
-    }
-  }, [debouncedQuery])
-
-  async function handleOnInputChange(e: ChangeEvent<HTMLInputElement>) {
-    const query = e.target.value
-    setQuery(query)
-
-    if (query.trim() === "") {
-      setResults(null)
-      return
-    }
-  }
 
   function handleOnInputFocus() {
     if (hasResults) setIsOpen(true)
@@ -60,20 +43,7 @@ export function Autocomplete({ className }: AutocompleteProps) {
     }
   }
 
-  const hasResults = results && results.length > 0
-
-  const resultsMarkup =
-    !!hasResults &&
-    results.map((singleProduct) => (
-      <Link
-        href={`/products/${singleProduct.handle}`}
-        className="flex h-[70px] cursor-pointer items-center gap-4 border-b border-neutral-200 p-4 last:rounded-b-md last:border-0 hover:bg-neutral-50"
-        key={singleProduct.id}
-        onClick={() => setIsOpen(false)}
-      >
-        <p className="line-clamp-2 text-[12px]">{getHighlightedText(singleProduct.title, debouncedQuery)}</p>
-      </Link>
-    ))
+  const hasResults = !!results && results.length > 0
 
   return (
     <div className="relative hidden lg:block">
@@ -84,16 +54,27 @@ export function Autocomplete({ className }: AutocompleteProps) {
         </div>
         <input
           type="search"
-          className="block w-full rounded-[66px] border border-neutral-300 bg-neutral-100 px-2.5 py-1.5 pl-10 text-[12px] text-black focus:border-blue-500 focus:ring-blue-500  "
+          className="block w-full rounded-[66px] border border-neutral-300 bg-neutral-100 px-2.5 py-1.5 pl-10 text-sm text-black focus:border-blue-500 focus:ring-blue-500  "
           placeholder="Search..."
-          onChange={handleOnInputChange}
+          onChange={onChange}
           onFocus={handleOnInputFocus}
           onKeyDown={handleOnKeyDown}
         />
       </div>
 
       <div className={cn("absolute top-10 z-50 w-[240px] rounded-b-md bg-white shadow-lg", { hidden: !isOpen })} ref={ref}>
-        {resultsMarkup}
+        {hasResults &&
+          results.map((singleProduct) => (
+            <Link
+              href={`/products/${singleProduct.handle}`}
+              className="flex h-[70px] cursor-pointer items-center gap-4 border-b border-neutral-200 p-4 last:rounded-b-md last:border-0 hover:bg-neutral-50"
+              key={singleProduct.id}
+              onClick={() => setIsOpen(false)}
+            >
+              <p className="line-clamp-2 text-xs">{getHighlightedText(singleProduct.title, query)}</p>
+            </Link>
+          ))}
+        {status === "error" && <p className="p-4 text-xs text-red-500">Sorry, something went wrong, please try again later</p>}
       </div>
     </div>
   )

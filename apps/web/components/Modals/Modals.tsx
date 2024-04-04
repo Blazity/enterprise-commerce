@@ -2,10 +2,11 @@
 
 import dynamic from "next/dynamic"
 import React from "react"
-import { useModalStore } from "stores/modalStore"
+import { type Modal, useModalStore } from "stores/modalStore"
 
 const LoginModal = dynamic(() => import("./LoginModal").then((m) => m.LoginModal), { loading: Placeholder })
 const SignupModal = dynamic(() => import("./SignupModal").then((m) => m.SignupModal), { loading: Placeholder })
+const SearchModal = dynamic(() => import("./SearchModal").then((m) => m.SearchModal), { loading: Placeholder })
 
 export function Modals() {
   const modals = useModalStore((s) => s.modals)
@@ -13,15 +14,23 @@ export function Modals() {
   return (
     <>
       {Object.entries(modals).map(([key, value]) => {
-        return (
-          <React.Fragment key={key}>
-            {key === "login" && !!value ? <LoginModal key="login" /> : null}
-            {key === "signup" && !!value ? <SignupModal key="signup" /> : null}
-          </React.Fragment>
-        )
+        return <React.Fragment key={key}>{value && <ModalsFactory key={key} type={key as Modal} />}</React.Fragment>
       })}
     </>
   )
+}
+
+function ModalsFactory({ type }: { type: Modal }) {
+  switch (type) {
+    case "login":
+      return <LoginModal />
+    case "signup":
+      return <SignupModal />
+    case "search":
+      return <SearchModal />
+    default:
+      return null
+  }
 }
 
 function Placeholder() {
