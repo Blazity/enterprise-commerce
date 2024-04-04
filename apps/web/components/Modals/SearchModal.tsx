@@ -40,7 +40,7 @@ export function SearchModal() {
         <DialogHeader className="bg-neutral-100">
           <div className="flex w-full flex-row items-center justify-between gap-4 px-8">
             <Input
-              className="my-4 block w-full border-0 bg-transparent px-2.5 py-3.5 text-sm font-normal text-black"
+              className="text-md my-4 block w-full border-0 bg-transparent px-2.5 py-3.5 font-normal text-black"
               placeholder="Search"
               type="search"
               name="search"
