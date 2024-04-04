@@ -22,7 +22,7 @@ export function CarouselSection({ items, title }: CarouselSectionProps) {
         <div className="w-full">
           <CarouselContent className="ml-0 justify-start gap-8">
             {items.map((product, idx) => (
-              <ProductCard className="h-full min-w-[150px] max-w-[150px] md:min-w-[280px] md:max-w-[280px]" {...product} key={"relevant_" + product.id + idx} />
+              <ProductCard className="h-full min-w-[200px] max-w-[200px] md:min-w-[280px] md:max-w-[280px]" {...product} key={"relevant_" + product.id + idx} />
             ))}
           </CarouselContent>
         </div>
