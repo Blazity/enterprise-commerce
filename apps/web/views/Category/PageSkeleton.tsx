@@ -20,7 +20,7 @@ export function PageSkeleton() {
               <div className="block h-[24px] lg:hidden" />
             </div>
 
-            <section className="grid w-full grid-cols-[repeat(_auto-fill,minmax(140px,1fr)_)] items-start gap-4 gap-y-8 md:grid-cols-[repeat(_auto-fill,minmax(280px,1fr)_)]">
+            <section className="grid w-full grid-cols-[repeat(_auto-fill,minmax(140px,1fr)_)] items-start gap-4 gap-y-8 md:grid-cols-[repeat(_auto-fill,minmax(200px,1fr)_)] xl:grid-cols-[repeat(_auto-fill,minmax(280px,1fr)_)]">
               {Array.from({ length: 6 }).map((_, index) => (
                 <div key={index} className="flex h-[258px] w-full flex-col gap-4 md:h-[430px]">
                   <Skeleton className="h-[320px]" />
