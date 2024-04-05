@@ -14,7 +14,7 @@ export function VariantsSection({ variants, className, handle }: VariantsSection
 
   return (
     <div className={cn("flex flex-col gap-4", className)}>
-      <p className="text-sm text-neutral-500">Select size</p>
+      <p className="text-sm text-neutral-500">Select variant</p>
       <div className="relative flex w-full flex-wrap gap-2">
         {combinations.map((singleCombination) => (
           <Link
