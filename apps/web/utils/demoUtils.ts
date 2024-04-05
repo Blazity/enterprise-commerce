@@ -19,7 +19,7 @@ export function getDemoSingleProduct(handle: string) {
 }
 
 export function getDemoCategories() {
-  return getDemoProducts().hits.flatMap((p) => p.collections)
+  return require("public/demo-categories-data.json")
 }
 
 export function getDemoSingleCategory(handle: string) {
