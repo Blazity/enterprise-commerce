@@ -4,6 +4,7 @@
       "id": "7513862799460",
       "handle": "example_bags2",
       "title": "Floral Elegance Tote Bag",
+      "descriptionHtml": "Embrace timeless style with our Floral Elegance Tote Bag, perfect for adding a touch of sophistication to any outfit. This chic handbag features a vibrant botanical print, a spacious interior for all your essentials, and luxurious hardware accents for a polished finish. Its durable construction ensures lasting quality, making it a must-have accessory for the fashion-forward individual.",
       "priceRange": {
         "maxVariantPrice": {
           "amount": "960.0",
@@ -134,12 +135,14 @@
           "width": 1024,
           "height": 1024
         }
-      ]
+      ],
+      "collections": []
     },
     {
       "id": "7513863127140",
       "handle": "example_skin_care2",
       "title": "Soothing Lavender Shower Gel",
+      "descriptionHtml": "Indulge in the calming aromas of our Soothing Lavender Shower Gel, designed to relax your senses and prepare you for a restful night's sleep. The gentle formula works into a rich lather, leaving your skin feeling soft and lightly scented with the tranquil fragrance of lavender. Perfect for your evening shower routine to unwind after a long day.",
       "priceRange": {
         "maxVariantPrice": {
           "amount": "390.0",
@@ -270,12 +273,14 @@
           "width": 1024,
           "height": 1024
         }
-      ]
+      ],
+      "collections": []
     },
     {
       "id": "7513872728164",
       "handle": "example_music7",
       "title": "Portable Round Mesh Bluetooth Speaker",
+      "descriptionHtml": "Experience immersive sound with our Portable Round Mesh Bluetooth Speaker, designed for music lovers on-the-go. This speaker boasts a compact design and a durable mesh build, suitable for any setting, indoors or out. Along with superior sound quality, it includes a convenient leather strap for easy transport, making it your perfect audio companion.",
       "priceRange": {
         "maxVariantPrice": {
           "amount": "760.0",
@@ -406,12 +411,14 @@
           "width": 1024,
           "height": 1024
         }
-      ]
+      ],
+      "collections": []
     },
     {
       "id": "7513876398180",
       "handle": "example_music13",
       "title": "Orbital Harmony Hanging Bluetooth Speaker",
+      "descriptionHtml": "Experience 360-degree sound with the Orbital Harmony Hanging Bluetooth Speaker, designed for both indoor and outdoor use. Its sleek, orb-like design adds a modern touch to any space, while the durable strap allows for easy hanging anywhere. Enjoy wireless audio with high-fidelity playback that can pair effortlessly with your devices.",
       "priceRange": {
         "maxVariantPrice": {
           "amount": "890.0",
@@ -542,12 +549,14 @@
           "width": 1024,
           "height": 1024
         }
-      ]
+      ],
+      "collections": []
     },
     {
       "id": "7513732677732",
       "handle": "example_furniture17",
       "title": "Modern Comfort Dining Chair",
+      "descriptionHtml": "Designed for elegance and comfort, this dining chair features a plush seat and a curved backrest, upholstered in high-quality fabric for a cozy dining experience. The robust wooden frame ensures stability, while the sleek design adds a touch of modern flair to any dining room.",
       "priceRange": {
         "maxVariantPrice": {
           "amount": "900.0",
@@ -678,12 +687,24 @@
           "width": 1024,
           "height": 1024
         }
+      ],
+      "collections": [
+        {
+          "handle": "home",
+          "title": "Home",
+          "descriptionHtml": "",
+          "updatedAt": "2024-04-05T14:02:23Z",
+          "id": "gid://shopify/Collection/287131631716",
+          "descriptionHtml": "",
+          "image": null
+        }
       ]
     },
     {
       "id": "7513732710500",
       "handle": "example_perfumes4",
       "title": "Summer Orchard Eau de Cologne",
+      "descriptionHtml": "Indulge in the sweet symphony of summer with our Summer Orchard Eau de Cologne. A perfect blend of juicy nectarine aromas and subtle hints of honey, this fragrance is designed to captivate your senses and leave a lasting impression. Immerse yourself in its light, refreshing scent that's perfect for any occasion.",
       "priceRange": {
         "maxVariantPrice": {
           "amount": "770.0",
@@ -814,12 +835,14 @@
           "width": 1024,
           "height": 1024
         }
-      ]
+      ],
+      "collections": []
     },
     {
       "id": "7513732808804",
       "handle": "example_photography_2",
       "title": "ProCapture X20 Digital SLR Camera",
+      "descriptionHtml": "Discover the world of professional photography with the ProCapture X20 Digital SLR Camera. Featuring a high-resolution sensor for stunning image clarity, a versatile zoom lens for wide-angle to portrait shots, and intuitive controls for enthusiasts and pros alike. This camera is engineered for durability and performance, ensuring every moment is captured with precision.",
       "priceRange": {
         "maxVariantPrice": {
           "amount": "880.0",
@@ -950,12 +973,14 @@
           "width": 1024,
           "height": 1024
         }
-      ]
+      ],
+      "collections": []
     },
     {
       "id": "7513732907108",
       "handle": "example_electronics_5",
       "title": "SleekPro Elite Smartphone",
+      "descriptionHtml": "The SleekPro Elite offers an elegant design combined with powerful performance, featuring an advanced dual-camera system for stunning photos, a vibrant display for immersive media experience, and a high-capacity battery for all-day use. Its durable construction and user-friendly interface make it a top choice for professionals and tech enthusiasts alike.",
       "priceRange": {
         "maxVariantPrice": {
           "amount": "610.0",
@@ -1086,12 +1111,14 @@
           "width": 1024,
           "height": 1024
         }
-      ]
+      ],
+      "collections": []
     },
     {
       "id": "7513733038180",
       "handle": "example_glasses1",
       "title": "Vintage Round Tortoiseshell Sunglasses",
+      "descriptionHtml": "Elevate your style with these classic round sunglasses, featuring a timeless tortoiseshell pattern and durable, high-quality lenses for perfect clarity. Their lightweight design ensures all-day comfort while offering UV protection for your eyes.",
       "priceRange": {
         "maxVariantPrice": {
           "amount": "900.0",
@@ -1222,12 +1249,14 @@
           "width": 1024,
           "height": 1024
         }
-      ]
+      ],
+      "collections": []
     },
     {
       "id": "7513733103716",
       "handle": "example_shoes8",
       "title": "Urban Sleek Low-Top Sneakers",
+      "descriptionHtml": "Experience the perfect blend of comfort and style with our Urban Sleek Low-Top Sneakers. Crafted for the modern urbanite, these shoes feature a durable multi-textured upper, cushioned insole, and a robust outsole for all-day wearability. Whether you're hitting the pavement or lounging at your favorite cafe, these sneakers are sure to turn heads.",
       "priceRange": {
         "maxVariantPrice": {
           "amount": "780.0",
@@ -1358,12 +1387,14 @@
           "width": 1024,
           "height": 1024
         }
-      ]
+      ],
+      "collections": []
     },
     {
       "id": "7513733136484",
       "handle": "example_jewellery9",
       "title": "Elegant Sapphire Vintage-Inspired Ring",
+      "descriptionHtml": "Discover the timeless beauty of our Elegant Sapphire Vintage-Inspired Ring. This exquisite piece features a captivating deep blue sapphire, encompassed by a radiant halo of sparkling accents. Crafted with attention to detail, the ring offers a delicate balance of elegance and sophistication, perfect for any special occasion or adding a touch of glamour to everyday wear.",
       "priceRange": {
         "maxVariantPrice": {
           "amount": "570.0",
@@ -1494,12 +1525,24 @@
           "width": 1024,
           "height": 1024
         }
+      ],
+      "collections": [
+        {
+          "handle": "fashion",
+          "title": "Fashion",
+          "descriptionHtml": "The fashion category in our store is a vibrant and diverse collection designed to cater to all your style needs. From the latest runway trends to timeless classics, our range offers a wide selection of apparel, accessories, and footwear for men, women, and children. Whether you're refreshing your wardrobe for the season, seeking the perfect outfit for a special occasion, or simply indulging in your passion for fashion, our curated selections feature high-quality pieces from renowned brands and emerging designers. With a focus on sustainability, we also present eco-friendly options that merge style with environmental consciousness. Explore our fashion category to discover stylish and affordable choices that will keep you at the forefront of fashion trends",
+          "updatedAt": "2024-04-05T14:23:20Z",
+          "id": "gid://shopify/Collection/287132844132",
+          "descriptionHtml": "The fashion category in our store is a vibrant and diverse collection designed to cater to all your style needs. From the latest runway trends to timeless classics, our range offers a wide selection of apparel, accessories, and footwear for men, women, and children. Whether you're refreshing your wardrobe for the season, seeking the perfect outfit for a special occasion, or simply indulging in your passion for fashion, our curated selections feature high-quality pieces from renowned brands and emerging designers. With a focus on sustainability, we also present eco-friendly options that merge style with environmental consciousness. Explore our fashion category to discover stylish and affordable choices that will keep you at the forefront of fashion trends",
+          "image": null
+        }
       ]
     },
     {
       "id": "7513733169252",
       "handle": "example_skin_care28",
       "title": "Luxurious Locks Deep Conditioning Hair Mask",
+      "descriptionHtml": "Indulge in the rich, creamy essence of our Luxurious Locks Deep Conditioning Hair Mask. Formulated with natural ingredients, this intense nourishment treatment is designed to restore hydration and vitality to tired, overworked hair, ensuring that your locks remain soft, lustrous, and healthy-looking. Our exclusive formula is also perfect for maintaining the pristine condition of hair extensions.",
       "priceRange": {
         "maxVariantPrice": {
           "amount": "780.0",
@@ -1630,12 +1673,14 @@
           "width": 1024,
           "height": 1024
         }
-      ]
+      ],
+      "collections": []
     },
     {
       "id": "7513733234788",
       "handle": "example_decor31",
       "title": "Sleek Modernist Vase",
+      "descriptionHtml": "Elevate your home decor with this elegantly streamlined vase, boasting a timeless design and a lustrous finish that reflects light beautifully. Perfect for displaying a single stem or a small bouquet, this piece brings a touch of sophistication to any room.",
       "priceRange": {
         "maxVariantPrice": {
           "amount": "940.0",
@@ -1766,12 +1811,24 @@
           "width": 1024,
           "height": 1024
         }
+      ],
+      "collections": [
+        {
+          "handle": "home",
+          "title": "Home",
+          "descriptionHtml": "",
+          "updatedAt": "2024-04-05T14:04:01Z",
+          "id": "gid://shopify/Collection/287131631716",
+          "descriptionHtml": "",
+          "image": null
+        }
       ]
     },
     {
       "id": "7513733365860",
       "handle": "example_decor26",
       "title": "Aqua Essence Decorative Ceramic Plate",
+      "descriptionHtml": "Add a touch of elegance and mesmerizing oceanic patterns to your home decor with this Aqua Essence Decorative Ceramic Plate. Each piece is handcrafted with detailed turquoise and copper tones, ensuring a unique accent that complements any room or table setting. Ideal for collectors and enthusiasts of fine ceramics.",
       "priceRange": {
         "maxVariantPrice": {
           "amount": "910.0",
@@ -1902,12 +1959,24 @@
           "width": 1024,
           "height": 1024
         }
+      ],
+      "collections": [
+        {
+          "handle": "home",
+          "title": "Home",
+          "descriptionHtml": "The home category in our store unfolds as a meticulously curated selection aimed at transforming your living spaces into havens of comfort, style, and functionality. From chic furniture that marries form with function to decorative accents that add a personal touch to any room, our collection spans across all areas of your home—living room, bedroom, kitchen, and beyond. Dive into our assortment of bedding, cookware, lighting, and home accessories designed to elevate your everyday life and reflect your unique taste. For those who prioritize sustainability, we offer eco-conscious choices that ensure your home decor is not only beautiful but also kind to the planet. Embrace the joy of home making with our diverse range, offering solutions for every style, budget, and space. Discover everything you need to create a space that truly feels like home.",
+          "updatedAt": "2024-04-05T14:42:06Z",
+          "id": "gid://shopify/Collection/287132778596",
+          "descriptionHtml": "The home category in our store unfolds as a meticulously curated selection aimed at transforming your living spaces into havens of comfort, style, and functionality. From chic furniture that marries form with function to decorative accents that add a personal touch to any room, our collection spans across all areas of your home—living room, bedroom, kitchen, and beyond. Dive into our assortment of bedding, cookware, lighting, and home accessories designed to elevate your everyday life and reflect your unique taste. For those who prioritize sustainability, we offer eco-conscious choices that ensure your home decor is not only beautiful but also kind to the planet. Embrace the joy of home making with our diverse range, offering solutions for every style, budget, and space. Discover everything you need to create a space that truly feels like home.\n",
+          "image": null
+        }
       ]
     },
     {
       "id": "7513733529700",
       "handle": "example_photography_4",
       "title": "ProLens Master Prime 85mm Camera Lens",
+      "descriptionHtml": "Capture the world in impeccable detail with the ProLens Master Prime 85mm lens. Expertly engineered for sharpness and rich contrast, this lens offers a bright aperture ideal for portrait and low-light photography. Its sturdy construction ensures durability, while offering smooth and precise manual focus for professional-grade image creation.",
       "priceRange": {
         "maxVariantPrice": {
           "amount": "780.0",
@@ -2038,12 +2107,14 @@
           "width": 1024,
           "height": 1024
         }
-      ]
+      ],
+      "collections": []
     },
     {
       "id": "7513733660772",
       "handle": "example_shoes19",
       "title": "Blooming Elegance High Heels",
+      "descriptionHtml": "Step into style with these stunning floral-patterned high heels, the perfect blend of comfort and panache for the fashion-forward woman. Featuring a vivid color palette and a sleek, classic design, these shoes add a touch of sophistication to any outfit. Crafted with attention to detail, they promise to be an eye-catching addition to your wardrobe.",
       "priceRange": {
         "maxVariantPrice": {
           "amount": "930.0",
@@ -2174,12 +2245,24 @@
           "width": 1024,
           "height": 1024
         }
+      ],
+      "collections": [
+        {
+          "handle": "fashion",
+          "title": "Fashion",
+          "descriptionHtml": "The fashion category in our store is a vibrant and diverse collection designed to cater to all your style needs. From the latest runway trends to timeless classics, our range offers a wide selection of apparel, accessories, and footwear for men, women, and children. Whether you're refreshing your wardrobe for the season, seeking the perfect outfit for a special occasion, or simply indulging in your passion for fashion, our curated selections feature high-quality pieces from renowned brands and emerging designers. With a focus on sustainability, we also present eco-friendly options that merge style with environmental consciousness. Explore our fashion category to discover stylish and affordable choices that will keep you at the forefront of fashion trends",
+          "updatedAt": "2024-04-05T14:23:20Z",
+          "id": "gid://shopify/Collection/287132844132",
+          "descriptionHtml": "The fashion category in our store is a vibrant and diverse collection designed to cater to all your style needs. From the latest runway trends to timeless classics, our range offers a wide selection of apparel, accessories, and footwear for men, women, and children. Whether you're refreshing your wardrobe for the season, seeking the perfect outfit for a special occasion, or simply indulging in your passion for fashion, our curated selections feature high-quality pieces from renowned brands and emerging designers. With a focus on sustainability, we also present eco-friendly options that merge style with environmental consciousness. Explore our fashion category to discover stylish and affordable choices that will keep you at the forefront of fashion trends",
+          "image": null
+        }
       ]
     },
     {
       "id": "7513733726308",
       "handle": "example_glasses3",
       "title": "Modern Classic Full-Rim Eyeglasses",
+      "descriptionHtml": "Elevate your look with these sleek, modern classic eyeglasses. Crafted with precision, they offer a comfortable fit and a durable design, suitable for everyday wear. Their timeless full-rim style makes them a versatile choice for both professional and casual looks.",
       "priceRange": {
         "maxVariantPrice": {
           "amount": "960.0",
@@ -2310,12 +2393,14 @@
           "width": 1024,
           "height": 1024
         }
-      ]
+      ],
+      "collections": []
     },
     {
       "id": "7513733824612",
       "handle": "example_decor33",
       "title": "Oceanic Elegance Decorative Ceramic Vase",
+      "descriptionHtml": "This exquisite ceramic vase brings a touch of the deep ocean into your home with its mesmerizing turquoise hues and textured finish. Perfect for adding a serene and artistic flair to any room, it serves as a beautiful standalone piece or as an elegant container for your favorite fresh or dried floral arrangements.",
       "priceRange": {
         "maxVariantPrice": {
           "amount": "930.0",
@@ -2446,12 +2531,24 @@
           "width": 1024,
           "height": 1024
         }
+      ],
+      "collections": [
+        {
+          "handle": "home",
+          "title": "Home",
+          "descriptionHtml": "",
+          "updatedAt": "2024-04-05T14:02:50Z",
+          "id": "gid://shopify/Collection/287131631716",
+          "descriptionHtml": "",
+          "image": null
+        }
       ]
     },
     {
       "id": "7513733890148",
       "handle": "example_skin_care16",
       "title": "Revitalizing Botanical Face Cleanser",
+      "descriptionHtml": "Indulge in the natural luxury of our Revitalizing Botanical Face Cleanser, featuring a blend of essential oils and plant extracts to gently remove impurities while nourishing the skin. Its lightweight formula dissolves makeup and dirt, leaving your complexion feeling fresh, clean, and hydrated. Ideal for daily use, this cleanser is perfect for all skin types seeking a radiant, healthy glow.",
       "priceRange": {
         "maxVariantPrice": {
           "amount": "640.0",
@@ -2582,12 +2679,14 @@
           "width": 1024,
           "height": 1024
         }
-      ]
+      ],
+      "collections": []
     },
     {
       "id": "7513733955684",
       "handle": "example_perfumes6",
       "title": "Sunset Amber Eau de Parfum",
+      "descriptionHtml": "Embrace the warmth of the Sunset Amber Eau de Parfum, a luxurious scent that opens with vibrant top notes of citrus, mellowing into a heart of deep floral tones, and concludes with a smoky base of woods and amber. Encased in an elegantly simple bottle, its golden hues are a tribute to the beauty of a day's end.",
       "priceRange": {
         "maxVariantPrice": {
           "amount": "830.0",
@@ -2718,12 +2817,14 @@
           "width": 1024,
           "height": 1024
         }
-      ]
+      ],
+      "collections": []
     },
     {
       "id": "7513734086756",
       "handle": "example_furniture15",
       "title": "Moderno Vibrance Armchair",
+      "descriptionHtml": "Elevate your living space with the Moderno Vibrance Armchair, boasting a bold orange hue and a contemporary, minimalist design. Crafted for both comfort and style, this armchair is perfect for adding a pop of color to any modern interior. Its sturdy construction and durable materials ensure that it can withstand daily use while providing a chic seating option.",
       "priceRange": {
         "maxVariantPrice": {
           "amount": "850.0",
@@ -2854,12 +2955,24 @@
           "width": 1024,
           "height": 1024
         }
+      ],
+      "collections": [
+        {
+          "handle": "home",
+          "title": "Home",
+          "descriptionHtml": "",
+          "updatedAt": "2024-04-05T14:03:30Z",
+          "id": "gid://shopify/Collection/287131631716",
+          "descriptionHtml": "",
+          "image": null
+        }
       ]
     },
     {
       "id": "7513734185060",
       "handle": "example_electronics_6",
       "title": "Elegant Pink Electric Toothbrush Set",
+      "descriptionHtml": "Experience a refreshing clean with this sleek electric toothbrush set, designed to combine style and functionality. The set includes a high-performance toothbrush, a convenient charging base, and a durable travel case. Its gentle yet effective brushing modes cater to various oral care needs, ensuring a thorough clean for brighter, healthier teeth.",
       "priceRange": {
         "maxVariantPrice": {
           "amount": "940.0",
@@ -2990,12 +3103,24 @@
           "width": 1024,
           "height": 1024
         }
+      ],
+      "collections": [
+        {
+          "handle": "electronics",
+          "title": "Electronics",
+          "descriptionHtml": "The electronics category in our store is a dynamic collection tailored to meet all your technological needs, blending the latest in gadgets with essential household appliances. Explore our range of smartphones, laptops, audio and visual equipment, smart home devices, wearables, drones, and gaming consoles, all designed to enhance your digital experience and streamline your lifestyle. With offerings from top brands and a focus on quality and innovation, our electronics category promises to keep you connected, entertained, and efficient, no matter where you are.",
+          "updatedAt": "2024-04-05T14:26:45Z",
+          "id": "gid://shopify/Collection/287132942436",
+          "descriptionHtml": "The electronics category in our store is a dynamic collection tailored to meet all your technological needs, blending the latest in gadgets with essential household appliances. Explore our range of smartphones, laptops, audio and visual equipment, smart home devices, wearables, drones, and gaming consoles, all designed to enhance your digital experience and streamline your lifestyle. With offerings from top brands and a focus on quality and innovation, our electronics category promises to keep you connected, entertained, and efficient, no matter where you are.\n",
+          "image": null
+        }
       ]
     },
     {
       "id": "7513734250596",
       "handle": "example_decor18",
       "title": "Triple Wick Amber Glass Scented Candle",
+      "descriptionHtml": "Envelop your senses with the luxurious aroma of our Triple Wick Scented Candle. Crafted with a unique blend of essential oils, this candle comes in a chic amber-colored glass jar that adds a touch of elegance to any room. With three wicks for even burning, enjoy a long-lasting and harmonious fragrance experience.",
       "priceRange": {
         "maxVariantPrice": {
           "amount": "680.0",
@@ -3126,12 +3251,24 @@
           "width": 1024,
           "height": 1024
         }
+      ],
+      "collections": [
+        {
+          "handle": "home",
+          "title": "Home",
+          "descriptionHtml": "",
+          "updatedAt": "2024-04-05T14:02:23Z",
+          "id": "gid://shopify/Collection/287131631716",
+          "descriptionHtml": "",
+          "image": null
+        }
       ]
     },
     {
       "id": "7513734316132",
       "handle": "example_electronics_4",
       "title": "Sleek Portable Wireless Speaker",
+      "descriptionHtml": "Experience the fusion of sleek design and exceptional sound quality with this portable wireless speaker. Crafted for audiophiles, the speaker delivers rich, immersive audio and boasts a compact silhouette perfect for on-the-go lifestyles. With easy Bluetooth connectivity and long-lasting battery life, tune into your favorite tracks anywhere and everywhere.",
       "priceRange": {
         "maxVariantPrice": {
           "amount": "840.0",
@@ -3261,6 +3398,17 @@
           "altText": null,
           "width": 1024,
           "height": 1024
+        }
+      ],
+      "collections": [
+        {
+          "handle": "home",
+          "title": "Home",
+          "descriptionHtml": "",
+          "updatedAt": "2024-04-05T14:02:23Z",
+          "id": "gid://shopify/Collection/287131631716",
+          "descriptionHtml": "",
+          "image": null
         }
       ]
     }

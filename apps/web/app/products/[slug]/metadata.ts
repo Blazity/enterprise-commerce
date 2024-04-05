@@ -13,10 +13,10 @@ interface ProductProps {
 export async function generateMetadata({ params: { slug } }: ProductProps): Promise<Metadata> {
   const product = await getProduct(removeOptionsFromUrl(slug))
 
-  const originalDescription = product?.seo.description
-  const originalTitle = product?.seo.title
+  const originalDescription = product?.seo?.description
+  const originalTitle = product?.seo?.title
   const keywords = makeKeywords(product?.title)
-  const lastCollection = product?.collections.findLast(Boolean)
+  const lastCollection = product?.collections?.findLast(Boolean)
 
   return {
     metadataBase: new URL(env.LIVE_URL!),

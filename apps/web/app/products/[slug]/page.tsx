@@ -80,7 +80,7 @@ async function ProductView({ slug }: { slug: string }) {
 }
 
 function makeBreadcrumbs(product: PlatformProduct) {
-  const lastCollection = product.collections.findLast(Boolean)
+  const lastCollection = product.collections?.findLast(Boolean)
 
   return {
     Home: "/",

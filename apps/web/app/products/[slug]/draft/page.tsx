@@ -88,7 +88,7 @@ async function getDraftAwareProduct(slug: string) {
 const getAdminProduct = unstable_cache(async (id: string) => storefrontClient.getAdminProduct(id), ["admin-product-by-handle"], { revalidate: 1 })
 
 function makeBreadcrumbs(product: PlatformProduct) {
-  const lastCollection = product.collections.findLast(Boolean)
+  const lastCollection = product.collections?.findLast(Boolean)
 
   return {
     Home: "/",
