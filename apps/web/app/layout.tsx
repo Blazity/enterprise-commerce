@@ -30,7 +30,7 @@ const navigationItems: NavItem[] = [
     href: "/",
   },
   {
-    text: "Handheld",
+    text: "Fashion",
     submenu: {
       variant: "text-grid",
       items: [
@@ -38,117 +38,90 @@ const navigationItems: NavItem[] = [
           text: "Women",
           items: [
             { text: "Shirts & Blouses", href: "/search" },
-            { text: "Pants", href: "/sport" },
-            { text: "Blazers & Vests", href: "#" },
-            { text: "Cardigans & Sweaters", href: "#" },
+            { text: "Pants", href: "/search" },
+            { text: "Blazers & Vests", href: "/search" },
+            { text: "Cardigans & Sweaters", href: "/search" },
           ],
         },
         {
           text: "Men",
           items: [
-            { text: "T-shirts & Tanks", href: "#" },
-            { text: "Pants", href: "#" },
-            { text: "Hoodies & Sweatshirts", href: "#" },
-            { text: "Blazers & Suits", href: "#" },
+            { text: "T-shirts & Tanks", href: "/search" },
+            { text: "Pants", href: "/search" },
+            { text: "Hoodies & Sweatshirts", href: "/search" },
+            { text: "Blazers & Suits", href: "/search" },
           ],
         },
         {
           text: "Kids",
           items: [
-            { text: "Clothing", href: "#" },
-            { text: "Outerwear", href: "#" },
-            { text: "Activewear", href: "#" },
-            { text: "Accessories", href: "#" },
-          ],
-        },
-        {
-          text: "Sport",
-          items: [
-            { text: "Clothing", href: "#" },
-            { text: "Swimwear", href: "#" },
-            { text: "Outerwear", href: "#" },
-            { text: "Accessories & Equipment", href: "#" },
+            { text: "Clothing", href: "/search" },
+            { text: "Outerwear", href: "/search" },
+            { text: "Activewear", href: "/search" },
+            { text: "Accessories", href: "/search" },
           ],
         },
       ],
     },
   },
   {
-    text: "Gaming",
+    text: "Electronics",
     submenu: {
       variant: "image-grid",
       items: [
         {
-          href: "#",
-          image:
-            "https://plus.unsplash.com/premium_photo-1677013011737-ba61149ba70c?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-          text: "Home",
+          href: "/category/electronics",
+          image: "/menu/electronics-1.png",
+          text: "Best Offers",
         },
         {
-          href: "#",
-          image:
-            "https://images.unsplash.com/photo-1515688594390-b649af70d282?q=80&w=1612&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-          text: "Beauty",
+          href: "/category/electronics",
+          image: "/menu/electronics-2.png",
+          text: "New",
         },
         {
-          href: "#",
-          image:
-            "https://plus.unsplash.com/premium_photo-1676550886096-bfc64aae1e2a?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          href: "/category/electronics",
+          image: "/menu/electronics-3.png",
           text: "Holiday",
         },
         {
-          href: "#",
-          image:
-            "https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          href: "/category/electronics",
+          image: "/menu/electronics-4.png",
           text: "Sale",
-        },
-        {
-          href: "#",
-          image:
-            "https://images.unsplash.com/photo-1515688594390-b649af70d282?q=80&w=1612&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-          text: "Lorem",
         },
       ],
     },
   },
   {
-    text: "Laptops",
-    href: "#",
-  },
-  {
-    text: "Accessories",
+    text: "Beauty",
     submenu: {
       variant: "text-image-grid",
       items: [
-        { text: "Women", href: "#" },
-        { text: "Men", href: "#" },
-        { text: "Kids", href: "#" },
-        { text: "Sport", href: "#" },
-        { text: "T-shirts & Tanks", href: "#" },
-        { text: "Pants", href: "#" },
-        { text: "Hoodies & Sweatshirts", href: "#" },
-        { text: "Blazers & Suits", href: "#" },
+        { text: "Women", href: "/search" },
+        { text: "Men", href: "/search" },
+        { text: "Kids", href: "/search" },
+        { text: "Sport", href: "/search" },
+        { text: "T-shirts & Tanks", href: "/search" },
+        { text: "Pants", href: "/search" },
+        { text: "Hoodies & Sweatshirts", href: "/search" },
+        { text: "Blazers & Suits", href: "/search" },
         {
           href: "#",
-          image: "https://picsum.photos/seed/home/160/200",
+          image: "/menu/beauty-1.png",
           text: "Home",
         },
         {
           href: "#",
-          image: "https://picsum.photos/seed/beauty/160/200",
+          image: "/menu/beauty-2.png",
           text: "Beauty",
         },
         {
           href: "#",
-          image: "https://picsum.photos/seed/holiday/160/200",
+          image: "/menu/beauty-3.png",
           text: "Holiday",
         },
       ],
     },
-  },
-  {
-    text: "Speakers",
-    href: "#",
   },
 ]
 
