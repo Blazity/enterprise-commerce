@@ -1,6 +1,6 @@
 {
   "name": "commerce-cli",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "scripts": {
     "build": "cross-env FORCE_COLOR=1 rollup --config rollup.config.js",
     "build:prod": "cross-env FORCE_COLOR=1 NODE_ENV=production rollup --config rollup.config.js",
