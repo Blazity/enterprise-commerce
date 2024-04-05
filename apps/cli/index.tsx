@@ -38,13 +38,13 @@ program
     render(<Sync />)
   })
 
-const featureCommand = program
-  .command("feature")
-  .description("manage (toggle/list) product features")
-  .alias("f")
-  .alias("feat")
-  .action(() => {
-    render(<Feature />)
-  })
+// const featureCommand = program
+//   .command("feature")
+//   .description("manage (toggle/list) product features")
+//   .alias("f")
+//   .alias("feat")
+//   .action(() => {
+//     render(<Feature />)
+//   })
 
 program.parse()
