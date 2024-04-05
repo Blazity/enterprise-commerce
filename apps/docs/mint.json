@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Starter Kit",
+  "name": "Enterprise Next.js Commerce",
   "logo": {
     "dark": "/logo/dark.svg",
     "light": "/logo/light.svg"
@@ -36,7 +36,7 @@
   "navigation": [
     {
       "group": "Get Started",
-      "pages": ["introduction", "setup", "architecture"]
+      "pages": ["introduction", "setup"]
     },
     {
       "group": "Features",
@@ -53,7 +53,6 @@
         "features/ab-tests",
         "features/redirects",
         "features/favorites",
-        "features/rich-pages",
         "features/ci-cd",
         "features/platform-agnostic",
         "features/mega-menu",

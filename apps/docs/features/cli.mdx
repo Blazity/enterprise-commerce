@@ -1,5 +1,40 @@
 ---
 title: "CLI"
-description: "Display inline code and code blocks"
+description: "Easily migrate your Shopify products to Meilisearch with our CLI"
 icon: "terminal"
 ---
+
+The CLI tool offers a command-line interface for managing various aspects of your Commerce instance.
+
+### Installation
+
+You can install the CLI globally using npm, pnpm, or yarn:
+
+```bash
+# npm
+npm install -g commerce-cli
+
+# pnpm
+pnpm add -g commerce-cli
+
+# yarn
+yarn global add commerce-cli
+```
+
+### Available Commands
+
+#### `sync`
+
+<Frame>
+  <img className="block" src="/images/cli-demo.png" alt="Cli demo" />
+</Frame>
+
+The `sync` command provides a streamlined method for importing your Shopify product data into Meilisearch. This process is automated and takes only minutes to complete. Importantly, the command **does not modify your products in Shopify**, eliminating the need for backups or concerns about data alteration. It solely fetches product data and uploads it to Meilisearch.
+
+**Usage:**
+
+```bash
+commerce-cli sync
+```
+
+Note: It runs the background job on the Shopify end which means that the migration won't be instant. It might take some time depending on Shpify servers usage. It is also incremental so you will see items appearing one by one.

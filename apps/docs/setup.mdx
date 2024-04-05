@@ -1,6 +1,6 @@
 ---
 title: "Setup"
-description: "Start building awesome documentation in under 5 minutes"
+description: "Streamline your eCommerce store in minutes with Next.js Enterprise Commerce"
 ---
 
 Create your Enterprise Commerce project either manually or through our convenient CLI tool.
@@ -16,10 +16,6 @@ yarn create commerce
 
 npm create commerce
 ```
-
-<Frame>
-  <img className="block" src="/images/cli-demo.gif" alt="Cli demo" />
-</Frame>
 
 ## Manual
 
@@ -95,3 +91,21 @@ To get started with Meilisearch Cloud, navigate to the Meilisearch Cloud platfor
 ### 5. Live URL
 
 The Live URL is the primary web address where your Enterprise Commerce application is hosted. If you have a custom domain, use that URL. If you don't have a custom domain yet, use the URL provided by your hosting provider. The Live URL is used for generating metadata and can be used for additional functionalities in the future, making it crucial for SEO and the general functioning of the application.
+
+### Meilisearch Settings
+
+The last thing, but also crucial for application to work correctly is setting your Meilisearch index the right way.
+
+- Go to your index settings. Remembers that index should be named `products`
+- Go to **Attributes** section, and:
+  - Ensure **Searchable attributes** are set to `["*"]`
+  - Ensure **Filterable attributes** are set to `["collections","collections.title","flatOptions","handle","minPrice","tags","variants.availableForSale","vendor"]`
+  - Ensure **Sortable attributes** are set to `["minPrice","updatedAtTimestamp"]`
+- Go to **Ranking Rules** section, and:
+  - Change the Ranking rules order to `["sort","words","typo","proximity","attribute","exactness"]`
+
+<Frame>
+  <img className="block" src="/images/meilisearch-settings.png" alt="Meilisearch settings" />
+</Frame>
+
+And that's it! You're all set and can enjoy your fast and swift eCommerce storefront.
