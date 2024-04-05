@@ -9,14 +9,6 @@ Simply run this command and let our CLI do the setup for you!
 
 ```bash
 $ yarn create commerce
-
-# or
-
-$ npm create commerce
-
-# or
-
-$ pnpm create commerce
 ```
 
 or deploy it straight to Vercel: 
