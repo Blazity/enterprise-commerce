@@ -39,7 +39,7 @@ or deploy it straight to Vercel:
 - Shadcn UI
 - TailwindCSS
 - Analytics (GTM, Vercel)
-- Highly Scalable SEO Redirects
+- Highly Scalable SEO Redirects ([Bloom Filters](https://nextjs.org/docs/app/building-your-application/routing/redirecting#managing-redirects-at-scale-advanced))
 - Complete and fast CI/CD pipelines
 - Platform agnostic (integrated with Shopify by default)
 - Easy migration - migrate your existing solution in minutes
