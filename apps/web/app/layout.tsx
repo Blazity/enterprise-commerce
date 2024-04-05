@@ -31,6 +31,7 @@ const navigationItems: NavItem[] = [
   },
   {
     text: "Fashion",
+    href: "/category/fashion",
     submenu: {
       variant: "text-grid",
       items: [
@@ -66,6 +67,7 @@ const navigationItems: NavItem[] = [
   },
   {
     text: "Electronics",
+    href: "/category/electronics",
     submenu: {
       variant: "image-grid",
       items: [
@@ -94,6 +96,7 @@ const navigationItems: NavItem[] = [
   },
   {
     text: "Beauty",
+    href: "/category/beauty",
     submenu: {
       variant: "text-image-grid",
       items: [
@@ -119,6 +122,35 @@ const navigationItems: NavItem[] = [
           href: "#",
           image: "/menu/beauty-3.png",
           text: "Holiday",
+        },
+      ],
+    },
+  },
+  {
+    text: "Furniture",
+    href: "/category/furniture",
+    submenu: {
+      variant: "image-grid",
+      items: [
+        {
+          href: "/category/furniture",
+          image: "/menu/furniture-1.png",
+          text: "Decor",
+        },
+        {
+          href: "/category/furniture",
+          image: "/menu/furniture-2.png",
+          text: "Furniture",
+        },
+        {
+          href: "/category/furniture",
+          image: "/menu/furniture-3.png",
+          text: "Bags",
+        },
+        {
+          href: "/category/furniture",
+          image: "/menu/furniture-4.png",
+          text: "Sofas",
         },
       ],
     },
