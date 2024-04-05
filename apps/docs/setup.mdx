@@ -31,7 +31,10 @@ SHOPIFY_APP_API_SECRET_KEY=your_app_api_key
 MEILISEARCH_MASTER_KEY=master_key
 MEILISEARCH_HOST=https://something.meilisearch.io
 LIVE_URL=https://commerce.blazity.com
+FLAGS_SECRET=EAMwX-AhlPipEaZfTc-24bxAZ7BvLikwuIV2Zq7FP64 # change to your own
 ```
+
+Remember to generate your own `FLAGS_SECRET` using `node -e "console.log(crypto.randomBytes(32).toString('base64url'))"`.
 
 Replace `your_store_domain.myshopify.com`, `your_storefront_access_token`, `your_admin_access_token`, and `your_app_api_key` with the actual values that you will obtain through the setup process described below.
 
