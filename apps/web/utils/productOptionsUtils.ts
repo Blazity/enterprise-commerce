@@ -26,8 +26,8 @@ export function getAllCombinations(variants: PlatformVariant[]): Combination[] {
 export function getCombination(product: PlatformProduct, color: string | null, size: string | null) {
   const hasOnlyOneVariant = product.variants.length <= 1
 
-  const defaultColor = product.flatOptions?.["Color"]?.find(Boolean)?.toLowerCase() ?? null
-  const defaultSize = product.flatOptions?.["Size"]?.find(Boolean)?.toLowerCase() ?? null
+  const defaultColor = product.flatOptions?.["Color"]?.find(Boolean)?.toLowerCase() ?? undefined
+  const defaultSize = product.flatOptions?.["Size"]?.find(Boolean)?.toLowerCase() ?? undefined
 
   return hasOnlyOneVariant
     ? product.variants.find(Boolean)
