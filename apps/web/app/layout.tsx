@@ -1,6 +1,6 @@
 import "./globals.css"
 
-import dynamic from "next/dynamic"
+import nextDynamic from "next/dynamic"
 import Script from "next/script"
 import { Suspense } from "react"
 import { Toaster } from "sonner"
@@ -11,7 +11,6 @@ import { mobileInlineScript } from "components/NavigationBar/mobileInlineScript"
 import { NavigationBar } from "components/NavigationBar/NavigationBar"
 import { NavItem } from "components/NavigationBar/types"
 import { TopBar } from "components/TopBar/TopBar"
-import { Cart } from "views/Cart/Cart"
 import { FlagValues } from "views/FlagValues"
 import { NavigationEvents } from "views/NavigationEvents"
 import { ThirdParties } from "views/ThirdParties"
@@ -19,10 +18,13 @@ import { env } from "env.mjs"
 import { Metadata } from "next"
 import { GithubBadge } from "views/GithubBadge"
 import { DemoModeAlert } from "views/DemoModeAlert"
+import { CartView } from "views/Cart/CartView"
 
-const DraftToolbar = dynamic(() => import("views/DraftToolbar"), { ssr: false })
+const DraftToolbar = nextDynamic(() => import("views/DraftToolbar"), { ssr: false })
 
 export const revalidate = 3600
+
+export const dynamic = "force-static"
 
 const navigationItems: NavItem[] = [
   {
@@ -188,7 +190,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <Script id="mobileMegaMenuLogic" strategy="beforeInteractive">{`${mobileInlineScript}`}</Script>
 
-        <TopBar />
+        {/* <TopBar /> */}
         <NavigationBar items={navigationItems} />
 
         {children}
@@ -196,9 +198,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <CallToAction />
         <Footer />
         <Modals />
-        <Suspense fallback={null}>
-          <Cart />
-        </Suspense>
+
+        <CartView />
 
         <Suspense fallback={null}>
           <NavigationEvents />

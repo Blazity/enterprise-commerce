@@ -1,33 +1,36 @@
+"use client"
+
 import { HeartIcon } from "components/Icons/HeartIcon"
-import { cookies } from "next/headers"
 import { cn } from "utils/cn"
-import { COOKIE_FAVORITES } from "constants/index"
+import { getParsedFavoritesHandles, toggleFavoriteProduct } from "app/actions/favorites.actions"
+import { useEffect, useState, useTransition } from "react"
+import { Spinner } from "components/Spinner/Spinner"
+import { useFormState } from "react-dom"
 
 export function FavoriteMarker({ handle }: { handle: string }) {
-  const favorites = getParsedFavoritesHandles()
-  const isActive = favorites.some((favoriteHandle) => favoriteHandle === handle)
+  const [isActive, setIsActive] = useState<boolean>(false)
+  const [state, formAction] = useFormState(toggleFavoriteProduct, { ok: false })
+  const [isPending, startTransition] = useTransition()
 
-  async function toggleFavoriteProduct(handle: string) {
-    "use server"
-
-    const handles = getParsedFavoritesHandles()
-    const newFavorites = handles.includes(handle) ? handles.filter((i) => i !== handle) : [...handles, handle]
-    cookies().set(COOKIE_FAVORITES, JSON.stringify(newFavorites))
-  }
+  useEffect(() => {
+    startTransition(async () => {
+      const favorites = await getParsedFavoritesHandles()
+      setIsActive(favorites.some((favoriteHandle) => favoriteHandle === handle))
+    })
+  }, [state, handle])
 
   return (
     <div className="absolute left-4 top-4">
-      <form action={toggleFavoriteProduct.bind(null, handle)}>
-        <button aria-label="Favorite this item" type="submit" className="bg-transparent">
-          <HeartIcon className={cn("size-8 cursor-pointer transition-colors hover:fill-neutral-400", { "fill-black": isActive })} />
+      <form action={formAction.bind(null, handle)}>
+        <button aria-label="Favorite this item" type="submit" className="relative bg-transparent">
+          <HeartIcon className={cn("size-8 cursor-pointer transition-colors hover:fill-neutral-200", { "fill-black": isActive })} />
+          {isPending && (
+            <div className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center ">
+              <Spinner className="size-4 bg-transparent " />
+            </div>
+          )}
         </button>
       </form>
     </div>
   )
-}
-
-function getParsedFavoritesHandles() {
-  const favoritesCookie = cookies().get(COOKIE_FAVORITES)?.value || "[]"
-  const favoritesHandles = JSON.parse(favoritesCookie) as string[]
-  return favoritesHandles
 }

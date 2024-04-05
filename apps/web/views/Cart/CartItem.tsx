@@ -9,11 +9,12 @@ import { DeleteButton } from "./DeleteButton"
 
 interface CartItemProps extends PlatformCartItem {
   onProductClick: () => void
+  className?: string
 }
 
 export function CartItem(props: CartItemProps) {
   return (
-    <li className={cn("flex items-center justify-between gap-6 py-2")}>
+    <li className={cn("flex items-center justify-between gap-6 py-2", props.className)}>
       <div className="flex h-[115px] w-[90px] shrink-0 items-center bg-neutral-100">
         <Image
           src={props.merchandise.product.featuredImage?.url || "/default-product-image.svg"}

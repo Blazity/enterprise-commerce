@@ -45,6 +45,8 @@ export async function removeCartItem(prevState: any, itemId: string) {
 
   await storefrontClient.deleteCartItem(cartId!, [itemId])
   revalidateTag(TAGS.CART)
+
+  return { ok: true }
 }
 
 export async function updateItemQuantity(prevState: any, payload: { itemId: string; variantId: string; quantity: number }) {

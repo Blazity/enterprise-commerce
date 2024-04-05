@@ -18,6 +18,8 @@ import { VariantsSection } from "views/Product/VariantsSection"
 
 export const revalidate = 3600
 
+export const dynamic = "force-static"
+
 export const dynamicParams = true
 
 interface ProductProps {
@@ -58,9 +60,7 @@ async function ProductView({ slug }: { slug: string }) {
         <Breadcrumbs className="mb-8" items={makeBreadcrumbs(product)} />
         <div className="grid grid-cols-1 justify-center gap-10 md:grid-cols-2 lg:gap-20">
           <GallerySection images={product.images}>
-            <Suspense fallback={null}>
-              <FavoriteMarker handle={product.handle} />
-            </Suspense>
+            <FavoriteMarker handle={product.handle} />
           </GallerySection>
           <div className="flex flex-col items-start pt-12">
             <InfoSection className="pb-6" title={product.title} description={product.descriptionHtml} combination={combination} />

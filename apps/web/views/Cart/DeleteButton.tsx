@@ -1,6 +1,8 @@
 import { removeCartItem } from "app/actions/cart.actions"
 import { LoadingDots } from "components/LoadingDots/LoadingDots"
+import { useEffect } from "react"
 import { useFormState, useFormStatus } from "react-dom"
+import { useCartStore } from "stores/cartStore"
 import { cn } from "utils/cn"
 
 interface DeleteButtonProps {
@@ -8,9 +10,14 @@ interface DeleteButtonProps {
 }
 
 export function DeleteButton({ id }: DeleteButtonProps) {
-  const [_, formAction] = useFormState(removeCartItem, { ok: false })
+  const [state, formAction] = useFormState(removeCartItem, { ok: false })
+  const refresh = useCartStore((prev) => prev.refresh)
 
   const actionWithParams = formAction.bind(null, id)
+
+  useEffect(() => {
+    state.ok && refresh()
+  }, [state.ok, refresh])
 
   return (
     <form action={actionWithParams}>

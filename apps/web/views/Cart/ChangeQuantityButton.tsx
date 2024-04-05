@@ -3,6 +3,7 @@ import { Spinner } from "components/Spinner/Spinner"
 import { useEffect } from "react"
 import { useFormState, useFormStatus } from "react-dom"
 import { toast } from "sonner"
+import { useCartStore } from "stores/cartStore"
 
 interface ChangeQuantityButtonProps {
   id: string
@@ -13,14 +14,18 @@ interface ChangeQuantityButtonProps {
 
 export function ChangeQuantityButton({ id, variantId, quantity, children }: ChangeQuantityButtonProps) {
   const [state, formAction] = useFormState(updateItemQuantity, { ok: false })
+  const refresh = useCartStore((prev) => prev.refresh)
 
   const actionWithParams = formAction.bind(null, { itemId: id, variantId, quantity })
 
   useEffect(() => {
     if (!state.ok && state.message) {
       toast(state.message)
+      refresh()
     }
-  }, [state])
+
+    state.ok && refresh()
+  }, [refresh, state])
 
   return (
     <form action={actionWithParams}>

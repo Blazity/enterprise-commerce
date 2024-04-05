@@ -8,8 +8,6 @@ import { MEILISEARCH_INDEX } from "constants/index"
 import { env } from "env.mjs"
 import { Root } from "shopify-webhooks"
 
-export const maxDuration = 60 * 3
-
 export async function POST(req: Request) {
   const hmac = req.headers.get("X-Shopify-Hmac-Sha256")
 

@@ -4,15 +4,18 @@ import { CloseIcon } from "components/Icons/CloseIcon"
 import { Sheet, SheetClose, SheetContent, SheetFooter, SheetHeader, SheetTitle } from "components/Sheet/Sheet"
 import { useRouter } from "next/navigation"
 import { CartItem } from "./CartItem"
+import { cn } from "utils/cn"
+import { LoadingDots } from "components/LoadingDots/LoadingDots"
 
 interface CartSheetProps {
   cart: PlatformCart
   onCartClose: () => void
   onCartOpen: () => void
   isOpen: boolean
+  isPending: boolean
 }
 
-export function CartSheet({ cart, isOpen, onCartOpen, onCartClose }: CartSheetProps) {
+export function CartSheet({ cart, isOpen, onCartClose, isPending }: CartSheetProps) {
   const router = useRouter()
 
   const hasAnyItems = cart?.items?.length > 0
@@ -21,9 +24,13 @@ export function CartSheet({ cart, isOpen, onCartOpen, onCartClose }: CartSheetPr
 
   return (
     <Sheet open={isOpen} onOpenChange={() => onCartClose()}>
-      <SheetContent className="size-full min-h-[100vh] bg-white p-0 ">
+      <SheetContent className="size-full min-h-svh bg-white p-0">
         <SheetHeader className="mb-4 flex w-full flex-row items-center justify-between border-b border-black">
-          <SheetTitle className="p-4 text-[20px] font-normal">Review your cart</SheetTitle>
+          <SheetTitle className="flex items-center p-4 text-[20px] font-normal">
+            Review your cart
+            {isPending ? <LoadingDots className="ml-4" /> : null}
+          </SheetTitle>
+
           <SheetClose className="ring-offset-background focus:ring-ring data-[state=open]:bg-secondary absolute right-4 top-4 rounded-sm bg-white opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:pointer-events-none">
             <CloseIcon className="size-4" />
             <span className="sr-only">Close</span>
@@ -32,8 +39,15 @@ export function CartSheet({ cart, isOpen, onCartOpen, onCartClose }: CartSheetPr
 
         {!hasAnyItems && <CartEmptyState />}
 
-        <div className="mb-4 flex size-full h-[calc(100%-63px-260px)] flex-col gap-4 overflow-x-hidden p-4">
-          {cart?.items.map((singleItem) => <CartItem {...singleItem} key={singleItem.id + "_" + singleItem.merchandise.id} onProductClick={() => onCartClose()} />)}
+        <div className={cn("mb-4 flex size-full h-[calc(100%-63px-260px)] flex-col gap-4 overflow-x-hidden p-4")}>
+          {cart?.items.map((singleItem) => (
+            <CartItem
+              className={cn(isPending && "pointer-events-none")}
+              {...singleItem}
+              key={singleItem.id + "_" + singleItem.merchandise.id}
+              onProductClick={() => onCartClose()}
+            />
+          ))}
         </div>
 
         {hasAnyItems && (
