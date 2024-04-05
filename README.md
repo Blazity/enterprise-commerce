@@ -1,73 +1,87 @@
-## Next.js Enterprise Commerce
 
-### Project Setup
+![PROJECT HERO IMAGE](https://github.com/Blazity/enterprise-commerce/assets/28964599/84dc192d-5c9e-4672-96b3-b9cb18a1cfa1)  
 
-To streamline the setup process, we will first list all necessary environment variables required for configuration. Subsequently, we'll provide detailed instructions on how to obtain each of these variables.
+[![GitHub Actions Workflow Status][check-workflow-badge]][check-workflow-badge-link] [![GitHub License][github-license-badge]][github-license-badge-link] [![GitHub contributors][github-contributors-badge]][github-contributors-badge-link] [![Discord][discord-badge]][discord-badge-link] [![Blazity][made-by-blazity-badge]][made-by-blazity-badge-link]
 
-Below is the list of environment variables that you'll need to configure in your `.env` file for the proper setup of your enterprise commerce system:
+🚀 Launch your high-performance eCommerce site in minutes, not weeks, with this Next.js commerce starter. Leverage the power of Vector Search and AI to deliver a superior online shopping experience without the development headaches.
 
-```plaintext
-SHOPIFY_STORE_DOMAIN=your_store_domain.myshopify.com
-SHOPIFY_STOREFRONT_ACCESS_TOKEN=your_storefront_access_token
-SHOPIFY_ADMIN_ACCESS_TOKEN=your_admin_access_token
-SHOPIFY_APP_API_SECRET_KEY=your_app_api_key
-MEILISEARCH_MASTER_KEY=master_key
-MEILISEARCH_HOST=https://something.meilisearch.io
+Simply run this command and let our CLI do the setup for you!
+
+```bash
+$ yarn create commerce
+
+# or
+
+$ npm create commerce
+
+# or
+
+$ pnpm create commerce
 ```
 
-Replace `your_store_domain.myshopify.com`, `your_storefront_access_token`, `your_admin_access_token`, and `your_app_api_key` with the actual values that you will obtain through the setup process described below.
+## Features
 
-## Configuration Steps
+- Next.js App Router & Turborepo
+- [React Server Components](https://nextjs.org/docs/app/building-your-application/rendering/server-components) (RSCs), [Suspense and Streaming](https://nextjs.org/docs/app/building-your-application/routing/loading-ui-and-streaming)
+- [Server Actions](https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations)
+- [Dynamic OG Images](https://nextjs.org/docs/app/api-reference/file-conventions/metadata/opengraph-image)
+- [AI Vector Search](https://www.meilisearch.com/docs/learn/experimental/vector_search)
+- [Lightning fast search & filtering](https://www.meilisearch.com/)
+- AI Image captioning
+- Perfect Performance & SEO
+- Extremely strict TypeScript 
+- Draft Mode
+- A/B Tests
+- Shadcn UI
+- TailwindCSS
+- Analytics (GTM, Vercel)
+- Highly Scalable SEO Redirects
+- Complete and fast CI/CD pipelines
+- Platform agnostic (integrated with Shopify by default)
+- Easy migration - migrate your existing solution in minutes
+- Conventional commits git hook
+- Playwright - write end-to-end tests like a pro
+- Storybook - create, test, and showcase your components
+- T3 Env - manage your environment variables with ease
+- Patch-package - fix external dependencies without losing your mind
+- Components coupling and cohesion graph - a tool for managing component relationships
 
-### 1. Shopify Store Domain
+> Note: Looking for a live demo with real products? See [commerce.blazity.com](https://blazity.com/r/commerce)
 
-- **Variable Required:** `SHOPIFY_STORE_DOMAIN`
-- **How to Obtain:**
-  - Your Shopify store domain is the URL of your Shopify store. You can obtain it in shopify dashboard, it should be without `https` and `/` at the end of the string. Example: `cool-socks.myshopify.com`
+## 🤝 Contribution
 
-### 2. Headless App
+Contributions are always welcome! To contribute, please follow these steps:
 
-- **Variable Required:** `SHOPIFY_STOREFRONT_ACCESS_TOKEN`
-- **Installation and Configuration:**
-  1. Visit the Shopify Marketplace and search for the Headless commerce application or navigate directly to [https://apps.shopify.com/headless](https://apps.shopify.com/headless).
-  2. Install the application, open it, and create a new Storefront within the app.
-  3. In the "Manage API Access" section, click on the `Manage` button next to **Storefront API**.
-  4. Make sure you have enabled `unauthenticated_read_product_inventory` and `unauthenticated_read_customer_tags` scopes
-  5. Copy the **Private access token** displayed and place it in your `.env` file under `SHOPIFY_STOREFRONT_ACCESS_TOKEN`.
+1. Fork the repository.
+2. Create a new branch with a descriptive name.
+3. Make your changes, and commit them using the [Conventional Commits](https://www.conventionalcommits.org/) format.
+4. Push your changes to the forked repository.
+5. Create a pull request, and we'll review your changes.
 
-### 3. Private Admin App
+## Support
 
-- **Variables Required:** `SHOPIFY_ADMIN_ACCESS_TOKEN`, `SHOPIFY_APP_API_SECRET_KEY`
-- **Application Setup and Scopes Configuration:**
-  1. Go to the Shopify admin dashboard, navigate to Settings > `Apps and sales channels` > `Develop Apps`, and click on `Create app`.
-  2. After naming and creating your app, move to the `Configuration` tab.
-  3. In the "Admin API access scopes" section, click `Edit` and select the following scopes:
-     - `write_product_listings`
-     - `read_product_listings`
-     - `read_products`
-     - `write_products`
-  4. Under **Webhook subscriptions**, choose the `2024-01` API version.
-  5. In the `Storefront API Integration` section, enable the listed unauthenticated scopes.
-     - `unauthenticated_write_checkouts`
-     - `unauthenticated_read_checkouts`
-     - `unauthenticated_read_product_listings`
-     - `unauthenticated_read_product_inventory`
-     - `unauthenticated_read_product_pickup_locations`
-     - `unauthenticated_read_product_tags`
-     - `unauthenticated_read_selling_plans`
-     - `unauthenticated_read_bulk_operations`
-  6. Lastly, navigate to the `API Credentials` section.
-     - Copy the **Admin API access token** and place it in your `.env` file under `SHOPIFY_ADMIN_ACCESS_TOKEN`
-     - Also, copy the `SHOPIFY_APP_API_SECRET_KEY` and place it in your `.env` file under `SHOPIFY_APP_API_SECRET_KEY`
+If you're looking for help or simply want to share your thoughts about the project, we encourage you to join our Discord community. Here's the link: [https://blazity.com/discord](https://blazity.com/discord). It's a space where we exchange ideas and help one another. Everyone's input is appreciated, and we look forward to welcoming you.
 
-### 4. Setting Up Meilisearch
+<br />
+<a href="https://discord.gg/fyWtyNKmfX" style="width: 100%; display: flex; justify-content: center;">
+  <img src="https://discordapp.com/api/guilds/1111676875782234175/widget.png?style=banner2" alt="Blazity Discord Banner"/>
+</a>
+<br />
 
-Meilisearch is a powerful, fast, open-source search engine. There are two main ways to host Meilisearch: on-premise (self-hosting on dedicated servers or cloud providers) and using Meilisearch Cloud. For the purposes of this guide, we will focus on the recommended approach, which is using Meilisearch Cloud.
+## 📜 License
 
-To get started with Meilisearch Cloud, navigate to the Meilisearch Cloud platform and [log in](https://cloud.meilisearch.com/).
+This project is licensed under the MIT License. For more information, see the [LICENSE](./LICENSE) file.
 
-- Create a new project within the platform.
-- Create an index called `products`. If you wish to use different index name you will also have to make a change in the codebase.
-- After your project is set up, proceed to the "Settings" tab of your Meilisearch Cloud project.
-- Locate and copy the `Master key`. This key should be securely stored in your .env file under the `MEILISEARCH_MASTER_KEY` variable.
-- Copy the Meilisearch URL and place it in your .env file under `MEILISEARCH_HOST`. **Ensure you do not include a trailing slash at the end of the URL.**
+
+
+[check-workflow-badge]: https://img.shields.io/github/actions/workflow/status/blazity/enterprise-commerce/check.yml?label=check
+[github-license-badge]: https://img.shields.io/github/license/blazity/enterprise-commerce?link=https%3A%2F%2Fgithub.com%2FBlazity%2Fenterprise-commerce%2Fblob%2Fmain%2FLICENSE
+[github-contributors-badge]: https://img.shields.io/github/contributors/blazity/enterprise-commerce?link=https%3A%2F%2Fgithub.com%2FBlazity%2Fenterprise-commerce%2Fgraphs%2Fcontributors
+[discord-badge]: https://img.shields.io/discord/1111676875782234175?color=7b8dcd&link=https%3A%2F%2Fblazity.com%2Fdiscord
+[made-by-blazity-badge]: https://img.shields.io/badge/made_by-Blazity-blue?color=FF782B&link=https://blazity.com/
+
+[check-workflow-badge-link]: https://github.com/Blazity/enterprise-commerce/actions/workflows/check.yml
+[github-license-badge-link]: https://github.com/Blazity/enterprise-commerce/blob/main/LICENSE
+[github-contributors-badge-link]: https://github.com/Blazity/enterprise-commerce/graphs/contributors
+[discord-badge-link]: https://blazity.com/discord
+[made-by-blazity-badge-link]: https://blazity.com/?utm_source=nextenterprise&utm_medium=github
