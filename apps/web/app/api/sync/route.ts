@@ -1,5 +1,4 @@
 import { PlatformImage, PlatformProduct } from "@enterprise-commerce/core/platform/types"
-import { Index } from "meilisearch"
 import { FailedAttemptError } from "p-retry"
 import { createHmac } from "crypto"
 import { meilisearch } from "clients/meilisearch"
@@ -71,20 +70,6 @@ function normalizeId(id: string) {
 
 function denormalizeId(id: string) {
   return id.startsWith("gid://shopify/Product/") ? id : `gid://shopify/Product/${id}`
-}
-
-// TODO: remove, move to docs
-async function updateAttributesSettings(index: Index) {
-  const sortableAttributes = await index.getSortableAttributes()
-  const filterableAttributes = await index.getFilterableAttributes()
-
-  if (!sortableAttributes.includes("minPrice") || !sortableAttributes.includes("updatedAtTimestamp")) {
-    await index.updateSortableAttributes(["minPrice", "updatedAtTimestamp"])
-  }
-
-  if (!filterableAttributes.includes("tags") || !filterableAttributes.includes("collections")) {
-    await index.updateFilterableAttributes(["tags", "collections"])
-  }
 }
 
 async function getMeilisearchIndex(indexName: string) {
