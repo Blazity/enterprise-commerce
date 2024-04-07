@@ -24,8 +24,6 @@ const DraftToolbar = nextDynamic(() => import("views/DraftToolbar"), { ssr: fals
 
 export const revalidate = 3600
 
-export const dynamic = "force-static"
-
 const navigationItems: NavItem[] = [
   {
     text: "Home",

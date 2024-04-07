@@ -9,6 +9,8 @@ import { HeroSection } from "views/Homepage/HeroSection"
 
 export const revalidate = 3600
 
+export const dynamic = "force-static"
+
 export const dynamicParams = true
 
 export default function Homepage({ params: { bucket } }: { params: { bucket: string } }) {
