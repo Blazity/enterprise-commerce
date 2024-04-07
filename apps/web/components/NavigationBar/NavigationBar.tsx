@@ -97,9 +97,7 @@ export function NavigationBar({ items }: NavigationBarProps) {
                 <Autocomplete className="mr-6" />
                 <div className="flex gap-2">
                   <Favorites className="hidden md:flex" />
-                  <Suspense fallback={<Skeleton className="size-8" />}>
-                    <Cart className="hidden md:flex" />
-                  </Suspense>
+                  <Cart className="hidden md:flex" />
                 </div>
               </div>
             </div>

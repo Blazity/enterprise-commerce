@@ -8,7 +8,7 @@ import { cn } from "utils/cn"
 import { LoadingDots } from "components/LoadingDots/LoadingDots"
 
 interface CartSheetProps {
-  cart: PlatformCart
+  cart: PlatformCart | null
   onCartClose: () => void
   onCartOpen: () => void
   isOpen: boolean
@@ -18,7 +18,7 @@ interface CartSheetProps {
 export function CartSheet({ cart, isOpen, onCartClose, isPending }: CartSheetProps) {
   const router = useRouter()
 
-  const hasAnyItems = cart?.items?.length > 0
+  const hasAnyItems = (cart?.items?.length || 0) > 0
   const subtotalFormatted = cart?.cost?.subtotalAmount?.amount + " " + cart?.cost?.subtotalAmount?.currencyCode
   const totalFomatted = cart?.cost?.totalAmount?.amount + " " + cart?.cost?.totalAmount?.currencyCode
 
@@ -70,7 +70,7 @@ export function CartSheet({ cart, isOpen, onCartClose, isPending }: CartSheetPro
                 isAnimated={false}
                 className="w-full justify-center text-center hover:text-white"
                 size="lg"
-                onClick={() => router.push(cart?.checkoutUrl)}
+                onClick={() => router.push(cart?.checkoutUrl!)}
               >
                 Proceed to Checkout
               </Button>

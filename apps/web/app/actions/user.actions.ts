@@ -16,6 +16,12 @@ export async function loginUser({ email, password }: { email: string; password: 
   return user
 }
 
+export async function getCurrentUser() {
+  const accessToken = cookies().get(COOKIE_ACCESS_TOKEN)?.value
+  const user = await storefrontClient.getUser(accessToken || "")
+  return user
+}
+
 export async function updateUser(input: Pick<PlatformUserCreateInput, "firstName" | "lastName" | "phone">) {
   const accessToken = cookies().get(COOKIE_ACCESS_TOKEN)?.value
 

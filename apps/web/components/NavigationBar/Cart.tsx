@@ -1,23 +1,15 @@
-import { PlatformCart } from "@enterprise-commerce/core/platform/types"
-import { cookies } from "next/headers"
-import { getCart } from "app/actions/cart.actions"
-import { COOKIE_CART_ID } from "constants/index"
+"use client"
+
 import { cn } from "utils/cn"
 import { OpenCartButton } from "./OpenCartButton"
+import { useCartStore } from "stores/cartStore"
 
 interface CartProps {
   className?: string
 }
 
-export async function Cart({ className }: CartProps) {
-  const cartId = cookies().get(COOKIE_CART_ID)?.value
-
-  let cart: PlatformCart | undefined | null
-  if (cartId) {
-    cart = await getCart(cartId)
-  }
-
-  const itemsInCart = cart?.items.length || null
+export function Cart({ className }: CartProps) {
+  const cart = useCartStore((s) => s.cart)
 
   return (
     <div className={cn("relative size-8 cursor-pointer items-center justify-center fill-none transition-transform hover:scale-105", className)}>
@@ -28,7 +20,9 @@ export async function Cart({ className }: CartProps) {
           strokeLinecap="round"
         />
       </svg>
-      {!!itemsInCart && <div className="absolute bottom-0 right-0 flex size-4 items-center justify-center rounded-full bg-black text-[11px] text-white">{itemsInCart}</div>}
+      {!!cart?.totalQuantity && (
+        <div className="absolute bottom-0 right-0 flex size-4 items-center justify-center rounded-full bg-black text-[11px] text-white">{cart?.totalQuantity}</div>
+      )}
       <OpenCartButton />
     </div>
   )

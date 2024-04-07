@@ -1,5 +1,4 @@
 import Link from "next/link"
-import { Suspense } from "react"
 import { ProfileMenu } from "../ProfileMenu/ProfileMenu"
 
 export async function TopBar() {
@@ -10,9 +9,7 @@ export async function TopBar() {
           Blazity
         </Link>
 
-        <Suspense fallback={null}>
-          <ProfileMenu />
-        </Suspense>
+        <ProfileMenu />
       </div>
     </header>
   )

@@ -1,22 +1,18 @@
 "use client"
 
-import { PlatformCart } from "@enterprise-commerce/core/platform/types"
 import { getCart } from "app/actions/cart.actions"
 import { COOKIE_CART_ID } from "constants/index"
 import dynamic from "next/dynamic"
-import { useEffect, useState, useTransition } from "react"
+import { useEffect, useTransition } from "react"
 import { useCartStore } from "stores/cartStore"
 import { getCookie } from "utils/getCookie"
 
 const CartSheet = dynamic(() => import("views/Cart/CartSheet").then((mod) => mod.CartSheet), { loading: Placeholder })
 
 export function CartView() {
-  const [cart, setCart] = useState<PlatformCart | null>(null)
   const [isPending, startTransition] = useTransition()
 
-  const closeCart = useCartStore((s) => s.closeCart)
-  const openCart = useCartStore((s) => s.openCart)
-  const isOpen = useCartStore((s) => s.isOpen)
+  const { isOpen, openCart, closeCart, setCart, cart } = useCartStore()
   const { lastUpdatedAt } = useCartStore()
 
   useEffect(() => {
@@ -28,11 +24,9 @@ export function CartView() {
       const newCart = await getCart(cartId)
       newCart && setCart(newCart)
     })
-  }, [lastUpdatedAt])
+  }, [lastUpdatedAt, setCart])
 
-  if (!cart) return null
-
-  return isOpen ? <CartSheet isPending={isPending} isOpen={isOpen} onCartOpen={openCart} cart={cart} onCartClose={closeCart} /> : null
+  return isOpen ? <CartSheet isPending={isPending} isOpen={isOpen} onCartOpen={openCart} cart={cart!} onCartClose={closeCart} /> : null
 }
 
 function Placeholder() {

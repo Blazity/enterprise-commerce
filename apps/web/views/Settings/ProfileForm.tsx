@@ -2,7 +2,7 @@
 
 import { PlatformUser } from "@enterprise-commerce/core/platform/types"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { updateUser } from "app/actions/user.actions"
+import { getCurrentUser, updateUser } from "app/actions/user.actions"
 import { Button } from "components/Button/Button"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "components/Card/Card"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "components/Form/Form"
@@ -10,6 +10,7 @@ import { Input } from "components/Input/Input"
 
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
+import { useUserStore } from "stores/userStore"
 import { z } from "zod"
 
 const formSchema = z.object({
@@ -28,6 +29,7 @@ const formFields = [
 ] as const
 
 export function ProfileForm({ user }: { user: PlatformUser }) {
+  const setUser = useUserStore((s) => s.setUser)
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -44,6 +46,9 @@ export function ProfileForm({ user }: { user: PlatformUser }) {
     const user = await updateUser(values)
 
     if (user?.id) {
+      const currentUser = await getCurrentUser()
+      currentUser && setUser(currentUser)
+
       toast.success("Updated the profile details")
       return
     }

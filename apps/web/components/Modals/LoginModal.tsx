@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { z } from "zod"
-import { loginUser } from "app/actions/user.actions"
+import { getCurrentUser, loginUser } from "app/actions/user.actions"
 import { Button } from "components/Button/Button"
 import { DialogFooter } from "components/Dialog/Dialog"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "components/Form/Form"
@@ -10,6 +10,7 @@ import { GenericModal } from "components/GenericModal/GenericModal"
 import { Input } from "components/Input/Input"
 import { Logo } from "components/Logo/Logo"
 import { useModalStore } from "stores/modalStore"
+import { useUserStore } from "stores/userStore"
 
 const passwordRegexp = new RegExp(/(?=.*\d)(?=.*\W)(?=.*[a-z])(?=.*[A-Z]).{8,20}$/)
 
@@ -24,6 +25,7 @@ const formFields = [
 ] as const
 
 export function LoginModal() {
+  const setUser = useUserStore((s) => s.setUser)
   const modals = useModalStore((s) => s.modals)
   const closeModal = useModalStore((s) => s.closeModal)
   const form = useForm<z.infer<typeof formSchema>>({
@@ -35,9 +37,12 @@ export function LoginModal() {
     const user = await loginUser({ email, password })
 
     if (user) {
-      toast.success("Successfully logged in")
+      const currentUser = await getCurrentUser()
+      currentUser && setUser(currentUser)
 
+      toast.success("Successfully logged in")
       closeModal("login")
+
       return
     }
 
