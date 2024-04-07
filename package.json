@@ -75,6 +75,5 @@
   },
   "engines": {
     "node": ">=20.11.1"
-  },
-  "packageManager": "yarn@1.19.1"
+  }
 }
