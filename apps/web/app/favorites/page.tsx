@@ -9,8 +9,6 @@ export const revalidate = 3600
 
 export const dynamicParams = true
 
-// TODO: doesnt work
-
 export default async function Favorites() {
   return (
     <div className="max-w-container-md mx-auto flex flex-col gap-16 px-4 py-20 md:pb-32 md:pt-24 xl:px-0">
