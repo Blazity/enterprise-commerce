@@ -22,6 +22,7 @@ jobs:
       MEILISEARCH_HOST: ${{ secrets.MEILISEARCH_HOST }}
       SHOPIFY_APP_API_SECRET_KEY: ${{ secrets.SHOPIFY_APP_API_SECRET_KEY }}
       REPLICATE_API_KEY: ${{ secrets.REPLICATE_API_KEY }}
+      FLAGS_SECRET: EAMwX-AhlPipEaZfTc-24bxAZ7BvLikwuIV2Zq7FP64
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
