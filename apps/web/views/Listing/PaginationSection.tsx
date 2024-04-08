@@ -1,4 +1,5 @@
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "components/Pagination/Pagination"
+import { cn } from "utils/cn"
 
 const PAGE_OFFSET = 2
 
@@ -34,13 +35,18 @@ export function PaginationSection({ queryParams, totalPages }: PaginationSection
 
   return (
     <Pagination className="my-32 border-t border-black py-4">
-      <PaginationContent>
+      <PaginationContent className="relative">
         <PaginationItem>
           <PaginationPrevious disabled={+page === 1} href={{ query: { ...queryParams, page: +page - 1 } }} />
         </PaginationItem>
         {pages.map((singlePage, idx) => (
           <PaginationItem key={"pagination_item" + idx + singlePage}>
-            <PaginationLink aria-label={`Go to ${page} page`} isActive={singlePage === +page} href={{ query: { ...queryParams, page: singlePage } }}>
+            <PaginationLink
+              className={cn(singlePage === +page && "absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 md:static md:transform-none")}
+              aria-label={`Go to ${page} page`}
+              isActive={singlePage === +page}
+              href={{ query: { ...queryParams, page: singlePage } }}
+            >
               {singlePage}
             </PaginationLink>
           </PaginationItem>
