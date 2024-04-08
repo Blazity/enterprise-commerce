@@ -26,6 +26,11 @@ export function Footer() {
           </Link>
         </header>
         <main className="py-32">
+          <Link href="https://v0.dev/" target="_blank">
+            <span className="focus:ring-ring mb-4 inline-flex w-fit items-center whitespace-nowrap rounded-full border border-transparent bg-white px-2.5 py-0.5 text-xs font-semibold text-black transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2">
+              Designed by v0
+            </span>
+          </Link>
           <p className="text-6xl font-bold">Lorem Ipsum</p>
           <p className="mt-4 text-xl">Your daily trendsetting deals.</p>
         </main>
