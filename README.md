@@ -7,7 +7,7 @@
 
 🚀 Launch your high-performance eCommerce site in minutes, not weeks, with this Next.js commerce starter. Leverage the power of Vector Search and AI to deliver a superior online shopping experience without the development headaches.
 
-Simply run this command and let our CLI do the setup for you!
+Run this command and let our CLI do the job or [see our documentation for manual setup instruction](https://docs.commerce.blazity.com/).
 
 ```bash
 $ yarn create commerce
@@ -17,8 +17,7 @@ $ yarn create commerce
  <video loop autoplay src="https://github.com/Blazity/enterprise-commerce/assets/28964599/a3f0c83a-c8f4-4cb7-b07b-b7b19526eade">  cli demo </video> 
 
 
-
-[see the live demo](https://blazity.com/r/commerce) or deploy it straight to Vercel: 
+[See the live demo](https://blazity.com/r/commerce) or deploy it straight to Vercel: 
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fblazity%2Fenterprise-commerce&env=SHOPIFY_STOREFRONT_ACCESS_TOKEN,SHOPIFY_ADMIN_ACCESS_TOKEN,FLAGS_SECRET,SHOPIFY_APP_API_SECRET_KEY,SHOPIFY_STORE_DOMAIN,MEILISEARCH_HOST,MEILISEARCH_MASTER_KEY,LIVE_URL&envDescription=Variables%20needed%20to%20deploy%20your%20new%20eCommerce%20application&envLink=https%3A%2F%2Fblazity.com%2Fr%2Fcommerce-docs&demo-title=Next.js%20Enterprise%20Commerce&demo-description=AI-FIRST%20NEXT.JS%20STOREFRONT%20FOR%20COMPOSABLE%20COMMERCE&demo-url=https%3A%2F%2Fcommerce.blazity.com%2F&demo-image=https%3A%2F%2Fcommerce.blazity.com%2Fopengraph-image.jpg)
   
@@ -49,8 +48,6 @@ $ yarn create commerce
 - T3 Env - manage your environment variables with ease
 - Patch-package - fix external dependencies without losing your mind
 - Components coupling and cohesion graph - a tool for managing component relationships
-
-> Note: Looking for a live demo with real products? See [commerce.blazity.com](https://blazity.com/r/commerce)
 
 ## 🤝 Contribution
 
