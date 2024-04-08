@@ -66,9 +66,7 @@ async function ProductView({ slug }: { slug: string }) {
             <InfoSection className="pb-6" title={product.title} description={product.descriptionHtml} combination={combination} />
             {hasOnlyOneVariant ? null : <VariantsSection combination={combination} handle={product.handle} className="pb-4" variants={product.variants} />}
 
-            <Suspense fallback={null}>
-              <DetailsSection slug={slug} product={product} />
-            </Suspense>
+            <DetailsSection slug={slug} product={product} />
           </div>
         </div>
       </main>
