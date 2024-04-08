@@ -64,7 +64,7 @@ async function ProductView({ slug }: { slug: string }) {
           <GallerySection images={product.images} />
           <div className="flex flex-col items-start pt-12">
             <InfoSection className="pb-10" title={product.title} description={product.descriptionHtml} combination={combination} />
-            {hasOnlyOneVariant ? null : <VariantsSection handle={product.handle} variants={product.variants} />}
+            {hasOnlyOneVariant ? null : <VariantsSection combination={combination} handle={product.handle} variants={product.variants} />}
             <DetailsSection slug={slug} product={product} />
           </div>
         </div>

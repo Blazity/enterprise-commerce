@@ -1,15 +1,16 @@
 import { PlatformVariant } from "@enterprise-commerce/core/platform/types"
 import Link from "next/link"
 import { cn } from "utils/cn"
-import { createOptionfulUrl, getAllCombinations } from "utils/productOptionsUtils"
+import { Combination, createOptionfulUrl, getAllCombinations } from "utils/productOptionsUtils"
 
 interface VariantsSectionProps {
   variants: PlatformVariant[]
   className?: string
+  combination: Combination | undefined
   handle: string
 }
 
-export function VariantsSection({ variants, className, handle }: VariantsSectionProps) {
+export function VariantsSection({ variants, className, handle, combination }: VariantsSectionProps) {
   const combinations = getAllCombinations(variants)
 
   return (
@@ -23,6 +24,7 @@ export function VariantsSection({ variants, className, handle }: VariantsSection
             prefetch={false}
             className={cn(
               "relative flex h-[40px] min-w-[80px] cursor-pointer items-center justify-center border border-black bg-white p-1.5 text-[11px] uppercase transition-colors hover:bg-neutral-800 hover:text-white disabled:cursor-not-allowed disabled:hover:text-black",
+              { "bg-neutral-800 text-white": singleCombination.id === combination?.id },
               { "stroke-black opacity-80 hover:bg-transparent hover:text-black": !singleCombination.availableForSale }
             )}
           >
