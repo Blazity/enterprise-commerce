@@ -10,7 +10,7 @@
 
 🚀 Launch your high-performance eCommerce site in minutes, not weeks, with this Next.js commerce starter. Leverage the power of Vector Search and AI to deliver a superior online shopping experience without the development headaches.
 
-Run this command and let our CLI do the job or [see our documentation for manual setup instruction](https://docs.commerce.blazity.com/).
+Run this command and let our CLI do the job or [see our documentation for manual setup instruction](https://blazity.com/r/commerce-docs).
 
 ```bash
 $ yarn create commerce
