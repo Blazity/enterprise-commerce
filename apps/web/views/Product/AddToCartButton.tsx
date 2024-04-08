@@ -16,6 +16,7 @@ export function AddToCartButton({ className, combination }: { className?: string
   const [state, formAction] = useFormState(addCartItem, { ok: false })
   const [hasAnyAvailable, setHasAnyAvailable] = useState(false)
   const openCart = useCartStore((s) => s.openCart)
+  const preloadSheet = useCartStore((s) => s.preloadSheet)
 
   const actionWithParams = formAction.bind(null, combination?.id)
 
@@ -33,7 +34,7 @@ export function AddToCartButton({ className, combination }: { className?: string
   }, [combination?.id, state])
 
   return (
-    <form className={className} action={actionWithParams}>
+    <form className={className} action={actionWithParams} onMouseEnter={preloadSheet}>
       <Submit disabled={!hasAnyAvailable || !combination?.availableForSale || isPending}>{"Add to Cart"}</Submit>
     </form>
   )

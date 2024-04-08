@@ -7,12 +7,12 @@ import { useEffect, useTransition } from "react"
 import { useCartStore } from "stores/cartStore"
 import { getCookie } from "utils/getCookie"
 
-const CartSheet = dynamic(() => import("views/Cart/CartSheet").then((mod) => mod.CartSheet), { loading: Placeholder })
+const CartSheet = dynamic(() => import("views/Cart/CartSheet").then((mod) => mod.CartSheet))
 
 export function CartView() {
   const [isPending, startTransition] = useTransition()
 
-  const { isOpen, openCart, closeCart, setCart, cart } = useCartStore()
+  const { isOpen, isSheetLoaded, openCart, closeCart, setCart, cart } = useCartStore()
   const { lastUpdatedAt } = useCartStore()
 
   useEffect(() => {
@@ -26,9 +26,5 @@ export function CartView() {
     })
   }, [lastUpdatedAt, setCart])
 
-  return isOpen ? <CartSheet isPending={isPending} isOpen={isOpen} onCartOpen={openCart} cart={cart!} onCartClose={closeCart} /> : null
-}
-
-function Placeholder() {
-  return <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm"></div>
+  return isSheetLoaded ? <CartSheet isPending={isPending} isOpen={isOpen} onCartOpen={openCart} cart={cart!} onCartClose={closeCart} /> : null
 }
