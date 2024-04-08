@@ -20,7 +20,7 @@ $ yarn create commerce
 
 [see the live demo](https://blazity.com/r/commerce) or deploy it straight to Vercel: 
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fblazity%2Fenterprise-commerce&env=SHOPIFY_STOREFRONT_ACCESS_TOKEN,SHOPIFY_ADMIN_ACCESS_TOKEN,FLAGS_SECRET,SHOPIFY_APP_API_SECRET_KEY,SHOPIFY_STORE_DOMAIN,MEILISEARCH_HOST,MEILISEARCH_MASTER_KEY,LIVE_URL&envDescription=Variables%20needed%20to%20deploy%20your%20new%20eCommerce%20application&envLink=https%3A%2F%2Fblazity.com%2Fr%2Fcommerce-docs&demo-title=Next.js%20Enterprise%20Commerce&demo-description=AI-FIRST%20NEXT.JS%20STOREFRONT%20FOR%20COMPOSABLE%20COMMERCE&demo-url=https%3A%2F%2Fcommerce.blazity.com%2F&demo-image=https%3A%2F%2Fcommerce.blazity.com%2Ftwitter-image.png)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fblazity%2Fenterprise-commerce&env=SHOPIFY_STOREFRONT_ACCESS_TOKEN,SHOPIFY_ADMIN_ACCESS_TOKEN,FLAGS_SECRET,SHOPIFY_APP_API_SECRET_KEY,SHOPIFY_STORE_DOMAIN,MEILISEARCH_HOST,MEILISEARCH_MASTER_KEY,LIVE_URL&envDescription=Variables%20needed%20to%20deploy%20your%20new%20eCommerce%20application&envLink=https%3A%2F%2Fblazity.com%2Fr%2Fcommerce-docs&demo-title=Next.js%20Enterprise%20Commerce&demo-description=AI-FIRST%20NEXT.JS%20STOREFRONT%20FOR%20COMPOSABLE%20COMMERCE&demo-url=https%3A%2F%2Fcommerce.blazity.com%2F&demo-image=https%3A%2F%2Fcommerce.blazity.com%2Fopengraph-image.jpg)
   
 ## Features
 

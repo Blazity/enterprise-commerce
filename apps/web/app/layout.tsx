@@ -164,14 +164,14 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Next.js Enterprise Commerce | Blazity",
     description: "AI-FIRST NEXT.JS STOREFRONT FOR COMPOSABLE COMMERCE",
-    images: ["/twitter-image.png"],
+    images: ["/opengraph-image.jpg"],
   },
   twitter: {
     card: "summary_large_image",
     title: "Next.js Enterprise Commerce | Blazity",
     description: "AI-FIRST NEXT.JS STOREFRONT FOR COMPOSABLE COMMERCE",
     creator: "@blazity",
-    images: ["/twitter-image.png"],
+    images: ["/opengraph-image.jpg"],
   },
   verification: {
     google: "google",
