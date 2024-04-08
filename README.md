@@ -7,11 +7,12 @@
 
 Simply run this command and let our CLI do the setup for you!
 
-![create-commerce-demo (1)](https://github.com/Blazity/enterprise-commerce/assets/28964599/9764669e-afac-47e7-8c17-bd1b64cf59f1)
-
 ```bash
 $ yarn create commerce
 ```
+
+
+ <video loop autoplay src="https://github.com/Blazity/enterprise-commerce/assets/28964599/a3f0c83a-c8f4-4cb7-b07b-b7b19526eade">  cli demo </video> 
 
 
 
