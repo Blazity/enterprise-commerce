@@ -1,7 +1,7 @@
 
 ![PROJECT HERO IMAGE](https://github.com/Blazity/enterprise-commerce/assets/28964599/84dc192d-5c9e-4672-96b3-b9cb18a1cfa1)  
 
-[![GitHub Actions Workflow Status][check-workflow-badge]][check-workflow-badge-link] [![GitHub License][github-license-badge]][github-license-badge-link] [![GitHub contributors][github-contributors-badge]][github-contributors-badge-link] [![Discord][discord-badge]][discord-badge-link] [![Blazity][made-by-blazity-badge]][made-by-blazity-badge-link]
+[![GitHub Actions Workflow Status][check-workflow-badge]][check-workflow-badge-link] [![GitHub License][github-license-badge]][github-license-badge-link] [![GitHub contributors][github-contributors-badge]][github-contributors-badge-link] [![Discord][discord-badge]][discord-badge-link] [![Blazity][made-by-blazity-badge]][made-by-blazity-badge-link] [![Blazity][made-with-v0-badge]][made-with-v0-link] 
 
 🚀 Launch your high-performance eCommerce site in minutes, not weeks, with this Next.js commerce starter. Leverage the power of Vector Search and AI to deliver a superior online shopping experience without the development headaches.
 
@@ -28,6 +28,7 @@ $ yarn create commerce
 - [Dynamic OG Images](https://nextjs.org/docs/app/api-reference/file-conventions/metadata/opengraph-image)
 - [AI Vector Search](https://www.meilisearch.com/docs/learn/experimental/vector_search)
 - [Lightning fast search & filtering](https://www.meilisearch.com/)
+- [Designed with v0](https://v0.dev/)
 - AI Image captioning
 - Perfect Performance & SEO
 - Extremely strict TypeScript 
@@ -80,9 +81,11 @@ This project is licensed under the MIT License. For more information, see the [L
 [github-contributors-badge]: https://img.shields.io/github/contributors/blazity/enterprise-commerce?link=https%3A%2F%2Fgithub.com%2FBlazity%2Fenterprise-commerce%2Fgraphs%2Fcontributors
 [discord-badge]: https://img.shields.io/discord/1111676875782234175?color=7b8dcd&link=https%3A%2F%2Fblazity.com%2Fdiscord
 [made-by-blazity-badge]: https://img.shields.io/badge/made_by-Blazity-blue?color=FF782B&link=https://blazity.com/
+[made-with-v0-badge]: https://img.shields.io/badge/designed_with-v0-red?color=black&link=https://blazity.com/
 
 [check-workflow-badge-link]: https://github.com/Blazity/enterprise-commerce/actions/workflows/check.yml
 [github-license-badge-link]: https://github.com/Blazity/enterprise-commerce/blob/main/LICENSE
 [github-contributors-badge-link]: https://github.com/Blazity/enterprise-commerce/graphs/contributors
 [discord-badge-link]: https://blazity.com/discord
 [made-by-blazity-badge-link]: https://blazity.com/?utm_source=nextenterprise&utm_medium=github
+[made-with-v0-link]: https://v0.dev/
