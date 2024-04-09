@@ -7,7 +7,7 @@ import { COOKIE_CART_ID, TAGS } from "constants/index"
 
 export const getCart = unstable_cache(async (cartId: string) => storefrontClient.getCart(cartId), [TAGS.CART], { revalidate: 60 * 15, tags: [TAGS.CART] })
 
-export async function addCartItem(prevState: any, variantId: string | undefined) {
+export async function addCartItem(prevState: any, variantId: string) {
   if (!variantId) return { ok: false }
 
   let cartId = cookies().get(COOKIE_CART_ID)?.value
@@ -70,10 +70,15 @@ export async function updateItemQuantity(prevState: any, payload: { itemId: stri
     return { ok: true }
   }
 
-  const updatedItemResults = await storefrontClient.updateCartItem(cartId, [{ id: itemId, merchandiseId: variantId, quantity }])
-  const cartItem = updatedItemResults?.items?.find((item) => item.merchandise.id === variantId)
-  const hasAnyLeftInInventory = (cartItem?.quantity ?? 0) < (cartItem?.merchandise.quantityAvailable ?? Infinity)
+  const itemAvailability = await getItemAvailability(cartId, variantId)
+  if (!itemAvailability || itemAvailability.inCartQuantity >= itemAvailability.inStockQuantity)
+    return {
+      ok: false,
+      message: "This product is out of stock",
+    }
+
+  await storefrontClient.updateCartItem(cartId, [{ id: itemId, merchandiseId: variantId, quantity }])
 
   revalidateTag(TAGS.CART)
-  return { ok: hasAnyLeftInInventory, message: "This product is out of stock" }
+  return { ok: true }
 }

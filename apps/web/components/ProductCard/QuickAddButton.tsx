@@ -19,8 +19,10 @@ export default function QuickAddButton({ combination, label, className }: QuickA
   const openCart = useCartStore((s) => s.openCart)
 
   const handleClick = () => {
+    if (!combination?.id) return
+
     startTransition(async () => {
-      const { ok, message } = await addCartItem(null, combination?.id)
+      const { ok, message } = await addCartItem(null, combination.id)
 
       if (!ok && message) {
         toast.warning(message)
