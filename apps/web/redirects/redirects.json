@@ -1,14 +1,6 @@
 {
-  "/old": {
-    "destination": "/new",
-    "permanent": true
-  },
-  "/blog/post-old": {
-    "destination": "/blog/post-new",
-    "permanent": true
-  },
-  "/external": {
-    "destination": "https://example.com",
+  "/example_smartwatch_2": {
+    "destination": "/product/example_smartwatch_2",
     "permanent": true
   }
 }

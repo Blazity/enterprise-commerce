@@ -12,7 +12,7 @@ export const runtime = "edge"
 const BASE_URL = env.LIVE_URL
 const HITS_PER_PAGE = 24
 
-export default async function sitemap(): Promise<Promise<Promise<MetadataRoute.Sitemap>>> {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes: MetadataRoute.Sitemap = [
     {
       url: `${BASE_URL}/`,

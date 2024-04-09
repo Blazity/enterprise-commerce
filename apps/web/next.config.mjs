@@ -12,7 +12,6 @@ const config = withPlugins([[withVercelToolbar(), withBundleAnalyzer({ enabled: 
       fullUrl: true,
     },
   },
-  experimental: { ppr: false },
   images: {
     imageSizes: [256, 384],
     deviceSizes: [320, 500, 750, 1080, 1200],
@@ -45,19 +44,11 @@ const config = withPlugins([[withVercelToolbar(), withBundleAnalyzer({ enabled: 
   rewrites() {
     return [
       { source: "/", destination: "/home" },
-      { source: "/healthz", destination: "/api/health" },
-      { source: "/api/healthz", destination: "/api/health" },
       { source: "/health", destination: "/api/health" },
-      { source: "/ping", destination: "/api/health" },
       {
         source: "/search/:second",
         destination: "/search?second=:second",
       },
-      { source: "/privacy-policy", destination: "/pages/privacy-policy" },
-      { source: "/faq", destination: "/pages/frequently-asked-questions" },
-      { source: "/about", destination: "/pages/about" },
-      { source: "/terms-conditions", destination: "/pages/terms-conditions" },
-      { source: "/shipping-return-policy", destination: "/pages/shipping-return-policy" },
     ]
   },
 })
