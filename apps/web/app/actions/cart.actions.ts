@@ -7,7 +7,7 @@ import { COOKIE_CART_ID, TAGS } from "constants/index"
 
 export const getCart = unstable_cache(async (cartId: string) => storefrontClient.getCart(cartId), [TAGS.CART], { revalidate: 60 * 15, tags: [TAGS.CART] })
 
-export async function addCartItem(prevState: any, variantId: string) {
+export async function addCartItem(prevState: any, variantId: string | undefined) {
   if (!variantId) return { ok: false }
 
   let cartId = cookies().get(COOKIE_CART_ID)?.value
@@ -22,6 +22,14 @@ export async function addCartItem(prevState: any, variantId: string) {
 
     revalidateTag(TAGS.CART)
   }
+
+  const itemAvailability = await getItemAvailability(cartId, variantId)
+
+  if (!itemAvailability || itemAvailability.inCartQuantity >= itemAvailability.inStockQuantity)
+    return {
+      ok: false,
+      message: "This product is out of stock",
+    }
 
   await storefrontClient.createCartItem(cartId!, [{ merchandiseId: variantId, quantity: 1 }])
   revalidateTag(TAGS.CART)
@@ -41,7 +49,7 @@ export async function getItemAvailability(cartId: string | null | undefined, var
 export async function removeCartItem(prevState: any, itemId: string) {
   const cartId = cookies().get(COOKIE_CART_ID)?.value
 
-  if (!cartId) return null
+  if (!cartId) return { ok: false }
 
   await storefrontClient.deleteCartItem(cartId!, [itemId])
   revalidateTag(TAGS.CART)

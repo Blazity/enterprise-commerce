@@ -5,10 +5,12 @@ import { cookies } from "next/headers"
 
 export async function toggleFavoriteProduct(prevState: any, handle: string) {
   const handles = await getParsedFavoritesHandles()
+  const isFavorite = handles.includes(handle)
   const newFavorites = handles.includes(handle) ? handles.filter((i) => i !== handle) : [...handles, handle]
+
   cookies().set(COOKIE_FAVORITES, JSON.stringify(newFavorites))
 
-  return newFavorites
+  return !isFavorite
 }
 
 export async function getParsedFavoritesHandles() {
