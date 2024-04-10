@@ -199,7 +199,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         <CartView />
 
-        <Suspense fallback={null}>
+        <Suspense>
           <NavigationEvents />
         </Suspense>
 
@@ -207,11 +207,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         <DraftToolbar />
 
-        <Suspense fallback={null}>
+        <Suspense>
           <FlagValues />
         </Suspense>
 
-        <Suspense fallback={null}>
+        <Suspense>
           <ThirdParties />
         </Suspense>
 
