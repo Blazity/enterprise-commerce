@@ -11,9 +11,9 @@ export function HeroSection({ title, className }: { title: string; className?: s
       </div>
       <div className="flex basis-1/2 flex-col items-center justify-start gap-16 px-4 py-20 md:items-start md:p-36">
         <h1 className="text-center text-[23px]/[24px] tracking-tighter sm:text-[77px]/[79px] md:text-left">{title}</h1>
-        <Link href="/search" prefetch={false}>
+        <Link href="https://git.new/commerce" target="_blank" prefetch={false}>
           <Button size="xl" variant="secondary" className="py-[28px] text-[23px]/[18px]">
-            Shop Now
+            See on GitHub
           </Button>
         </Link>
       </div>
