@@ -26,5 +26,5 @@ export function CartView() {
     })
   }, [lastUpdatedAt, setCart])
 
-  return isSheetLoaded ? <CartSheet isPending={isPending} isOpen={isOpen} onCartOpen={openCart} cart={cart!} onCartClose={closeCart} /> : null
+  return isSheetLoaded && <CartSheet isPending={isPending} isOpen={isOpen} onCartOpen={openCart} cart={cart!} onCartClose={closeCart} />
 }

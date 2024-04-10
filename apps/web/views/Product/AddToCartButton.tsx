@@ -4,57 +4,60 @@ import { PlatformVariant } from "@enterprise-commerce/core/platform/types"
 import { addCartItem, getItemAvailability } from "app/actions/cart.actions"
 import { Button } from "components/Button/Button"
 import { useEffect, useState, useTransition } from "react"
-import { useFormState, useFormStatus } from "react-dom"
 import { useCartStore } from "stores/cartStore"
 import { cn } from "utils/cn"
 import { getCookie } from "utils/getCookie"
 import { Combination } from "utils/productOptionsUtils"
 import { COOKIE_CART_ID } from "constants/index"
+import { toast } from "sonner"
 
 export function AddToCartButton({ className, combination }: { className?: string; combination: Combination | PlatformVariant | undefined }) {
   const [isPending, startTransition] = useTransition()
-  const [state, formAction] = useFormState(addCartItem, { ok: false })
-  const [hasAnyAvailable, setHasAnyAvailable] = useState(false)
+  const [hasAnyAvailable, setHasAnyAvailable] = useState(true)
   const openCart = useCartStore((s) => s.openCart)
   const preloadSheet = useCartStore((s) => s.preloadSheet)
 
-  const actionWithParams = formAction.bind(null, combination?.id)
-
-  useEffect(() => {
-    state.ok && openCart()
-  }, [openCart, state])
-
-  useEffect(() => {
+  const handleClick = () => {
     startTransition(async () => {
+      if (!combination?.id) return
+
+      const { ok, message } = await addCartItem(null, combination.id)
+
+      if (!ok && message) {
+        toast.warning(message)
+      }
+
+      if (ok) {
+        openCart()
+      }
+    })
+  }
+
+  useEffect(() => {
+    const checkStock = async () => {
       const cartId = getCookie(COOKIE_CART_ID)
       const itemAvailability = await getItemAvailability(cartId, combination?.id)
 
       itemAvailability && setHasAnyAvailable(itemAvailability.inCartQuantity < itemAvailability.inStockQuantity)
-    })
-  }, [combination?.id, state])
+    }
 
-  return (
-    <form className={className} action={actionWithParams} onMouseEnter={preloadSheet}>
-      <Submit disabled={!hasAnyAvailable || !combination?.availableForSale || isPending}>{"Add to Cart"}</Submit>
-    </form>
-  )
-}
+    checkStock()
+  }, [combination?.id])
 
-function Submit({ children, disabled }) {
-  const { pending } = useFormStatus()
+  const disabled = !hasAnyAvailable || !combination?.availableForSale || isPending
 
   return (
     <Button
-      type="submit"
-      onClick={(e) => pending && e.preventDefault()}
+      onClick={handleClick}
+      onMouseEnter={preloadSheet}
       variant="secondary"
       size="xl"
       isAnimated={false}
-      className={cn("relative w-fit rounded-xl transition-transform hover:scale-105 hover:text-white")}
-      isLoading={pending}
-      disabled={pending || disabled}
+      className={cn("relative w-fit rounded-xl transition-transform hover:scale-105 hover:text-white", className)}
+      isLoading={isPending}
+      disabled={isPending || disabled}
     >
-      {children}
+      Add to Cart
     </Button>
   )
 }

@@ -23,6 +23,14 @@ export async function addCartItem(prevState: any, variantId: string) {
     revalidateTag(TAGS.CART)
   }
 
+  const itemAvailability = await getItemAvailability(cartId, variantId)
+
+  if (!itemAvailability || itemAvailability.inCartQuantity >= itemAvailability.inStockQuantity)
+    return {
+      ok: false,
+      message: "This product is out of stock",
+    }
+
   await storefrontClient.createCartItem(cartId!, [{ merchandiseId: variantId, quantity: 1 }])
   revalidateTag(TAGS.CART)
 
@@ -41,7 +49,7 @@ export async function getItemAvailability(cartId: string | null | undefined, var
 export async function removeCartItem(prevState: any, itemId: string) {
   const cartId = cookies().get(COOKIE_CART_ID)?.value
 
-  if (!cartId) return null
+  if (!cartId) return { ok: false }
 
   await storefrontClient.deleteCartItem(cartId!, [itemId])
   revalidateTag(TAGS.CART)
@@ -62,10 +70,15 @@ export async function updateItemQuantity(prevState: any, payload: { itemId: stri
     return { ok: true }
   }
 
-  const updatedItemResults = await storefrontClient.updateCartItem(cartId, [{ id: itemId, merchandiseId: variantId, quantity }])
-  const cartItem = updatedItemResults?.items?.find((item) => item.merchandise.id === variantId)
-  const hasAnyLeftInInventory = (cartItem?.quantity ?? 0) < (cartItem?.merchandise.quantityAvailable ?? Infinity)
+  const itemAvailability = await getItemAvailability(cartId, variantId)
+  if (!itemAvailability || itemAvailability.inCartQuantity >= itemAvailability.inStockQuantity)
+    return {
+      ok: false,
+      message: "This product is out of stock",
+    }
+
+  await storefrontClient.updateCartItem(cartId, [{ id: itemId, merchandiseId: variantId, quantity }])
 
   revalidateTag(TAGS.CART)
-  return { ok: hasAnyLeftInInventory, message: "This product is out of stock" }
+  return { ok: true }
 }
