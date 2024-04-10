@@ -19,7 +19,9 @@ export function AddToCartButton({ className, combination }: { className?: string
 
   const handleClick = () => {
     startTransition(async () => {
-      const { ok, message } = await addCartItem(null, combination?.id)
+      if (!combination?.id) return
+
+      const { ok, message } = await addCartItem(null, combination.id)
 
       if (!ok && message) {
         toast.warning(message)
