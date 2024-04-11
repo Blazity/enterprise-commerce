@@ -22,8 +22,9 @@ export function VariantsSection({ variants, className, handle, combination }: Va
             href={createOptionfulUrl(handle, singleCombination.size, singleCombination.color)}
             key={singleCombination.id}
             prefetch={false}
+            scroll={false}
             className={cn(
-              "relative flex h-[40px] min-w-[80px] cursor-pointer items-center justify-center border border-black bg-white p-1.5 text-[11px] uppercase transition-colors hover:bg-neutral-800 hover:text-white disabled:cursor-not-allowed disabled:hover:text-black",
+              "relative flex h-[40px] min-w-[80px] cursor-pointer items-center justify-center border border-black bg-white p-1.5 text-[11px] uppercase transition-colors hover:bg-neutral-800 hover:text-white",
               { "bg-neutral-800 text-white": singleCombination.id === combination?.id },
               { "stroke-black opacity-80 hover:bg-transparent hover:text-black": !singleCombination.availableForSale }
             )}
