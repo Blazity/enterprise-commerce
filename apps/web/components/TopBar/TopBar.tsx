@@ -6,7 +6,7 @@ export async function TopBar() {
     <header className="hidden bg-white py-4 md:block">
       <div className="max-w-container-lg mx-auto flex items-center justify-between px-4">
         <Link prefetch={false} href="/" className="text-3xl font-bold">
-          Blazity
+          Acme
         </Link>
 
         <ProfileMenu />

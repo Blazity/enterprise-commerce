@@ -14,7 +14,7 @@ const buttonVariants = cva("inline-flex border border-black rounded-md text-cent
     size: {
       default: "px-10 py-2 text-[11px]",
       lg: "px-6 py-3 text-[13px]",
-      xl: "px-20 py-4 text-[18px]",
+      xl: "px-10 py-2 md:px-20 md:py-4 md:text-[18px]",
     },
   },
   defaultVariants: {
