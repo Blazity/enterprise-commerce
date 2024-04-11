@@ -12,7 +12,6 @@ import { NavigationBar } from "components/NavigationBar/NavigationBar"
 import { NavItem } from "components/NavigationBar/types"
 import { TopBar } from "components/TopBar/TopBar"
 import { FlagValues } from "views/FlagValues"
-import { NavigationEvents } from "views/NavigationEvents"
 import { ThirdParties } from "views/ThirdParties"
 import { env } from "env.mjs"
 import { Metadata } from "next"
@@ -198,10 +197,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Modals />
 
         <CartView />
-
-        <Suspense>
-          <NavigationEvents />
-        </Suspense>
 
         <Toaster position="bottom-left" />
 
