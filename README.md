@@ -22,7 +22,7 @@ $ yarn create commerce
 
 [See the live demo](https://blazity.com/r/commerce) or deploy it straight to Vercel: 
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Blazity/enterprise-commerce/tree/main/apps/web&demo-title=Next.js%20Enterprise%20Commerce&demo-description=AI-FIRST%20NEXT.JS%20STOREFRONT%20FOR%20COMPOSABLE%20COMMERCE&demo-url=https%3A%2F%2Fcommerce.blazity.com%2F&demo-image=https%3A%2F%2Fcommerce.blazity.com%2Fopengraph-image.jpg)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FBlazity%2Fenterprise-commerce%2Ftree%2Fmain%2F&env=FLAGS_SECRET&demo-title=Your%20Commerce&demo-description=AI-FIRST%20NEXT.JS%20STOREFRONT%20FOR%20COMPOSABLE%20COMMERCE&demo-url=https%3A%2F%2Fblazity.com%2Fr%2Fcommerce&demo-image=https%3A%2F%2Fcommerce.blazity.com%2Fopengraph-image.jpg)
   
 ## Features
 
