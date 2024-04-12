@@ -51,7 +51,7 @@ $ yarn create commerce
 
 ## Architecture 
 
-In our high-level architecture, Meilisearch serves as the primary source for all product data and potentially other types of data in the future. The system is designed to easily integrate AI personalization tools without needing to modify any frontend code. While we are integrated with Shopify by default, we are not tightly bound to it, and you can use any system that works with Meilisearch and can adapt data to our format.
+In Enterprise Commerce high-level architecture, Meilisearch serves as the primary source for all product data and potentially other types of data in the future. The system is designed to easily integrate AI personalization tools without needing to modify any frontend code. While we are integrated with Shopify by default, we are not tightly bound to it, and you can use any system that works with Meilisearch and can adapt data to our format.
 
 From a structural viewpoint, we use a monorepo (Turborepo) to manage packages, even though we currently have only one Next.js app. We chose this setup because it prepares us for future developments, which will include additional apps. This arrangement helps keep the packages well-separated and self-contained.
 
