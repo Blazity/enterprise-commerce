@@ -1,5 +1,6 @@
 import { Button } from "components/Button/Button"
 import { Input } from "components/Input/Input"
+import { Label } from "components/Label/Label"
 
 export function CallToAction() {
   return (
@@ -11,8 +12,14 @@ export function CallToAction() {
           </div>
           <div>
             <form className="ml-0 flex max-w-md flex-col gap-4 md:ml-auto">
-              <Input placeholder="Name" />
-              <Input placeholder="Email" type="email" />
+              <Label>
+                <span className="sr-only">Name</span>
+                <Input placeholder="Name" />
+              </Label>
+              <Label>
+                <span className="sr-only">Email</span>
+                <Input placeholder="Email" type="email" />
+              </Label>
               <Button size="lg" className="w-fit bg-black text-center text-white">
                 Become a Member
               </Button>
