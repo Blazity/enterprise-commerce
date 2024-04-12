@@ -17,22 +17,9 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
 }
 
 export async function generateStaticParams() {
-  const collection = (await storefrontClient.getCollections()) || []
+  const collections = (await storefrontClient.getCollections()) || []
 
-  return collection
-    ?.map((collection) => {
-      return [
-        {
-          slug: collection.handle,
-          page: "2",
-        },
-        {
-          slug: collection.handle,
-          page: "3",
-        },
-      ]
-    })
-    .flat()
+  return collections.map((collection) => Array.from({ length: 3 }, (_, i) => i + 2).map((page) => ({ slug: collection.handle, page: page.toString() }))).flat()
 }
 
 export default async function CategoryPage({ params }: CategoryPageProps) {

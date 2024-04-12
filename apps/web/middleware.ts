@@ -96,7 +96,7 @@ function handleCLPMiddleware(request: NextRequest) {
   const page = request.nextUrl.searchParams.get("page")
 
   if (page) {
-    url.pathname = `category/page/${page}/${request.nextUrl.pathname.split("/")[2]}`
+    url.pathname = `category/clp/${request.nextUrl.pathname.split("/")[2]}/${page}`
     url.searchParams.delete("page")
 
     return NextResponse.rewrite(url)
@@ -123,7 +123,7 @@ export const config = {
 
 function isCLP(request: NextRequest): boolean {
   const isCategory = request.nextUrl.pathname.startsWith("/category/")
-  const isInternalRoute = request.nextUrl.pathname.startsWith("/category/clp/") || request.nextUrl.pathname.startsWith("/category/page/")
+  const isInternalRoute = request.nextUrl.pathname.startsWith("/category/clp/")
   const isFaceted = facetParams.some((param) => request.nextUrl.searchParams.has(param))
 
   return isCategory && !isFaceted && !isInternalRoute

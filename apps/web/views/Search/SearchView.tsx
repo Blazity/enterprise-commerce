@@ -1,4 +1,4 @@
-import { Suspense, type ReactNode } from "react"
+import { type ReactNode, Suspense } from "react"
 import { PlatformCollection, PlatformProduct } from "@enterprise-commerce/core/platform/types"
 import { unstable_cache } from "next/cache"
 import { createSearchParamsCache, parseAsArrayOf, parseAsInteger, parseAsString } from "nuqs/server"

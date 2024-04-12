@@ -1,4 +1,3 @@
-import { storefrontClient } from "clients/storefrontClient"
 import type { Metadata } from "next"
 import { CategoryView } from "views/Category/CategoryView"
 
@@ -14,12 +13,6 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
     title: `${params.slug} | Enterprise Commerce`,
     description: "In excepteur elit mollit in.",
   }
-}
-
-export async function generateStaticParams() {
-  const collections = (await storefrontClient.getCollections()) || []
-
-  return collections?.map((collection) => ({ slug: collection.handle }))
 }
 
 export default async function CategoryPage({ params }: CategoryPageProps) {
