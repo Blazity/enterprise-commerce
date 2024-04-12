@@ -17,9 +17,6 @@ $ yarn create commerce
 ```
 
 
- <video loop autoplay src="https://github.com/Blazity/enterprise-commerce/assets/28964599/a3f0c83a-c8f4-4cb7-b07b-b7b19526eade">  cli demo </video> 
-
-
 [See the live demo](https://blazity.com/r/commerce) or deploy it straight to Vercel: 
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FBlazity%2Fenterprise-commerce%2Ftree%2Fmain%2F&env=FLAGS_SECRET&demo-title=Your%20Commerce&demo-description=AI-FIRST%20NEXT.JS%20STOREFRONT%20FOR%20COMPOSABLE%20COMMERCE&demo-url=https%3A%2F%2Fblazity.com%2Fr%2Fcommerce&demo-image=https%3A%2F%2Fcommerce.blazity.com%2Fopengraph-image.jpg)
@@ -51,6 +48,26 @@ $ yarn create commerce
 - T3 Env - manage your environment variables with ease
 - Patch-package - fix external dependencies without losing your mind
 - Components coupling and cohesion graph - a tool for managing component relationships
+
+## Architecture 
+
+In our high-level architecture, Meilisearch serves as the primary source for all product data and potentially other types of data in the future. The system is designed to easily integrate AI personalization tools without needing to modify any frontend code. While we are integrated with Shopify by default, we are not tightly bound to it, and you can use any system that works with Meilisearch and can adapt data to our format.
+
+From a structural viewpoint, we use a monorepo (Turborepo) to manage packages, even though we currently have only one Next.js app. We chose this setup because it prepares us for future developments, which will include additional apps. This arrangement helps keep the packages well-separated and self-contained.
+
+<img width="1841" alt="architecture diagram" src="https://github.com/Blazity/enterprise-commerce/assets/28964599/c5d3a0b3-6c3e-47df-9c45-4ecb583f5a64">
+
+
+
+## Performance
+
+At Blazity, we prioritize speed. Enterprise Commerce is meticulously crafted to deliver top-notch performance for your online store.  
+
+Lighthouse scores offer a valuable comparison tool, but they don’t directly translate to SEO or user experience (UX). 
+For a true picture, prioritize real user data. Tools like CrUX or Vercel Speed Insights provide user-based performance metrics, ensuring your online store delivers a seamless experience for your customers.
+
+![performance diagram](https://github.com/Blazity/enterprise-commerce/assets/28964599/8aba9b68-38d6-41c9-81a8-234003e7e1b0)
+
 
 ## 🤝 Contribution
 
