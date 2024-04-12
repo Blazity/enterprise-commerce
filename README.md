@@ -1,7 +1,7 @@
 
 <a href="https://blazity.com/r/commerce">
 
-![HERO](https://github.com/Blazity/enterprise-commerce/assets/28964599/6816d299-2b66-4082-8979-4ced7d7bba6b)
+![HERO](https://github.com/Blazity/enterprise-commerce/assets/28964599/1ff1a75d-30ea-41dd-aa9a-b530b2baed51)
 
 </a>
 
