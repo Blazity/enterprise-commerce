@@ -7,14 +7,16 @@ import { useCartStore } from "stores/cartStore"
 import { cn } from "utils/cn"
 import { Combination } from "utils/productOptionsUtils"
 import { toast } from "sonner"
+import { type CurrencyType, mapCurrencyToSign } from "utils/mapCurrencyToSign"
 
 interface QuickAddButtonProps {
   combination: Combination | undefined
   label?: string
   className?: string
+  withPrice?: boolean
 }
 
-export default function QuickAddButton({ combination, label, className }: QuickAddButtonProps) {
+export default function QuickAddButton({ combination, label, className, withPrice = false }: QuickAddButtonProps) {
   const [isPending, startTransition] = useTransition()
   const openCart = useCartStore((s) => s.openCart)
 
@@ -41,11 +43,30 @@ export default function QuickAddButton({ combination, label, className }: QuickA
       onClick={handleClick}
       disabled={isPending}
       className={cn(
-        "relative flex min-h-[30px] w-[70px] cursor-pointer justify-center truncate text-nowrap border border-black bg-white p-1.5 text-[11px] uppercase transition-colors hover:bg-neutral-800 hover:text-white disabled:cursor-not-allowed disabled:hover:text-black",
+        "relative flex min-h-[30px] cursor-pointer justify-center border border-black bg-white p-1.5 text-[11px] uppercase transition-colors hover:bg-neutral-800 hover:text-white disabled:cursor-not-allowed disabled:hover:text-black",
         className
       )}
     >
-      {isPending ? <Spinner className="size-4" /> : label || combination.title}
+      {isPending ? <Spinner className="size-4" /> : <QuickAddButtonLabel label={label || combination.title} price={withPrice ? combination.price : undefined} />}
     </button>
+  )
+}
+
+type QuickAddButtonLabelProps = {
+  label: string
+  price?: Combination["price"]
+}
+
+function QuickAddButtonLabel({ label, price }: QuickAddButtonLabelProps) {
+  return (
+    <div className="flex h-full flex-col">
+      <p className="whitespace-nowrap px-1">{label}</p>
+      {!!price && (
+        <span className="mt-auto">
+          {(+price.amount).toFixed(2)}
+          {mapCurrencyToSign(price?.currencyCode as CurrencyType)}
+        </span>
+      )}
+    </div>
   )
 }
