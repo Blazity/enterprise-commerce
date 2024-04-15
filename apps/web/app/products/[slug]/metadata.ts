@@ -1,6 +1,6 @@
 import { PlatformProduct } from "@enterprise-commerce/core/platform/types"
 import { Metadata } from "next"
-import { Product } from "schema-dts"
+import { Product, WithContext } from "schema-dts"
 import { getProduct } from "app/actions/product.actions"
 import { env } from "env.mjs"
 import { makeKeywords } from "utils/makeKeywords"
@@ -64,5 +64,5 @@ export function generateJsonLd(product: PlatformProduct, slug: string) {
       price: product.priceRange.minVariantPrice.amount,
       priceCurrency: product.priceRange.minVariantPrice.currencyCode,
     },
-  } as Product
+  } satisfies WithContext<Product>
 }

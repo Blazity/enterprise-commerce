@@ -5,5 +5,9 @@ import { useCartStore } from "stores/cartStore"
 export function OpenCartButton() {
   const openCart = useCartStore((s) => s.openCart)
 
-  return <div className="absolute inset-0 size-full" onClick={() => openCart()} />
+  return (
+    <button className="absolute inset-0 size-full bg-transparent" onClick={() => openCart()}>
+      <span className="sr-only">open cart</span>
+    </button>
+  )
 }

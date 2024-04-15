@@ -55,11 +55,11 @@ export function NavigationBar({ items }: NavigationBarProps) {
     <nav className="mega-navbar relative mx-auto my-0 flex w-full flex-wrap content-center items-center justify-between border-b border-black py-6 md:border-y ">
       <div className="md:max-w-container-md flex justify-start px-4 md:mx-auto md:w-full md:px-0">
         <section className="navbar__left flex w-full justify-between md:hidden">
-          <div className="burger" id="burger">
+          <button className="burger" id="burger" aria-label="open menu" aria-controls="menu">
             <span className="burger-line"></span>
             <span className="burger-line"></span>
             <span className="burger-line"></span>
-          </div>
+          </button>
           <a href="/" className="brand flex items-center text-xl font-bold">
             Acme
           </a>
@@ -91,9 +91,9 @@ export function NavigationBar({ items }: NavigationBarProps) {
                 </li>
               </ul>
               <div className="relative ml-auto flex items-center">
-                <div className="menu-close-button absolute right-3 top-0 md:hidden">
+                <button className="menu-close-button absolute right-3 top-0 bg-transparent md:hidden" aria-label="close menu" aria-controls="menu">
                   <CloseIcon className="size-5" />
-                </div>
+                </button>
                 <Autocomplete className="mr-6" />
                 <div className="flex gap-2">
                   <Favorites className="hidden md:flex" />
