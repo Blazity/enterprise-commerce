@@ -10,7 +10,7 @@ export function ImageGridVariant({ items }: ImageGridVariantProps) {
   if (!items) return null
 
   return (
-    <div className="max-w-container-md mx-auto my-20 grid w-full grid-cols-[repeat(_auto-fit,minmax(200px,1fr)_)] gap-8 px-4 md:my-0 md:py-14 xl:px-0">
+    <div className="max-w-container-md mx-auto mb-10 mt-20 grid w-full grid-cols-[repeat(_auto-fit,minmax(200px,1fr)_)] gap-8 px-4 md:my-0 md:py-14 xl:px-0">
       {items.map((singleCategory) => (
         <Link prefetch={false} href={singleCategory.href} className="submenu__inner flex flex-col items-center gap-4" key={singleCategory.text}>
           <Image

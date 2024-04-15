@@ -13,7 +13,7 @@ export function TextImageGridVariant({ items }: TextImageGridVariantProps) {
   const imageItems = items.filter((item) => item.image).slice(0, 3)
 
   return (
-    <div className="max-w-container-md mx-auto my-20 flex w-full flex-wrap justify-between gap-4 px-4 md:my-0 md:flex-nowrap md:gap-10 md:py-14 xl:px-0">
+    <div className="max-w-container-md mx-auto mb-10 mt-20 flex w-full flex-wrap justify-between gap-4 px-4 md:my-0 md:flex-nowrap md:gap-10 md:py-14 xl:px-0">
       <div className="flex w-full flex-col gap-2 text-center md:w-1/2 md:text-left">
         <ul>
           {textItems.map((item) => (

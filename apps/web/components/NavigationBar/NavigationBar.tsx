@@ -13,6 +13,7 @@ import { Skeleton } from "components/Skeleton/Skeleton"
 import { CloseIcon } from "components/Icons/CloseIcon"
 import { ProfileMenu } from "components/ProfileMenu/ProfileMenu"
 import { SearchButton } from "./SearchButton"
+import { NavigationItem } from "./NavigationItem"
 
 interface NavigationBarProps {
   items: NavItem[]
@@ -36,17 +37,15 @@ function VariantGrid({ variant, items }: { variant?: "text-grid" | "image-grid" 
 export function NavigationBar({ items }: NavigationBarProps) {
   const itemsMarkup = items.map((singleMenuItem) => (
     <li className={cn("menu__item", { menu__dropdown: !!singleMenuItem.submenu })} key={singleMenuItem.text}>
-      <a href={singleMenuItem.href || "#"} className="menu__link text-[22px] hover:underline md:text-sm/[18px]">
-        {singleMenuItem.text}
-        {!!singleMenuItem.submenu && (
-          <i>
-            <ChevronIcon />
-          </i>
-        )}
-      </a>
+      <NavigationItem singleMenuItem={singleMenuItem} />
 
       <div className="submenu megamenu__text w-full border-b border-black shadow-sm">
         <VariantGrid items={singleMenuItem.submenu?.items} variant={singleMenuItem.submenu?.variant} />
+        <div className="submenu__inner flex w-full flex-col gap-4 md:hidden">
+          <a href={singleMenuItem.href || "#"}>
+            <h4 className="mb-20 text-center text-xl underline">See all {singleMenuItem.text}</h4>
+          </a>
+        </div>
       </div>
     </li>
   ))
