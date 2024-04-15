@@ -3,8 +3,9 @@ import Image from "next/image"
 import Link from "next/link"
 import { cn } from "utils/cn"
 import { QuickAdd } from "./QuickAdd"
+import { type CurrencyType, mapCurrencyToSign } from "utils/mapCurrencyToSign"
 
-interface ProductCardProps extends Pick<PlatformProduct, "variants" | "handle" | "images" | "title" | "featuredImage"> {
+interface ProductCardProps extends Pick<PlatformProduct, "variants" | "handle" | "images" | "title" | "featuredImage" | "minPrice"> {
   priority?: boolean
   className?: string
 }
@@ -31,11 +32,14 @@ export function ProductCard(props: ProductCardProps) {
 
         <QuickAdd variants={props.variants} />
       </div>
-
       <Link aria-label={linkAria} href={href}>
         <div className="mt-4 flex flex-col gap-0.5 text-slate-700">
-          <div className="line-clamp-2 text-[13px] tracking-tight md:text-[19px]">{props.title}</div>
-          {variant ? <p className="text-[13px] font-bold tracking-tight text-black md:text-[23px] md:font-normal">{variant.amount + " " + variant.currencyCode}</p> : null}
+          <div className="line-clamp-2 text-base tracking-tight md:text-xl">{props.title}</div>
+          {!!variant && (
+            <p className="text-base font-semibold tracking-tight text-black md:text-lg">
+              From {props.minPrice.toFixed(2) + mapCurrencyToSign(variant.currencyCode as CurrencyType)}
+            </p>
+          )}
         </div>
       </Link>
     </div>

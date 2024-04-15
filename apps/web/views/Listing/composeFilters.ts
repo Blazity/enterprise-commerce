@@ -34,11 +34,11 @@ export function composeFilters(filter: FilterBuilder, parsedSearchParams: MakeFi
     },
     {
       predicate: !!parsedSearchParams.minPrice,
-      action: () => filter.and().where("minPrice", ComparisonOperators.GreaterThan, parsedSearchParams.minPrice!),
+      action: () => filter.and().where("minPrice", ComparisonOperators.GreaterThanOrEqual, parsedSearchParams.minPrice!),
     },
     {
       predicate: !!parsedSearchParams.maxPrice,
-      action: () => filter.and().where("minPrice", ComparisonOperators.LessThan, parsedSearchParams.maxPrice!),
+      action: () => filter.and().where("minPrice", ComparisonOperators.LessThanOrEqual, parsedSearchParams.maxPrice!),
     },
   ]
 
