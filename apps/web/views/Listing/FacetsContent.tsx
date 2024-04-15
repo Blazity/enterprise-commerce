@@ -2,13 +2,12 @@
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "components/Accordion/Accordion"
 import { SearchIcon } from "components/Icons/SearchIcon"
-import { Input } from "components/Input/Input"
-import { Label } from "components/Label/Label"
 import type { CategoriesDistribution } from "meilisearch"
 import { parseAsArrayOf, parseAsInteger, parseAsString, useQueryState } from "nuqs"
-import { ChangeEvent } from "react"
 import { Facet } from "./Facet"
 import { CategoryFacet } from "./CategoryFacet"
+import { useFilterTransitionStore } from "stores/filterTransitionStore"
+import { PriceFacet } from "./PriceFacet"
 
 interface FacetsContentProps {
   facetDistribution: Record<string, CategoriesDistribution> | undefined
@@ -23,17 +22,31 @@ export function FacetsContent({ facetDistribution, className, disabledFacets }: 
   const sizes = facetDistribution?.["flatOptions.Size"]
   const colors = facetDistribution?.["flatOptions.Color"]
 
-  const [selectedCategories, setSelectedCategories] = useQueryState("categories", { ...parseAsArrayOf(parseAsString), defaultValue: [], shallow: false, history: "push" })
-  const [selectedVendors, setSelectedVendors] = useQueryState("vendors", { ...parseAsArrayOf(parseAsString), defaultValue: [], shallow: false, history: "push" })
-  const [selectedTags, setSelectedTags] = useQueryState("tags", { ...parseAsArrayOf(parseAsString), defaultValue: [], shallow: false, history: "push" })
-  const [selectedColors, setSelectedColors] = useQueryState("colors", { ...parseAsArrayOf(parseAsString), defaultValue: [], shallow: false, history: "push" })
-  const [selectedSizes, setSelectedSizes] = useQueryState("sizes", { ...parseAsArrayOf(parseAsString), defaultValue: [], shallow: false, history: "push" })
+  const { set: setLastSelected, selected: lastSelected } = useFilterTransitionStore((s) => s)
+
+  const [selectedCategories, setSelectedCategories] = useQueryState("categories", {
+    ...parseAsArrayOf(parseAsString),
+    defaultValue: [],
+    shallow: false,
+    history: "push",
+    clearOnDefault: true,
+  })
+  const [selectedVendors, setSelectedVendors] = useQueryState("vendors", {
+    ...parseAsArrayOf(parseAsString),
+    defaultValue: [],
+    shallow: false,
+    history: "push",
+    clearOnDefault: true,
+  })
+  const [selectedTags, setSelectedTags] = useQueryState("tags", { ...parseAsArrayOf(parseAsString), defaultValue: [], shallow: false, history: "push", clearOnDefault: true })
+  const [selectedColors, setSelectedColors] = useQueryState("colors", { ...parseAsArrayOf(parseAsString), defaultValue: [], shallow: false, history: "push", clearOnDefault: true })
+  const [selectedSizes, setSelectedSizes] = useQueryState("sizes", { ...parseAsArrayOf(parseAsString), defaultValue: [], shallow: false, history: "push", clearOnDefault: true })
 
   const [query, setQuery] = useQueryState("q", { shallow: false })
   const [_, setPage] = useQueryState("page", { ...parseAsInteger, defaultValue: 1, shallow: false, history: "push", clearOnDefault: true })
 
-  const [minPrice, setMinPrice] = useQueryState("minPrice", { ...parseAsInteger, shallow: false })
-  const [maxPrice, setMaxPrice] = useQueryState("maxPrice", { ...parseAsInteger, shallow: false })
+  const [minPrice, setMinPrice] = useQueryState("minPrice", { ...parseAsInteger, shallow: false, defaultValue: 0, clearOnDefault: true })
+  const [maxPrice, setMaxPrice] = useQueryState("maxPrice", { ...parseAsInteger, shallow: false, defaultValue: 0, clearOnDefault: true })
 
   const filtersCount = [selectedCategories, selectedVendors, selectedTags, selectedColors, selectedSizes, minPrice, maxPrice].filter((v) =>
     Array.isArray(v) ? v.length !== 0 : !!v
@@ -78,7 +91,7 @@ export function FacetsContent({ facetDistribution, className, disabledFacets }: 
         />
       </div>
 
-      <Accordion collapsible className="w-full" type="single">
+      <Accordion collapsible className="w-full" type="single" defaultValue={lastSelected}>
         {!disabledFacets?.includes("tags") ? (
           <Facet
             id="tags"
@@ -87,6 +100,7 @@ export function FacetsContent({ facetDistribution, className, disabledFacets }: 
             isChecked={(tag) => selectedTags.includes(tag)}
             onCheckedChange={(checked, tag) => {
               setSelectedTags((prev) => (checked ? [...prev, tag] : prev.filter((cat) => cat !== tag)))
+              setLastSelected("tags")
               setPage(1)
             }}
           />
@@ -100,6 +114,7 @@ export function FacetsContent({ facetDistribution, className, disabledFacets }: 
             isChecked={(vendor) => selectedVendors.includes(vendor)}
             onCheckedChange={(checked, vendor) => {
               setSelectedVendors((prev) => (checked ? [...prev, vendor] : prev.filter((cat) => cat !== vendor)))
+              setLastSelected("vendors")
               setPage(1)
             }}
           />
@@ -113,6 +128,7 @@ export function FacetsContent({ facetDistribution, className, disabledFacets }: 
             isChecked={(size) => selectedSizes.includes(size)}
             onCheckedChange={(checked, size) => {
               setSelectedSizes((prev) => (checked ? [...prev, size] : prev.filter((cat) => cat !== size)))
+              setLastSelected("sizes")
               setPage(1)
             }}
           />
@@ -126,6 +142,7 @@ export function FacetsContent({ facetDistribution, className, disabledFacets }: 
             isChecked={(color) => selectedColors.includes(color)}
             onCheckedChange={(checked, color) => {
               setSelectedColors((prev) => (checked ? [...prev, color] : prev.filter((cat) => cat !== color)))
+              setLastSelected("colors")
               setPage(1)
             }}
           />
@@ -134,25 +151,16 @@ export function FacetsContent({ facetDistribution, className, disabledFacets }: 
         <AccordionItem value="price">
           <AccordionTrigger className="text-base">Price Range</AccordionTrigger>
           <AccordionContent>
-            <div className="flex justify-between gap-4">
-              <PriceInput
-                label="Min price"
-                value={minPrice || undefined}
-                onChange={(e) => {
-                  setMinPrice(+e.target.value)
-                  setPage(1)
-                }}
-              />
-
-              <PriceInput
-                label="Max price"
-                value={maxPrice || undefined}
-                onChange={(e) => {
-                  setMaxPrice(+e.target.value)
-                  setPage(1)
-                }}
-              />
-            </div>
+            <PriceFacet
+              initMin={minPrice}
+              initMax={maxPrice}
+              setFacet={({ minPrice, maxPrice }) => {
+                setMinPrice(minPrice)
+                setMaxPrice(maxPrice)
+                setPage(1)
+                setLastSelected("price")
+              }}
+            />
           </AccordionContent>
         </AccordionItem>
       </Accordion>
@@ -163,26 +171,5 @@ export function FacetsContent({ facetDistribution, className, disabledFacets }: 
         </div>
       ) : null}
     </div>
-  )
-}
-
-interface PriceInputProps {
-  value: number | undefined
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void
-  label: string
-}
-
-function PriceInput({ value, onChange, label }: PriceInputProps) {
-  return (
-    <Label className="flex w-full min-w-[90px] flex-col gap-2">
-      {label}
-      <Input
-        placeholder="10.0"
-        className="block h-auto w-full rounded-md border border-neutral-300 bg-neutral-100 px-2.5 py-1.5 text-[14px] text-black focus:border-blue-500 focus:ring-blue-500  "
-        type="number"
-        value={value}
-        onChange={onChange}
-      />
-    </Label>
   )
 }

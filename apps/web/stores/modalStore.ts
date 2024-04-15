@@ -1,6 +1,6 @@
 import { create } from "zustand"
 
-export type Modal = "login" | "signup" | "search"
+export type Modal = "login" | "signup" | "search" | "facets-mobile"
 
 interface ModalStore {
   modals: Partial<Record<Modal, boolean>>

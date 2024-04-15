@@ -20,8 +20,6 @@ export enum SpecialOperators {
   IsNull = "IS NULL",
 }
 
-type Operator = ComparisonOperators | LogicalOperators | SpecialOperators
-
 type Value = string | number | (string | number)[]
 
 export class FilterBuilder {

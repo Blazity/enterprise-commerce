@@ -1,7 +1,7 @@
 import { ScalableBloomFilter } from "bloom-filters"
 import { NextRequest, NextResponse } from "next/server"
 import { getBucket } from "utils/abTesting"
-import { BUCKETS } from "constants/index"
+import { BUCKETS, facetParams } from "constants/index"
 import GeneratedBloomFilter from "./redirects/bloom-filter.json"
 
 type RedirectEntry = {
@@ -31,12 +31,24 @@ export async function middleware(request: NextRequest) {
   const homeAwarePathname = pathname === "/" ? "/home" : pathname
 
   if (BLOOM_FILTER.has(homeAwarePathname)) {
-    return handleRedirectsMiddleware(request)
+    const response = await handleRedirectsMiddleware(request)
+
+    if (response) {
+      return response
+    }
   }
 
   const route = ROUTES[pathname]
   if (route) {
     return handleAbTestingMiddleware(request, route)
+  }
+
+  if (isCLP(request)) {
+    return handleCLPMiddleware(request)
+  }
+
+  if (isPLP(request)) {
+    return handlePLPMiddleware(request)
   }
 
   return NextResponse.next()
@@ -79,8 +91,48 @@ function handleAbTestingMiddleware(request: NextRequest, route: Route) {
   return res
 }
 
+function handleCLPMiddleware(request: NextRequest) {
+  const url = request.nextUrl.clone()
+  const page = request.nextUrl.searchParams.get("page")
+
+  if (page) {
+    url.pathname = `category/clp/${request.nextUrl.pathname.split("/")[2]}/${page}`
+    url.searchParams.delete("page")
+
+    return NextResponse.rewrite(url)
+  }
+
+  url.pathname = `category/clp/${request.nextUrl.pathname.split("/")[2]}`
+
+  return NextResponse.rewrite(url)
+}
+
+function handlePLPMiddleware(request: NextRequest) {
+  const url = request.nextUrl.clone()
+
+  url.pathname = `category/plp/${request.nextUrl.pathname.split("/")[2]}`
+
+  return NextResponse.rewrite(url)
+}
+
 export const config = {
   // https://nextjs.org/docs/messages/edge-dynamic-code-evaluation
   unstable_allowDynamic: ["**/node_modules/lodash/lodash.js", "**/node_modules/reflect-metadata/Reflect.js"],
-  matcher: ["/", "/((?!api|_next|cache-healthcheck|healthz|health|ping|_vercel|.*\\..*).*)"],
+  matcher: ["/", "/((?!api|_next|cache-healthcheck|health|_vercel|.*\\..*).*)"],
+}
+
+function isCLP(request: NextRequest): boolean {
+  const isCategory = request.nextUrl.pathname.startsWith("/category/")
+  const isInternalRoute = request.nextUrl.pathname.startsWith("/category/clp/")
+  const isFaceted = facetParams.some((param) => request.nextUrl.searchParams.has(param))
+
+  return isCategory && !isFaceted && !isInternalRoute
+}
+
+function isPLP(request: NextRequest): boolean {
+  const isCategory = request.nextUrl.pathname.startsWith("/category/")
+  const isInternalRoute = request.nextUrl.pathname.startsWith("/category/plp/")
+  const isFaceted = facetParams.some((param) => request.nextUrl.searchParams.has(param))
+
+  return isCategory && isFaceted && !isInternalRoute
 }
