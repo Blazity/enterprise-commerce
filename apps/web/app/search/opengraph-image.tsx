@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable jsx-a11y/alt-text */
 
+import { env } from "env.mjs"
 import { ImageResponse } from "next/og"
 
 export const revalidate = 3600
@@ -15,8 +16,8 @@ export const size = {
 export const contentType = "image/png"
 
 export default async function Image() {
-  const interRegular = fetch(new URL("../../public/fonts/Inter-Regular.ttf", import.meta.url)).then((res) => res.arrayBuffer())
-  const interBold = fetch(new URL("../../public/fonts/Inter-Bold.ttf", import.meta.url)).then((res) => res.arrayBuffer())
+  const interRegular = fetch(new URL(`${env.LIVE_URL}/fonts/Inter-Regular.ttf`)).then((res) => res.arrayBuffer())
+  const interBold = fetch(new URL(`${env.LIVE_URL}/fonts/Inter-Bold.ttf`)).then((res) => res.arrayBuffer())
 
   return new ImageResponse(
     (
