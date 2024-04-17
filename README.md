@@ -16,17 +16,20 @@ $ yarn create commerce
 
 [See the live demo](https://blazity.com/r/commerce) or deploy it straight to Vercel:
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FBlazity%2Fenterprise-commerce%2Ftree%2Fmain&env=SHOPIFY_STORE_DOMAIN,SHOPIFY_STOREFRONT_ACCESS_TOKEN,SHOPIFY_ADMIN_ACCESS_TOKEN,SHOPIFY_APP_API_SECRET_KEY,MEILISEARCH_MASTER_KEY,MEILISEARCH_HOST,LIVE_URL,FLAGS_SECRET&envDescription=Full%20explanation%20on%20how%20to%20obtain%20keys&envLink=https%3A%2F%2Fdocs.commerce.blazity.com%2Fsetup&demo-title=Your%20Commerce&demo-description=AI-FIRST%20NEXT.JS%20STOREFRONT%20FOR%20COMPOSABLE%20COMMERCE&demo-url=https%3A%2F%2Fblazity.com%2Fr%2Fcommerce&demo-image=https%3A%2F%2Fcommerce.blazity.com%2Fopengraph-image.jpg)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FBlazity%2Fenterprise-commerce%2Ftree%2Fmain&envDescription=Full%20explanation%20on%20how%20to%20obtain%20keys&envLink=https%3A%2F%2Fdocs.commerce.blazity.com%2Fsetup&demo-title=Your%20Commerce&demo-description=AI-FIRST%20NEXT.JS%20STOREFRONT%20FOR%20COMPOSABLE%20COMMERCE&demo-url=https%3A%2F%2Fblazity.com%2Fr%2Fcommerce&demo-image=https%3A%2F%2Fcommerce.blazity.com%2Fopengraph-image.jpg)
+
+**Note: To enable all features, please ensure the [necessary environment variables](https://docs.commerce.blazity.com/setup#manual) are properly set.**
 
 ## Features
 
-- Next.js App Router & Turborepo
+- [Next.js App Router](https://nextjs.org/docs/app) & [Turborepo](https://turbo.build/repo)
 - [React Server Components](https://nextjs.org/docs/app/building-your-application/rendering/server-components) (RSCs), [Suspense and Streaming](https://nextjs.org/docs/app/building-your-application/routing/loading-ui-and-streaming)
 - [Server Actions](https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations)
 - [Dynamic OG Images](https://nextjs.org/docs/app/api-reference/file-conventions/metadata/opengraph-image)
 - [AI Vector Search](https://www.meilisearch.com/docs/learn/experimental/vector_search)
 - [Lightning fast search & filtering](https://www.meilisearch.com/)
 - [Designed with v0](https://v0.dev/)
+- [Vercel Toolbar](https://vercel.com/docs/workflow-collaboration/vercel-toolbar) (feature flags, comments, deployment sharing, etc.)
 - AI Image captioning
 - Perfect Performance & SEO
 - Extremely strict TypeScript

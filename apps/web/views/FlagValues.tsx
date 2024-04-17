@@ -10,5 +10,9 @@ async function ConfidentialFlagValues({ values }: { values: FlagValuesType }) {
 export async function FlagValues() {
   const flags = await getVercelFlagOverrides()
 
+  if (!process.env.FLAGS_SECRET) {
+    return null
+  }
+
   return <ConfidentialFlagValues values={flags!} />
 }
