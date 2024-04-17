@@ -18,7 +18,7 @@ $ yarn create commerce
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FBlazity%2Fenterprise-commerce%2Ftree%2Fmain&envDescription=Full%20explanation%20on%20how%20to%20obtain%20keys&envLink=https%3A%2F%2Fdocs.commerce.blazity.com%2Fsetup&demo-title=Your%20Commerce&demo-description=AI-FIRST%20NEXT.JS%20STOREFRONT%20FOR%20COMPOSABLE%20COMMERCE&demo-url=https%3A%2F%2Fblazity.com%2Fr%2Fcommerce&demo-image=https%3A%2F%2Fcommerce.blazity.com%2Fopengraph-image.jpg)
 
-**Note: To enable all features, please ensure the [necessary environment variables](https://docs.commerce.blazity.com/setup#manual) are properly set.**
+**Note:** To enable all features, ensure `NEXT_PUBLIC_IS_DEMO_MODE=false` is set in your `.env.local` along with the [required environment variables](https://docs.commerce.blazity.com/setup#manual)
 
 ## Features
 
