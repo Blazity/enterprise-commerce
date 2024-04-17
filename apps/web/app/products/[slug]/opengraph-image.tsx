@@ -5,8 +5,6 @@ import { ImageResponse } from "next/og"
 import { getProduct } from "app/actions/product.actions"
 import { removeOptionsFromUrl } from "utils/productOptionsUtils"
 
-export const runtime = "edge"
-
 export const revalidate = 3600
 
 export const dynamic = "force-static"
