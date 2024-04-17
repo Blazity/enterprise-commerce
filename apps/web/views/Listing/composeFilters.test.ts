@@ -41,14 +41,14 @@ describe("composeFilters", () => {
     const parsedSearchParams = { categories: [], vendors: [], tags: [], colors: [], sizes: [], minPrice: 100, maxPrice: null }
     const filter = composeFilters(new FilterBuilder(), parsedSearchParams)
 
-    expect(filter.build()).toStrictEqual(`minPrice > 100`)
+    expect(filter.build()).toStrictEqual(`minPrice >= 100`)
   })
 
   test("should add a maxPrice filter when maxPrice is specified", () => {
     const parsedSearchParams = { categories: [], vendors: [], tags: [], colors: [], sizes: [], minPrice: null, maxPrice: 500 }
     const filter = composeFilters(new FilterBuilder(), parsedSearchParams)
 
-    expect(filter.build()).toStrictEqual(`minPrice < 500`)
+    expect(filter.build()).toStrictEqual(`minPrice <= 500`)
   })
 
   test("should add all filters when all conditions are met", () => {
@@ -66,7 +66,7 @@ describe("composeFilters", () => {
     const builtFilter = filter.build()
 
     expect(builtFilter).toStrictEqual(
-      '(collections.title IN ["Electronics"]) AND (vendor IN ["Apple"]) AND (tags IN ["Smartphone"]) AND (flatOptions.Color IN ["Black"]) AND (flatOptions.Size IN ["M"]) AND minPrice > 100 AND minPrice < 500'
+      '(collections.title IN ["Electronics"]) AND (vendor IN ["Apple"]) AND (tags IN ["Smartphone"]) AND (flatOptions.Color IN ["Black"]) AND (flatOptions.Size IN ["M"]) AND minPrice >= 100 AND minPrice <= 500'
     )
   })
 })
