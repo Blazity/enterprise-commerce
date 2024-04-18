@@ -24,7 +24,7 @@ export const env = createEnv({
   },
   client: {},
   runtimeEnv: {
-    IS_DEMO_MODE: process.env.NEXT_PUBLIC_IS_DEMO_MODE || "true",
+    IS_DEMO_MODE: process.env.NEXT_PUBLIC_IS_DEMO_MODE,
     SHOPIFY_STOREFRONT_ACCESS_TOKEN: process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN || "demo",
     SHOPIFY_ADMIN_ACCESS_TOKEN: process.env.SHOPIFY_ADMIN_ACCESS_TOKEN || "demo",
     SHOPIFY_APP_API_SECRET_KEY: process.env.SHOPIFY_APP_API_SECRET_KEY,
