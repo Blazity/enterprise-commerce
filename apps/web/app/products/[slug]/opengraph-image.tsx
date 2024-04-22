@@ -4,6 +4,7 @@
 import { ImageResponse } from "next/og"
 import { getProduct } from "app/actions/product.actions"
 import { removeOptionsFromUrl } from "utils/productOptionsUtils"
+import { env } from "env.mjs"
 
 export const revalidate = 3600
 
@@ -17,8 +18,8 @@ export const size = {
 export const contentType = "image/png"
 
 export default async function Image({ params: { slug } }: { params: { slug: string } }) {
-  const interRegular = fetch(new URL("../../../public/fonts/Inter-Regular.ttf", import.meta.url)).then((res) => res.arrayBuffer())
-  const interBold = fetch(new URL("../../../public/fonts/Inter-Bold.ttf", import.meta.url)).then((res) => res.arrayBuffer())
+  const interRegular = fetch(new URL(`${env.LIVE_URL}/fonts/Inter-Regular.ttf`)).then((res) => res.arrayBuffer())
+  const interBold = fetch(new URL(`${env.LIVE_URL}/fonts/Inter-Bold.ttf`)).then((res) => res.arrayBuffer())
 
   const product = await getProduct(removeOptionsFromUrl(slug))
 
