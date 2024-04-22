@@ -7,7 +7,6 @@
     "SHOPIFY_STORE_DOMAIN": "demo",
     "MEILISEARCH_MASTER_KEY": "demo",
     "MEILISEARCH_HOST": "demo",
-    "LIVE_URL": "https://commerce.blazity.com",
-
+    "LIVE_URL": "https://commerce.blazity.com"
   }
 }
