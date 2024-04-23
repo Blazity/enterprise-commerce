@@ -27,8 +27,12 @@ export function DetailsSection({ product, slug }: { product: PlatformProduct; sl
 
   return (
     <div ref={ref} className="w-full">
-      {hasLoaded.current ? <AddToCartButton className="my-8" combination={combination} /> : null}
-      {hasLoaded.current ? <FaqSection className="mt-12" /> : null}
+      {hasLoaded.current && (
+        <>
+          <AddToCartButton className="my-8" combination={combination} product={product} slug={slug} />
+          <FaqSection className="mt-12" />
+        </>
+      )}
     </div>
   )
 }

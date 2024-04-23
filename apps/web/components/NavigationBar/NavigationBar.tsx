@@ -14,6 +14,7 @@ import { CloseIcon } from "components/Icons/CloseIcon"
 import { ProfileMenu } from "components/ProfileMenu/ProfileMenu"
 import { SearchButton } from "./SearchButton"
 import { NavigationItem } from "./NavigationItem"
+import { ProductAddedAlert } from "views/Product/ProductAddedAlert"
 
 interface NavigationBarProps {
   items: NavItem[]
@@ -51,7 +52,7 @@ export function NavigationBar({ items }: NavigationBarProps) {
   ))
 
   return (
-    <nav className="mega-navbar relative mx-auto my-0 flex w-full flex-wrap content-center items-center justify-between border-b border-black py-6 md:border-y ">
+    <nav className="mega-navbar sticky top-0 z-50 mx-auto my-0 flex w-full flex-wrap content-center items-center justify-between border-b border-black bg-white py-6 md:border-y ">
       <div className="md:max-w-container-md flex justify-start px-4 md:mx-auto md:w-full md:px-0">
         <section className="navbar__left flex w-full justify-between md:hidden">
           <button className="burger" id="burger" aria-label="open menu" aria-controls="menu">
@@ -69,6 +70,7 @@ export function NavigationBar({ items }: NavigationBarProps) {
             </Suspense>
             <SearchButton />
           </div>
+          <ProductAddedAlert className="md:hidden" />
         </section>
         <section className="navbar__center w-full md:justify-center">
           <span className="overlay"></span>
@@ -97,6 +99,7 @@ export function NavigationBar({ items }: NavigationBarProps) {
                 <div className="flex gap-2">
                   <Favorites className="hidden md:flex" />
                   <Cart className="hidden md:flex" />
+                  <ProductAddedAlert className="hidden md:block" />
                 </div>
               </div>
             </div>

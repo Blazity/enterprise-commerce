@@ -1,39 +1,42 @@
 "use client"
 
-import { useTransition } from "react"
+import { useState } from "react"
 import { addCartItem } from "app/actions/cart.actions"
 import { Spinner } from "components/Spinner/Spinner"
-import { useCartStore } from "stores/cartStore"
+import { useAddProductStore } from "stores/addProductStore"
 import { cn } from "utils/cn"
 import { Combination } from "utils/productOptionsUtils"
 import { toast } from "sonner"
 import { type CurrencyType, mapCurrencyToSign } from "utils/mapCurrencyToSign"
+import type { PlatformProduct } from "@enterprise-commerce/core/platform/types"
 
 interface QuickAddButtonProps {
+  product: PlatformProduct
   combination: Combination | undefined
   label?: string
   className?: string
   withPrice?: boolean
 }
 
-export default function QuickAddButton({ combination, label, className, withPrice = false }: QuickAddButtonProps) {
-  const [isPending, startTransition] = useTransition()
-  const openCart = useCartStore((s) => s.openCart)
+export default function QuickAddButton({ combination, label, className, product, withPrice = false }: QuickAddButtonProps) {
+  const [isPending, setIsPending] = useState(false)
+  const { setProduct, clean } = useAddProductStore()
 
-  const handleClick = () => {
+  // Mimic delay and display optimistic UI due to shopify API being slow
+  const handleClick = async () => {
     if (!combination?.id) return
 
-    startTransition(async () => {
-      const { ok, message } = await addCartItem(null, combination.id)
+    setIsPending(true)
 
-      if (!ok && message) {
-        toast.warning(message)
-      }
+    setTimeout(() => {
+      setProduct({ product, combination })
+      setIsPending(false)
+    }, 300)
 
-      if (ok) {
-        openCart()
-      }
-    })
+    setTimeout(() => clean(), 4500)
+    const res = await addCartItem(null, combination.id)
+
+    if (!res.ok) toast.error("Out of stock")
   }
 
   if (!combination) return null
