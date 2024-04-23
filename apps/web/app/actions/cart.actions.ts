@@ -73,7 +73,7 @@ export async function updateItemQuantity(prevState: any, payload: { itemId: stri
   }
 
   const itemAvailability = await getItemAvailability(cartId, variantId)
-  if (!itemAvailability || itemAvailability.inCartQuantity >= itemAvailability.inStockQuantity)
+  if (!itemAvailability || quantity > itemAvailability.inStockQuantity)
     return {
       ok: false,
       message: "This product is out of stock",

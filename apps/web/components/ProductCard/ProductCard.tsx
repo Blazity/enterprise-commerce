@@ -1,4 +1,4 @@
-import { PlatformProduct } from "@enterprise-commerce/core/platform/types"
+import type { PlatformProduct } from "@enterprise-commerce/core/platform/types"
 import Image from "next/image"
 import Link from "next/link"
 import { cn } from "utils/cn"
@@ -30,7 +30,7 @@ export function ProductCard(props: ProductCardProps) {
           />
         </Link>
 
-        <QuickAdd variants={props.variants} />
+        <QuickAdd product={props as PlatformProduct} variants={props.variants} />
       </div>
       <Link aria-label={linkAria} href={href}>
         <div className="mt-4 flex flex-col gap-0.5 text-slate-700">
