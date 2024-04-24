@@ -189,7 +189,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         <TopBar />
         <NavigationBar items={navigationItems} />
-
+        <div className="w-full bg-gray-600 p-1 text-center text-white">
+          <a className="underline" rel="noreferrer" target="_blank" href="https://docs.commerce.blazity.com">
+            Discover features that are not visible at first glance
+          </a>
+        </div>
         {children}
 
         <CallToAction />

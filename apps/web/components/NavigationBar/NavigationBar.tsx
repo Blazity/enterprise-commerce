@@ -15,6 +15,7 @@ import { CloseIcon } from "components/Icons/CloseIcon"
 import { ProfileMenu } from "components/ProfileMenu/ProfileMenu"
 import { SearchButton } from "./SearchButton"
 import { NavigationItem } from "./NavigationItem"
+import { HideOnScroll } from "./HideOnScroll"
 
 const ProductAddedAlert = dynamic(() => import("views/Product/ProductAddedAlert").then((mod) => mod.ProductAddedAlert))
 
@@ -54,60 +55,62 @@ export function NavigationBar({ items }: NavigationBarProps) {
   ))
 
   return (
-    <nav className="mega-navbar sticky top-0 z-50 mx-auto my-0 flex w-full flex-wrap content-center items-center justify-between border-b border-black bg-white py-6 md:border-y ">
-      <div className="md:max-w-container-md flex justify-start px-4 md:mx-auto md:w-full md:px-0">
-        <section className="navbar__left flex w-full justify-between md:hidden">
-          <button className="burger" id="burger" aria-label="open menu" aria-controls="menu">
-            <span className="burger-line"></span>
-            <span className="burger-line"></span>
-            <span className="burger-line"></span>
-          </button>
-          <a href="/" className="brand flex items-center text-xl font-bold">
-            Acme
-          </a>
-          <div className="menu-actions absolute right-4 flex items-center justify-center gap-2">
-            <Favorites className="flex md:hidden" />
-            <Suspense fallback={<Skeleton className="size-8" />}>
-              <Cart className="flex md:hidden" />
-            </Suspense>
-            <SearchButton />
-          </div>
-          <ProductAddedAlert className="md:hidden" />
-        </section>
-        <section className="navbar__center w-full md:justify-center">
-          <span className="overlay"></span>
-          <div className="menu w-full" id="menu">
-            <div className="menu__header">
-              <span className="menu__arrow">
-                <i className="rotate-90">
-                  <ChevronIcon />
-                </i>
-              </span>
-              <span className="menu__title"></span>
+    <HideOnScroll>
+      <nav className="mega-navbar sticky top-0 z-50 mx-auto my-0 flex w-full flex-wrap content-center items-center justify-between border-b border-black bg-white py-6 md:border-y ">
+        <div className="md:max-w-container-md flex justify-start px-4 md:mx-auto md:w-full md:px-0">
+          <section className="navbar__left flex w-full justify-between md:hidden">
+            <button className="burger" id="burger" aria-label="open menu" aria-controls="menu">
+              <span className="burger-line"></span>
+              <span className="burger-line"></span>
+              <span className="burger-line"></span>
+            </button>
+            <a href="/" className="brand flex items-center text-xl font-bold">
+              Acme
+            </a>
+            <div className="menu-actions absolute right-4 flex items-center justify-center gap-2">
+              <Favorites className="flex md:hidden" />
+              <Suspense fallback={<Skeleton className="size-8" />}>
+                <Cart className="flex md:hidden" />
+              </Suspense>
+              <SearchButton />
             </div>
-            <div className="menu__inner flex w-full justify-between">
-              <ul className="mt-10 flex w-full flex-col gap-8 px-4 md:mt-0 md:w-auto md:flex-row md:items-center md:justify-start xl:px-0">
-                {itemsMarkup}
+            <ProductAddedAlert className="md:hidden" />
+          </section>
+          <section className="navbar__center w-full md:justify-center">
+            <span className="overlay"></span>
+            <div className="menu w-full" id="menu">
+              <div className="menu__header">
+                <span className="menu__arrow">
+                  <i className="rotate-90">
+                    <ChevronIcon />
+                  </i>
+                </span>
+                <span className="menu__title"></span>
+              </div>
+              <div className="menu__inner flex w-full justify-between">
+                <ul className="mt-10 flex w-full flex-col gap-8 px-4 md:mt-0 md:w-auto md:flex-row md:items-center md:justify-start xl:px-0">
+                  {itemsMarkup}
 
-                <li className="mt-auto flex w-full justify-center pb-10 md:hidden">
-                  <ProfileMenu />
-                </li>
-              </ul>
-              <div className="relative ml-auto flex items-center">
-                <button className="menu-close-button absolute right-3 top-0 bg-transparent md:hidden" aria-label="close menu" aria-controls="menu">
-                  <CloseIcon className="size-5" />
-                </button>
-                <Autocomplete className="mr-6" />
-                <div className="flex gap-2">
-                  <Favorites className="hidden md:flex" />
-                  <Cart className="hidden md:flex" />
-                  <ProductAddedAlert className="hidden md:block" />
+                  <li className="mt-auto flex w-full justify-center pb-10 md:hidden">
+                    <ProfileMenu />
+                  </li>
+                </ul>
+                <div className="relative ml-auto flex items-center">
+                  <button className="menu-close-button absolute right-3 top-0 bg-transparent md:hidden" aria-label="close menu" aria-controls="menu">
+                    <CloseIcon className="size-5" />
+                  </button>
+                  <Autocomplete className="mr-6" />
+                  <div className="flex gap-2">
+                    <Favorites className="hidden md:flex" />
+                    <Cart className="hidden md:flex" />
+                    <ProductAddedAlert className="hidden md:block" />
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </section>
-      </div>
-    </nav>
+          </section>
+        </div>
+      </nav>
+    </HideOnScroll>
   )
 }

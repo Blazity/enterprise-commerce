@@ -30,7 +30,7 @@ export function VariantsSection({ variants, className, handle, combination }: Va
             )}
           >
             {singleCombination.title}
-            {singleCombination.availableForSale ? null : (
+            {!singleCombination.availableForSale && (
               <svg className={"absolute inset-0 block size-full"}>
                 <line x1="0" y1="100%" x2="100%" y2="0"></line>
               </svg>

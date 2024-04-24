@@ -31,8 +31,13 @@ export function Footer() {
               Designed by v0
             </span>
           </Link>
-          <p className="text-6xl font-bold">Lorem Ipsum</p>
-          <p className="mt-4 text-xl">Your daily trendsetting deals.</p>
+          <p className="text-3xl font-bold">Missing feature? </p>
+          <p className="mt-1 text-xl">
+            <a className="p-1 underline" href="mailto:contact@blazity.com">
+              Let us know
+            </a>
+            , we&apos;ll build it!
+          </p>
         </main>
         <footer className="mt-auto flex flex-col items-center justify-between pb-8 text-neutral-300 md:flex-row">
           <span className="text-sm">2024 © Lorem Ipsum. All Rights Reserved.</span>
