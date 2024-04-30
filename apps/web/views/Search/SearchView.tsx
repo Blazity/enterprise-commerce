@@ -4,7 +4,6 @@ import { unstable_cache } from "next/cache"
 import { createSearchParamsCache, parseAsArrayOf, parseAsInteger, parseAsString } from "nuqs/server"
 import { meilisearch } from "clients/meilisearch"
 
-import { MEILISEARCH_INDEX } from "constants/index"
 import { ComparisonOperators, FilterBuilder } from "utils/filterBuilder"
 import { composeFilters } from "views/Listing/composeFilters"
 import { FacetsDesktop } from "views/Listing/FacetsDesktop"
@@ -14,6 +13,7 @@ import { PaginationSection } from "views/Listing/PaginationSection"
 import { Sorter } from "views/Listing/Sorter"
 import { getDemoProducts, isDemoMode } from "utils/demoUtils"
 import { SearchParamsType } from "types"
+import { env } from "env.mjs"
 
 interface SearchViewProps {
   searchParams: SearchParamsType
@@ -42,7 +42,7 @@ export async function SearchView({ searchParams, disabledFacets, intro, collecti
   const filterBuilder = new FilterBuilder()
 
   if (collection) {
-    filterBuilder.where("collections.title", ComparisonOperators.Equal, collection.title)
+    filterBuilder.where("collections.handle", ComparisonOperators.Equal, collection.handle)
   }
 
   const { facetDistribution, hits, totalPages } = await searchProducts(q, sortBy, page, composeFilters(filterBuilder, rest).build())
@@ -79,12 +79,12 @@ const searchProducts = unstable_cache(
   async (query: string, sortBy: string, page: number, filter: string) => {
     if (isDemoMode()) return getDemoProducts()
 
-    const index = await meilisearch?.getIndex<PlatformProduct>(MEILISEARCH_INDEX)
+    const index = await meilisearch?.getIndex<PlatformProduct>(env.MEILISEARCH_PRODUCTS_INDEX)
 
     const results = await index?.search(query, {
       sort: sortBy ? [sortBy] : undefined,
       hitsPerPage: 24,
-      facets: ["collections.title", "tags", "vendor", "variants.availableForSale", "flatOptions.Size", "flatOptions.Color", "minPrice"],
+      facets: ["collections.handle", "tags", "vendor", "variants.availableForSale", "flatOptions.Size", "flatOptions.Color", "minPrice"],
       filter,
       page,
       attributesToRetrieve: ["id", "handle", "title", "priceRange", "featuredImage", "minPrice", "variants", "images"],

@@ -15,6 +15,7 @@ import { SimilarProductsSection } from "views/Product/SimilarProductsSection"
 import { SimilarProductsSectionSkeleton } from "views/Product/SimilarProductsSectionSkeleton"
 import { generateJsonLd } from "./metadata"
 import { VariantsSection } from "views/Product/VariantsSection"
+import { slugToName } from "utils/slug-name"
 
 export const revalidate = 3600
 
@@ -71,7 +72,7 @@ async function ProductView({ slug }: { slug: string }) {
         </div>
       </main>
       <Suspense fallback={<SimilarProductsSectionSkeleton />}>
-        <SimilarProductsSection collection={lastCollection?.title} slug={slug} />
+        <SimilarProductsSection collectionHandle={lastCollection?.handle} slug={slug} />
       </Suspense>
     </div>
   )
@@ -82,7 +83,7 @@ function makeBreadcrumbs(product: PlatformProduct) {
 
   return {
     Home: "/",
-    [lastCollection?.title || "Products"]: lastCollection?.handle ? `/category/${lastCollection.handle}` : "/search",
+    [lastCollection?.handle ? slugToName(lastCollection?.handle) : "Products"]: lastCollection?.handle ? `/category/${lastCollection.handle}` : "/search",
     [product.title]: "",
   }
 }

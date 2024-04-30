@@ -14,7 +14,6 @@ export const PriceFacet = ({ initMin, initMax, setFacet }: PriceFacetProps) => {
   const [maxPrice, setMaxPrice] = useState(initMax)
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    console.log({ e })
     if (e.key === "Enter") {
       setFacet({ minPrice, maxPrice })
     }

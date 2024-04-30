@@ -3,10 +3,10 @@ import { composeFilters } from "./composeFilters"
 
 describe("composeFilters", () => {
   test("should add a category filter when categories are present", () => {
-    const parsedSearchParams = { categories: ["Electronics"], vendors: [], tags: [], colors: [], sizes: [], minPrice: null, maxPrice: null }
+    const parsedSearchParams = { categories: ["electronics"], vendors: [], tags: [], colors: [], sizes: [], minPrice: null, maxPrice: null }
     const filter = composeFilters(new FilterBuilder(), parsedSearchParams)
 
-    expect(filter.build()).toStrictEqual(`(collections.title IN ["Electronics"])`)
+    expect(filter.build()).toStrictEqual(`(collections.handle IN ["electronics"])`)
   })
 
   test("should add a vendor filter when vendors are present", () => {
@@ -53,7 +53,7 @@ describe("composeFilters", () => {
 
   test("should add all filters when all conditions are met", () => {
     const parsedSearchParams = {
-      categories: ["Electronics"],
+      categories: ["electronics"],
       vendors: ["Apple"],
       tags: ["Smartphone"],
       colors: ["Black"],
@@ -66,7 +66,7 @@ describe("composeFilters", () => {
     const builtFilter = filter.build()
 
     expect(builtFilter).toStrictEqual(
-      '(collections.title IN ["Electronics"]) AND (vendor IN ["Apple"]) AND (tags IN ["Smartphone"]) AND (flatOptions.Color IN ["Black"]) AND (flatOptions.Size IN ["M"]) AND minPrice >= 100 AND minPrice <= 500'
+      '(collections.handle IN ["electronics"]) AND (vendor IN ["Apple"]) AND (tags IN ["Smartphone"]) AND (flatOptions.Color IN ["Black"]) AND (flatOptions.Size IN ["M"]) AND minPrice >= 100 AND minPrice <= 500'
     )
   })
 })

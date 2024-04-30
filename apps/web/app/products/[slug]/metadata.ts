@@ -5,6 +5,7 @@ import { getProduct } from "app/actions/product.actions"
 import { env } from "env.mjs"
 import { makeKeywords } from "utils/makeKeywords"
 import { removeOptionsFromUrl } from "utils/productOptionsUtils"
+import { slugToName } from "utils/slug-name"
 
 interface ProductProps {
   params: { slug: string }
@@ -26,7 +27,7 @@ export async function generateMetadata({ params: { slug } }: ProductProps): Prom
     applicationName: "Next.js",
     referrer: "origin-when-cross-origin",
     keywords: keywords,
-    category: lastCollection?.title,
+    category: lastCollection ? slugToName(lastCollection.handle) : "Search",
     creator: "Blazity",
     alternates: {
       canonical: `/products/${slug}`,

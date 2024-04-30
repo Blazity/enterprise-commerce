@@ -16,6 +16,7 @@ import { PageSkeleton } from "views/Product/PageSkeleton"
 import { SimilarProductsSection } from "views/Product/SimilarProductsSection"
 import { SimilarProductsSectionSkeleton } from "views/Product/SimilarProductsSectionSkeleton"
 import { VariantsSection } from "views/Product/VariantsSection"
+import { slugToName } from "utils/slug-name"
 
 export const dynamic = "force-static"
 
@@ -70,7 +71,7 @@ async function ProductView({ slug }: { slug: string }) {
         </div>
       </main>
       <Suspense fallback={<SimilarProductsSectionSkeleton />}>
-        <SimilarProductsSection collection={lastCollection?.title} slug={slug} />
+        <SimilarProductsSection collectionHandle={lastCollection?.handle} slug={slug} />
       </Suspense>
     </div>
   )
@@ -92,7 +93,7 @@ function makeBreadcrumbs(product: PlatformProduct) {
 
   return {
     Home: "/",
-    [lastCollection?.title || "Products"]: lastCollection?.handle ? `/category/${lastCollection.handle}` : "/search",
+    [lastCollection?.handle ? slugToName(lastCollection.handle) : "Products"]: lastCollection?.handle ? `/category/${lastCollection.handle}` : "/search",
     [product.title]: "",
   }
 }

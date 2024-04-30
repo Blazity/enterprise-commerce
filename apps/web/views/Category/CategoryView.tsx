@@ -1,7 +1,6 @@
-import { storefrontClient } from "clients/storefrontClient"
+import { getCollection } from "app/actions/collection.actions"
 import { notFound } from "next/navigation"
 import { SearchParamsType } from "types"
-import { getDemoSingleCategory, isDemoMode } from "utils/demoUtils"
 import { HeroSection } from "views/Category/HeroSection"
 import { SearchView } from "views/Search/SearchView"
 
@@ -11,7 +10,7 @@ interface CategoryViewProps {
 }
 
 export async function CategoryView({ params, searchParams = {} }: CategoryViewProps) {
-  const collection = isDemoMode() ? getDemoSingleCategory(params.slug) : await storefrontClient.getCollection(params.slug)
+  const collection = await getCollection(params.slug)
 
   if (!collection) return notFound()
 
