@@ -8,6 +8,7 @@ import type { Combination } from "utils/productOptionsUtils"
 import { COOKIE_CART_ID } from "constants/index"
 import { useAddProductStore } from "stores/addProductStore"
 import { toast } from "sonner"
+import { useCartStore } from "stores/cartStore"
 
 export function AddToCartButton({
   className,
@@ -22,6 +23,7 @@ export function AddToCartButton({
   const [isPending, setIsPending] = useState(false)
   const [hasAnyAvailable, setHasAnyAvailable] = useState(true)
   const { setProduct, clean } = useAddProductStore()
+  const { cart, refresh } = useCartStore((s) => s)
 
   const disabled = !hasAnyAvailable || !combination?.availableForSale || isPending
 
@@ -41,6 +43,8 @@ export function AddToCartButton({
     const res = await addCartItem(null, combination.id)
 
     if (!res.ok) toast.error("Out of stock")
+
+    refresh()
   }
 
   useEffect(() => {
@@ -48,11 +52,11 @@ export function AddToCartButton({
       const cartId = getCookie(COOKIE_CART_ID)
       const itemAvailability = await getItemAvailability(cartId, combination?.id)
 
-      itemAvailability && setHasAnyAvailable(itemAvailability.inCartQuantity < itemAvailability.inStockQuantity)
+      itemAvailability && setHasAnyAvailable(itemAvailability.inCartQuantity < (combination?.quantityAvailable || 0))
     }
 
     checkStock()
-  }, [combination?.id, isPending])
+  }, [combination?.id, isPending, combination?.quantityAvailable, cart?.items])
 
   return (
     <Button
