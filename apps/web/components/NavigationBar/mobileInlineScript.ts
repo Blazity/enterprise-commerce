@@ -16,6 +16,7 @@ const menuTitle = menu?.querySelector(".menu__title")
 const burger = document.querySelector(".burger")
 const overlay = document.querySelector(".overlay")
 const closeButton = document.querySelector(".menu-close-button")
+const allLinks = document.querySelectorAll(".submenu__inner")
 let subMenu = null
 
 function toggleMenu() {
@@ -63,6 +64,7 @@ closeButton?.addEventListener("click", toggleMenu)
 menuArrow?.addEventListener("click", hideSubMenu)
 menuTitle?.addEventListener("click", hideSubMenu)
 menuInner?.addEventListener("click", toggleSubMenu)
+Array.from(allLinks).map((link) => link?.addEventListener("click", toggleMenu))
 
 function debounce(func, delay) {
   let inDebounce
