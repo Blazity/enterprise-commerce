@@ -26,15 +26,30 @@ export function getDemoSingleCategory(handle: string) {
   return getDemoCategories().find((c) => c.handle === handle) || null
 }
 
-export function isDemoMode() {
+export function isDemoMode(): boolean {
+  const {
+    SHOPIFY_STOREFRONT_ACCESS_TOKEN,
+    SHOPIFY_ADMIN_ACCESS_TOKEN,
+    SHOPIFY_APP_API_SECRET_KEY,
+    SHOPIFY_STORE_DOMAIN,
+    MEILISEARCH_HOST,
+    MEILISEARCH_MASTER_KEY,
+    LIVE_URL,
+    IS_DEMO_MODE,
+  } = process.env
+
   return (
-    !process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN ||
-    !process.env.SHOPIFY_ADMIN_ACCESS_TOKEN ||
-    !process.env.SHOPIFY_APP_API_SECRET_KEY ||
-    !process.env.SHOPIFY_STORE_DOMAIN ||
-    !process.env.MEILISEARCH_HOST ||
-    !process.env.MEILISEARCH_MASTER_KEY ||
-    !process.env.LIVE_URL ||
-    env.IS_DEMO_MODE === "true"
+    isDemoValue(SHOPIFY_STOREFRONT_ACCESS_TOKEN) ||
+    isDemoValue(SHOPIFY_ADMIN_ACCESS_TOKEN) ||
+    isDemoValue(SHOPIFY_APP_API_SECRET_KEY) ||
+    isDemoValue(SHOPIFY_STORE_DOMAIN) ||
+    isDemoValue(MEILISEARCH_HOST) ||
+    isDemoValue(MEILISEARCH_MASTER_KEY) ||
+    !LIVE_URL ||
+    IS_DEMO_MODE === "true"
   )
+}
+
+function isDemoValue(value: string | undefined) {
+  return !value || value === "demo"
 }
