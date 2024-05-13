@@ -11,6 +11,7 @@ import { FacetsDesktop } from "views/Listing/FacetsDesktop"
 import { FacetsMobile } from "views/Listing/FacetsMobile"
 import { HitsSection } from "views/Listing/HitsSection"
 import { PaginationSection } from "views/Listing/PaginationSection"
+import { SearchFacet } from "views/Listing/SearchFacet"
 import { Sorter } from "views/Listing/Sorter"
 import { getDemoProducts, isDemoMode } from "utils/demoUtils"
 import { SearchParamsType } from "types"
@@ -54,15 +55,18 @@ export async function SearchView({ searchParams, disabledFacets, intro, collecti
         <FacetsDesktop disabledFacets={disabledFacets} className="hidden min-w-[250px] max-w-[250px] md:mt-16 lg:block" facetDistribution={facetDistribution} />
         <div className="flex w-full flex-col">
           <div className="mb-6 flex w-full flex-wrap items-center justify-between">
-            <div className="flex w-full flex-col gap-2 pb-8">
-              <div className="flex items-center justify-between">
+            <div className="flex w-full gap-2 pb-8">
+              <div className="flex items-center justify-between gap-4">
                 <FacetsMobile disabledFacets={disabledFacets} facetDistribution={facetDistribution} className="block lg:hidden" />
               </div>
+              <Suspense>
+                <SearchFacet className="grow" />
+              </Suspense>
               {/*  has to be wrapped w. suspense, nuqs is using useSearchParams in useQueryState
                * https://github.com/47ng/nuqs/issues/496
                */}
               <Suspense>
-                <Sorter className="ml-auto" />
+                <Sorter className="ml-auto hidden shrink-0 basis-[200px] self-center lg:block" />
               </Suspense>
             </div>
 

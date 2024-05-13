@@ -1,13 +1,18 @@
 "use client"
 
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "components/Accordion/Accordion"
-import { SearchIcon } from "components/Icons/SearchIcon"
+import { Suspense } from "react"
 import type { CategoriesDistribution } from "meilisearch"
 import { parseAsArrayOf, parseAsInteger, parseAsString, useQueryState } from "nuqs"
+
+import { useFilterTransitionStore } from "stores/filterTransitionStore"
+
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "components/Accordion/Accordion"
+import { SearchIcon } from "components/Icons/SearchIcon"
+
 import { Facet } from "./Facet"
 import { CategoryFacet } from "./CategoryFacet"
-import { useFilterTransitionStore } from "stores/filterTransitionStore"
 import { PriceFacet } from "./PriceFacet"
+import { Sorter } from "./Sorter"
 
 interface FacetsContentProps {
   facetDistribution: Record<string, CategoriesDistribution> | undefined
@@ -42,7 +47,6 @@ export function FacetsContent({ facetDistribution, className, disabledFacets }: 
   const [selectedColors, setSelectedColors] = useQueryState("colors", { ...parseAsArrayOf(parseAsString), defaultValue: [], shallow: false, history: "push", clearOnDefault: true })
   const [selectedSizes, setSelectedSizes] = useQueryState("sizes", { ...parseAsArrayOf(parseAsString), defaultValue: [], shallow: false, history: "push", clearOnDefault: true })
 
-  const [query, setQuery] = useQueryState("q", { shallow: false })
   const [_, setPage] = useQueryState("page", { ...parseAsInteger, defaultValue: 1, shallow: false, history: "push", clearOnDefault: true })
 
   const [minPrice, setMinPrice] = useQueryState("minPrice", { ...parseAsInteger, shallow: false, defaultValue: 0, clearOnDefault: true })
@@ -64,6 +68,9 @@ export function FacetsContent({ facetDistribution, className, disabledFacets }: 
 
   return (
     <div className={className}>
+      <Suspense>
+        <Sorter className="shrink-0 basis-[200px] self-center lg:hidden" />
+      </Suspense>
       {!disabledFacets?.includes("category") ? (
         <CategoryFacet
           title="categories"
@@ -79,16 +86,6 @@ export function FacetsContent({ facetDistribution, className, disabledFacets }: 
         <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5">
           <SearchIcon className="size-4 text-neutral-500" />
         </div>
-        <input
-          className="block w-full rounded-md border border-neutral-300 bg-neutral-100 px-2.5 py-1.5 pl-10 text-[14px] text-black focus:border-blue-500 focus:ring-blue-500"
-          placeholder="Search..."
-          type="search"
-          value={query || ""}
-          onChange={(event) => {
-            setQuery(event.target.value)
-            setPage(1)
-          }}
-        />
       </div>
 
       <Accordion collapsible className="w-full" type="single" defaultValue={lastSelected}>
