@@ -19,6 +19,9 @@ import { slugToName } from "utils/slug-name"
 import { generateJsonLd } from "./metadata"
 import { ReviewsSection } from "views/Product/ReviewsSection"
 
+import { generateJsonLd } from "./metadata"
+import { ReviewsSection } from "views/Product/ReviewsSection"
+
 export const revalidate = 3600
 
 export const dynamic = "force-static"
