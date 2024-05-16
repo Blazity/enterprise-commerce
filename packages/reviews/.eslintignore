@@ -1,0 +1,9 @@
+node_modules
+
+dist
+/dist
+dist/*
+dist/**/*
+
+**/types/**.*.d.ts
+**/types/*.d.ts

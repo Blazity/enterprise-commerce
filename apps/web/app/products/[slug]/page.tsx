@@ -1,7 +1,7 @@
 import { PlatformProduct } from "@enterprise-commerce/core/platform/types"
 import { notFound } from "next/navigation"
 import { Suspense } from "react"
-import { getProduct } from "app/actions/product.actions"
+import { getProduct, getProductReviews } from "app/actions/product.actions"
 import { Breadcrumbs } from "components/Breadcrumbs/Breadcrumbs"
 
 import { getCombination, getOptionsFromUrl, hasValidOption, removeOptionsFromUrl } from "utils/productOptionsUtils"
@@ -13,9 +13,11 @@ import { InfoSection } from "views/Product/InfoSection"
 import { PageSkeleton } from "views/Product/PageSkeleton"
 import { SimilarProductsSection } from "views/Product/SimilarProductsSection"
 import { SimilarProductsSectionSkeleton } from "views/Product/SimilarProductsSectionSkeleton"
-import { generateJsonLd } from "./metadata"
 import { VariantsSection } from "views/Product/VariantsSection"
 import { slugToName } from "utils/slug-name"
+
+import { generateJsonLd } from "./metadata"
+import { ReviewsSection } from "views/Product/ReviewsSection"
 
 export const revalidate = 3600
 
@@ -39,6 +41,7 @@ export default async function Product({ params: { slug } }: ProductProps) {
 
 async function ProductView({ slug }: { slug: string }) {
   const product = await getProduct(removeOptionsFromUrl(slug))
+  const { reviews, total: totalReviews } = await getProductReviews(removeOptionsFromUrl(slug), { limit: 4 })
 
   const { color, size } = getOptionsFromUrl(slug)
   const hasInvalidOptions = !hasValidOption(product?.variants, "color", color) || !hasValidOption(product?.variants, "size", size)
@@ -59,6 +62,7 @@ async function ProductView({ slug }: { slug: string }) {
       </div>
       <main className="max-w-container-sm mx-auto">
         <Breadcrumbs className="mb-8" items={makeBreadcrumbs(product)} />
+
         <div className="grid grid-cols-1 justify-center gap-10 md:grid-cols-2 lg:gap-20">
           <GallerySection images={product.images}>
             <FavoriteMarker handle={product.handle} />
@@ -70,6 +74,14 @@ async function ProductView({ slug }: { slug: string }) {
             <DetailsSection slug={slug} product={product} />
           </div>
         </div>
+        <Suspense>
+          <ReviewsSection
+            productHandle={product.handle}
+            productId={product.id}
+            reviews={reviews.map((review) => ({ ...review, author: review.reviewer.name }))}
+            total={totalReviews}
+          />
+        </Suspense>
       </main>
       <Suspense fallback={<SimilarProductsSectionSkeleton />}>
         <SimilarProductsSection collectionHandle={lastCollection?.handle} slug={slug} />

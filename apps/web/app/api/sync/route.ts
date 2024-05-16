@@ -1,22 +1,28 @@
 import { PlatformImage, PlatformProduct } from "@enterprise-commerce/core/platform/types"
 import { FailedAttemptError } from "p-retry"
-import { createHmac } from "crypto"
 import { meilisearch } from "clients/meilisearch"
 import { replicate } from "clients/replicate"
 import { storefrontClient } from "clients/storefrontClient"
 import { env } from "env.mjs"
 import { Root } from "shopify-webhooks"
+import { compareHmac } from "utils/compare-hmac"
 
 export async function POST(req: Request) {
   const hmac = req.headers.get("X-Shopify-Hmac-Sha256")
 
-  if (!env.SHOPIFY_APP_API_SECRET_KEY) {
+  if (!env.SHOPIFY_APP_API_SECRET_KEY || !hmac) {
     return new Response(JSON.stringify({ message: "Not all credentials were provided for the deployment" }), { status: 500, headers: { "Content-Type": "application/json" } })
   }
 
   const rawPayload = await req.text()
 
-  if (!isWebhookVerified(rawPayload, hmac!)) {
+  if (
+    !compareHmac({
+      body: rawPayload,
+      hmac,
+      secret: env.SHOPIFY_APP_API_SECRET_KEY,
+    })
+  ) {
     return new Response(JSON.stringify({ message: "Could not verify request." }), { status: 401, headers: { "Content-Type": "application/json" } })
   }
 
@@ -94,11 +100,6 @@ async function getMeilisearchIndex(indexName: string) {
     retries: 10,
     onFailedAttempt,
   })
-}
-
-function isWebhookVerified(rawBody: string, hmac: string) {
-  const genHash = createHmac("sha256", env.SHOPIFY_APP_API_SECRET_KEY!).update(rawBody).digest("base64")
-  return genHash === hmac
 }
 
 async function generateProductAltTags(product: PlatformProduct) {

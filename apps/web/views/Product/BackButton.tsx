@@ -1,9 +1,9 @@
 import { ArrowIcon } from "components/Icons/ArrowIcon"
 import Link from "next/link"
 
-export function BackButton({ className }: { className?: string }) {
+export function BackButton({ href = "/search", className }: { href?: string; className?: string }) {
   return (
-    <Link href="/search" className={className} aria-label="Go back">
+    <Link href={href} className={className} aria-label="Go back">
       <ArrowIcon className="size-8 cursor-pointer fill-black transition-transform hover:scale-110" />
     </Link>
   )
