@@ -3,6 +3,7 @@
 import dynamic from "next/dynamic"
 import React from "react"
 import { type Modal, useModalStore } from "stores/modalStore"
+import { ReviewModal } from "./ReviewModal"
 
 const LoginModal = dynamic(() => import("./LoginModal").then((m) => m.LoginModal), { loading: Placeholder })
 const SignupModal = dynamic(() => import("./SignupModal").then((m) => m.SignupModal), { loading: Placeholder })
@@ -28,6 +29,8 @@ function ModalsFactory({ type }: { type: Modal }) {
       return <SignupModal />
     case "search":
       return <SearchModal />
+    case "review":
+      return <ReviewModal />
     default:
       return null
   }

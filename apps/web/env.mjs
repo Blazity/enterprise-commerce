@@ -10,6 +10,7 @@ export const env = createEnv({
     SHOPIFY_STORE_DOMAIN: z.string(),
     MEILISEARCH_MASTER_KEY: z.string().optional(),
     MEILISEARCH_HOST: z.string().optional(),
+    MEILISEARCH_REVIEWS_INDEX: z.string().optional(),
     REPLICATE_API_KEY: z.string().optional(),
     LIVE_URL: z.string().optional(),
     GTM_ID: z.string().optional().default(),
@@ -21,6 +22,9 @@ export const env = createEnv({
       .enum(["true", "false"])
       .optional()
       .transform((value) => value === "true"),
+    JUDGE_BASE_URL: z.string(),
+    JUDGE_API_TOKEN: z.string(),
+    CRON_SECRET: z.string().optional(),
   },
   client: {},
   runtimeEnv: {
@@ -31,6 +35,7 @@ export const env = createEnv({
     SHOPIFY_STORE_DOMAIN: process.env.SHOPIFY_STORE_DOMAIN || "demo",
     MEILISEARCH_MASTER_KEY: process.env.MEILISEARCH_MASTER_KEY || "demo",
     MEILISEARCH_HOST: process.env.MEILISEARCH_HOST || "demo",
+    MEILISEARCH_REVIEWS_INDEX: process.env.MEILISEARCH_REVIEWS_INDEX,
     LIVE_URL: process.env.LIVE_URL || "https://commerce.blazity.com",
     ANALYZE: process.env.ANALYZE,
     IS_GTM_ENABLED: process.env.IS_GTM_ENABLED,
@@ -38,5 +43,8 @@ export const env = createEnv({
     IS_SPEED_INSIGHTS_ENABLED: process.env.IS_SPEED_INSIGHTS_ENABLED || "true",
     GTM_ID: process.env.NEXT_PUBLIC_GTM_ID,
     REPLICATE_API_KEY: process.env.REPLICATE_API_KEY,
+    JUDGE_BASE_URL: process.env.JUDGE_BASE_URL || "https://judge.me/api/v1",
+    JUDGE_API_TOKEN: process.env.JUDGE_API_TOKEN,
+    CRON_SECRET: process.env.CRON_SECRET,
   },
 })
