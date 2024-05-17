@@ -35,7 +35,7 @@ export function ProductCard(props: ProductCardProps) {
       <Link aria-label={linkAria} href={href}>
         <div className="mt-4 flex flex-col gap-0.5 text-slate-700">
           <div className="line-clamp-2 text-base tracking-tight md:text-xl">{props.title}</div>
-          {!!variant && (
+          {!!variant && !!props.minPrice && (
             <p className="text-base font-semibold tracking-tight text-black md:text-lg">
               From {props.minPrice.toFixed(2) + mapCurrencyToSign(variant.currencyCode as CurrencyType)}
             </p>
