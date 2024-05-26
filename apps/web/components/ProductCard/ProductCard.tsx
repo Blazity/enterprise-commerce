@@ -4,8 +4,9 @@ import { cn } from "utils/cn"
 import { QuickAdd } from "./QuickAdd"
 import { type CurrencyType, mapCurrencyToSign } from "utils/mapCurrencyToSign"
 import type { CommerceProduct } from "types"
+import { StarRating } from "views/Product/StarRating"
 
-interface ProductCardProps extends Pick<CommerceProduct, "variants" | "handle" | "images" | "title" | "featuredImage" | "minPrice"> {
+interface ProductCardProps extends Pick<CommerceProduct, "variants" | "handle" | "images" | "title" | "featuredImage" | "minPrice" | "avgRating" | "totalReviews"> {
   priority?: boolean
   className?: string
 }
@@ -35,6 +36,14 @@ export function ProductCard(props: ProductCardProps) {
       <Link aria-label={linkAria} href={href}>
         <div className="mt-4 flex flex-col gap-0.5 text-slate-700">
           <div className="line-clamp-2 text-base tracking-tight md:text-xl">{props.title}</div>
+          {!!props.avgRating && !!props.totalReviews && (
+            <div className="flex items-center space-x-1">
+              <StarRating rating={Math.ceil(props.avgRating)} />
+              <span>
+                <span className="text-sm">({props.totalReviews})</span>
+              </span>
+            </div>
+          )}
           {!!variant && (
             <p className="text-base font-semibold tracking-tight text-black md:text-lg">
               From {props.minPrice.toFixed(2) + mapCurrencyToSign(variant.currencyCode as CurrencyType)}

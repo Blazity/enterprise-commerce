@@ -67,7 +67,14 @@ async function ProductView({ slug }: { slug: string }) {
             <FavoriteMarker handle={product.handle} />
           </GallerySection>
           <div className="flex flex-col items-start pt-12">
-            <InfoSection className="pb-6" title={product.title} description={product.descriptionHtml} combination={combination} />
+            <InfoSection
+              className="pb-6"
+              title={product.title}
+              description={product.descriptionHtml}
+              combination={combination}
+              avgRating={product.avgRating}
+              totalReviews={product.totalReviews}
+            />
             {hasOnlyOneVariant ? null : <VariantsSection combination={combination} handle={product.handle} className="pb-4" variants={product.variants} />}
 
             <DetailsSection slug={slug} product={product} />
