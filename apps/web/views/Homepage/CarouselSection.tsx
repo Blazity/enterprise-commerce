@@ -1,11 +1,11 @@
-import { PlatformProduct } from "@enterprise-commerce/core/platform/types"
 import { Carousel, CarouselContent, CarouselNext, CarouselPrevious } from "components/Carousel/Carousel"
 import { ProductCard } from "components/ProductCard/ProductCard"
 import { Skeleton } from "components/Skeleton/Skeleton"
+import type { CommerceProduct } from "types"
 
 interface CarouselSectionProps {
   title: string
-  items: PlatformProduct[]
+  items: CommerceProduct[]
 }
 
 export function CarouselSection({ items, title }: CarouselSectionProps) {

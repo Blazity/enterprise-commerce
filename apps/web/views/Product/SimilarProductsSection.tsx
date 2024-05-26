@@ -1,4 +1,3 @@
-import { PlatformProduct } from "@enterprise-commerce/core/platform/types"
 import { meilisearch } from "clients/meilisearch"
 import { Carousel, CarouselContent } from "components/Carousel/Carousel"
 import { ProductCard } from "components/ProductCard/ProductCard"
@@ -6,6 +5,7 @@ import { unstable_cache } from "next/cache"
 import { ComparisonOperators, FilterBuilder } from "utils/filterBuilder"
 import { MEILISEARCH_INDEX } from "constants/index"
 import { getDemoProducts, isDemoMode } from "utils/demoUtils"
+import type { CommerceProduct } from "types"
 
 interface SimilarProductsSectionProps {
   slug: string
@@ -35,7 +35,7 @@ const getSimilarProducts = unstable_cache(
 
     if (isDemoMode()) return getDemoProducts().hits.slice(0, limit)
 
-    const index = await meilisearch?.getIndex<PlatformProduct>(MEILISEARCH_INDEX)
+    const index = await meilisearch?.getIndex<CommerceProduct>(MEILISEARCH_INDEX)
     const similarSearchResults = await index.search(handle, { matchingStrategy: "last", limit, hybrid: { semanticRatio: 1 } })
 
     let collectionSearchResults = { hits: [] }

@@ -1,9 +1,10 @@
-import type { PlatformProduct, PlatformVariant } from "@enterprise-commerce/core/platform/types"
+import type { PlatformVariant } from "@enterprise-commerce/core/platform/types"
 import { getAllCombinations } from "utils/productOptionsUtils"
 import QuickAddButton from "./QuickAddButton"
+import { CommerceProduct } from "types"
 
 interface QuickAddProps {
-  product: PlatformProduct
+  product: CommerceProduct
   variants: PlatformVariant[]
 }
 

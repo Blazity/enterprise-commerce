@@ -1,4 +1,3 @@
-import { PlatformProduct } from "@enterprise-commerce/core/platform/types"
 import { notFound } from "next/navigation"
 import { Suspense } from "react"
 import { getProduct, getProductReviews } from "app/actions/product.actions"
@@ -17,6 +16,7 @@ import { VariantsSection } from "views/Product/VariantsSection"
 
 import { generateJsonLd } from "./metadata"
 import { ReviewsSection } from "views/Product/ReviewsSection"
+import type { CommerceProduct } from "types"
 
 export const revalidate = 3600
 
@@ -89,7 +89,7 @@ async function ProductView({ slug }: { slug: string }) {
   )
 }
 
-function makeBreadcrumbs(product: PlatformProduct) {
+function makeBreadcrumbs(product: CommerceProduct) {
   const lastCollection = product.collections?.findLast(Boolean)
 
   return {

@@ -1,16 +1,16 @@
 "use client"
 
-import { PlatformProduct } from "@enterprise-commerce/core/platform/types"
 import { useIntersectionObserver } from "@uidotdev/usehooks"
 import dynamic from "next/dynamic"
 import { getCombination, getOptionsFromUrl } from "utils/productOptionsUtils"
 import { AddToCartButtonSkeleton, FaqSectionSkeleton } from "./PageSkeleton"
 import { useRef } from "react"
+import type { CommerceProduct } from "types"
 
 const AddToCartButton = dynamic(() => import("views/Product/AddToCartButton").then((module) => module.AddToCartButton), { loading: AddToCartButtonSkeleton })
 const FaqSection = dynamic(() => import("views/Product/FaqSection").then((module) => module.FaqSection), { loading: FaqSectionSkeleton })
 
-export function DetailsSection({ product, slug }: { product: PlatformProduct; slug: string }) {
+export function DetailsSection({ product, slug }: { product: CommerceProduct; slug: string }) {
   const hasLoaded = useRef(false)
   const [ref, entry] = useIntersectionObserver({
     threshold: 0,

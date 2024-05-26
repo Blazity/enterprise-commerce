@@ -1,10 +1,10 @@
-import { PlatformProduct } from "@enterprise-commerce/core/platform/types"
 import { Metadata } from "next"
 import { Product, WithContext } from "schema-dts"
 import { getProduct } from "app/actions/product.actions"
 import { env } from "env.mjs"
 import { makeKeywords } from "utils/makeKeywords"
 import { removeOptionsFromUrl } from "utils/productOptionsUtils"
+import type { CommerceProduct } from "types"
 
 interface ProductProps {
   params: { slug: string }
@@ -35,7 +35,7 @@ export async function generateMetadata({ params: { slug } }: ProductProps): Prom
   }
 }
 
-export function generateJsonLd(product: PlatformProduct, slug: string) {
+export function generateJsonLd(product: CommerceProduct, slug: string) {
   return {
     "@context": "https://schema.org",
     "@type": "Product",
