@@ -1,4 +1,5 @@
-import { PlatformProduct, PlatformVariant } from "@enterprise-commerce/core/platform/types"
+import { PlatformVariant } from "@enterprise-commerce/core/platform/types"
+import type { CommerceProduct } from "types"
 
 export interface Combination {
   id: string
@@ -23,7 +24,7 @@ export function getAllCombinations(variants: PlatformVariant[]): Combination[] {
   }))
 }
 
-export function getCombination(product: PlatformProduct, color: string | null, size: string | null) {
+export function getCombination(product: CommerceProduct, color: string | null, size: string | null) {
   const hasOnlyOneVariant = product.variants.length <= 1
 
   const defaultColor = product.flatOptions?.["Color"]?.find(Boolean)?.toLowerCase() ?? undefined

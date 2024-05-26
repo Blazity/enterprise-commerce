@@ -1,8 +1,8 @@
-import { PlatformProduct } from "@enterprise-commerce/core/platform/types"
 import { ProductCard } from "components/ProductCard/ProductCard"
+import type { CommerceProduct } from "types"
 
 interface HitsSectionProps {
-  hits: PlatformProduct[]
+  hits: CommerceProduct[]
 }
 
 export async function HitsSection({ hits }: HitsSectionProps) {

@@ -1,5 +1,5 @@
 import { type ReactNode, Suspense } from "react"
-import { PlatformCollection, PlatformProduct } from "@enterprise-commerce/core/platform/types"
+import type { PlatformCollection } from "@enterprise-commerce/core/platform/types"
 import { unstable_cache } from "next/cache"
 import { createSearchParamsCache, parseAsArrayOf, parseAsInteger, parseAsString } from "nuqs/server"
 import { meilisearch } from "clients/meilisearch"
@@ -13,8 +13,8 @@ import { PaginationSection } from "views/Listing/PaginationSection"
 import { SearchFacet } from "views/Listing/SearchFacet"
 import { Sorter } from "views/Listing/Sorter"
 import { getDemoProducts, isDemoMode } from "utils/demoUtils"
-import { SearchParamsType } from "types"
 import { env } from "env.mjs"
+import { CommerceProduct, SearchParamsType } from "types"
 
 interface SearchViewProps {
   searchParams: SearchParamsType
@@ -83,7 +83,7 @@ const searchProducts = unstable_cache(
   async (query: string, sortBy: string, page: number, filter: string) => {
     if (isDemoMode()) return getDemoProducts()
 
-    const index = await meilisearch?.getIndex<PlatformProduct>(env.MEILISEARCH_PRODUCTS_INDEX)
+    const index = await meilisearch?.getIndex<CommerceProduct>(env.MEILISEARCH_PRODUCTS_INDEX!)
 
     const results = await index?.search(query, {
       sort: sortBy ? [sortBy] : undefined,
@@ -91,7 +91,7 @@ const searchProducts = unstable_cache(
       facets: ["collections.handle", "tags", "vendor", "variants.availableForSale", "flatOptions.Size", "flatOptions.Color", "minPrice"],
       filter,
       page,
-      attributesToRetrieve: ["id", "handle", "title", "priceRange", "featuredImage", "minPrice", "variants", "images"],
+      attributesToRetrieve: ["id", "handle", "title", "priceRange", "featuredImage", "minPrice", "variants", "images", "avgRating", "totalReviews"],
     })
 
     const hits = results?.hits || []

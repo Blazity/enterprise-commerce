@@ -8,10 +8,10 @@ import { cn } from "utils/cn"
 import { Combination } from "utils/productOptionsUtils"
 import { toast } from "sonner"
 import { type CurrencyType, mapCurrencyToSign } from "utils/mapCurrencyToSign"
-import type { PlatformProduct } from "@enterprise-commerce/core/platform/types"
+import type { CommerceProduct } from "types"
 
 interface QuickAddButtonProps {
-  product: PlatformProduct
+  product: CommerceProduct
   combination: Combination | undefined
   label?: string
   className?: string

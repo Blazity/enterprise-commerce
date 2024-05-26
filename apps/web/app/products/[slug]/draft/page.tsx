@@ -1,9 +1,8 @@
-import { PlatformProduct } from "@enterprise-commerce/core/platform/types"
+import type { PlatformProduct } from "@enterprise-commerce/core/platform/types"
 import { unstable_cache } from "next/cache"
 import { draftMode } from "next/headers"
 import { notFound } from "next/navigation"
 import { Suspense } from "react"
-import { getProduct } from "app/actions/product.actions"
 import { storefrontClient } from "clients/storefrontClient"
 import { Breadcrumbs } from "components/Breadcrumbs/Breadcrumbs"
 
@@ -17,6 +16,7 @@ import { SimilarProductsSection } from "views/Product/SimilarProductsSection"
 import { SimilarProductsSectionSkeleton } from "views/Product/SimilarProductsSectionSkeleton"
 import { VariantsSection } from "views/Product/VariantsSection"
 import { slugToName } from "utils/slug-name"
+import type { CommerceProduct } from "types"
 
 export const dynamic = "force-static"
 
@@ -50,7 +50,7 @@ async function ProductView({ slug }: { slug: string }) {
     return notFound()
   }
 
-  const combination = getCombination(product, color, size)
+  const combination = getCombination(product as CommerceProduct, color, size)
   const lastCollection = product?.collections?.findLast(Boolean)
   const hasOnlyOneVariant = product.variants.length <= 1
 
@@ -66,7 +66,7 @@ async function ProductView({ slug }: { slug: string }) {
           <div className="flex flex-col items-start pt-12">
             <InfoSection className="pb-10" title={product.title} description={product.descriptionHtml} combination={combination} />
             {hasOnlyOneVariant ? null : <VariantsSection combination={combination} handle={product.handle} variants={product.variants} />}
-            <DetailsSection slug={slug} product={product} />
+            <DetailsSection slug={slug} product={product as CommerceProduct} />
           </div>
         </div>
       </main>
@@ -80,7 +80,7 @@ async function ProductView({ slug }: { slug: string }) {
 async function getDraftAwareProduct(slug: string) {
   const draft = draftMode()
 
-  let product = await getProduct(removeOptionsFromUrl(slug))
+  let product = await storefrontClient.getProductByHandle(removeOptionsFromUrl(slug))
   if (draft.isEnabled && product) product = await getAdminProduct(product?.id)
 
   return product

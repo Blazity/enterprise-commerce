@@ -1,4 +1,4 @@
-import type { PlatformProduct, PlatformVariant } from "@enterprise-commerce/core/platform/types"
+import type { PlatformVariant } from "@enterprise-commerce/core/platform/types"
 import { addCartItem, getItemAvailability } from "app/actions/cart.actions"
 import { Button } from "components/Button/Button"
 import { useEffect, useState } from "react"
@@ -9,6 +9,7 @@ import { COOKIE_CART_ID } from "constants/index"
 import { useAddProductStore } from "stores/addProductStore"
 import { toast } from "sonner"
 import { useCartStore } from "stores/cartStore"
+import type { CommerceProduct } from "types"
 
 export function AddToCartButton({
   className,
@@ -16,7 +17,7 @@ export function AddToCartButton({
   combination,
 }: {
   className?: string
-  product: PlatformProduct
+  product: CommerceProduct
   combination: Combination | PlatformVariant | undefined
   slug: string
 }) {

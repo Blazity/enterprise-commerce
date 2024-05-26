@@ -1,4 +1,3 @@
-import { PlatformProduct } from "@enterprise-commerce/core/platform/types"
 import { notFound, redirect } from "next/navigation"
 import { getProduct, getProductReviews } from "app/actions/product.actions"
 import { Breadcrumbs } from "components/Breadcrumbs/Breadcrumbs"
@@ -8,6 +7,7 @@ import { StarRating } from "views/Product/StarRating"
 import { PaginationSection } from "views/Listing/PaginationSection"
 
 import { removeOptionsFromUrl } from "utils/productOptionsUtils"
+import type { CommerceProduct } from "types"
 
 export { generateMetadata } from "./metadata"
 
@@ -97,7 +97,7 @@ async function ProductReviewsView({ slug, searchParams }: { slug: string; search
   )
 }
 
-function makeBreadcrumbs(product: PlatformProduct) {
+function makeBreadcrumbs(product: CommerceProduct) {
   const lastCollection = product.collections?.findLast(Boolean)
 
   return {

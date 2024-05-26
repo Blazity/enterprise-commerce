@@ -1,4 +1,4 @@
-import { PlatformImage, PlatformProduct } from "@enterprise-commerce/core/platform/types"
+import type { PlatformImage, PlatformProduct } from "@enterprise-commerce/core/platform/types"
 import { FailedAttemptError } from "p-retry"
 import { meilisearch } from "clients/meilisearch"
 import { replicate } from "clients/replicate"

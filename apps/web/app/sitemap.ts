@@ -2,8 +2,9 @@ import { env } from "env.mjs"
 import { MetadataRoute } from "next"
 import { meilisearch } from "clients/meilisearch"
 import { getDemoCategories, getDemoProducts, isDemoMode } from "utils/demoUtils"
-import { PlatformCollection, PlatformProduct } from "@enterprise-commerce/core/platform/types"
+import type { PlatformCollection } from "@enterprise-commerce/core/platform/types"
 import { storefrontClient } from "clients/storefrontClient"
+import type { CommerceProduct } from "types"
 
 export const revalidate = 604800
 export const runtime = "edge"
@@ -37,14 +38,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ]
 
-  let allHits: PlatformProduct[] = []
+  let allHits: CommerceProduct[] = []
   let allCollections: PlatformCollection[] = []
   let finished = false
   let page = 0
 
   if (!isDemoMode()) {
     while (finished === false) {
-      const response = await (await meilisearch.getIndex(env.MEILISEARCH_PRODUCTS_INDEX)).getDocuments<PlatformProduct>({ limit: 100, offset: page * 100 })
+      const response = await (await meilisearch.getIndex(env.MEILISEARCH_PRODUCTS_INDEX!)).getDocuments<CommerceProduct>({ limit: 100, offset: page * 100 })
       allHits.push(...response.results)
       page++
 

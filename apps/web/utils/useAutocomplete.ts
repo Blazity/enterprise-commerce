@@ -2,9 +2,8 @@ import { type ChangeEvent, useEffect, useState, useTransition } from "react"
 
 import { useDebounce } from "@uidotdev/usehooks"
 
-import { type PlatformProduct } from "@enterprise-commerce/core/platform/types"
-
 import { searchProducts } from "app/actions/product.actions"
+import type { CommerceProduct } from "types"
 
 /*
  * Callback is optional to be called every time the query changes
@@ -19,7 +18,7 @@ export function useAutocomplete({ callback, debounce = 300, noOfResults = 4 }: A
   const [query, setQuery] = useState("")
   const [hasMore, setHasMore] = useState(false)
   const [status, setStatus] = useState<"idle" | "error" | "loading" | "done">("idle")
-  const [results, setResults] = useState<PlatformProduct[] | null>(null)
+  const [results, setResults] = useState<CommerceProduct[] | null>(null)
 
   const [isPending, startTransition] = useTransition()
   const debouncedQuery = useDebounce(query, debounce)
