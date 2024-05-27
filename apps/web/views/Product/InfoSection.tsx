@@ -7,8 +7,8 @@ interface InfoSectionProps {
   description: string
   combination: Combination | PlatformVariant | undefined
   className?: string
-  avgRating: number
-  totalReviews: number
+  avgRating?: number
+  totalReviews?: number
 }
 
 export function InfoSection({ title, description, combination, className, avgRating, totalReviews }: InfoSectionProps) {
@@ -18,7 +18,7 @@ export function InfoSection({ title, description, combination, className, avgRat
         <h1 className="mb-1 text-xl/6 tracking-[-1px] md:text-4xl">{title}</h1>
         {!!avgRating && !!totalReviews && (
           <div className="flex items-center space-x-1">
-            <StarRating rating={Math.ceil(avgRating)} /> {/* rounds up always */}
+            <StarRating rating={Math.ceil(avgRating)} />
             <span className="text-xs text-gray-400">
               ({avgRating}) based on {totalReviews} review{totalReviews !== 1 && "s"}
             </span>
