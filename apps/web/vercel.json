@@ -8,6 +8,10 @@
     {
       "path": "/api/reviews/sync-products",
       "schedule": "30 2 * * *"
+    },
+    {
+      "path": "/api/reviews/ai-summary",
+      "schedule": "0 0 * * 1"
     }
   ]
 }

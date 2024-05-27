@@ -24,6 +24,7 @@
     "coupling-graph": "npx madge --extensions js,jsx,ts,tsx,css,md,mdx ./ --exclude '.next|tailwind.config.js|reset.d.ts|prettier.config.js|postcss.config.js|playwright.config.ts|next.config.js|next-env.d.ts|instrumentation.ts|e2e/|README.md|.storybook/|.eslintrc.js' --image graph.svg"
   },
   "dependencies": {
+    "@ai-sdk/openai": "^0.0.16",
     "@enterprise-commerce/reviews": "*",
     "@hookform/resolvers": "^3.3.4",
     "@next/bundle-analyzer": "14.1.1-canary.61",
@@ -50,6 +51,7 @@
     "@vercel/flags": "2.2.1",
     "@vercel/speed-insights": "^1.0.10",
     "@vercel/toolbar": "0.1.10",
+    "ai": "^3.1.15",
     "bloom-filters": "^3.0.1",
     "class-variance-authority": "^0.7.0",
     "date-fns": "^3.6.0",

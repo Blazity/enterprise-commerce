@@ -4,7 +4,6 @@ import { unstable_cache } from "next/cache"
 import { env } from "env.mjs"
 
 import { meilisearch } from "clients/meilisearch"
-import { MEILISEARCH_INDEX } from "constants/index"
 import type { Review } from "@enterprise-commerce/reviews"
 
 import { ComparisonOperators, FilterBuilder } from "utils/filterBuilder"
@@ -18,7 +17,11 @@ export const searchProducts = unstable_cache(
         hits: [],
         hasMore: false,
       }
-    const index = await meilisearch?.getIndex<CommerceProduct>(MEILISEARCH_INDEX)
+    if (!env.MEILISEARCH_PRODUCTS_INDEX) {
+      throw new Error("Missing environment variable MEILISEARCH_PRODUCTS_INDEX")
+    }
+
+    const index = await meilisearch?.getIndex<CommerceProduct>(env.MEILISEARCH_PRODUCTS_INDEX)
 
     if (!index) return { hits: [], hasMore: false }
 
@@ -34,7 +37,11 @@ export const getProduct = unstable_cache(
   async (handle: string) => {
     if (isDemoMode()) return getDemoSingleProduct(handle)
 
-    const index = await meilisearch?.getIndex<CommerceProduct>(MEILISEARCH_INDEX)
+    if (!env.MEILISEARCH_PRODUCTS_INDEX) {
+      throw new Error("Missing environment variable MEILISEARCH_PRODUCTS_INDEX")
+    }
+
+    const index = await meilisearch?.getIndex<CommerceProduct>(env.MEILISEARCH_PRODUCTS_INDEX)
     const documents = await index?.getDocuments({ filter: new FilterBuilder().where("handle", ComparisonOperators.Equal, handle).build(), limit: 1 })
     return documents.results.find(Boolean) || null
   },

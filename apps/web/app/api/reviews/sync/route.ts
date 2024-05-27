@@ -2,12 +2,12 @@ import type { Review } from "@enterprise-commerce/reviews"
 import { meilisearch } from "clients/meilisearch"
 import { reviewsClient } from "clients/reviews"
 import { env } from "env.mjs"
+import { authenticate } from "utils/authenticate-api-route"
 
 export const maxDuration = 60
 
 export async function POST(req: Request) {
-  const authHeader = req.headers.get("authorization")
-  if (authHeader !== `Bearer ${env.CRON_SECRET}`) {
+  if (!authenticate(req)) {
     return new Response("Unauthorized", {
       status: 401,
     })
@@ -53,7 +53,7 @@ export async function POST(req: Request) {
     return new Response(JSON.stringify({ message: "No reviews to sync" }), { status: 200 })
   }
 
-  reviewsIndex.updateDocuments(delta, { primaryKey: "id" })
+  await reviewsIndex.updateDocuments(delta, { primaryKey: "id" })
 
   return new Response(JSON.stringify({ message: "Reviews synced" }), { status: 200 })
 }
