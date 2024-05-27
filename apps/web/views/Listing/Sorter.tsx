@@ -10,11 +10,13 @@ export enum Sorting {
   DATE_ASC = "updatedAtTimestamp:asc",
   DATE_DESC = "updatedAtTimestamp:desc",
   RELEVANCY = "",
+  RATING = "avgRating:desc",
 }
 
 const LABELS = {
   [Sorting.PRICE_DESC]: "Price: High to Low",
   [Sorting.PRICE_ASC]: "Price: Low to High",
+  [Sorting.RATING]: "Customer Reviews",
   [Sorting.DATE_ASC]: "Newest",
   [Sorting.DATE_DESC]: "Oldest",
   [Sorting.RELEVANCY]: "Relevancy",
