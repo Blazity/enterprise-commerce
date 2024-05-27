@@ -6,7 +6,6 @@ import type { CommerceProduct } from "types"
 export const maxDuration = 120 // seconds
 
 /* This API route runs via cron job, and updates products index (daily) to sync avgRating and total reviews with the reviews index */
-
 export async function POST(req: Request) {
   const authHeader = req.headers.get("authorization")
   if (authHeader !== `Bearer ${env.CRON_SECRET}`) {
@@ -34,12 +33,10 @@ export async function POST(req: Request) {
     return new Response(JSON.stringify({ message: "Sorry, something went wrong" }), { status: 500 })
   }
 
-  // Potentially will need to paginate later on
   const allProducts = await productsIndex?.getDocuments<CommerceProduct>({
     limit: 10000,
   })
 
-  // Potentially will need to paginate later on
   const allReviews = await reviewsIndex?.getDocuments<Review>({
     limit: 10000,
     filter: `published=true AND hidden=false`,
@@ -70,7 +67,7 @@ export async function POST(req: Request) {
   }
 
   const updatedProducts = delta.map((product) => {
-    const newProduct = { ...product } // Shallow copy and to prevent mutating the original objects
+    const newProduct = { ...product }
 
     newProduct.totalReviews = mappedReviews[product.handle]?.length || 0
     newProduct.avgRating = mappedReviews[product.handle]?.reduce((acc, review) => acc + review.rating, 0) / mappedReviews[product.handle]?.length || 0
