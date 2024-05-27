@@ -1,5 +1,4 @@
 import { PlatformVariant } from "@enterprise-commerce/core/platform/types"
-import { StarIcon } from "components/Icons/StarIcon"
 import { Combination } from "utils/productOptionsUtils"
 import { StarRating } from "./StarRating"
 
@@ -21,7 +20,7 @@ export function InfoSection({ title, description, combination, className, avgRat
           <div className="flex items-center space-x-1">
             <StarRating rating={Math.ceil(avgRating)} /> {/* rounds up always */}
             <span className="text-xs text-gray-400">
-              ({avgRating}) based on {totalReviews} review{totalReviews === 1 ? "" : "s"}
+              ({avgRating}) based on {totalReviews} review{totalReviews !== 1 && "s"}
             </span>
           </div>
         )}

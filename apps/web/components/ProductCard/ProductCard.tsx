@@ -4,7 +4,7 @@ import { cn } from "utils/cn"
 import { QuickAdd } from "./QuickAdd"
 import { type CurrencyType, mapCurrencyToSign } from "utils/mapCurrencyToSign"
 import type { CommerceProduct } from "types"
-import { StarRating } from "views/Product/StarRating"
+import { StarIcon } from "components/Icons/StarIcon"
 
 interface ProductCardProps extends Pick<CommerceProduct, "variants" | "handle" | "images" | "title" | "featuredImage" | "minPrice" | "avgRating" | "totalReviews"> {
   priority?: boolean
@@ -38,9 +38,10 @@ export function ProductCard(props: ProductCardProps) {
           <div className="line-clamp-2 text-base tracking-tight md:text-xl">{props.title}</div>
           {!!props.avgRating && !!props.totalReviews && (
             <div className="flex items-center space-x-1">
-              <StarRating rating={Math.ceil(props.avgRating)} />
-              <span>
-                <span className="text-sm">({props.totalReviews})</span>
+              <StarIcon className="size-4 fill-yellow-400 stroke-yellow-500" />
+              <span className="text-sm">{props.avgRating.toFixed(2)}</span>
+              <span className="text-xs">
+                ({props.totalReviews} review{props.totalReviews !== 1 && "s"})
               </span>
             </div>
           )}

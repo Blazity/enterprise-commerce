@@ -34,6 +34,7 @@ export const searchParamsCache = createSearchParamsCache({
   tags: parseAsArrayOf(parseAsString).withDefault([]),
   colors: parseAsArrayOf(parseAsString).withDefault([]),
   sizes: parseAsArrayOf(parseAsString).withDefault([]),
+  rating: parseAsInteger,
 })
 
 export async function SearchView({ searchParams, disabledFacets, intro, collection }: SearchViewProps) {
@@ -84,7 +85,7 @@ const searchProducts = unstable_cache(
     const results = await index?.search(query, {
       sort: sortBy ? [sortBy] : undefined,
       hitsPerPage: 24,
-      facets: ["collections.title", "tags", "vendor", "variants.availableForSale", "flatOptions.Size", "flatOptions.Color", "minPrice"],
+      facets: ["collections.title", "tags", "vendor", "variants.availableForSale", "flatOptions.Size", "flatOptions.Color", "minPrice", "avgRating"],
       filter,
       page,
       attributesToRetrieve: ["id", "handle", "title", "priceRange", "featuredImage", "minPrice", "variants", "images", "avgRating", "totalReviews"],

@@ -8,8 +8,6 @@ import type { CommerceProduct } from "types"
 export async function BestOffersSection() {
   const items = await getBestOffers()
 
-  console.log({ items })
-
   return <CarouselSection title="Best Offers" items={items} />
 }
 
