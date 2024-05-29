@@ -50,3 +50,4 @@ apps/docs/.vitepress/cache/
 apps/docs/.vitepress/config.mts.timestamp-*
 apps/docs/.vitepress/dist/
 .vercel
+.env*.local
