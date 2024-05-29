@@ -14,13 +14,11 @@ export async function CategoriesSection() {
       </div>
       <div className="group mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {categories.map((singleCategory, index) => (
-          <Link key={singleCategory.handle + index} href={`/category/${singleCategory.handle}`}>
-            <div className="relative h-[260px] w-full overflow-hidden rounded-2xl ">
-              <div className="absolute inset-0 size-full bg-neutral-100 transition-all hover:bg-neutral-50 hover:blur">
-                <img alt="" src={`/category-placeholder-${index + 1}.svg`} className="absolute -top-8 right-0 h-full" />
-              </div>
-              <h3 className="absolute bottom-8 left-8 text-[29px]/[18px] tracking-tight text-black">{singleCategory.title}</h3>
+          <Link className="relative h-[260px] w-full overflow-hidden rounded-2xl" key={singleCategory.handle + index} href={`/category/${singleCategory.handle}`}>
+            <div className="absolute inset-0 size-full bg-neutral-100 transition-all hover:bg-neutral-50 hover:blur">
+              <img alt="" src={`/category-placeholder-${index + 1}.svg`} className="absolute -top-8 right-0 h-full" />
             </div>
+            <h3 className="absolute bottom-8 left-8 text-[29px]/[18px] tracking-tight text-black">{singleCategory.title}</h3>
           </Link>
         ))}
       </div>

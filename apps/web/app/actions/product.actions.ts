@@ -21,7 +21,7 @@ export const searchProducts = unstable_cache(
       throw new Error("Missing environment variable MEILISEARCH_PRODUCTS_INDEX")
     }
 
-    const index = await meilisearch?.getIndex<CommerceProduct>(env.MEILISEARCH_PRODUCTS_INDEX)
+    const index = await meilisearch?.getIndex<CommerceProduct>(env.MEILISEARCH_PRODUCTS_INDEX!)
 
     if (!index) return { hits: [], hasMore: false }
 
@@ -41,7 +41,7 @@ export const getProduct = unstable_cache(
       throw new Error("Missing environment variable MEILISEARCH_PRODUCTS_INDEX")
     }
 
-    const index = await meilisearch?.getIndex<CommerceProduct>(env.MEILISEARCH_PRODUCTS_INDEX)
+    const index = await meilisearch?.getIndex<CommerceProduct>(env.MEILISEARCH_PRODUCTS_INDEX!)
     const documents = await index?.getDocuments({ filter: new FilterBuilder().where("handle", ComparisonOperators.Equal, handle).build(), limit: 1 })
     return documents.results.find(Boolean) || null
   },

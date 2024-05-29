@@ -1,4 +1,5 @@
 import { cn } from "utils/cn"
+import { slugToName } from "utils/slug-name"
 
 interface CategoryFacetProps {
   title: string
@@ -19,13 +20,13 @@ export function CategoryFacet({ distribution, isChecked, onCheckedChange }: Cate
     <div className="mb-[50px] mt-[72px] tracking-[-0.44px]">
       {hasNoResults ? null : (
         <div className="grid gap-[24px]">
-          {distributionsEntries.map(([value], index) => (
+          {distributionsEntries.map(([value, count], index) => (
             <button
               key={index + value}
               className={cn("flex items-center gap-2 bg-transparent text-[18px]/[18px] font-normal", isChecked(value) && "font-bold")}
               onClick={() => handleClick(value)}
             >
-              {value}
+              {slugToName(value)} ({count})
             </button>
           ))}
         </div>

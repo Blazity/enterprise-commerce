@@ -21,13 +21,10 @@ interface AutocompleteProps {
 
 export function Autocomplete({ className }: AutocompleteProps) {
   const router = useRouter()
-
   const [isOpen, setIsOpen] = useState(false)
-
   const { query, results, isPending, onChange, status } = useAutocomplete({
     callback: () => !isOpen && setIsOpen(true),
   })
-
   const ref = useClickAway<HTMLDivElement>(() => {
     setIsOpen(false)
   })

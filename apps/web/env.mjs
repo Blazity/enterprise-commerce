@@ -10,8 +10,16 @@ export const env = createEnv({
     SHOPIFY_STORE_DOMAIN: z.string(),
     MEILISEARCH_MASTER_KEY: z.string().optional(),
     MEILISEARCH_HOST: z.string().optional(),
+<<<<<<< HEAD
     MEILISEARCH_REVIEWS_INDEX: z.string().optional(),
     MEILISEARCH_PRODUCTS_INDEX: z.string().optional(),
+||||||| 2ee74c1
+=======
+    MEILISEARCH_PRODUCTS_INDEX: z.string(),
+    MEILISEARCH_CATEGORIES_INDEX: z.string(),
+    MEILISEARCH_REVIEWS_INDEX: z.string().optional(),
+    MEILISEARCH_PRODUCTS_INDEX: z.string().optional(),
+>>>>>>> origin/main
     REPLICATE_API_KEY: z.string().optional(),
     OPENAI_API_KEY: z.string().optional(),
     LIVE_URL: z.string().optional(),
@@ -37,9 +45,10 @@ export const env = createEnv({
     SHOPIFY_STORE_DOMAIN: process.env.SHOPIFY_STORE_DOMAIN || "demo",
     MEILISEARCH_MASTER_KEY: process.env.MEILISEARCH_MASTER_KEY || "demo",
     MEILISEARCH_HOST: process.env.MEILISEARCH_HOST || "demo",
-    MEILISEARCH_REVIEWS_INDEX: process.env.MEILISEARCH_REVIEWS_INDEX,
-    MEILISEARCH_PRODUCTS_INDEX: process.env.MEILISEARCH_PRODUCTS_INDEX,
     OPENAI_API_KEY: process.env.OPENAI_API_KEY,
+    MEILISEARCH_CATEGORIES_INDEX: process.env.MEILISEARCH_CATEGORIES_INDEX || "categories",
+    MEILISEARCH_PRODUCTS_INDEX: process.env.MEILISEARCH_PRODUCTS_INDEX || "products",
+    MEILISEARCH_REVIEWS_INDEX: process.env.MEILISEARCH_REVIEWS_INDEX || "reviews",
     LIVE_URL: process.env.LIVE_URL || "https://commerce.blazity.com",
     ANALYZE: process.env.ANALYZE,
     IS_GTM_ENABLED: process.env.IS_GTM_ENABLED,
