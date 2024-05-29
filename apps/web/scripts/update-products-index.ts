@@ -6,7 +6,7 @@ import { env } from "env.mjs"
  * (bulk operation, should be done just once)
  */
 export async function updateProductIndex() {
-  const index = await getMeilisearchIndex(env.MEILISEARCH_PRODUCTS_INDEX)
+  const index = await getMeilisearchIndex(env.MEILISEARCH_PRODUCTS_INDEX!)
 
   const temp_products = await meilisearch.getIndex("temp_products")
 

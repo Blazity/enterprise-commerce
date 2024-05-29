@@ -1,11 +1,12 @@
-import type { PlatformProduct, PlatformVariant } from "@enterprise-commerce/core/platform/types"
+import type { PlatformVariant } from "@enterprise-commerce/core/platform/types"
+import type { CommerceProduct } from "types"
 import type { Combination } from "utils/productOptionsUtils"
 import { create } from "zustand"
 
 interface AddProductStore {
-  product: PlatformProduct | null
+  product: CommerceProduct | null
   combination: Combination | null
-  setProduct: ({ product, combination }: { product: PlatformProduct; combination: Combination | PlatformVariant }) => void
+  setProduct: ({ product, combination }: { product: CommerceProduct; combination: Combination | PlatformVariant }) => void
   clean: () => void
 }
 

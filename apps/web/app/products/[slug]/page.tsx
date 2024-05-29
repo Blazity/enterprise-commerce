@@ -1,4 +1,3 @@
-import { PlatformProduct } from "@enterprise-commerce/core/platform/types"
 import { notFound } from "next/navigation"
 import { Suspense } from "react"
 import { getProduct, getProductReviews } from "app/actions/product.actions"
@@ -18,6 +17,8 @@ import { slugToName } from "utils/slug-name"
 
 import { generateJsonLd } from "./metadata"
 import { ReviewsSection } from "views/Product/ReviewsSection"
+
+import type { CommerceProduct } from "types"
 
 export const revalidate = 3600
 
@@ -68,7 +69,14 @@ async function ProductView({ slug }: { slug: string }) {
             <FavoriteMarker handle={product.handle} />
           </GallerySection>
           <div className="flex flex-col items-start pt-12">
-            <InfoSection className="pb-6" title={product.title} description={product.descriptionHtml} combination={combination} />
+            <InfoSection
+              className="pb-6"
+              title={product.title}
+              description={product.descriptionHtml}
+              combination={combination}
+              avgRating={product.avgRating}
+              totalReviews={product.totalReviews}
+            />
             {hasOnlyOneVariant ? null : <VariantsSection combination={combination} handle={product.handle} className="pb-4" variants={product.variants} />}
 
             <DetailsSection slug={slug} product={product} />
@@ -90,7 +98,7 @@ async function ProductView({ slug }: { slug: string }) {
   )
 }
 
-function makeBreadcrumbs(product: PlatformProduct) {
+function makeBreadcrumbs(product: CommerceProduct) {
   const lastCollection = product.collections?.findLast(Boolean)
 
   return {

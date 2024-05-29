@@ -13,6 +13,7 @@ import { Facet } from "./Facet"
 import { CategoryFacet } from "./CategoryFacet"
 import { PriceFacet } from "./PriceFacet"
 import { Sorter } from "./Sorter"
+import { RatingFacet } from "./RatingFacet"
 
 interface FacetsContentProps {
   facetDistribution: Record<string, CategoriesDistribution> | undefined
@@ -36,6 +37,14 @@ export function FacetsContent({ facetDistribution, className, disabledFacets }: 
     history: "push",
     clearOnDefault: true,
   })
+
+  const [selectedRating, setSelectedRating] = useQueryState("rating", {
+    ...parseAsInteger,
+    defaultValue: 0,
+    shallow: false,
+    history: "push",
+    clearOnDefault: true,
+  })
   const [selectedVendors, setSelectedVendors] = useQueryState("vendors", {
     ...parseAsArrayOf(parseAsString),
     defaultValue: [],
@@ -52,9 +61,28 @@ export function FacetsContent({ facetDistribution, className, disabledFacets }: 
   const [minPrice, setMinPrice] = useQueryState("minPrice", { ...parseAsInteger, shallow: false, defaultValue: 0, clearOnDefault: true })
   const [maxPrice, setMaxPrice] = useQueryState("maxPrice", { ...parseAsInteger, shallow: false, defaultValue: 0, clearOnDefault: true })
 
-  const filtersCount = [selectedCategories, selectedVendors, selectedTags, selectedColors, selectedSizes, minPrice, maxPrice].filter((v) =>
+  const filtersCount = [selectedCategories, selectedVendors, selectedTags, selectedColors, selectedSizes, minPrice, maxPrice, selectedRating].filter((v) =>
     Array.isArray(v) ? v.length !== 0 : !!v
   ).length
+
+  const roundedRatings = Object.entries(facetDistribution?.["avgRating"] || {}).reduce(
+    (acc, [key, value]) => {
+      const numKey = parseFloat(key)
+      const roundedKey = Math.floor(numKey)
+
+      for (let i = 1; i <= roundedKey; i++) {
+        acc[i] = (acc[i] || 0) + value
+      }
+
+      return acc
+    },
+    {
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+    }
+  )
 
   function resetAllFilters() {
     setSelectedCategories(null)
@@ -64,6 +92,7 @@ export function FacetsContent({ facetDistribution, className, disabledFacets }: 
     setSelectedSizes(null)
     setMinPrice(null)
     setMaxPrice(null)
+    setSelectedRating(null)
   }
 
   return (
@@ -140,6 +169,20 @@ export function FacetsContent({ facetDistribution, className, disabledFacets }: 
             onCheckedChange={(checked, color) => {
               setSelectedColors((prev) => (checked ? [...prev, color] : prev.filter((cat) => cat !== color)))
               setLastSelected("colors")
+              setPage(1)
+            }}
+          />
+        ) : null}
+
+        {!disabledFacets?.includes("avgRating") ? (
+          <RatingFacet
+            id="avgRating"
+            title="Rating"
+            distribution={roundedRatings}
+            isChecked={(rating) => selectedRating === parseInt(rating)}
+            onCheckedChange={(checked, rating) => {
+              setSelectedRating(checked ? parseInt(rating) : 0)
+              setLastSelected("rating")
               setPage(1)
             }}
           />

@@ -8,6 +8,7 @@ interface MakeFilterProps {
   tags: string[]
   colors: string[]
   sizes: string[]
+  rating: number | null
 }
 
 export function composeFilters(filter: FilterBuilder, parsedSearchParams: MakeFilterProps) {
@@ -39,6 +40,10 @@ export function composeFilters(filter: FilterBuilder, parsedSearchParams: MakeFi
     {
       predicate: !!parsedSearchParams.maxPrice,
       action: () => filter.and().where("minPrice", ComparisonOperators.LessThanOrEqual, parsedSearchParams.maxPrice!),
+    },
+    {
+      predicate: !!parsedSearchParams.rating,
+      action: () => filter.and().where("avgRating", ComparisonOperators.GreaterThanOrEqual, parsedSearchParams.rating!),
     },
   ]
 
