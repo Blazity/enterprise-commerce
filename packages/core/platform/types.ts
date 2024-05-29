@@ -21,7 +21,7 @@ export interface PlatformProduct {
   updatedAtTimestamp: number
   createdAtTimestamp: number
   flatOptions: Record<string, string[]>
-  collections: Pick<PlatformCollection, 'handle' | 'id'>[]
+  collections: Pick<PlatformCollection, "handle" | "id" | "title">[]
   seo: {
     description?: string | null | undefined
     title?: string | null | undefined

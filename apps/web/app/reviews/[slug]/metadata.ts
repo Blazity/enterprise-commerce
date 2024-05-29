@@ -21,7 +21,7 @@ export async function generateMetadata({ params: { slug } }: ProductReviewsPageP
     applicationName: "Next.js",
     referrer: "origin-when-cross-origin",
     keywords: keywords,
-    category: lastCollection?.title,
+    category: lastCollection?.title || "",
     creator: "Blazity",
     alternates: {
       canonical: `/reviews/${slug}`,
