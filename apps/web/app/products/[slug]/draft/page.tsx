@@ -15,8 +15,8 @@ import { PageSkeleton } from "views/Product/PageSkeleton"
 import { SimilarProductsSection } from "views/Product/SimilarProductsSection"
 import { SimilarProductsSectionSkeleton } from "views/Product/SimilarProductsSectionSkeleton"
 import { VariantsSection } from "views/Product/VariantsSection"
-import { slugToName } from "utils/slug-name"
 import type { CommerceProduct } from "types"
+import { slugToName } from "utils/slug-name"
 
 export const dynamic = "force-static"
 

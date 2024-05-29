@@ -2,8 +2,8 @@ import { meilisearch } from "clients/meilisearch"
 import { unstable_cache } from "next/cache"
 import { CarouselSection } from "./CarouselSection"
 import { getDemoProducts, isDemoMode } from "utils/demoUtils"
-import { env } from "env.mjs"
 import type { CommerceProduct } from "types"
+import { env } from "env.mjs"
 
 export async function BestOffersSection() {
   const items = await getBestOffers()

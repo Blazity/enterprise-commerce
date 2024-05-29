@@ -2,14 +2,16 @@ import Link from "next/link"
 
 import { ReviewButton } from "./ReviewButton"
 import { ReviewCard, type ReviewCardProps } from "./ReviewCard"
+import { RobotIcon } from "components/Icons/RobotIcon"
 
 type ReviewsSectionProps = {
   productId: string
   productHandle: string
   reviews: ReviewCardProps[]
   total: number
+  summary: string
 }
-export const ReviewsSection = ({ productId, productHandle, reviews, total }: ReviewsSectionProps) => {
+export const ReviewsSection = ({ productId, productHandle, reviews, total, summary }: ReviewsSectionProps) => {
   if (reviews.length <= 0) {
     return (
       <section className="relative left-1/2 w-screen -translate-x-1/2 bg-gray-50 py-12 md:my-10">
@@ -37,6 +39,15 @@ export const ReviewsSection = ({ productId, productHandle, reviews, total }: Rev
             </h2>
             <ReviewButton productId={productId} />
           </div>
+          {!!summary && (
+            <div className="rounded bg-gray-300/25 p-4">
+              <div className="mb-2 flex items-center space-x-2">
+                <RobotIcon className="size-4" />
+                <h3 className="text-base font-semibold">AI Summary</h3>
+              </div>
+              <p className="text-sm text-gray-600">{summary}</p>
+            </div>
+          )}
           <div className="flex flex-col gap-4 md:flex-row">
             {reviews.map(({ body, author, rating, created_at }) => (
               <ReviewCard key={created_at} body={body} author={author} rating={rating} created_at={created_at} />

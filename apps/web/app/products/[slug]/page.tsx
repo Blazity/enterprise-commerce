@@ -88,6 +88,7 @@ async function ProductView({ slug }: { slug: string }) {
             productId={product.id}
             reviews={reviews.map((review) => ({ ...review, author: review.reviewer.name }))}
             total={totalReviews}
+            summary={product.reviewsSummary}
           />
         </Suspense>
       </main>

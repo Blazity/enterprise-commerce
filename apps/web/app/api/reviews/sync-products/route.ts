@@ -2,13 +2,13 @@ import type { Review } from "@enterprise-commerce/reviews"
 import { meilisearch } from "clients/meilisearch"
 import { env } from "env.mjs"
 import type { CommerceProduct } from "types"
+import { authenticate } from "utils/authenticate-api-route"
 
 export const maxDuration = 120 // seconds
 
 /* This API route runs via cron job, and updates products index (daily) to sync avgRating and total reviews with the reviews index */
 export async function POST(req: Request) {
-  const authHeader = req.headers.get("authorization")
-  if (authHeader !== `Bearer ${env.CRON_SECRET}`) {
+  if (!authenticate(req)) {
     return new Response("Unauthorized", {
       status: 401,
     })
@@ -33,14 +33,17 @@ export async function POST(req: Request) {
     return new Response(JSON.stringify({ message: "Sorry, something went wrong" }), { status: 500 })
   }
 
-  const allProducts = await productsIndex?.getDocuments<CommerceProduct>({
-    limit: 10000,
-  })
-
-  const allReviews = await reviewsIndex?.getDocuments<Review>({
-    limit: 10000,
-    filter: `published=true AND hidden=false`,
-  })
+  const [allProducts, allReviews] = await Promise.all([
+    productsIndex?.getDocuments<CommerceProduct>({
+      limit: 10000,
+      fields: ["handle", "totalReviews", "avgRating", "id"],
+    }),
+    reviewsIndex?.getDocuments<Review>({
+      limit: 10000,
+      filter: `published=true AND hidden=false`,
+      fields: ["product_handle", "rating"],
+    }),
+  ])
 
   const mappedReviews = allReviews?.results.reduce(
     (acc, review) => {
@@ -75,7 +78,7 @@ export async function POST(req: Request) {
     return newProduct
   })
 
-  productsIndex.updateDocuments(updatedProducts, { primaryKey: "id" })
+  await productsIndex.updateDocuments(updatedProducts, { primaryKey: "id" })
 
   return new Response(JSON.stringify({ message: "Reviews synced" }), { status: 200 })
 }

@@ -4,8 +4,8 @@ import { ProductCard } from "components/ProductCard/ProductCard"
 import { unstable_cache } from "next/cache"
 import { ComparisonOperators, FilterBuilder } from "utils/filterBuilder"
 import { getDemoProducts, isDemoMode } from "utils/demoUtils"
-import { env } from "env.mjs"
 import type { CommerceProduct } from "types"
+import { env } from "env.mjs"
 
 interface SimilarProductsSectionProps {
   slug: string

@@ -4,8 +4,8 @@ import { getProduct } from "app/actions/product.actions"
 import { env } from "env.mjs"
 import { makeKeywords } from "utils/makeKeywords"
 import { removeOptionsFromUrl } from "utils/productOptionsUtils"
-import { slugToName } from "utils/slug-name"
 import type { CommerceProduct } from "types"
+import { slugToName } from "utils/slug-name"
 
 interface ProductProps {
   params: { slug: string }
