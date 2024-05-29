@@ -112,7 +112,7 @@ export async function POST(req: Request) {
 
   for (const batch of batches) {
     const products = await generateBatchSummaries(batch)
-    results.push(products)
+    results.push(...products)
   }
 
   const updatedProducts = results
