@@ -18,8 +18,6 @@ import { slugToName } from "utils/slug-name"
 import { generateJsonLd } from "./metadata"
 import { ReviewsSection } from "views/Product/ReviewsSection"
 
-import { generateJsonLd } from "./metadata"
-import { ReviewsSection } from "views/Product/ReviewsSection"
 import type { CommerceProduct } from "types"
 
 export const revalidate = 3600

@@ -28,7 +28,7 @@ export async function POST(req: Request) {
 
   const { product, metadata } = JSON.parse(rawPayload) as Root
 
-  let index = await getMeilisearchIndex(env.MEILISEARCH_PRODUCTS_INDEX)
+  let index = await getMeilisearchIndex(env.MEILISEARCH_PRODUCTS_INDEX!)
 
   // await updateAttributesSettings(index)
 
