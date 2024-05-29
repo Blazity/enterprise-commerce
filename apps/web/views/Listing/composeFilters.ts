@@ -14,7 +14,7 @@ export function composeFilters(filter: FilterBuilder, parsedSearchParams: MakeFi
   const filterConditions = [
     {
       predicate: parsedSearchParams.categories.length > 0,
-      action: () => filter.and().group((sub) => sub.in("collections.title", parsedSearchParams.categories)),
+      action: () => filter.and().group((sub) => sub.in("collections.handle", parsedSearchParams.categories)),
     },
     {
       predicate: parsedSearchParams.vendors.length > 0,

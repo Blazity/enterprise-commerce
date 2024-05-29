@@ -21,7 +21,7 @@ interface FacetsContentProps {
 }
 
 export function FacetsContent({ facetDistribution, className, disabledFacets }: FacetsContentProps) {
-  const collections = facetDistribution?.["collections.title"]
+  const collections = facetDistribution?.["collections.handle"]
   const tags = facetDistribution?.["tags"]
   const vendors = facetDistribution?.["vendor"]
   const sizes = facetDistribution?.["flatOptions.Size"]

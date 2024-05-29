@@ -4,7 +4,6 @@ import { createHmac } from "crypto"
 import { meilisearch } from "clients/meilisearch"
 import { replicate } from "clients/replicate"
 import { storefrontClient } from "clients/storefrontClient"
-import { MEILISEARCH_INDEX } from "constants/index"
 import { env } from "env.mjs"
 import { Root } from "shopify-webhooks"
 
@@ -23,7 +22,7 @@ export async function POST(req: Request) {
 
   const { product, metadata } = JSON.parse(rawPayload) as Root
 
-  let index = await getMeilisearchIndex(MEILISEARCH_INDEX)
+  let index = await getMeilisearchIndex(env.MEILISEARCH_PRODUCTS_INDEX)
 
   // await updateAttributesSettings(index)
 
@@ -44,7 +43,7 @@ export async function POST(req: Request) {
 
     if (originalProduct?.id) {
       const newImages = await generateProductAltTags(originalProduct)
-      await index.updateDocuments([{ ...originalProduct, id: normalizeId(originalProduct.id), images: newImages }], { primaryKey: "id" })
+      await index.updateDocuments([normalizeProduct({ product: originalProduct, newImages })], { primaryKey: "id" })
       return Response.json({ status: "ok" })
     }
 
@@ -54,11 +53,20 @@ export async function POST(req: Request) {
   if (metadata.action === "UPDATE" || metadata.action === "CREATE") {
     if (originalProduct) {
       const newImages = await generateProductAltTags(originalProduct)
-      await index.updateDocuments([{ ...originalProduct, id: normalizeId(originalProduct.id), images: newImages }], { primaryKey: "id" })
+      await index.updateDocuments([normalizeProduct({ product: originalProduct, newImages })], { primaryKey: "id" })
     }
   }
 
   return Response.json({ status: "ok" })
+}
+
+function normalizeProduct({ product, newImages }: { product: PlatformProduct; newImages: (PlatformImage | undefined)[] }) {
+  return {
+    ...product,
+    id: normalizeId(product.id),
+    images: newImages,
+    collections: product.collections.map((collection) => ({ handle: collection.handle, id: collection.id })),
+  }
 }
 
 function normalizeId(id: string) {

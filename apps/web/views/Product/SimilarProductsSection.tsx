@@ -4,16 +4,16 @@ import { Carousel, CarouselContent } from "components/Carousel/Carousel"
 import { ProductCard } from "components/ProductCard/ProductCard"
 import { unstable_cache } from "next/cache"
 import { ComparisonOperators, FilterBuilder } from "utils/filterBuilder"
-import { MEILISEARCH_INDEX } from "constants/index"
 import { getDemoProducts, isDemoMode } from "utils/demoUtils"
+import { env } from "env.mjs"
 
 interface SimilarProductsSectionProps {
   slug: string
-  collection: string | undefined
+  collectionHandle: string | undefined
 }
 
-export async function SimilarProductsSection({ slug, collection }: SimilarProductsSectionProps) {
-  const items = await getSimilarProducts(slug, collection)
+export async function SimilarProductsSection({ slug, collectionHandle }: SimilarProductsSectionProps) {
+  const items = await getSimilarProducts(slug, collectionHandle)
 
   return (
     <section className="py-40">
@@ -35,7 +35,7 @@ const getSimilarProducts = unstable_cache(
 
     if (isDemoMode()) return getDemoProducts().hits.slice(0, limit)
 
-    const index = await meilisearch?.getIndex<PlatformProduct>(MEILISEARCH_INDEX)
+    const index = await meilisearch?.getIndex<PlatformProduct>(env.MEILISEARCH_PRODUCTS_INDEX)
     const similarSearchResults = await index.search(handle, { matchingStrategy: "last", limit, hybrid: { semanticRatio: 1 } })
 
     let collectionSearchResults = { hits: [] }
@@ -43,7 +43,7 @@ const getSimilarProducts = unstable_cache(
       collectionSearchResults = await index.search("", {
         matchingStrategy: "last",
         limit: limit - similarSearchResults.hits.length,
-        filter: collection ? new FilterBuilder().where("collections.title", ComparisonOperators.Equal, collection).build() : undefined,
+        filter: collection ? new FilterBuilder().where("collections.handle", ComparisonOperators.Equal, collection).build() : undefined,
       })
     }
 
