@@ -7,7 +7,7 @@ import { storefrontClient } from "clients/storefrontClient"
 import type { CommerceProduct } from "types"
 
 export const revalidate = 604800
-export const runtime = "edge"
+export const runtime = "nodejs"
 
 const BASE_URL = env.LIVE_URL
 const HITS_PER_PAGE = 24

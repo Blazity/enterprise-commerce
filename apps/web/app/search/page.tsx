@@ -11,6 +11,8 @@ export const metadata: Metadata = {
 
 export const revalidate = 3600
 
+export const runtime = "nodejs"
+
 interface SearchPageProps {
   searchParams: SearchParamsType
 }

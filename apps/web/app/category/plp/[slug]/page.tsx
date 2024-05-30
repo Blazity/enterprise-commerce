@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import { SearchParamsType } from "types"
 import { CategoryView } from "views/Category/CategoryView"
 
-export const runtime = "edge"
+export const runtime = "nodejs"
 
 export const revalidate = 3600
 
