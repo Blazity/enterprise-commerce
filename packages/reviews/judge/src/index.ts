@@ -9,12 +9,16 @@ type CreateJudgeClientArgs = {
 }
 
 export function createJudgeClient({ baseUrl, apiKey, shopDomain }: CreateJudgeClientArgs) {
+  if (!apiKey || !baseUrl) {
+    throw new Error("Judge me: Invalid keys to create Judge.Me client")
+  }
   const url = new URL(baseUrl)
   url.searchParams.set("api_token", apiKey)
   url.searchParams.set("shop_domain", shopDomain)
 
   return {
     getProductReviews: async (opts: GetProductReviewsOpts = {}) => getProductReviews(url, opts),
+    getAllProductReviews: async () => getAllProductReviews(url),
     createProductReview: async (body: ProductReviewBody) => createProductReview({ baseUrl: url, body }),
     createWebhook: async (key: JudgeMeWebhookKey, subscribeUrl: string) => createWebhook(url, key, subscribeUrl),
   }
@@ -43,6 +47,20 @@ async function getProductReviews(
   const jsonReviews: Pick<GetProductReviewsResponse, "per_page" | "reviews" | "current_page"> = await reviews.json()
 
   return { ...jsonReviews, total: count, totalPages: Math.ceil(count / jsonReviews.per_page) }
+}
+
+async function getAllProductReviews(baseUrl: URL) {
+  const allReviews = []
+
+  const { reviews, totalPages } = await getProductReviews(baseUrl, { per_page: 100 })
+  allReviews.push(...reviews)
+
+  for (let page = 2; page <= totalPages; page++) {
+    const { reviews } = await getProductReviews(baseUrl, { per_page: 100, page })
+    allReviews.push(...reviews)
+  }
+
+  return allReviews
 }
 
 async function createProductReview({ baseUrl, body }: ProductReviewArgs) {

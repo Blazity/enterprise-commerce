@@ -25,8 +25,8 @@ export const env = createEnv({
       .enum(["true", "false"])
       .optional()
       .transform((value) => value === "true"),
-    JUDGE_BASE_URL: z.string(),
-    JUDGE_API_TOKEN: z.string(),
+    JUDGE_BASE_URL: z.string().optional(),
+    JUDGE_API_TOKEN: z.string().optional(),
     CRON_SECRET: z.string().optional(),
   },
   client: {},

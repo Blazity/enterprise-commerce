@@ -3,16 +3,23 @@ import Link from "next/link"
 import { ReviewButton } from "./ReviewButton"
 import { ReviewCard, type ReviewCardProps } from "./ReviewCard"
 import { RobotIcon } from "components/Icons/RobotIcon"
+import { isOptIn, notifyOptIn } from "utils/opt-in"
 
 type ReviewsSectionProps = {
   productId: string
   productHandle: string
   reviews: ReviewCardProps[]
   total: number
-  summary: string
+  summary?: string
 }
 export const ReviewsSection = ({ productId, productHandle, reviews, total, summary }: ReviewsSectionProps) => {
-  if (reviews.length <= 0) {
+  if (!isOptIn("reviews")) {
+    notifyOptIn({ feature: "reviews", source: "components/ReviewsSection" })
+
+    return null
+  }
+
+  if (reviews?.length <= 0) {
     return (
       <section className="relative left-1/2 w-screen -translate-x-1/2 bg-gray-50 py-12 md:my-10">
         <div className="container mx-auto max-w-5xl px-4 md:px-6">
@@ -24,6 +31,7 @@ export const ReviewsSection = ({ productId, productHandle, reviews, total, summa
       </section>
     )
   }
+
   return (
     <section
       className="relative left-1/2 w-screen
