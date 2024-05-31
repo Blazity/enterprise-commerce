@@ -4,7 +4,7 @@ import { isOptIn, notifyOptIn } from "utils/opt-in"
 
 export const reviewsClient = (() => {
   if (!isOptIn("reviews")) {
-    notifyOptIn({ feature: "reviews" })
+    notifyOptIn({ feature: "reviews", source: "clients/reviews" })
   }
 
   return createJudgeClient({

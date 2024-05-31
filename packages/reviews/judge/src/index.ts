@@ -9,9 +9,6 @@ type CreateJudgeClientArgs = {
 }
 
 export function createJudgeClient({ baseUrl, apiKey, shopDomain }: CreateJudgeClientArgs) {
-  if (!apiKey || !baseUrl) {
-    throw new Error("Judge me: Invalid keys to create Judge.Me client")
-  }
   const url = new URL(baseUrl)
   url.searchParams.set("api_token", apiKey)
   url.searchParams.set("shop_domain", shopDomain)
