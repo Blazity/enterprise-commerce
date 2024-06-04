@@ -1,10 +1,12 @@
-export const getMenuQuery = `#graphql
+import { createMenuItemFragment, menuItemFragment } from "../fragments/menu"
+
+export const getMenuQuery = (depth: number) => `#graphql
   query Menu($handle: String!) {
     menu(handle: $handle) {
       items {
-        title
-        url
+        ${createMenuItemFragment(depth)}
       }
     }
   }
+${menuItemFragment}
 `

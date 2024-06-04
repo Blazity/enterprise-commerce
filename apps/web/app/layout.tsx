@@ -18,6 +18,7 @@ import { Metadata } from "next"
 import { GithubBadge } from "views/GithubBadge"
 import { DemoModeAlert } from "views/DemoModeAlert"
 import { CartView } from "views/Cart/CartView"
+import { storefrontClient } from "clients/storefrontClient"
 
 const DraftToolbar = nextDynamic(() => import("views/DraftToolbar"), { ssr: false })
 
@@ -181,7 +182,31 @@ export const metadata: Metadata = {
   applicationName: "Next.js",
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+function mapOver(item: any) {
+  if (!item.items || item.items.length < 1) {
+    return (
+      <li key={item.id}>
+        {item.title} - {item?.resource?.handle || "no handle"}
+      </li>
+    )
+  }
+
+  console.log({ item })
+
+  return (
+    <li key={item.id}>
+      {item.title} - {item.resource && item.resource.__typename === "Collection" && item.resource.handle}
+      <ul className="list-inside list-decimal">
+        {item.items.map((subItem: any) => {
+          return mapOver(subItem)
+        })}
+      </ul>
+    </li>
+  )
+}
+
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const { items } = await storefrontClient.getMenu()
   return (
     <html lang="en">
       <body>
@@ -189,6 +214,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         <TopBar />
         <NavigationBar items={navigationItems} />
+        <ul className="list-inside list-disc">
+          {items.map((item) => {
+            return mapOver(item)
+          })}
+        </ul>
 
         {children}
 

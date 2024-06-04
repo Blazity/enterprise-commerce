@@ -80,7 +80,7 @@ export function createShopifyClient({ storefrontAccessToken, adminAccessToken, s
   // To prevent prettier from wrapping pretty one liners and making them unreadable
   // prettier-ignore
   return {
-    getMenu: async (handle?: string) => getMenu(client!, handle),
+    getMenu: async (handle?: string, depth?: number) => getMenu(client!, handle, depth),
     getProduct: async (id: string) => getProduct(client!, id),
     getProductByHandle: async (handle: string) => getProductByHandle(client!, handle),
     subscribeWebhook: async (topic: `${WebhookSubscriptionTopic}`, callbackUrl: string) => subscribeWebhook(adminClient, topic, callbackUrl),
@@ -106,13 +106,10 @@ export function createShopifyClient({ storefrontAccessToken, adminAccessToken, s
   }
 }
 
-async function getMenu(client: StorefrontApiClient, handle: string = "main-menu"): Promise<PlatformMenu> {
-  const response = await client.request<MenuQuery>(getMenuQuery, { variables: { handle } })
-  const mappedItems = response.data?.menu?.items?.map((item) => ({
-    title: item.title,
-    url: item.url,
-  }))
-
+async function getMenu(client: StorefrontApiClient, handle: string = "main-menu", depth = 3): Promise<PlatformMenu> {
+  const query = getMenuQuery(depth)
+  const response = await client.request<MenuQuery>(query, { variables: { handle } })
+  const mappedItems = response.data?.menu?.items
   return {
     items: mappedItems || [],
   }
