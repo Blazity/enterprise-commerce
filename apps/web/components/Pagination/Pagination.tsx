@@ -37,7 +37,7 @@ const PaginationLink = ({ className, isActive, children, href, disabled, "aria-l
       buttonVariants({
         variant: "ghost",
       }),
-      "hidden size-9 items-center justify-center rounded-full border border-black bg-white px-0 py-0 text-[16px] text-slate-800 transition-colors hover:bg-black hover:text-white md:flex",
+      "size-9 items-center justify-center rounded-full border border-black bg-white px-0 py-0 text-[16px] text-slate-800 transition-colors hover:bg-black hover:text-white md:flex",
       { "bg-black font-bold text-white": isActive },
       { "pointer-events-none cursor-not-allowed opacity-50": disabled },
       className

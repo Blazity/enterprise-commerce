@@ -1,5 +1,4 @@
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "components/Pagination/Pagination"
-import { cn } from "utils/cn"
 
 const PAGE_OFFSET = 2
 
@@ -42,10 +41,10 @@ export function PaginationSection({ queryParams, totalPages }: PaginationSection
         {pages.map((singlePage, idx) => (
           <PaginationItem key={"pagination_item" + idx + singlePage}>
             <PaginationLink
-              className={cn(singlePage === +page && "absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 md:static md:transform-none")}
-              aria-label={`Go to ${page} page`}
+              aria-label={`Go to ${singlePage} page`}
               isActive={singlePage === +page}
-              href={{ query: { ...queryParams, page: singlePage } }}
+              // has to be undefined, null leaves it like ?page=
+              href={{ query: { ...queryParams, page: singlePage === 1 ? undefined : singlePage } }}
             >
               {singlePage}
             </PaginationLink>

@@ -1,3 +1,4 @@
+import { DISABLED_FACETS } from "constants/index"
 import type { Metadata } from "next"
 import { Suspense } from "react"
 import type { SearchParamsType } from "types"
@@ -20,7 +21,7 @@ interface SearchPageProps {
 export default async function SearchPage({ searchParams }: SearchPageProps) {
   return (
     <Suspense fallback={<PageSkeleton />}>
-      <SearchView searchParams={searchParams} />
+      <SearchView searchParams={searchParams} disabledFacets={DISABLED_FACETS} />
     </Suspense>
   )
 }
