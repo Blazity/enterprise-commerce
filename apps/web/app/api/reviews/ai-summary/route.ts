@@ -6,6 +6,8 @@ import type { CommerceProduct } from "types"
 import { meilisearch } from "clients/meilisearch"
 import { env } from "env.mjs"
 import { authenticate } from "utils/authenticate-api-route"
+import { isOptIn, notifyOptIn } from "utils/opt-in"
+import { unstable_noStore } from "next/cache"
 
 const summarySchema = z.object({
   products: z.array(
@@ -22,19 +24,17 @@ export const maxDuration = 60
 /*
  * This API route will be used for cron job, running once a week to re-generate AI summary based on all user reviews, tweak to your needs
  */
-export async function POST(req: Request) {
+export async function GET(req: Request) {
+  unstable_noStore()
   if (!authenticate(req)) {
     return new Response("Unauthorized", {
       status: 401,
     })
   }
 
-  if (!env.OPENAI_API_KEY) {
-    console.error({
-      message: "No OpenAI API key provided",
-      source: "api/reviews/ai-summary",
-    })
-    return new Response(JSON.stringify({ message: "This feature is not enabled, to enable define OPENAI_API_KEY env variable" }), { status: 200 })
+  if (!isOptIn("ai-reviews")) {
+    const res = notifyOptIn({ feature: "ai-reviews", source: "api/reviews/ai-summary" })
+    return new Response(JSON.stringify(res), { status: 200 })
   }
 
   if (!env.MEILISEARCH_REVIEWS_INDEX || !env.MEILISEARCH_PRODUCTS_INDEX) {
