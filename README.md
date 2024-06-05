@@ -49,6 +49,7 @@ $ yarn create commerce
 - Patch-package - fix external dependencies without losing your mind
 - Components coupling and cohesion graph - a tool for managing component relationships
 - Category Landing Page detached from Product Listing for fast SEO indexing & better performance
+- Reviews & Ratings with [Judge.me](https://judge.me/)
 
 ## Architecture
 
