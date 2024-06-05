@@ -8,6 +8,7 @@ import { env } from "env.mjs"
 import { authenticate } from "utils/authenticate-api-route"
 import { isOptIn, notifyOptIn } from "utils/opt-in"
 import { unstable_noStore } from "next/cache"
+import { isDemoMode } from "utils/demoUtils"
 
 const summarySchema = z.object({
   products: z.array(
@@ -37,7 +38,7 @@ export async function GET(req: Request) {
     return new Response(JSON.stringify(res), { status: 200 })
   }
 
-  if (!env.MEILISEARCH_REVIEWS_INDEX || !env.MEILISEARCH_PRODUCTS_INDEX) {
+  if (isDemoMode() || !env.MEILISEARCH_REVIEWS_INDEX) {
     console.error({
       message: "Lacking environment variables",
       source: "api/reviews/ai-summary",
@@ -50,7 +51,7 @@ export async function GET(req: Request) {
 
   if (!reviewsIndex || !productsIndex) {
     console.error({
-      message: "No index found",
+      message: "Missing reviews or products index",
       source: "api/reviews/ai-summary",
     })
     return new Response(JSON.stringify({ message: "Sorry, something went wrong" }), { status: 500 })

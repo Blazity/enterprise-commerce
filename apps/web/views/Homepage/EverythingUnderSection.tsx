@@ -9,6 +9,8 @@ import { env } from "env.mjs"
 export async function EverythingUnderSection() {
   const items = await getPriceRangedProducts()
 
+  if (!items.length) return null
+
   return <CarouselSection title="Everything under $50" items={items} />
 }
 
@@ -16,7 +18,12 @@ const getPriceRangedProducts = unstable_cache(
   async () => {
     if (isDemoMode()) return getDemoProducts().hits.slice(0, 8)
 
-    const index = await meilisearch?.getIndex<CommerceProduct>(env.MEILISEARCH_PRODUCTS_INDEX!)
+    const index = await meilisearch?.getIndex<CommerceProduct>(env.MEILISEARCH_PRODUCTS_INDEX)
+
+    if (!index) {
+      console.warn({ message: "Missing products index", source: "EverythingUnderSection" })
+    }
+
     const results = await index.search("", {
       matchingStrategy: "last",
       limit: 8,

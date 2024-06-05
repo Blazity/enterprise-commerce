@@ -84,7 +84,11 @@ const searchProducts = unstable_cache(
   async (query: string, sortBy: string, page: number, filter: string) => {
     if (isDemoMode()) return getDemoProducts()
 
-    const index = await meilisearch?.getIndex<CommerceProduct>(env.MEILISEARCH_PRODUCTS_INDEX!)
+    const index = await meilisearch?.getIndex<CommerceProduct>(env.MEILISEARCH_PRODUCTS_INDEX)
+
+    if (!index) {
+      console.warn({ message: "Missing products index", source: "SearchView" })
+    }
 
     const results = await index?.search(query, {
       sort: sortBy ? [sortBy] : undefined,

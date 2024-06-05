@@ -6,6 +6,7 @@ import { authenticate } from "utils/authenticate-api-route"
 import { isOptIn, notifyOptIn } from "utils/opt-in"
 import type { Review } from "@enterprise-commerce/reviews"
 import type { CommerceProduct } from "types"
+import { isDemoMode } from "utils/demoUtils"
 
 export const maxDuration = 60
 
@@ -22,7 +23,7 @@ export async function GET(req: Request) {
     return new Response(JSON.stringify(res), { status: 200 })
   }
 
-  if (!env.MEILISEARCH_PRODUCTS_INDEX || !env.MEILISEARCH_REVIEWS_INDEX) {
+  if (isDemoMode() || !env.MEILISEARCH_REVIEWS_INDEX) {
     console.error({
       message: "Lacking environment variables",
       source: "api/reviews/sync",
@@ -33,9 +34,9 @@ export async function GET(req: Request) {
   const productsIndex = meilisearch?.index(env.MEILISEARCH_PRODUCTS_INDEX)
   const reviewsIndex = meilisearch?.index(env.MEILISEARCH_REVIEWS_INDEX)
 
-  if (!reviewsIndex) {
+  if (!productsIndex || !reviewsIndex) {
     console.error({
-      message: "No reviews index found",
+      message: "No products or reviews index found",
       source: "api/reviews/sync",
     })
     return new Response(JSON.stringify({ message: "Sorry, something went wrong" }), { status: 500 })

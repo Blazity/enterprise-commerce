@@ -1,11 +1,14 @@
-import { storefrontClient } from "clients/storefrontClient"
+import { meilisearch } from "clients/meilisearch"
 import { Skeleton } from "components/Skeleton/Skeleton"
+import { env } from "env.mjs"
 import { unstable_cache } from "next/cache"
 import Link from "next/link"
 import { getDemoCategories, isDemoMode } from "utils/demoUtils"
 
 export async function CategoriesSection() {
   const categories = await getCategories()
+
+  if (!categories.length) return null
 
   return (
     <div className="max-w-container-md mx-auto flex w-full flex-col gap-16 px-4 py-20 md:py-32 xl:px-0">
@@ -30,8 +33,9 @@ const getCategories = unstable_cache(
   async () => {
     if (isDemoMode()) return getDemoCategories().slice(0, 6)
 
-    const results = await storefrontClient.getCollections(6)
-    return results || []
+    const index = await meilisearch?.getIndex(env.MEILISEARCH_CATEGORIES_INDEX)
+    const results = await index?.search("", { limit: 6 })
+    return results.hits || []
   },
   ["categories-section"],
   { revalidate: 3600 }

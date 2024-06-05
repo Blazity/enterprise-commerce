@@ -3,8 +3,8 @@ import { MetadataRoute } from "next"
 import { meilisearch } from "clients/meilisearch"
 import { getDemoCategories, getDemoProducts, isDemoMode } from "utils/demoUtils"
 import type { PlatformCollection } from "@enterprise-commerce/core/platform/types"
-import { storefrontClient } from "clients/storefrontClient"
 import type { CommerceProduct } from "types"
+import { Index } from "meilisearch"
 
 export const revalidate = 604800
 export const runtime = "nodejs"
@@ -40,22 +40,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   let allHits: CommerceProduct[] = []
   let allCollections: PlatformCollection[] = []
-  let finished = false
-  let page = 0
 
   if (!isDemoMode()) {
-    while (finished === false) {
-      const response = await (await meilisearch.getIndex(env.MEILISEARCH_PRODUCTS_INDEX!)).getDocuments<CommerceProduct>({ limit: 100, offset: page * 100 })
-      allHits.push(...response.results)
-      page++
+    const productsIndex = await meilisearch.getIndex(env.MEILISEARCH_PRODUCTS_INDEX)
+    const categoriesIndex = await meilisearch.getIndex(env.MEILISEARCH_CATEGORIES_INDEX)
 
-      if (allHits.length >= response.total) {
-        finished = true
-      }
-    }
-
-    const collections = await storefrontClient.getCollections()
-    allCollections = collections || []
+    allHits = await getAllResults(productsIndex)
+    allCollections = await getAllResults(categoriesIndex)
   } else {
     allHits = getDemoProducts().hits
     allCollections = getDemoCategories()
@@ -91,4 +82,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   })
 
   return [...staticRoutes, ...paginationRoutes, ...productRoutes, ...collectionsRoutes]
+}
+
+async function getAllResults<T extends Record<string, any>>(index: Index) {
+  let hits: T[] = []
+  let page = 0
+  let finished = false
+
+  while (!finished) {
+    const response = await index.getDocuments<T>({ limit: 100, offset: page * 100 })
+    hits.push(...response.results)
+    page++
+    if (hits.length >= response.total) {
+      finished = true
+    }
+  }
+
+  return hits
 }

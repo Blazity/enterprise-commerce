@@ -2,6 +2,7 @@ import { storefrontClient } from "../clients/storefrontClient"
 import { meilisearch } from "../clients/meilisearch"
 import { env } from "../env.mjs"
 import { PlatformCollection } from "@enterprise-commerce/core/platform/types"
+import { isDemoMode } from "utils/demoUtils"
 
 /*
  * This script pushes all categories from storefront client to Meilisearch (bulk operation, should be done just once)
@@ -11,9 +12,16 @@ async function bulkPushCategories() {
 
   if (!collections?.length) return
 
-  if (!env.MEILISEARCH_CATEGORIES_INDEX) throw new Error("Missing index variable")
+  if (isDemoMode()) throw new Error("Missing categories variable")
 
   const index = await getMeilisearchIndex(env.MEILISEARCH_CATEGORIES_INDEX)
+
+  if (!index) {
+    return {
+      status: "error",
+      message: "Could not get categories index",
+    }
+  }
 
   await index.updateDocuments(
     collections.map((collection) => normalizeCollection(collection)),

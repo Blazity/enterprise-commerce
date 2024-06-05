@@ -35,7 +35,12 @@ const getSimilarProducts = unstable_cache(
 
     if (isDemoMode()) return getDemoProducts().hits.slice(0, limit)
 
-    const index = await meilisearch?.getIndex<CommerceProduct>(env.MEILISEARCH_PRODUCTS_INDEX!)
+    const index = await meilisearch?.getIndex<CommerceProduct>(env.MEILISEARCH_PRODUCTS_INDEX)
+
+    if (!index) {
+      console.warn({ message: "Missing products index", source: "SimilarProductsSection" })
+    }
+
     const similarSearchResults = await index.search(handle, { matchingStrategy: "last", limit, hybrid: { semanticRatio: 1 } })
 
     let collectionSearchResults = { hits: [] }

@@ -6,6 +6,7 @@ import { storefrontClient } from "clients/storefrontClient"
 import { env } from "env.mjs"
 import { Root } from "shopify-webhooks"
 import { compareHmac } from "utils/compare-hmac"
+import { isDemoMode } from "utils/demoUtils"
 
 export async function POST(req: Request) {
   const hmac = req.headers.get("X-Shopify-Hmac-Sha256")
@@ -28,7 +29,18 @@ export async function POST(req: Request) {
 
   const { product, metadata } = JSON.parse(rawPayload) as Root
 
-  let index = await getMeilisearchIndex(env.MEILISEARCH_PRODUCTS_INDEX!)
+  if (isDemoMode()) {
+    console.error({
+      message: "Missing environment variable MEILISEARCH_PRODUCTS_INDEX",
+    })
+    return new Response(JSON.stringify({ message: "Sorry, something went wrong" }), { status: 500, headers: { "Content-Type": "application/json" } })
+  }
+
+  let index = await getMeilisearchIndex(env.MEILISEARCH_PRODUCTS_INDEX)
+
+  if (!index) {
+    return new Response(JSON.stringify({ message: "Could not get products index" }), { status: 500, headers: { "Content-Type": "application/json" } })
+  }
 
   // await updateAttributesSettings(index)
 
