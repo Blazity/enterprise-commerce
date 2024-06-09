@@ -12,7 +12,7 @@ export function AuthActions() {
         Log In
       </Button>
       <Button className="leading-[18px] hover:text-white" variant="secondary" isAnimated={false} onClick={() => openModal("signup")}>
-        Sign In
+        Sign Up
       </Button>
     </div>
   )
