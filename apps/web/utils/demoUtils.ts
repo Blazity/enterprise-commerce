@@ -26,26 +26,18 @@ export function getDemoSingleCategory(handle: string) {
 }
 
 export function isDemoMode(): boolean {
-  const {
-    SHOPIFY_STOREFRONT_ACCESS_TOKEN,
-    SHOPIFY_ADMIN_ACCESS_TOKEN,
-    SHOPIFY_APP_API_SECRET_KEY,
-    SHOPIFY_STORE_DOMAIN,
-    MEILISEARCH_HOST,
-    MEILISEARCH_MASTER_KEY,
-    LIVE_URL,
-    IS_DEMO_MODE,
-  } = process.env
-
   return (
-    isDemoValue(SHOPIFY_STOREFRONT_ACCESS_TOKEN) ||
-    isDemoValue(SHOPIFY_ADMIN_ACCESS_TOKEN) ||
-    isDemoValue(SHOPIFY_APP_API_SECRET_KEY) ||
-    isDemoValue(SHOPIFY_STORE_DOMAIN) ||
-    isDemoValue(MEILISEARCH_HOST) ||
-    isDemoValue(MEILISEARCH_MASTER_KEY) ||
-    !LIVE_URL ||
-    IS_DEMO_MODE === "true"
+    isDemoValue(process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN) ||
+    isDemoValue(process.env.SHOPIFY_ADMIN_ACCESS_TOKEN) ||
+    isDemoValue(process.env.SHOPIFY_APP_API_SECRET_KEY) ||
+    isDemoValue(process.env.SHOPIFY_STORE_DOMAIN) ||
+    isDemoValue(process.env.MEILISEARCH_HOST) ||
+    isDemoValue(process.env.MEILISEARCH_MASTER_KEY) ||
+    isDemoValue(process.env.MEILISEARCH_CATEGORIES_INDEX) ||
+    isDemoValue(process.env.MEILISEARCH_PRODUCTS_INDEX) ||
+    isDemoValue(process.env.MEILISEARCH_MASTER_KEY) ||
+    !process.env.LIVE_URL ||
+    process.env.IS_DEMO_MODE === "true"
   )
 }
 
