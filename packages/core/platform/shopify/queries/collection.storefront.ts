@@ -1,5 +1,14 @@
 import { collectionFragment } from "../fragments/collection"
 
+export const getCollectionByIdQuery = `#graphql
+  query SingleCollectionById($id: ID!) {
+    collection(id: $id) {
+      ...singleCollection
+    }
+  }
+  ${collectionFragment}
+`
+
 export const getCollectionQuery = `#graphql
   query SingleCollection($handle: String!) {
     collection(handle: $handle) {

@@ -7,7 +7,7 @@ import { createProductFeedMutation, fullSyncProductFeedMutation } from "./mutati
 import { subscribeWebhookMutation } from "./mutations/webhook.admin"
 import { normalizeCart, normalizeCollection, normalizeProduct } from "./normalize"
 import { getCartQuery } from "./queries/cart.storefront"
-import { getCollectionQuery, getCollectionsQuery } from "./queries/collection.storefront"
+import { getCollectionByIdQuery, getCollectionQuery, getCollectionsQuery } from "./queries/collection.storefront"
 import { getCustomerQuery } from "./queries/customer.storefront"
 import { getMenuQuery } from "./queries/menu.storefront"
 import { getPageQuery, getPagesQuery } from "./queries/page.storefront"
@@ -35,6 +35,7 @@ import type {
   PagesQuery,
   ProductsByHandleQuery,
   SingleCartQuery,
+  SingleCollectionByIdQuery,
   SingleCollectionQuery,
   SingleCustomerQuery,
   SinglePageQuery,
@@ -97,6 +98,7 @@ export function createShopifyClient({ storefrontAccessToken, adminAccessToken, s
     getCart: async (cartId: string) => getCart(client!, cartId),
     getCollections: async (limit?: number) => getCollections(client!, limit),
     getCollection: async (handle: string) => getCollection(client!, handle),
+    getCollectionById: async (id: string) => getCollectionById(client!, id),
     createUser: async (input: PlatformUserCreateInput) => createUser(client!, input),
     getUser: async (accessToken: string) => getUser(client!, accessToken),
     updateUser: async (accessToken: string, input: Omit<PlatformUserCreateInput, "password">) => updateUser(client!, accessToken, input),
@@ -209,6 +211,12 @@ async function getCollections(client: StorefrontApiClient, limit?: number): Prom
 
 async function getCollection(client: StorefrontApiClient, handle: string): Promise<PlatformCollection | undefined | null> {
   const collection = await client.request<SingleCollectionQuery>(getCollectionQuery, { variables: { handle } })
+
+  return normalizeCollection(collection.data?.collection)
+}
+
+async function getCollectionById(client: StorefrontApiClient, id: string): Promise<PlatformCollection | undefined | null> {
+  const collection = await client.request<SingleCollectionByIdQuery>(getCollectionByIdQuery, { variables: { id } })
 
   return normalizeCollection(collection.data?.collection)
 }
