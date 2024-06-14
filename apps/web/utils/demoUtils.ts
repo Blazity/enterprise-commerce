@@ -32,10 +32,9 @@ export function isDemoMode(): boolean {
     isDemoValue(process.env.SHOPIFY_APP_API_SECRET_KEY) ||
     isDemoValue(process.env.SHOPIFY_STORE_DOMAIN) ||
     isDemoValue(process.env.MEILISEARCH_HOST) ||
-    isDemoValue(process.env.MEILISEARCH_MASTER_KEY) ||
+    isDemoValue(process.env.MEILISEARCH_ADMIN_KEY) ||
     isDemoValue(process.env.MEILISEARCH_CATEGORIES_INDEX) ||
     isDemoValue(process.env.MEILISEARCH_PRODUCTS_INDEX) ||
-    isDemoValue(process.env.MEILISEARCH_MASTER_KEY) ||
     !process.env.LIVE_URL ||
     process.env.IS_DEMO_MODE === "true"
   )
