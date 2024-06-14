@@ -1,7 +1,7 @@
 import { env } from "env.mjs"
 import { MeiliSearch } from "meilisearch"
 
-export const meilisearchClientSingleton = () => {
+const meilisearchClientSingleton = () => {
   return new MeiliSearch({
     host: env.MEILISEARCH_HOST || "",
     apiKey: env.MEILISEARCH_MASTER_KEY || "",
