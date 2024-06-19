@@ -19,6 +19,7 @@ import { GithubBadge } from "views/GithubBadge"
 import { DemoModeAlert } from "views/DemoModeAlert"
 import { CartView } from "views/Cart/CartView"
 import { storefrontClient } from "clients/storefrontClient"
+import { PlatformMenu } from "@enterprise-commerce/core/platform/types"
 
 const DraftToolbar = nextDynamic(() => import("views/DraftToolbar"), { ssr: false })
 
@@ -182,6 +183,26 @@ export const metadata: Metadata = {
   applicationName: "Next.js",
 }
 
+// Recursive function to build a list of handles from a hierarchical menu
+// It will keep hierarchy separated by a /
+// Example: ["collection-1", "collection-1/subcollection-1", "collection-1/subcollection-2", "collection-1/subcollection-1/subsubcollection-1"]
+function buildHierarchicalHandles(menu: any[]) {
+  const handles: string[] = []
+  function buildHandles(item: PlatformMenu["items"][number], parentHandle: string) {
+    const handle: string = parentHandle ? `${parentHandle}/${item.resource?.handle}` : item.resource?.handle
+    handles.push(handle)
+    if (item.items) {
+      item.items.forEach((subItem: any) => {
+        buildHandles(subItem, handle)
+      })
+    }
+  }
+  menu.forEach((item) => {
+    buildHandles(item, "")
+  })
+  return handles
+}
+
 function mapOver(item: any) {
   if (!item.items || item.items.length < 1) {
     return (
@@ -191,10 +212,8 @@ function mapOver(item: any) {
     )
   }
 
-  console.log({ item })
-
   return (
-    <li key={item.id}>
+    <li key={item.id} className="p-2">
       {item.title} - {item.resource && item.resource.__typename === "Collection" && item.resource.handle}
       <ul className="list-inside list-decimal">
         {item.items.map((subItem: any) => {
@@ -207,6 +226,8 @@ function mapOver(item: any) {
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const { items } = await storefrontClient.getMenu()
+  console.log({ menu: buildHierarchicalHandles(items.filter((item) => item.resource?.__typename === "Collection")) })
+
   return (
     <html lang="en">
       <body>
