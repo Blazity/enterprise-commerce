@@ -9,7 +9,7 @@ import { normalizeCart, normalizeCollection, normalizeProduct } from "./normaliz
 import { getCartQuery } from "./queries/cart.storefront"
 import { getCollectionByIdQuery, getCollectionQuery, getCollectionsQuery } from "./queries/collection.storefront"
 import { getCustomerQuery } from "./queries/customer.storefront"
-import { getMenuQuery } from "./queries/menu.storefront"
+import { getMenuQuery, type MenuQuery } from "./queries/menu.storefront"
 import { getPageQuery, getPagesQuery } from "./queries/page.storefront"
 import { getLatestProductFeedQuery } from "./queries/product-feed.admin"
 import { getAdminProductQuery, getProductStatusQuery } from "./queries/product.admin"
@@ -31,7 +31,6 @@ import type {
   CreateCartMutation,
   CreateCustomerMutation,
   DeleteCartItemsMutation,
-  MenuQuery,
   PagesQuery,
   ProductsByHandleQuery,
   SingleCartQuery,
@@ -102,7 +101,8 @@ export function createShopifyClient({ storefrontAccessToken, adminAccessToken, s
     createUser: async (input: PlatformUserCreateInput) => createUser(client!, input),
     getUser: async (accessToken: string) => getUser(client!, accessToken),
     updateUser: async (accessToken: string, input: Omit<PlatformUserCreateInput, "password">) => updateUser(client!, accessToken, input),
-    createUserAccessToken: async (input: Pick<PlatformUserCreateInput, "password" | "email">) => createUserAccessToken(client!, input)
+    createUserAccessToken: async (input: Pick<PlatformUserCreateInput, "password" | "email">) => createUserAccessToken(client!, input),
+    getHierarchicalCollections: async (handle: string, depth?: number) => getHierarchicalCollections(client!, handle, depth),
   }
 }
 
@@ -110,6 +110,15 @@ async function getMenu(client: StorefrontApiClient, handle: string = "main-menu"
   const query = getMenuQuery(depth)
   const response = await client.request<MenuQuery>(query, { variables: { handle } })
   const mappedItems = response.data?.menu?.items
+
+  return { items: mappedItems || [] }
+}
+
+async function getHierarchicalCollections(client: StorefrontApiClient, handle: string, depth = 3): Promise<PlatformMenu> {
+  const query = getMenuQuery(depth)
+  const response = await client.request<MenuQuery>(query, { variables: { handle } })
+  const mappedItems = response.data?.menu.items.filter((item) => item.resource?.__typename === "Collection")
+
   return {
     items: mappedItems || [],
   }

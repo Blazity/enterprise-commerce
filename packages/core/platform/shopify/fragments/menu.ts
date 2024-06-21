@@ -1,7 +1,6 @@
 const menuItemFragment = `#graphql
 fragment NavigationItemFields on MenuItem {
 	title
-	url
 	id
     resource {
         __typename

@@ -1,7 +1,7 @@
 import { MenuItem } from "./shopify/types/storefront.types"
 
 export interface PlatformMenu {
-  items: Pick<MenuItem, "id" | "resource" | "title" | "items">[]
+  items: Array<Pick<MenuItem, "id" | "resource" | "title" | "items">>
 }
 
 export interface PlatformProduct {
