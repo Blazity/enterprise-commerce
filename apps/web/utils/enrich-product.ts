@@ -1,4 +1,5 @@
-import { PlatformMenu, PlatformProduct } from "@enterprise-commerce/core/platform/types"
+import { PlatformImage, PlatformMenu, PlatformProduct } from "@enterprise-commerce/core/platform/types"
+import { replicate } from "clients/replicate"
 
 /*
  * Enrich product by attaching hierarchical categories to it
@@ -6,16 +7,13 @@ import { PlatformMenu, PlatformProduct } from "@enterprise-commerce/core/platfor
  * Currently just shopify focused
  */
 
-export const enrichProduct = (product: PlatformProduct, collections: PlatformMenu["items"]) => {
+export const enrichProduct = async (product: PlatformProduct, collections: PlatformMenu["items"]) => {
   const categoryMap = buildCategoryMap(collections)
+  const images = await generateProductAltTags(product)
 
   return {
     ...product,
-    // ugly hack to update all collections that does not exist in the tags, as shopify payload just contains outdated data..
-    collections: product.collections.filter((collection) => {
-      const hierarchy = categoryMap.get(collection.handle)
-      return hierarchy?.includes(collection.handle)
-    }),
+    images: images.filter(Boolean),
     hierarchicalCategories: generateHierarchicalCategories(product.tags, categoryMap),
   }
 }
@@ -63,4 +61,26 @@ function generateHierarchicalCategories(tags: PlatformProduct["tags"], categoryM
   })
 
   return hierarchicalCategories
+}
+
+async function generateProductAltTags(product: PlatformProduct): Promise<(PlatformImage | undefined)[]> {
+  try {
+    const altTagAwareImages = await Promise.all(product?.images?.slice(0, 1).map(mapper).filter(Boolean))
+    return [...altTagAwareImages, ...product?.images?.slice(1)?.filter(Boolean)] || []
+  } catch (e) {
+    console.error(e)
+    return product.images // graceful exit
+  }
+
+  async function mapper(image: PlatformImage) {
+    if (!replicate) return
+    const output = (await replicate.run("salesforce/blip:2e1dddc8621f72155f24cf2e0adbde548458d3cab9f00c0139eea840d0ac4746", {
+      input: {
+        task: "image_captioning",
+        image: image.url,
+      },
+    })) as unknown as string
+
+    return { ...image, altText: output?.replace("Caption:", "") || "" }
+  }
 }

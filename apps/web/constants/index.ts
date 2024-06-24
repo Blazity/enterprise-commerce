@@ -12,3 +12,7 @@ export const BUCKETS = {
 } as const
 
 export const facetParams = ["q", "minPrice", "maxPrice", "sortBy", "categories", "vendors", "tags", "colors", "sizes", "rating"]
+
+export const HIERARCHICAL_ATRIBUTES = ["hierarchicalCategories.lvl0", "hierarchicalCategories.lvl1", "hierarchicalCategories.lvl2"] as const
+
+export const HIERARCHICAL_SEPARATOR = " > "

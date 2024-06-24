@@ -87,7 +87,7 @@ async function handleProductTopics(topic: SupportedTopic, { id }: Record<string,
         return new Response(JSON.stringify({ message: "Product not found" }), { status: 404, headers: { "Content-Type": "application/json" } })
       }
 
-      const enrichedProduct = enrichProduct(product, items)
+      const enrichedProduct = await enrichProduct(product, items)
       await index.updateDocuments([normalizeProduct(enrichedProduct, id)], {
         primaryKey: "id",
       })
