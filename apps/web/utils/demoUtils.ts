@@ -31,6 +31,7 @@ export function isDemoMode(): boolean {
     isDemoValue(process.env.SHOPIFY_ADMIN_ACCESS_TOKEN) ||
     isDemoValue(process.env.SHOPIFY_APP_API_SECRET_KEY) ||
     isDemoValue(process.env.SHOPIFY_STORE_DOMAIN) ||
+    isDemoValue(process.env.SHOPIFY_HIERARCHICAL_NAV_HANDLE) ||
     isDemoValue(process.env.MEILISEARCH_HOST) ||
     isDemoValue(process.env.MEILISEARCH_ADMIN_KEY) ||
     isDemoValue(process.env.MEILISEARCH_CATEGORIES_INDEX) ||

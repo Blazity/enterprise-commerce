@@ -15,6 +15,7 @@ import { Sorter } from "views/Listing/Sorter"
 import { getDemoProducts, isDemoMode } from "utils/demoUtils"
 import { env } from "env.mjs"
 import { CommerceProduct, SearchParamsType } from "types"
+import { HIERARCHICAL_SEPARATOR } from "constants/index"
 
 interface SearchViewProps {
   searchParams: SearchParamsType
@@ -47,7 +48,7 @@ export async function SearchView({ searchParams, disabledFacets, intro, collecti
     filterBuilder.where("collections.handle", ComparisonOperators.Equal, collection.handle)
   }
 
-  const { facetDistribution, hits, totalPages } = await searchProducts(q, sortBy, page, composeFilters(filterBuilder, rest).build())
+  const { facetDistribution, hits, totalPages } = await searchProducts(q, sortBy, page, composeFilters(filterBuilder, rest, HIERARCHICAL_SEPARATOR).build())
 
   return (
     <div className="max-w-container-md mx-auto w-full px-4 py-12 md:py-24 xl:px-0">
@@ -93,7 +94,20 @@ const searchProducts = unstable_cache(
     const results = await index?.search(query, {
       sort: sortBy ? [sortBy] : undefined,
       hitsPerPage: 24,
-      facets: ["collections.handle", "collections.title", "tags", "vendor", "variants.availableForSale", "flatOptions.Size", "flatOptions.Color", "minPrice", "avgRating"],
+      facets: [
+        "collections.handle",
+        "collections.title",
+        "tags",
+        "vendor",
+        "variants.availableForSale",
+        "flatOptions.Size",
+        "flatOptions.Color",
+        "minPrice",
+        "avgRating",
+        `hierarchicalCategories.lvl0`,
+        `hierarchicalCategories.lvl1`,
+        `hierarchicalCategories.lvl2`,
+      ],
       filter,
       page,
       attributesToRetrieve: ["id", "handle", "title", "priceRange", "featuredImage", "minPrice", "variants", "images", "avgRating", "totalReviews"],

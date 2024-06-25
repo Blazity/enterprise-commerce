@@ -1,5 +1,7 @@
+import { MenuItem } from "./shopify/types/storefront.types"
+
 export interface PlatformMenu {
-  items: { title: string; url: string }[]
+  items: Array<Pick<MenuItem, "id" | "resource" | "title" | "items">>
 }
 
 export interface PlatformProduct {
