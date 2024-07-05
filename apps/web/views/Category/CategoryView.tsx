@@ -18,7 +18,6 @@ export async function CategoryView({ params, searchParams = {} }: CategoryViewPr
     <SearchView
       searchParams={searchParams}
       params={params}
-      disabledFacets={["category", "tags"]}
       collection={collection}
       intro={<HeroSection handle={collection.handle} title={collection.title} description={collection.description} image={collection.image} />}
     />

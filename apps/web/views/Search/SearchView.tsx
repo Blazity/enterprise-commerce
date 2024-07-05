@@ -7,14 +7,14 @@ import { meilisearch } from "clients/meilisearch"
 import { ComparisonOperators, FilterBuilder } from "utils/filterBuilder"
 import { composeFilters } from "views/Listing/composeFilters"
 import { FacetsDesktop } from "views/Listing/FacetsDesktop"
-import { FacetsMobile } from "views/Listing/FacetsMobile"
 import { HitsSection } from "views/Listing/HitsSection"
 import { PaginationSection } from "views/Listing/PaginationSection"
 import { SearchFacet } from "views/Listing/SearchFacet"
-import { Sorter } from "views/Listing/Sorter"
 import { getDemoProducts, isDemoMode } from "utils/demoUtils"
 import { env } from "env.mjs"
 import { CommerceProduct, SearchParamsType } from "types"
+import { HIERARCHICAL_SEPARATOR, HITS_PER_PAGE } from "constants/index"
+import { Controls } from "views/Listing/Controls"
 
 interface SearchViewProps {
   searchParams: SearchParamsType
@@ -32,9 +32,7 @@ export const searchParamsCache = createSearchParamsCache({
   sortBy: parseAsString.withDefault(""),
   categories: parseAsArrayOf(parseAsString).withDefault([]),
   vendors: parseAsArrayOf(parseAsString).withDefault([]),
-  tags: parseAsArrayOf(parseAsString).withDefault([]),
   colors: parseAsArrayOf(parseAsString).withDefault([]),
-  sizes: parseAsArrayOf(parseAsString).withDefault([]),
   rating: parseAsInteger,
 })
 
@@ -47,33 +45,20 @@ export async function SearchView({ searchParams, disabledFacets, intro, collecti
     filterBuilder.where("collections.handle", ComparisonOperators.Equal, collection.handle)
   }
 
-  const { facetDistribution, hits, totalPages } = await searchProducts(q, sortBy, page, composeFilters(filterBuilder, rest).build())
+  const { facetDistribution, hits, totalPages, totalHits } = await searchProducts(q, sortBy, page, composeFilters(filterBuilder, rest, HIERARCHICAL_SEPARATOR).build())
 
   return (
     <div className="max-w-container-md mx-auto w-full px-4 py-12 md:py-24 xl:px-0">
       {intro}
-      <div className="flex min-h-screen w-full flex-col gap-12 md:flex-row md:gap-24">
-        <FacetsDesktop disabledFacets={disabledFacets} className="hidden min-w-[250px] max-w-[250px] md:mt-16 lg:block" facetDistribution={facetDistribution} />
-        <div className="flex w-full flex-col">
-          <div className="mb-6 flex w-full flex-wrap items-center justify-between">
-            <div className="flex w-full gap-2 pb-8">
-              <div className="flex items-center justify-between gap-4">
-                <FacetsMobile disabledFacets={disabledFacets} facetDistribution={facetDistribution} className="block lg:hidden" />
-              </div>
-              <Suspense>
-                <SearchFacet className="grow" />
-              </Suspense>
-              {/*  has to be wrapped w. suspense, nuqs is using useSearchParams in useQueryState
-               * https://github.com/47ng/nuqs/issues/496
-               */}
-              <Suspense>
-                <Sorter className="ml-auto hidden shrink-0 basis-[200px] self-center lg:block" />
-              </Suspense>
-            </div>
-
-            <HitsSection hits={hits} />
-            <PaginationSection queryParams={searchParams} totalPages={totalPages} />
-          </div>
+      <div className="flex gap-12 md:gap-24">
+        <FacetsDesktop disabledFacets={disabledFacets} className="hidden shrink-0  basis-[250px] lg:block" facetDistribution={facetDistribution} />
+        <div className="w-full">
+          <Controls disabledFacets={disabledFacets} facetDistribution={facetDistribution} totalHits={totalHits} />
+          <Suspense>
+            <SearchFacet className="mb-6" />
+          </Suspense>
+          <HitsSection hits={hits} />
+          <PaginationSection queryParams={searchParams} totalPages={totalPages} />
         </div>
       </div>
     </div>
@@ -92,8 +77,11 @@ const searchProducts = unstable_cache(
 
     const results = await index?.search(query, {
       sort: sortBy ? [sortBy] : undefined,
-      hitsPerPage: 24,
-      facets: ["collections.handle", "collections.title", "tags", "vendor", "variants.availableForSale", "flatOptions.Size", "flatOptions.Color", "minPrice", "avgRating"],
+      limit: HITS_PER_PAGE,
+      hitsPerPage: HITS_PER_PAGE,
+      facets: ["collections.handle", "collections.title", "vendor", "variants.availableForSale", "flatOptions.Color", "minPrice", "avgRating"].concat(
+        !!env.SHOPIFY_HIERARCHICAL_NAV_HANDLE ? [`hierarchicalCategories.lvl0`, `hierarchicalCategories.lvl1`, `hierarchicalCategories.lvl2`] : []
+      ),
       filter,
       page,
       attributesToRetrieve: ["id", "handle", "title", "priceRange", "featuredImage", "minPrice", "variants", "images", "avgRating", "totalReviews"],

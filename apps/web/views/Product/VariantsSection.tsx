@@ -27,7 +27,7 @@ export function VariantsSection({ variants, className, handle, combination }: Va
             <Variant
               cartItem={cartItem}
               key={singleCombination.id}
-              href={createOptionfulUrl(handle, singleCombination.size, singleCombination.color)}
+              href={createOptionfulUrl(handle, singleCombination.color)}
               singleCombination={singleCombination}
               isActive={singleCombination.id === combination?.id}
             />

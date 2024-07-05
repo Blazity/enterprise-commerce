@@ -1,5 +1,6 @@
 "use client"
 
+import { Button } from "components/Button/Button"
 import { Placeholder } from "components/GenericModal/GenericModal"
 import { FiltersIcon } from "components/Icons/FiltersIcon"
 import { CategoriesDistribution } from "meilisearch"
@@ -20,9 +21,10 @@ export function FacetsMobile({ className, facetDistribution, disabledFacets }: F
 
   return (
     <div className={className}>
-      <div onClick={() => openModal("facets-mobile")}>
-        <FiltersIcon className="size-5" />
-      </div>
+      <Button className="px-1 py-2 [&>span]:flex [&>span]:items-center [&>span]:gap-2" onClick={() => openModal("facets-mobile")}>
+        <FiltersIcon className="size-4" />
+        <span className="text-sm">Filters</span>
+      </Button>
       {!!modals["facets-mobile"] && (
         <GenericModal className="h-full overflow-auto" title="Filters" open={!!modals["facets-mobile"]} onOpenChange={() => closeModal("facets-mobile")}>
           <FacetsContent facetDistribution={facetDistribution} disabledFacets={disabledFacets} />

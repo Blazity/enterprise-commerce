@@ -43,14 +43,14 @@ export async function generateStaticParams() {
 async function ProductView({ slug }: { slug: string }) {
   const product = await getDraftAwareProduct(slug)
 
-  const { color, size } = getOptionsFromUrl(slug)
-  const hasInvalidOptions = !hasValidOption(product?.variants, "color", color) || !hasValidOption(product?.variants, "size", size)
+  const { color } = getOptionsFromUrl(slug)
+  const hasInvalidOptions = !hasValidOption(product?.variants, "color", color)
 
   if (!product || hasInvalidOptions) {
     return notFound()
   }
 
-  const combination = getCombination(product as CommerceProduct, color, size)
+  const combination = getCombination(product as CommerceProduct, color)
   const lastCollection = product?.collections?.findLast(Boolean)
   const hasOnlyOneVariant = product.variants.length <= 1
 

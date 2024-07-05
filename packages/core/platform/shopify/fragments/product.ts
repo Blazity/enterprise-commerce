@@ -24,17 +24,10 @@ const productFragment = `#graphql
         currencyCode
       }
     }
-    collections(first: 15) {
+    collections(first: 250) {
       nodes {
         handle
-        title
-        description
-        updatedAt
         id
-        descriptionHtml
-        image {
-          ...singleImage
-        }
       }
     }
     variants(first: 250) {

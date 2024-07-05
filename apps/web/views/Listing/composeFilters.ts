@@ -5,33 +5,23 @@ interface MakeFilterProps {
   maxPrice: number | null
   categories: string[]
   vendors: string[]
-  tags: string[]
   colors: string[]
-  sizes: string[]
-  rating: number | null
+  rating?: number | null
 }
 
-export function composeFilters(filter: FilterBuilder, parsedSearchParams: MakeFilterProps) {
+export function composeFilters(filter: FilterBuilder, parsedSearchParams: MakeFilterProps, separator: string) {
   const filterConditions = [
     {
       predicate: parsedSearchParams.categories.length > 0,
-      action: () => filter.and().group((sub) => sub.in("collections.handle", parsedSearchParams.categories)),
+      action: () => filter.and().group((sub) => sub.in(`hierarchicalCategories.lvl${parsedSearchParams.categories.length - 1}`, [parsedSearchParams.categories.join(separator)])),
     },
     {
       predicate: parsedSearchParams.vendors.length > 0,
       action: () => filter.and().group((sub) => sub.in("vendor", parsedSearchParams.vendors)),
     },
     {
-      predicate: parsedSearchParams.tags.length > 0,
-      action: () => filter.and().group((sub) => sub.in("tags", parsedSearchParams.tags)),
-    },
-    {
       predicate: parsedSearchParams.colors.length > 0,
       action: () => filter.and().group((sub) => sub.in("flatOptions.Color", parsedSearchParams.colors)),
-    },
-    {
-      predicate: parsedSearchParams.sizes.length > 0,
-      action: () => filter.and().group((sub) => sub.in("flatOptions.Size", parsedSearchParams.sizes)),
     },
     {
       predicate: !!parsedSearchParams.minPrice,

@@ -41,17 +41,19 @@ export default async function Product({ params: { slug } }: ProductProps) {
 }
 
 async function ProductView({ slug }: { slug: string }) {
-  const product = await getProduct(removeOptionsFromUrl(slug))
-  const { reviews, total: totalReviews } = await getProductReviews(removeOptionsFromUrl(slug), { limit: 4 })
+  const [product, { reviews, total: totalReviews }] = await Promise.all([
+    await getProduct(removeOptionsFromUrl(slug)),
+    await getProductReviews(removeOptionsFromUrl(slug), { limit: 4 }),
+  ])
 
-  const { color, size } = getOptionsFromUrl(slug)
-  const hasInvalidOptions = !hasValidOption(product?.variants, "color", color) || !hasValidOption(product?.variants, "size", size)
+  const { color } = getOptionsFromUrl(slug)
+  const hasInvalidOptions = !hasValidOption(product?.variants, "color", color)
 
   if (!product || hasInvalidOptions) {
     return notFound()
   }
 
-  const combination = getCombination(product, color, size)
+  const combination = getCombination(product, color)
   const lastCollection = product?.collections?.findLast(Boolean)
   const hasOnlyOneVariant = product.variants.length <= 1
 

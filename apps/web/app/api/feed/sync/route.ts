@@ -4,6 +4,7 @@ import { storefrontClient } from "clients/storefrontClient"
 import { env } from "env.mjs"
 import type { FailedAttemptError } from "p-retry"
 import { compareHmac } from "utils/compare-hmac"
+import { enrichProduct } from "utils/enrich-product"
 
 type SupportedTopic = "products/update" | "products/delete" | "products/create" | "collections/update" | "collections/delete" | "collections/create"
 
@@ -80,11 +81,15 @@ async function handleProductTopics(topic: SupportedTopic, { id }: Record<string,
     case "products/update":
     case "products/create":
       const product = await storefrontClient.getProduct(makeShopifyId(`${id}`, "Product"))
+      const items = env.SHOPIFY_HIERARCHICAL_NAV_HANDLE ? (await storefrontClient.getHierarchicalCollections(env.SHOPIFY_HIERARCHICAL_NAV_HANDLE)).items : []
+
       if (!product) {
         console.error(`Product ${id} not found`)
         return new Response(JSON.stringify({ message: "Product not found" }), { status: 404, headers: { "Content-Type": "application/json" } })
       }
-      await index.updateDocuments([normalizeProduct(product, id)], {
+
+      const enrichedProduct = await enrichProduct(product, items)
+      await index.updateDocuments([normalizeProduct(enrichedProduct, id)], {
         primaryKey: "id",
       })
 
