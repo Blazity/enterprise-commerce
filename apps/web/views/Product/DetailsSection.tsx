@@ -18,8 +18,8 @@ export function DetailsSection({ product, slug }: { product: CommerceProduct; sl
     rootMargin: "0px",
   })
 
-  const { color, size } = getOptionsFromUrl(slug)
-  const combination = getCombination(product, color, size)
+  const { color } = getOptionsFromUrl(slug)
+  const combination = getCombination(product, color)
 
   if (!hasLoaded.current && entry?.isIntersecting) {
     hasLoaded.current = true

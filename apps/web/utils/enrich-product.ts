@@ -10,11 +10,12 @@ import { replicate } from "clients/replicate"
 export const enrichProduct = async (product: PlatformProduct, collections: PlatformMenu["items"]) => {
   const categoryMap = buildCategoryMap(collections)
   const images = await generateProductAltTags(product)
+  const hierarchicalCategories = generateHierarchicalCategories(product.tags, categoryMap)
 
   return {
     ...product,
     images: images.filter(Boolean),
-    hierarchicalCategories: generateHierarchicalCategories(product.tags, categoryMap),
+    hierarchicalCategories,
   }
 }
 
@@ -38,6 +39,8 @@ function buildCategoryMap(categories: PlatformMenu["items"]) {
 
 function generateHierarchicalCategories(tags: PlatformProduct["tags"], categoryMap: Map<string, string[]>) {
   const hierarchicalCategories: Record<"lvl0" | "lvl1" | "lvl2", string[]> = { lvl0: [], lvl1: [], lvl2: [] }
+
+  if (!tags.length || !categoryMap.size) return hierarchicalCategories
 
   tags.forEach((tag) => {
     const path = categoryMap.get(tag)

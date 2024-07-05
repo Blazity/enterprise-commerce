@@ -18,8 +18,6 @@ import { Metadata } from "next"
 import { GithubBadge } from "views/GithubBadge"
 import { DemoModeAlert } from "views/DemoModeAlert"
 import { CartView } from "views/Cart/CartView"
-import { storefrontClient } from "clients/storefrontClient"
-import { PlatformMenu } from "@enterprise-commerce/core/platform/types"
 
 const DraftToolbar = nextDynamic(() => import("views/DraftToolbar"), { ssr: false })
 

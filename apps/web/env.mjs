@@ -8,7 +8,7 @@ export const env = createEnv({
     SHOPIFY_STORE_DOMAIN: z.string(),
     SHOPIFY_ADMIN_ACCESS_TOKEN: z.string().optional(),
     SHOPIFY_APP_API_SECRET_KEY: z.string().optional(),
-    SHOPIFY_HIERARCHICAL_NAV_HANDLE: z.string(),
+    SHOPIFY_HIERARCHICAL_NAV_HANDLE: z.string().optional(),
     MEILISEARCH_PRODUCTS_INDEX: z.string(),
     MEILISEARCH_CATEGORIES_INDEX: z.string(),
     MEILISEARCH_ADMIN_KEY: z.string().optional(),

@@ -81,7 +81,8 @@ async function handleProductTopics(topic: SupportedTopic, { id }: Record<string,
     case "products/update":
     case "products/create":
       const product = await storefrontClient.getProduct(makeShopifyId(`${id}`, "Product"))
-      const { items } = await storefrontClient.getHierarchicalCollections(env.SHOPIFY_HIERARCHICAL_NAV_HANDLE)
+      const items = env.SHOPIFY_HIERARCHICAL_NAV_HANDLE ? (await storefrontClient.getHierarchicalCollections(env.SHOPIFY_HIERARCHICAL_NAV_HANDLE)).items : []
+
       if (!product) {
         console.error(`Product ${id} not found`)
         return new Response(JSON.stringify({ message: "Product not found" }), { status: 404, headers: { "Content-Type": "application/json" } })
