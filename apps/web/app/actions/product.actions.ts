@@ -7,7 +7,7 @@ import { meilisearch } from "clients/meilisearch"
 import type { Review } from "@enterprise-commerce/reviews"
 
 import { ComparisonOperators, FilterBuilder } from "utils/filterBuilder"
-import { getDemoSingleProduct, isDemoMode } from "utils/demoUtils"
+import { getDemoProductReviews, getDemoSingleProduct, isDemoMode } from "utils/demoUtils"
 import type { CommerceProduct } from "types"
 import { notifyOptIn } from "utils/opt-in"
 
@@ -45,7 +45,7 @@ export const getProduct = unstable_cache(
 
 export const getProductReviews = unstable_cache(
   async (handle: string, { page = 1, limit = 10 } = { page: 1, limit: 10 }) => {
-    if (isDemoMode()) return { reviews: [], total: 0 }
+    if (isDemoMode()) return getDemoProductReviews()
 
     if (!env.MEILISEARCH_REVIEWS_INDEX) {
       notifyOptIn({ feature: "reviews", source: "product.actions.ts" })

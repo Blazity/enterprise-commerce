@@ -4,7 +4,10 @@
       "id": "7513862799460",
       "handle": "example_bags2",
       "title": "Floral Elegance Tote Bag",
-      "descriptionHtml": "Embrace timeless style with our Floral Elegance Tote Bag, perfect for adding a touch of sophistication to any outfit. This chic handbag features a vibrant botanical print, a spacious interior for all your essentials, and luxurious hardware accents for a polished finish. Its durable construction ensures lasting quality, making it a must-have accessory for the fashion-forward individual.",
+      "descriptionHtml": "Customers are enamored with its vibrant botanical print and sophisticated design, which effortlessly elevates any outfit. The spacious interior accommodates all essentials, while the luxurious hardware accents add a polished touch. Reviewers also appreciate its durable construction, ensuring it remains a staple accessory for years to come. Perfect for anyone looking to embrace timeless style with a chic and practical handbag.",
+      "totalReviews": 15,
+      "avgRating": 4.85,
+      "reviewsSummary": "The SleekTime Pro Smartwatch is praised for its minimalist and sleek design, with a smooth stainless steel finish and an easy-to-read watch face. Many users find it a game-changer in their daily routines. However, one reviewer mentioned that it is too expensive.",
       "priceRange": {
         "maxVariantPrice": {
           "amount": "960.0",
@@ -143,6 +146,10 @@
       "handle": "example_skin_care2",
       "title": "Soothing Lavender Shower Gel",
       "descriptionHtml": "Indulge in the calming aromas of our Soothing Lavender Shower Gel, designed to relax your senses and prepare you for a restful night's sleep. The gentle formula works into a rich lather, leaving your skin feeling soft and lightly scented with the tranquil fragrance of lavender. Perfect for your evening shower routine to unwind after a long day.",
+      "totalReviews": 8,
+      "avgRating": 4.375,
+      "reviewsSummary": "Users love the calming aroma, which helps them relax and prepare for a restful night's sleep. The gentle formula creates a rich lather that leaves skin feeling soft and lightly scented with lavender's tranquil fragrance. Many have praised it as a perfect addition to their evening shower routine, making unwinding after a long day a truly indulgent experience.",
+
       "priceRange": {
         "maxVariantPrice": {
           "amount": "390.0",
@@ -281,6 +288,9 @@
       "handle": "example_music7",
       "title": "Portable Round Mesh Bluetooth Speaker",
       "descriptionHtml": "Experience immersive sound with our Portable Round Mesh Bluetooth Speaker, designed for music lovers on-the-go. This speaker boasts a compact design and a durable mesh build, suitable for any setting, indoors or out. Along with superior sound quality, it includes a convenient leather strap for easy transport, making it your perfect audio companion.",
+      "totalReviews": 4,
+      "avgRating": 3.215,
+      "reviewsSummary": "The Portable Round Mesh Bluetooth Speaker features a compact design and durable mesh build, perfect for any setting. Its leather strap adds convenience for easy transport. While some users praise its sound quality, others find it lacking in immersive audio experience.",
       "priceRange": {
         "maxVariantPrice": {
           "amount": "760.0",
@@ -419,6 +429,10 @@
       "handle": "example_music13",
       "title": "Orbital Harmony Hanging Bluetooth Speaker",
       "descriptionHtml": "Experience 360-degree sound with the Orbital Harmony Hanging Bluetooth Speaker, designed for both indoor and outdoor use. Its sleek, orb-like design adds a modern touch to any space, while the durable strap allows for easy hanging anywhere. Enjoy wireless audio with high-fidelity playback that can pair effortlessly with your devices.",
+
+      "totalReviews": 75,
+      "avgRating": 5,
+      "reviewsSummary": "The Orbital Harmony Hanging Bluetooth Speaker delivers 360-degree sound with high-fidelity playback, perfect for both indoor and outdoor use. Its sleek, orb-like design adds a modern touch, and the durable strap allows for easy hanging anywhere. Users love its seamless device pairing and exceptional audio quality.",
       "priceRange": {
         "maxVariantPrice": {
           "amount": "890.0",

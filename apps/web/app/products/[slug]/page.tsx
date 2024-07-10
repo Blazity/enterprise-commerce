@@ -88,7 +88,7 @@ async function ProductView({ slug }: { slug: string }) {
           <ReviewsSection
             productHandle={product.handle}
             productId={product.id}
-            reviews={reviews?.map((review) => ({ ...review, author: review.reviewer.name }))}
+            reviews={reviews?.map((review) => ({ ...review, author: review.reviewer.name })) || []}
             total={totalReviews}
             summary={product.reviewsSummary}
           />
