@@ -17,7 +17,7 @@ interface CategoryFacetProps {
 export function CategoryFacet({ distribution, isChecked, onCheckedChange, onBackClick }: CategoryFacetProps) {
   const { items, current } = useHierarchicalMenu({
     attributes: HIERARCHICAL_ATRIBUTES,
-    distribution: distribution,
+    distribution,
     separator: HIERARCHICAL_SEPARATOR,
   })
 

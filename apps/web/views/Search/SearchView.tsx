@@ -79,7 +79,7 @@ const searchProducts = unstable_cache(
       sort: sortBy ? [sortBy] : undefined,
       limit: HITS_PER_PAGE,
       hitsPerPage: HITS_PER_PAGE,
-      facets: ["collections.handle", "collections.title", "vendor", "variants.availableForSale", "flatOptions.Color", "minPrice", "avgRating"].concat(
+      facets: ["vendor", "variants.availableForSale", "flatOptions.Color", "minPrice", "avgRating"].concat(
         !!env.SHOPIFY_HIERARCHICAL_NAV_HANDLE ? [`hierarchicalCategories.lvl0`, `hierarchicalCategories.lvl1`, `hierarchicalCategories.lvl2`] : []
       ),
       filter,
