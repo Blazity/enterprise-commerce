@@ -25,6 +25,10 @@ export function getDemoSingleCategory(handle: string) {
   return getDemoCategories().find((c) => c.handle === handle) || null
 }
 
+export function getDemoProductReviews() {
+  return require("public/demo-product-reviews-data.json")
+}
+
 export function isDemoMode(): boolean {
   return (
     isDemoValue(process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN) ||
