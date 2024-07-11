@@ -19,11 +19,12 @@ import { generateJsonLd } from "./metadata"
 import { ReviewsSection } from "views/Product/ReviewsSection"
 
 import type { CommerceProduct } from "types"
+import { isDemoMode } from "utils/demoUtils"
+import { meilisearch } from "clients/meilisearch"
+import { env } from "env.mjs"
 
 export const revalidate = 3600
-
 export const dynamic = "force-static"
-
 export const dynamicParams = true
 
 interface ProductProps {
@@ -31,6 +32,19 @@ interface ProductProps {
 }
 
 export { generateMetadata } from "./metadata"
+
+export async function generateStaticParams() {
+  if (isDemoMode()) return []
+
+  const index = await meilisearch?.getIndex<CommerceProduct>(env.MEILISEARCH_PRODUCTS_INDEX)
+
+  const { results } = await index?.getDocuments({
+    limit: 1000,
+    fields: ["handle"],
+  })
+
+  return results.map(({ handle }) => ({ slug: handle }))
+}
 
 export default async function Product({ params: { slug } }: ProductProps) {
   return (

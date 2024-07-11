@@ -23,9 +23,9 @@ export async function generateStaticParams() {
   if (isDemoMode()) return []
 
   const index = await meilisearch?.getIndex<PlatformCollection>(env.MEILISEARCH_CATEGORIES_INDEX)
-  const collections = (await index?.getDocuments({ limit: 1000 }))?.results || []
+  const { results } = await index?.getDocuments({ limit: 1000, fields: ["handle"] })
 
-  return collections.map((collection) => ({ slug: collection.handle }))
+  return results.map(({ handle }) => ({ slug: handle }))
 }
 
 export default async function CategoryPage({ params }: CategoryPageProps) {
