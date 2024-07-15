@@ -57,7 +57,7 @@ export default async function Product({ params: { slug } }: ProductProps) {
 async function ProductView({ slug }: { slug: string }) {
   const [product, { reviews, total: totalReviews }] = await Promise.all([
     await getProduct(removeOptionsFromUrl(slug)),
-    await getProductReviews(removeOptionsFromUrl(slug), { limit: 4 }),
+    await getProductReviews(removeOptionsFromUrl(slug), { limit: 16 }),
   ])
 
   const { color } = getOptionsFromUrl(slug)
@@ -100,6 +100,7 @@ async function ProductView({ slug }: { slug: string }) {
         </div>
         <Suspense>
           <ReviewsSection
+            avgRating={product.avgRating}
             productHandle={product.handle}
             productId={product.id}
             reviews={reviews?.map((review) => ({ ...review, author: review.reviewer.name })) || []}
