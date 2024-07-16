@@ -115,7 +115,7 @@ function Results({ results, query, status, closeModal }: ResultsProps) {
             <p className="text-[18px] text-neutral-400">Top suggestions</p>
             <ul className="mb-6 flex max-w-72 flex-col gap-1 text-[20px]">
               {results.slice(0, 5).map((singleResult) => (
-                <Link key={singleResult.id} href={`/products/${singleResult.handle}`}>
+                <Link key={singleResult.id} href={`/product/${singleResult.handle}`}>
                   <li onClick={() => closeModal("search")}>{getHighlightedText(singleResult.title, query)}</li>
                 </Link>
               ))}

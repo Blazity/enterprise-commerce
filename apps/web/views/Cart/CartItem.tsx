@@ -25,7 +25,7 @@ export function CartItem(props: CartItemProps) {
         />
       </div>
       <div className="flex flex-1 flex-col items-start justify-around gap-0.5 text-[13px]">
-        <Link href={`/products/${props.merchandise.product.handle}`} onClick={props.onProductClick}>
+        <Link href={`/product/${props.merchandise.product.handle}`} onClick={props.onProductClick}>
           <h2 className="line-clamp-1 hover:underline">{props.merchandise.product.title + props.merchandise.product.title + props.merchandise.product.title}</h2>
           <p className="line-clamp-1 text-neutral-500">{props.merchandise.title || ""}</p>
         </Link>

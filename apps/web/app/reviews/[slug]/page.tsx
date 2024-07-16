@@ -37,7 +37,7 @@ async function ProductReviewsView({ slug, searchParams }: { slug: string; search
     return (
       <div className="max-w-container-md relative mx-auto mb-20 px-4 xl:px-0">
         <div className="relative w-fit py-4 md:pt-12">
-          <BackButton href={`/products/${product.handle}`} className="mb-8 hidden md:block" />
+          <BackButton href={`/product/${product.handle}`} className="mb-8 hidden md:block" />
         </div>
 
         <main className="container mx-auto max-w-5xl px-4 md:px-6">
@@ -58,7 +58,7 @@ async function ProductReviewsView({ slug, searchParams }: { slug: string; search
   return (
     <div className="max-w-container-md relative mx-auto mb-20 px-4 xl:px-0">
       <div className="relative w-fit py-4 md:pt-12">
-        <BackButton href={`/products/${product.handle}`} className="mb-8 hidden md:block" />
+        <BackButton href={`/product/${product.handle}`} className="mb-8 hidden md:block" />
       </div>
 
       <main className="container mx-auto max-w-5xl px-4 md:px-6">
@@ -103,7 +103,7 @@ function makeBreadcrumbs(product: CommerceProduct) {
   return {
     Home: "/",
     [lastCollection?.title || "Products"]: lastCollection?.handle ? `/category/${lastCollection.handle}` : "/search",
-    [product.title]: `/products/${product.handle}`,
+    [product.title]: `/product/${product.handle}`,
     Reviews: "",
   }
 }

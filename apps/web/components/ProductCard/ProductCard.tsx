@@ -13,7 +13,7 @@ interface ProductCardProps extends Pick<CommerceProduct, "variants" | "handle" |
 
 export function ProductCard(props: ProductCardProps) {
   const variant = props.variants?.find(Boolean)?.price
-  const href = `/products/${props.handle}`
+  const href = `/product/${props.handle}`
   const linkAria = `Visit product: ${props.title}`
   const featuredImageAltTag = props.images?.find((singleImage) => singleImage.url === props.featuredImage?.url)?.altText || ""
 

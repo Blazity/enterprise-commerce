@@ -22,7 +22,7 @@ export function Facet({ id, title, distribution, isChecked, onCheckedChange }: F
         {hasNoResults ? (
           <p className="text-[14px] text-neutral-500">No {title.toLowerCase()} found</p>
         ) : (
-          <div className="grid gap-2">
+          <div className="grid max-h-[300px] gap-2 overflow-auto">
             {distributionsEntries.map(([value, noOfItems], index) => (
               <Label key={value + index} className="flex items-center gap-2 font-normal">
                 <Checkbox name={value} checked={isChecked(value)} onCheckedChange={(checked) => onCheckedChange(!!checked, value)} />
