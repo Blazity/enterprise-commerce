@@ -9,7 +9,6 @@ import { DetailsSection } from "views/Product/DetailsSection"
 import { FavoriteMarker } from "views/Product/FavoriteMarker"
 import { GallerySection } from "views/Product/GallerySection"
 import { InfoSection } from "views/Product/InfoSection"
-import { PageSkeleton } from "views/Product/PageSkeleton"
 import { SimilarProductsSection } from "views/Product/SimilarProductsSection"
 import { SimilarProductsSectionSkeleton } from "views/Product/SimilarProductsSectionSkeleton"
 import { VariantsSection } from "views/Product/VariantsSection"
@@ -39,7 +38,7 @@ export async function generateStaticParams() {
   const index = await meilisearch?.getIndex<CommerceProduct>(env.MEILISEARCH_PRODUCTS_INDEX)
 
   const { results } = await index?.getDocuments({
-    limit: 1000,
+    limit: 500,
     fields: ["handle"],
   })
 
@@ -47,14 +46,6 @@ export async function generateStaticParams() {
 }
 
 export default async function Product({ params: { slug } }: ProductProps) {
-  return (
-    <Suspense fallback={<PageSkeleton />}>
-      <ProductView slug={slug} />
-    </Suspense>
-  )
-}
-
-async function ProductView({ slug }: { slug: string }) {
   const [product, { reviews, total: totalReviews }] = await Promise.all([
     await getProduct(removeOptionsFromUrl(slug)),
     await getProductReviews(removeOptionsFromUrl(slug), { limit: 16 }),

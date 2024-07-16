@@ -30,7 +30,7 @@ export async function generateMetadata({ params: { slug } }: ProductProps): Prom
     category: lastCollection ? slugToName(lastCollection.handle) : "Search",
     creator: "Blazity",
     alternates: {
-      canonical: `/products/${slug}`,
+      canonical: `/product/${slug}`,
     },
     publisher: "Blazity",
   }
@@ -59,7 +59,7 @@ export function generateJsonLd(product: CommerceProduct, slug: string) {
     },
     offers: {
       "@type": "Offer",
-      url: `${env.LIVE_URL}/products/${slug}`,
+      url: `${env.LIVE_URL}/product/${slug}`,
       itemCondition: "https://schema.org/NewCondition",
       availability: "https://schema.org/InStock",
       price: product.priceRange.minVariantPrice.amount,

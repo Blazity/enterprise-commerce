@@ -63,7 +63,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const productRoutes = allHits.map((hit) => {
     const item: MetadataRoute.Sitemap[0] = {
-      url: `${BASE_URL}/products/${hit.handle}`,
+      url: `${BASE_URL}/product/${hit.handle}`,
       lastModified: hit.updatedAt,
       priority: 0.5,
       changeFrequency: "monthly",
