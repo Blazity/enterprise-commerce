@@ -2,7 +2,7 @@ import { Suspense } from "react"
 import type { PlatformCollection } from "@enterprise-commerce/core/platform/types"
 import { unstable_cache } from "next/cache"
 import { createSearchParamsCache, parseAsArrayOf, parseAsInteger, parseAsString } from "nuqs/server"
-import { meilisearch } from "clients/meilisearch"
+import { meilisearch } from "clients/search"
 
 import { ComparisonOperators, FilterBuilder } from "utils/filterBuilder"
 import { composeFilters } from "views/Listing/composeFilters"
@@ -101,12 +101,6 @@ const searchProducts = unstable_cache(
     if (isDemoMode()) return getDemoProducts()
 
     try {
-      const index = await meilisearch?.getIndex<CommerceProduct>(env.MEILISEARCH_PRODUCTS_INDEX)
-
-      if (!index) {
-        console.warn({ message: "Missing products index", source: "SearchView" })
-      }
-
       // use a single http request to search for products and facets, utilize separate query for facet values that should be independent from the search query
       const res = await meilisearch?.multiSearch<CommerceProduct>({
         queries: [
@@ -130,7 +124,7 @@ const searchProducts = unstable_cache(
         ],
       })
 
-      const [independentFacets, results] = res?.results || []
+      const [independentFacets, results] = res || []
 
       const hits = results?.hits || []
       const totalPages = results?.totalPages || 0

@@ -1,8 +1,7 @@
 import type { PlatformProduct } from "@enterprise-commerce/core/platform/types"
-import { meilisearch } from "clients/meilisearch"
+import { meilisearch } from "clients/search"
 import { storefrontClient } from "clients/storefrontClient"
 import { env } from "env.mjs"
-import type { FailedAttemptError } from "p-retry"
 import { compareHmac } from "utils/compare-hmac"
 import { enrichProduct } from "utils/enrich-product"
 
@@ -47,8 +46,6 @@ export async function POST(req: Request) {
 }
 
 async function handleCollectionTopics(topic: SupportedTopic, { id }: Record<string, string>): Promise<Response> {
-  const index = await getMeilisearchIndex(env.MEILISEARCH_CATEGORIES_INDEX)
-
   switch (topic) {
     case "collections/update":
     case "collections/create":
@@ -57,14 +54,21 @@ async function handleCollectionTopics(topic: SupportedTopic, { id }: Record<stri
         console.error(`Collection ${id} not found`)
         return new Response(JSON.stringify({ message: "Collection not found" }), { status: 404, headers: { "Content-Type": "application/json" } })
       }
-      await index.updateDocuments([{ ...collection, id: `${id}` }], {
-        primaryKey: "id",
+      await meilisearch.updateDocuments({
+        indexName: env.MEILISEARCH_CATEGORIES_INDEX,
+        documents: [{ ...collection, id: `${id}` }],
+        options: {
+          primaryKey: "id",
+        },
       })
 
       break
 
     case "collections/delete":
-      await index.deleteDocument(id)
+      await meilisearch.deleteDocuments({
+        indexName: env.MEILISEARCH_CATEGORIES_INDEX,
+        params: [id],
+      })
       break
 
     default:
@@ -75,8 +79,6 @@ async function handleCollectionTopics(topic: SupportedTopic, { id }: Record<stri
 }
 
 async function handleProductTopics(topic: SupportedTopic, { id }: Record<string, string>): Promise<Response> {
-  const index = await getMeilisearchIndex(env.MEILISEARCH_PRODUCTS_INDEX)
-
   switch (topic) {
     case "products/update":
     case "products/create":
@@ -89,13 +91,20 @@ async function handleProductTopics(topic: SupportedTopic, { id }: Record<string,
       }
 
       const enrichedProduct = await enrichProduct(product, items)
-      await index.updateDocuments([normalizeProduct(enrichedProduct, id)], {
-        primaryKey: "id",
+      await meilisearch.updateDocuments({
+        indexName: env.MEILISEARCH_PRODUCTS_INDEX,
+        documents: [normalizeProduct(enrichedProduct, id)],
+        options: {
+          primaryKey: "id",
+        },
       })
 
       break
     case "products/delete":
-      await index.deleteDocument(id)
+      await meilisearch.deleteDocuments({
+        indexName: env.MEILISEARCH_PRODUCTS_INDEX,
+        params: [id],
+      })
       break
 
     default:
@@ -115,22 +124,4 @@ function normalizeProduct(product: PlatformProduct, originalId: string): Platfor
 
 function makeShopifyId(id: string, type: "Product" | "Collection") {
   return id.startsWith("gid://shopify/") ? id : `gid://shopify/${type}/${id}`
-}
-
-async function getMeilisearchIndex(indexName: string) {
-  const pRetry = await import("p-retry")
-
-  const run = async () => {
-    return meilisearch.getIndex(indexName)
-  }
-
-  const onFailedAttempt = async (error: FailedAttemptError) => {
-    await meilisearch.createIndex(indexName)
-    console.log(`Attempt ${error.attemptNumber} failed. There are ${error.retriesLeft} retries left.`)
-  }
-
-  return pRetry.default(run, {
-    retries: 10,
-    onFailedAttempt,
-  })
 }

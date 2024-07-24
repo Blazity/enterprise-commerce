@@ -1,4 +1,4 @@
-import { meilisearch } from "clients/meilisearch"
+import { meilisearch } from "clients/search"
 import { Skeleton } from "components/Skeleton/Skeleton"
 import { env } from "env.mjs"
 import { unstable_cache } from "next/cache"
@@ -34,8 +34,13 @@ const getCategories = unstable_cache(
   async () => {
     if (isDemoMode()) return getDemoCategories().slice(0, 6)
 
-    const index = await meilisearch?.getIndex(env.MEILISEARCH_CATEGORIES_INDEX)
-    const results = await index?.search("", { limit: 6 })
+    const results = await meilisearch.searchDocuments({
+      indexName: env.MEILISEARCH_CATEGORIES_INDEX,
+      options: {
+        limit: 6,
+      },
+    })
+
     return results.hits || []
   },
   ["categories-section"],

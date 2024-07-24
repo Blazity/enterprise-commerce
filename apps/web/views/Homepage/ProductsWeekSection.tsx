@@ -1,4 +1,4 @@
-import { meilisearch } from "clients/meilisearch"
+import { meilisearch } from "clients/search"
 import { Carousel, CarouselContent } from "components/Carousel/Carousel"
 import { Skeleton } from "components/Skeleton/Skeleton"
 import { env } from "env.mjs"
@@ -45,12 +45,14 @@ export async function ProductsWeekSection() {
 const getNewestProducts = unstable_cache(
   async () => {
     if (isDemoMode()) return getDemoProducts().hits.slice(0, 8)
-
-    const index = await meilisearch?.getIndex<CommerceProduct>(env.MEILISEARCH_PRODUCTS_INDEX)
-    if (!index) {
-      console.warn({ message: "Missing products index", source: "ProductsWeekSection" })
-    }
-    const results = await index.search("", { matchingStrategy: "last", limit: 8, sort: ["updatedAtTimestamp:desc"] })
+    const results = await meilisearch.searchDocuments<CommerceProduct>({
+      indexName: env.MEILISEARCH_PRODUCTS_INDEX,
+      options: {
+        matchingStrategy: "last",
+        limit: 8,
+        sort: ["updatedAtTimestamp:desc"],
+      },
+    })
 
     return [...results.hits]
   },
