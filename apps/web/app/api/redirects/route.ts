@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
-import redirects from "../../../redirects/redirects.json"
+import redirects from "../../../redirects/new-redirects.json"
 
 type RedirectEntry = {
   destination: string
