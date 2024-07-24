@@ -1,6 +1,6 @@
 const { ScalableBloomFilter } = require("bloom-filters")
 const { writeFileSync } = require("fs")
-const redirects = require("./redirects.json")
+const redirects = require("./new-redirects.json")
 
 const filter = new ScalableBloomFilter(Object.keys(redirects).length, 0.0001)
 
