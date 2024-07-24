@@ -2,7 +2,7 @@ import { type ReactNode, Suspense } from "react"
 import type { PlatformCollection } from "@enterprise-commerce/core/platform/types"
 import { unstable_cache } from "next/cache"
 import { createSearchParamsCache, parseAsArrayOf, parseAsInteger, parseAsString } from "nuqs/server"
-import { meilisearch } from "clients/meilisearch"
+import { meilisearch } from "clients/search"
 
 import { ComparisonOperators, FilterBuilder } from "utils/filterBuilder"
 import { composeFilters } from "views/Listing/composeFilters"
@@ -69,13 +69,7 @@ const searchProducts = unstable_cache(
   async (query: string, sortBy: string, page: number, filter: string) => {
     if (isDemoMode()) return getDemoProducts()
 
-    const index = await meilisearch?.getIndex<CommerceProduct>(env.MEILISEARCH_PRODUCTS_INDEX)
-
-    if (!index) {
-      console.warn({ message: "Missing products index", source: "SearchView" })
-    }
-
-    const results = await index?.search(query, {
+    const options = {
       sort: sortBy ? [sortBy] : undefined,
       limit: HITS_PER_PAGE,
       hitsPerPage: HITS_PER_PAGE,
@@ -85,12 +79,17 @@ const searchProducts = unstable_cache(
       filter,
       page,
       attributesToRetrieve: ["id", "handle", "title", "priceRange", "featuredImage", "minPrice", "variants", "images", "avgRating", "totalReviews"],
+    }
+    const results = await meilisearch.searchDocuments<CommerceProduct, typeof options>({
+      indexName: env.MEILISEARCH_PRODUCTS_INDEX,
+      query,
+      options,
     })
 
     const hits = results?.hits || []
     const totalPages = results?.totalPages || 0
     const facetDistribution = results?.facetDistribution || {}
-    const totalHits = results.totalHits
+    const totalHits = results?.totalHits
 
     return { hits, totalPages, facetDistribution, totalHits }
   },

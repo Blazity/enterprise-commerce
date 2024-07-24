@@ -1,4 +1,4 @@
-import { meilisearch } from "clients/meilisearch"
+import { meilisearch } from "clients/search"
 import { unstable_cache } from "next/cache"
 import { CarouselSection } from "./CarouselSection"
 import { getDemoProducts, isDemoMode } from "utils/demoUtils"
@@ -17,13 +17,14 @@ const getBestOffers = unstable_cache(
   async () => {
     if (isDemoMode()) return getDemoProducts().hits.slice(0, 8)
 
-    const index = await meilisearch?.getIndex<CommerceProduct>(env.MEILISEARCH_PRODUCTS_INDEX)
-
-    if (!index) {
-      console.warn({ message: "Missing products index", source: "BestOffersSection" })
-    }
-
-    const results = await index.search("", { matchingStrategy: "last", limit: 8, sort: ["minPrice:asc"] })
+    const results = await meilisearch.searchDocuments<CommerceProduct>({
+      indexName: env.MEILISEARCH_PRODUCTS_INDEX,
+      options: {
+        limit: 8,
+        sort: ["minPrice:asc"],
+        matchingStrategy: "last",
+      },
+    })
 
     return [...results.hits]
   },

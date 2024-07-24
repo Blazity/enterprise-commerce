@@ -3,7 +3,7 @@ import z from "zod"
 import { openai } from "@ai-sdk/openai"
 import type { Review } from "@enterprise-commerce/reviews"
 import type { CommerceProduct } from "types"
-import { meilisearch } from "clients/meilisearch"
+import { meilisearch } from "clients/search"
 import { env } from "env.mjs"
 import { authenticate } from "utils/authenticate-api-route"
 import { isOptIn, notifyOptIn } from "utils/opt-in"
@@ -46,27 +46,21 @@ export async function GET(req: Request) {
     return new Response(JSON.stringify({ message: "Sorry, something went wrong" }), { status: 500 })
   }
 
-  const reviewsIndex = meilisearch?.index(env.MEILISEARCH_REVIEWS_INDEX)
-  const productsIndex = meilisearch?.index(env.MEILISEARCH_PRODUCTS_INDEX)
-
-  if (!reviewsIndex || !productsIndex) {
-    console.error({
-      message: "Missing reviews or products index",
-      source: "api/reviews/ai-summary",
-    })
-    return new Response(JSON.stringify({ message: "Sorry, something went wrong" }), { status: 500 })
-  }
-
-  // Potentially will need to paginate later on
   const [allReviews, allProducts] = await Promise.all([
-    reviewsIndex?.getDocuments<Review>({
-      limit: 10000,
-      fields: ["body", "title", "product_handle", "rating"],
-      filter: "published=true AND hidden=false",
+    meilisearch.getDocuments<Review>({
+      indexName: env.MEILISEARCH_REVIEWS_INDEX,
+      options: {
+        limit: 10000,
+        fields: ["body", "title", "product_handle", "rating"],
+        filter: "published=true AND hidden=false",
+      },
     }),
-    productsIndex?.getDocuments<CommerceProduct>({
-      limit: 10000,
-      fields: ["handle", "title", "id", "totalReviews"],
+    meilisearch.getDocuments<CommerceProduct>({
+      indexName: env.MEILISEARCH_PRODUCTS_INDEX,
+      options: {
+        limit: 10000,
+        fields: ["handle", "title", "id", "totalReviews"],
+      },
     }),
   ])
 
@@ -129,7 +123,7 @@ export async function GET(req: Request) {
     })
     .filter(Boolean)
 
-  await productsIndex.updateDocuments(updatedProducts, { primaryKey: "id" })
+  await meilisearch.updateDocuments<CommerceProduct>({ indexName: env.MEILISEARCH_PRODUCTS_INDEX, documents: updatedProducts, options: { primaryKey: "id" } })
 
   return new Response(JSON.stringify({ message: "Reviews synced" }), { status: 200 })
 }

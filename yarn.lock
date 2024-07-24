@@ -12753,6 +12753,13 @@ meilisearch@^0.38.0:
   dependencies:
     cross-fetch "^3.1.6"
 
+meilisearch@^0.41.0:
+  version "0.41.0"
+  resolved "https://registry.yarnpkg.com/meilisearch/-/meilisearch-0.41.0.tgz#98fc50dd8ce4f2446aa4445e3cecd47e3c9afde5"
+  integrity sha512-5KcGLxEXD7E+uNO7R68rCbGSHgCqeM3Q3RFFLSsN7ZrIgr8HPDXVAIlP4LHggAZfk0FkSzo8VSXifHCwa2k80g==
+  dependencies:
+    cross-fetch "^3.1.6"
+
 memfs@^3.4.1, memfs@^3.4.12:
   version "3.6.0"
   resolved "https://registry.yarnpkg.com/memfs/-/memfs-3.6.0.tgz#d7a2110f86f79dd950a8b6df6d57bc984aa185f6"

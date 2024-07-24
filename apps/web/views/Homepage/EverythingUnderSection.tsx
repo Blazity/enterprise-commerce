@@ -1,4 +1,4 @@
-import { meilisearch } from "clients/meilisearch"
+import { meilisearch } from "clients/search"
 import { unstable_cache } from "next/cache"
 import { ComparisonOperators, FilterBuilder } from "utils/filterBuilder"
 import { CarouselSection } from "./CarouselSection"
@@ -18,17 +18,14 @@ const getPriceRangedProducts = unstable_cache(
   async () => {
     if (isDemoMode()) return getDemoProducts().hits.slice(0, 8)
 
-    const index = await meilisearch?.getIndex<CommerceProduct>(env.MEILISEARCH_PRODUCTS_INDEX)
-
-    if (!index) {
-      console.warn({ message: "Missing products index", source: "EverythingUnderSection" })
-    }
-
-    const results = await index.search("", {
-      matchingStrategy: "last",
-      limit: 8,
-      filter: new FilterBuilder().where("minPrice", ComparisonOperators.LessThanOrEqual, 50).build(),
-      sort: ["minPrice:desc"],
+    const results = await meilisearch.searchDocuments<CommerceProduct>({
+      indexName: env.MEILISEARCH_PRODUCTS_INDEX,
+      options: {
+        matchingStrategy: "last",
+        limit: 8,
+        filter: new FilterBuilder().where("minPrice", ComparisonOperators.LessThanOrEqual, 50).build(),
+        sort: ["minPrice:asc"],
+      },
     })
 
     return [...results.hits]
