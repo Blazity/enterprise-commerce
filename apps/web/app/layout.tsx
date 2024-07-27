@@ -25,10 +25,6 @@ export const revalidate = 3600
 
 const navigationItems: NavItem[] = [
   {
-    text: "Home",
-    href: "/",
-  },
-  {
     text: "Fashion",
     href: "/category/fashion",
     submenu: {
@@ -36,29 +32,34 @@ const navigationItems: NavItem[] = [
       items: [
         {
           text: "Women",
+          href: "/category/women",
           items: [
-            { text: "Shirts & Blouses", href: "/search" },
-            { text: "Pants", href: "/search" },
-            { text: "Blazers & Vests", href: "/search" },
-            { text: "Cardigans & Sweaters", href: "/search" },
+            { text: "Shirts & Blouses", href: "/category/shirts-and-blouses" },
+            { text: "Blazers & Vests", href: "/category/blazers-and-vests" },
+            { text: "Cardigans & Sweaters", href: "/category/cardigans-and-sweaters" },
+            { text: "Dresses", href: "/category/dresses" },
+            { text: "Skirts", href: "/category/skirts" },
           ],
         },
         {
           text: "Men",
+          href: "/category/men",
           items: [
-            { text: "T-shirts & Tanks", href: "/search" },
-            { text: "Pants", href: "/search" },
-            { text: "Hoodies & Sweatshirts", href: "/search" },
-            { text: "Blazers & Suits", href: "/search" },
+            { text: "T-shirts & Tanks", href: "/category/t-shirts-and-tanks" },
+            { text: "Hoodies & Sweatshirts", href: "/category/hoodies-and-sweatshirts" },
+            { text: "Blazers & Suits", href: "/category/blazers-and-suits" },
+            { text: "Shorts", href: "/category/shorts" },
+            { text: "Outerwear", href: "/category/outerwear" },
           ],
         },
         {
           text: "Kids",
+          href: "/category/kids",
           items: [
-            { text: "Clothing", href: "/search" },
-            { text: "Outerwear", href: "/search" },
-            { text: "Activewear", href: "/search" },
-            { text: "Accessories", href: "/search" },
+            { text: "Clothing", href: "/category/clothing" },
+            { text: "Activewear", href: "/category/activewear" },
+            { text: "Accessories", href: "/category/kids-accessories" },
+            { text: "Footwear", href: "/category/footwear" },
           ],
         },
       ],
@@ -68,27 +69,60 @@ const navigationItems: NavItem[] = [
     text: "Electronics",
     href: "/category/electronics",
     submenu: {
-      variant: "image-grid",
+      variant: "text-grid",
       items: [
         {
-          href: "/category/electronics",
-          image: "/menu/electronics-1.png",
-          text: "Best Offers",
+          text: "Audio Devices",
+          href: "/category/audio-devices",
+          items: [
+            { text: "Headphones", href: "/category/headphones" },
+            { text: "Speakers", href: "/category/speakers" },
+          ],
         },
         {
-          href: "/category/electronics",
-          image: "/menu/electronics-2.png",
-          text: "New",
+          text: "Cameras",
+          href: "/category/cameras",
+          items: [
+            { text: "Digital Cameras", href: "/category/digital-cameras" },
+            { text: "Action Cameras", href: "/category/action-cameras" },
+          ],
         },
         {
-          href: "/category/electronics",
-          image: "/menu/electronics-3.png",
-          text: "Holiday",
+          text: "Smartphones",
+          href: "/category/smartphones",
         },
         {
-          href: "/category/electronics",
-          image: "/menu/electronics-4.png",
-          text: "Sale",
+          text: "Laptops",
+          href: "/category/laptops",
+        },
+        {
+          text: "Screens",
+          href: "/category/screens",
+        },
+      ],
+    },
+  },
+  {
+    text: "Sports & Outdoors",
+    href: "/category/sports-and-outdoors",
+    submenu: {
+      variant: "text-grid",
+      items: [
+        {
+          href: "/category/exercise-equipment",
+          text: "Exercise Equipment",
+        },
+        {
+          href: "/category/outdoor-gear",
+          text: "Outdoor Gear",
+        },
+        {
+          href: "/category/sportswear",
+          text: "Sportswear",
+        },
+        {
+          href: "/category/athletic-footwear",
+          text: "Athletic Footwear",
         },
       ],
     },
@@ -97,30 +131,42 @@ const navigationItems: NavItem[] = [
     text: "Beauty",
     href: "/category/beauty",
     submenu: {
-      variant: "text-image-grid",
+      variant: "text-grid",
       items: [
-        { text: "Women", href: "/search" },
-        { text: "Men", href: "/search" },
-        { text: "Kids", href: "/search" },
-        { text: "Sport", href: "/search" },
-        { text: "T-shirts & Tanks", href: "/search" },
-        { text: "Pants", href: "/search" },
-        { text: "Hoodies & Sweatshirts", href: "/search" },
-        { text: "Blazers & Suits", href: "/search" },
         {
-          href: "#",
-          image: "/menu/beauty-1.png",
-          text: "Home",
+          text: "Skin Care",
+          href: "/category/skin-care",
+          items: [
+            { text: "Cleansers", href: "/category/cleansers" },
+            { text: "Moisturizers", href: "/category/moisturizers" },
+            { text: "Treatments & Serums", href: "/category/treatments-and-serums" },
+          ],
         },
         {
-          href: "#",
-          image: "/menu/beauty-2.png",
-          text: "Beauty",
+          text: "Makeup",
+          href: "/category/makeup",
+          items: [
+            { text: "Face Makeup", href: "/category/face-makeup" },
+            { text: "Eye Makeup", href: "/category/eye-makeup" },
+            { text: "Lip Makeup", href: "/category/lip-makeup" },
+          ],
         },
         {
-          href: "#",
-          image: "/menu/beauty-3.png",
-          text: "Holiday",
+          text: "Haircare",
+          href: "/category/haircare",
+          items: [
+            { text: "Shampoos & Conditioners", href: "/category/shampoos-and-conditioners" },
+            { text: "Styling Products", href: "/category/styling-products" },
+          ],
+        },
+
+        {
+          text: "Fragrances",
+          href: "/category/fragrances",
+          items: [
+            { text: "Perfumes", href: "/category/perfumes" },
+            { text: "Body Sprays", href: "/category/body-sprays" },
+          ],
         },
       ],
     },
@@ -129,27 +175,36 @@ const navigationItems: NavItem[] = [
     text: "Furniture",
     href: "/category/furniture",
     submenu: {
-      variant: "image-grid",
+      variant: "text-grid",
       items: [
         {
-          href: "/category/furniture",
-          image: "/menu/furniture-1.png",
-          text: "Decor",
+          text: "Living Room",
+          href: "/category/living-room-furniture",
+          items: [
+            { text: "Sofas & Sectionals", href: "/category/sofas-and-sectionals" },
+            { text: "Coffee Tables", href: "/category/coffee-tables" },
+            { text: "TV Stands", href: "/category/tv-stands" },
+          ],
         },
+
         {
-          href: "/category/furniture",
-          image: "/menu/furniture-2.png",
-          text: "Furniture",
+          text: "Bedroom",
+          href: "/category/bedroom-furniture",
+          items: [
+            { text: "Beds", href: "/category/beds" },
+            { text: "Dressers", href: "/category/dressers" },
+            { text: "Nightstands", href: "/category/nightstands" },
+          ],
         },
+
         {
-          href: "/category/furniture",
-          image: "/menu/furniture-3.png",
-          text: "Bags",
-        },
-        {
-          href: "/category/furniture",
-          image: "/menu/furniture-4.png",
-          text: "Sofas",
+          text: "Office",
+          href: "/category/office-furniture",
+          items: [
+            { text: "Desks", href: "/category/desks" },
+            { text: "Office Chairs", href: "/category/office-chairs" },
+            { text: "Storage Solutions", href: "/category/storage-solutions" },
+          ],
         },
       ],
     },

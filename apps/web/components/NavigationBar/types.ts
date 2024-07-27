@@ -11,6 +11,7 @@ interface Submenu {
 
 export interface TextGridItem {
   text: string
+  href?: string
   items: Array<{ text: string; href: string }>
 }
 
