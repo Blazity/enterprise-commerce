@@ -1,0 +1,21 @@
+{
+  "name": "@enterprise-commerce/search-meilisearch",
+  "version": "0.0.0",
+  "license": "MIT",
+  "files": [
+    "dist/**"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "prebuild": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
+    "build": "cross-env FORCE_COLOR=1 tsup **/*.ts --format esm,cjs --dts --external react",
+    "dev": "yarn clean && cross-env FORCE_COLOR=1 tsup **/*.ts --format esm,cjs --watch --dts --external react --onSuccess 'node dist/index.mjs about'",
+    "lint": "cross-env FORCE_COLOR=1 eslint .",
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
+    "test": "cross-env FORCE_COLOR=1 jest --passWithNoTests",
+    "codegen": "graphql-codegen && graphql-codegen -p admin"
+  },
+  "dependencies": {
+    "meilisearch": "^0.41.0"
+  }
+}

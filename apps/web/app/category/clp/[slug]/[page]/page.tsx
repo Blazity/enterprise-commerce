@@ -1,5 +1,5 @@
 import type { PlatformCollection } from "@enterprise-commerce/core/platform/types"
-import { meilisearch } from "clients/meilisearch"
+import { meilisearch } from "clients/search"
 import { env } from "env.mjs"
 import type { Metadata } from "next"
 import { isDemoMode } from "utils/demoUtils"
@@ -21,8 +21,12 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
 
 export async function generateStaticParams() {
   if (isDemoMode()) return []
-  const index = await meilisearch?.getIndex<PlatformCollection>(env.MEILISEARCH_CATEGORIES_INDEX)
-  const collections = (await index?.getDocuments({ limit: 1000 }))?.results || []
+  const { results: collections } = await meilisearch.getDocuments<PlatformCollection>({
+    indexName: env.MEILISEARCH_CATEGORIES_INDEX,
+    options: {
+      limit: 1000,
+    },
+  })
 
   return collections.map((collection) => Array.from({ length: 3 }, (_, i) => i + 2).map((page) => ({ slug: collection.handle, page: page.toString() }))).flat()
 }
