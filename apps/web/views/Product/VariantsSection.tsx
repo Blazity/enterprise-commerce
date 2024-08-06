@@ -19,8 +19,8 @@ export function VariantsSection({ variants, className, handle, combination }: Va
 
   return (
     <div className={cn("flex flex-col gap-4", className)}>
-      <p className="text-sm text-neutral-500">Select variant</p>
-      <div className="relative flex w-full flex-wrap gap-2">
+      <p className="text-center text-sm text-neutral-500 md:text-left">Select variant</p>
+      <div className="relative flex w-full flex-wrap justify-center gap-2 md:justify-start">
         {combinations.map((singleCombination) => {
           const cartItem = cart?.items.find((item) => item.merchandise.id === singleCombination?.id)
           return (

@@ -6,6 +6,7 @@ import { Carousel, CarouselContent, CarouselNext, CarouselPrevious } from "compo
 import { RobotIcon } from "components/Icons/RobotIcon"
 import { isOptIn, notifyOptIn } from "utils/opt-in"
 import { StarIcon } from "components/Icons/StarIcon"
+import { cn } from "utils/cn"
 
 type ReviewsSectionProps = {
   productId: string
@@ -14,8 +15,9 @@ type ReviewsSectionProps = {
   total: number
   avgRating: number | undefined
   summary?: string
+  className?: string
 }
-export const ReviewsSection = ({ productId, productHandle, reviews, total, summary, avgRating }: ReviewsSectionProps) => {
+export const ReviewsSection = ({ productId, productHandle, reviews, total, summary, avgRating, className }: ReviewsSectionProps) => {
   if (!isOptIn("reviews")) {
     notifyOptIn({ feature: "reviews", source: "components/ReviewsSection" })
 
@@ -24,7 +26,7 @@ export const ReviewsSection = ({ productId, productHandle, reviews, total, summa
 
   if (reviews?.length <= 0) {
     return (
-      <section className="relative left-1/2 w-screen -translate-x-1/2 bg-gray-50 py-12 md:my-10">
+      <section className={cn("relative left-1/2 w-screen -translate-x-1/2 bg-gray-50 py-12 md:my-10", className)}>
         <div className="container mx-auto max-w-5xl px-4 md:px-6">
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
             <h2 className="text-xl font-semibold sm:text-2xl">Have this product? Help others by sharing your experience</h2>
@@ -36,11 +38,7 @@ export const ReviewsSection = ({ productId, productHandle, reviews, total, summa
   }
 
   return (
-    <section
-      className="relative left-1/2 w-screen
-    -translate-x-1/2 bg-gray-50 py-12 md:my-10
-    "
-    >
+    <section className={cn("relative left-1/2 w-screen -translate-x-1/2 bg-gray-50 py-12 md:my-10", className)}>
       <div className="container mx-auto max-w-5xl px-4 md:px-6">
         <div className="space-y-4">
           <div className="mb-10 flex flex-col items-center justify-between gap-4 md:flex-row">
@@ -72,7 +70,7 @@ export const ReviewsSection = ({ productId, productHandle, reviews, total, summa
               <CarouselPrevious className="relative" />
               <CarouselNext className="relative" />
             </div>
-            <CarouselContent className="ml-0 w-full justify-start gap-6">
+            <CarouselContent className="ml-0 gap-6">
               {reviews.map(({ body, author, rating, created_at }) => (
                 <ReviewCard key={created_at} body={body} author={author} rating={rating} created_at={created_at} />
               ))}
