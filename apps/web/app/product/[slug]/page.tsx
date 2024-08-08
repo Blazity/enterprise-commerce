@@ -49,10 +49,7 @@ export async function generateStaticParams() {
 }
 
 export default async function Product({ params: { slug } }: ProductProps) {
-  const [product, { reviews, total: totalReviews }] = await Promise.all([
-    await getProduct(removeOptionsFromUrl(slug)),
-    await getProductReviews(removeOptionsFromUrl(slug), { limit: 16 }),
-  ])
+  const [product, { reviews, total: totalReviews }] = await Promise.all([getProduct(removeOptionsFromUrl(slug)), getProductReviews(removeOptionsFromUrl(slug), { limit: 16 })])
 
   const { color } = getOptionsFromUrl(slug)
   const hasInvalidOptions = !hasValidOption(product?.variants, "color", color)
