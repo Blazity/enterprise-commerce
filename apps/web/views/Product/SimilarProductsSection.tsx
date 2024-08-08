@@ -16,7 +16,7 @@ export async function SimilarProductsSection({ slug, collectionHandle }: Similar
   const items = await getSimilarProducts(slug, collectionHandle)
 
   return (
-    <section className="py-40">
+    <section className="my-10">
       <h2 className="mb-10 text-[26px] font-normal tracking-[-0.78px]">You might also like</h2>
       <Carousel opts={{ skipSnaps: true }}>
         <CarouselContent className="ml-0 justify-start gap-6">

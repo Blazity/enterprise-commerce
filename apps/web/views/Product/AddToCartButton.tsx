@@ -1,6 +1,8 @@
+"use client"
+
 import type { PlatformVariant } from "@enterprise-commerce/core/platform/types"
 import { addCartItem, getItemAvailability } from "app/actions/cart.actions"
-import { Button } from "components/Button/Button"
+import { Button } from "components/Button/ButtonNew"
 import { useEffect, useState } from "react"
 import { cn } from "utils/cn"
 import { getCookie } from "utils/getCookie"
@@ -11,16 +13,7 @@ import { toast } from "sonner"
 import { useCartStore } from "stores/cartStore"
 import type { CommerceProduct } from "types"
 
-export function AddToCartButton({
-  className,
-  product,
-  combination,
-}: {
-  className?: string
-  product: CommerceProduct
-  combination: Combination | PlatformVariant | undefined
-  slug: string
-}) {
+export function AddToCartButton({ className, product, combination }: { className?: string; product: CommerceProduct; combination: Combination | PlatformVariant | undefined }) {
   const [isPending, setIsPending] = useState(false)
   const [hasAnyAvailable, setHasAnyAvailable] = useState(true)
   const { setProduct, clean } = useAddProductStore()
@@ -62,14 +55,11 @@ export function AddToCartButton({
   return (
     <Button
       onClick={handleClick}
-      variant="secondary"
-      size="xl"
-      isAnimated={false}
-      className={cn("relative w-fit rounded-xl transition-transform hover:scale-105 hover:text-white", className)}
-      isLoading={isPending}
       disabled={isPending || disabled}
+      variant="default"
+      className={cn("mx-auto w-full rounded-md p-10 py-4 transition-all hover:scale-105 md:w-full md:rounded-md md:py-4", className)}
     >
-      Add to Cart
+      Add to Bag
     </Button>
   )
 }

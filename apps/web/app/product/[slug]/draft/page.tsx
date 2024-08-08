@@ -1,21 +1,26 @@
-import type { PlatformProduct } from "@enterprise-commerce/core/platform/types"
 import { unstable_cache } from "next/cache"
 import { draftMode } from "next/headers"
 import { notFound } from "next/navigation"
 import { Suspense } from "react"
 import { storefrontClient } from "clients/storefrontClient"
+import type { CommerceProduct } from "types"
+
 import { Breadcrumbs } from "components/Breadcrumbs/Breadcrumbs"
 
+import type { PlatformProduct } from "@enterprise-commerce/core/platform/types"
 import { getCombination, getOptionsFromUrl, hasValidOption, removeOptionsFromUrl } from "utils/productOptionsUtils"
 import { BackButton } from "views/Product/BackButton"
-import { DetailsSection } from "views/Product/DetailsSection"
-import { GallerySection } from "views/Product/GallerySection"
-import { InfoSection } from "views/Product/InfoSection"
-import { PageSkeleton } from "views/Product/PageSkeleton"
 import { SimilarProductsSection } from "views/Product/SimilarProductsSection"
 import { SimilarProductsSectionSkeleton } from "views/Product/SimilarProductsSectionSkeleton"
 import { VariantsSection } from "views/Product/VariantsSection"
-import type { CommerceProduct } from "types"
+import { ProductTitle } from "views/Product/ProductTitle"
+import { CurrencyType, mapCurrencyToSign } from "utils/mapCurrencyToSign"
+import { ProductImages } from "views/Product/ProductImages"
+import { RightSection } from "views/Product/RightSection"
+import { AddToCartButton } from "views/Product/AddToCartButton"
+import { FavoriteMarker } from "views/Product/FavoriteMarker"
+import { FaqSection } from "views/Product/FaqSection"
+
 import { slugToName } from "utils/slug-name"
 
 export const dynamic = "force-static"
@@ -29,11 +34,7 @@ interface ProductProps {
 }
 
 export default async function Product({ params: { slug } }: ProductProps) {
-  return (
-    <Suspense fallback={<PageSkeleton />}>
-      <ProductView slug={slug} />
-    </Suspense>
-  )
+  return <ProductView slug={slug} />
 }
 
 export async function generateStaticParams() {
@@ -60,19 +61,33 @@ async function ProductView({ slug }: { slug: string }) {
         <BackButton className="mb-8 hidden md:block" />
       </div>
       <main className="max-w-container-sm mx-auto">
-        <Breadcrumbs className="mb-8 hidden md:block" items={makeBreadcrumbs(product)} />
-        <div className="grid grid-cols-1 justify-center gap-10 md:grid-cols-2 lg:gap-20">
-          <GallerySection images={product.images} />
-          <div className="flex flex-col items-start pt-12">
-            <InfoSection className="pb-10" title={product.title} description={product.descriptionHtml} combination={combination} />
-            {hasOnlyOneVariant ? null : <VariantsSection combination={combination} handle={product.handle} variants={product.variants} />}
-            <DetailsSection slug={slug} product={product as CommerceProduct} />
-          </div>
+        <Breadcrumbs className="mb-8" items={makeBreadcrumbs(product)} />
+        <div className="grid grid-cols-1 gap-4 md:mx-auto md:max-w-screen-xl md:grid-cols-12 md:gap-8">
+          <ProductTitle
+            className="md:hidden"
+            title={product.title}
+            price={parseFloat(combination!.price!.amount).toFixed(2)}
+            currency={combination?.price ? mapCurrencyToSign(combination.price?.currencyCode as CurrencyType) : "$"}
+          />
+          <ProductImages images={product.images} />
+          <RightSection className="md:col-span-6 md:col-start-8 md:mt-0">
+            <ProductTitle
+              className="hidden md:col-span-4 md:col-start-9 md:block"
+              title={product.title}
+              price={parseFloat(combination!.price!.amount).toFixed(2)}
+              currency={combination?.price ? mapCurrencyToSign(combination.price?.currencyCode as CurrencyType) : "$"}
+            />
+            {!hasOnlyOneVariant && <VariantsSection variants={product.variants} handle={product.handle} combination={combination} />}
+            <p>{product.description}</p>
+            <AddToCartButton className="mt-4" product={product} combination={combination} />
+            <FavoriteMarker handle={product.handle} />
+            <FaqSection />
+          </RightSection>
         </div>
+        <Suspense fallback={<SimilarProductsSectionSkeleton />}>
+          <SimilarProductsSection collectionHandle={lastCollection?.handle} slug={slug} />
+        </Suspense>
       </main>
-      <Suspense fallback={<SimilarProductsSectionSkeleton />}>
-        <SimilarProductsSection collectionHandle={lastCollection?.handle} slug={slug} />
-      </Suspense>
     </div>
   )
 }

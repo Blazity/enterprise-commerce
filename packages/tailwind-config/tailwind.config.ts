@@ -18,10 +18,33 @@ const config: Omit<Config, "content"> = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        wiggle: {
+          "0%, 100%": { transform: "rotate(-3deg)" },
+          "50%": { transform: "rotate(3deg)" },
+        },
+        bounceOnce: {
+          "0%": {
+            transform: "scale(1)",
+          },
+          "100%": {
+            transform: "scale(1)",
+          },
+          "30%": {
+            transform: "scale(1.2)",
+          },
+          "60%": {
+            transform: "scale(0.8)",
+          },
+          "80%": {
+            transform: "scale(1.1)",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "single-bounce": "bounceOnce 0.5s ease-out",
+        wiggle: "wiggle .2s ease-out",
       },
       colors: {
         primary: {

@@ -1,13 +1,15 @@
 "use client"
 
 import { HeartIcon } from "components/Icons/HeartIcon"
-import { cn } from "utils/cn"
 import { getParsedFavoritesHandles, toggleFavoriteProduct } from "app/actions/favorites.actions"
 import { useEffect, useState, useTransition } from "react"
 import { Spinner } from "components/Spinner/Spinner"
+import { Button } from "components/Button/ButtonNew"
+import { cn } from "utils/cn"
 
 export function FavoriteMarker({ handle }: { handle: string }) {
   const [isActive, setIsActive] = useState<boolean>(false)
+  const [isAnimating, setIsAnimating] = useState(false)
   const [isPending, startTransition] = useTransition()
 
   useEffect(() => {
@@ -22,23 +24,33 @@ export function FavoriteMarker({ handle }: { handle: string }) {
     checkIsFavorite()
   }, [handle])
 
-  const handleClick = () => {
-    startTransition(async () => {
-      const isFavorite = await toggleFavoriteProduct(null, handle)
-      setIsActive(isFavorite)
-    })
+  const handleClick = async () => {
+    setIsAnimating(true)
+    const isFavorite = await toggleFavoriteProduct(null, handle)
+
+    setIsActive(isFavorite)
   }
 
   return (
-    <div className="absolute left-4 top-4">
-      <button aria-label="Favorite this item" type="submit" className="relative bg-transparent" onClick={handleClick}>
-        <HeartIcon className={cn("size-8 cursor-pointer transition-colors hover:fill-neutral-200", { "fill-black": isActive })} />
-        {isPending && (
-          <div className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center ">
-            <Spinner className="size-4 bg-transparent " />
+    <>
+      <Button aria-label="Favorite this item" type="submit" onClick={handleClick} variant="outline" className="group w-full bg-white transition-all hover:scale-105">
+        {isPending ? (
+          <div className="flex items-center justify-center">
+            <Spinner className="size-4 bg-transparent" />
           </div>
+        ) : (
+          <>
+            Favorite
+            <HeartIcon
+              onAnimationEnd={() => {
+                console.log("end")
+                setIsAnimating(false)
+              }}
+              className={cn("ml-2 size-5 transition-all", isActive ? "text-red-500 " : "text-black", isAnimating && "animate-single-bounce")}
+            />
+          </>
         )}
-      </button>
-    </div>
+      </Button>
+    </>
   )
 }
