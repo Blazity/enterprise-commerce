@@ -16,7 +16,11 @@ export const getCollection = unstable_cache(
       console.warn({ message: "Missing categories index", source: "collection.actions.ts" })
     }
 
-    const documents = await index?.getDocuments({ filter: new FilterBuilder().where("handle", ComparisonOperators.Equal, slug).build(), limit: 1 })
+    const documents = await index?.getDocuments({
+      filter: new FilterBuilder().where("handle", ComparisonOperators.Equal, slug).build(),
+      limit: 1,
+      fields: ["handle", "title", "seo"],
+    })
     return documents.results.find(Boolean) || null
   },
   ["category-by-handle"],

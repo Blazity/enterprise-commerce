@@ -1,5 +1,4 @@
-import { ChevronIcon } from "components/Icons/ChevronIcon"
-import Link from "next/link"
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "components/Breadcrumb/Breadcrumb"
 import React from "react"
 import { cn } from "utils/cn"
 
@@ -10,27 +9,28 @@ interface BreadcrumbsProps {
 
 export function Breadcrumbs({ items, className }: BreadcrumbsProps) {
   return (
-    <nav aria-label="Breadcrumb" className={className}>
-      <ol className="no-scrollbar flex items-center gap-1.5 overflow-x-scroll  whitespace-nowrap text-xs  md:text-base/[18px]">
+    <Breadcrumb className={className}>
+      <BreadcrumbList className="no-scrollbar flex items-center gap-1.5 overflow-x-scroll  whitespace-nowrap text-xs  md:text-base/[18px]">
         {Object.entries(items).map(([title, href], idx) => {
           const isLast = idx + 1 === Object.keys(items).length
 
           return (
             <React.Fragment key={title + href}>
-              <li>
-                <Link prefetch={false} aria-current={isLast ? "page" : undefined} className={cn("text-neutral-500 hover:underline", isLast && "font-medium underline")} href={href}>
+              <BreadcrumbItem>
+                <BreadcrumbLink
+                  prefetch={false}
+                  aria-current={isLast ? "page" : undefined}
+                  className={cn("text-neutral-500 hover:underline", isLast && "font-medium underline")}
+                  href={href}
+                >
                   {title}
-                </Link>
-              </li>
-              {!isLast && (
-                <li>
-                  <ChevronIcon className="-rotate-90" />
-                </li>
-              )}
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              {!isLast && <BreadcrumbSeparator />}
             </React.Fragment>
           )
         })}
-      </ol>
-    </nav>
+      </BreadcrumbList>
+    </Breadcrumb>
   )
 }

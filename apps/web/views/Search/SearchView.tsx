@@ -1,4 +1,4 @@
-import { type ReactNode, Suspense } from "react"
+import { Suspense } from "react"
 import type { PlatformCollection } from "@enterprise-commerce/core/platform/types"
 import { unstable_cache } from "next/cache"
 import { createSearchParamsCache, parseAsArrayOf, parseAsInteger, parseAsString } from "nuqs/server"
@@ -21,7 +21,6 @@ interface SearchViewProps {
   params?: { slug: string; page?: string }
   collection?: PlatformCollection
   disabledFacets?: string[]
-  intro?: ReactNode
 }
 
 export const searchParamsCache = createSearchParamsCache({
@@ -36,7 +35,7 @@ export const searchParamsCache = createSearchParamsCache({
   rating: parseAsInteger,
 })
 
-export async function SearchView({ searchParams, disabledFacets, intro, collection }: SearchViewProps) {
+export async function SearchView({ searchParams, disabledFacets, collection }: SearchViewProps) {
   const { q, sortBy, page, ...rest } = searchParamsCache.parse(searchParams)
 
   const filterBuilder = new FilterBuilder()
@@ -49,9 +48,10 @@ export async function SearchView({ searchParams, disabledFacets, intro, collecti
 
   return (
     <div className="max-w-container-md mx-auto w-full px-4 py-12 md:py-24 xl:px-0">
-      {intro}
       <div className="flex gap-12 md:gap-24">
-        <FacetsDesktop disabledFacets={disabledFacets} className="hidden shrink-0  basis-[250px] lg:block" facetDistribution={facetDistribution} />
+        <Suspense>
+          <FacetsDesktop disabledFacets={disabledFacets} className="hidden shrink-0  basis-[250px] lg:block" facetDistribution={facetDistribution} />
+        </Suspense>
         <div className="w-full">
           <Controls disabledFacets={disabledFacets} facetDistribution={facetDistribution} totalHits={totalHits} />
           <Suspense>
@@ -69,30 +69,34 @@ const searchProducts = unstable_cache(
   async (query: string, sortBy: string, page: number, filter: string) => {
     if (isDemoMode()) return getDemoProducts()
 
-    const index = await meilisearch?.getIndex<CommerceProduct>(env.MEILISEARCH_PRODUCTS_INDEX)
+    try {
+      const index = await meilisearch?.getIndex<CommerceProduct>(env.MEILISEARCH_PRODUCTS_INDEX)
 
-    if (!index) {
-      console.warn({ message: "Missing products index", source: "SearchView" })
+      if (!index) {
+        console.warn({ message: "Missing products index", source: "SearchView" })
+      }
+
+      const results = await index?.search(query, {
+        sort: sortBy ? [sortBy] : undefined,
+        limit: HITS_PER_PAGE,
+        hitsPerPage: HITS_PER_PAGE,
+        facets: ["vendor", "variants.availableForSale", "flatOptions.Color", "minPrice", "avgRating"].concat(
+          !!env.SHOPIFY_HIERARCHICAL_NAV_HANDLE ? [`hierarchicalCategories.lvl0`, `hierarchicalCategories.lvl1`, `hierarchicalCategories.lvl2`] : []
+        ),
+        filter,
+        page,
+        attributesToRetrieve: ["id", "handle", "title", "priceRange", "featuredImage", "minPrice", "variants", "images", "avgRating", "totalReviews"],
+      })
+
+      const hits = results?.hits || []
+      const totalPages = results?.totalPages || 0
+      const facetDistribution = results?.facetDistribution || {}
+      const totalHits = results.totalHits
+
+      return { hits, totalPages, facetDistribution, totalHits }
+    } catch (err) {
+      return { hits: [], totalPages: 0, facetDistribution: {}, totalHits: 0 }
     }
-
-    const results = await index?.search(query, {
-      sort: sortBy ? [sortBy] : undefined,
-      limit: HITS_PER_PAGE,
-      hitsPerPage: HITS_PER_PAGE,
-      facets: ["vendor", "variants.availableForSale", "flatOptions.Color", "minPrice", "avgRating"].concat(
-        !!env.SHOPIFY_HIERARCHICAL_NAV_HANDLE ? [`hierarchicalCategories.lvl0`, `hierarchicalCategories.lvl1`, `hierarchicalCategories.lvl2`] : []
-      ),
-      filter,
-      page,
-      attributesToRetrieve: ["id", "handle", "title", "priceRange", "featuredImage", "minPrice", "variants", "images", "avgRating", "totalReviews"],
-    })
-
-    const hits = results?.hits || []
-    const totalPages = results?.totalPages || 0
-    const facetDistribution = results?.facetDistribution || {}
-    const totalHits = results.totalHits
-
-    return { hits, totalPages, facetDistribution, totalHits }
   },
   ["products-search"],
   { revalidate: 3600 }
