@@ -4,7 +4,7 @@ import { CategoryView } from "views/Category/CategoryView"
 
 export const runtime = "nodejs"
 
-export const revalidate = 3600
+export const revalidate = 86400
 
 interface ProductListingPageProps {
   searchParams: SearchParamsType

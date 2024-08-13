@@ -6,7 +6,7 @@ import { getProduct } from "app/actions/product.actions"
 import { removeOptionsFromUrl } from "utils/productOptionsUtils"
 import { env } from "env.mjs"
 
-export const revalidate = 3600
+export const revalidate = 86400
 
 export const dynamic = "force-static"
 

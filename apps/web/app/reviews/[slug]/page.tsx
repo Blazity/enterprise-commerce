@@ -11,6 +11,8 @@ import type { CommerceProduct } from "types"
 
 export { generateMetadata } from "./metadata"
 
+export const revalidate = 86400
+
 export interface ProductReviewsPageProps {
   params: { slug: string }
   searchParams: { [key: string]: string | string[] | undefined }

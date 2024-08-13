@@ -5,7 +5,7 @@ import { ProductCard } from "components/ProductCard/ProductCard"
 import { Skeleton } from "components/Skeleton/Skeleton"
 import { COOKIE_FAVORITES } from "constants/index"
 
-export const revalidate = 3600
+export const revalidate = 86400
 
 export const dynamicParams = true
 

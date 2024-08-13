@@ -7,7 +7,7 @@ import { EverythingUnderSection } from "views/Homepage/EverythingUnderSection"
 import { AnnouncementBar } from "components/AnnouncementBar/AnnouncementBar"
 import { HeroSection } from "views/Homepage/HeroSection"
 
-export const revalidate = 3600
+export const revalidate = 86400
 
 export const dynamic = "force-static"
 

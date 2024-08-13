@@ -21,7 +21,7 @@ import { CartView } from "views/Cart/CartView"
 
 const DraftToolbar = nextDynamic(() => import("views/DraftToolbar"), { ssr: false })
 
-export const revalidate = 3600
+export const revalidate = 86400
 
 const navigationItems: NavItem[] = [
   {
