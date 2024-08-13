@@ -2583,10 +2583,10 @@
     pump "^3.0.0"
     tar-fs "^2.1.1"
 
-"@next/bundle-analyzer@14.1.1-canary.61":
-  version "14.1.1-canary.61"
-  resolved "https://registry.yarnpkg.com/@next/bundle-analyzer/-/bundle-analyzer-14.1.1-canary.61.tgz#78620f0ac6877570603fcdf02d75ca7d92e56a61"
-  integrity sha512-kkwO4A3+g65tCM6Vl4ErQSP5WbaFUMYf4r7NvLaa7PJv8dmdfL74Z8bZxLkRLOoFx/Yasl55owlFUUB6q/TB+Q==
+"@next/bundle-analyzer@14.2.5":
+  version "14.2.5"
+  resolved "https://registry.yarnpkg.com/@next/bundle-analyzer/-/bundle-analyzer-14.2.5.tgz#549414aba34e3d21862be6090881d681b0984e8e"
+  integrity sha512-BtBbI8VUnB7s4m9ut6CkeJ8Hyx+aq+86mbH+uAld7ZGG0/eH4+5hcPnkHKsQM/yj74iClazS0fninI8yZbIZWA==
   dependencies:
     webpack-bundle-analyzer "4.10.1"
 

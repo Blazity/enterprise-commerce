@@ -5,10 +5,7 @@ import { Breadcrumbs } from "components/Breadcrumbs/Breadcrumbs"
 
 import { getCombination, getOptionsFromUrl, hasValidOption, removeOptionsFromUrl } from "utils/productOptionsUtils"
 import { BackButton } from "views/Product/BackButton"
-import { DetailsSection } from "views/Product/DetailsSection"
 import { FavoriteMarker } from "views/Product/FavoriteMarker"
-import { GallerySection } from "views/Product/GallerySection"
-import { InfoSection } from "views/Product/InfoSection"
 import { SimilarProductsSection } from "views/Product/SimilarProductsSection"
 import { SimilarProductsSectionSkeleton } from "views/Product/SimilarProductsSectionSkeleton"
 import { VariantsSection } from "views/Product/VariantsSection"
@@ -21,6 +18,12 @@ import type { CommerceProduct } from "types"
 import { isDemoMode } from "utils/demoUtils"
 import { meilisearch } from "clients/meilisearch"
 import { env } from "env.mjs"
+import { ProductTitle } from "views/Product/ProductTitle"
+import { CurrencyType, mapCurrencyToSign } from "utils/mapCurrencyToSign"
+import { ProductImages } from "views/Product/ProductImages"
+import { RightSection } from "views/Product/RightSection"
+import { FaqSection } from "views/Product/FaqSection"
+import { AddToCartButton } from "views/Product/AddToCartButton"
 
 export const revalidate = 3600
 export const dynamic = "force-static"
@@ -38,7 +41,7 @@ export async function generateStaticParams() {
   const index = await meilisearch?.getIndex<CommerceProduct>(env.MEILISEARCH_PRODUCTS_INDEX)
 
   const { results } = await index?.getDocuments({
-    limit: 500,
+    limit: 50,
     fields: ["handle"],
   })
 
@@ -46,10 +49,7 @@ export async function generateStaticParams() {
 }
 
 export default async function Product({ params: { slug } }: ProductProps) {
-  const [product, { reviews, total: totalReviews }] = await Promise.all([
-    await getProduct(removeOptionsFromUrl(slug)),
-    await getProductReviews(removeOptionsFromUrl(slug), { limit: 16 }),
-  ])
+  const [product, { reviews, total: totalReviews }] = await Promise.all([getProduct(removeOptionsFromUrl(slug)), getProductReviews(removeOptionsFromUrl(slug), { limit: 16 })])
 
   const { color } = getOptionsFromUrl(slug)
   const hasInvalidOptions = !hasValidOption(product?.variants, "color", color)
@@ -61,6 +61,7 @@ export default async function Product({ params: { slug } }: ProductProps) {
   const combination = getCombination(product, color)
   const lastCollection = product?.collections?.findLast(Boolean)
   const hasOnlyOneVariant = product.variants.length <= 1
+  const combinationPrice = combination?.price?.amount || null
 
   return (
     <div className="max-w-container-md relative mx-auto px-4 xl:px-0">
@@ -70,24 +71,27 @@ export default async function Product({ params: { slug } }: ProductProps) {
       </div>
       <main className="max-w-container-sm mx-auto">
         <Breadcrumbs className="mb-8" items={makeBreadcrumbs(product)} />
-
-        <div className="grid grid-cols-1 justify-center gap-10 md:grid-cols-2 lg:gap-20">
-          <GallerySection images={product.images}>
-            <FavoriteMarker handle={product.handle} />
-          </GallerySection>
-          <div className="flex flex-col items-start pt-12">
-            <InfoSection
-              className="pb-6"
+        <div className="grid grid-cols-1 gap-4 md:mx-auto md:max-w-screen-xl md:grid-cols-12 md:gap-8">
+          <ProductTitle
+            className="md:hidden"
+            title={product.title}
+            price={combinationPrice}
+            currency={combination?.price ? mapCurrencyToSign(combination.price?.currencyCode as CurrencyType) : "$"}
+          />
+          <ProductImages images={product.images} />
+          <RightSection className="md:col-span-6 md:col-start-8 md:mt-0">
+            <ProductTitle
+              className="hidden md:col-span-4 md:col-start-9 md:block"
               title={product.title}
-              description={product.descriptionHtml}
-              combination={combination}
-              avgRating={product.avgRating}
-              totalReviews={product.totalReviews}
+              price={combinationPrice}
+              currency={combination?.price ? mapCurrencyToSign(combination.price?.currencyCode as CurrencyType) : "$"}
             />
-            {hasOnlyOneVariant ? null : <VariantsSection combination={combination} handle={product.handle} className="pb-4" variants={product.variants} />}
-
-            <DetailsSection slug={slug} product={product} />
-          </div>
+            {!hasOnlyOneVariant && <VariantsSection variants={product.variants} handle={product.handle} combination={combination} />}
+            <p>{product.description}</p>
+            <AddToCartButton className="mt-4" product={product} combination={combination} />
+            <FavoriteMarker handle={product.handle} />
+            <FaqSection />
+          </RightSection>
         </div>
         <Suspense>
           <ReviewsSection
@@ -99,10 +103,10 @@ export default async function Product({ params: { slug } }: ProductProps) {
             summary={product.reviewsSummary}
           />
         </Suspense>
+        <Suspense fallback={<SimilarProductsSectionSkeleton />}>
+          <SimilarProductsSection collectionHandle={lastCollection?.handle} slug={slug} />
+        </Suspense>
       </main>
-      <Suspense fallback={<SimilarProductsSectionSkeleton />}>
-        <SimilarProductsSection collectionHandle={lastCollection?.handle} slug={slug} />
-      </Suspense>
     </div>
   )
 }
