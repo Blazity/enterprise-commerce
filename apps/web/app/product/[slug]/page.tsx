@@ -41,7 +41,7 @@ export async function generateStaticParams() {
   const index = await meilisearch?.getIndex<CommerceProduct>(env.MEILISEARCH_PRODUCTS_INDEX)
 
   const { results } = await index?.getDocuments({
-    limit: 500,
+    limit: 50,
     fields: ["handle"],
   })
 
@@ -49,10 +49,7 @@ export async function generateStaticParams() {
 }
 
 export default async function Product({ params: { slug } }: ProductProps) {
-  const [product, { reviews, total: totalReviews }] = await Promise.all([
-    await getProduct(removeOptionsFromUrl(slug)),
-    await getProductReviews(removeOptionsFromUrl(slug), { limit: 16 }),
-  ])
+  const [product, { reviews, total: totalReviews }] = await Promise.all([getProduct(removeOptionsFromUrl(slug)), getProductReviews(removeOptionsFromUrl(slug), { limit: 16 })])
 
   const { color } = getOptionsFromUrl(slug)
   const hasInvalidOptions = !hasValidOption(product?.variants, "color", color)
@@ -64,6 +61,7 @@ export default async function Product({ params: { slug } }: ProductProps) {
   const combination = getCombination(product, color)
   const lastCollection = product?.collections?.findLast(Boolean)
   const hasOnlyOneVariant = product.variants.length <= 1
+  const combinationPrice = combination?.price?.amount || null
 
   return (
     <div className="max-w-container-md relative mx-auto px-4 xl:px-0">
@@ -77,7 +75,7 @@ export default async function Product({ params: { slug } }: ProductProps) {
           <ProductTitle
             className="md:hidden"
             title={product.title}
-            price={parseFloat(combination!.price!.amount).toFixed(2)}
+            price={combinationPrice}
             currency={combination?.price ? mapCurrencyToSign(combination.price?.currencyCode as CurrencyType) : "$"}
           />
           <ProductImages images={product.images} />
@@ -85,7 +83,7 @@ export default async function Product({ params: { slug } }: ProductProps) {
             <ProductTitle
               className="hidden md:col-span-4 md:col-start-9 md:block"
               title={product.title}
-              price={parseFloat(combination!.price!.amount).toFixed(2)}
+              price={combinationPrice}
               currency={combination?.price ? mapCurrencyToSign(combination.price?.currencyCode as CurrencyType) : "$"}
             />
             {!hasOnlyOneVariant && <VariantsSection variants={product.variants} handle={product.handle} combination={combination} />}
