@@ -5,7 +5,7 @@ import type { Metadata } from "next"
 import { isDemoMode } from "utils/demoUtils"
 import { CategoryView } from "views/Category/CategoryView"
 
-export const revalidate = 3600
+export const revalidate = 86400
 export const dynamic = "force-static"
 
 interface CategoryPageProps {

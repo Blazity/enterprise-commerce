@@ -25,7 +25,7 @@ import { RightSection } from "views/Product/RightSection"
 import { FaqSection } from "views/Product/FaqSection"
 import { AddToCartButton } from "views/Product/AddToCartButton"
 
-export const revalidate = 3600
+export const revalidate = 86400
 export const dynamic = "force-static"
 export const dynamicParams = true
 

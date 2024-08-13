@@ -25,7 +25,7 @@ import { slugToName } from "utils/slug-name"
 
 export const dynamic = "force-static"
 
-export const revalidate = 1
+export const revalidate = 86400
 
 export const dynamicParams = true
 

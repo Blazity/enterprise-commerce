@@ -1,7 +1,7 @@
 import { format } from "date-fns/format"
 import { getAllPages, getPage } from "app/actions/page.actions"
 
-export const revalidate = 3600
+export const revalidate = 86400
 export const dynamic = "force-static"
 export const dynamicParams = true
 
