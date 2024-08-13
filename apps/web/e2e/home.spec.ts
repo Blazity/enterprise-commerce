@@ -178,7 +178,101 @@ test('should check if all category sections exist', async ({ page }) => {
 
 
 
+test('check for the existence of specific elements', async ({ page }) => {
+  await page.goto("http://localhost:3000/")
+
+  // Check if the container div exists
+  const container = page.getByText('Best OffersPrevious slideNext');
+  await expect(container).toBeVisible();
+
+  //  heading element exists
+  const heading = container.locator('h2');
+  await expect(heading).toHaveText('Best Offers');
+
+  // Check if the buttons within the div are visible
+  const buttons = container.locator('div.hidden.gap-4.md\\:flex button');
+  await expect(buttons).toHaveCount(2);
+
+  // first button has the correct attributes and content
+  const firstButton = buttons.first();
+  await expect(firstButton).toHaveAttribute('disabled', '');
+  await expect(firstButton.locator('span > svg')).toBeVisible();
+  await expect(firstButton.locator('span > svg > path')).toHaveAttribute('d', 'M0.999876 1.03964L4.89244 4.89256L8.74536 1');
+  await expect(firstButton.locator('span > span.sr-only')).toHaveText('Previous slide');
+
+  //  second button has the correct attributes and content
+  const secondButton = buttons.nth(1);
+  await expect(secondButton).toHaveAttribute('disabled', '');
+  await expect(secondButton.locator('span > svg')).toBeVisible();
+  await expect(secondButton.locator('span > svg > path')).toHaveAttribute('d', 'M0.999876 1.03964L4.89244 4.89256L8.74536 1');
+  await expect(secondButton.locator('span > span.sr-only')).toHaveText('Next slide');
+});
 
 
 
+test('check for the existence of specific elements in the second HTML snippet', async ({ page }) => {
+  await page.goto("http://localhost:3000/")
 
+  // Check if the container div exists
+  const container = page.getByText('Everything under $50Previous')
+  await expect(container).toBeVisible();
+
+  // Check if the heading <h2> element exists
+  const heading = container.locator('h2');
+  await expect(heading).toHaveText('Everything under $50');
+
+  // Check if the buttons within the div are visible
+  const buttons = container.locator('div.hidden.gap-4.md\\:flex button');
+  await expect(buttons).toHaveCount(2);
+
+  // Check if the first button has the correct attributes and content
+  const firstButton = buttons.first();
+  await expect(firstButton).toHaveAttribute('disabled', '');
+  await expect(firstButton.locator('span > svg')).toBeVisible();
+  await expect(firstButton.locator('span > svg > path')).toHaveAttribute('d', 'M0.999876 1.03964L4.89244 4.89256L8.74536 1');
+  await expect(firstButton.locator('span > span.sr-only')).toHaveText('Previous slide');
+
+  // Check if the second button has the correct attributes and content
+  const secondButton = buttons.nth(1);
+  await expect(secondButton).toHaveAttribute('disabled', '');
+  await expect(secondButton.locator('span > svg')).toBeVisible();
+  await expect(secondButton.locator('span > svg > path')).toHaveAttribute('d', 'M0.999876 1.03964L4.89244 4.89256L8.74536 1');
+  await expect(secondButton.locator('span > span.sr-only')).toHaveText('Next slide');
+});
+
+
+test('check for the existence of specific elements in the form', async ({ page }) => {
+  await page.goto("http://localhost:3000/")
+
+  // Check if the container div exists
+  const container = page.locator('div.max-w-container-md.mx-auto.my-0.w-full.px-4.py-16.xl\\:px-0');
+  await expect(container).toBeVisible();
+
+  // grid container
+  const gridContainer = container.locator('div.grid.grid-cols-1.items-center.gap-8.md\\:grid-cols-2');
+  await expect(gridContainer).toBeVisible();
+
+  // text element
+  const textElement = gridContainer.locator('div:first-of-type p');
+  await expect(textElement).toHaveText('Become a member and receive our special discounts.');
+
+  // form exists
+  const form = gridContainer.locator('div:nth-of-type(2) > form');
+  await expect(form).toBeVisible();
+
+  //  Name input field 
+  const nameInput = form.locator('label:first-of-type input');
+  await expect(nameInput).toBeVisible();
+  await expect(nameInput).toHaveAttribute('placeholder', 'Name');
+
+  // Email input field
+  const emailInput = form.locator('label:nth-of-type(2) input');
+  await expect(emailInput).toBeVisible();
+  await expect(emailInput).toHaveAttribute('placeholder', 'Email');
+  await expect(emailInput).toHaveAttribute('type', 'email');
+
+  // button exists 
+  const button = form.locator('button');
+  await expect(button).toBeVisible();
+  await expect(button).toHaveText('Become a Member');
+});
