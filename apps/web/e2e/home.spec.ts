@@ -276,3 +276,88 @@ test('check for the existence of specific elements in the form', async ({ page }
   await expect(button).toBeVisible();
   await expect(button).toHaveText('Become a Member');
 });
+
+
+
+test('should check for social media links in the header', async ({ page }) => {
+  await page.goto("http://localhost:3000/")
+
+  // Locate the header element
+  const header = page.locator('header.flex.justify-end.gap-4.pt-8');
+  await expect(header).toBeVisible();
+
+  // Check if each social media link exists and has the correct aria-label and href
+  const facebookLink = header.locator('a[aria-label="Facebook link"]');
+  await expect(facebookLink).toHaveAttribute('href', 'https://www.facebook.com/blazity/');
+  await expect(facebookLink).toBeVisible();
+
+  const twitterLink = header.locator('a[aria-label="Twitter link"]');
+  await expect(twitterLink).toHaveAttribute('href', 'https://twitter.com/blazity');
+  await expect(twitterLink).toBeVisible();
+
+  const instagramLink = header.locator('a[aria-label="Instagram link"]');
+  await expect(instagramLink).toHaveAttribute('href', 'https://www.instagram.com/blazitysoftware/');
+  await expect(instagramLink).toBeVisible();
+
+  const linkedinLink = header.locator('a[aria-label="Linkedin link"]');
+  await expect(linkedinLink).toHaveAttribute('href', 'https://www.linkedin.com/company/blazity');
+  await expect(linkedinLink).toBeVisible();
+
+  const youtubeLink = header.locator('a[aria-label="Youtube link"]');
+  await expect(youtubeLink).toHaveAttribute('href', 'https://www.youtube.com/channel/UCYDeWaSWiOHn_lUHY-u1VYw/videos');
+  await expect(youtubeLink).toBeVisible();
+});
+
+
+test('should check the existence of elements within the main section', async ({ page }) => {
+  await page.goto("http://localhost:3000/");
+
+  const main = page.locator('main.py-32');
+  await expect(main).toBeVisible();
+
+  // Check if the "Designed by v0" link exists
+  const designedByLink = main.locator('a[target="_blank"][href="https://v0.dev/"]');
+  await expect(designedByLink).toBeVisible();
+
+  // "Designed by v0" 
+  const designedBySpan = designedByLink.locator('span.focus\\:ring-ring.mb-4.inline-flex.w-fit.items-center.whitespace-nowrap.rounded-full.border.border-transparent.bg-white.px-2\\.5.py-0\\.5.text-xs.font-semibold.text-black.transition-colors.focus\\:outline-none.focus\\:ring-2.focus\\:ring-offset-2');
+  await expect(designedBySpan).toBeVisible();
+  await expect(designedBySpan).toHaveText('Designed by v0');
+
+  // Check if the "Missing feature?" paragraph exists
+  const missingFeatureText = main.locator('p.text-3xl.font-bold');
+  await expect(missingFeatureText).toBeVisible();
+  await expect(missingFeatureText).toHaveText('Missing feature?');
+
+  // Check if the "Let us know" link exists within the following paragraph
+  const letUsKnowLink = main.locator('p.mt-1.text-xl a[href="mailto:contact@blazity.com"]');
+  await expect(letUsKnowLink).toBeVisible();
+  await expect(letUsKnowLink).toHaveText("Let us know");
+});
+
+test('should check the existence of elements within the footer section', async ({ page }) => {
+  await page.goto("http://localhost:3000/");
+
+  const footer = page.locator('footer.mt-auto.flex.flex-col.items-center.justify-between.pb-8.text-neutral-300.md\\:flex-row');
+  await expect(footer).toBeVisible();
+
+  // Check if the copyright text exists
+  const copyrightText = footer.locator('span.text-sm');
+  await expect(copyrightText).toBeVisible();
+  await expect(copyrightText).toHaveText('2024 © Lorem Ipsum. All Rights Reserved.');
+
+  // Locate the div containing the links
+  const linkContainer = footer.locator('div.mt-4.flex.space-x-4.md\\:mt-0');
+  await expect(linkContainer).toBeVisible();
+
+  // Check if the "Privacy and Cookie Policy" link exists
+  const privacyLink = linkContainer.locator('a[href="/privacy-policy"]');
+  await expect(privacyLink).toBeVisible();
+  await expect(privacyLink).toHaveText('Privacy and Cookie Policy');
+
+  // Check if the "Terms & Conditions" link exists
+  const termsLink = linkContainer.locator('a[href="/terms-conditions"]');
+  await expect(termsLink).toBeVisible();
+  await expect(termsLink).toHaveText('Terms & Conditions');
+});
+
