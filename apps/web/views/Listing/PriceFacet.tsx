@@ -66,7 +66,7 @@ function PriceInput({ value, onChange, label, ...rest }: PriceInputProps) {
       {label}
       <Input
         placeholder="10.0"
-        className="block h-auto w-full rounded-md border border-neutral-300 bg-neutral-100 px-2.5 py-1.5 text-[14px] text-black focus:border-blue-500 focus:ring-blue-500  "
+        className="block h-auto w-full rounded-md border border-neutral-300 bg-neutral-100 px-2.5 py-1.5 text-[14px] text-black focus:border-blue-500 focus:ring-blue-500"
         type="number"
         value={value}
         onChange={onChange}

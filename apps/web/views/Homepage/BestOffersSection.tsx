@@ -10,7 +10,7 @@ export async function BestOffersSection() {
 
   if (!items.length) return null
 
-  return <CarouselSection title="Best Offers" items={items} />
+  return <CarouselSection className="my-16" title="Best Offers" items={items} />
 }
 
 const getBestOffers = unstable_cache(

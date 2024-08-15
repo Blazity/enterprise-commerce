@@ -1,5 +1,5 @@
 import { meilisearch } from "clients/meilisearch"
-import { Carousel, CarouselContent } from "components/Carousel/Carousel"
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "components/Carousel/Carousel"
 import { ProductCard } from "components/ProductCard/ProductCard"
 import { unstable_cache } from "next/cache"
 import { ComparisonOperators, FilterBuilder } from "utils/filterBuilder"
@@ -17,11 +17,19 @@ export async function SimilarProductsSection({ slug, collectionHandle }: Similar
 
   return (
     <section className="my-10">
-      <h2 className="mb-10 text-[26px] font-normal tracking-[-0.78px]">You might also like</h2>
       <Carousel opts={{ skipSnaps: true }}>
-        <CarouselContent className="ml-0 justify-start gap-6">
+        <div className="flex justify-between">
+          <h2 className="mb-10 text-[26px] font-normal tracking-[-0.78px]">You might also like</h2>
+          <div className="hidden gap-4 md:flex">
+            <CarouselPrevious className="relative" />
+            <CarouselNext className="relative" />
+          </div>
+        </div>
+        <CarouselContent>
           {items.map((product, idx) => (
-            <ProductCard className="h-full min-w-[150px] max-w-[150px] md:min-w-[280px] md:max-w-[280px]" key={"featured_" + product.id + idx} {...product} />
+            <CarouselItem className="basis-1/2 md:basis-1/4" key={"featured_" + product.id + idx}>
+              <ProductCard {...product} />
+            </CarouselItem>
           ))}
         </CarouselContent>
       </Carousel>

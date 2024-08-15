@@ -52,21 +52,23 @@ export async function SearchView({ searchParams, disabledFacets, collection }: S
   )
 
   return (
-    <div className="max-w-container-md mx-auto w-full px-4 py-12 md:py-24 xl:px-0">
+    <div className="max-w-container-md mx-auto w-full py-12 md:px-4 md:py-24">
       <div className="flex gap-12 md:gap-24">
         <Suspense>
           <FacetsDesktop
             independentFacetDistribution={independentFacetDistribution}
             disabledFacets={disabledFacets}
-            className="hidden shrink-0  basis-[250px] lg:block"
+            className="hidden shrink-0  basis-[300px] lg:block"
             facetDistribution={facetDistribution}
           />
         </Suspense>
         <div className="w-full">
-          <Controls disabledFacets={disabledFacets} independentFacetDistribution={independentFacetDistribution} facetDistribution={facetDistribution} totalHits={totalHits} />
-          <Suspense>
-            <SearchFacet className="mb-6" />
-          </Suspense>
+          <div className="px-4">
+            <Controls disabledFacets={disabledFacets} independentFacetDistribution={independentFacetDistribution} facetDistribution={facetDistribution} totalHits={totalHits} />
+            <Suspense>
+              <SearchFacet className="mb-6" />
+            </Suspense>
+          </div>
           <HitsSection hits={hits} />
           <PaginationSection queryParams={searchParams} totalPages={totalPages} />
         </div>
@@ -104,7 +106,7 @@ const searchProducts = unstable_cache(
             ),
             filter,
             page,
-            attributesToRetrieve: ["id", "handle", "title", "priceRange", "featuredImage", "minPrice", "variants", "images", "avgRating", "totalReviews"],
+            attributesToRetrieve: ["id", "handle", "title", "priceRange", "featuredImage", "minPrice", "variants", "images", "avgRating", "totalReviews", "vendor"],
           },
         ],
       })

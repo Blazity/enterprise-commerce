@@ -5,7 +5,6 @@ import type { CategoriesDistribution } from "meilisearch"
 import { parseAsArrayOf, parseAsInteger, parseAsString, useQueryState } from "nuqs"
 
 import { useFilterTransitionStore } from "stores/filterTransitionStore"
-
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "components/Accordion/Accordion"
 import { SearchIcon } from "components/Icons/SearchIcon"
 
@@ -14,7 +13,7 @@ import { CategoryFacet } from "./CategoryFacet"
 import { PriceFacet } from "./PriceFacet"
 import { Sorter } from "./Sorter"
 import { RatingFacet } from "./RatingFacet"
-import { HIERARCHICAL_ATRIBUTES } from "constants/index"
+import { HIERARCHICAL_ATRIBUTES, HIERARCHICAL_SEPARATOR } from "constants/index"
 import { usePathname, useRouter } from "next/navigation"
 
 interface FacetsContentProps {
@@ -103,41 +102,42 @@ export function FacetsContent({ independentFacetDistribution, facetDistribution,
       <Suspense>
         <Sorter className="shrink-0 basis-[200px] self-center lg:hidden" />
       </Suspense>
-      {!disabledFacets?.includes("categories") && (
-        <CategoryFacet
-          title="Categories"
-          distribution={collections}
-          isChecked={(category) => selectedCategories.includes(category)}
-          onBackClick={(currentCategory, parentSlug) => {
-            if (pathname === "/search") {
-              setSelectedCategories((prev) => {
-                if (!currentCategory) return []
-                const index = prev.indexOf(currentCategory)
-                return prev.slice(0, index)
-              })
-
-              return
-            }
-
-            router.push(`/category/${parentSlug}`)
-          }}
-          onCheckedChange={(checked, category) => {
-            if (pathname === "/search") {
-              setSelectedCategories((prev) => (checked ? [...prev, category] : prev.filter((cat) => cat !== category)))
-              return
-            }
-
-            router.push(`/category/${category}`)
-          }}
-        />
-      )}
       <div className={"relative mb-6 block overflow-hidden rounded-md"}>
         <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5">
           <SearchIcon className="size-4 text-neutral-500" />
         </div>
       </div>
 
-      <Accordion collapsible className="w-full space-y-4" type="single" defaultValue={lastSelected}>
+      <Accordion className="space-y-4" type="multiple" defaultValue={lastSelected}>
+        {!disabledFacets?.includes("categories") && (
+          <CategoryFacet
+            id="categories"
+            title="Categories"
+            distribution={collections}
+            isChecked={(category) => {
+              return selectedCategories.some((el) => el.split(HIERARCHICAL_SEPARATOR).includes(category))
+            }}
+            onCheckedChange={(category) => {
+              const checked = selectedCategories.includes(category)
+
+              if (pathname === "/search") {
+                setSelectedCategories((prev) => {
+                  if (checked) {
+                    return prev.filter((cat) => cat !== category)
+                  } else {
+                    // Remove any broader or narrower categories before adding the new one
+                    const updatedCategories = prev.filter((cat) => !category.startsWith(cat) && !cat.startsWith(category))
+                    return [...updatedCategories, category]
+                  }
+                })
+                return
+              }
+
+              setLastSelected("categories")
+              router.push(`/category/${category.split(HIERARCHICAL_SEPARATOR).pop()}`)
+            }}
+          />
+        )}
         {!disabledFacets?.includes("vendors") && (
           <Facet
             id="vendors"
@@ -147,6 +147,7 @@ export function FacetsContent({ independentFacetDistribution, facetDistribution,
             onCheckedChange={(checked, vendor) => {
               setSelectedVendors((prev) => (checked ? [...prev, vendor] : prev.filter((cat) => cat !== vendor)))
               setLastSelected("vendors")
+
               setPage(1)
             }}
           />
@@ -182,7 +183,7 @@ export function FacetsContent({ independentFacetDistribution, facetDistribution,
 
         <AccordionItem value="price">
           <AccordionTrigger className="text-base">Price Range</AccordionTrigger>
-          <AccordionContent>
+          <AccordionContent className="px-2">
             <PriceFacet
               initMin={minPrice}
               initMax={maxPrice}
@@ -190,7 +191,6 @@ export function FacetsContent({ independentFacetDistribution, facetDistribution,
                 setMinPrice(minPrice)
                 setMaxPrice(maxPrice)
                 setPage(1)
-                setLastSelected("price")
               }}
             />
           </AccordionContent>

@@ -17,7 +17,7 @@ export function Facet({ id, title, distribution, isChecked, onCheckedChange }: F
 
   return (
     <AccordionItem value={id}>
-      <AccordionTrigger className="text-base">{title}</AccordionTrigger>
+      <AccordionTrigger className="py-2 text-base">{title}</AccordionTrigger>
       <AccordionContent>
         {hasNoResults ? (
           <p className="text-[14px] text-neutral-500">No {title.toLowerCase()} found</p>
