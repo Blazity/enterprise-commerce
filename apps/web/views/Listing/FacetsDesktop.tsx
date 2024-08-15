@@ -7,6 +7,7 @@ import dynamic from "next/dynamic"
 import { cn } from "utils/cn"
 
 interface FacetsDesktopProps {
+  independentFacetDistribution: Record<string, CategoriesDistribution> | undefined
   facetDistribution: Record<string, CategoriesDistribution> | undefined
   className?: string
   disabledFacets?: string[]
@@ -14,11 +15,18 @@ interface FacetsDesktopProps {
 
 const FacetsContent = dynamic(() => import("views/Listing/FacetsContent").then((m) => m.FacetsContent), { loading: FacetsContentSkeleton })
 
-export function FacetsDesktop({ facetDistribution, className, disabledFacets }: FacetsDesktopProps) {
+export function FacetsDesktop({ independentFacetDistribution, facetDistribution, className, disabledFacets }: FacetsDesktopProps) {
   const { width = 0 } = useWindowSize()
   const isMobile = width! < 1024 && !!width
 
-  return isMobile ? null : <FacetsContent facetDistribution={facetDistribution} className={cn(className, "sticky overflow-auto")} disabledFacets={disabledFacets} />
+  return isMobile ? null : (
+    <FacetsContent
+      independentFacetDistribution={independentFacetDistribution}
+      facetDistribution={facetDistribution}
+      className={cn(className, "sticky overflow-auto")}
+      disabledFacets={disabledFacets}
+    />
+  )
 }
 
 function FacetsContentSkeleton() {

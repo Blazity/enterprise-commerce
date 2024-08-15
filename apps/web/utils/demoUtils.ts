@@ -1,7 +1,7 @@
 import type { CommerceProduct } from "types"
 
 export function getDemoProducts() {
-  if (!isDemoMode()) return { hits: [], totalPages: 0, facetDistribution: {}, totalHits: 0 }
+  if (!isDemoMode()) return { hits: [], totalPages: 0, facetDistribution: {}, totalHits: 0, independentFacetDistribution: {} }
 
   const allProducts = require("public/demo-data.json") as { results: CommerceProduct[]; offset: number; limit: number; total: number }
 
@@ -10,6 +10,7 @@ export function getDemoProducts() {
     totalPages: 1,
     facetDistribution: {},
     totalHits: allProducts.results.length,
+    independentFacetDistribution: {},
   }
 }
 

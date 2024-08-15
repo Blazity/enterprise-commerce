@@ -44,16 +44,26 @@ export async function SearchView({ searchParams, disabledFacets, collection }: S
     filterBuilder.where("collections.handle", ComparisonOperators.Equal, collection.handle)
   }
 
-  const { facetDistribution, hits, totalPages, totalHits } = await searchProducts(q, sortBy, page, composeFilters(filterBuilder, rest, HIERARCHICAL_SEPARATOR).build())
+  const { facetDistribution, hits, totalPages, totalHits, independentFacetDistribution } = await searchProducts(
+    q,
+    sortBy,
+    page,
+    composeFilters(filterBuilder, rest, HIERARCHICAL_SEPARATOR).build()
+  )
 
   return (
     <div className="max-w-container-md mx-auto w-full px-4 py-12 md:py-24 xl:px-0">
       <div className="flex gap-12 md:gap-24">
         <Suspense>
-          <FacetsDesktop disabledFacets={disabledFacets} className="hidden shrink-0  basis-[250px] lg:block" facetDistribution={facetDistribution} />
+          <FacetsDesktop
+            independentFacetDistribution={independentFacetDistribution}
+            disabledFacets={disabledFacets}
+            className="hidden shrink-0  basis-[250px] lg:block"
+            facetDistribution={facetDistribution}
+          />
         </Suspense>
         <div className="w-full">
-          <Controls disabledFacets={disabledFacets} facetDistribution={facetDistribution} totalHits={totalHits} />
+          <Controls disabledFacets={disabledFacets} independentFacetDistribution={independentFacetDistribution} facetDistribution={facetDistribution} totalHits={totalHits} />
           <Suspense>
             <SearchFacet className="mb-6" />
           </Suspense>
@@ -76,26 +86,40 @@ const searchProducts = unstable_cache(
         console.warn({ message: "Missing products index", source: "SearchView" })
       }
 
-      const results = await index?.search(query, {
-        sort: sortBy ? [sortBy] : undefined,
-        limit: HITS_PER_PAGE,
-        hitsPerPage: HITS_PER_PAGE,
-        facets: ["vendor", "variants.availableForSale", "flatOptions.Color", "minPrice", "avgRating"].concat(
-          !!env.SHOPIFY_HIERARCHICAL_NAV_HANDLE ? [`hierarchicalCategories.lvl0`, `hierarchicalCategories.lvl1`, `hierarchicalCategories.lvl2`] : []
-        ),
-        filter,
-        page,
-        attributesToRetrieve: ["id", "handle", "title", "priceRange", "featuredImage", "minPrice", "variants", "images", "avgRating", "totalReviews"],
+      // use a single http request to search for products and facets, utilize separate query for facet values that should be independent from the search query
+      const res = await meilisearch?.multiSearch<CommerceProduct>({
+        queries: [
+          {
+            indexUid: env.MEILISEARCH_PRODUCTS_INDEX,
+            q: query,
+            facets: ["hierarchicalCategories.lvl0", "hierarchicalCategories.lvl1", "hierarchicalCategories.lvl2"],
+          },
+          {
+            indexUid: env.MEILISEARCH_PRODUCTS_INDEX,
+            sort: sortBy ? [sortBy] : undefined,
+            limit: HITS_PER_PAGE,
+            hitsPerPage: HITS_PER_PAGE,
+            facets: ["vendor", "variants.availableForSale", "flatOptions.Color", "minPrice", "avgRating"].concat(
+              !!env.SHOPIFY_HIERARCHICAL_NAV_HANDLE ? [`hierarchicalCategories.lvl0`, `hierarchicalCategories.lvl1`, `hierarchicalCategories.lvl2`] : []
+            ),
+            filter,
+            page,
+            attributesToRetrieve: ["id", "handle", "title", "priceRange", "featuredImage", "minPrice", "variants", "images", "avgRating", "totalReviews"],
+          },
+        ],
       })
+
+      const [independentFacets, results] = res?.results || []
 
       const hits = results?.hits || []
       const totalPages = results?.totalPages || 0
       const facetDistribution = results?.facetDistribution || {}
-      const totalHits = results.totalHits
+      const totalHits = results.totalHits || 0
+      const independentFacetDistribution = independentFacets.facetDistribution || {}
 
-      return { hits, totalPages, facetDistribution, totalHits }
+      return { hits, totalPages, facetDistribution, totalHits, independentFacetDistribution }
     } catch (err) {
-      return { hits: [], totalPages: 0, facetDistribution: {}, totalHits: 0 }
+      return { hits: [], totalPages: 0, facetDistribution: {}, totalHits: 0, independentFacetDistribution: {} }
     }
   },
   ["products-search"],

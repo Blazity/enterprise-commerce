@@ -18,19 +18,21 @@ import { HIERARCHICAL_ATRIBUTES } from "constants/index"
 import { usePathname, useRouter } from "next/navigation"
 
 interface FacetsContentProps {
+  independentFacetDistribution: Record<string, CategoriesDistribution> | undefined
   facetDistribution: Record<string, CategoriesDistribution> | undefined
   className?: string
   disabledFacets?: string[]
 }
 
-export function FacetsContent({ facetDistribution, className, disabledFacets }: FacetsContentProps) {
+export function FacetsContent({ independentFacetDistribution, facetDistribution, className, disabledFacets }: FacetsContentProps) {
   const router = useRouter()
   const pathname = usePathname()
 
   const collections: Record<string, CategoriesDistribution> = HIERARCHICAL_ATRIBUTES.reduce((acc, key) => {
-    acc[key] = facetDistribution?.[key] || {}
+    acc[key] = independentFacetDistribution?.[key] || {}
     return acc
   }, {})
+
   const vendors = facetDistribution?.["vendor"]
   const colors = facetDistribution?.["flatOptions.Color"]
 
@@ -135,7 +137,7 @@ export function FacetsContent({ facetDistribution, className, disabledFacets }: 
         </div>
       </div>
 
-      <Accordion collapsible className="w-full" type="single" defaultValue={lastSelected}>
+      <Accordion collapsible className="w-full space-y-4" type="single" defaultValue={lastSelected}>
         {!disabledFacets?.includes("vendors") && (
           <Facet
             id="vendors"
