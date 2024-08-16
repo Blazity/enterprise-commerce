@@ -31,8 +31,8 @@ export function CategoryFacet({ id, title, distribution, isChecked, onCheckedCha
 
   return (
     <AccordionItem value={id}>
-      <AccordionTrigger className="text-base">{title}</AccordionTrigger>
-      <AccordionContent className="max-h-[500px] overflow-y-scroll">
+      <AccordionTrigger className="py-2 text-base">{title}</AccordionTrigger>
+      <AccordionContent>
         {items.length === 0 ? (
           <p className="text-sm/3 text-neutral-500">No categories found</p>
         ) : (
@@ -55,15 +55,15 @@ interface CategoryTreeProps {
 const CategoryTree = ({ items, level, onClick, isChecked, className, parent }: CategoryTreeProps) => {
   return (
     <ul className={className}>
-      {items.map(({ value, count, isRefined, data }) => {
+      {items.map(({ value, isRefined, data }) => {
         const valueWithParent = parent ? [...parent, value].join(HIERARCHICAL_SEPARATOR) : value
         return (
           <li key={value} className={cn("flex flex-col gap-4")}>
             <button
-              className={cn("flex items-center bg-transparent text-sm/3", isRefined || isChecked(value) ? "font-normal text-black" : "font-thin text-gray-400")}
+              className={cn("flex items-center bg-transparent text-left text-sm/4", isRefined || isChecked(value) ? "font-normal text-black" : "font-thin text-gray-400")}
               onClick={() => onClick(valueWithParent)}
             >
-              {slugToName(value)} ({count})
+              {slugToName(value)}
             </button>
             {data && data.length > 0 && (
               <CategoryTree

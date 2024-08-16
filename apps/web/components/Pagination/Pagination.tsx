@@ -37,7 +37,7 @@ const PaginationLink = ({ className, isActive, children, href, disabled, "aria-l
       buttonVariants({
         variant: "ghost",
       }),
-      "size-9 items-center justify-center rounded-full border border-black bg-white px-0 py-0 text-[16px] text-slate-800 transition-colors hover:bg-black hover:text-white md:flex",
+      "size-9 items-center justify-center bg-white px-0 py-0 text-[16px] text-slate-800 transition-colors hover:bg-black hover:text-white md:flex",
       { "bg-black font-bold text-white": isActive },
       { "pointer-events-none cursor-not-allowed opacity-50": disabled },
       className
@@ -53,10 +53,7 @@ const PaginationPrevious = ({ className, disabled, ...props }: React.ComponentPr
   <PaginationLink
     aria-label="Go to previous page"
     size="default"
-    className={cn(
-      "flex size-8 items-center justify-center rounded-full border-0 px-0 py-0 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50",
-      className
-    )}
+    className={cn("flex size-8 items-center justify-center border-0 px-0 py-0 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50", className)}
     disabled={disabled}
     {...props}
   >
@@ -70,7 +67,7 @@ const PaginationNext = ({ className, disabled, ...props }: React.ComponentProps<
     aria-label="Go to next page"
     size="default"
     className={cn(
-      "flex size-8 items-center justify-center rounded-full border-0 px-0 py-0 transition-transform disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50",
+      "flex size-8 items-center justify-center border-0 px-0 py-0 transition-transform disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50",
       className
     )}
     disabled={disabled}

@@ -10,6 +10,14 @@ const config: Omit<Config, "content"> = {
   theme: {
     extend: {
       keyframes: {
+        slideInLeft: {
+          "0%": { marginLeft: "-283px", visibility: "visible" },
+          "100%": { marginLeft: "0px" },
+        },
+        slideOutLeft: {
+          "0%": { marginLeft: "0px" },
+          "100%": { marginLeft: "-283px", visibility: "hidden" },
+        },
         "accordion-down": {
           from: { height: "0" },
           to: { height: "var(--radix-accordion-content-height)" },
@@ -41,6 +49,8 @@ const config: Omit<Config, "content"> = {
         },
       },
       animation: {
+        slideOutLeft: "slideOutLeft 0.3s ease-out forwards",
+        slideInLeft: "slideInLeft 0.3s ease-in forwards",
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "single-bounce": "bounceOnce 0.5s ease-out",

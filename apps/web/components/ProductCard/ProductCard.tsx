@@ -17,18 +17,19 @@ export const ProductCard = ({ variants, handle, title, featuredImage, minPrice, 
   const variantPrice = variants?.find(Boolean)?.price
 
   return (
-    <Link className={cn("flex h-full w-full flex-col overflow-hidden transition-all hover:shadow-md", className)} aria-label={linkAria} href={href}>
-      <Image
-        priority={priority}
-        className="aspect-square object-cover"
-        src={featuredImage?.url || "/default-product-image.svg"}
-        alt={featuredImage?.altText || title}
-        width={430}
-        height={300}
-      />
+    <Link className={cn("group flex h-full w-full flex-col overflow-hidden transition-all hover:shadow-md", className)} aria-label={linkAria} href={href}>
+      <div className="relative aspect-square overflow-hidden">
+        <Image
+          priority={priority}
+          className="object-cover transition-transform group-hover:scale-105"
+          src={featuredImage?.url || "/default-product-image.svg"}
+          alt={featuredImage?.altText || title}
+          fill
+        />
+      </div>
       <div className="flex shrink-0 grow flex-col gap-2 p-4">
         {/* remove first word from the title as it includes vendor (this just needs feed update and then can be removed) */}
-        <h3 className="line-clamp-2 text-lg font-semibold">{title.split(" ").slice(1).join(" ")}</h3>
+        <h3 className="line-clamp-2 text-lg font-semibold transition-colors group-hover:text-orange-500">{title.split(" ").slice(1).join(" ")}</h3>
         <div className="mt-auto flex flex-col gap-1">
           {!!vendor && <p className="text-sm text-orange-400">{vendor}</p>}
           {noOfVariants > 0 && (

@@ -27,7 +27,7 @@ interface SorterProps {
 }
 
 export function Sorter({ className }: SorterProps) {
-  const [sortBy, setSortBy] = useQueryState("sortBy", {
+  const [_, setSortBy] = useQueryState("sortBy", {
     ...parseAsStringEnum<Sorting>(Object.values(Sorting)).withDefault(Sorting.RELEVANCY),
     shallow: false,
     history: "push",
@@ -36,9 +36,9 @@ export function Sorter({ className }: SorterProps) {
   return (
     <div className={className}>
       <DropdownMenu>
-        <DropdownMenuTrigger aria-expanded={undefined} asChild>
-          <div className="flex cursor-pointer flex-wrap items-center justify-center gap-0.5 text-[15px] text-black">
-            Sort by: <span className="ml-0.5 text-slate-700 underline">{LABELS[sortBy]}</span>
+        <DropdownMenuTrigger asChild>
+          <div className="flex cursor-pointer flex-wrap items-center justify-center gap-2 font-thin text-black [&[data-state=open]>svg]:rotate-180">
+            <span>Sort by</span>
             <ChevronIcon />
           </div>
         </DropdownMenuTrigger>

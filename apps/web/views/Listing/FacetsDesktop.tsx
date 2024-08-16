@@ -1,6 +1,5 @@
 import { Skeleton } from "components/Skeleton/Skeleton"
 import type { CategoriesDistribution } from "meilisearch"
-import { cn } from "utils/cn"
 import { FacetsContent } from "views/Listing/FacetsContent"
 
 interface FacetsDesktopProps {
@@ -11,14 +10,7 @@ interface FacetsDesktopProps {
 }
 
 export function FacetsDesktop({ independentFacetDistribution, facetDistribution, className, disabledFacets }: FacetsDesktopProps) {
-  return (
-    <FacetsContent
-      independentFacetDistribution={independentFacetDistribution}
-      facetDistribution={facetDistribution}
-      className={cn(className, "sticky hidden overflow-auto md:block")}
-      disabledFacets={disabledFacets}
-    />
-  )
+  return <FacetsContent independentFacetDistribution={independentFacetDistribution} facetDistribution={facetDistribution} className={className} disabledFacets={disabledFacets} />
 }
 
 export function FacetsContentSkeleton() {
