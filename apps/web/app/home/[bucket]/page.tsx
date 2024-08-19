@@ -1,6 +1,8 @@
+import { Suspense } from "react"
 import { BUCKETS } from "constants/index"
 import { BestOffersSection } from "views/Homepage/BestOffersSection"
-import { CategoriesSection } from "views/Homepage/CategoriesSection"
+import { CarouselSectionSkeleton } from "views/Homepage/CarouselSection"
+import { CategoriesSection, CategoriesSectionSkeleton } from "views/Homepage/CategoriesSection"
 import { EverythingUnderSection } from "views/Homepage/EverythingUnderSection"
 import { AnnouncementBar } from "components/AnnouncementBar/AnnouncementBar"
 import { HeroSection } from "views/Homepage/HeroSection"
@@ -22,9 +24,17 @@ export default function Homepage({ params: { bucket } }: { params: { bucket: str
       <HeroSection className="-order-1 md:-order-2" title={heroTitles[bucket]} />
       <AnnouncementBar className="-order-2 md:-order-1" />
 
-      <CategoriesSection />
-      <BestOffersSection />
-      <EverythingUnderSection />
+      <Suspense fallback={<CategoriesSectionSkeleton />}>
+        <CategoriesSection />
+      </Suspense>
+
+      <Suspense fallback={<CarouselSectionSkeleton />}>
+        <BestOffersSection />
+      </Suspense>
+
+      <Suspense fallback={<CarouselSectionSkeleton />}>
+        <EverythingUnderSection />
+      </Suspense>
     </div>
   )
 }
