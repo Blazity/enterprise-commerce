@@ -23,7 +23,7 @@ export async function generateStaticParams() {
   if (isDemoMode()) return []
 
   const index = await meilisearch?.getIndex<PlatformCollection>(env.MEILISEARCH_CATEGORIES_INDEX)
-  const { results } = await index?.getDocuments({ limit: 1000, fields: ["handle"] })
+  const { results } = await index?.getDocuments({ limit: 50, fields: ["handle"] })
 
   return results.map(({ handle }) => ({ slug: handle }))
 }

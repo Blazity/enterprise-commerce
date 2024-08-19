@@ -56,7 +56,7 @@ export function NavigationBar({ items }: NavigationBarProps) {
   return (
     <header className="mega-navbar sticky top-0 z-50 mx-auto my-0 flex w-full flex-wrap content-center items-center justify-between border-b border-black bg-white py-6 md:border-y ">
       <div className="md:max-w-container-md flex justify-start px-4 md:mx-auto md:w-full md:px-0">
-        <Link href="/" className="brand mr-20 hidden items-center text-xl font-bold md:flex">
+        <Link prefetch={false} href="/" className="brand mr-20 hidden items-center text-xl font-bold md:flex">
           Acme
         </Link>
 
@@ -66,7 +66,7 @@ export function NavigationBar({ items }: NavigationBarProps) {
             <span className="burger-line"></span>
             <span className="burger-line"></span>
           </button>
-          <Link href="/" className="brand flex items-center text-xl font-bold">
+          <Link prefetch={false} href="/" className="brand flex items-center text-xl font-bold">
             Acme
           </Link>
           <div className="menu-actions absolute right-4 flex items-center justify-center gap-2">

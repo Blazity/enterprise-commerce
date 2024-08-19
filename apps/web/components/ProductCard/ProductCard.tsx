@@ -7,17 +7,18 @@ import { StarIcon } from "components/Icons/StarIcon"
 
 interface ProductCardProps extends Pick<CommerceProduct, "variants" | "handle" | "images" | "title" | "featuredImage" | "minPrice" | "avgRating" | "totalReviews" | "vendor"> {
   priority?: boolean
+  prefetch?: boolean
   className?: string
 }
 
-export const ProductCard = ({ variants, handle, title, featuredImage, minPrice, avgRating, totalReviews, className, priority, vendor }: ProductCardProps) => {
+export const ProductCard = ({ variants, handle, title, featuredImage, minPrice, avgRating, totalReviews, className, priority, vendor, prefetch = false }: ProductCardProps) => {
   const noOfVariants = variants?.length
   const href = `/product/${handle}`
   const linkAria = `Visit product: ${title}`
   const variantPrice = variants?.find(Boolean)?.price
 
   return (
-    <Link className={cn("group flex h-full w-full flex-col overflow-hidden transition-all hover:shadow-md", className)} aria-label={linkAria} href={href}>
+    <Link className={cn("group flex h-full w-full flex-col overflow-hidden transition-all hover:shadow-md", className)} aria-label={linkAria} href={href} prefetch={prefetch}>
       <div className="relative aspect-square overflow-hidden">
         <Image
           priority={priority}
