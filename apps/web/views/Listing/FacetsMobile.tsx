@@ -13,10 +13,11 @@ const GenericModal = dynamic(() => import("components/GenericModal/GenericModal"
 interface FacetsMobileProps {
   className?: string
   facetDistribution: Record<string, CategoriesDistribution> | undefined
+  independentFacetDistribution: Record<string, CategoriesDistribution> | undefined
   disabledFacets?: string[]
 }
 
-export function FacetsMobile({ className, facetDistribution, disabledFacets }: FacetsMobileProps) {
+export function FacetsMobile({ className, facetDistribution, disabledFacets, independentFacetDistribution }: FacetsMobileProps) {
   const { modals, openModal, closeModal } = useModalStore()
 
   return (
@@ -27,7 +28,7 @@ export function FacetsMobile({ className, facetDistribution, disabledFacets }: F
       </Button>
       {!!modals["facets-mobile"] && (
         <GenericModal className="h-full overflow-auto" title="Filters" open={!!modals["facets-mobile"]} onOpenChange={() => closeModal("facets-mobile")}>
-          <FacetsContent facetDistribution={facetDistribution} disabledFacets={disabledFacets} />
+          <FacetsContent independentFacetDistribution={independentFacetDistribution} facetDistribution={facetDistribution} disabledFacets={disabledFacets} />
         </GenericModal>
       )}
     </div>

@@ -11,7 +11,7 @@ export async function EverythingUnderSection() {
 
   if (!items.length) return null
 
-  return <CarouselSection title="Everything under $50" items={items} />
+  return <CarouselSection className="my-16" title="Everything under $50" items={items} />
 }
 
 const getPriceRangedProducts = unstable_cache(

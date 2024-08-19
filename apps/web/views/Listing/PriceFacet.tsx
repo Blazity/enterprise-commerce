@@ -21,7 +21,7 @@ export const PriceFacet = ({ initMin, initMax, setFacet }: PriceFacetProps) => {
 
   return (
     <div className="flex flex-col gap-1">
-      <div className="flex justify-between gap-4">
+      <div className="flex gap-4 lg:flex-col">
         <PriceInput
           id="min-price"
           label="Min price"
@@ -66,7 +66,7 @@ function PriceInput({ value, onChange, label, ...rest }: PriceInputProps) {
       {label}
       <Input
         placeholder="10.0"
-        className="block h-auto w-full rounded-md border border-neutral-300 bg-neutral-100 px-2.5 py-1.5 text-[14px] text-black focus:border-blue-500 focus:ring-blue-500  "
+        className="block h-auto w-full rounded-md border border-neutral-300 bg-neutral-100 px-2.5 py-1.5 text-[14px] text-black focus:border-blue-500 focus:ring-blue-500"
         type="number"
         value={value}
         onChange={onChange}

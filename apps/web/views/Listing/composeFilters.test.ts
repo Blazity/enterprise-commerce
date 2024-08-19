@@ -55,4 +55,22 @@ describe("composeFilters", () => {
       '(hierarchicalCategories.lvl0 IN ["electronics"]) AND (vendor IN ["Apple"]) AND (flatOptions.Color IN ["Black"]) AND minPrice >= 100 AND minPrice <= 500'
     )
   })
+
+  test("should support hierarchical categories", () => {
+    const parsedSearchParams = {
+      categories: ["electronics > cameras", "beauty", "fashion > men > shoes"],
+      vendors: [],
+      colors: [],
+      sizes: [],
+      minPrice: null,
+      maxPrice: null,
+    }
+
+    const filter = composeFilters(new FilterBuilder(), parsedSearchParams, HIERARCHICAL_SEPARATOR)
+    const builtFilter = filter.build()
+
+    expect(builtFilter).toStrictEqual(
+      '(hierarchicalCategories.lvl1 IN ["electronics > cameras"]) OR (hierarchicalCategories.lvl0 IN ["beauty"]) OR (hierarchicalCategories.lvl2 IN ["fashion > men > shoes"])'
+    )
+  })
 })

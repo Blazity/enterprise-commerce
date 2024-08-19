@@ -1,87 +1,83 @@
-import { ArrowIcon } from "components/Icons/ArrowIcon"
+import { AccordionContent, AccordionItem, AccordionTrigger } from "components/Accordion/Accordion"
+
 import { HIERARCHICAL_ATRIBUTES, HIERARCHICAL_SEPARATOR } from "constants/index"
 import type { CategoriesDistribution } from "meilisearch"
 import { usePathname } from "next/navigation"
 import { cn } from "utils/cn"
 import { slugToName } from "utils/slug-name"
-import { useHierarchicalMenu } from "utils/useHierarchicalMenu"
+import { type HierarchicalMenuItem, useHierarchicalMenu } from "utils/useHierarchicalMenu"
 
 interface CategoryFacetProps {
+  id: string
   title: string
   distribution: Record<string, CategoriesDistribution>
   isChecked: (value: string) => boolean
-  onCheckedChange: (checked: boolean, value: string) => void
-  onBackClick: (currentCategory: string | null, parentSlug: string | null) => void
+  onCheckedChange: (value: string) => void
 }
 
-export function CategoryFacet({ distribution, isChecked, onCheckedChange, onBackClick }: CategoryFacetProps) {
-  const { items, current } = useHierarchicalMenu({
+export function CategoryFacet({ id, title, distribution, isChecked, onCheckedChange }: CategoryFacetProps) {
+  const pathname = usePathname()
+  const isSRP = pathname === "/search"
+
+  const { items } = useHierarchicalMenu({
     attributes: HIERARCHICAL_ATRIBUTES,
     distribution,
-    separator: HIERARCHICAL_SEPARATOR,
+    transformItems: (items) => (isSRP ? items : items.filter((item) => item.isRefined)),
   })
 
-  const distributionsEntries = Object.entries(items || {})
-
   function handleClick(value: string) {
-    onCheckedChange(!isChecked(value), value)
+    onCheckedChange(value)
   }
 
   return (
-    <div className="tracking-[-0.44px]">
-      <BackButton distribution={distribution} onBackClick={onBackClick} />
-      {!!current && <h2 className="mb-4 text-base/5 font-bold">{slugToName(current)}</h2>}
-      <div className="grid gap-6">
-        {distributionsEntries.map(([value, count], index) => (
-          <button key={index + value} className={cn("flex items-center gap-2 bg-transparent text-sm/3 ")} onClick={() => handleClick(value)}>
-            {slugToName(value)} ({count})
-          </button>
-        ))}
-      </div>
-      {distributionsEntries.length === 0 && !current && <p className="text-sm/3 text-neutral-500">No categories found</p>}
-      <hr className="my-6 border-neutral-400" />
-    </div>
+    <AccordionItem value={id}>
+      <AccordionTrigger className="py-2 text-base">{title}</AccordionTrigger>
+      <AccordionContent>
+        {items.length === 0 ? (
+          <p className="text-sm/3 text-neutral-500">No categories found</p>
+        ) : (
+          <CategoryTree className="my-4 space-y-8" items={items} parent={null} level={0} onClick={handleClick} isChecked={isChecked} />
+        )}
+      </AccordionContent>
+    </AccordionItem>
   )
 }
 
-const BackButton = ({ distribution, onBackClick }: { distribution: CategoryFacetProps["distribution"]; onBackClick: CategoryFacetProps["onBackClick"] }) => {
-  const pathname = usePathname()
-  const { parent, current } = useHierarchicalMenu({
-    attributes: HIERARCHICAL_ATRIBUTES,
-    distribution: distribution,
-    separator: HIERARCHICAL_SEPARATOR,
-  })
+interface CategoryTreeProps {
+  items: HierarchicalMenuItem[]
+  level: number
+  onClick: (value: string) => void
+  isChecked: (value: string) => boolean
+  className?: string
+  parent: string[] | null
+}
 
-  const parentCategory = {
-    label: !!parent ? slugToName(parent) : null,
-    value: parent || null,
-  }
-  const currentCategory = {
-    label: !!current ? slugToName(current) : null,
-    value: current || null,
-  }
-
-  if (pathname === "/search") {
-    return (
-      <>
-        {!parentCategory.value && !currentCategory.value ? (
-          <span className="mb-6 mt-2 flex items-center gap-2 bg-transparent text-base font-semibold">All Categories:</span>
-        ) : (
-          <button className="mb-6 mt-2 flex items-center gap-2 bg-transparent text-sm" onClick={() => onBackClick(currentCategory.value, parentCategory.value)}>
-            {(parentCategory.value || currentCategory.label) && <ArrowIcon className="size-4" />}
-            {parentCategory.label || "All Categories:"}
-          </button>
-        )}
-      </>
-    )
-  }
-
+const CategoryTree = ({ items, level, onClick, isChecked, className, parent }: CategoryTreeProps) => {
   return (
-    parentCategory.value && (
-      <button className="mb-6 mt-2 flex items-center gap-2 bg-transparent text-sm" onClick={() => onBackClick(currentCategory.value, parentCategory.value)}>
-        {parentCategory.value && <ArrowIcon className="size-4" />}
-        {parentCategory.label || "All Categories:"}
-      </button>
-    )
+    <ul className={className}>
+      {items.map(({ value, isRefined, data }) => {
+        const valueWithParent = parent ? [...parent, value].join(HIERARCHICAL_SEPARATOR) : value
+        return (
+          <li key={value} className={cn("flex flex-col gap-4")}>
+            <button
+              className={cn("flex items-center bg-transparent text-left text-sm/4", isRefined || isChecked(value) ? "font-normal text-black" : "font-thin text-gray-400")}
+              onClick={() => onClick(valueWithParent)}
+            >
+              {slugToName(value)}
+            </button>
+            {data && data.length > 0 && (
+              <CategoryTree
+                className={cn("ml-2 flex flex-col gap-4", level > 0 && (isRefined || isChecked(value)) && "border-l border-orange-500 pl-2")}
+                items={data}
+                level={level + 1}
+                onClick={onClick}
+                isChecked={isChecked}
+                parent={parent ? [...parent, value] : [value]}
+              />
+            )}
+          </li>
+        )
+      })}
+    </ul>
   )
 }

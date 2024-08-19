@@ -1,57 +1,54 @@
 import Image from "next/image"
 import Link from "next/link"
 import { cn } from "utils/cn"
-import { QuickAdd } from "./QuickAdd"
 import { type CurrencyType, mapCurrencyToSign } from "utils/mapCurrencyToSign"
 import type { CommerceProduct } from "types"
 import { StarIcon } from "components/Icons/StarIcon"
 
-interface ProductCardProps extends Pick<CommerceProduct, "variants" | "handle" | "images" | "title" | "featuredImage" | "minPrice" | "avgRating" | "totalReviews"> {
+interface ProductCardProps extends Pick<CommerceProduct, "variants" | "handle" | "images" | "title" | "featuredImage" | "minPrice" | "avgRating" | "totalReviews" | "vendor"> {
   priority?: boolean
   className?: string
 }
 
-export function ProductCard(props: ProductCardProps) {
-  const variant = props.variants?.find(Boolean)?.price
-  const href = `/product/${props.handle}`
-  const linkAria = `Visit product: ${props.title}`
-  const featuredImageAltTag = props.images?.find((singleImage) => singleImage.url === props.featuredImage?.url)?.altText || ""
+export const ProductCard = ({ variants, handle, title, featuredImage, minPrice, avgRating, totalReviews, className, priority, vendor }: ProductCardProps) => {
+  const noOfVariants = variants?.length
+  const href = `/product/${handle}`
+  const linkAria = `Visit product: ${title}`
+  const variantPrice = variants?.find(Boolean)?.price
 
   return (
-    <div className={cn("group relative p-0 md:bg-transparent md:p-0", props.className)}>
-      <div className="relative flex size-full min-h-[100px] items-center justify-center">
-        <Link aria-label={linkAria} href={href} className="transform-[translateZ(0)] relative z-[2] size-[200px] overflow-hidden md:size-[300px]">
-          <Image
-            alt={featuredImageAltTag}
-            className="z-0 select-none object-cover transition-transform group-hover:scale-105"
-            fill
-            src={props.featuredImage?.url || "/default-product-image.svg"}
-            sizes="(max-width: 450px) 150px, 300px"
-            priority={props.priority}
-          />
-        </Link>
-
-        <QuickAdd product={props as CommerceProduct} variants={props.variants} />
+    <Link className={cn("group flex h-full w-full flex-col overflow-hidden transition-all hover:shadow-md", className)} aria-label={linkAria} href={href}>
+      <div className="relative aspect-square overflow-hidden">
+        <Image
+          priority={priority}
+          className="object-cover transition-transform group-hover:scale-105"
+          src={featuredImage?.url || "/default-product-image.svg"}
+          alt={featuredImage?.altText || title}
+          fill
+        />
       </div>
-      <Link aria-label={linkAria} href={href}>
-        <div className="mt-4 flex flex-col gap-0.5 text-slate-700">
-          <div className="line-clamp-2 text-base tracking-tight md:text-xl">{props.title}</div>
-          {!!props.avgRating && !!props.totalReviews && (
+      <div className="flex shrink-0 grow flex-col gap-2 p-4">
+        {/* remove first word from the title as it includes vendor (this just needs feed update and then can be removed) */}
+        <h3 className="line-clamp-2 text-lg font-semibold transition-colors group-hover:text-orange-500">{title.split(" ").slice(1).join(" ")}</h3>
+        <div className="mt-auto flex flex-col gap-1">
+          {!!vendor && <p className="text-sm text-orange-400">{vendor}</p>}
+          {noOfVariants > 0 && (
+            <p className="text-sm text-gray-500">
+              {noOfVariants} variant{noOfVariants > 1 ? "s" : ""}
+            </p>
+          )}
+          {!!avgRating && !!totalReviews && (
             <div className="flex items-center space-x-1">
               <StarIcon className="size-4 fill-yellow-400 stroke-yellow-500" />
-              <span className="text-sm">{props.avgRating.toFixed(2)}</span>
+              <span className="text-sm">{avgRating.toFixed(2)}</span>
               <span className="text-xs">
-                ({props.totalReviews} review{props.totalReviews !== 1 && "s"})
+                ({totalReviews} review{totalReviews !== 1 && "s"})
               </span>
             </div>
           )}
-          {!!variant && (
-            <p className="text-base font-semibold tracking-tight text-black md:text-lg">
-              From {props.minPrice.toFixed(2) + mapCurrencyToSign(variant.currencyCode as CurrencyType)}
-            </p>
-          )}
+          {!!variantPrice && <span>From {mapCurrencyToSign((variantPrice.currencyCode as CurrencyType) || "USD") + minPrice.toFixed(2)}</span>}
         </div>
-      </Link>
-    </div>
+      </div>
+    </Link>
   )
 }

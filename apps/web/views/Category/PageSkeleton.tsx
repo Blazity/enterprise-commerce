@@ -1,10 +1,8 @@
 import { Skeleton } from "components/Skeleton/Skeleton"
-import { HeroSectionSkeleton } from "./HeroSection"
 
 export function PageSkeleton() {
   return (
     <div className="max-w-container-md mx-auto w-full px-4 py-12 md:py-24 xl:px-0">
-      <HeroSectionSkeleton />
       <div className="flex min-h-screen w-full flex-col gap-12 md:flex-row md:gap-24">
         <div className="hidden flex-col gap-0 md:mt-16 lg:flex">
           <Skeleton className="mb-6 flex h-[35px] min-w-[250px] md:block" />

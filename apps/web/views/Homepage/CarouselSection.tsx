@@ -1,31 +1,33 @@
-import { Carousel, CarouselContent, CarouselNext, CarouselPrevious } from "components/Carousel/Carousel"
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "components/Carousel/Carousel"
 import { ProductCard } from "components/ProductCard/ProductCard"
 import { Skeleton } from "components/Skeleton/Skeleton"
 import type { CommerceProduct } from "types"
+import { cn } from "utils/cn"
 
 interface CarouselSectionProps {
   title: string
   items: CommerceProduct[]
+  className?: string
 }
 
-export function CarouselSection({ items, title }: CarouselSectionProps) {
+export function CarouselSection({ items, title, className }: CarouselSectionProps) {
   return (
     <Carousel opts={{ skipSnaps: true }}>
-      <div className="max-w-container-md mx-auto flex flex-col gap-16 px-4 py-20 md:pb-32 md:pt-24 xl:px-0">
-        <div className="flex basis-1/3 justify-between text-left text-5xl font-normal tracking-tighter sm:min-w-[280px] md:text-left md:text-6xl">
-          <h2>{title}</h2>
+      <div className={cn("max-w-container-md mx-auto flex flex-col gap-4", className)}>
+        <div className="flex justify-between sm:min-w-[280px]">
+          <h2 className="px-4 text-left text-4xl font-thin tracking-tighter">{title}</h2>
           <div className="hidden gap-4 md:flex">
             <CarouselPrevious className="relative" />
             <CarouselNext className="relative" />
           </div>
         </div>
-        <div className="w-full">
-          <CarouselContent className="ml-0 justify-start gap-8">
-            {items.map((product, idx) => (
-              <ProductCard className="h-full min-w-[200px] max-w-[200px] md:min-w-[280px] md:max-w-[280px]" {...product} key={"relevant_" + product.id + idx} />
-            ))}
-          </CarouselContent>
-        </div>
+        <CarouselContent>
+          {items.map((product, idx) => (
+            <CarouselItem key={"relevant_" + product.id + idx} className="basis-1/2 md:basis-1/4">
+              <ProductCard {...product} />
+            </CarouselItem>
+          ))}
+        </CarouselContent>
       </div>
     </Carousel>
   )

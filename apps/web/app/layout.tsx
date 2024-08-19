@@ -10,7 +10,6 @@ import { Modals } from "components/Modals/Modals"
 import { mobileInlineScript } from "components/NavigationBar/mobileInlineScript"
 import { NavigationBar } from "components/NavigationBar/NavigationBar"
 import { NavItem } from "components/NavigationBar/types"
-import { TopBar } from "components/TopBar/TopBar"
 import { FlagValues } from "views/FlagValues"
 import { ThirdParties } from "views/ThirdParties"
 import { env } from "env.mjs"
@@ -242,7 +241,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <body>
         <Script id="mobileMegaMenuLogic" strategy="lazyOnload">{`${mobileInlineScript}`}</Script>
 
-        <TopBar />
         <NavigationBar items={navigationItems} />
 
         {children}
