@@ -28,7 +28,7 @@ export async function SimilarProductsSection({ slug, collectionHandle }: Similar
         <CarouselContent>
           {items.map((product, idx) => (
             <CarouselItem className="basis-1/2 md:basis-1/4" key={"featured_" + product.id + idx}>
-              <ProductCard {...product} />
+              <ProductCard prefetch {...product} />
             </CarouselItem>
           ))}
         </CarouselContent>

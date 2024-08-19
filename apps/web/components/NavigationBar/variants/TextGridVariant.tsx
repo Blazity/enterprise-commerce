@@ -13,7 +13,7 @@ export function TextGridVariant({ items }: TextGridVariantProps) {
       {items.map((singleCategory) => (
         <div className="submenu__inner flex w-full flex-col gap-4" key={singleCategory.text}>
           {singleCategory.href ? (
-            <Link href={singleCategory.href}>
+            <Link href={singleCategory.href} prefetch={false}>
               <h4 className="submenu__title text-[22px] underline">{singleCategory.text}</h4>
             </Link>
           ) : (

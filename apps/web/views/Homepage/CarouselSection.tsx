@@ -24,7 +24,7 @@ export function CarouselSection({ items, title, className }: CarouselSectionProp
         <CarouselContent>
           {items.map((product, idx) => (
             <CarouselItem key={"relevant_" + product.id + idx} className="basis-1/2 md:basis-1/4">
-              <ProductCard {...product} />
+              <ProductCard prefetch {...product} />
             </CarouselItem>
           ))}
         </CarouselContent>

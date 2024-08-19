@@ -78,7 +78,7 @@ export const ReviewsSection = ({ productId, productHandle, reviews, total, summa
           </Carousel>
         </div>
         <div className="mt-10 flex justify-center md:justify-end">
-          <Link href={`/reviews/${productHandle}`} className="text-sm underline">
+          <Link href={`/reviews/${productHandle}`} className="text-sm underline" prefetch={false}>
             See all reviews
           </Link>
         </div>
