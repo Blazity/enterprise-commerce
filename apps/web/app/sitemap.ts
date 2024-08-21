@@ -1,10 +1,9 @@
 import { env } from "env.mjs"
 import { MetadataRoute } from "next"
-import { meilisearch } from "clients/meilisearch"
+import { meilisearch } from "clients/search"
 import { getDemoCategories, getDemoProducts, isDemoMode } from "utils/demoUtils"
 import type { PlatformCollection } from "@enterprise-commerce/core/platform/types"
 import type { CommerceProduct } from "types"
-import { Index } from "meilisearch"
 
 export const revalidate = 604800
 export const runtime = "nodejs"
@@ -42,11 +41,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let allCollections: PlatformCollection[] = []
 
   if (!isDemoMode()) {
-    const productsIndex = await meilisearch.getIndex(env.MEILISEARCH_PRODUCTS_INDEX)
-    const categoriesIndex = await meilisearch.getIndex(env.MEILISEARCH_CATEGORIES_INDEX)
-
-    allHits = await getAllResults(productsIndex)
-    allCollections = await getAllResults(categoriesIndex)
+    allHits = await getResults(env.MEILISEARCH_PRODUCTS_INDEX)
+    allCollections = await getResults(env.MEILISEARCH_CATEGORIES_INDEX)
   } else {
     allHits = getDemoProducts().hits
     allCollections = getDemoCategories()
@@ -84,19 +80,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   return [...staticRoutes, ...paginationRoutes, ...productRoutes, ...collectionsRoutes]
 }
 
-async function getAllResults<T extends Record<string, any>>(index: Index) {
-  let hits: T[] = []
-  let page = 0
-  let finished = false
+// Pull only 100 results for the case of the demo
+async function getResults<T extends Record<string, any>>(indexName: string) {
+  const response = await meilisearch.getDocuments<T>({
+    indexName,
+    options: {
+      limit: 100,
+    },
+  })
 
-  while (!finished) {
-    const response = await index.getDocuments<T>({ limit: 100, offset: page * 100 })
-    hits.push(...response.results)
-    page++
-    if (hits.length >= response.total) {
-      finished = true
-    }
-  }
-
-  return hits
+  return response.results as T[]
 }

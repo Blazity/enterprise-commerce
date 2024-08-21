@@ -1,5 +1,5 @@
 import { unstable_noStore } from "next/cache"
-import { meilisearch } from "clients/meilisearch"
+import { meilisearch } from "clients/search"
 import { reviewsClient } from "clients/reviews"
 import { env } from "env.mjs"
 import { authenticate } from "utils/authenticate-api-route"
@@ -31,26 +31,21 @@ export async function GET(req: Request) {
     return new Response(JSON.stringify({ message: "Sorry, something went wrong" }), { status: 500 })
   }
 
-  const productsIndex = meilisearch?.index(env.MEILISEARCH_PRODUCTS_INDEX)
-  const reviewsIndex = meilisearch?.index(env.MEILISEARCH_REVIEWS_INDEX)
-
-  if (!productsIndex || !reviewsIndex) {
-    console.error({
-      message: "No products or reviews index found",
-      source: "api/reviews/sync",
-    })
-    return new Response(JSON.stringify({ message: "Sorry, something went wrong" }), { status: 500 })
-  }
-
   const [allReviews, allProducts, allIndexReviews] = await Promise.all([
     reviewsClient.getAllProductReviews(),
-    productsIndex?.getDocuments<CommerceProduct>({
-      limit: 10000,
-      fields: ["handle", "totalReviews", "avgRating", "id"],
+    meilisearch.getDocuments<CommerceProduct>({
+      indexName: env.MEILISEARCH_PRODUCTS_INDEX,
+      options: {
+        limit: 10000,
+        fields: ["handle", "totalReviews", "avgRating", "id"],
+      },
     }),
-    reviewsIndex?.getDocuments<Review>({
-      limit: 10000,
-      fields: ["updated_at", "id"],
+    meilisearch.getDocuments<Review>({
+      indexName: env.MEILISEARCH_REVIEWS_INDEX,
+      options: {
+        limit: 10000,
+        fields: ["updated_at", "id"],
+      },
     }),
   ])
 
@@ -77,12 +72,24 @@ export async function GET(req: Request) {
 
   !!reviewsDelta.length &&
     (async () => {
-      await reviewsIndex.updateDocuments(reviewsDelta, { primaryKey: "id" })
+      meilisearch.updateDocuments({
+        indexName: env.MEILISEARCH_REVIEWS_INDEX!,
+        documents: reviewsDelta,
+        options: {
+          primaryKey: "id",
+        },
+      })
       console.log("API/sync: Reviews synced", reviewsDelta.length)
     })()
   !!productTotalReviewsDelta.length &&
     (async () => {
-      await productsIndex.updateDocuments(productTotalReviewsDelta, { primaryKey: "id" })
+      meilisearch.updateDocuments({
+        indexName: env.MEILISEARCH_PRODUCTS_INDEX,
+        documents: productTotalReviewsDelta,
+        options: {
+          primaryKey: "id",
+        },
+      })
       console.log("API/sync:Products synced", productTotalReviewsDelta.length)
     })()
 

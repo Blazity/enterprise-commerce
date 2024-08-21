@@ -16,7 +16,7 @@ import { ReviewsSection } from "views/Product/ReviewsSection"
 
 import type { CommerceProduct } from "types"
 import { isDemoMode } from "utils/demoUtils"
-import { meilisearch } from "clients/meilisearch"
+import { meilisearch } from "clients/search"
 import { env } from "env.mjs"
 import { ProductTitle } from "views/Product/ProductTitle"
 import { CurrencyType, mapCurrencyToSign } from "utils/mapCurrencyToSign"
@@ -38,11 +38,12 @@ export { generateMetadata } from "./metadata"
 export async function generateStaticParams() {
   if (isDemoMode()) return []
 
-  const index = await meilisearch?.getIndex<CommerceProduct>(env.MEILISEARCH_PRODUCTS_INDEX)
-
-  const { results } = await index?.getDocuments({
-    limit: 50,
-    fields: ["handle"],
+  const { results } = await meilisearch.getDocuments<CommerceProduct>({
+    indexName: env.MEILISEARCH_PRODUCTS_INDEX,
+    options: {
+      limit: 50,
+      fields: ["handle"],
+    },
   })
 
   return results.map(({ handle }) => ({ slug: handle }))

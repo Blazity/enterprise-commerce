@@ -1,5 +1,5 @@
 import { PlatformCollection } from "@enterprise-commerce/core/platform/types"
-import { meilisearch } from "clients/meilisearch"
+import { meilisearch } from "clients/search"
 import { env } from "env.mjs"
 import type { Metadata } from "next"
 import { isDemoMode } from "utils/demoUtils"
@@ -22,10 +22,15 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
 export async function generateStaticParams() {
   if (isDemoMode()) return []
 
-  const index = await meilisearch?.getIndex<PlatformCollection>(env.MEILISEARCH_CATEGORIES_INDEX)
-  const { results } = await index?.getDocuments({ limit: 50, fields: ["handle"] })
+  const { hits } = await meilisearch.searchDocuments<PlatformCollection>({
+    indexName: env.MEILISEARCH_CATEGORIES_INDEX,
+    options: {
+      limit: 50,
+      attributesToRetrieve: ["handle"],
+    },
+  })
 
-  return results.map(({ handle }) => ({ slug: handle }))
+  return hits.map(({ handle }) => ({ slug: handle }))
 }
 
 export default async function CategoryPage({ params }: CategoryPageProps) {

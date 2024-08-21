@@ -26,6 +26,7 @@
   "dependencies": {
     "@ai-sdk/openai": "^0.0.16",
     "@enterprise-commerce/reviews": "*",
+    "@enterprise-commerce/search-meilisearch": "*",
     "@hookform/resolvers": "^3.3.4",
     "@next/bundle-analyzer": "14.2.5",
     "@next/third-parties": "^14.1.4",

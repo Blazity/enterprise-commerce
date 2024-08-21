@@ -1,4 +1,4 @@
-import { meilisearch } from "clients/meilisearch"
+import { meilisearch } from "clients/search"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "components/Carousel/Carousel"
 import { ProductCard } from "components/ProductCard/ProductCard"
 import { unstable_cache } from "next/cache"
@@ -43,20 +43,25 @@ const getSimilarProducts = unstable_cache(
 
     if (isDemoMode()) return getDemoProducts().hits.slice(0, limit)
 
-    const index = await meilisearch?.getIndex<CommerceProduct>(env.MEILISEARCH_PRODUCTS_INDEX)
-
-    if (!index) {
-      console.warn({ message: "Missing products index", source: "SimilarProductsSection" })
-    }
-
-    const similarSearchResults = await index.search(handle, { matchingStrategy: "last", limit, hybrid: { semanticRatio: 1 } })
-
-    let collectionSearchResults = { hits: [] }
-    if (similarSearchResults.hits.length < limit) {
-      collectionSearchResults = await index.search("", {
+    const similarSearchResults = await meilisearch.searchDocuments<CommerceProduct>({
+      indexName: env.MEILISEARCH_PRODUCTS_INDEX,
+      query: handle,
+      options: {
         matchingStrategy: "last",
-        limit: limit - similarSearchResults.hits.length,
-        filter: collection ? new FilterBuilder().where("collections.handle", ComparisonOperators.Equal, collection).build() : undefined,
+        limit,
+        hybrid: { semanticRatio: 1 },
+      },
+    })
+
+    let collectionSearchResults: { hits: CommerceProduct[] } = { hits: [] }
+    if (similarSearchResults.hits.length < limit) {
+      collectionSearchResults = await meilisearch.searchDocuments<CommerceProduct>({
+        indexName: env.MEILISEARCH_PRODUCTS_INDEX,
+        options: {
+          matchingStrategy: "last",
+          limit: limit - similarSearchResults.hits.length,
+          filter: new FilterBuilder().where("collections.handle", ComparisonOperators.Equal, collection).build(),
+        },
       })
     }
 
