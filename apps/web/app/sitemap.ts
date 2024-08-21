@@ -41,8 +41,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let allCollections: PlatformCollection[] = []
 
   if (!isDemoMode()) {
-    allHits = await getAllResults(env.MEILISEARCH_PRODUCTS_INDEX)
-    allCollections = await getAllResults(env.MEILISEARCH_CATEGORIES_INDEX)
+    allHits = await getResults(env.MEILISEARCH_PRODUCTS_INDEX)
+    allCollections = await getResults(env.MEILISEARCH_CATEGORIES_INDEX)
   } else {
     allHits = getDemoProducts().hits
     allCollections = getDemoCategories()
@@ -80,26 +80,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   return [...staticRoutes, ...paginationRoutes, ...productRoutes, ...collectionsRoutes]
 }
 
-async function getAllResults<T extends Record<string, any>>(indexName: string) {
-  let hits: T[] = []
-  let page = 0
-  let finished = false
+// Pull only 100 results for the case of the demo
+async function getResults<T extends Record<string, any>>(indexName: string) {
+  const response = await meilisearch.getDocuments<T>({
+    indexName,
+    options: {
+      limit: 100,
+    },
+  })
 
-  while (!finished) {
-    const response = await meilisearch.getDocuments<T>({
-      indexName,
-      options: {
-        limit: 100,
-        offset: page * 100,
-      },
-    })
-
-    hits.push(...(response.results as T[]))
-    page++
-    if (hits.length >= response.total) {
-      finished = true
-    }
-  }
-
-  return hits
+  return response.results as T[]
 }

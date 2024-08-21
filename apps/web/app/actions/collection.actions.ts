@@ -16,7 +16,7 @@ export const getCollection = unstable_cache(
       options: {
         filter: new FilterBuilder().where("handle", ComparisonOperators.Equal, slug).build(),
         limit: 1,
-        fields: ["handle", "title", "seo"],
+        attributesToRetrieve: ["handle", "title", "seo"],
       },
     })
 
