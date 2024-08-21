@@ -4,7 +4,6 @@ import nextDynamic from "next/dynamic"
 import Script from "next/script"
 import { Suspense } from "react"
 import { Toaster } from "sonner"
-import { CallToAction } from "components/CallToAction/CallToAction"
 import { Footer } from "components/Footer/Footer"
 import { Modals } from "components/Modals/Modals"
 import { mobileInlineScript } from "components/NavigationBar/mobileInlineScript"
@@ -245,7 +244,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
         {children}
 
-        <CallToAction />
         <Footer />
         <Modals />
 
