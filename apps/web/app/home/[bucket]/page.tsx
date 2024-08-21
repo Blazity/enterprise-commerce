@@ -1,7 +1,7 @@
 import { BUCKETS } from "constants/index"
 import { AnnouncementBar } from "components/AnnouncementBar/AnnouncementBar"
 import { HeroSection } from "views/Homepage/HeroSection"
-import { meilisearch } from "clients/meilisearch"
+import { meilisearch } from "clients/search"
 import { CommerceProduct } from "types"
 import { env } from "env.mjs"
 import type { Hits } from "meilisearch"
@@ -38,10 +38,10 @@ export async function generateStaticParams() {
 }
 
 const fetchFeaturedData = async () => {
-  const { results } = await meilisearch?.multiSearch({
+  const results = await meilisearch?.multiSearch({
     queries: [
       {
-        indexUid: env.MEILISEARCH_PRODUCTS_INDEX,
+        indexUid: env.MEILISEARCH_FEATURED_PRODUCTS_INDEX,
         q: "",
         limit: 6,
         attributesToRetrieve: ["id", "title", "featuredImage", "minPrice", "variants", "avgRating", "totalReviews", "vendor", "handle"],

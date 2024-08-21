@@ -1,5 +1,7 @@
-import { ProductCard } from "components/ProductCard/ProductCard"
+import { CompactProductCard } from "components/CompactProductCard/CompactProductCard"
+import { FeaturedProductCard } from "components/FeaturedProductCard/FeaturedProductCard"
 import { CommerceProduct } from "types"
+import { cn } from "utils/cn"
 
 export const FeaturedProductsSection = ({
   products,
@@ -7,11 +9,23 @@ export const FeaturedProductsSection = ({
   products: Pick<CommerceProduct, "id" | "variants" | "handle" | "images" | "title" | "featuredImage" | "minPrice" | "avgRating" | "totalReviews" | "vendor">[]
 }) => {
   return (
-    <div className="max-w-container-md mx-auto my-4 w-full space-y-4 px-4">
-      <h2 className="mb-6 text-2xl font-semibold">Bestsellers</h2>
-      <div className="grid gap-1 sm:grid-cols-2 md:grid-cols-3 md:gap-4">
+    <div className="max-w-container-sm mx-auto my-4 w-full space-y-4 px-4">
+      <h2 className="mb-8 text-4xl font-semibold">New Arrivals</h2>
+      <div className="grid gap-1 sm:grid-cols-2 md:grid-cols-3 md:grid-rows-3 md:gap-4">
         {products.map((product, index) => {
-          return <ProductCard prefetch={index < 3} key={product.id} {...product} />
+          if (index === 0) {
+            return <FeaturedProductCard prefetch className="col-span-2 md:row-span-2" key={product.id} {...product} />
+          }
+          return (
+            <CompactProductCard
+              prefetch={index < 2}
+              key={product.id}
+              {...product}
+              className={cn({
+                "col-span-2 md:col-auto": index === 5,
+              })}
+            />
+          )
         })}
       </div>
     </div>
