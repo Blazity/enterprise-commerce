@@ -1,4 +1,4 @@
-import { PlatformProduct } from "@enterprise-commerce/core/platform/types"
+import type { PlatformProduct } from "@enterprise-commerce/core/platform/types"
 
 export type SearchParamsType = Record<string, string | string[] | undefined>
 
