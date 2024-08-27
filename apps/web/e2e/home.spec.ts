@@ -361,3 +361,94 @@ test('should check the existence of elements within the footer section', async (
   await expect(termsLink).toHaveText('Terms & Conditions');
 });
 
+
+test('check found results elements', async ({ page }) => {
+  await page.goto('http://localhost:3000/category/home');
+
+  // Locate the element
+  const targetElement = "Triple Wick Amber Glass";
+  const element = page.locator('a').filter({ hasText: targetElement });
+
+  // Wait for the element to be visible
+  await expect(element).toBeVisible();
+
+  // Scroll the element into view
+  await element.scrollIntoViewIfNeeded();
+
+  
+  const targetElementFloral = "Floral Elegance Tote Bag";
+  const elementFloral = page.locator('a').filter({ hasText: targetElementFloral });
+
+  await expect(elementFloral).toBeVisible();
+  await elementFloral.scrollIntoViewIfNeeded();
+  await elementFloral.click();
+
+  const targetElementSoothing = "Soothing Lavender Shower Gel";
+  const elementSoothing = page.locator('a').filter({ hasText: targetElementSoothing });
+
+  await expect(elementSoothing).toBeVisible();
+  await elementSoothing.scrollIntoViewIfNeeded();
+  await elementSoothing.click();
+
+  const targetElementPortable = "Portable Round Mesh Bluetooth Speaker";
+  const elementPortable = page.locator('a').filter({ hasText: targetElementPortable });
+
+  await expect(elementPortable).toBeVisible();
+  await elementPortable.scrollIntoViewIfNeeded();
+  await elementPortable.click();
+
+
+  const targetElementOrbital = "Orbital Harmony Hanging Bluetooth Speaker";
+  const elementOrbital = page.locator('a').filter({ hasText: targetElementOrbital });
+
+  await expect(elementOrbital).toBeVisible();
+  await elementOrbital.scrollIntoViewIfNeeded();
+  await elementOrbital.click();
+
+  const targetElementChair = "Modern Comfort Dining Chair";
+  const elementChair = page.locator('a').filter({ hasText: targetElementChair });
+
+  await expect(elementChair).toBeVisible();
+  await elementChair.scrollIntoViewIfNeeded();
+  await elementChair.click();
+
+
+  const targetElementCologne = "Summer Orchard Eau de Cologne";
+  const elementCologne = page.locator('a').filter({ hasText: targetElementCologne });
+
+  await expect(elementCologne).toBeVisible();
+  await elementCologne.scrollIntoViewIfNeeded();
+  await elementCologne.click();
+});
+
+test('check *you might also like* section exist', async ({ page }) => {
+  await page.goto('http://localhost:3000/product/example_bags2');
+
+  const targetElementFloral = "Floral Elegance Tote Bag";
+  const elementFloral = page.getByRole('link', { name: targetElementFloral, exact: true });
+
+  await expect(elementFloral).toBeVisible();
+  await elementFloral.scrollIntoViewIfNeeded();
+  await elementFloral.click(); 
+
+  const targetElementSoothing = "Soothing Lavender Shower Gel";
+  const elementSoothing = page.locator('a').filter({ hasText: targetElementSoothing });
+
+  await expect(elementSoothing).toBeVisible();
+  await elementSoothing.scrollIntoViewIfNeeded();
+  await elementSoothing.click(); 
+  
+  const targetElementSpeaker = "Portable Round Mesh Bluetooth Speaker";
+  const elementSpeaker = page.locator('a').filter({ hasText: targetElementSpeaker });
+
+  await expect(elementSpeaker).toBeVisible();
+  await elementSpeaker.scrollIntoViewIfNeeded();
+  await elementSpeaker.click(); 
+  
+  const targetElementOrbital = "Orbital Harmony Hanging Bluetooth Speaker";
+  const elementOrbital = page.locator('a').filter({ hasText: targetElementOrbital });
+
+  await expect(elementOrbital).toBeVisible();
+  await elementOrbital.scrollIntoViewIfNeeded();
+  await elementOrbital.click(); 
+});
