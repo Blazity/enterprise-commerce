@@ -182,3 +182,105 @@ test('check product card elements and interactions', async ({ page }) => {
 
   await quickAddButtons.first().click();
 });
+
+
+test('Check Home elemet exist', async ({ page }) => {
+  await page.goto('http://localhost:3000/category/home'); 
+
+  // ol element
+  const olLocator = page.locator('ol.no-scrollbar.flex.items-center.gap-1\\.5.overflow-x-scroll.whitespace-nowrap.text-xs.md\\:text-base\\/\\[18px\\]');
+
+  // ol element exists
+  await expect(olLocator).toBeVisible();
+
+  // li containing the <a> link with specific text
+  const linkLocator = olLocator.locator('li > a', { hasText: 'Home' });
+
+  await expect(linkLocator).toBeVisible();
+});
+
+test('Check if specific elements exist inside the header', async ({ page }) => {
+  await page.goto('http://localhost:3000/category/home'); 
+  
+  // header element
+  const headerLocator = page.locator('header.mt-2');
+
+  // Check if the <header> element exists
+  await expect(headerLocator).toBeVisible();
+
+  // h1 element inside the <header>
+  const h1Locator = headerLocator.locator('h1.mt-4.text-3xl.font-extrabold.tracking-tight.text-gray-900.sm\\:text-4xl');
+
+  //<h1> element exists
+  await expect(h1Locator).toBeVisible();
+
+  // <div> element inside the <header>
+  const divLocator = headerLocator.locator('div.mt-2.text-lg.text-gray-500.transition-all');
+
+  // <div> element exists
+  await expect(divLocator).toBeVisible();
+
+  //<button> element inside the <header>
+  const buttonLocator = headerLocator.locator('button.mt-3.inline-block.bg-transparent.font-bold');
+
+  await expect(buttonLocator).toBeVisible();
+});
+
+
+test('Check if specific elements exist inside the ordered list', async ({ page }) => {
+  await page.goto('http://localhost:3000/category/electronics'); 
+
+  const olLocator = page.locator('ol.no-scrollbar.flex.items-center.gap-1\\.5.overflow-x-scroll.whitespace-nowrap.text-xs.md\\:text-base\\/\\[18px\\]');
+
+  // <ol> element exists
+  await expect(olLocator).toBeVisible();
+
+  // Define the locator for the first <li> containing the <a> link with the text "Home"
+  const homeLinkLocator = olLocator.locator('li > a.text-neutral-500.hover\\:underline[href="/"]');
+
+  //  <a> link element with text "Home" exists
+  await expect(homeLinkLocator).toBeVisible();
+
+  //  <li> containing the <svg> element
+  const svgLocator = olLocator.locator('li > svg.-rotate-90');
+
+  //  <svg> element exists
+  await expect(svgLocator).toBeVisible();
+
+  // Define the locator for the third <li> containing the <a> link
+  const electronicsLinkLocator = olLocator.locator('li > a.text-neutral-500.hover\\:underline.font-medium.underline[href="/category/electronics"]');
+
+  await expect(electronicsLinkLocator).toBeVisible();
+});
+
+
+test('Check if specific elements exist inside the header for electronics', async ({ page }) => {
+  await page.goto('http://localhost:3000/category/electronics'); 
+
+  // Define the locator for the <header> element
+  const headerLocator = page.locator('header.mt-2');
+
+  // <header> element exists
+  await expect(headerLocator).toBeVisible();
+
+  //  <h1> element within the <header>
+  const h1Locator = headerLocator.locator('h1.mt-4.text-3xl.font-extrabold.tracking-tight.text-gray-900.sm\\:text-4xl');
+
+  // Check if the <h1> element
+  await expect(h1Locator).toBeVisible();
+  await expect(h1Locator).toHaveText('Electronics');
+
+  // Define the locator for the <div> element within the <header>
+  const divLocator = headerLocator.locator('div.mt-2.text-lg.text-gray-500.transition-all');
+
+  // Check if the <div> element exists 
+  await expect(divLocator).toBeVisible();
+  await expect(divLocator).toContainText('The electronics category in our store');
+
+  //<button> element within the <header>
+  const buttonLocator = headerLocator.locator('button.mt-3.inline-block.bg-transparent.font-bold');
+
+  // Check if the <button> element exists
+  await expect(buttonLocator).toBeVisible();
+  await expect(buttonLocator).toHaveText('Read More');
+});
