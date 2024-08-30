@@ -452,3 +452,30 @@ test('check *you might also like* section exist', async ({ page }) => {
   await elementOrbital.scrollIntoViewIfNeeded();
   await elementOrbital.click(); 
 });
+
+
+test('should verify 404 page elements exist', async ({ page }) => {
+  await page.goto('localhost:3000/category/test404');
+
+  // main container of the 404 page
+  const mainContainer = page.locator('div.flex.min-h-screen.flex-col.items-center.justify-center.bg-neutral-100.dark\\:bg-neutral-900');
+  await expect(mainContainer).toBeVisible();
+
+  // Check for the "404" heading element
+  const heading = page.locator('h1.text-6xl.font-bold.text-neutral-800.dark\\:text-neutral-200');
+  await expect(heading).toHaveText('404');
+
+  //  "Page not found" paragraph
+  const notFoundText = page.locator('p.mt-4.text-2xl.text-neutral-600.dark\\:text-neutral-500');
+  await expect(notFoundText).toHaveText('Page not found');
+
+  // second paragraph explaining the error
+  const errorDescription = page.locator('p.mt-2.text-lg.text-neutral-500.dark\\:text-neutral-300');
+  await expect(errorDescription).toHaveText("Sorry, we couldn't find the page you're looking for.");
+
+  // "Go to Homepage" link/button
+  const goHomeLink = page.locator('a.mt-8.rounded-md.bg-neutral-200.px-6.py-2.text-neutral-900.hover\\:bg-neutral-300.hover\\:text-neutral-900.dark\\:bg-neutral-700.dark\\:text-neutral-200.dark\\:hover\\:bg-neutral-600.dark\\:hover\\:text-neutral-200');
+  await expect(goHomeLink).toBeVisible();
+  await expect(goHomeLink).toHaveText('Go to Homepage');
+
+});

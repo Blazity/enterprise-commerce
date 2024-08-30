@@ -284,3 +284,43 @@ test('Check if specific elements exist inside the header for electronics', async
   await expect(buttonLocator).toBeVisible();
   await expect(buttonLocator).toHaveText('Read More');
 });
+
+
+test('should check the existence of specific elements on the page', async ({ page }) => {
+
+  await page.goto('http://localhost:3000/product/example_electronics_4', { waitUntil: 'networkidle' });
+ 
+  const slider = page.locator('.overflow-hidden .flex');
+
+  // Locate the button that controls the slider
+  const nextButton = page.locator('button.your-next-button-class');
+
+  // Check the initial position or the first image
+  let firstImageSrc = await slider.locator('img').nth(0).getAttribute('src');
+  console.log('First Image Source:', firstImageSrc);
+
+  await nextButton.click();
+
+  // Wait for the slider
+  await page.waitForTimeout(1000);
+
+  // new position or the next image
+  let secondImageSrc = await slider.locator('img').nth(0).getAttribute('src');
+  console.log('Second Image Source:', secondImageSrc);
+
+  // image source has changed
+  expect(secondImageSrc).not.toBe(firstImageSrc);
+
+  // again to go to the next slide
+  await nextButton.click();
+  
+  // for the next transition
+  await page.waitForTimeout(1000);
+
+  // third image or position
+  let thirdImageSrc = await slider.locator('img').nth(0).getAttribute('src');
+  console.log('Third Image Source:', thirdImageSrc);
+
+  // the image source has changed again
+  expect(thirdImageSrc).not.toBe(secondImageSrc);
+});
