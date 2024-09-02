@@ -1,0 +1,3433 @@
+{
+  "results": [
+    {
+      "id": "7513862799460",
+      "handle": "example_bags2",
+      "title": "Floral Elegance Tote Bag",
+      "descriptionHtml": "Customers are enamored with its vibrant botanical print and sophisticated design, which effortlessly elevates any outfit. The spacious interior accommodates all essentials, while the luxurious hardware accents add a polished touch. Reviewers also appreciate its durable construction, ensuring it remains a staple accessory for years to come. Perfect for anyone looking to embrace timeless style with a chic and practical handbag.",
+      "totalReviews": 15,
+      "avgRating": 4.85,
+      "reviewsSummary": "The SleekTime Pro Smartwatch is praised for its minimalist and sleek design, with a smooth stainless steel finish and an easy-to-read watch face. Many users find it a game-changer in their daily routines. However, one reviewer mentioned that it is too expensive.",
+      "priceRange": {
+        "maxVariantPrice": {
+          "amount": "960.0",
+          "currencyCode": "USD"
+        },
+        "minVariantPrice": {
+          "amount": "420.0",
+          "currencyCode": "USD"
+        }
+      },
+      "featuredImage": {
+        "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_bags2_3de05386-bb42-4d9e-879e-a33ef2bad59a.png?v=1712326362",
+        "altText": null,
+        "width": 1024,
+        "height": 1024
+      },
+      "minPrice": 420,
+      "variants": [
+        {
+          "id": "gid://shopify/ProductVariant/43285474082916",
+          "title": "White",
+          "quantityAvailable": 105,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "White"
+            }
+          ],
+          "price": {
+            "amount": "670.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285474115684",
+          "title": "Dark",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Dark"
+            }
+          ],
+          "price": {
+            "amount": "420.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285474148452",
+          "title": "Darker",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Darker"
+            }
+          ],
+          "price": {
+            "amount": "720.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285474181220",
+          "title": "Even Darker",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Even Darker"
+            }
+          ],
+          "price": {
+            "amount": "460.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285474213988",
+          "title": "The Darkest",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "The Darkest"
+            }
+          ],
+          "price": {
+            "amount": "960.0",
+            "currencyCode": "USD"
+          }
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_bags2_3de05386-bb42-4d9e-879e-a33ef2bad59a.png?v=1712326362",
+          "altText": " a handbag with a tropical print on it",
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_bags2gray1_3aad3458-7642-421f-8c21-c066576a41e7.png?v=1712326362",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_bags2gray2_861ec9a0-308d-4332-b172-82ed706deb1f.png?v=1712326362",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_bags2gray3_6f1b622e-9c32-4520-bafd-fc4164634cdf.png?v=1712326362",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_bags2gray4_4010f8fb-1d79-4c64-82b3-67195f06047c.png?v=1712326362",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        }
+      ],
+      "collections": []
+    },
+    {
+      "id": "7513863127140",
+      "handle": "example_skin_care2",
+      "title": "Soothing Lavender Shower Gel",
+      "descriptionHtml": "Indulge in the calming aromas of our Soothing Lavender Shower Gel, designed to relax your senses and prepare you for a restful night's sleep. The gentle formula works into a rich lather, leaving your skin feeling soft and lightly scented with the tranquil fragrance of lavender. Perfect for your evening shower routine to unwind after a long day.",
+      "totalReviews": 8,
+      "avgRating": 4.375,
+      "reviewsSummary": "Users love the calming aroma, which helps them relax and prepare for a restful night's sleep. The gentle formula creates a rich lather that leaves skin feeling soft and lightly scented with lavender's tranquil fragrance. Many have praised it as a perfect addition to their evening shower routine, making unwinding after a long day a truly indulgent experience.",
+
+      "priceRange": {
+        "maxVariantPrice": {
+          "amount": "390.0",
+          "currencyCode": "USD"
+        },
+        "minVariantPrice": {
+          "amount": "50.0",
+          "currencyCode": "USD"
+        }
+      },
+      "featuredImage": {
+        "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_skin_care2_4463de02-20f6-4495-8975-4c9e20804c46.png?v=1712326372",
+        "altText": null,
+        "width": 1024,
+        "height": 1024
+      },
+      "minPrice": 50,
+      "variants": [
+        {
+          "id": "gid://shopify/ProductVariant/43285475786852",
+          "title": "White",
+          "quantityAvailable": 74,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "White"
+            }
+          ],
+          "price": {
+            "amount": "390.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285475819620",
+          "title": "Dark",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Dark"
+            }
+          ],
+          "price": {
+            "amount": "50.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285475852388",
+          "title": "Darker",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Darker"
+            }
+          ],
+          "price": {
+            "amount": "380.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285475885156",
+          "title": "Even Darker",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Even Darker"
+            }
+          ],
+          "price": {
+            "amount": "150.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285475917924",
+          "title": "The Darkest",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "The Darkest"
+            }
+          ],
+          "price": {
+            "amount": "120.0",
+            "currencyCode": "USD"
+          }
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_skin_care2_4463de02-20f6-4495-8975-4c9e20804c46.png?v=1712326372",
+          "altText": " a bottle of sleepy deodorant on a white background",
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_skin_care2gray1_e13e141d-3b65-4fe0-94e1-9718769f2216.png?v=1712326372",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_skin_care2gray2_bcfe8fd7-b849-4535-98d6-42badc342217.png?v=1712326372",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_skin_care2gray3_f2655f2c-ada5-47e4-840f-4b9eb5f5dd00.png?v=1712326372",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_skin_care2gray4_a26b3906-e0ef-4300-912c-37d5657bd836.png?v=1712326372",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        }
+      ],
+      "collections": []
+    },
+    {
+      "id": "7513872728164",
+      "handle": "example_music7",
+      "title": "Portable Round Mesh Bluetooth Speaker",
+      "descriptionHtml": "Experience immersive sound with our Portable Round Mesh Bluetooth Speaker, designed for music lovers on-the-go. This speaker boasts a compact design and a durable mesh build, suitable for any setting, indoors or out. Along with superior sound quality, it includes a convenient leather strap for easy transport, making it your perfect audio companion.",
+      "totalReviews": 4,
+      "avgRating": 3.215,
+      "reviewsSummary": "The Portable Round Mesh Bluetooth Speaker features a compact design and durable mesh build, perfect for any setting. Its leather strap adds convenience for easy transport. While some users praise its sound quality, others find it lacking in immersive audio experience.",
+      "priceRange": {
+        "maxVariantPrice": {
+          "amount": "760.0",
+          "currencyCode": "USD"
+        },
+        "minVariantPrice": {
+          "amount": "230.0",
+          "currencyCode": "USD"
+        }
+      },
+      "featuredImage": {
+        "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_music7_6dece47c-a1f8-4ecc-bfca-9006181433a5.png?v=1712326710",
+        "altText": null,
+        "width": 1024,
+        "height": 1024
+      },
+      "minPrice": 230,
+      "variants": [
+        {
+          "id": "gid://shopify/ProductVariant/43285517238372",
+          "title": "White",
+          "quantityAvailable": 31,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "White"
+            }
+          ],
+          "price": {
+            "amount": "440.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285517271140",
+          "title": "Dark",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Dark"
+            }
+          ],
+          "price": {
+            "amount": "230.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285517303908",
+          "title": "Darker",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Darker"
+            }
+          ],
+          "price": {
+            "amount": "560.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285517336676",
+          "title": "Even Darker",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Even Darker"
+            }
+          ],
+          "price": {
+            "amount": "760.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285517369444",
+          "title": "The Darkest",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "The Darkest"
+            }
+          ],
+          "price": {
+            "amount": "340.0",
+            "currencyCode": "USD"
+          }
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_music7_6dece47c-a1f8-4ecc-bfca-9006181433a5.png?v=1712326710",
+          "altText": " a speaker with a cord attached to it",
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_music7gray1_117007b3-307a-4bee-94e6-c395d03d5b3c.png?v=1712326710",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_music7gray2_40c75c93-1747-48fb-980c-163c94558aa8.png?v=1712326710",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_music7gray3_e16edb8a-289f-486c-a03a-94466d0f2b30.png?v=1712326710",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_music7gray4_3fece643-01ad-4427-98c2-c1ed1ed6d6fe.png?v=1712326710",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        }
+      ],
+      "collections": []
+    },
+    {
+      "id": "7513876398180",
+      "handle": "example_music13",
+      "title": "Orbital Harmony Hanging Bluetooth Speaker",
+      "descriptionHtml": "Experience 360-degree sound with the Orbital Harmony Hanging Bluetooth Speaker, designed for both indoor and outdoor use. Its sleek, orb-like design adds a modern touch to any space, while the durable strap allows for easy hanging anywhere. Enjoy wireless audio with high-fidelity playback that can pair effortlessly with your devices.",
+
+      "totalReviews": 75,
+      "avgRating": 5,
+      "reviewsSummary": "The Orbital Harmony Hanging Bluetooth Speaker delivers 360-degree sound with high-fidelity playback, perfect for both indoor and outdoor use. Its sleek, orb-like design adds a modern touch, and the durable strap allows for easy hanging anywhere. Users love its seamless device pairing and exceptional audio quality.",
+      "priceRange": {
+        "maxVariantPrice": {
+          "amount": "890.0",
+          "currencyCode": "USD"
+        },
+        "minVariantPrice": {
+          "amount": "200.0",
+          "currencyCode": "USD"
+        }
+      },
+      "featuredImage": {
+        "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_music13_b6dca7ab-4ab9-4377-8bf8-a72a97ad2bd5.png?v=1712326846",
+        "altText": null,
+        "width": 1024,
+        "height": 1024
+      },
+      "minPrice": 200,
+      "variants": [
+        {
+          "id": "gid://shopify/ProductVariant/43285534343268",
+          "title": "White",
+          "quantityAvailable": 106,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "White"
+            }
+          ],
+          "price": {
+            "amount": "590.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285534376036",
+          "title": "Dark",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Dark"
+            }
+          ],
+          "price": {
+            "amount": "890.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285534408804",
+          "title": "Darker",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Darker"
+            }
+          ],
+          "price": {
+            "amount": "560.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285534441572",
+          "title": "Even Darker",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Even Darker"
+            }
+          ],
+          "price": {
+            "amount": "200.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285534474340",
+          "title": "The Darkest",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "The Darkest"
+            }
+          ],
+          "price": {
+            "amount": "530.0",
+            "currencyCode": "USD"
+          }
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_music13_b6dca7ab-4ab9-4377-8bf8-a72a97ad2bd5.png?v=1712326846",
+          "altText": " a white round object hanging from a string",
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_music13gray1_9c18b70d-1a8e-4512-bbd4-cfdef901f4a1.png?v=1712326846",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_music13gray2_7afb25ff-bec2-4fe8-80ab-1cd124bb8ca4.png?v=1712326846",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_music13gray3_f3dc223b-41a2-4b1c-9289-078c3933d9fb.png?v=1712326846",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_music13gray4_0751e771-f0dc-4d97-aae4-96ebaf93174d.png?v=1712326846",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        }
+      ],
+      "collections": []
+    },
+    {
+      "id": "7513732677732",
+      "handle": "example_furniture17",
+      "title": "Modern Comfort Dining Chair",
+      "descriptionHtml": "Designed for elegance and comfort, this dining chair features a plush seat and a curved backrest, upholstered in high-quality fabric for a cozy dining experience. The robust wooden frame ensures stability, while the sleek design adds a touch of modern flair to any dining room.",
+      "priceRange": {
+        "maxVariantPrice": {
+          "amount": "900.0",
+          "currencyCode": "USD"
+        },
+        "minVariantPrice": {
+          "amount": "90.0",
+          "currencyCode": "USD"
+        }
+      },
+      "featuredImage": {
+        "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_furniture17_0bad6a8b-31a1-4550-b7fe-5af6b7d54f84.png?v=1712325570",
+        "altText": null,
+        "width": 1024,
+        "height": 1024
+      },
+      "minPrice": 90,
+      "variants": [
+        {
+          "id": "gid://shopify/ProductVariant/43285367423076",
+          "title": "White",
+          "quantityAvailable": 22,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "White"
+            }
+          ],
+          "price": {
+            "amount": "430.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285367455844",
+          "title": "Dark",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Dark"
+            }
+          ],
+          "price": {
+            "amount": "90.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285367488612",
+          "title": "Darker",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Darker"
+            }
+          ],
+          "price": {
+            "amount": "850.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285367521380",
+          "title": "Even Darker",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Even Darker"
+            }
+          ],
+          "price": {
+            "amount": "470.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285367554148",
+          "title": "The Darkest",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "The Darkest"
+            }
+          ],
+          "price": {
+            "amount": "900.0",
+            "currencyCode": "USD"
+          }
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_furniture17_0bad6a8b-31a1-4550-b7fe-5af6b7d54f84.png?v=1712325570",
+          "altText": " a gray and white chair with a white background",
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_furniture17gray1_5259fb45-d38c-4e38-8f67-fba91c3a6648.png?v=1712325570",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_furniture17gray2_13284710-aa1f-41d5-bce1-089f059a7be5.png?v=1712325570",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_furniture17gray3_d369047a-5496-4071-af6a-6e2bc4b9b64e.png?v=1712325570",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_furniture17gray4_04df261d-9c8a-4c26-87d6-9c3b2f4f3e77.png?v=1712325570",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        }
+      ],
+      "collections": [
+        {
+          "handle": "home",
+          "title": "Home",
+          "descriptionHtml": "",
+          "updatedAt": "2024-04-05T14:02:23Z",
+          "id": "gid://shopify/Collection/287131631716",
+          "descriptionHtml": "",
+          "image": null
+        }
+      ]
+    },
+    {
+      "id": "7513732710500",
+      "handle": "example_perfumes4",
+      "title": "Summer Orchard Eau de Cologne",
+      "descriptionHtml": "Indulge in the sweet symphony of summer with our Summer Orchard Eau de Cologne. A perfect blend of juicy nectarine aromas and subtle hints of honey, this fragrance is designed to captivate your senses and leave a lasting impression. Immerse yourself in its light, refreshing scent that's perfect for any occasion.",
+      "priceRange": {
+        "maxVariantPrice": {
+          "amount": "770.0",
+          "currencyCode": "USD"
+        },
+        "minVariantPrice": {
+          "amount": "80.0",
+          "currencyCode": "USD"
+        }
+      },
+      "featuredImage": {
+        "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_furniture17_263098ce-5d6a-479b-b35a-c6f36997a054.png?v=1712325580",
+        "altText": null,
+        "width": 1024,
+        "height": 1024
+      },
+      "minPrice": 80,
+      "variants": [
+        {
+          "id": "gid://shopify/ProductVariant/43285368897636",
+          "title": "White",
+          "quantityAvailable": 49,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "White"
+            }
+          ],
+          "price": {
+            "amount": "80.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285368930404",
+          "title": "Dark",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Dark"
+            }
+          ],
+          "price": {
+            "amount": "770.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285368963172",
+          "title": "Darker",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Darker"
+            }
+          ],
+          "price": {
+            "amount": "190.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285368995940",
+          "title": "Even Darker",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Even Darker"
+            }
+          ],
+          "price": {
+            "amount": "420.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285369028708",
+          "title": "The Darkest",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "The Darkest"
+            }
+          ],
+          "price": {
+            "amount": "380.0",
+            "currencyCode": "USD"
+          }
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_furniture17_263098ce-5d6a-479b-b35a-c6f36997a054.png?v=1712325580",
+          "altText": " a gray and white chair with a white background",
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_furniture17gray1_2f3c6b74-d9b1-4c24-89dc-254938afc4f3.png?v=1712325580",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_furniture17gray2_b4ca37f7-2b09-4c1c-96d7-c98bed124141.png?v=1712325580",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_furniture17gray3_2df357d1-9a6d-4333-b454-d26a8494d105.png?v=1712325580",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_furniture17gray4_c7a36f3b-fc31-4919-aa9a-8b63c7b162ea.png?v=1712325580",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        }
+      ],
+      "collections": []
+    },
+    {
+      "id": "7513732808804",
+      "handle": "example_photography_2",
+      "title": "ProCapture X20 Digital SLR Camera",
+      "descriptionHtml": "Discover the world of professional photography with the ProCapture X20 Digital SLR Camera. Featuring a high-resolution sensor for stunning image clarity, a versatile zoom lens for wide-angle to portrait shots, and intuitive controls for enthusiasts and pros alike. This camera is engineered for durability and performance, ensuring every moment is captured with precision.",
+      "priceRange": {
+        "maxVariantPrice": {
+          "amount": "880.0",
+          "currencyCode": "USD"
+        },
+        "minVariantPrice": {
+          "amount": "80.0",
+          "currencyCode": "USD"
+        }
+      },
+      "featuredImage": {
+        "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_photography_2_cab4be64-5097-44fc-bab6-45787b01d7fc.png?v=1712325590",
+        "altText": null,
+        "width": 1024,
+        "height": 1024
+      },
+      "minPrice": 80,
+      "variants": [
+        {
+          "id": "gid://shopify/ProductVariant/43285369159780",
+          "title": "White",
+          "quantityAvailable": 89,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "White"
+            }
+          ],
+          "price": {
+            "amount": "880.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285369192548",
+          "title": "Dark",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Dark"
+            }
+          ],
+          "price": {
+            "amount": "80.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285369225316",
+          "title": "Darker",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Darker"
+            }
+          ],
+          "price": {
+            "amount": "340.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285369258084",
+          "title": "Even Darker",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Even Darker"
+            }
+          ],
+          "price": {
+            "amount": "620.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285369290852",
+          "title": "The Darkest",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "The Darkest"
+            }
+          ],
+          "price": {
+            "amount": "350.0",
+            "currencyCode": "USD"
+          }
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_photography_2_cab4be64-5097-44fc-bab6-45787b01d7fc.png?v=1712325590",
+          "altText": " a black camera sitting on top of a white surface",
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_photography_2gray1_00b33c15-3c4a-4cb8-97a9-207ae5adf78b.png?v=1712325590",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_photography_2gray2_0a4b53c1-a218-4994-9bb2-6f4abd314560.png?v=1712325590",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_photography_2gray3_dd4ba3f7-d501-4363-a861-b39c94040bf2.png?v=1712325590",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_photography_2gray4_94f10413-97aa-4569-a1aa-a9f129ec0da0.png?v=1712325590",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        }
+      ],
+      "collections": []
+    },
+    {
+      "id": "7513732907108",
+      "handle": "example_electronics_5",
+      "title": "SleekPro Elite Smartphone",
+      "descriptionHtml": "The SleekPro Elite offers an elegant design combined with powerful performance, featuring an advanced dual-camera system for stunning photos, a vibrant display for immersive media experience, and a high-capacity battery for all-day use. Its durable construction and user-friendly interface make it a top choice for professionals and tech enthusiasts alike.",
+      "priceRange": {
+        "maxVariantPrice": {
+          "amount": "610.0",
+          "currencyCode": "USD"
+        },
+        "minVariantPrice": {
+          "amount": "130.0",
+          "currencyCode": "USD"
+        }
+      },
+      "featuredImage": {
+        "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_electronics_5_929463a1-057f-4a12-9511-da6f8881912b.png?v=1712325601",
+        "altText": null,
+        "width": 1024,
+        "height": 1024
+      },
+      "minPrice": 130,
+      "variants": [
+        {
+          "id": "gid://shopify/ProductVariant/43285369978980",
+          "title": "White",
+          "quantityAvailable": 60,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "White"
+            }
+          ],
+          "price": {
+            "amount": "130.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285370011748",
+          "title": "Dark",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Dark"
+            }
+          ],
+          "price": {
+            "amount": "300.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285370044516",
+          "title": "Darker",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Darker"
+            }
+          ],
+          "price": {
+            "amount": "610.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285370077284",
+          "title": "Even Darker",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Even Darker"
+            }
+          ],
+          "price": {
+            "amount": "230.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285370110052",
+          "title": "The Darkest",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "The Darkest"
+            }
+          ],
+          "price": {
+            "amount": "470.0",
+            "currencyCode": "USD"
+          }
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_electronics_5_929463a1-057f-4a12-9511-da6f8881912b.png?v=1712325601",
+          "altText": " a black iphone case sitting on top of a white surface",
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_electronics_5gray1_1a684a36-06c2-4733-96e3-cbb3f6a783c8.png?v=1712325601",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_electronics_5gray2_c0d383dc-55c3-4bf4-a7d4-e6e90db94f71.png?v=1712325601",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_electronics_5gray3_21aa96ff-0947-4f78-8862-ad345a628e0a.png?v=1712325601",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_electronics_5gray4_e93b24b4-49f4-44ca-b6b3-759336b9f587.png?v=1712325601",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        }
+      ],
+      "collections": []
+    },
+    {
+      "id": "7513733038180",
+      "handle": "example_glasses1",
+      "title": "Vintage Round Tortoiseshell Sunglasses",
+      "descriptionHtml": "Elevate your style with these classic round sunglasses, featuring a timeless tortoiseshell pattern and durable, high-quality lenses for perfect clarity. Their lightweight design ensures all-day comfort while offering UV protection for your eyes.",
+      "priceRange": {
+        "maxVariantPrice": {
+          "amount": "900.0",
+          "currencyCode": "USD"
+        },
+        "minVariantPrice": {
+          "amount": "190.0",
+          "currencyCode": "USD"
+        }
+      },
+      "featuredImage": {
+        "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_glasses1_baac154f-9ce0-4a1a-af4d-8be2b2a6b2c4.png?v=1712325611",
+        "altText": null,
+        "width": 1024,
+        "height": 1024
+      },
+      "minPrice": 190,
+      "variants": [
+        {
+          "id": "gid://shopify/ProductVariant/43285371420772",
+          "title": "White",
+          "quantityAvailable": 77,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "White"
+            }
+          ],
+          "price": {
+            "amount": "900.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285371453540",
+          "title": "Dark",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Dark"
+            }
+          ],
+          "price": {
+            "amount": "190.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285371486308",
+          "title": "Darker",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Darker"
+            }
+          ],
+          "price": {
+            "amount": "510.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285371519076",
+          "title": "Even Darker",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Even Darker"
+            }
+          ],
+          "price": {
+            "amount": "700.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285371551844",
+          "title": "The Darkest",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "The Darkest"
+            }
+          ],
+          "price": {
+            "amount": "560.0",
+            "currencyCode": "USD"
+          }
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_glasses1_baac154f-9ce0-4a1a-af4d-8be2b2a6b2c4.png?v=1712325611",
+          "altText": " a pair of sunglasses on a white background",
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_glasses1gray1_acddc8d4-4d44-4811-a6d9-652de4b87ee3.png?v=1712325611",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_glasses1gray2_ff3af1bc-d1eb-4b42-8d63-2fc2fa24f805.png?v=1712325611",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_glasses1gray3_2871335e-9f04-495f-aaab-11843159b786.png?v=1712325611",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_glasses1gray4_a716d54b-a39d-4732-a856-5cddcba62291.png?v=1712325611",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        }
+      ],
+      "collections": []
+    },
+    {
+      "id": "7513733103716",
+      "handle": "example_shoes8",
+      "title": "Urban Sleek Low-Top Sneakers",
+      "descriptionHtml": "Experience the perfect blend of comfort and style with our Urban Sleek Low-Top Sneakers. Crafted for the modern urbanite, these shoes feature a durable multi-textured upper, cushioned insole, and a robust outsole for all-day wearability. Whether you're hitting the pavement or lounging at your favorite cafe, these sneakers are sure to turn heads.",
+      "priceRange": {
+        "maxVariantPrice": {
+          "amount": "780.0",
+          "currencyCode": "USD"
+        },
+        "minVariantPrice": {
+          "amount": "270.0",
+          "currencyCode": "USD"
+        }
+      },
+      "featuredImage": {
+        "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_shoes8_9be2b05d-e785-40c1-ae99-79bc8c0234d2.png?v=1712325621",
+        "altText": null,
+        "width": 1024,
+        "height": 1024
+      },
+      "minPrice": 270,
+      "variants": [
+        {
+          "id": "gid://shopify/ProductVariant/43285372862564",
+          "title": "White",
+          "quantityAvailable": 107,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "White"
+            }
+          ],
+          "price": {
+            "amount": "770.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285372895332",
+          "title": "Dark",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Dark"
+            }
+          ],
+          "price": {
+            "amount": "460.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285372928100",
+          "title": "Darker",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Darker"
+            }
+          ],
+          "price": {
+            "amount": "780.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285372960868",
+          "title": "Even Darker",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Even Darker"
+            }
+          ],
+          "price": {
+            "amount": "590.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285372993636",
+          "title": "The Darkest",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "The Darkest"
+            }
+          ],
+          "price": {
+            "amount": "270.0",
+            "currencyCode": "USD"
+          }
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_shoes8_9be2b05d-e785-40c1-ae99-79bc8c0234d2.png?v=1712325621",
+          "altText": " a black and white sneaker on a white background",
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_shoes8gray1_256affbd-900c-4b7d-b2ea-f91c05bb8564.png?v=1712325622",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_shoes8gray2_26ae1380-f168-4e4d-84e9-b0e36f9ff2e9.png?v=1712325622",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_shoes8gray3_2d92a7f4-301b-427d-8abf-613803d2f44c.png?v=1712325622",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_shoes8gray4_9df56610-00cc-4017-b46b-1a1d5ee576b2.png?v=1712325622",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        }
+      ],
+      "collections": []
+    },
+    {
+      "id": "7513733136484",
+      "handle": "example_jewellery9",
+      "title": "Elegant Sapphire Vintage-Inspired Ring",
+      "descriptionHtml": "Discover the timeless beauty of our Elegant Sapphire Vintage-Inspired Ring. This exquisite piece features a captivating deep blue sapphire, encompassed by a radiant halo of sparkling accents. Crafted with attention to detail, the ring offers a delicate balance of elegance and sophistication, perfect for any special occasion or adding a touch of glamour to everyday wear.",
+      "priceRange": {
+        "maxVariantPrice": {
+          "amount": "570.0",
+          "currencyCode": "USD"
+        },
+        "minVariantPrice": {
+          "amount": "20.0",
+          "currencyCode": "USD"
+        }
+      },
+      "featuredImage": {
+        "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_jewellery9_3ea2f4ff-eb65-406c-940f-d575416cf7b5.png?v=1712325632",
+        "altText": null,
+        "width": 1024,
+        "height": 1024
+      },
+      "minPrice": 20,
+      "variants": [
+        {
+          "id": "gid://shopify/ProductVariant/43285373681764",
+          "title": "White",
+          "quantityAvailable": 14,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "White"
+            }
+          ],
+          "price": {
+            "amount": "570.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285373714532",
+          "title": "Dark",
+          "quantityAvailable": 14,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Dark"
+            }
+          ],
+          "price": {
+            "amount": "50.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285373747300",
+          "title": "Darker",
+          "quantityAvailable": 14,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Darker"
+            }
+          ],
+          "price": {
+            "amount": "20.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285373780068",
+          "title": "Even Darker",
+          "quantityAvailable": 14,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Even Darker"
+            }
+          ],
+          "price": {
+            "amount": "350.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285373812836",
+          "title": "The Darkest",
+          "quantityAvailable": 14,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "The Darkest"
+            }
+          ],
+          "price": {
+            "amount": "200.0",
+            "currencyCode": "USD"
+          }
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_jewellery9_3ea2f4ff-eb65-406c-940f-d575416cf7b5.png?v=1712325632",
+          "altText": " a black and white diamond ring on a white background",
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_jewellery9gray1_8e30a1f4-39db-4a2c-ae62-7e2d959bba9e.png?v=1712325632",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_jewellery9gray2_fa98faf2-7f12-466e-b337-f82bf1abf356.png?v=1712325632",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_jewellery9gray3_d1ff4219-845d-4943-ab8c-568e0a692be4.png?v=1712325632",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_jewellery9gray4_aa2322c0-03ca-4b48-a067-c9269d9a3863.png?v=1712325632",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        }
+      ],
+      "collections": [
+        {
+          "handle": "fashion",
+          "title": "Fashion",
+          "descriptionHtml": "The fashion category in our store is a vibrant and diverse collection designed to cater to all your style needs. From the latest runway trends to timeless classics, our range offers a wide selection of apparel, accessories, and footwear for men, women, and children. Whether you're refreshing your wardrobe for the season, seeking the perfect outfit for a special occasion, or simply indulging in your passion for fashion, our curated selections feature high-quality pieces from renowned brands and emerging designers. With a focus on sustainability, we also present eco-friendly options that merge style with environmental consciousness. Explore our fashion category to discover stylish and affordable choices that will keep you at the forefront of fashion trends",
+          "updatedAt": "2024-04-05T14:23:20Z",
+          "id": "gid://shopify/Collection/287132844132",
+          "descriptionHtml": "The fashion category in our store is a vibrant and diverse collection designed to cater to all your style needs. From the latest runway trends to timeless classics, our range offers a wide selection of apparel, accessories, and footwear for men, women, and children. Whether you're refreshing your wardrobe for the season, seeking the perfect outfit for a special occasion, or simply indulging in your passion for fashion, our curated selections feature high-quality pieces from renowned brands and emerging designers. With a focus on sustainability, we also present eco-friendly options that merge style with environmental consciousness. Explore our fashion category to discover stylish and affordable choices that will keep you at the forefront of fashion trends",
+          "image": null
+        }
+      ]
+    },
+    {
+      "id": "7513733169252",
+      "handle": "example_skin_care28",
+      "title": "Luxurious Locks Deep Conditioning Hair Mask",
+      "descriptionHtml": "Indulge in the rich, creamy essence of our Luxurious Locks Deep Conditioning Hair Mask. Formulated with natural ingredients, this intense nourishment treatment is designed to restore hydration and vitality to tired, overworked hair, ensuring that your locks remain soft, lustrous, and healthy-looking. Our exclusive formula is also perfect for maintaining the pristine condition of hair extensions.",
+      "priceRange": {
+        "maxVariantPrice": {
+          "amount": "780.0",
+          "currencyCode": "USD"
+        },
+        "minVariantPrice": {
+          "amount": "170.0",
+          "currencyCode": "USD"
+        }
+      },
+      "featuredImage": {
+        "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_skin_care28_fdad399a-b0db-4b24-b500-3e9ab6ac7819.png?v=1712325643",
+        "altText": null,
+        "width": 1024,
+        "height": 1024
+      },
+      "minPrice": 170,
+      "variants": [
+        {
+          "id": "gid://shopify/ProductVariant/43285375221860",
+          "title": "White",
+          "quantityAvailable": 14,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "White"
+            }
+          ],
+          "price": {
+            "amount": "410.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285375254628",
+          "title": "Dark",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Dark"
+            }
+          ],
+          "price": {
+            "amount": "780.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285375287396",
+          "title": "Darker",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Darker"
+            }
+          ],
+          "price": {
+            "amount": "720.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285375320164",
+          "title": "Even Darker",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Even Darker"
+            }
+          ],
+          "price": {
+            "amount": "380.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285375352932",
+          "title": "The Darkest",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "The Darkest"
+            }
+          ],
+          "price": {
+            "amount": "170.0",
+            "currencyCode": "USD"
+          }
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_skin_care28_fdad399a-b0db-4b24-b500-3e9ab6ac7819.png?v=1712325643",
+          "altText": " a tube of black toothpaste on a white background",
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_skin_care28gray1_2f8e9a27-cf20-4548-b621-4b69c5b957ec.png?v=1712325643",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_skin_care28gray2_6dc09db1-fed2-4f5e-8015-6a46496854fc.png?v=1712325643",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_skin_care28gray3_89e7fdea-7bcd-40ab-9ac9-93a6422f9bc2.png?v=1712325643",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_skin_care28gray4_adb33774-f7bc-42bc-9a41-5c308da4024d.png?v=1712325643",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        }
+      ],
+      "collections": []
+    },
+    {
+      "id": "7513733234788",
+      "handle": "example_decor31",
+      "title": "Sleek Modernist Vase",
+      "descriptionHtml": "Elevate your home decor with this elegantly streamlined vase, boasting a timeless design and a lustrous finish that reflects light beautifully. Perfect for displaying a single stem or a small bouquet, this piece brings a touch of sophistication to any room.",
+      "priceRange": {
+        "maxVariantPrice": {
+          "amount": "940.0",
+          "currencyCode": "USD"
+        },
+        "minVariantPrice": {
+          "amount": "80.0",
+          "currencyCode": "USD"
+        }
+      },
+      "featuredImage": {
+        "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_decor31_06f05251-ad7c-45d5-9e7b-ea977157f0ec.png?v=1712325653",
+        "altText": null,
+        "width": 1024,
+        "height": 1024
+      },
+      "minPrice": 80,
+      "variants": [
+        {
+          "id": "gid://shopify/ProductVariant/43285376565348",
+          "title": "White",
+          "quantityAvailable": 45,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "White"
+            }
+          ],
+          "price": {
+            "amount": "940.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285376598116",
+          "title": "Dark",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Dark"
+            }
+          ],
+          "price": {
+            "amount": "720.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285376630884",
+          "title": "Darker",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Darker"
+            }
+          ],
+          "price": {
+            "amount": "310.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285376663652",
+          "title": "Even Darker",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Even Darker"
+            }
+          ],
+          "price": {
+            "amount": "830.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285376696420",
+          "title": "The Darkest",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "The Darkest"
+            }
+          ],
+          "price": {
+            "amount": "80.0",
+            "currencyCode": "USD"
+          }
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_decor31_06f05251-ad7c-45d5-9e7b-ea977157f0ec.png?v=1712325653",
+          "altText": " a silver vase sitting on top of a white surface",
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_decor31gray1_9e136c97-81ec-48af-b317-0baf5faf02ed.png?v=1712325653",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_decor31gray2_dc037471-1f7b-42e7-a8ae-721c2ba45645.png?v=1712325653",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_decor31gray3_bccf73fa-8250-4d0a-b683-d0d93e2c952c.png?v=1712325653",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_decor31gray4_d5551ecc-f1b4-4e4a-8a12-02af3da6ba92.png?v=1712325653",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        }
+      ],
+      "collections": [
+        {
+          "handle": "home",
+          "title": "Home",
+          "descriptionHtml": "",
+          "updatedAt": "2024-04-05T14:04:01Z",
+          "id": "gid://shopify/Collection/287131631716",
+          "descriptionHtml": "",
+          "image": null
+        }
+      ]
+    },
+    {
+      "id": "7513733365860",
+      "handle": "example_decor26",
+      "title": "Aqua Essence Decorative Ceramic Plate",
+      "descriptionHtml": "Add a touch of elegance and mesmerizing oceanic patterns to your home decor with this Aqua Essence Decorative Ceramic Plate. Each piece is handcrafted with detailed turquoise and copper tones, ensuring a unique accent that complements any room or table setting. Ideal for collectors and enthusiasts of fine ceramics.",
+      "priceRange": {
+        "maxVariantPrice": {
+          "amount": "910.0",
+          "currencyCode": "USD"
+        },
+        "minVariantPrice": {
+          "amount": "130.0",
+          "currencyCode": "USD"
+        }
+      },
+      "featuredImage": {
+        "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_decor26_c515e1d9-5b4a-4f1e-bcc0-101380b70b67.png?v=1712325664",
+        "altText": null,
+        "width": 1024,
+        "height": 1024
+      },
+      "minPrice": 130,
+      "variants": [
+        {
+          "id": "gid://shopify/ProductVariant/43285377908836",
+          "title": "White",
+          "quantityAvailable": 14,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "White"
+            }
+          ],
+          "price": {
+            "amount": "260.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285377941604",
+          "title": "Dark",
+          "quantityAvailable": 14,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Dark"
+            }
+          ],
+          "price": {
+            "amount": "910.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285377974372",
+          "title": "Darker",
+          "quantityAvailable": 0,
+          "availableForSale": false,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Darker"
+            }
+          ],
+          "price": {
+            "amount": "400.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285378007140",
+          "title": "Even Darker",
+          "quantityAvailable": 14,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Even Darker"
+            }
+          ],
+          "price": {
+            "amount": "130.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285378039908",
+          "title": "The Darkest",
+          "quantityAvailable": 14,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "The Darkest"
+            }
+          ],
+          "price": {
+            "amount": "500.0",
+            "currencyCode": "USD"
+          }
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_decor26_c515e1d9-5b4a-4f1e-bcc0-101380b70b67.png?v=1712325664",
+          "altText": " a black and white photo of a round object",
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_decor26gray1_d29d12fb-0201-4ded-aa5f-2b8b6b5fb8e1.png?v=1712325664",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_decor26gray2_843aca56-fb0a-423c-a88d-726bf80ff19d.png?v=1712325664",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_decor26gray3_707722db-06d4-4dc3-b66f-4f070e01ad16.png?v=1712325664",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_decor26gray4_34a6a616-2a6b-415f-bdf1-40b18e8b50e0.png?v=1712325664",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        }
+      ],
+      "collections": [
+        {
+          "handle": "home",
+          "title": "Home",
+          "descriptionHtml": "The home category in our store unfolds as a meticulously curated selection aimed at transforming your living spaces into havens of comfort, style, and functionality. From chic furniture that marries form with function to decorative accents that add a personal touch to any room, our collection spans across all areas of your home—living room, bedroom, kitchen, and beyond. Dive into our assortment of bedding, cookware, lighting, and home accessories designed to elevate your everyday life and reflect your unique taste. For those who prioritize sustainability, we offer eco-conscious choices that ensure your home decor is not only beautiful but also kind to the planet. Embrace the joy of home making with our diverse range, offering solutions for every style, budget, and space. Discover everything you need to create a space that truly feels like home.",
+          "updatedAt": "2024-04-05T14:42:06Z",
+          "id": "gid://shopify/Collection/287132778596",
+          "descriptionHtml": "The home category in our store unfolds as a meticulously curated selection aimed at transforming your living spaces into havens of comfort, style, and functionality. From chic furniture that marries form with function to decorative accents that add a personal touch to any room, our collection spans across all areas of your home—living room, bedroom, kitchen, and beyond. Dive into our assortment of bedding, cookware, lighting, and home accessories designed to elevate your everyday life and reflect your unique taste. For those who prioritize sustainability, we offer eco-conscious choices that ensure your home decor is not only beautiful but also kind to the planet. Embrace the joy of home making with our diverse range, offering solutions for every style, budget, and space. Discover everything you need to create a space that truly feels like home.\n",
+          "image": null
+        }
+      ]
+    },
+    {
+      "id": "7513733529700",
+      "handle": "example_photography_4",
+      "title": "ProLens Master Prime 85mm Camera Lens",
+      "descriptionHtml": "Capture the world in impeccable detail with the ProLens Master Prime 85mm lens. Expertly engineered for sharpness and rich contrast, this lens offers a bright aperture ideal for portrait and low-light photography. Its sturdy construction ensures durability, while offering smooth and precise manual focus for professional-grade image creation.",
+      "priceRange": {
+        "maxVariantPrice": {
+          "amount": "780.0",
+          "currencyCode": "USD"
+        },
+        "minVariantPrice": {
+          "amount": "100.0",
+          "currencyCode": "USD"
+        }
+      },
+      "featuredImage": {
+        "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_photography_4_db26111c-2125-43c8-af91-31006d924032.png?v=1712325674",
+        "altText": null,
+        "width": 1024,
+        "height": 1024
+      },
+      "minPrice": 100,
+      "variants": [
+        {
+          "id": "gid://shopify/ProductVariant/43285379645540",
+          "title": "White",
+          "quantityAvailable": 18,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "White"
+            }
+          ],
+          "price": {
+            "amount": "780.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285379678308",
+          "title": "Dark",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Dark"
+            }
+          ],
+          "price": {
+            "amount": "100.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285379711076",
+          "title": "Darker",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Darker"
+            }
+          ],
+          "price": {
+            "amount": "340.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285379743844",
+          "title": "Even Darker",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Even Darker"
+            }
+          ],
+          "price": {
+            "amount": "500.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285379776612",
+          "title": "The Darkest",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "The Darkest"
+            }
+          ],
+          "price": {
+            "amount": "480.0",
+            "currencyCode": "USD"
+          }
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_photography_4_db26111c-2125-43c8-af91-31006d924032.png?v=1712325674",
+          "altText": " a close up of a lens on a white background",
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_photography_4gray1_3d941da9-ff9e-466e-8212-3405a378f3ea.png?v=1712325674",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_photography_4gray2_7d2a9361-1cdd-44ff-a714-60967c8abcf3.png?v=1712325674",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_photography_4gray3_c976cd91-a3d3-4c5d-86a8-5c5c9169236f.png?v=1712325674",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_photography_4gray4_11e6588d-890e-423b-b8ba-80f1e7a2a14b.png?v=1712325675",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        }
+      ],
+      "collections": []
+    },
+    {
+      "id": "7513733660772",
+      "handle": "example_shoes19",
+      "title": "Blooming Elegance High Heels",
+      "descriptionHtml": "Step into style with these stunning floral-patterned high heels, the perfect blend of comfort and panache for the fashion-forward woman. Featuring a vivid color palette and a sleek, classic design, these shoes add a touch of sophistication to any outfit. Crafted with attention to detail, they promise to be an eye-catching addition to your wardrobe.",
+      "priceRange": {
+        "maxVariantPrice": {
+          "amount": "930.0",
+          "currencyCode": "USD"
+        },
+        "minVariantPrice": {
+          "amount": "570.0",
+          "currencyCode": "USD"
+        }
+      },
+      "featuredImage": {
+        "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_shoes19_e87bf066-9bb6-4733-ac92-1dca1db95257.png?v=1712325685",
+        "altText": null,
+        "width": 1024,
+        "height": 1024
+      },
+      "minPrice": 570,
+      "variants": [
+        {
+          "id": "gid://shopify/ProductVariant/43285381283940",
+          "title": "White",
+          "quantityAvailable": 14,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "White"
+            }
+          ],
+          "price": {
+            "amount": "570.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285381316708",
+          "title": "Dark",
+          "quantityAvailable": 14,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Dark"
+            }
+          ],
+          "price": {
+            "amount": "610.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285381349476",
+          "title": "Darker",
+          "quantityAvailable": 14,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Darker"
+            }
+          ],
+          "price": {
+            "amount": "810.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285381382244",
+          "title": "Even Darker",
+          "quantityAvailable": 14,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Even Darker"
+            }
+          ],
+          "price": {
+            "amount": "780.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285381415012",
+          "title": "The Darkest",
+          "quantityAvailable": 14,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "The Darkest"
+            }
+          ],
+          "price": {
+            "amount": "930.0",
+            "currencyCode": "USD"
+          }
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_shoes19_e87bf066-9bb6-4733-ac92-1dca1db95257.png?v=1712325685",
+          "altText": " a pair of high heeled shoes with floral designs",
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_shoes19gray1_f6d192ab-5716-4093-9af0-928cfafeeef6.png?v=1712325685",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_shoes19gray2_eb980528-91dd-4039-9cde-4b3ef6f9b17d.png?v=1712325685",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_shoes19gray3_e0fd8872-0a77-43ce-bc16-57d7f5f5ee80.png?v=1712325685",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_shoes19gray4_3cf5b4cb-81d1-4ff0-9ee0-8457d000f05c.png?v=1712325685",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        }
+      ],
+      "collections": [
+        {
+          "handle": "fashion",
+          "title": "Fashion",
+          "descriptionHtml": "The fashion category in our store is a vibrant and diverse collection designed to cater to all your style needs. From the latest runway trends to timeless classics, our range offers a wide selection of apparel, accessories, and footwear for men, women, and children. Whether you're refreshing your wardrobe for the season, seeking the perfect outfit for a special occasion, or simply indulging in your passion for fashion, our curated selections feature high-quality pieces from renowned brands and emerging designers. With a focus on sustainability, we also present eco-friendly options that merge style with environmental consciousness. Explore our fashion category to discover stylish and affordable choices that will keep you at the forefront of fashion trends",
+          "updatedAt": "2024-04-05T14:23:20Z",
+          "id": "gid://shopify/Collection/287132844132",
+          "descriptionHtml": "The fashion category in our store is a vibrant and diverse collection designed to cater to all your style needs. From the latest runway trends to timeless classics, our range offers a wide selection of apparel, accessories, and footwear for men, women, and children. Whether you're refreshing your wardrobe for the season, seeking the perfect outfit for a special occasion, or simply indulging in your passion for fashion, our curated selections feature high-quality pieces from renowned brands and emerging designers. With a focus on sustainability, we also present eco-friendly options that merge style with environmental consciousness. Explore our fashion category to discover stylish and affordable choices that will keep you at the forefront of fashion trends",
+          "image": null
+        }
+      ]
+    },
+    {
+      "id": "7513733726308",
+      "handle": "example_glasses3",
+      "title": "Modern Classic Full-Rim Eyeglasses",
+      "descriptionHtml": "Elevate your look with these sleek, modern classic eyeglasses. Crafted with precision, they offer a comfortable fit and a durable design, suitable for everyday wear. Their timeless full-rim style makes them a versatile choice for both professional and casual looks.",
+      "priceRange": {
+        "maxVariantPrice": {
+          "amount": "960.0",
+          "currencyCode": "USD"
+        },
+        "minVariantPrice": {
+          "amount": "30.0",
+          "currencyCode": "USD"
+        }
+      },
+      "featuredImage": {
+        "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_glasses3_0da3bded-ad32-4e9b-bea1-02d79f2405d6.png?v=1712325697",
+        "altText": null,
+        "width": 1024,
+        "height": 1024
+      },
+      "minPrice": 30,
+      "variants": [
+        {
+          "id": "gid://shopify/ProductVariant/43285382692964",
+          "title": "White",
+          "quantityAvailable": 10,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "White"
+            }
+          ],
+          "price": {
+            "amount": "960.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285382791268",
+          "title": "Dark",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Dark"
+            }
+          ],
+          "price": {
+            "amount": "710.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285382856804",
+          "title": "Darker",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Darker"
+            }
+          ],
+          "price": {
+            "amount": "30.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285382955108",
+          "title": "Even Darker",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Even Darker"
+            }
+          ],
+          "price": {
+            "amount": "680.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285383020644",
+          "title": "The Darkest",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "The Darkest"
+            }
+          ],
+          "price": {
+            "amount": "810.0",
+            "currencyCode": "USD"
+          }
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_glasses3_0da3bded-ad32-4e9b-bea1-02d79f2405d6.png?v=1712325697",
+          "altText": " a pair of glasses sitting on top of a white surface",
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_glasses3gray1_a3d5e935-4e03-49cf-9ce0-5ae5cfe0f722.png?v=1712325697",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_glasses3gray2_3348659f-327b-4d37-940b-85e7dddadf0f.png?v=1712325697",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_glasses3gray3_ec655d64-bb1e-4279-ad5e-e3223b3d6107.png?v=1712325697",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_glasses3gray4_0cc64731-69fa-4dbc-be85-53fe8c62fb9e.png?v=1712325697",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        }
+      ],
+      "collections": []
+    },
+    {
+      "id": "7513733824612",
+      "handle": "example_decor33",
+      "title": "Oceanic Elegance Decorative Ceramic Vase",
+      "descriptionHtml": "This exquisite ceramic vase brings a touch of the deep ocean into your home with its mesmerizing turquoise hues and textured finish. Perfect for adding a serene and artistic flair to any room, it serves as a beautiful standalone piece or as an elegant container for your favorite fresh or dried floral arrangements.",
+      "priceRange": {
+        "maxVariantPrice": {
+          "amount": "930.0",
+          "currencyCode": "USD"
+        },
+        "minVariantPrice": {
+          "amount": "110.0",
+          "currencyCode": "USD"
+        }
+      },
+      "featuredImage": {
+        "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_decor33_d2ed28e5-8fd4-4268-a17e-0d9fb3433532.png?v=1712325708",
+        "altText": null,
+        "width": 1024,
+        "height": 1024
+      },
+      "minPrice": 110,
+      "variants": [
+        {
+          "id": "gid://shopify/ProductVariant/43285384921188",
+          "title": "White",
+          "quantityAvailable": 20,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "White"
+            }
+          ],
+          "price": {
+            "amount": "110.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285384953956",
+          "title": "Dark",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Dark"
+            }
+          ],
+          "price": {
+            "amount": "700.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285384986724",
+          "title": "Darker",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Darker"
+            }
+          ],
+          "price": {
+            "amount": "930.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285385019492",
+          "title": "Even Darker",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Even Darker"
+            }
+          ],
+          "price": {
+            "amount": "310.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285385052260",
+          "title": "The Darkest",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "The Darkest"
+            }
+          ],
+          "price": {
+            "amount": "700.0",
+            "currencyCode": "USD"
+          }
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_decor33_d2ed28e5-8fd4-4268-a17e-0d9fb3433532.png?v=1712325708",
+          "altText": " a black and white photo of a vase",
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_decor33gray1_1bca787d-be39-4edc-ac53-f42cbd924606.png?v=1712325708",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_decor33gray2_a457a2bd-7aee-4e13-ac17-628bad7f6462.png?v=1712325708",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_decor33gray3_a2d18e5f-b984-4371-a08b-4b5c9b492681.png?v=1712325709",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_decor33gray4_ba56d7c6-1ce9-4f97-b91a-60cebcbfb506.png?v=1712325709",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        }
+      ],
+      "collections": [
+        {
+          "handle": "home",
+          "title": "Home",
+          "descriptionHtml": "",
+          "updatedAt": "2024-04-05T14:02:50Z",
+          "id": "gid://shopify/Collection/287131631716",
+          "descriptionHtml": "",
+          "image": null
+        }
+      ]
+    },
+    {
+      "id": "7513733890148",
+      "handle": "example_skin_care16",
+      "title": "Revitalizing Botanical Face Cleanser",
+      "descriptionHtml": "Indulge in the natural luxury of our Revitalizing Botanical Face Cleanser, featuring a blend of essential oils and plant extracts to gently remove impurities while nourishing the skin. Its lightweight formula dissolves makeup and dirt, leaving your complexion feeling fresh, clean, and hydrated. Ideal for daily use, this cleanser is perfect for all skin types seeking a radiant, healthy glow.",
+      "priceRange": {
+        "maxVariantPrice": {
+          "amount": "640.0",
+          "currencyCode": "USD"
+        },
+        "minVariantPrice": {
+          "amount": "210.0",
+          "currencyCode": "USD"
+        }
+      },
+      "featuredImage": {
+        "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_skin_care16_51996eaa-97fb-4794-a3d8-06e0b42dc522.png?v=1712325719",
+        "altText": null,
+        "width": 1024,
+        "height": 1024
+      },
+      "minPrice": 210,
+      "variants": [
+        {
+          "id": "gid://shopify/ProductVariant/43285386035300",
+          "title": "White",
+          "quantityAvailable": 45,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "White"
+            }
+          ],
+          "price": {
+            "amount": "640.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285386068068",
+          "title": "Dark",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Dark"
+            }
+          ],
+          "price": {
+            "amount": "210.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285386100836",
+          "title": "Darker",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Darker"
+            }
+          ],
+          "price": {
+            "amount": "330.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285386133604",
+          "title": "Even Darker",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Even Darker"
+            }
+          ],
+          "price": {
+            "amount": "470.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285386166372",
+          "title": "The Darkest",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "The Darkest"
+            }
+          ],
+          "price": {
+            "amount": "480.0",
+            "currencyCode": "USD"
+          }
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_skin_care16_51996eaa-97fb-4794-a3d8-06e0b42dc522.png?v=1712325719",
+          "altText": " a bottle of hand sanitizer on a white background",
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_skin_care16gray1_2aa76168-7c05-4cee-b740-5ea8cba57cb2.png?v=1712325719",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_skin_care16gray2_f3f8ae6b-0db4-4dac-8b5e-12b9338a9841.png?v=1712325719",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_skin_care16gray3_12271d61-13b6-4605-a62c-fc31b6132bcd.png?v=1712325719",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_skin_care16gray4_b3fce743-bd5e-45c2-8909-d066feb2e383.png?v=1712325719",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        }
+      ],
+      "collections": []
+    },
+    {
+      "id": "7513733955684",
+      "handle": "example_perfumes6",
+      "title": "Sunset Amber Eau de Parfum",
+      "descriptionHtml": "Embrace the warmth of the Sunset Amber Eau de Parfum, a luxurious scent that opens with vibrant top notes of citrus, mellowing into a heart of deep floral tones, and concludes with a smoky base of woods and amber. Encased in an elegantly simple bottle, its golden hues are a tribute to the beauty of a day's end.",
+      "priceRange": {
+        "maxVariantPrice": {
+          "amount": "830.0",
+          "currencyCode": "USD"
+        },
+        "minVariantPrice": {
+          "amount": "190.0",
+          "currencyCode": "USD"
+        }
+      },
+      "featuredImage": {
+        "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_perfumes6_683b690a-ffde-4d93-b9b2-4036a9f24fec.png?v=1712325730",
+        "altText": null,
+        "width": 1024,
+        "height": 1024
+      },
+      "minPrice": 190,
+      "variants": [
+        {
+          "id": "gid://shopify/ProductVariant/43285386920036",
+          "title": "White",
+          "quantityAvailable": 44,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "White"
+            }
+          ],
+          "price": {
+            "amount": "320.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285386985572",
+          "title": "Dark",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Dark"
+            }
+          ],
+          "price": {
+            "amount": "830.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285387018340",
+          "title": "Darker",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Darker"
+            }
+          ],
+          "price": {
+            "amount": "190.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285387051108",
+          "title": "Even Darker",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Even Darker"
+            }
+          ],
+          "price": {
+            "amount": "570.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285387083876",
+          "title": "The Darkest",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "The Darkest"
+            }
+          ],
+          "price": {
+            "amount": "710.0",
+            "currencyCode": "USD"
+          }
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_perfumes6_683b690a-ffde-4d93-b9b2-4036a9f24fec.png?v=1712325730",
+          "altText": " a bottle of perfume on a white background",
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_perfumes6gray1_a4b6bc35-47bf-495c-bde7-97706a58fcdd.png?v=1712325730",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_perfumes6gray2_6915e2f1-cfdb-4c6d-9598-a8e5b4bba833.png?v=1712325730",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_perfumes6gray3_9e9bca0a-a000-44bd-8b4f-dabc2b0c4f07.png?v=1712325730",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_perfumes6gray4_7f68ac43-e0ba-42bf-9e1c-bae31bb831d6.png?v=1712325730",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        }
+      ],
+      "collections": []
+    },
+    {
+      "id": "7513734086756",
+      "handle": "example_furniture15",
+      "title": "Moderno Vibrance Armchair",
+      "descriptionHtml": "Elevate your living space with the Moderno Vibrance Armchair, boasting a bold orange hue and a contemporary, minimalist design. Crafted for both comfort and style, this armchair is perfect for adding a pop of color to any modern interior. Its sturdy construction and durable materials ensure that it can withstand daily use while providing a chic seating option.",
+      "priceRange": {
+        "maxVariantPrice": {
+          "amount": "850.0",
+          "currencyCode": "USD"
+        },
+        "minVariantPrice": {
+          "amount": "440.0",
+          "currencyCode": "USD"
+        }
+      },
+      "featuredImage": {
+        "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_furniture15_b717c6d9-1333-4108-b82b-0d28c9cbd3ff.png?v=1712325741",
+        "altText": null,
+        "width": 1024,
+        "height": 1024
+      },
+      "minPrice": 440,
+      "variants": [
+        {
+          "id": "gid://shopify/ProductVariant/43285388165220",
+          "title": "White",
+          "quantityAvailable": 70,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "White"
+            }
+          ],
+          "price": {
+            "amount": "850.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285388197988",
+          "title": "Dark",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Dark"
+            }
+          ],
+          "price": {
+            "amount": "550.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285388263524",
+          "title": "Darker",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Darker"
+            }
+          ],
+          "price": {
+            "amount": "620.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285388329060",
+          "title": "Even Darker",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Even Darker"
+            }
+          ],
+          "price": {
+            "amount": "440.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285388394596",
+          "title": "The Darkest",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "The Darkest"
+            }
+          ],
+          "price": {
+            "amount": "710.0",
+            "currencyCode": "USD"
+          }
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_furniture15_b717c6d9-1333-4108-b82b-0d28c9cbd3ff.png?v=1712325741",
+          "altText": " a gray chair with a white background",
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_furniture15gray1_a9638393-f1c3-488c-9097-5c70cf550609.png?v=1712325741",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_furniture15gray2_1c90c06a-d563-4724-a6c7-c73b496bb363.png?v=1712325741",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_furniture15gray3_3f83b39c-fb96-4b9c-8988-7091339da3ac.png?v=1712325741",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_furniture15gray4_824a72d3-edd3-404a-b6e1-0817792ce4b0.png?v=1712325741",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        }
+      ],
+      "collections": [
+        {
+          "handle": "home",
+          "title": "Home",
+          "descriptionHtml": "",
+          "updatedAt": "2024-04-05T14:03:30Z",
+          "id": "gid://shopify/Collection/287131631716",
+          "descriptionHtml": "",
+          "image": null
+        }
+      ]
+    },
+    {
+      "id": "7513734185060",
+      "handle": "example_electronics_6",
+      "title": "Elegant Pink Electric Toothbrush Set",
+      "descriptionHtml": "Experience a refreshing clean with this sleek electric toothbrush set, designed to combine style and functionality. The set includes a high-performance toothbrush, a convenient charging base, and a durable travel case. Its gentle yet effective brushing modes cater to various oral care needs, ensuring a thorough clean for brighter, healthier teeth.",
+      "priceRange": {
+        "maxVariantPrice": {
+          "amount": "940.0",
+          "currencyCode": "USD"
+        },
+        "minVariantPrice": {
+          "amount": "270.0",
+          "currencyCode": "USD"
+        }
+      },
+      "featuredImage": {
+        "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_electronics_6_bc8f3cdc-1d64-4509-bdfb-067f629a3aad.png?v=1712325752",
+        "altText": null,
+        "width": 1024,
+        "height": 1024
+      },
+      "minPrice": 270,
+      "variants": [
+        {
+          "id": "gid://shopify/ProductVariant/43285390491748",
+          "title": "White",
+          "quantityAvailable": 0,
+          "availableForSale": false,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "White"
+            }
+          ],
+          "price": {
+            "amount": "870.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285390524516",
+          "title": "Dark",
+          "quantityAvailable": 14,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Dark"
+            }
+          ],
+          "price": {
+            "amount": "600.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285390557284",
+          "title": "Darker",
+          "quantityAvailable": 14,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Darker"
+            }
+          ],
+          "price": {
+            "amount": "450.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285390590052",
+          "title": "Even Darker",
+          "quantityAvailable": 0,
+          "availableForSale": false,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Even Darker"
+            }
+          ],
+          "price": {
+            "amount": "270.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285390622820",
+          "title": "The Darkest",
+          "quantityAvailable": 14,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "The Darkest"
+            }
+          ],
+          "price": {
+            "amount": "940.0",
+            "currencyCode": "USD"
+          }
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_electronics_6_bc8f3cdc-1d64-4509-bdfb-067f629a3aad.png?v=1712325752",
+          "altText": " a toothbrush, toothpaste, and toothbrush holder on a white background",
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_electronics_6gray1_4a157161-09c8-4af4-be45-78ff3b57e7d1.png?v=1712325752",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_electronics_6gray2_28e91c40-10f0-43b3-9268-694fa3cc86cc.png?v=1712325752",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_electronics_6gray3_d3359c75-0328-43b5-ae26-b23ce20ca3e3.png?v=1712325752",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_electronics_6gray4_bf6d7b54-0965-4d4f-9b01-2a1c1bc3cf88.png?v=1712325752",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        }
+      ],
+      "collections": [
+        {
+          "handle": "electronics",
+          "title": "Electronics",
+          "descriptionHtml": "The electronics category in our store is a dynamic collection tailored to meet all your technological needs, blending the latest in gadgets with essential household appliances. Explore our range of smartphones, laptops, audio and visual equipment, smart home devices, wearables, drones, and gaming consoles, all designed to enhance your digital experience and streamline your lifestyle. With offerings from top brands and a focus on quality and innovation, our electronics category promises to keep you connected, entertained, and efficient, no matter where you are.",
+          "updatedAt": "2024-04-05T14:26:45Z",
+          "id": "gid://shopify/Collection/287132942436",
+          "descriptionHtml": "The electronics category in our store is a dynamic collection tailored to meet all your technological needs, blending the latest in gadgets with essential household appliances. Explore our range of smartphones, laptops, audio and visual equipment, smart home devices, wearables, drones, and gaming consoles, all designed to enhance your digital experience and streamline your lifestyle. With offerings from top brands and a focus on quality and innovation, our electronics category promises to keep you connected, entertained, and efficient, no matter where you are.\n",
+          "image": null
+        }
+      ]
+    },
+    {
+      "id": "7513734250596",
+      "handle": "example_decor18",
+      "title": "Triple Wick Amber Glass Scented Candle",
+      "descriptionHtml": "Envelop your senses with the luxurious aroma of our Triple Wick Scented Candle. Crafted with a unique blend of essential oils, this candle comes in a chic amber-colored glass jar that adds a touch of elegance to any room. With three wicks for even burning, enjoy a long-lasting and harmonious fragrance experience.",
+      "priceRange": {
+        "maxVariantPrice": {
+          "amount": "680.0",
+          "currencyCode": "USD"
+        },
+        "minVariantPrice": {
+          "amount": "240.0",
+          "currencyCode": "USD"
+        }
+      },
+      "featuredImage": {
+        "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_decor18_42667872-3691-4d13-9efa-da6f579191cc.png?v=1712325760",
+        "altText": null,
+        "width": 1024,
+        "height": 1024
+      },
+      "minPrice": 240,
+      "variants": [
+        {
+          "id": "gid://shopify/ProductVariant/43285394817124",
+          "title": "White",
+          "quantityAvailable": 59,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "White"
+            }
+          ],
+          "price": {
+            "amount": "410.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285394849892",
+          "title": "Dark",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Dark"
+            }
+          ],
+          "price": {
+            "amount": "260.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285394882660",
+          "title": "Darker",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Darker"
+            }
+          ],
+          "price": {
+            "amount": "680.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285394915428",
+          "title": "Even Darker",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Even Darker"
+            }
+          ],
+          "price": {
+            "amount": "620.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285394948196",
+          "title": "The Darkest",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "The Darkest"
+            }
+          ],
+          "price": {
+            "amount": "240.0",
+            "currencyCode": "USD"
+          }
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_decor18_42667872-3691-4d13-9efa-da6f579191cc.png?v=1712325760",
+          "altText": " a black candle with a white stripe on it",
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_decor18gray1_af817c87-75fe-4f51-8795-77353dc50c86.png?v=1712325761",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_decor18gray2_b27ffd93-ecac-40fa-8c3b-069c322fbe59.png?v=1712325761",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_decor18gray3_c6d88cc3-4e96-430b-9eba-ccbb3c1f6ae6.png?v=1712325761",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_decor18gray4_07c44bf6-3957-44a5-94a8-b570a492731f.png?v=1712325761",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        }
+      ],
+      "collections": [
+        {
+          "handle": "home",
+          "title": "Home",
+          "descriptionHtml": "",
+          "updatedAt": "2024-04-05T14:02:23Z",
+          "id": "gid://shopify/Collection/287131631716",
+          "descriptionHtml": "",
+          "image": null
+        }
+      ]
+    },
+    {
+      "id": "7513734316132",
+      "handle": "example_electronics_4",
+      "title": "Sleek Portable Wireless Speaker",
+      "descriptionHtml": "Experience the fusion of sleek design and exceptional sound quality with this portable wireless speaker. Crafted for audiophiles, the speaker delivers rich, immersive audio and boasts a compact silhouette perfect for on-the-go lifestyles. With easy Bluetooth connectivity and long-lasting battery life, tune into your favorite tracks anywhere and everywhere.",
+      "priceRange": {
+        "maxVariantPrice": {
+          "amount": "840.0",
+          "currencyCode": "USD"
+        },
+        "minVariantPrice": {
+          "amount": "30.0",
+          "currencyCode": "USD"
+        }
+      },
+      "featuredImage": {
+        "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_electronics_4_409b75d8-a85e-4176-a3a1-eadf3becbc34.png?v=1712325768",
+        "altText": null,
+        "width": 1024,
+        "height": 1024
+      },
+      "minPrice": 30,
+      "variants": [
+        {
+          "id": "gid://shopify/ProductVariant/43285396226148",
+          "title": "White",
+          "quantityAvailable": 103,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "White"
+            }
+          ],
+          "price": {
+            "amount": "640.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285396258916",
+          "title": "Dark",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Dark"
+            }
+          ],
+          "price": {
+            "amount": "840.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285396291684",
+          "title": "Darker",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Darker"
+            }
+          ],
+          "price": {
+            "amount": "610.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285396324452",
+          "title": "Even Darker",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "Even Darker"
+            }
+          ],
+          "price": {
+            "amount": "290.0",
+            "currencyCode": "USD"
+          }
+        },
+        {
+          "id": "gid://shopify/ProductVariant/43285396357220",
+          "title": "The Darkest",
+          "quantityAvailable": 0,
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Color",
+              "value": "The Darkest"
+            }
+          ],
+          "price": {
+            "amount": "30.0",
+            "currencyCode": "USD"
+          }
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_electronics_4_409b75d8-a85e-4176-a3a1-eadf3becbc34.png?v=1712325768",
+          "altText": " a close up of a white wall mounted speaker",
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_electronics_4gray1_d926efff-11b3-4964-91b8-b701341a4440.png?v=1712325768",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_electronics_4gray2_d172ff28-99f5-46be-a485-2daf4a5dee73.png?v=1712325768",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_electronics_4gray3_82ca5f4a-4911-42c8-82af-daf32fe9d766.png?v=1712325768",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0640/0504/6372/files/example_electronics_4gray4_085eac34-0966-4c8b-a650-429d5529efad.png?v=1712325768",
+          "altText": null,
+          "width": 1024,
+          "height": 1024
+        }
+      ],
+      "collections": [
+        {
+          "handle": "home",
+          "title": "Home",
+          "descriptionHtml": "",
+          "updatedAt": "2024-04-05T14:02:23Z",
+          "id": "gid://shopify/Collection/287131631716",
+          "descriptionHtml": "",
+          "image": null
+        }
+      ]
+    }
+  ],
+  "offset": 0,
+  "limit": 2,
+  "total": 528
+}
