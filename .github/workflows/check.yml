@@ -8,10 +8,23 @@ on:
 
 jobs:
   build:
+    strategy:
+      matrix:
+        app: [shopify-meilisearch, shopify-algolia]
+        include:
+          - app: shopify-meilisearch
+            working-directory: ./starters/shopify-meilisearch
+          - app: shopify-algolia
+            working-directory: ./starters/shopify-algolia
+
     environment: production
-    name: Build and Test
+    name: Build and Test (${{ matrix.app }})
     timeout-minutes: 15
     runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.workflow }}-${{ matrix.app }}-${{ github.ref }}
+      cancel-in-progress: true
+
     env:
       SKIP_ENV_VALIDATION: true
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
@@ -35,7 +48,7 @@ jobs:
       - uses: actions/cache@v2
         with:
           path: "**/node_modules"
-          key: ${{ runner.os }}-check-modules-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-${{ matrix.app }}-modules-${{ hashFiles('**/yarn.lock') }}
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile --prefer-offline
@@ -43,8 +56,18 @@ jobs:
       - name: Licenses check
         run: npx --yes license-checker-rseidelsohn --production --excludePrivatePackages --onlyAllow "MPL-2.0;UNKNOWN;MIT;Apache;AAL;BSD;Artistic;CC0;ISC;ISCL;PostgreSQL License;Public Domain;Unlicense;UPL;W3C;WTFPL;Python;CC-;BlueOak"
 
-      - name: Build
-        run: yarn build
-
       - name: Test
         run: yarn test
+        working-directory: ${{ matrix.working-directory }}
+
+      - name: Lint
+        run: yarn lint
+        working-directory: ${{ matrix.working-directory }}
+
+      - name: Format
+        run: yarn format
+        working-directory: ${{ matrix.working-directory }}
+
+      - name: Build
+        run: yarn build
+        working-directory: ${{ matrix.working-directory }}

@@ -5,19 +5,6 @@ node_modules
 .pnp
 .pnp.js
 
-# testing
-coverage
-
-# next.js
-.next/
-out/
-build
-
-build/**
-dist/**
-**/dist/**
-.next/**
-
 # misc
 .DS_Store
 *.pem
@@ -33,9 +20,6 @@ yarn-error.log*
 .env.development.local
 .env.test.local
 .env.production.local
-/test-results/
-/playwright-report/
-/playwright/.cache/
 **/**/.env.*
 **/**/.env
 
@@ -45,9 +29,5 @@ yarn-error.log*
 
 .turbo
 
-.vitepress/cache/
-apps/docs/.vitepress/cache/
-apps/docs/.vitepress/config.mts.timestamp-*
-apps/docs/.vitepress/dist/
 .vercel
 .env*.local

@@ -11,14 +11,24 @@ on:
       - develop
   workflow_dispatch:
 
-defaults:
-  run:
-    # change this if your nextjs app does not live at the root of the repo
-    working-directory: ./apps/web/
-
 jobs:
   analyze:
+    strategy:
+      matrix:
+        app: [shopify-meilisearch, shopify-algolia]
+        include:
+          - app: shopify-meilisearch
+            working-directory: ./starters/shopify-meilisearch
+          - app: shopify-algolia
+            working-directory: ./starters/shopify-algolia
+
     environment: production
+    name: Analyze (${{ matrix.app }})
+    runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.workflow }}-${{ matrix.app }}-${{ github.ref }}
+      cancel-in-progress: true
+
     env:
       SKIP_ENV_VALIDATION: true
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
@@ -30,7 +40,7 @@ jobs:
       MEILISEARCH_HOST: ${{ secrets.MEILISEARCH_HOST }}
       SHOPIFY_APP_API_SECRET_KEY: ${{ secrets.SHOPIFY_APP_API_SECRET_KEY }}
       REPLICATE_API_KEY: ${{ secrets.REPLICATE_API_KEY }}
-    runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
       - run: echo "node_version=$(cat ../../.github/nodejs.version)" >> $GITHUB_ENV
@@ -42,7 +52,7 @@ jobs:
       - uses: actions/cache@v2
         with:
           path: "**/node_modules"
-          key: ${{ runner.os }}-bundle-modules-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-${{ matrix.app }}-bundle-modules-${{ hashFiles('**/yarn.lock') }}
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile --prefer-offline
@@ -51,28 +61,25 @@ jobs:
         uses: actions/cache@v3
         id: restore-build-cache
         env:
-          cache-name: cache-next-build
+          cache-name: cache-next-build-${{ matrix.app }}
         with:
-          path: .next/cache
-          # change this if you prefer a more strict cache
+          path: ${{ matrix.working-directory }}/.next/cache
           key: ${{ runner.os }}-build-${{ env.cache-name }}
 
       - name: Build next.js app
         env:
           SKIP_BUILD_PRODUCT_REDIRECTS: 1
-        # change this if your site requires a custom build command
-        run: cd ../../ && yarn build && cd -
+        run: cd ${{ matrix.working-directory }} && yarn build && cd -
 
-      # Here's the first place where next-bundle-analysis' own script is used
-      # This step pulls the raw bundle stats for the current bundle
       - name: Analyze bundle
+        working-directory: ${{ matrix.working-directory }}
         run: node report-bundle-size.js
 
       - name: Upload bundle
         uses: actions/upload-artifact@v3
         with:
-          name: bundle
-          path: .next/analyze/__bundle_analysis.json
+          name: bundle-${{ matrix.app }}
+          path: ${{ matrix.working-directory }}/.next/analyze/__bundle_analysis.json
 
       - name: Download base branch bundle stats
         uses: dawidd6/action-download-artifact@v2
@@ -80,35 +87,24 @@ jobs:
         with:
           workflow: nextjs_bundle_analysis.yml
           branch: ${{ github.event.pull_request.base.ref }}
-          path: .next/analyze/base
+          name: bundle-${{ matrix.app }}
+          path: ${{ matrix.working-directory }}/.next/analyze/base
 
-      # And here's the second place - this runs after we have both the current and
-      # base branch bundle stats, and will compare them to determine what changed.
-      # There are two configurable arguments that come from package.json:
-      #
-      # - budget: optional, set a budget (bytes) against which size changes are measured
-      #           it's set to 350kb here by default, as informed by the following piece:
-      #           https://infrequently.org/2021/03/the-performance-inequality-gap/
-      #
-      # - red-status-percentage: sets the percent size increase where you get a red
-      #                          status indicator, defaults to 20%
-      #
-      # Either of these arguments can be changed or removed by editing the `nextBundleAnalysis`
-      # entry in your package.json file.
       - name: Compare with base branch bundle
         if: success() && github.event.number
+        working-directory: ${{ matrix.working-directory }}
         run: ls -laR .next/analyze/base && npx -p nextjs-bundle-analysis compare
 
       - name: Get comment body
         id: get-comment-body
         if: success() && github.event.number
-        uses: actions/github-script@v6
-        with:
-          result-encoding: string
-          script: |
-            const fs = require('fs')
-            const comment = fs.readFileSync('.next/analyze/__bundle_analysis_comment.txt', 'utf8')
-            core.setOutput('body', comment)
+        working-directory: ${{ matrix.working-directory }}
+        run: |
+          body=$(cat .next/analyze/__bundle_analysis_comment.txt)
+          body="${body//'%'/'%25'}"
+          body="${body//$'\n'/'%0A'}"
+          body="${body//$'\r'/'%0D'}"
+          echo "::set-output name=body::$body"
 
       - name: Find Comment
         uses: peter-evans/find-comment@v2
@@ -116,20 +112,17 @@ jobs:
         id: fc
         with:
           issue-number: ${{ github.event.number }}
-          body-includes: "<!-- __NEXTJS_BUNDLE -->"
+          comment-author: "github-actions[bot]"
+          body-includes: "<!-- NEXTJS_BUNDLE_${{ matrix.app }} -->"
 
-      - name: Create Comment
+      - name: Create or update comment
         uses: peter-evans/create-or-update-comment@v3
-        if: success() && github.event.number && steps.fc.outputs.comment-id == 0
+        if: success() && github.event.number
         with:
           issue-number: ${{ github.event.number }}
-          body: ${{ steps.get-comment-body.outputs.body }}
-
-      - name: Update Comment
-        uses: peter-evans/create-or-update-comment@v3
-        if: success() && github.event.number && steps.fc.outputs.comment-id != 0
-        with:
-          issue-number: ${{ github.event.number }}
-          body: ${{ steps.get-comment-body.outputs.body }}
+          body: |
+            <!-- NEXTJS_BUNDLE_${{ matrix.app }} -->
+            # Next.js Bundle Analysis (${{ matrix.app }})
+            ${{ steps.get-comment-body.outputs.body }}
           comment-id: ${{ steps.fc.outputs.comment-id }}
           edit-mode: replace
