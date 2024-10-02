@@ -1,0 +1,13 @@
+{
+  "framework": "nextjs",
+  "crons": [
+    {
+      "path": "/api/reviews/sync",
+      "schedule": "30 2 * * *"
+    },
+    {
+      "path": "/api/reviews/ai-summary",
+      "schedule": "0 0 * * 1"
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "/example_smartwatch_2": {
+    "destination": "/product/example_smartwatch_2",
+    "permanent": true
+  }
+}
