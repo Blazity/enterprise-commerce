@@ -74,8 +74,8 @@
     "schema-dts": "^1.1.2",
     "sharp": "0.32.6",
     "sonner": "^1.4.41",
-    "zustand": "^4.5.2",
-    "zod": "^3.22.4"
+    "zod": "^3.22.4",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "5.0.2",

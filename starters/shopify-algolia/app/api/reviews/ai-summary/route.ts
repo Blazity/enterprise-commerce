@@ -47,18 +47,16 @@ export async function GET(req: Request) {
   }
 
   const [{ hits: allReviews = [] }, { hits: allProducts = [] }] = await Promise.all([
-    algolia.search<Review>({
+    algolia.getAllResults<Review>({
       indexName: env.ALGOLIA_REVIEWS_INDEX,
-      searchParams: {
-        hitsPerPage: 10000,
+      browseParams: {
         attributesToRetrieve: ["body", "title", "product_handle", "rating"],
         filters: "published:true AND hidden:false",
       },
     }),
-    algolia.search<CommerceProduct>({
+    algolia.getAllResults<CommerceProduct>({
       indexName: env.ALGOLIA_PRODUCTS_INDEX,
-      searchParams: {
-        hitsPerPage: 10000,
+      browseParams: {
         attributesToRetrieve: ["handle", "title", "id", "totalReviews"],
       },
     }),

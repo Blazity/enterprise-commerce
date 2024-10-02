@@ -24,12 +24,15 @@ export function RatingFacet({ id, title, distribution, isChecked, onCheckedChang
           <p className="text-[14px] text-neutral-500">No {title.toLowerCase()} found</p>
         ) : (
           <div className="grid gap-2">
-            {distributionsEntries.map(([value], index) => (
-              <Label key={value + index} className="flex items-center gap-2 font-normal">
-                <Checkbox name={value} checked={isChecked(value)} onCheckedChange={(checked) => onCheckedChange(!!checked, value)} />
-                <StarRating rating={parseInt(value)} /> {parseInt(value) !== 5 && `& up`}{" "}
-              </Label>
-            ))}
+            {distributionsEntries.map(
+              ([value, count], index) =>
+                +value >= 3 && (
+                  <Label key={value + index} className="flex items-center gap-2 font-normal">
+                    <Checkbox name={value} checked={isChecked(value)} onCheckedChange={(checked) => onCheckedChange(!!checked, value)} />
+                    <StarRating rating={parseInt(value)} /> {parseInt(value) !== 5 && `& up`} ({count})
+                  </Label>
+                )
+            )}
           </div>
         )}
       </AccordionContent>

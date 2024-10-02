@@ -5,7 +5,7 @@ import { getDemoCategories, getDemoProducts, isDemoMode } from "utils/demoUtils"
 import type { PlatformCollection } from "lib/shopify/types"
 import type { CommerceProduct } from "types"
 
-export const revalidate = 604800
+export const revalidate = 604800 // once a week
 export const runtime = "nodejs"
 
 const BASE_URL = env.LIVE_URL
@@ -80,12 +80,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   return [...staticRoutes, ...paginationRoutes, ...productRoutes, ...collectionsRoutes]
 }
 
-// Pull only 100 results for the case of the demo
 async function getResults<T extends Record<string, any>>(indexName: string) {
   const { hits } = await algolia.search<T>({
     indexName,
     searchParams: {
-      hitsPerPage: 100,
+      hitsPerPage: 50,
     },
   })
 

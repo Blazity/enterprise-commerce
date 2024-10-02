@@ -1,28 +1,31 @@
 import Link from "next/link"
 
 import { ReviewButton } from "./ReviewButton"
-import { ReviewCard, type ReviewCardProps } from "./ReviewCard"
+import { ReviewCard } from "./ReviewCard"
 import { Carousel, CarouselContent, CarouselNext, CarouselPrevious } from "components/Carousel/Carousel"
 import { RobotIcon } from "components/Icons/RobotIcon"
 import { isOptIn, notifyOptIn } from "utils/opt-in"
 import { StarIcon } from "components/Icons/StarIcon"
 import { cn } from "utils/cn"
+import { getProductReviews } from "app/actions/product.actions"
+import { removeOptionsFromUrl } from "utils/productOptionsUtils"
 
 type ReviewsSectionProps = {
   productId: string
   productHandle: string
-  reviews: ReviewCardProps[]
-  total: number
+  slug: string
   avgRating: number | undefined
   summary?: string
   className?: string
 }
-export const ReviewsSection = ({ productId, productHandle, reviews, total, summary, avgRating, className }: ReviewsSectionProps) => {
+export const ReviewsSection = async ({ productId, productHandle, summary, avgRating, className, slug }: ReviewsSectionProps) => {
   if (!isOptIn("reviews")) {
     notifyOptIn({ feature: "reviews", source: "components/ReviewsSection" })
 
     return null
   }
+
+  const { reviews, total } = await getProductReviews(removeOptionsFromUrl(slug), { limit: 16 })
 
   if (reviews?.length <= 0) {
     return (
@@ -70,9 +73,10 @@ export const ReviewsSection = ({ productId, productHandle, reviews, total, summa
               <CarouselPrevious className="relative" />
               <CarouselNext className="relative" />
             </div>
+
             <CarouselContent className="ml-0 gap-6">
-              {reviews.map(({ body, author, rating, created_at }) => (
-                <ReviewCard key={created_at} body={body} author={author} rating={rating} created_at={created_at} />
+              {reviews.map(({ body, reviewer: { name }, rating, created_at }) => (
+                <ReviewCard key={created_at} body={body} author={name} rating={rating} created_at={created_at} />
               ))}
             </CarouselContent>
           </Carousel>

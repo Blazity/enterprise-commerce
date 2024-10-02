@@ -16,7 +16,8 @@ $ yarn create commerce
 
 [See the live demo](https://blazity.com/r/commerce) or deploy it straight to Vercel:
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FBlazity%2Fenterprise-commerce%2Ftree%2Fmain&envDescription=Full%20explanation%20on%20how%20to%20obtain%20keys&envLink=https%3A%2F%2Fdocs.commerce.blazity.com%2Fsetup&demo-title=Your%20Commerce&demo-description=AI-FIRST%20NEXT.JS%20STOREFRONT%20FOR%20COMPOSABLE%20COMMERCE&demo-url=https%3A%2F%2Fblazity.com%2Fr%2Fcommerce&demo-image=https%3A%2F%2Fcommerce.blazity.com%2Fopengraph-image.jpg&root-directory=apps%2Fweb)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fblazity%2Fenterprise-commerce%2Ftree%2Fmain%2Fstarters%2Fshopify-algolia) - Shopify & Algolia starter
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fblazity%2Fenterprise-commerce%2Ftree%2Fmain%2Fstarters%2Fshopify-meilisearch) - Shopify & Meilsearch starter
 
 **Note:** To enable all features, ensure [required environment variables](https://docs.commerce.blazity.com/setup#manual) are set in your `.env.local`
 
@@ -50,9 +51,7 @@ $ yarn create commerce
 
 ## Architecture
 
-In Enterprise Commerce high-level architecture, Meilisearch serves as the primary source for all product data and potentially other types of data in the future. The system is designed to easily integrate AI personalization tools without needing to modify any frontend code. While we are integrated with Shopify by default, we are not tightly bound to it, and you can use any system that works with Meilisearch and can adapt data to our format.
-
-From a structural viewpoint, we use a monorepo (Turborepo) to manage packages, even though we currently have only one Next.js app. We chose this setup because it prepares us for future developments, which will include additional apps. This arrangement helps keep the packages well-separated and self-contained.
+In Enterprise Commerce high-level architecture, Search Engine serves as the primary source for all product data and potentially other types of data in the future. The system is designed to easily integrate AI personalization tools without needing to modify any frontend code. While we are integrated with Shopify by default, we are not tightly bound to it, you can use any commerce platform and adapt data to our format.
 
 <img width="1841" alt="architecture diagram" src="https://github.com/Blazity/enterprise-commerce/assets/28964599/c5d3a0b3-6c3e-47df-9c45-4ecb583f5a64">
 

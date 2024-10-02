@@ -2,18 +2,17 @@ import { algolia } from "clients/search"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "components/Carousel/Carousel"
 import { ProductCard } from "components/ProductCard/ProductCard"
 import { unstable_cache } from "next/cache"
-import { ComparisonOperators } from "lib/algolia/filterBuilder"
 import { getDemoProducts, isDemoMode } from "utils/demoUtils"
 import type { CommerceProduct } from "types"
 import { env } from "env.mjs"
 
 interface SimilarProductsSectionProps {
-  slug: string
   collectionHandle: string | undefined
+  objectID: string
 }
 
-export async function SimilarProductsSection({ slug, collectionHandle }: SimilarProductsSectionProps) {
-  const items = await getSimilarProducts(slug, collectionHandle)
+export async function SimilarProductsSection({ collectionHandle, objectID }: SimilarProductsSectionProps) {
+  const items = await getSimilarProducts(collectionHandle, objectID)
 
   return (
     <section className="my-10">
@@ -38,33 +37,35 @@ export async function SimilarProductsSection({ slug, collectionHandle }: Similar
 }
 
 const getSimilarProducts = unstable_cache(
-  async (handle: string, collection: string | undefined) => {
+  async (collection: string | undefined, objectID: string) => {
     const limit = 8
 
     if (isDemoMode()) return getDemoProducts().hits.slice(0, limit)
 
-    const similarSearchResults = await algolia.search<CommerceProduct>({
-      indexName: env.ALGOLIA_PRODUCTS_INDEX,
-      //@TODO REIMPLEMENT SORT AND AI SEARCH
-      searchParams: {
-        query: handle,
-        hitsPerPage: limit,
-      },
+    const { results } = await algolia.getRecommendations({
+      requests: [
+        {
+          indexName: env.ALGOLIA_PRODUCTS_INDEX,
+          objectID,
+          model: "looking-similar",
+          maxRecommendations: limit,
+          threshold: 60,
+        },
+      ],
     })
 
     let collectionSearchResults: { hits: CommerceProduct[] } = { hits: [] }
-    if (similarSearchResults.hits.length < limit) {
+    if (results[0].hits.length < limit) {
       collectionSearchResults = await algolia.search<CommerceProduct>({
         indexName: env.ALGOLIA_PRODUCTS_INDEX,
-        //@TODO REIMPLEMENT SORT
         searchParams: {
-          hitsPerPage: limit - similarSearchResults.hits.length,
-          filters: algolia.filterBuilder().where("collections.handle", collection!, ComparisonOperators.Equal).build(),
+          hitsPerPage: limit - results[0].hits.length,
+          filters: algolia.filterBuilder().where("collections.handle", collection!).build(),
         },
       })
     }
 
-    return [...similarSearchResults.hits, ...collectionSearchResults.hits]
+    return [...results[0].hits, ...collectionSearchResults.hits]
   },
   ["product-by-handle"],
   { revalidate: 3600 }

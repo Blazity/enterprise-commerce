@@ -46,8 +46,7 @@ const getNewestProducts = unstable_cache(
   async () => {
     if (isDemoMode()) return getDemoProducts().hits.slice(0, 8)
     const { hits } = await algolia.search<CommerceProduct>({
-      indexName: env.ALGOLIA_PRODUCTS_INDEX,
-      //@TODO REIMPLEMENT SORT
+      indexName: algolia.mapIndexToSort(env.ALGOLIA_PRODUCTS_INDEX, "updatedAtTimestamp:asc"),
       searchParams: {
         hitsPerPage: 8,
       },
