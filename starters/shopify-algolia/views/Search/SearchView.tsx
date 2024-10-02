@@ -15,6 +15,7 @@ import { CommerceProduct, SearchParamsType } from "types"
 import { HIERARCHICAL_SEPARATOR, HITS_PER_PAGE } from "constants/index"
 import { Controls } from "views/Listing/Controls"
 import { FacetsMobile } from "views/Listing/FacetsMobile"
+import { SortType } from "lib/algolia"
 
 interface SearchViewProps {
   searchParams: SearchParamsType
@@ -97,28 +98,28 @@ export async function SearchView({ searchParams, disabledFacets, collection }: S
 }
 
 const searchProducts = unstable_cache(
-  async (query: string, sortBy: string, page: number, filter: string) => {
+  async (query: string, sortBy: string, page: number, filters: string) => {
     if (isDemoMode()) return getDemoProducts()
+    const indexName = algolia.mapIndexToSort(env.ALGOLIA_PRODUCTS_INDEX, sortBy as SortType)
 
     try {
       // use a single http request to search for products and facets, utilize separate query for facet values that should be independent from the search query
       const res = await algolia?.multiSearch<CommerceProduct>({
         requests: [
           {
-            indexName: env.ALGOLIA_PRODUCTS_INDEX,
+            indexName,
             query,
             facets: ["hierarchicalCategories.lvl0", "hierarchicalCategories.lvl1", "hierarchicalCategories.lvl2"],
             hitsPerPage: HITS_PER_PAGE,
           },
-          //@TODO: Implement sort
           {
-            indexName: env.ALGOLIA_PRODUCTS_INDEX,
+            indexName,
             hitsPerPage: HITS_PER_PAGE,
             facets: ["vendor", "variants.availableForSale", "flatOptions.Color", "minPrice", "avgRating"].concat(
               !!env.SHOPIFY_HIERARCHICAL_NAV_HANDLE ? [`hierarchicalCategories.lvl0`, `hierarchicalCategories.lvl1`, `hierarchicalCategories.lvl2`] : []
             ),
-            filters: filter,
-            page,
+            filters,
+            page: page - 1,
             attributesToRetrieve: ["id", "handle", "title", "priceRange", "featuredImage", "minPrice", "variants", "images", "avgRating", "totalReviews", "vendor"],
           },
         ],
@@ -134,6 +135,7 @@ const searchProducts = unstable_cache(
 
       return { hits, totalPages, facetDistribution, totalHits, independentFacetDistribution }
     } catch (err) {
+      console.error(err)
       return { hits: [], totalPages: 0, facetDistribution: {}, totalHits: 0, independentFacetDistribution: {} }
     }
   },

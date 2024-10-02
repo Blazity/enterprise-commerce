@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation"
 import { Suspense } from "react"
-import { getProduct, getProductReviews } from "app/actions/product.actions"
+import { getProduct } from "app/actions/product.actions"
 import { Breadcrumbs } from "components/Breadcrumbs/Breadcrumbs"
 
 import { getCombination, getOptionsFromUrl, hasValidOption, removeOptionsFromUrl } from "utils/productOptionsUtils"
@@ -50,7 +50,7 @@ export async function generateStaticParams() {
 }
 
 export default async function Product({ params: { slug } }: ProductProps) {
-  const [product, { reviews, total: totalReviews }] = await Promise.all([getProduct(removeOptionsFromUrl(slug)), getProductReviews(removeOptionsFromUrl(slug), { limit: 16 })])
+  const product = await getProduct(removeOptionsFromUrl(slug))
 
   const { color } = getOptionsFromUrl(slug)
   const hasInvalidOptions = !hasValidOption(product?.variants, "color", color)
@@ -94,18 +94,9 @@ export default async function Product({ params: { slug } }: ProductProps) {
             <FaqSection />
           </RightSection>
         </div>
-        <Suspense>
-          <ReviewsSection
-            avgRating={product.avgRating}
-            productHandle={product.handle}
-            productId={product.id}
-            reviews={reviews?.map((review) => ({ ...review, author: review.reviewer.name })) || []}
-            total={totalReviews}
-            summary={product.reviewsSummary}
-          />
-        </Suspense>
+        <ReviewsSection avgRating={product.avgRating} productHandle={product.handle} productId={product.id} summary={product.reviewsSummary} slug={slug} />
         <Suspense fallback={<SimilarProductsSectionSkeleton />}>
-          <SimilarProductsSection collectionHandle={lastCollection?.handle} slug={slug} />
+          <SimilarProductsSection collectionHandle={lastCollection?.handle} objectID={product.objectID} />
         </Suspense>
       </main>
     </div>

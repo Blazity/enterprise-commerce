@@ -20,7 +20,6 @@ const getPriceRangedProducts = unstable_cache(
 
     const { hits } = await algolia.search<CommerceProduct>({
       indexName: env.ALGOLIA_PRODUCTS_INDEX,
-      //@TODO REIMPLEMENT SORT
       searchParams: {
         hitsPerPage: 8,
         filters: algolia.filterBuilder().where("minPrice", 50, ComparisonOperators.LessThanOrEqual).build(),

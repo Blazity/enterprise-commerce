@@ -1,5 +1,6 @@
+// For numeric attributes only
 export enum ComparisonOperators {
-  Equal = ":",
+  Equal = "=",
   NotEqual = "!=",
   GreaterThan = ">",
   GreaterThanOrEqual = ">=",
@@ -19,11 +20,11 @@ type Value = string | number | boolean | (string | number | boolean)[]
 export class FilterBuilder {
   private expression: string[] = []
 
-  where(attribute: string, value: Value, operator: ComparisonOperators = ComparisonOperators.Equal): FilterBuilder {
+  where(attribute: string, value: Value, operator?: ComparisonOperators): FilterBuilder {
     if (Array.isArray(value)) {
       this.in(attribute, value)
     } else {
-      this.expression.push(`${attribute}${operator}${this.formatValue(value)}`)
+      this.expression.push(`${attribute}${operator || ":"}${this.formatValue(value)}`)
     }
     return this
   }
@@ -67,7 +68,7 @@ export class FilterBuilder {
     const subBuilder = new FilterBuilder()
     fn(subBuilder)
     const subExpression = subBuilder.build()
-    this.expression.push(`(${subExpression})`)
+    this.expression.push(`${subExpression}`)
     return this
   }
 

@@ -39,7 +39,7 @@ export function isDemoMode(): boolean {
     isDemoValue(process.env.SHOPIFY_APP_API_SECRET_KEY) ||
     isDemoValue(process.env.SHOPIFY_STORE_DOMAIN) ||
     isDemoValue(process.env.ALGOLIA_APP_ID) ||
-    isDemoValue(process.env.ALGOLIA_API_KEY) ||
+    isDemoValue(process.env.ALGOLIA_WRITE_API_KEY) ||
     isDemoValue(process.env.ALGOLIA_CATEGORIES_INDEX) ||
     isDemoValue(process.env.ALGOLIA_PRODUCTS_INDEX) ||
     !process.env.LIVE_URL ||

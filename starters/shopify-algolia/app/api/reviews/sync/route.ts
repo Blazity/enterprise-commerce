@@ -33,17 +33,15 @@ export async function GET(req: Request) {
 
   const [allReviews = [], { hits: allProducts = [] }, { hits: allIndexReviews = [] }] = await Promise.all([
     reviewsClient.getAllProductReviews(),
-    algolia.search<CommerceProduct>({
+    algolia.getAllResults<CommerceProduct>({
       indexName: env.ALGOLIA_PRODUCTS_INDEX,
-      searchParams: {
-        hitsPerPage: 10000,
+      browseParams: {
         attributesToRetrieve: ["handle", "totalReviews", "avgRating", "id"],
       },
     }),
-    algolia.search<Review>({
+    algolia.getAllResults<Review>({
       indexName: env.ALGOLIA_REVIEWS_INDEX,
-      searchParams: {
-        hitsPerPage: 10000,
+      browseParams: {
         attributesToRetrieve: ["updated_at", "id"],
       },
     }),
@@ -67,7 +65,9 @@ export async function GET(req: Request) {
     .filter(Boolean)
 
   if (!reviewsDelta.length && !productTotalReviewsDelta.length) {
-    return new Response(JSON.stringify({ message: "Nothing to sync" }), { status: 200 })
+    return new Response(JSON.stringify({ message: "Nothing to sync" }), {
+      status: 200,
+    })
   }
 
   !!reviewsDelta.length &&
@@ -87,5 +87,7 @@ export async function GET(req: Request) {
       console.log("API/sync:Products synced", productTotalReviewsDelta.length)
     })()
 
-  return new Response(JSON.stringify({ message: "All synced" }), { status: 200 })
+  return new Response(JSON.stringify({ message: "All synced" }), {
+    status: 200,
+  })
 }

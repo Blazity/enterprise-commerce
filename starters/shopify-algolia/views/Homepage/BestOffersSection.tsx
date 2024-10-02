@@ -19,7 +19,6 @@ const getBestOffers = unstable_cache(
 
     const { hits } = await algolia.search<CommerceProduct>({
       indexName: env.ALGOLIA_PRODUCTS_INDEX,
-      //@TODO REIMPLEMENT SORT
       searchParams: {
         hitsPerPage: 8,
       },
