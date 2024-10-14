@@ -1,5 +1,4 @@
 name: Check
-working-directory
 on:
   push:
     branches: ["main", "master", "develop", "preprod"]
@@ -48,10 +47,11 @@ jobs:
       - uses: actions/cache@v2
         with:
           path: "**/node_modules"
-          key: ${{ runner.os }}-${{ matrix.working-directory }}-modules-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-${{ matrix.app }}-modules-${{ hashFiles('**/yarn.lock') }}
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: yarn install --frozen-lockfile --prefer-offline
+        working-directory: ${{ matrix.working-directory }}
 
       - name: Licenses check
         run: npx --yes license-checker-rseidelsohn --production --excludePrivatePackages --onlyAllow "MPL-2.0;UNKNOWN;MIT;Apache;AAL;BSD;Artistic;CC0;ISC;ISCL;PostgreSQL License;Public Domain;Unlicense;UPL;W3C;WTFPL;Python;CC-;BlueOak"
