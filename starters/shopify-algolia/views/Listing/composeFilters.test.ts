@@ -7,35 +7,35 @@ describe("composeFilters", () => {
     const parsedSearchParams = { categories: ["electronics"], vendors: [], colors: [], sizes: [], minPrice: null, maxPrice: null }
     const filter = composeFilters(new FilterBuilder(), parsedSearchParams, HIERARCHICAL_SEPARATOR)
 
-    expect(filter.build()).toStrictEqual(`(hierarchicalCategories.lvl0 IN ["electronics"])`)
+    expect(filter.build()).toStrictEqual(`OR (hierarchicalCategories.lvl0:"electronics")`)
   })
 
   test("should add a vendor filter when vendors are present", () => {
     const parsedSearchParams = { categories: [], vendors: ["Apple"], colors: [], sizes: [], minPrice: null, maxPrice: null }
     const filter = composeFilters(new FilterBuilder(), parsedSearchParams, HIERARCHICAL_SEPARATOR)
 
-    expect(filter.build()).toStrictEqual(`(vendor IN ["Apple"])`)
+    expect(filter.build()).toStrictEqual(`AND (vendor:"Apple")`)
   })
 
   test("should add a color filter when colors are present", () => {
     const parsedSearchParams = { categories: [], vendors: [], colors: ["Black"], sizes: [], minPrice: null, maxPrice: null }
     const filter = composeFilters(new FilterBuilder(), parsedSearchParams, HIERARCHICAL_SEPARATOR)
 
-    expect(filter.build()).toStrictEqual(`(flatOptions.Color IN ["Black"])`)
+    expect(filter.build()).toStrictEqual(`AND (flatOptions.Color:"Black")`)
   })
 
   test("should add a minPrice filter when minPrice is specified", () => {
     const parsedSearchParams = { categories: [], vendors: [], colors: [], sizes: [], minPrice: 100, maxPrice: null }
     const filter = composeFilters(new FilterBuilder(), parsedSearchParams, HIERARCHICAL_SEPARATOR)
 
-    expect(filter.build()).toStrictEqual(`minPrice >= 100`)
+    expect(filter.build()).toStrictEqual(`AND minPrice>=100`)
   })
 
   test("should add a maxPrice filter when maxPrice is specified", () => {
     const parsedSearchParams = { categories: [], vendors: [], colors: [], sizes: [], minPrice: null, maxPrice: 500 }
     const filter = composeFilters(new FilterBuilder(), parsedSearchParams, HIERARCHICAL_SEPARATOR)
 
-    expect(filter.build()).toStrictEqual(`minPrice <= 500`)
+    expect(filter.build()).toStrictEqual(`AND minPrice<=500`)
   })
 
   test("should add all filters when all conditions are met", () => {
@@ -51,9 +51,7 @@ describe("composeFilters", () => {
     const filter = composeFilters(new FilterBuilder(), parsedSearchParams, HIERARCHICAL_SEPARATOR)
     const builtFilter = filter.build()
 
-    expect(builtFilter).toStrictEqual(
-      '(hierarchicalCategories.lvl0 IN ["electronics"]) AND (vendor IN ["Apple"]) AND (flatOptions.Color IN ["Black"]) AND minPrice >= 100 AND minPrice <= 500'
-    )
+    expect(builtFilter).toStrictEqual('OR (hierarchicalCategories.lvl0:"electronics") AND (vendor:"Apple") AND (flatOptions.Color:"Black") AND minPrice>=100 AND minPrice<=500')
   })
 
   test("should support hierarchical categories", () => {
@@ -70,7 +68,7 @@ describe("composeFilters", () => {
     const builtFilter = filter.build()
 
     expect(builtFilter).toStrictEqual(
-      '(hierarchicalCategories.lvl1 IN ["electronics > cameras"]) OR (hierarchicalCategories.lvl0 IN ["beauty"]) OR (hierarchicalCategories.lvl2 IN ["fashion > men > shoes"])'
+      'OR (hierarchicalCategories.lvl1:"electronics > cameras") OR (hierarchicalCategories.lvl0:"beauty") OR (hierarchicalCategories.lvl2:"fashion > men > shoes")'
     )
   })
 })
