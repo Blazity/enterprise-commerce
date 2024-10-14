@@ -1,7 +1,6 @@
 import { unstable_cache } from "next/cache"
 import { draftMode } from "next/headers"
 import { notFound } from "next/navigation"
-import { Suspense } from "react"
 import { storefrontClient } from "clients/storefrontClient"
 import type { CommerceProduct } from "types"
 
@@ -10,8 +9,6 @@ import { Breadcrumbs } from "components/Breadcrumbs/Breadcrumbs"
 import type { PlatformProduct } from "lib/shopify/types"
 import { getCombination, getOptionsFromUrl, hasValidOption, removeOptionsFromUrl } from "utils/productOptionsUtils"
 import { BackButton } from "views/Product/BackButton"
-import { SimilarProductsSection } from "views/Product/SimilarProductsSection"
-import { SimilarProductsSectionSkeleton } from "views/Product/SimilarProductsSectionSkeleton"
 import { VariantsSection } from "views/Product/VariantsSection"
 import { ProductTitle } from "views/Product/ProductTitle"
 import { CurrencyType, mapCurrencyToSign } from "utils/mapCurrencyToSign"
@@ -52,7 +49,6 @@ async function ProductView({ slug }: { slug: string }) {
   }
 
   const combination = getCombination(product as CommerceProduct, color)
-  const lastCollection = product?.collections?.findLast(Boolean)
   const hasOnlyOneVariant = product.variants.length <= 1
 
   return (
@@ -79,14 +75,11 @@ async function ProductView({ slug }: { slug: string }) {
             />
             {!hasOnlyOneVariant && <VariantsSection variants={product.variants} handle={product.handle} combination={combination} />}
             <p>{product.description}</p>
-            <AddToCartButton className="mt-4" product={product} combination={combination} />
+            <AddToCartButton className="mt-4" product={{ ...product, objectID: "123" }} combination={combination} />
             <FavoriteMarker handle={product.handle} />
             <FaqSection />
           </RightSection>
         </div>
-        <Suspense fallback={<SimilarProductsSectionSkeleton />}>
-          <SimilarProductsSection collectionHandle={lastCollection?.handle} slug={slug} />
-        </Suspense>
       </main>
     </div>
   )

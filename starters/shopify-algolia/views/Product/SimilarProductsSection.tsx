@@ -65,7 +65,7 @@ const getSimilarProducts = unstable_cache(
       })
     }
 
-    return [...results[0].hits, ...collectionSearchResults.hits]
+    return [...(results[0].hits as unknown as CommerceProduct[]), ...collectionSearchResults.hits]
   },
   ["product-by-handle"],
   { revalidate: 3600 }
