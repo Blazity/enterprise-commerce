@@ -1,0 +1,22 @@
+.next/
+out/
+build
+
+build/**
+dist/**
+**/dist/**
+.next/**
+
+
+/.npm-only-allow
+
+storybook-static/
+playwright-report/
+playwright/.cache/
+test-results/
+
+graph.svg
+
+# testing
+coverage
+.vercel
