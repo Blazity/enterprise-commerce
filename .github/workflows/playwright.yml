@@ -54,7 +54,7 @@ jobs:
           key: ${{ runner.os }}-${{ matrix.app }}-playwright-modules-${{ hashFiles('**/yarn.lock') }}
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile --prefer-offline
+        run: yarn install --frozen-lockfile
 
       - name: Install Playwright Browsers
         run: yarn playwright install

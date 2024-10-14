@@ -55,7 +55,7 @@ jobs:
           key: ${{ runner.os }}-${{ matrix.app }}-bundle-modules-${{ hashFiles('**/yarn.lock') }}
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile --prefer-offline
+        run: yarn install --frozen-lockfile
 
       - name: Restore next build
         uses: actions/cache@v3
