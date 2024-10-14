@@ -58,7 +58,8 @@ jobs:
         working-directory: ${{ matrix.working-directory }}
 
       - name: Install Playwright Browsers
-        run: yarn playwright install
+        run: yarn playwright install --with-deps
+        working-directory: ${{ matrix.working-directory }}
 
       - name: Run Playwright tests
         run: yarn e2e
