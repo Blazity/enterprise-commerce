@@ -17,6 +17,7 @@ $ yarn create commerce
 [See the live demo](https://blazity.com/r/commerce) or deploy it straight to Vercel:
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fblazity%2Fenterprise-commerce%2Ftree%2Fmain%2Fstarters%2Fshopify-algolia) - Shopify & Algolia starter
+
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fblazity%2Fenterprise-commerce%2Ftree%2Fmain%2Fstarters%2Fshopify-meilisearch) - Shopify & Meilsearch starter
 
 **Note:** To enable all features, ensure [required environment variables](https://docs.commerce.blazity.com/setup#manual) are set in your `.env.local`
