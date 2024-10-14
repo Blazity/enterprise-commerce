@@ -1,5 +1,5 @@
 name: Check
-
+working-directory
 on:
   push:
     branches: ["main", "master", "develop", "preprod"]
@@ -48,7 +48,7 @@ jobs:
       - uses: actions/cache@v2
         with:
           path: "**/node_modules"
-          key: ${{ runner.os }}-${{ matrix.app }}-modules-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-${{ matrix.working-directory }}-modules-${{ hashFiles('**/yarn.lock') }}
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile

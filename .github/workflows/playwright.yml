@@ -51,7 +51,7 @@ jobs:
       - uses: actions/cache@v2
         with:
           path: "**/node_modules"
-          key: ${{ runner.os }}-${{ matrix.app }}-playwright-modules-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-${{ matrix.working-directory }}-playwright-modules-${{ hashFiles('**/yarn.lock') }}
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
