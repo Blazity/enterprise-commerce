@@ -16,7 +16,7 @@ jobs:
           - app: shopify-algolia
             working-directory: ./starters/shopify-algolia
 
-    environment: production
+    environment: Production
     name: Build and Test (${{ matrix.app }})
     timeout-minutes: 15
     runs-on: ubuntu-latest

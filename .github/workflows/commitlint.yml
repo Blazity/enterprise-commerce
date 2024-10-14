@@ -3,7 +3,7 @@ on: [push, pull_request]
 
 jobs:
   commitlint:
-    environment: production
+    environment: Production
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

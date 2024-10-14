@@ -22,7 +22,7 @@ jobs:
           - app: shopify-algolia
             working-directory: ./starters/shopify-algolia
 
-    environment: production
+    environment: Production
     name: Analyze (${{ matrix.app }})
     runs-on: ubuntu-latest
     concurrency:
