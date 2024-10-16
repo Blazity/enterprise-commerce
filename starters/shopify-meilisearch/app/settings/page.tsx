@@ -1,4 +1,4 @@
-import { SettingsView } from "views/Settings/SettingsView"
+import { SettingsView } from "views/settings/settings-view"
 
 export default function Settings() {
   return <SettingsView />

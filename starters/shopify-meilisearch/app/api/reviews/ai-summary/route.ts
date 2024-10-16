@@ -8,7 +8,7 @@ import { env } from "env.mjs"
 import { authenticate } from "utils/authenticate-api-route"
 import { isOptIn, notifyOptIn } from "utils/opt-in"
 import { unstable_noStore } from "next/cache"
-import { isDemoMode } from "utils/demoUtils"
+import { isDemoMode } from "utils/demo-utils"
 
 const summarySchema = z.object({
   products: z.array(

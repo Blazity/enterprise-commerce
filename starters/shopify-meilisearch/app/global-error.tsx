@@ -1,6 +1,6 @@
 "use client"
 
-import { Button } from "components/Button/Button"
+import { Button } from "components/ui/button-old"
 
 export default function GlobalError({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
   return (

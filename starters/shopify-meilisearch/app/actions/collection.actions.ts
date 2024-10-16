@@ -2,8 +2,8 @@
 
 import { unstable_cache } from "next/cache"
 import { meilisearch } from "clients/search"
-import { ComparisonOperators, FilterBuilder } from "lib/meilisearch/filterBuilder"
-import { getDemoSingleCategory, isDemoMode } from "utils/demoUtils"
+import { ComparisonOperators, FilterBuilder } from "lib/meilisearch/filter-builder"
+import { getDemoSingleCategory, isDemoMode } from "utils/demo-utils"
 import type { PlatformCollection } from "lib/shopify/types"
 import { env } from "env.mjs"
 
