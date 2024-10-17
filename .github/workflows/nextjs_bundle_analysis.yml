@@ -89,12 +89,18 @@ jobs:
           workflow: nextjs_bundle_analysis.yml
           branch: ${{ github.event.pull_request.base.ref }}
           name: bundle-${{ matrix.app }}
-          path: ${{ matrix.working-directory }}/.next/analyze/base
+          path: ${{ matrix.working-directory }}/.next/analyze/base/bundle
 
       - name: Compare with base branch bundle
         if: success() && github.event.number
         working-directory: ${{ matrix.working-directory }}
-        run: ls -laR .next/analyze/base && npx -p nextjs-bundle-analysis compare
+        run: |
+          if [ -f .next/analyze/base/bundle/__bundle_analysis.json ]; then
+            npx -p nextjs-bundle-analysis compare
+          else
+            echo "Base bundle analysis file not found. Skipping comparison."
+            exit 0
+          fi
 
       - name: Get comment body
         id: get-comment-body

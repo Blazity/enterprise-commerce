@@ -6,8 +6,8 @@ import { env } from "env.mjs"
 import { meilisearch } from "clients/search"
 import type { Review } from "lib/reviews/types"
 
-import { ComparisonOperators, FilterBuilder } from "lib/meilisearch/filterBuilder"
-import { getDemoProductReviews, getDemoSingleProduct, isDemoMode } from "utils/demoUtils"
+import { ComparisonOperators, FilterBuilder } from "lib/meilisearch/filter-builder"
+import { getDemoProductReviews, getDemoSingleProduct, isDemoMode } from "utils/demo-utils"
 import type { CommerceProduct } from "types"
 import { notifyOptIn } from "utils/opt-in"
 

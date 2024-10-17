@@ -4,21 +4,21 @@ import nextDynamic from "next/dynamic"
 import Script from "next/script"
 import { Suspense } from "react"
 import { Toaster } from "sonner"
-import { CallToAction } from "components/CallToAction/CallToAction"
-import { Footer } from "components/Footer/Footer"
-import { Modals } from "components/Modals/Modals"
-import { mobileInlineScript } from "components/NavigationBar/mobileInlineScript"
-import { NavigationBar } from "components/NavigationBar/NavigationBar"
-import { NavItem } from "components/NavigationBar/types"
-import { FlagValues } from "views/FlagValues"
-import { ThirdParties } from "views/ThirdParties"
+import { FlagValues } from "views/flag-values"
+import { ThirdParties } from "views/third-parties"
 import { env } from "env.mjs"
 import { Metadata } from "next"
-import { GithubBadge } from "views/GithubBadge"
-import { DemoModeAlert } from "views/DemoModeAlert"
-import { CartView } from "views/Cart/CartView"
+import { GithubBadge } from "views/github-badge"
+import { DemoModeAlert } from "views/demo-mode-alert"
+import { CartView } from "views/cart/cart-view"
+import type { NavItem } from "components/navigation-bar/types"
+import { NavigationBar } from "components/navigation-bar/navigation-bar"
+import { mobileInlineScript } from "components/navigation-bar/mobile-inline-script"
+import { CallToAction } from "components/call-to-action"
+import { Footer } from "components/footer"
+import { Modals } from "components/modals/modals"
 
-const DraftToolbar = nextDynamic(() => import("views/DraftToolbar"), { ssr: false })
+const DraftToolbar = nextDynamic(() => import("views/draft-toolbar"), { ssr: false })
 
 export const revalidate = 86400
 
