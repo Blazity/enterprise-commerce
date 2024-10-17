@@ -33,24 +33,24 @@ export const ProductCard = ({ variants, handle, title, featuredImage, minPrice, 
         <h3 className="line-clamp-2 text-lg font-semibold transition-colors">{title.split(" ").slice(1).join(" ")}</h3>
         <div className="mt-auto flex flex-col gap-1">
           {!!vendor && <p className="text-sm text-gray-500">{vendor}</p>}
-          <div className="flex gap-1 items-center mt-1">
-
-          {!!avgRating && !!totalReviews && (<>
-            <div className="flex items-center space-x-1">
-              <StarIcon className="size-4 fill-gray-400 stroke-gray-500" />
-              <span className="text-sm">{avgRating.toFixed(2)}</span>
-              <span className="text-xs">
-                ({totalReviews} review{totalReviews !== 1 && "s"})
-              </span>
-            </div>
-            •
-          </>
-          )}
-          {noOfVariants > 0 && (
-            <p className="text-sm text-gray-500">
-              {noOfVariants} variant{noOfVariants > 1 ? "s" : ""}
-            </p>
-          )}
+          <div className="mt-1 flex items-center gap-1">
+            {!!avgRating && !!totalReviews && (
+              <>
+                <div className="flex items-center space-x-1">
+                  <StarIcon className="size-4 fill-gray-400 stroke-gray-500" />
+                  <span className="text-sm">{avgRating.toFixed(2)}</span>
+                  <span className="text-xs">
+                    ({totalReviews} review{totalReviews !== 1 && "s"})
+                  </span>
+                </div>
+                •
+              </>
+            )}
+            {noOfVariants > 0 && (
+              <p className="text-sm text-gray-500">
+                {noOfVariants} variant{noOfVariants > 1 ? "s" : ""}
+              </p>
+            )}
           </div>
           {!!variantPrice && <span>From {mapCurrencyToSign((variantPrice.currencyCode as CurrencyType) || "USD") + minPrice.toFixed(2)}</span>}
         </div>
