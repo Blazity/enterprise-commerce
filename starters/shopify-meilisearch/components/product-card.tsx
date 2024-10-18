@@ -33,7 +33,7 @@ export const ProductCard = ({ variants, handle, title, featuredImage, minPrice, 
         <h3 className="line-clamp-2 text-lg font-semibold transition-colors">{title.split(" ").slice(1).join(" ")}</h3>
         <div className="flex flex-col gap-1">
           {!!vendor && <p className="text-sm text-gray-500">{vendor}</p>}
-          <div className="mt-1 flex items-center gap-1 flex-wrap">
+          <div className="mt-1 flex flex-wrap items-center gap-1">
             {!!avgRating && !!totalReviews && (
               <>
                 <div className="flex items-center space-x-1">
