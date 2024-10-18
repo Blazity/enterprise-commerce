@@ -18,7 +18,7 @@ export const ProductCard = ({ variants, handle, title, featuredImage, minPrice, 
   const variantPrice = variants?.find(Boolean)?.price
 
   return (
-    <Link className={cn("group flex h-full w-full flex-col overflow-hidden", className)} aria-label={linkAria} href={href} prefetch={prefetch}>
+    <Link className={cn("group flex h-full w-full flex-col overflow-hidden transition-all hover:shadow-md", className)} aria-label={linkAria} href={href} prefetch={prefetch}>
       <div className="relative aspect-square overflow-hidden">
         <Image
           priority={priority}
@@ -28,7 +28,7 @@ export const ProductCard = ({ variants, handle, title, featuredImage, minPrice, 
           fill
         />
       </div>
-      <div className="flex shrink-0 grow flex-col py-4">
+      <div className="flex shrink-0 grow flex-col gap-2 p-4">
         {/* remove first word from the title as it includes vendor (this just needs feed update and then can be removed) */}
         <h3 className="line-clamp-2 text-lg font-semibold transition-colors">{title.split(" ").slice(1).join(" ")}</h3>
         <div className="flex flex-col gap-1">
