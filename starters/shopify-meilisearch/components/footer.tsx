@@ -6,18 +6,18 @@ export function Footer() {
   return (
     <footer className="text-muted-foreground border-t bg-white">
       <div className="mx-auto max-w-container-md px-6 py-12">
-        <div className="grid gap-8 md:grid-cols-2">
+        <div className="grid gap-8 sm:grid-cols-2">
           <div className="space-y-4">
             <h3 className="text-primary text-lg font-semibold">Newsletter</h3>
             <p>Subscribe to receive updates, access to exclusive deals, and more.</p>
-            <div className="max-w-md space-y-2">
+            <div className="space-y-2 sm:max-w-md">
               <Input type="email" placeholder="Enter your email" aria-label="Email for newsletter" />
               <Button type="submit" className="w-full">
                 Subscribe
               </Button>
             </div>
           </div>
-          <div className="flex justify-end gap-24">
+          <div className="flex justify-center gap-24 sm:justify-end">
             <div className="space-y-4">
               <h3 className="text-primary text-lg font-semibold">Shop</h3>
               <ul className="space-y-2">
