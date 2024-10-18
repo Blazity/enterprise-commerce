@@ -17,7 +17,7 @@ export function ProductAddedAlert({ className }: { className?: string }) {
   if (!product || !combination) return null
 
   return (
-    <Alert className={cn("absolute right-0 top-[5.5rem] z-50 w-full min-w-[220px] border border-input bg-white transition-all md:top-[4.5rem] md:min-w-[350px]", className)}>
+    <Alert className={cn("border-input absolute right-0 top-[5.5rem] z-50 w-full min-w-[220px] border bg-white transition-all md:top-[4.5rem] md:min-w-[350px]", className)}>
       <AlertTitle>Product has been added to the cart!</AlertTitle>
       <AlertDescription className="mt-6 flex flex-col">
         <div className="mb-6 flex items-center justify-between gap-2">
