@@ -1,6 +1,6 @@
 import type { PlatformProduct } from "lib/shopify/types"
 import { algolia } from "clients/search"
-import { storefrontClient } from "clients/storefrontClient"
+import { storefrontClient } from "clients/storefront"
 import { env } from "env.mjs"
 import { compareHmac } from "utils/compare-hmac"
 import { enrichProduct } from "utils/enrich-product"

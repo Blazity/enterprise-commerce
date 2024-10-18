@@ -1,7 +1,7 @@
 "use client"
 
-import { Button } from "components/Button/Button"
-import { isDemoMode } from "utils/demoUtils"
+import { Button } from "components/ui/button-old"
+import { isDemoMode } from "utils/demo-utils"
 
 export default function Error({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
   return (

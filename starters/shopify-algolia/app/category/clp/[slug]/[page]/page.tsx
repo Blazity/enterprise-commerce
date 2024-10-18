@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { CategoryView } from "views/Category/CategoryView"
+import { CategoryView } from "views/category/category-view"
 
 export const revalidate = 86400
 export const dynamic = "force-static"

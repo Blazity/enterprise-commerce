@@ -1,12 +1,12 @@
 import { notFound, redirect } from "next/navigation"
 import { getProduct, getProductReviews } from "app/actions/product.actions"
-import { Breadcrumbs } from "components/Breadcrumbs/Breadcrumbs"
+import { Breadcrumbs } from "components/breadcrumbs"
 
-import { BackButton } from "views/Product/BackButton"
-import { StarRating } from "views/Product/StarRating"
-import { PaginationSection } from "views/Listing/PaginationSection"
+import { BackButton } from "views/product/back-button"
+import { StarRating } from "views/product/star-rating"
+import { PaginationSection } from "views/listing/pagination-section"
 
-import { removeOptionsFromUrl } from "utils/productOptionsUtils"
+import { removeOptionsFromUrl } from "utils/product-options-utils"
 import type { CommerceProduct } from "types"
 
 export { generateMetadata } from "./metadata"

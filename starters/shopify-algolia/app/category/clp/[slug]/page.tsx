@@ -2,8 +2,8 @@ import { PlatformCollection } from "lib/shopify/types"
 import { algolia } from "clients/search"
 import { env } from "env.mjs"
 import type { Metadata } from "next"
-import { isDemoMode } from "utils/demoUtils"
-import { CategoryView } from "views/Category/CategoryView"
+import { isDemoMode } from "utils/demo-utils"
+import { CategoryView } from "views/category/category-view"
 
 export const revalidate = 86400
 export const dynamic = "force-static"
