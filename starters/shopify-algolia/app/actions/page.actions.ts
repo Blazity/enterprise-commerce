@@ -1,6 +1,6 @@
 "use server"
 
-import { storefrontClient } from "clients/storefrontClient"
+import { storefrontClient } from "clients/storefront"
 import { unstable_cache } from "next/cache"
 
 export const getPage = unstable_cache(async (handle: string) => await storefrontClient.getPage(handle), ["page"], { revalidate: 3600 })

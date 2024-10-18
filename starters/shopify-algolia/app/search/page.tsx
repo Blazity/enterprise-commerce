@@ -1,8 +1,8 @@
 import type { Metadata } from "next"
 import { Suspense } from "react"
 import type { SearchParamsType } from "types"
-import { PageSkeleton } from "views/Category/PageSkeleton"
-import { SearchView } from "views/Search/SearchView"
+import { PageSkeleton } from "views/category/page-skeleton"
+import { SearchView } from "views/search/search-view"
 
 export const metadata: Metadata = {
   title: "Search | Enterprise Commerce",

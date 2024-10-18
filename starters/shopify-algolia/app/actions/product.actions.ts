@@ -6,7 +6,7 @@ import { env } from "env.mjs"
 import { algolia } from "clients/search"
 import type { Review } from "lib/reviews/types"
 
-import { getDemoProductReviews, getDemoSingleProduct, isDemoMode } from "utils/demoUtils"
+import { getDemoProductReviews, getDemoSingleProduct, isDemoMode } from "utils/demo-utils"
 import type { CommerceProduct } from "types"
 import { notifyOptIn } from "utils/opt-in"
 

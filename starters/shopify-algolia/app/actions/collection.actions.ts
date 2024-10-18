@@ -2,7 +2,7 @@
 
 import { unstable_cache } from "next/cache"
 import { algolia } from "clients/search"
-import { getDemoSingleCategory, isDemoMode } from "utils/demoUtils"
+import { getDemoSingleCategory, isDemoMode } from "utils/demo-utils"
 import type { PlatformCollection } from "lib/shopify/types"
 import { env } from "env.mjs"
 

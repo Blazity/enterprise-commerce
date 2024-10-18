@@ -1,11 +1,11 @@
 import { Suspense } from "react"
 import { BUCKETS } from "constants/index"
-import { BestOffersSection } from "views/Homepage/BestOffersSection"
-import { CarouselSectionSkeleton } from "views/Homepage/CarouselSection"
-import { CategoriesSection, CategoriesSectionSkeleton } from "views/Homepage/CategoriesSection"
-import { EverythingUnderSection } from "views/Homepage/EverythingUnderSection"
-import { AnnouncementBar } from "components/AnnouncementBar/AnnouncementBar"
-import { HeroSection } from "views/Homepage/HeroSection"
+import { BestOffersSection } from "views/homepage/best-offers-skeleton"
+import { CarouselSectionSkeleton } from "views/homepage/carousel-section"
+import { CategoriesSection, CategoriesSectionSkeleton } from "views/homepage/categories-section"
+import { EverythingUnderSection } from "views/homepage/everything-under-section"
+import { AnnouncementBar } from "components/announcement-bar"
+import { HeroSection } from "views/homepage/hero-section"
 
 export const revalidate = 86400
 
