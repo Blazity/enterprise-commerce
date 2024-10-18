@@ -39,10 +39,10 @@ const ACCORDIONS = {
 
 export function FaqSection({ className }: { className?: string }) {
   return (
-    <Accordion type="multiple" className={cn("w-full", className)} defaultValue={["Product Details", "Size and Fit"]}>
+    <Accordion type="multiple" className={cn("w-full", className)} defaultValue={["Product Details"]}>
       {Object.entries(ACCORDIONS).map(([title, content]) => (
         <AccordionItem value={title} key={title}>
-          <AccordionTrigger className="p-4 text-base font-bold">{title}</AccordionTrigger>
+          <AccordionTrigger className="py-4 text-base font-bold">{title}</AccordionTrigger>
           <AccordionContent>{content}</AccordionContent>
         </AccordionItem>
       ))}
