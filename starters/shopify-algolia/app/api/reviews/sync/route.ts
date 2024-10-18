@@ -6,7 +6,7 @@ import { authenticate } from "utils/authenticate-api-route"
 import { isOptIn, notifyOptIn } from "utils/opt-in"
 import type { Review } from "lib/reviews/types"
 import type { CommerceProduct } from "types"
-import { isDemoMode } from "utils/demoUtils"
+import { isDemoMode } from "utils/demo-utils"
 
 export const maxDuration = 60
 

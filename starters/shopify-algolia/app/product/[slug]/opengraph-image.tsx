@@ -3,7 +3,7 @@
 
 import { ImageResponse } from "next/og"
 import { getProduct } from "app/actions/product.actions"
-import { removeOptionsFromUrl } from "utils/productOptionsUtils"
+import { removeOptionsFromUrl } from "utils/product-options-utils"
 import { env } from "env.mjs"
 
 export const revalidate = 86400

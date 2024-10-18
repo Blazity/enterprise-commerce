@@ -9,7 +9,7 @@ import {
   type SearchSingleIndexProps,
 } from "algoliasearch"
 
-import { FilterBuilder } from "./filterBuilder"
+import { FilterBuilder } from "./filter-builder"
 
 const algoliaClient = (args: { applicationId: string; apiKey: string }) => {
   return algoliasearch(args.applicationId, args.apiKey)

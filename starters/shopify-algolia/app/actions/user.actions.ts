@@ -2,7 +2,7 @@
 
 import { PlatformUserCreateInput } from "lib/shopify/types"
 import { cookies } from "next/headers"
-import { storefrontClient } from "clients/storefrontClient"
+import { storefrontClient } from "clients/storefront"
 import { COOKIE_ACCESS_TOKEN } from "constants/index"
 
 export async function signupUser({ email, password }: { email: string; password: string }) {

@@ -1,7 +1,7 @@
 import { env } from "env.mjs"
 import { MetadataRoute } from "next"
 import { algolia } from "clients/search"
-import { getDemoCategories, getDemoProducts, isDemoMode } from "utils/demoUtils"
+import { getDemoCategories, getDemoProducts, isDemoMode } from "utils/demo-utils"
 import type { PlatformCollection } from "lib/shopify/types"
 import type { CommerceProduct } from "types"
 

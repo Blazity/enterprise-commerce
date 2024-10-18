@@ -1,7 +1,7 @@
 import { getProduct } from "app/actions/product.actions"
 import { env } from "process"
-import { makeKeywords } from "utils/makeKeywords"
-import { removeOptionsFromUrl } from "utils/productOptionsUtils"
+import { makeKeywords } from "utils/make-keywords"
+import { removeOptionsFromUrl } from "utils/product-options-utils"
 import type { ProductReviewsPageProps } from "./page"
 import { Metadata } from "next"
 
