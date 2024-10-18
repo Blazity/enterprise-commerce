@@ -1,20 +1,34 @@
-import { Button } from "components/ui/button-old"
+import { Button } from "components/ui/button"
 import Image from "next/image"
+import Link from "next/link"
 import { cn } from "utils/cn"
 
 export function HeroSection({ title, className }: { title: string; className?: string }) {
   return (
-    <div className={cn("max-w-container-xl mx-auto flex w-full flex-col-reverse justify-between lg:flex-row", className)}>
-      <div className="shrink-1 flex basis-1/2 items-center justify-center bg-neutral-100 p-36">
-        <Image width={400} height={400} sizes="400px" alt="Homepage featured image" priority src={"/default-product-image.svg"} />
+    <div className={cn("mx-auto my-12 flex w-full max-w-container-md flex-col-reverse items-center lg:flex-row lg:justify-center", className)}>
+      <div className="flex-shrink">
+        <Image
+          width={650}
+          height={650}
+          className="rounded-l-lg"
+          sizes="(max-width: 768px) 80vw, 650px"
+          alt="Homepage featured image"
+          priority
+          src="/hero.png"
+          style={{
+            color: "transparent",
+            objectFit: "cover",
+          }}
+        />
       </div>
-      <div className="flex basis-1/2 flex-col items-center justify-start gap-16 px-4 py-20 md:items-start md:p-36">
-        <h1 className="text-center text-[32px]/[32px] tracking-tighter sm:text-[77px]/[79px] md:text-left">{title}</h1>
-        <a href="https://git.new/commerce" rel="noreferrer" target="_blank">
-          <Button size="xl" variant="secondary" className="py-[10px] text-[21px] md:py-[28px] md:text-[23px]">
-            See on GitHub
+      <div className="flex max-w-lg shrink-0 flex-col items-center space-y-4 px-8 lg:items-start lg:space-y-8">
+        <h1 className="text-center text-3xl font-semibold tracking-tight lg:text-left lg:text-4xl">{"Shop the best Deals on Top Brands & Unique Finds"}</h1>
+        <p className="text-center text-lg lg:text-left">From everyday essentials to rare gems, we’ve got something for everyone.</p>
+        <Link href="/search" prefetch={false} aria-label="Search products">
+          <Button size="lg" role="link" className="transition-transform hover:scale-105">
+            Shop now
           </Button>
-        </a>
+        </Link>
       </div>
     </div>
   )

@@ -7,6 +7,7 @@ import { RobotIcon } from "components/icons/robot-icon"
 import { isOptIn, notifyOptIn } from "utils/opt-in"
 import { StarIcon } from "components/icons/star-icon"
 import { cn } from "utils/cn"
+import { buttonVariants } from "components/ui/button"
 
 type ReviewsSectionProps = {
   productId: string
@@ -39,7 +40,7 @@ export const ReviewsSection = ({ productId, productHandle, reviews, total, summa
 
   return (
     <section className={cn("relative left-1/2 w-screen -translate-x-1/2 bg-gray-50 py-12 md:my-10", className)}>
-      <div className="container mx-auto max-w-5xl px-4 md:px-6">
+      <div className="container mx-auto max-w-5xl px-6 xl:pl-0">
         <div className="space-y-4">
           <div className="mb-10 flex flex-col items-center justify-between gap-4 md:flex-row">
             <div className="flex items-center justify-center">
@@ -47,7 +48,7 @@ export const ReviewsSection = ({ productId, productHandle, reviews, total, summa
               <span className="ml-1 text-sm font-normal text-gray-500">({total})</span>
               {!!avgRating && (
                 <div className="ml-1 inline-flex items-center">
-                  <StarIcon className="ml-0.5 size-4 fill-yellow-400 text-yellow-500" />
+                  <StarIcon className="ml-0.5 size-4 fill-gray-400 text-gray-500" />
                   <span className="ml-0.5 text-sm font-normal"> {avgRating.toFixed(2)}</span>
                 </div>
               )}
@@ -66,19 +67,17 @@ export const ReviewsSection = ({ productId, productHandle, reviews, total, summa
           )}
 
           <Carousel opts={{ skipSnaps: true }}>
-            <div className="my-4 hidden justify-end gap-4 md:flex">
-              <CarouselPrevious className="relative" />
-              <CarouselNext className="relative" />
-            </div>
+            <CarouselPrevious className="absolute -left-20 top-[40%] hidden xl:flex" />
             <CarouselContent className="ml-0 gap-6">
               {reviews.map(({ body, author, rating, created_at }) => (
                 <ReviewCard key={created_at} body={body} author={author} rating={rating} created_at={created_at} />
               ))}
             </CarouselContent>
+            <CarouselNext className="absolute -right-20 top-[40%] hidden xl:flex" />
           </Carousel>
         </div>
         <div className="mt-10 flex justify-center md:justify-end">
-          <Link href={`/reviews/${productHandle}`} className="text-sm underline" prefetch={false}>
+          <Link href={`/reviews/${productHandle}`} className={cn(buttonVariants({ variant: "outline" }), "w-full bg-white transition-all hover:scale-105")} prefetch={false}>
             See all reviews
           </Link>
         </div>

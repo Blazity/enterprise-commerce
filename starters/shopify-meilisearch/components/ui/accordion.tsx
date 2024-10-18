@@ -22,7 +22,7 @@ const AccordionTrigger = React.forwardRef<React.ElementRef<typeof AccordionPrimi
       >
         <div className="flex w-full items-center justify-between">
           {children}
-          <ChevronIcon className="size-3 shrink-0 text-black transition-transform duration-200" />
+          <ChevronIcon className="size-2 shrink-0 fill-black text-black transition-transform duration-200" />
         </div>
       </AccordionPrimitive.Trigger>
     </AccordionPrimitive.Header>

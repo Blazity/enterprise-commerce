@@ -25,8 +25,8 @@ export function CartSheet({ cart, isOpen, onCartClose, isPending }: CartSheetPro
   return (
     <Sheet open={isOpen} onOpenChange={() => onCartClose()}>
       <SheetContent className="size-full min-h-svh bg-white p-0">
-        <SheetHeader className="mb-4 flex w-full flex-row items-center justify-between border-b border-black">
-          <SheetTitle className="flex items-center p-4 text-[20px] font-normal">
+        <SheetHeader className="flex w-full flex-row items-center justify-between">
+          <SheetTitle className="flex items-center p-4 pb-0 text-[20px] font-normal">
             Review your cart
             {isPending ? <LoadingDots className="ml-4" /> : null}
           </SheetTitle>
@@ -39,7 +39,7 @@ export function CartSheet({ cart, isOpen, onCartClose, isPending }: CartSheetPro
 
         {!hasAnyItems && <CartEmptyState />}
 
-        <div className={cn("mb-4 flex size-full h-[calc(100%-63px-260px)] flex-col gap-4 overflow-x-hidden p-4")}>
+        <div className={cn("mb-4 flex size-full h-[calc(100%-63px-260px)] flex-col gap-4 overflow-x-hidden p-4 pt-2")}>
           {cart?.items.map((singleItem) => (
             <CartItem
               className={cn(isPending && "pointer-events-none")}
@@ -53,15 +53,15 @@ export function CartSheet({ cart, isOpen, onCartClose, isPending }: CartSheetPro
         {hasAnyItems && (
           <SheetFooter className="border-t border-black p-4">
             <div className="w-full bg-white py-4 text-sm text-neutral-500">
-              <div className="mb-3 flex items-center justify-between border-b border-neutral-200 pb-1 ">
+              <div className="flex items-center justify-between border-b border-neutral-200 pb-4 ">
                 <p>Subtotal</p>
                 <p className="text-right text-base text-black ">{subtotalFormatted}</p>
               </div>
-              <div className="mb-3 flex items-center justify-between border-b border-neutral-200 py-1 ">
+              <div className="flex items-center justify-between border-b border-neutral-200 py-4 ">
                 <p>Shipping</p>
                 <p className="text-right">Calculated at checkout</p>
               </div>
-              <div className="mb-3 flex items-center justify-between border-b border-neutral-200 py-1 ">
+              <div className="flex items-center justify-between border-neutral-200 py-4 ">
                 <p>Total</p>
                 <p className="text-right text-base text-black ">{totalFomatted}</p>
               </div>

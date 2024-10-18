@@ -18,13 +18,9 @@ export async function SimilarProductsSection({ slug, collectionHandle }: Similar
   return (
     <section className="my-10">
       <Carousel opts={{ skipSnaps: true }}>
-        <div className="flex justify-between">
-          <h2 className="mb-10 text-[26px] font-normal tracking-[-0.78px]">You might also like</h2>
-          <div className="hidden gap-4 md:flex">
-            <CarouselPrevious className="relative" />
-            <CarouselNext className="relative" />
-          </div>
-        </div>
+        <CarouselPrevious className="absolute -left-20 top-[40%] hidden xl:flex" />
+        <h2 className="mb-10 text-[26px] font-medium tracking-[-0.78px]">You might also like</h2>
+
         <CarouselContent>
           {items.map((product, idx) => (
             <CarouselItem className="basis-1/2 md:basis-1/4" key={"featured_" + product.id + idx}>
@@ -32,6 +28,7 @@ export async function SimilarProductsSection({ slug, collectionHandle }: Similar
             </CarouselItem>
           ))}
         </CarouselContent>
+        <CarouselNext className="absolute -right-20 top-[40%] hidden xl:flex" />
       </Carousel>
     </section>
   )

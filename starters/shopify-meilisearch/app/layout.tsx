@@ -14,7 +14,6 @@ import { CartView } from "views/cart/cart-view"
 import type { NavItem } from "components/navigation-bar/types"
 import { NavigationBar } from "components/navigation-bar/navigation-bar"
 import { mobileInlineScript } from "components/navigation-bar/mobile-inline-script"
-import { CallToAction } from "components/call-to-action"
 import { Footer } from "components/footer"
 import { Modals } from "components/modals/modals"
 
@@ -245,7 +244,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
         {children}
 
-        <CallToAction />
         <Footer />
         <Modals />
 
