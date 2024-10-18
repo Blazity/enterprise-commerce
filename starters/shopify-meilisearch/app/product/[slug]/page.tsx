@@ -67,11 +67,13 @@ export default async function Product({ params: { slug } }: ProductProps) {
   return (
     <div className="relative mx-auto max-w-container-md px-4 xl:px-0">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(generateJsonLd(product, slug)) }}></script>
-      <div className="mb:pb-8 relative w-fit py-4 md:pt-12">
-        <BackButton className="mb-8 hidden md:block" />
+      <div className="mb:pb-8 relative flex w-full items-center justify-center gap-10 py-4 md:pt-12">
+        <BackButton className="left-2 mb-8 hidden md:block xl:absolute" />
+        <div className="mx-auto w-full max-w-container-sm">
+          <Breadcrumbs className="mb-8" items={makeBreadcrumbs(product)} />
+        </div>
       </div>
       <main className="mx-auto max-w-container-sm">
-        <Breadcrumbs className="mb-8" items={makeBreadcrumbs(product)} />
         <div className="grid grid-cols-1 gap-4 md:mx-auto md:max-w-screen-xl md:grid-cols-12 md:gap-8">
           <ProductTitle
             className="md:hidden"
