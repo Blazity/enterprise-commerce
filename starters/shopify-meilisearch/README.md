@@ -1,12 +1,4 @@
-<a href="https://blazity.com/r/commerce">
-
-![HERO](https://github.com/Blazity/enterprise-commerce/assets/28964599/1ff1a75d-30ea-41dd-aa9a-b530b2baed51)
-
-</a>
-
-[![GitHub Actions Workflow Status][check-workflow-badge]][check-workflow-badge-link] [![GitHub License][github-license-badge]][github-license-badge-link] [![GitHub contributors][github-contributors-badge]][github-contributors-badge-link] [![Discord][discord-badge]][discord-badge-link] [![Blazity][made-by-blazity-badge]][made-by-blazity-badge-link] [![Blazity][made-with-v0-badge]][made-with-v0-link]
-
-🚀 Launch your high-performance Shopify storefront in minutes, not weeks, with this Next.js commerce starter. Leverage the power of Vector Search and AI to deliver a superior online shopping experience without the development headaches.
+🚀 Shopify + Meilisearch Starter for your next storefront
 
 Run this command and let our CLI do the job or [see our documentation for manual setup instruction](https://blazity.com/r/commerce-docs).
 
@@ -16,16 +8,36 @@ $ yarn create commerce
 
 [See the live demo](https://blazity.com/r/commerce) or deploy it straight to Vercel:
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fblazity%2Fenterprise-commerce%2Ftree%2Fmain%2Fstarters%2Fshopify-algolia) - Shopify & Algolia starter
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fblazity%2Fenterprise-commerce%2Ftree%2Fmain%2Fstarters%2Fshopify-meilisearch)
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fblazity%2Fenterprise-commerce%2Ftree%2Fmain%2Fstarters%2Fshopify-meilisearch) - Shopify & Meilsearch starter
+**Note:** To enable all features, ensure [required environment variables](https://docs.commerce.blazity.com/providers) are set in your `.env.local`
 
-## Starters
+## Features
 
-Each starter is a combination of commerce platform and search engine. While each starter follows very similar features crucial for every storefront, they may be different therefore we recommend checking the documentation for each starter.
-
-- [Shopify + Algolia Starter](https://github.com/Blazity/enterprise-commerce/tree/main/starters/shopify-algolia)
-- [Shopify + Meilisearch Starter](https://github.com/Blazity/enterprise-commerce/tree/main/starters/shopify-meilisearch)
+- [Next.js App Router](https://nextjs.org/docs/app) & [Turborepo](https://turbo.build/repo)
+- [React Server Components](https://nextjs.org/docs/app/building-your-application/rendering/server-components) (RSCs), [Suspense and Streaming](https://nextjs.org/docs/app/building-your-application/routing/loading-ui-and-streaming)
+- [Server Actions](https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations)
+- [Dynamic OG Images](https://nextjs.org/docs/app/api-reference/file-conventions/metadata/opengraph-image)
+- [AI Vector Search](https://www.meilisearch.com/docs/learn/experimental/vector_search)
+- [Lightning fast search & filtering](https://www.meilisearch.com/)
+- [Designed with v0](https://v0.dev/)
+- [Vercel Toolbar](https://vercel.com/docs/workflow-collaboration/vercel-toolbar) (feature flags, comments, deployment sharing, etc.)
+- AI Image captioning
+- Perfect Performance & SEO
+- Draft Mode
+- A/B Tests
+- Shadcn UI
+- TailwindCSS
+- Analytics (GTM, Vercel)
+- Highly Scalable SEO Redirects ([Bloom Filters](https://nextjs.org/docs/app/building-your-application/routing/redirecting#managing-redirects-at-scale-advanced))
+- Easy migration - migrate your existing solution in minutes
+- Playwright - write end-to-end tests like a pro
+- Storybook - create, test, and showcase your components
+- T3 Env - manage your environment variables with ease
+- Patch-package - fix external dependencies without losing your mind
+- Components coupling and cohesion graph - a tool for managing component relationships
+- Category Landing Page detached from Product Listing for fast SEO indexing & better performance
+- Reviews & Ratings [Judge.me](https://judge.me/)
 
 ## Architecture
 
