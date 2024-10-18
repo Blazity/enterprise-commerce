@@ -14,11 +14,7 @@ Run this command and let our CLI do the job or [see our documentation for manual
 $ yarn create commerce
 ```
 
-[See the live demo](https://blazity.com/r/commerce) or deploy it straight to Vercel:
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fblazity%2Fenterprise-commerce%2Ftree%2Fmain%2Fstarters%2Fshopify-algolia) - Shopify & Algolia starter
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fblazity%2Fenterprise-commerce%2Ftree%2Fmain%2Fstarters%2Fshopify-meilisearch) - Shopify & Meilsearch starter
+[See the live demo](https://blazity.com/r/commerce)
 
 ## Starters
 
