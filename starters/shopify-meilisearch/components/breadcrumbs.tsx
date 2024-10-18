@@ -20,7 +20,7 @@ export function Breadcrumbs({ items, className }: BreadcrumbsProps) {
                 <BreadcrumbLink
                   prefetch={false}
                   aria-current={isLast ? "page" : undefined}
-                  className={cn("text-base text-neutral-500 hover:underline", isLast && "font-medium underline")}
+                  className={cn("text-sm text-neutral-500 hover:underline", isLast && "font-medium underline")}
                   href={href}
                 >
                   {title}

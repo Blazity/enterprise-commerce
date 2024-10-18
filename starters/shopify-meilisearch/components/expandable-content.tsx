@@ -42,7 +42,7 @@ export const ExpandableContent = ({ children, className, lines = 2 }: Expandable
         {children}
       </div>
       {isClamped && (
-        <button className={cn("flex items-center gap-1 bg-transparent text-sm underline")} onClick={() => setIsExpanded((prev) => !prev)}>
+        <button className={cn("mx-auto flex items-center gap-1 bg-transparent text-sm underline")} onClick={() => setIsExpanded((prev) => !prev)}>
           {isExpanded ? "Read less" : "Read more"}
           <ChevronIcon className={isExpanded ? "rotate-180" : "rotate-0"} />
         </button>

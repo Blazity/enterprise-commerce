@@ -16,7 +16,7 @@ export const ReviewCard = ({ created_at, author, rating, body }: ReviewCardProps
         <StarRating rating={rating} />
       </div>
       <ExpandableContent lines={4}>
-        <p className="mt-6 text-gray-500">{body}</p>
+        <p className="mt-6 overflow-hidden text-center text-gray-500">{body}</p>
       </ExpandableContent>
       <div className="mt-6 flex w-full flex-col items-center justify-between gap-2">
         <h3 className="font-semibold">{author}</h3>
