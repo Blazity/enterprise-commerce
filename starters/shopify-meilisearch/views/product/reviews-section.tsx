@@ -67,13 +67,13 @@ export const ReviewsSection = ({ productId, productHandle, reviews, total, summa
           )}
 
           <Carousel opts={{ skipSnaps: true }}>
-            <CarouselPrevious className="absolute -left-20 top-1/2 hidden xl:flex" />
+            <CarouselPrevious className="absolute -left-20 top-[40%] hidden xl:flex" />
             <CarouselContent className="ml-0 gap-6">
               {reviews.map(({ body, author, rating, created_at }) => (
                 <ReviewCard key={created_at} body={body} author={author} rating={rating} created_at={created_at} />
               ))}
             </CarouselContent>
-            <CarouselNext className="absolute -right-20 top-1/2 hidden xl:flex" />
+            <CarouselNext className="absolute -right-20 top-[40%] hidden xl:flex" />
           </Carousel>
         </div>
         <div className="mt-10 flex justify-center md:justify-end">
