@@ -48,6 +48,7 @@ export const CompactProductCard = ({
       <div className="absolute bottom-0 flex w-full shrink-0 grow translate-y-full flex-col overflow-hidden bg-gradient-to-t from-gray-100 to-transparent p-4 transition-transform group-hover:translate-y-0">
         {/* remove first word from the title as it includes vendor (this just needs feed update and then can be removed) */}
         <h3 className="line-clamp-2 text-lg font-semibold">{title.split(" ").slice(1).join(" ")}</h3>
+        {!!variantPrice && <span>From {mapCurrencyToSign((variantPrice.currencyCode as CurrencyType) || "USD") + minPrice.toFixed(2)}</span>}
         <div className="mt-auto flex flex-col gap-1">
           {!!vendor && <p className="text-sm text-gray-500">{vendor}</p>}
 
@@ -70,7 +71,6 @@ export const CompactProductCard = ({
               </p>
             )}
           </div>
-          {!!variantPrice && <span>From {mapCurrencyToSign((variantPrice.currencyCode as CurrencyType) || "USD") + minPrice.toFixed(2)}</span>}
         </div>
       </div>
     </Link>

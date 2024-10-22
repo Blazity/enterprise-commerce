@@ -44,6 +44,7 @@ export const FeaturedProductCard = ({
         <div className="flex flex-col gap-1">
           {/* remove first word from the title as it includes vendor (this just needs feed update and then can be removed) */}
           <h3 className="line-clamp-2 text-lg font-semibold">{title.split(" ").slice(1).join(" ")}</h3>
+          {!!variantPrice && <span className="block sm:hidden">From {mapCurrencyToSign((variantPrice.currencyCode as CurrencyType) || "USD") + minPrice.toFixed(2)}</span>}
           <div className="mt-auto flex flex-col gap-1">
             {!!vendor && <p className="text-sm text-gray-500">{vendor}</p>}
             <div className="flex items-center gap-1">
@@ -67,7 +68,7 @@ export const FeaturedProductCard = ({
             </div>
           </div>
         </div>
-        {!!variantPrice && <span>From {mapCurrencyToSign((variantPrice.currencyCode as CurrencyType) || "USD") + minPrice.toFixed(2)}</span>}
+        {!!variantPrice && <span className="hidden sm:block">From {mapCurrencyToSign((variantPrice.currencyCode as CurrencyType) || "USD") + minPrice.toFixed(2)}</span>}
       </div>
     </Link>
   )

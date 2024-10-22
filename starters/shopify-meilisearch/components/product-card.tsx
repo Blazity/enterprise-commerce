@@ -31,6 +31,7 @@ export const ProductCard = ({ variants, handle, title, featuredImage, minPrice, 
       <div className="flex shrink-0 grow flex-col py-4">
         {/* remove first word from the title as it includes vendor (this just needs feed update and then can be removed) */}
         <h3 className="line-clamp-2 text-lg font-semibold transition-colors">{title.split(" ").slice(1).join(" ")}</h3>
+        {!!variantPrice && <span>From {mapCurrencyToSign((variantPrice.currencyCode as CurrencyType) || "USD") + minPrice.toFixed(2)}</span>}
         <div className="flex flex-col gap-1">
           {!!vendor && <p className="text-sm text-gray-500">{vendor}</p>}
           <div className="mt-1 flex flex-wrap items-center gap-1">
@@ -52,7 +53,6 @@ export const ProductCard = ({ variants, handle, title, featuredImage, minPrice, 
               </p>
             )}
           </div>
-          {!!variantPrice && <span>From {mapCurrencyToSign((variantPrice.currencyCode as CurrencyType) || "USD") + minPrice.toFixed(2)}</span>}
         </div>
       </div>
     </Link>
