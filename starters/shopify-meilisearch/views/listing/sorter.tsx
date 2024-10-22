@@ -37,7 +37,7 @@ export function Sorter({ className }: SorterProps) {
     <div className={className}>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <div className="flex cursor-pointer flex-wrap items-center justify-center gap-2 font-thin text-black [&[data-state=open]>svg]:rotate-180">
+          <div className="flex cursor-pointer flex-wrap items-center justify-center gap-2 font-normal text-black [&[data-state=open]>svg]:rotate-180">
             <span>Sort by</span>
             <ChevronIcon />
           </div>
