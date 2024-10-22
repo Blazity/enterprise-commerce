@@ -11,14 +11,31 @@ interface ProductCardProps extends Pick<CommerceProduct, "variants" | "handle" |
   className?: string
 }
 
-export const ProductCard = ({ variants, handle, title, featuredImage, minPrice, avgRating, totalReviews, className, priority, vendor, prefetch = false }: ProductCardProps) => {
+export const CompactProductCard = ({
+  variants,
+  handle,
+  title,
+  featuredImage,
+  minPrice,
+  avgRating,
+  totalReviews,
+  className,
+  priority,
+  vendor,
+  prefetch = false,
+}: ProductCardProps) => {
   const noOfVariants = variants?.length
   const href = `/product/${handle}`
   const linkAria = `Visit product: ${title}`
   const variantPrice = variants?.find(Boolean)?.price
 
   return (
-    <Link className={cn("group flex h-full w-full flex-col overflow-hidden", className)} aria-label={linkAria} href={href} prefetch={prefetch}>
+    <Link
+      className={cn("group relative flex flex-col overflow-hidden rounded-lg border border-gray-100 transition-all", className)}
+      aria-label={linkAria}
+      href={href}
+      prefetch={prefetch}
+    >
       <div className="relative aspect-square overflow-hidden">
         <Image
           priority={priority}
@@ -28,14 +45,15 @@ export const ProductCard = ({ variants, handle, title, featuredImage, minPrice, 
           fill
         />
       </div>
-      <div className="flex shrink-0 grow flex-col py-4">
+      <div className="absolute bottom-0 flex w-full shrink-0 grow translate-y-full flex-col overflow-hidden bg-gradient-to-t from-gray-100 to-transparent p-4 transition-transform group-hover:translate-y-0">
         {/* remove first word from the title as it includes vendor (this just needs feed update and then can be removed) */}
-        <h3 className="line-clamp-2 text-lg font-semibold transition-colors">{title.split(" ").slice(1).join(" ")}</h3>
-        <div className="flex flex-col gap-1">
+        <h3 className="line-clamp-2 text-lg font-semibold">{title.split(" ").slice(1).join(" ")}</h3>
+        <div className="mt-auto flex flex-col gap-1">
           {!!variantPrice && <span>From {mapCurrencyToSign((variantPrice.currencyCode as CurrencyType) || "USD") + minPrice.toFixed(2)}</span>}
 
           {!!vendor && <p className="text-sm text-gray-500">{vendor}</p>}
-          <div className="mt-1 flex flex-wrap items-center gap-1">
+
+          <div className="flex items-center gap-1">
             {!!avgRating && !!totalReviews && (
               <>
                 <div className="flex items-center space-x-1">

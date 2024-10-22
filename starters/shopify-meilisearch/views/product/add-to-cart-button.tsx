@@ -12,6 +12,7 @@ import { useAddProductStore } from "stores/add-product-store"
 import { toast } from "sonner"
 import { useCartStore } from "stores/cart-store"
 import type { CommerceProduct } from "types"
+import { BagIcon } from "components/icons/bag-icon"
 
 export function AddToCartButton({ className, product, combination }: { className?: string; product: CommerceProduct; combination: Combination | PlatformVariant | undefined }) {
   const [isPending, setIsPending] = useState(false)
@@ -59,6 +60,7 @@ export function AddToCartButton({ className, product, combination }: { className
       variant="default"
       className={cn("mx-auto w-full rounded-md p-10 py-4 transition-all hover:scale-105 md:w-full md:rounded-md md:py-4", className)}
     >
+      <BagIcon className="mr-2 size-5 text-white" />
       Add to Bag
     </Button>
   )

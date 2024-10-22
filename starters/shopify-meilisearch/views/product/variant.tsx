@@ -23,7 +23,7 @@ export function Variant({ singleCombination, isActive, href, cartItem }: Variant
       prefetch={false}
       scroll={false}
       className={cn(
-        "relative flex h-[40px] min-w-[80px] cursor-pointer items-center justify-center border border-black bg-white p-1.5 text-[11px] uppercase transition-colors hover:bg-neutral-800 hover:text-white",
+        "relative flex h-[40px] min-w-[80px] cursor-pointer items-center justify-center rounded-md border border-black bg-white p-1.5 text-[11px] font-medium transition-colors hover:bg-neutral-800 hover:text-white",
         { "bg-neutral-800 text-white": isActive },
         { "stroke-black opacity-80 hover:bg-transparent hover:text-black": isOutOfStock }
       )}

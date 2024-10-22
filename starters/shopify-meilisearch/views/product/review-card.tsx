@@ -11,23 +11,23 @@ export type ReviewCardProps = {
 
 export const ReviewCard = ({ created_at, author, rating, body }: ReviewCardProps) => {
   return (
-    <Card key={created_at} className="min-w-[280px] max-w-[280px] p-4">
-      <div className="flex flex-col items-center justify-between space-y-2">
-        <div className="flex w-full flex-col-reverse items-center justify-between gap-2">
-          <span className="text-xs text-gray-500">
-            {new Date(created_at).toLocaleDateString("en-US", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
-          </span>
-          <h3 className="font-semibold">{author}</h3>
-        </div>
+    <Card key={created_at} className="flex min-w-[280px] max-w-[280px] flex-col px-4 py-8">
+      <div className="mx-auto w-auto">
         <StarRating rating={rating} />
       </div>
       <ExpandableContent lines={4}>
-        <p className="mt-4 text-gray-500">{body}</p>
+        <p className="mt-6 overflow-hidden text-center text-gray-500">{body}</p>
       </ExpandableContent>
+      <div className="mt-6 flex w-full flex-col items-center justify-between gap-2">
+        <h3 className="font-semibold">{author}</h3>
+        <span className="text-xs text-gray-500">
+          {new Date(created_at).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}
+        </span>
+      </div>
     </Card>
   )
 }
