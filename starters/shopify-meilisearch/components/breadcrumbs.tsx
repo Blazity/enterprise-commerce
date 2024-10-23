@@ -20,13 +20,13 @@ export function Breadcrumbs({ items, className }: BreadcrumbsProps) {
                 <BreadcrumbLink
                   prefetch={false}
                   aria-current={isLast ? "page" : undefined}
-                  className={cn("text-neutral-500 hover:underline", isLast && "font-medium underline")}
+                  className={cn("text-sm text-neutral-500 hover:underline", isLast && "font-medium underline")}
                   href={href}
                 >
                   {title}
                 </BreadcrumbLink>
               </BreadcrumbItem>
-              {!isLast && <BreadcrumbSeparator />}
+              {!isLast && <BreadcrumbSeparator className="text-transparent [&>svg]:size-2 [&>svg]:fill-black" />}
             </React.Fragment>
           )
         })}

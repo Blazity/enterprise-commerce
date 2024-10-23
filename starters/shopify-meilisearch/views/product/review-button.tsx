@@ -1,6 +1,6 @@
 "use client"
 
-import { Button } from "components/ui/button-old"
+import { Button } from "components/ui/button"
 import { useModalStore } from "stores/modal-store"
 import { useQueryState } from "nuqs"
 
@@ -14,6 +14,8 @@ export const ReviewButton = ({ productId }: ReviewButtonProps) => {
 
   return (
     <Button
+      variant="outline"
+      className="bg-white transition-all hover:scale-105"
       onClick={() => {
         setPid(productId)
         open("review")

@@ -40,12 +40,7 @@ export function PaginationSection({ queryParams, totalPages }: PaginationSection
         </PaginationItem>
         {pages.map((singlePage, idx) => (
           <PaginationItem key={"pagination_item" + idx + singlePage}>
-            <PaginationLink
-              aria-label={`Go to ${singlePage} page`}
-              isActive={singlePage === +page}
-              // has to be undefined, null leaves it like ?page=
-              href={{ query: { ...queryParams, page: singlePage === 1 ? undefined : singlePage } }}
-            >
+            <PaginationLink aria-label={`Go to ${singlePage} page`} isActive={singlePage === +page} href={{ query: { ...queryParams, page: singlePage } }}>
               {singlePage}
             </PaginationLink>
           </PaginationItem>
