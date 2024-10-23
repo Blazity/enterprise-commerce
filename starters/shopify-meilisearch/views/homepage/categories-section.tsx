@@ -1,8 +1,13 @@
+import { meilisearch } from "clients/search"
 import { CategoryCard } from "components/category-card"
-import { PlatformCollection } from "lib/shopify/types"
+import { unstable_cache } from "next/cache"
+import { env } from "env.mjs"
 import { cn } from "utils/cn"
+import { getDemoCategories, isDemoMode } from "utils/demo-utils"
 
-export async function CategoriesSection({ categories }: { categories: Pick<PlatformCollection, "handle" | "title" | "id" | "image">[] }) {
+export async function CategoriesSection() {
+  const categories = await getCategories()
+
   if (!categories?.length) return null
 
   return (
@@ -30,3 +35,20 @@ export async function CategoriesSection({ categories }: { categories: Pick<Platf
     </div>
   )
 }
+
+const getCategories = unstable_cache(
+  async () => {
+    if (isDemoMode()) return getDemoCategories().slice(0, 4)
+
+    const results = await meilisearch.searchDocuments({
+      indexName: env.MEILISEARCH_CATEGORIES_INDEX,
+      options: {
+        limit: 4,
+      },
+    })
+
+    return results.hits || []
+  },
+  ["categories-section"],
+  { revalidate: 3600 }
+)
