@@ -41,7 +41,7 @@ export function ProductAddedAlert({ className }: { className?: string }) {
           </span>
         </div>
         <div className="flex items-center justify-between gap-2">
-          <Button onMouseEnter={preloadSheet} onClick={openCart} variant={"outline"} className="bg-white transition-all hover:scale-105">
+          <Button onMouseEnter={preloadSheet} onClick={openCart} variant="outline" className="bg-white transition-all hover:scale-105">
             View cart
           </Button>
           <Button variant="default" onClick={() => router.push(cart?.checkoutUrl!)} className="rounded-md px-10 py-4 transition-all hover:scale-105">
