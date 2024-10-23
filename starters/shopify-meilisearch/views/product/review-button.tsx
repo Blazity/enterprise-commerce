@@ -14,7 +14,7 @@ export const ReviewButton = ({ productId }: ReviewButtonProps) => {
 
   return (
     <Button
-      variant={"outline"}
+      variant="outline"
       className="bg-white transition-all hover:scale-105"
       onClick={() => {
         setPid(productId)
