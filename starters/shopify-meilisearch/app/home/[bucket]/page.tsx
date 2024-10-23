@@ -21,14 +21,14 @@ export default async function Homepage({ params: { bucket } }: { params: { bucke
     b: "Shop the best Deals on Top Brands & Unique Finds",
   }
 
-  const { products, categories } = await fetchFeaturedData()
+  const { products } = await fetchFeaturedData()
 
   return (
     <div className="flex w-full flex-col">
       <AnnouncementBar className="-order-2" />
       <HeroSection className="-order-1 self-center md:-order-2" title={heroTitles[bucket]} />
       <FeaturedProductsSection products={products} />
-      <CategoriesSection categories={categories} />
+      <CategoriesSection />
     </div>
   )
 }
