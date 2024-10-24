@@ -1,4 +1,3 @@
-import { unstable_cache } from "next/cache"
 import { draftMode } from "next/headers"
 import { notFound } from "next/navigation"
 import { Suspense } from "react"
@@ -23,28 +22,15 @@ import { FaqSection } from "views/product/faq-section"
 
 import { slugToName } from "utils/slug-name"
 
-export const dynamic = "force-static"
-
-export const revalidate = 86400
-
-export const dynamicParams = true
-
-interface ProductProps {
-  params: { slug: string }
+type ProductProps = {
+  params: Promise<{ slug: string }>
 }
 
-export default async function Product({ params: { slug } }: ProductProps) {
-  return <ProductView slug={slug} />
-}
+export default async function Product({ params: promiseParams }: ProductProps) {
+  const params = await promiseParams
+  const product = await getDraftAwareProduct(params.slug)
 
-export async function generateStaticParams() {
-  return []
-}
-
-async function ProductView({ slug }: { slug: string }) {
-  const product = await getDraftAwareProduct(slug)
-
-  const { color } = getOptionsFromUrl(slug)
+  const { color } = getOptionsFromUrl(params.slug)
   const hasInvalidOptions = !hasValidOption(product?.variants, "color", color)
 
   if (!product || hasInvalidOptions) {
@@ -85,7 +71,7 @@ async function ProductView({ slug }: { slug: string }) {
           </RightSection>
         </div>
         <Suspense fallback={<SimilarProductsSectionSkeleton />}>
-          <SimilarProductsSection collectionHandle={lastCollection?.handle} slug={slug} />
+          <SimilarProductsSection collectionHandle={lastCollection?.handle} slug={params.slug} />
         </Suspense>
       </main>
     </div>
@@ -93,7 +79,7 @@ async function ProductView({ slug }: { slug: string }) {
 }
 
 async function getDraftAwareProduct(slug: string) {
-  const draft = draftMode()
+  const draft = await draftMode()
 
   let product = await storefrontClient.getProductByHandle(removeOptionsFromUrl(slug))
   if (draft.isEnabled && product) product = await getAdminProduct(product?.id)
@@ -101,7 +87,7 @@ async function getDraftAwareProduct(slug: string) {
   return product
 }
 
-const getAdminProduct = unstable_cache(async (id: string) => storefrontClient.getAdminProduct(id), ["admin-product-by-handle"], { revalidate: 1 })
+const getAdminProduct = async (id: string) => storefrontClient.getAdminProduct(id)
 
 function makeBreadcrumbs(product: PlatformProduct) {
   const lastCollection = product.collections?.findLast(Boolean)

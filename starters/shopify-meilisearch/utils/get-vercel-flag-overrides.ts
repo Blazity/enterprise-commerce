@@ -5,7 +5,8 @@ import { cookies } from "next/headers"
 type Flags = Record<Partial<"isVercelAnalyticsEnabled" | "isGoogleTagManagerEnabled" | "isSpeedInsightsEnabled">, boolean>
 
 export async function getVercelFlagOverrides(): Promise<Flags | null> {
-  const overridesCookieValue = cookies().get("vercel-flag-overrides")?.value
+  const cookieStore = await cookies()
+  const overridesCookieValue = cookieStore.get("vercel-flag-overrides")?.value
   const overrides = overridesCookieValue ? ((await decrypt<FlagOverridesType>(overridesCookieValue)) as Flags) : null
 
   return {

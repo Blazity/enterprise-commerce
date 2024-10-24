@@ -1,3 +1,4 @@
+import { unstable_cacheLife as cacheLife, unstable_cacheTag as cacheTag } from "next/cache"
 import { meilisearch } from "clients/search"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "components/ui/carousel"
 import { ProductCard } from "components/product-card"
@@ -34,36 +35,36 @@ export async function SimilarProductsSection({ slug, collectionHandle }: Similar
   )
 }
 
-const getSimilarProducts = unstable_cache(
-  async (handle: string, collection: string | undefined) => {
-    const limit = 8
+const getSimilarProducts = async (handle: string, collection: string | undefined) => {
+  "use cache"
+  cacheLife("days")
+  cacheTag(`similar-products-${handle}-${collection}`)
 
-    if (isDemoMode()) return getDemoProducts().hits.slice(0, limit)
+  const limit = 8
 
-    const similarSearchResults = await meilisearch.searchDocuments<CommerceProduct>({
+  if (isDemoMode()) return getDemoProducts().hits.slice(0, limit)
+
+  const similarSearchResults = await meilisearch.searchDocuments<CommerceProduct>({
+    indexName: env.MEILISEARCH_PRODUCTS_INDEX,
+    query: handle,
+    options: {
+      matchingStrategy: "last",
+      limit,
+      hybrid: { semanticRatio: 1 },
+    },
+  })
+
+  let collectionSearchResults: { hits: CommerceProduct[] } = { hits: [] }
+  if (similarSearchResults.hits.length < limit) {
+    collectionSearchResults = await meilisearch.searchDocuments<CommerceProduct>({
       indexName: env.MEILISEARCH_PRODUCTS_INDEX,
-      query: handle,
       options: {
         matchingStrategy: "last",
-        limit,
-        hybrid: { semanticRatio: 1 },
+        limit: limit - similarSearchResults.hits.length,
+        filter: new FilterBuilder().where("collections.handle", ComparisonOperators.Equal, collection).build(),
       },
     })
+  }
 
-    let collectionSearchResults: { hits: CommerceProduct[] } = { hits: [] }
-    if (similarSearchResults.hits.length < limit) {
-      collectionSearchResults = await meilisearch.searchDocuments<CommerceProduct>({
-        indexName: env.MEILISEARCH_PRODUCTS_INDEX,
-        options: {
-          matchingStrategy: "last",
-          limit: limit - similarSearchResults.hits.length,
-          filter: new FilterBuilder().where("collections.handle", ComparisonOperators.Equal, collection).build(),
-        },
-      })
-    }
-
-    return [...similarSearchResults.hits, ...collectionSearchResults.hits]
-  },
-  ["product-by-handle"],
-  { revalidate: 3600 }
-)
+  return [...similarSearchResults.hits, ...collectionSearchResults.hits]
+}

@@ -2,16 +2,13 @@ import type { Metadata } from "next"
 import { SearchParamsType } from "types"
 import { CategoryView } from "views/category/category-view"
 
-export const runtime = "nodejs"
-
-export const revalidate = 86400
-
 interface ProductListingPageProps {
   searchParams: SearchParamsType
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
-export async function generateMetadata({ params }: ProductListingPageProps): Promise<Metadata> {
+export async function generateMetadata(props: ProductListingPageProps): Promise<Metadata> {
+  const params = await props.params
   return {
     title: `${params.slug} | Enterprise Commerce`,
     description: "In excepteur elit mollit in.",

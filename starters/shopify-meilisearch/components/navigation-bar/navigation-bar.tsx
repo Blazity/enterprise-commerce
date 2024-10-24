@@ -1,6 +1,5 @@
 import { Suspense } from "react"
 import { ChevronIcon } from "components/icons/chevron-icon"
-import dynamic from "next/dynamic"
 
 import { cn } from "utils/cn"
 import { Autocomplete } from "./autocomplete"
@@ -15,8 +14,7 @@ import { CloseIcon } from "components/icons/close-icon"
 import { SearchButton } from "./search-button"
 import { NavigationItem } from "./navigation-item"
 import Link from "next/link"
-
-const ProductAddedAlert = dynamic(() => import("views/product/product-added-alert").then((mod) => mod.ProductAddedAlert))
+import { ProductAddedAlert } from "views/product/product-added-alert"
 
 interface NavigationBarProps {
   items: NavItem[]

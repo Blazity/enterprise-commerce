@@ -1,8 +1,20 @@
 "use server"
 
 import { storefrontClient } from "clients/storefrontClient"
-import { unstable_cache } from "next/cache"
+import { unstable_cacheTag as cacheTag, unstable_cacheLife as cacheLife } from "next/cache"
 
-export const getPage = unstable_cache(async (handle: string) => await storefrontClient.getPage(handle), ["page"], { revalidate: 3600 })
+export const getPage = async (handle: string) => {
+  "use cache"
+  cacheTag(`page-${handle}`)
+  cacheLife("days")
 
-export const getAllPages = unstable_cache(async () => await storefrontClient.getAllPages(), ["page"], { revalidate: 3600 })
+  return await storefrontClient.getPage(handle)
+}
+
+export const getAllPages = async () => {
+  "use cache"
+  cacheTag("all-pages")
+  cacheLife("days")
+
+  return await storefrontClient.getAllPages()
+}

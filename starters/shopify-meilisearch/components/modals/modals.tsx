@@ -1,7 +1,7 @@
 "use client"
 
 import dynamic from "next/dynamic"
-import React from "react"
+import React, { Suspense } from "react"
 import { type Modal, useModalStore } from "stores/modal-store"
 import { ReviewModal } from "./review-modal"
 
@@ -24,13 +24,29 @@ export function Modals() {
 function ModalsFactory({ type }: { type: Modal }) {
   switch (type) {
     case "login":
-      return <LoginModal />
+      return (
+        <Suspense>
+          <LoginModal />
+        </Suspense>
+      )
     case "signup":
-      return <SignupModal />
+      return (
+        <Suspense>
+          <SignupModal />
+        </Suspense>
+      )
     case "search":
-      return <SearchModal />
+      return (
+        <Suspense>
+          <SearchModal />
+        </Suspense>
+      )
     case "review":
-      return <ReviewModal />
+      return (
+        <Suspense>
+          <ReviewModal />
+        </Suspense>
+      )
     default:
       return null
   }

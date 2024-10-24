@@ -25,12 +25,8 @@ import { RightSection } from "views/product/right-section"
 import { FaqSection } from "views/product/faq-section"
 import { AddToCartButton } from "views/product/add-to-cart-button"
 
-export const revalidate = 86400
-export const dynamic = "force-static"
-export const dynamicParams = true
-
-interface ProductProps {
-  params: { slug: string }
+type ProductProps = {
+  params: Promise<{ slug: string }>
 }
 
 export { generateMetadata } from "./metadata"
@@ -49,10 +45,15 @@ export async function generateStaticParams() {
   return results.map(({ handle }) => ({ slug: handle }))
 }
 
-export default async function Product({ params: { slug } }: ProductProps) {
-  const [product, { reviews, total: totalReviews }] = await Promise.all([getProduct(removeOptionsFromUrl(slug)), getProductReviews(removeOptionsFromUrl(slug), { limit: 16 })])
+export default async function Product({ params: promiseParams }: ProductProps) {
+  const params = await promiseParams
 
-  const { color } = getOptionsFromUrl(slug)
+  const [product, { reviews, total: totalReviews }] = await Promise.all([
+    getProduct(removeOptionsFromUrl(params.slug)),
+    getProductReviews(removeOptionsFromUrl(params.slug), { limit: 16 }),
+  ])
+
+  const { color } = getOptionsFromUrl(params.slug)
   const hasInvalidOptions = !hasValidOption(product?.variants, "color", color)
 
   if (!product || hasInvalidOptions) {
@@ -66,7 +67,7 @@ export default async function Product({ params: { slug } }: ProductProps) {
 
   return (
     <div className="relative mx-auto max-w-container-md px-4 xl:px-0">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(generateJsonLd(product, slug)) }}></script>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(generateJsonLd(product, params.slug)) }}></script>
       <div className="mb:pb-8 relative flex w-full items-center justify-center gap-10 py-4 md:pt-12">
         <BackButton className="left-2 mb-8 hidden md:block xl:absolute" />
         <div className="mx-auto w-full max-w-container-sm">
@@ -107,7 +108,7 @@ export default async function Product({ params: { slug } }: ProductProps) {
           />
         </Suspense>
         <Suspense fallback={<SimilarProductsSectionSkeleton />}>
-          <SimilarProductsSection collectionHandle={lastCollection?.handle} slug={slug} />
+          <SimilarProductsSection collectionHandle={lastCollection?.handle} slug={params.slug} />
         </Suspense>
       </main>
     </div>

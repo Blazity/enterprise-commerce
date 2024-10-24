@@ -1,18 +1,21 @@
 "use server"
 
-import { revalidateTag, unstable_cache } from "next/cache"
+import { unstable_cacheTag as cacheTag, unstable_cacheLife as cacheLife } from "next/cache"
 import { cookies } from "next/headers"
 import { storefrontClient } from "clients/storefrontClient"
 import { COOKIE_CART_ID, TAGS } from "constants/index"
 import { isDemoMode } from "utils/demo-utils"
 
-export const getCart = unstable_cache(async (cartId: string) => storefrontClient.getCart(cartId), [TAGS.CART], { revalidate: 60 * 15, tags: [TAGS.CART] })
+export const getCart = async (cartId: string) => {
+  return storefrontClient.getCart(cartId)
+}
 
 export async function addCartItem(prevState: any, variantId: string) {
   if (isDemoMode()) return { ok: false, message: "Demo mode active. Filtering, searching, and adding to cart disabled." }
   if (!variantId) return { ok: false }
 
-  let cartId = cookies().get(COOKIE_CART_ID)?.value
+  const cookieStore = await cookies()
+  let cartId = cookieStore.get(COOKIE_CART_ID)?.value
   let cart
 
   if (cartId) cart = await storefrontClient.getCart(cartId)
@@ -20,9 +23,10 @@ export async function addCartItem(prevState: any, variantId: string) {
   if (!cartId || !cart) {
     cart = await storefrontClient.createCart([])
     cartId = cart?.id
-    cartId && cookies().set(COOKIE_CART_ID, cartId)
-
-    revalidateTag(TAGS.CART)
+    if (cartId) {
+      await cookieStore.set(COOKIE_CART_ID, cartId)
+      cacheTag(TAGS.CART)
+    }
   }
 
   const itemAvailability = await getItemAvailability(cartId, variantId)
@@ -34,7 +38,7 @@ export async function addCartItem(prevState: any, variantId: string) {
     }
 
   await storefrontClient.createCartItem(cartId!, [{ merchandiseId: variantId, quantity: 1 }])
-  revalidateTag(TAGS.CART)
+  cacheTag(TAGS.CART)
 
   return { ok: true }
 }
@@ -49,18 +53,20 @@ export async function getItemAvailability(cartId: string | null | undefined, var
 }
 
 export async function removeCartItem(prevState: any, itemId: string) {
-  const cartId = cookies().get(COOKIE_CART_ID)?.value
+  const cookieStore = await cookies()
+  const cartId = cookieStore.get(COOKIE_CART_ID)?.value
 
   if (!cartId) return { ok: false }
 
   await storefrontClient.deleteCartItem(cartId!, [itemId])
-  revalidateTag(TAGS.CART)
+  cacheTag(TAGS.CART)
 
   return { ok: true }
 }
 
 export async function updateItemQuantity(prevState: any, payload: { itemId: string; variantId: string; quantity: number }) {
-  const cartId = cookies().get(COOKIE_CART_ID)?.value
+  const cookieStore = await cookies()
+  const cartId = cookieStore.get(COOKIE_CART_ID)?.value
 
   if (!cartId) return { ok: false }
 
@@ -68,7 +74,7 @@ export async function updateItemQuantity(prevState: any, payload: { itemId: stri
 
   if (quantity === 0) {
     await storefrontClient.deleteCartItem(cartId, [itemId])
-    revalidateTag(TAGS.CART)
+    cacheTag(TAGS.CART)
     return { ok: true }
   }
 
@@ -81,6 +87,6 @@ export async function updateItemQuantity(prevState: any, payload: { itemId: stri
 
   await storefrontClient.updateCartItem(cartId, [{ id: itemId, merchandiseId: variantId, quantity }])
 
-  revalidateTag(TAGS.CART)
+  cacheTag(TAGS.CART)
   return { ok: true }
 }

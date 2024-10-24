@@ -5,10 +5,6 @@ import { ProductCard } from "components/product-card"
 import { Skeleton } from "components/ui/skeleton"
 import { COOKIE_FAVORITES } from "constants/index"
 
-export const revalidate = 86400
-
-export const dynamicParams = true
-
 export default async function Favorites() {
   return (
     <div className="mx-auto flex max-w-container-md flex-col gap-16 px-4 py-20 md:pb-32 md:pt-24 xl:px-0">
@@ -24,7 +20,8 @@ export default async function Favorites() {
 
 async function FavoritesView() {
   let favoritesHandles: string[] = []
-  const favoritesCookie = cookies().get(COOKIE_FAVORITES)?.value
+  const cookieStore = await cookies()
+  const favoritesCookie = cookieStore.get(COOKIE_FAVORITES)?.value
 
   if (favoritesCookie) {
     favoritesHandles = JSON.parse(favoritesCookie) as string[]
