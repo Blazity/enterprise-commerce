@@ -8,11 +8,12 @@ import type { CommerceProduct } from "types"
 import { slugToName } from "utils/slug-name"
 
 interface ProductProps {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
-export async function generateMetadata({ params: { slug } }: ProductProps): Promise<Metadata> {
-  const product = await getProduct(removeOptionsFromUrl(slug))
+export async function generateMetadata({ params: promiseParams }: ProductProps): Promise<Metadata> {
+  const params = await promiseParams
+  const product = await getProduct(removeOptionsFromUrl(params.slug))
 
   const originalDescription = product?.seo?.description
   const originalTitle = product?.seo?.title
@@ -30,7 +31,7 @@ export async function generateMetadata({ params: { slug } }: ProductProps): Prom
     category: lastCollection ? slugToName(lastCollection.handle) : "Search",
     creator: "Blazity",
     alternates: {
-      canonical: `/product/${slug}`,
+      canonical: `/product/${params.slug}`,
     },
     publisher: "Blazity",
   }

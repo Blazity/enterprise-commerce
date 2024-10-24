@@ -1,5 +1,6 @@
 import { Button } from "components/ui/button"
 import { Input } from "components/ui/input"
+import { Copyright } from "components/copyright"
 import Link from "next/link"
 
 export function Footer() {
@@ -80,7 +81,7 @@ export function Footer() {
                 <LinkedinIcon className="size-6" />
               </a>
             </div>
-            <div className="text-sm">© {new Date().getFullYear()} Blazity Enterprise Commerce.</div>
+            <Copyright />
           </div>
           <div className="mt-4 flex flex-col items-center justify-between space-y-4 md:flex-row md:space-y-0">
             <Link

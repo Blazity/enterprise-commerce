@@ -1,12 +1,14 @@
-import { Button } from "components/ui/button"
+import type { HTMLAttributes } from "react"
 import Image from "next/image"
 import Link from "next/link"
+
+import { Button } from "components/ui/button"
 import { cn } from "utils/cn"
 
-export function HeroSection({ title, className }: { title: string; className?: string }) {
+export function HeroSection({ className, ...rest }: HTMLAttributes<HTMLDivElement>) {
   return (
-    <div className={cn("mx-auto my-12 flex w-full max-w-container-md flex-col-reverse items-center lg:flex-row lg:justify-center", className)}>
-      <div className="flex-shrink">
+    <div className={cn("mx-auto my-12 flex w-full max-w-container-md flex-col-reverse items-center lg:flex-row lg:justify-center", className)} {...rest}>
+      <div className="shrink">
         <Image
           width={650}
           height={650}

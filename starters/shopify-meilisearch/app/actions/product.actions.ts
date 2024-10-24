@@ -1,6 +1,6 @@
 "use server"
 
-import { unstable_cache } from "next/cache"
+import { unstable_cacheLife as cacheLife, unstable_cacheTag as cacheTag } from "next/cache"
 import { env } from "env.mjs"
 
 import { meilisearch } from "clients/search"
@@ -11,74 +11,74 @@ import { getDemoProductReviews, getDemoSingleProduct, isDemoMode } from "utils/d
 import type { CommerceProduct } from "types"
 import { notifyOptIn } from "utils/opt-in"
 
-export const searchProducts = unstable_cache(
-  async (query: string, limit: number = 4) => {
-    if (isDemoMode())
-      return {
-        hits: [],
-        hasMore: false,
-      }
+export const searchProducts = async (query: string, limit: number = 4) => {
+  "use cache"
+  cacheTag(`search-products-${query}`)
+  cacheLife("days")
 
-    const { hits, estimatedTotalHits } = await meilisearch.searchDocuments<CommerceProduct>({
-      indexName: env.MEILISEARCH_PRODUCTS_INDEX,
-      query,
-      options: {
-        limit,
-        attributesToRetrieve: ["id", "handle", "title", "featuredImage", "images", "variants"],
-      },
-    })
-
-    return { hits, hasMore: estimatedTotalHits > limit }
-  },
-  ["autocomplete-search"],
-  { revalidate: 3600 }
-)
-
-export const getProduct = unstable_cache(
-  async (handle: string) => {
-    if (isDemoMode()) return getDemoSingleProduct(handle)
-
-    const { results } = await meilisearch.getDocuments<CommerceProduct>({
-      indexName: env.MEILISEARCH_PRODUCTS_INDEX,
-      options: {
-        filter: new FilterBuilder().where("handle", ComparisonOperators.Equal, handle).build(),
-        limit: 1,
-      },
-    })
-
-    return results.find(Boolean) || null
-  },
-  ["product-by-handle"],
-  { revalidate: 3600 }
-)
-
-export const getProductReviews = unstable_cache(
-  async (handle: string, { page = 1, limit = 10 } = { page: 1, limit: 10 }) => {
-    if (isDemoMode()) return getDemoProductReviews()
-
-    if (!env.MEILISEARCH_REVIEWS_INDEX) {
-      notifyOptIn({ feature: "reviews", source: "product.actions.ts" })
-      return { reviews: [], total: 0 }
+  if (isDemoMode())
+    return {
+      hits: [],
+      hasMore: false,
     }
 
-    const { results, total } = await meilisearch.getDocuments<Review>({
-      indexName: env.MEILISEARCH_REVIEWS_INDEX,
-      options: {
-        filter: new FilterBuilder()
-          .where("product_handle", ComparisonOperators.Equal, handle)
-          .and()
-          .where("published", ComparisonOperators.Equal, "true")
-          .and()
-          .where("hidden", ComparisonOperators.Equal, "false")
-          .build(),
-        limit,
-        offset: (page - 1) * limit,
-        fields: ["body", "rating", "verified", "reviewer", "published", "created_at", "hidden", "featured"],
-      },
-    })
+  const { hits, estimatedTotalHits } = await meilisearch.searchDocuments<CommerceProduct>({
+    indexName: env.MEILISEARCH_PRODUCTS_INDEX,
+    query,
+    options: {
+      limit,
+      attributesToRetrieve: ["id", "handle", "title", "featuredImage", "images", "variants"],
+    },
+  })
 
-    return { reviews: results.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()), total }
-  },
-  ["product-reviews-by-handle"],
-  { revalidate: 3600 }
-)
+  return { hits, hasMore: estimatedTotalHits > limit }
+}
+
+export const getProduct = async (handle: string) => {
+  "use cache"
+  cacheTag(`product-${handle}`)
+  cacheLife("days")
+
+  if (isDemoMode()) return getDemoSingleProduct(handle)
+
+  const { results } = await meilisearch.getDocuments<CommerceProduct>({
+    indexName: env.MEILISEARCH_PRODUCTS_INDEX,
+    options: {
+      filter: new FilterBuilder().where("handle", ComparisonOperators.Equal, handle).build(),
+      limit: 1,
+    },
+  })
+
+  return results.find(Boolean) || null
+}
+
+export const getProductReviews = async (handle: string, { page = 1, limit = 10 } = { page: 1, limit: 10 }) => {
+  "use cache"
+  cacheTag(`product-reviews-${handle}`)
+  cacheLife("days")
+
+  if (isDemoMode()) return getDemoProductReviews()
+
+  if (!env.MEILISEARCH_REVIEWS_INDEX) {
+    notifyOptIn({ feature: "reviews", source: "product.actions.ts" })
+    return { reviews: [], total: 0 }
+  }
+
+  const { results, total } = await meilisearch.getDocuments<Review>({
+    indexName: env.MEILISEARCH_REVIEWS_INDEX,
+    options: {
+      filter: new FilterBuilder()
+        .where("product_handle", ComparisonOperators.Equal, handle)
+        .and()
+        .where("published", ComparisonOperators.Equal, "true")
+        .and()
+        .where("hidden", ComparisonOperators.Equal, "false")
+        .build(),
+      limit,
+      offset: (page - 1) * limit,
+      fields: ["body", "rating", "verified", "reviewer", "published", "created_at", "hidden", "featured"],
+    },
+  })
+
+  return { reviews: results.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()), total }
+}

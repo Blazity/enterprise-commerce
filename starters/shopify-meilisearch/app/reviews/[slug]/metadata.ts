@@ -5,8 +5,9 @@ import { removeOptionsFromUrl } from "utils/product-options-utils"
 import type { ProductReviewsPageProps } from "./page"
 import { Metadata } from "next"
 
-export async function generateMetadata({ params: { slug } }: ProductReviewsPageProps): Promise<Metadata> {
-  const product = await getProduct(removeOptionsFromUrl(slug))
+export async function generateMetadata(props: ProductReviewsPageProps): Promise<Metadata> {
+  const params = await props.params
+  const product = await getProduct(removeOptionsFromUrl(params.slug))
 
   const originalTitle = product?.seo?.title
   const title = originalTitle || product?.title
@@ -24,7 +25,7 @@ export async function generateMetadata({ params: { slug } }: ProductReviewsPageP
     category: lastCollection?.title || "",
     creator: "Blazity",
     alternates: {
-      canonical: `/reviews/${slug}`,
+      canonical: `/reviews/${params.slug}`,
     },
     publisher: "Blazity",
   }

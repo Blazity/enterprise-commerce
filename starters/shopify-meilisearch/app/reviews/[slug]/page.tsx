@@ -11,25 +11,22 @@ import type { CommerceProduct } from "types"
 
 export { generateMetadata } from "./metadata"
 
-export const revalidate = 86400
-
 export interface ProductReviewsPageProps {
-  params: { slug: string }
-  searchParams: { [key: string]: string | string[] | undefined }
+  params: Promise<{ slug: string }>
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }
 
-export default async function ProductReviews({ params: { slug }, searchParams }: ProductReviewsPageProps) {
-  return <ProductReviewsView searchParams={searchParams} slug={slug} />
-}
+const LIMIT = 20
 
-async function ProductReviewsView({ slug, searchParams }: { slug: string; searchParams: ProductReviewsPageProps["searchParams"] }) {
-  const limit = 20
+export default async function ProductReviews(props: ProductReviewsPageProps) {
+  const params = await props.params
+  const searchParams = await props.searchParams
   const page = searchParams.page ? parseInt(searchParams.page as string) : 1
 
-  const product = await getProduct(removeOptionsFromUrl(slug))
-  const { reviews, total: totalReviews } = await getProductReviews(removeOptionsFromUrl(slug), { limit, page })
+  const product = await getProduct(removeOptionsFromUrl(params.slug))
+  const { reviews, total: totalReviews } = await getProductReviews(removeOptionsFromUrl(params.slug), { limit: LIMIT, page })
 
-  const totalPages = Math.ceil(totalReviews / limit)
+  const totalPages = Math.ceil(totalReviews / LIMIT)
 
   if (!product) {
     return notFound()
@@ -53,8 +50,8 @@ async function ProductReviewsView({ slug, searchParams }: { slug: string; search
     )
   }
 
-  if (page > Math.ceil(totalReviews / limit)) {
-    redirect(`/reviews/${slug}`)
+  if (page > Math.ceil(totalReviews / LIMIT)) {
+    redirect(`/reviews/${params.slug}`)
   }
 
   return (

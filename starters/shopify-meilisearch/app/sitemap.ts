@@ -5,8 +5,7 @@ import { getDemoCategories, getDemoProducts, isDemoMode } from "utils/demo-utils
 import type { PlatformCollection } from "lib/shopify/types"
 import type { CommerceProduct } from "types"
 
-export const revalidate = 604800
-export const runtime = "nodejs"
+import { unstable_cacheLife as cacheLife } from "next/cache"
 
 const BASE_URL = env.LIVE_URL
 const HITS_PER_PAGE = 24
@@ -82,6 +81,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
 // Pull only 100 results for the case of the demo
 async function getResults<T extends Record<string, any>>(indexName: string) {
+  "use cache"
+  cacheLife("max")
+
   const response = await meilisearch.getDocuments<T>({
     indexName,
     options: {

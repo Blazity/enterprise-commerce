@@ -1,6 +1,6 @@
 import { Suspense } from "react"
 import type { PlatformCollection } from "lib/shopify/types"
-import { unstable_cache } from "next/cache"
+import { unstable_cacheLife as cacheLife, unstable_cacheTag as cacheTag } from "next/cache"
 import { createSearchParamsCache, parseAsArrayOf, parseAsInteger, parseAsString } from "nuqs/server"
 import { meilisearch } from "clients/search"
 
@@ -47,7 +47,8 @@ function makePageTitle(collection: PlatformCollection | undefined, query: string
   return "Search"
 }
 
-export async function SearchView({ searchParams, disabledFacets, collection }: SearchViewProps) {
+export async function SearchView({ searchParams: promiseSearchParams, disabledFacets, collection }: SearchViewProps) {
+  const searchParams = await promiseSearchParams
   const { q, sortBy, page, ...rest } = searchParamsCache.parse(searchParams)
 
   const filterBuilder = new FilterBuilder()
@@ -75,7 +76,9 @@ export async function SearchView({ searchParams, disabledFacets, collection }: S
       <hr className="lg:hidden" />
       <div className="sticky top-[141px] z-40 flex items-center justify-between bg-white p-2 py-4 lg:hidden">
         <span className="text-gray-500">{totalHits} results</span>
-        <FacetsMobile disabledFacets={disabledFacets} independentFacetDistribution={independentFacetDistribution} facetDistribution={facetDistribution} className="lg:hidden" />
+        <Suspense>
+          <FacetsMobile disabledFacets={disabledFacets} independentFacetDistribution={independentFacetDistribution} facetDistribution={facetDistribution} className="lg:hidden" />
+        </Suspense>
       </div>
       <div className="flex gap-12 md:gap-24">
         <Suspense>
@@ -96,47 +99,47 @@ export async function SearchView({ searchParams, disabledFacets, collection }: S
   )
 }
 
-const searchProducts = unstable_cache(
-  async (query: string, sortBy: string, page: number, filter: string) => {
-    if (isDemoMode()) return getDemoProducts()
+const searchProducts = async (query: string, sortBy: string, page: number, filter: string) => {
+  "use cache"
+  cacheTag(`products-search$-${query}-${filter}`)
+  cacheLife("days")
 
-    try {
-      // use a single http request to search for products and facets, utilize separate query for facet values that should be independent from the search query
-      const res = await meilisearch?.multiSearch<CommerceProduct>({
-        queries: [
-          {
-            indexUid: env.MEILISEARCH_PRODUCTS_INDEX,
-            q: query,
-            facets: ["hierarchicalCategories.lvl0", "hierarchicalCategories.lvl1", "hierarchicalCategories.lvl2"],
-          },
-          {
-            indexUid: env.MEILISEARCH_PRODUCTS_INDEX,
-            sort: sortBy ? [sortBy] : undefined,
-            limit: HITS_PER_PAGE,
-            hitsPerPage: HITS_PER_PAGE,
-            facets: ["vendor", "variants.availableForSale", "flatOptions.Color", "minPrice", "avgRating"].concat(
-              !!env.SHOPIFY_HIERARCHICAL_NAV_HANDLE ? [`hierarchicalCategories.lvl0`, `hierarchicalCategories.lvl1`, `hierarchicalCategories.lvl2`] : []
-            ),
-            filter,
-            page,
-            attributesToRetrieve: ["id", "handle", "title", "priceRange", "featuredImage", "minPrice", "variants", "images", "avgRating", "totalReviews", "vendor"],
-          },
-        ],
-      })
+  if (isDemoMode()) return getDemoProducts()
 
-      const [independentFacets, results] = res || []
+  try {
+    // use a single http request to search for products and facets, utilize separate query for facet values that should be independent from the search query
+    const res = await meilisearch?.multiSearch<CommerceProduct>({
+      queries: [
+        {
+          indexUid: env.MEILISEARCH_PRODUCTS_INDEX,
+          q: query,
+          facets: ["hierarchicalCategories.lvl0", "hierarchicalCategories.lvl1", "hierarchicalCategories.lvl2"],
+        },
+        {
+          indexUid: env.MEILISEARCH_PRODUCTS_INDEX,
+          sort: sortBy ? [sortBy] : undefined,
+          limit: HITS_PER_PAGE,
+          hitsPerPage: HITS_PER_PAGE,
+          facets: ["vendor", "variants.availableForSale", "flatOptions.Color", "minPrice", "avgRating"].concat(
+            !!env.SHOPIFY_HIERARCHICAL_NAV_HANDLE ? [`hierarchicalCategories.lvl0`, `hierarchicalCategories.lvl1`, `hierarchicalCategories.lvl2`] : []
+          ),
+          filter,
+          page,
+          attributesToRetrieve: ["id", "handle", "title", "priceRange", "featuredImage", "minPrice", "variants", "images", "avgRating", "totalReviews", "vendor"],
+        },
+      ],
+    })
 
-      const hits = results?.hits || []
-      const totalPages = results?.totalPages || 0
-      const facetDistribution = results?.facetDistribution || {}
-      const totalHits = results.totalHits || 0
-      const independentFacetDistribution = independentFacets.facetDistribution || {}
+    const [independentFacets, results] = res || []
 
-      return { hits, totalPages, facetDistribution, totalHits, independentFacetDistribution }
-    } catch (err) {
-      return { hits: [], totalPages: 0, facetDistribution: {}, totalHits: 0, independentFacetDistribution: {} }
-    }
-  },
-  ["products-search"],
-  { revalidate: 3600 }
-)
+    const hits = results?.hits || []
+    const totalPages = results?.totalPages || 0
+    const facetDistribution = results?.facetDistribution || {}
+    const totalHits = results.totalHits || 0
+    const independentFacetDistribution = independentFacets.facetDistribution || {}
+
+    return { hits, totalPages, facetDistribution, totalHits, independentFacetDistribution }
+  } catch (err) {
+    return { hits: [], totalPages: 0, facetDistribution: {}, totalHits: 0, independentFacetDistribution: {} }
+  }
+}

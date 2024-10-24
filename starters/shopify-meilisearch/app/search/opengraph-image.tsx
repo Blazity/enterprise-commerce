@@ -4,15 +4,10 @@
 import { env } from "env.mjs"
 import { ImageResponse } from "next/og"
 
-export const revalidate = 86400
-export const dynamic = "force-static"
-
 export const size = {
   width: 1200,
   height: 630,
 }
-
-export const contentType = "image/png"
 
 export default async function Image() {
   const interRegular = fetch(new URL(`${env.LIVE_URL}/fonts/Inter-Regular.ttf`)).then((res) => res.arrayBuffer())

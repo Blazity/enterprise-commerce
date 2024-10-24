@@ -1,18 +1,19 @@
-import { PlatformCollection } from "lib/shopify/types"
+import type { Metadata } from "next"
+
+import { CategoryView } from "views/category/category-view"
+import type { PlatformCollection } from "lib/shopify/types"
 import { meilisearch } from "clients/search"
 import { env } from "env.mjs"
-import type { Metadata } from "next"
 import { isDemoMode } from "utils/demo-utils"
-import { CategoryView } from "views/category/category-view"
-
-export const revalidate = 86400
-export const dynamic = "force-static"
+import { Suspense } from "react"
 
 interface CategoryPageProps {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
-export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {
+export async function generateMetadata(props: CategoryPageProps): Promise<Metadata> {
+  const params = await props.params
+
   return {
     title: `${params.slug} | Enterprise Commerce`,
     description: "In excepteur elit mollit in.",
@@ -34,5 +35,9 @@ export async function generateStaticParams() {
 }
 
 export default async function CategoryPage({ params }: CategoryPageProps) {
-  return <CategoryView params={params} />
+  return (
+    <Suspense>
+      <CategoryView params={params} />
+    </Suspense>
+  )
 }

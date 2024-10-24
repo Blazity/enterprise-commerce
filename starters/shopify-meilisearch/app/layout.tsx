@@ -1,6 +1,5 @@
 import "./globals.css"
 
-import nextDynamic from "next/dynamic"
 import Script from "next/script"
 import { Suspense } from "react"
 import { Toaster } from "sonner"
@@ -16,10 +15,7 @@ import { NavigationBar } from "components/navigation-bar/navigation-bar"
 import { mobileInlineScript } from "components/navigation-bar/mobile-inline-script"
 import { Footer } from "components/footer"
 import { Modals } from "components/modals/modals"
-
-const DraftToolbar = nextDynamic(() => import("views/draft-toolbar"), { ssr: false })
-
-export const revalidate = 86400
+import DraftToolbar from "views/draft-toolbar"
 
 const navigationItems: NavItem[] = [
   {
@@ -250,8 +246,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <CartView />
 
         <Toaster position="bottom-left" />
-
-        <DraftToolbar />
+        <Suspense>
+          <DraftToolbar />
+        </Suspense>
 
         <Suspense>
           <FlagValues />

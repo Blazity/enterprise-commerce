@@ -6,6 +6,10 @@ import withPlugins from "next-compose-plugins"
  * @type {import('next').NextConfig}
  */
 const config = withPlugins([[withVercelToolbar(), withBundleAnalyzer({ enabled: process.env.ANALYZE === "true" })]], {
+  experimental: {
+    dynamicIO: true,
+    ppr: "incremental",
+  },
   reactStrictMode: true,
   logging: {
     fetches: {

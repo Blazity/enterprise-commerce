@@ -1,14 +1,14 @@
 import { format } from "date-fns/format"
 import { getAllPages, getPage } from "app/actions/page.actions"
 
-export const revalidate = 86400
-export const dynamic = "force-static"
-export const dynamicParams = true
-
 export { generateMetadata } from "./metadata"
 
-export default async function StaticPage({ params: { slug } }: { params: { slug: string } }) {
-  const page = await getPage(slug)
+export type StaticPageProps = {
+  params: Promise<{ slug: string }>
+}
+export default async function StaticPage(props: StaticPageProps) {
+  const params = await props.params
+  const page = await getPage(params.slug)
 
   if (!page) return null
 
@@ -24,7 +24,9 @@ export default async function StaticPage({ params: { slug } }: { params: { slug:
 }
 
 export async function generateStaticParams() {
-  const pages = (await getAllPages()) || []
+  const pages = await getAllPages()
+
+  if (!pages) return []
 
   return pages.map((page) => ({
     slug: page.handle,

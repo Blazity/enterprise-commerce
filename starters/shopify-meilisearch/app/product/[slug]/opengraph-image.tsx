@@ -6,22 +6,21 @@ import { getProduct } from "app/actions/product.actions"
 import { removeOptionsFromUrl } from "utils/product-options-utils"
 import { env } from "env.mjs"
 
-export const revalidate = 86400
-
-export const dynamic = "force-static"
-
 export const size = {
   width: 1200,
   height: 630,
 }
 
-export const contentType = "image/png"
+type ImageProps = {
+  params: Promise<{ slug: string }>
+}
 
-export default async function Image({ params: { slug } }: { params: { slug: string } }) {
+export default async function Image({ params: promiseParams }: ImageProps) {
+  const params = await promiseParams
   const interRegular = fetch(new URL(`${env.LIVE_URL}/fonts/Inter-Regular.ttf`)).then((res) => res.arrayBuffer())
   const interBold = fetch(new URL(`${env.LIVE_URL}/fonts/Inter-Bold.ttf`)).then((res) => res.arrayBuffer())
 
-  const product = await getProduct(removeOptionsFromUrl(slug))
+  const product = await getProduct(removeOptionsFromUrl(params.slug))
 
   return new ImageResponse(
     (
