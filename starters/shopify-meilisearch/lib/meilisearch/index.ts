@@ -36,13 +36,8 @@ type SearchDocumentsArgs<S extends SearchParams = SearchParams> = {
 
 const searchDocuments = async <Document extends Record<string, unknown>, S extends SearchParams>(args: SearchDocumentsArgs<S>, client: MeiliSearch) => {
   const { indexName, query, options } = args
-  const index = await client.getIndex<Document>(indexName)
 
-  if (!index) {
-    throw new Error("Missing index" + indexName)
-  }
-
-  const results = await index.search<Document, S>(query, options)
+  const results = await client.index<Document>(indexName).search<Document, S>(query, options)
 
   return results
 }
@@ -55,13 +50,8 @@ type UpdateDocumentsArgs<Document extends Record<string, unknown>> = {
 
 const updateDocuments = async <Document extends Record<string, unknown>>(args: UpdateDocumentsArgs<Document>, client: MeiliSearch) => {
   const { documents, indexName, options } = args
-  const index = await client.getIndex<Document>(indexName)
 
-  if (!index) {
-    throw new Error("Missing index" + index)
-  }
-
-  const result = await index.updateDocuments(documents, options)
+  const result = await client.index<Document>(indexName).updateDocuments(documents, options)
 
   return result
 }
@@ -73,13 +63,8 @@ type DeleteDocumentsArgs = {
 
 const deleteDocuments = async <Document extends Record<string, unknown>>(args: DeleteDocumentsArgs, client: MeiliSearch) => {
   const { params, indexName } = args
-  const index = await client.getIndex<Document>(indexName)
 
-  if (!index) {
-    throw new Error("Missing index" + index)
-  }
-
-  const result = await index.deleteDocuments(params)
+  const result = await client.index<Document>(indexName).deleteDocuments(params)
 
   return result
 }
@@ -92,13 +77,8 @@ type CreateDocumentsArgs<Document extends Record<string, unknown>> = {
 
 const createDocuments = async <Document extends Record<string, unknown>>(args: CreateDocumentsArgs<Document>, client: MeiliSearch) => {
   const { documents, indexName, options } = args
-  const index = await client.getIndex<Document>(indexName)
 
-  if (!index) {
-    throw new Error("Missing index" + index)
-  }
-
-  const result = await index.addDocuments(documents, options)
+  const result = await client.index<Document>(indexName).addDocuments(documents, options)
 
   return result
 }
@@ -110,13 +90,8 @@ type GetDocumentsArgs<Document extends Record<string, any>> = {
 
 const getDocuments = async <Document extends Record<string, unknown>>(args: GetDocumentsArgs<Document>, client: MeiliSearch) => {
   const { indexName, options } = args
-  const index = await client.getIndex<Document>(indexName)
 
-  if (!index) {
-    throw new Error("Missing index" + index)
-  }
-
-  const result = await index.getDocuments<Document>(options)
+  const result = await client.index<Document>(indexName).getDocuments<Document>(options)
 
   return result
 }

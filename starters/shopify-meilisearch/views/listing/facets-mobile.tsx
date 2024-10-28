@@ -3,7 +3,7 @@
 import { Button } from "components/ui/button-old"
 import { Placeholder } from "components/generic-modal"
 import { FiltersIcon } from "components/icons/filters-icon"
-import { CategoriesDistribution } from "meilisearch"
+import type { CategoriesDistribution } from "meilisearch"
 import dynamic from "next/dynamic"
 import { useModalStore } from "stores/modal-store"
 

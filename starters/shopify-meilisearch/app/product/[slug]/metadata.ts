@@ -1,10 +1,10 @@
+import { getProduct } from "clients/search"
+import { env } from "env.mjs"
 import { Metadata } from "next"
 import { Product, WithContext } from "schema-dts"
-import { getProduct } from "app/actions/product.actions"
-import { env } from "env.mjs"
+import type { CommerceProduct } from "types"
 import { makeKeywords } from "utils/make-keywords"
 import { removeOptionsFromUrl } from "utils/product-options-utils"
-import type { CommerceProduct } from "types"
 import { slugToName } from "utils/slug-name"
 
 interface ProductProps {

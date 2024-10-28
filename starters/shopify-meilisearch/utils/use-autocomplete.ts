@@ -2,8 +2,8 @@ import { type ChangeEvent, useEffect, useState, useTransition } from "react"
 
 import { useDebounce } from "@uidotdev/usehooks"
 
-import { searchProducts } from "app/actions/product.actions"
 import type { CommerceProduct } from "types"
+import { searchProducts } from "app/actions/product.actions"
 
 /*
  * Callback is optional to be called every time the query changes
