@@ -1,18 +1,25 @@
 "use client"
 
-import type { PlatformVariant } from "lib/shopify/types"
-import { addCartItem, getItemAvailability } from "app/actions/cart.actions"
-import { Button } from "components/ui/button"
 import { useEffect, useState } from "react"
+import { toast } from "sonner"
+
+import type { PlatformVariant } from "lib/shopify/types"
+
+import { addCartItem, getItemAvailability } from "app/actions/cart.actions"
+
+import { Button } from "components/ui/button"
+import { BagIcon } from "components/icons/bag-icon"
+
 import { cn } from "utils/cn"
 import { getCookie } from "utils/get-cookie"
 import type { Combination } from "utils/product-options-utils"
-import { COOKIE_CART_ID } from "constants/index"
+
 import { useAddProductStore } from "stores/add-product-store"
-import { toast } from "sonner"
 import { useCartStore } from "stores/cart-store"
+
 import type { CommerceProduct } from "types"
-import { BagIcon } from "components/icons/bag-icon"
+
+import { COOKIE_CART_ID } from "constants/index"
 
 export function AddToCartButton({ className, product, combination }: { className?: string; product: CommerceProduct; combination: Combination | PlatformVariant | undefined }) {
   const [isPending, setIsPending] = useState(false)

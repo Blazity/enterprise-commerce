@@ -1,11 +1,6 @@
-import { meilisearch } from "clients/search"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "components/ui/carousel"
 import { ProductCard } from "components/product-card"
-import { unstable_cache } from "next/cache"
-import { ComparisonOperators, FilterBuilder } from "lib/meilisearch/filter-builder"
-import { getDemoProducts, isDemoMode } from "utils/demo-utils"
-import type { CommerceProduct } from "types"
-import { env } from "env.mjs"
+import { getSimilarProducts } from "clients/search"
 
 interface SimilarProductsSectionProps {
   slug: string
@@ -33,37 +28,3 @@ export async function SimilarProductsSection({ slug, collectionHandle }: Similar
     </section>
   )
 }
-
-const getSimilarProducts = unstable_cache(
-  async (handle: string, collection: string | undefined) => {
-    const limit = 8
-
-    if (isDemoMode()) return getDemoProducts().hits.slice(0, limit)
-
-    const similarSearchResults = await meilisearch.searchDocuments<CommerceProduct>({
-      indexName: env.MEILISEARCH_PRODUCTS_INDEX,
-      query: handle,
-      options: {
-        matchingStrategy: "last",
-        limit,
-        hybrid: { semanticRatio: 1 },
-      },
-    })
-
-    let collectionSearchResults: { hits: CommerceProduct[] } = { hits: [] }
-    if (similarSearchResults.hits.length < limit) {
-      collectionSearchResults = await meilisearch.searchDocuments<CommerceProduct>({
-        indexName: env.MEILISEARCH_PRODUCTS_INDEX,
-        options: {
-          matchingStrategy: "last",
-          limit: limit - similarSearchResults.hits.length,
-          filter: new FilterBuilder().where("collections.handle", ComparisonOperators.Equal, collection).build(),
-        },
-      })
-    }
-
-    return [...similarSearchResults.hits, ...collectionSearchResults.hits]
-  },
-  ["product-by-handle"],
-  { revalidate: 3600 }
-)

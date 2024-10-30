@@ -1,24 +1,26 @@
 import Link from "next/link"
 
 import { ReviewButton } from "./review-button"
-import { ReviewCard, type ReviewCardProps } from "./review-card"
+import { ReviewCard } from "./review-card"
 import { Carousel, CarouselContent, CarouselNext, CarouselPrevious } from "components/ui/carousel"
 import { RobotIcon } from "components/icons/robot-icon"
 import { isOptIn, notifyOptIn } from "utils/opt-in"
 import { StarIcon } from "components/icons/star-icon"
 import { cn } from "utils/cn"
 import { buttonVariants } from "components/ui/button"
+import { getProductReviews } from "clients/search"
+import { removeOptionsFromUrl } from "utils/product-options-utils"
 
 type ReviewsSectionProps = {
   productId: string
   productHandle: string
-  reviews: ReviewCardProps[]
-  total: number
   avgRating: number | undefined
   summary?: string
   className?: string
+  slug: string
 }
-export const ReviewsSection = ({ productId, productHandle, reviews, total, summary, avgRating, className }: ReviewsSectionProps) => {
+export const ReviewsSection = async ({ productId, productHandle, summary, avgRating, className, slug }: ReviewsSectionProps) => {
+  const { reviews, total } = await getProductReviews(removeOptionsFromUrl(slug), { limit: 16 })
   if (!isOptIn("reviews")) {
     notifyOptIn({ feature: "reviews", source: "components/ReviewsSection" })
 
@@ -69,7 +71,7 @@ export const ReviewsSection = ({ productId, productHandle, reviews, total, summa
           <Carousel opts={{ skipSnaps: true }}>
             <CarouselPrevious className="absolute -left-20 top-[40%] hidden xl:flex" />
             <CarouselContent className="ml-0 gap-6">
-              {reviews.map(({ body, author, rating, created_at }) => (
+              {reviews.map(({ body, rating, created_at, reviewer: { name: author } }) => (
                 <ReviewCard key={created_at} body={body} author={author} rating={rating} created_at={created_at} />
               ))}
             </CarouselContent>

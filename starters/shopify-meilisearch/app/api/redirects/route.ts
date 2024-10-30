@@ -6,8 +6,6 @@ type RedirectEntry = {
   permanent: boolean
 }
 
-export const runtime = "edge"
-
 export function GET(request: NextRequest) {
   const pathname = request.nextUrl.searchParams.get("pathname")
 

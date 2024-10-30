@@ -1,29 +1,32 @@
-import { notFound } from "next/navigation"
 import { Suspense } from "react"
-import { getProduct, getProductReviews } from "app/actions/product.actions"
+import { notFound } from "next/navigation"
+
+import { getProduct, meilisearch } from "clients/search"
+
+import { env } from "env.mjs"
+
+import { isDemoMode } from "utils/demo-utils"
+import { slugToName } from "utils/slug-name"
+import { CurrencyType, mapCurrencyToSign } from "utils/map-currency-to-sign"
+import { getCombination, getOptionsFromUrl, hasValidOption, removeOptionsFromUrl } from "utils/product-options-utils"
+
 import { Breadcrumbs } from "components/breadcrumbs"
 
-import { getCombination, getOptionsFromUrl, hasValidOption, removeOptionsFromUrl } from "utils/product-options-utils"
 import { BackButton } from "views/product/back-button"
 import { FavoriteMarker } from "views/product/favorite-marker"
 import { SimilarProductsSection } from "views/product/similar-products-section"
 import { SimilarProductsSectionSkeleton } from "views/product/similar-product-section-skeleton"
 import { VariantsSection } from "views/product/variants-section"
-import { slugToName } from "utils/slug-name"
-
-import { generateJsonLd } from "./metadata"
-import { ReviewsSection } from "views/product/reviews-section"
-
-import type { CommerceProduct } from "types"
-import { isDemoMode } from "utils/demo-utils"
-import { meilisearch } from "clients/search"
-import { env } from "env.mjs"
 import { ProductTitle } from "views/product/product-title"
-import { CurrencyType, mapCurrencyToSign } from "utils/map-currency-to-sign"
 import { ProductImages } from "views/product/product-images"
 import { RightSection } from "views/product/right-section"
 import { FaqSection } from "views/product/faq-section"
 import { AddToCartButton } from "views/product/add-to-cart-button"
+import { ReviewsSection } from "views/product/reviews-section"
+
+import type { CommerceProduct } from "types"
+
+import { generateJsonLd } from "./metadata"
 
 export const revalidate = 86400
 export const dynamic = "force-static"
@@ -32,8 +35,6 @@ export const dynamicParams = true
 interface ProductProps {
   params: { slug: string }
 }
-
-export { generateMetadata } from "./metadata"
 
 export async function generateStaticParams() {
   if (isDemoMode()) return []
@@ -50,7 +51,7 @@ export async function generateStaticParams() {
 }
 
 export default async function Product({ params: { slug } }: ProductProps) {
-  const [product, { reviews, total: totalReviews }] = await Promise.all([getProduct(removeOptionsFromUrl(slug)), getProductReviews(removeOptionsFromUrl(slug), { limit: 16 })])
+  const product = await getProduct(removeOptionsFromUrl(slug))
 
   const { color } = getOptionsFromUrl(slug)
   const hasInvalidOptions = !hasValidOption(product?.variants, "color", color)
@@ -97,14 +98,7 @@ export default async function Product({ params: { slug } }: ProductProps) {
           </RightSection>
         </div>
         <Suspense>
-          <ReviewsSection
-            avgRating={product.avgRating}
-            productHandle={product.handle}
-            productId={product.id}
-            reviews={reviews?.map((review) => ({ ...review, author: review.reviewer.name })) || []}
-            total={totalReviews}
-            summary={product.reviewsSummary}
-          />
+          <ReviewsSection avgRating={product.avgRating} productHandle={product.handle} productId={product.id} slug={slug} summary={product.reviewsSummary} />
         </Suspense>
         <Suspense fallback={<SimilarProductsSectionSkeleton />}>
           <SimilarProductsSection collectionHandle={lastCollection?.handle} slug={slug} />

@@ -1,17 +1,19 @@
 "use client"
 
-import { PlatformUser } from "lib/shopify/types"
+import { useForm } from "react-hook-form"
+import { toast } from "sonner"
+import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { getCurrentUser, updateUser } from "app/actions/user.actions"
+
+import { PlatformUser } from "lib/shopify/types"
+
 import { Button } from "components/ui/button-old"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "components/ui/card"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "components/ui/form"
 import { Input } from "components/ui/input"
 
-import { useForm } from "react-hook-form"
-import { toast } from "sonner"
 import { useUserStore } from "stores/user-store"
-import { z } from "zod"
+import { getCurrentUser, updateUser } from "app/actions/user.actions"
 
 const formSchema = z.object({
   firstName: z.string().max(64).optional(),

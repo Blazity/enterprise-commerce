@@ -2,10 +2,16 @@
 
 import { VercelToolbar } from "@vercel/toolbar/next"
 import { usePathname } from "next/navigation"
+import { useEffect, useState } from "react"
 
 export default function DraftToolbar() {
+  const [hasToolbarHash, setHasToolbarHash] = useState(false)
   const pathname = usePathname()
-  const hasToolbarHash = window.location.hash === "#toolbar"
+
+  useEffect(() => {
+    if (typeof window === "undefined") return
+    setHasToolbarHash(window.location.hash === "#toolbar")
+  }, [pathname])
 
   return pathname.endsWith("/draft") || hasToolbarHash ? <VercelToolbar /> : null
 }

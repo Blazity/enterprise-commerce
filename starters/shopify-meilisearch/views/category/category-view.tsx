@@ -1,6 +1,6 @@
-import { getCollection } from "app/actions/collection.actions"
 import { notFound } from "next/navigation"
 import { SearchParamsType } from "types"
+import { getCollection } from "clients/search"
 import { SearchView } from "views/search/search-view"
 
 interface CategoryViewProps {

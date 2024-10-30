@@ -9,7 +9,7 @@ type ReviewButtonProps = {
 }
 
 export const ReviewButton = ({ productId }: ReviewButtonProps) => {
-  const open = useModalStore((s) => s.openModal)
+  const { openModal } = useModalStore()
   const [_, setPid] = useQueryState("pid")
 
   return (
@@ -18,7 +18,7 @@ export const ReviewButton = ({ productId }: ReviewButtonProps) => {
       className="bg-white transition-all hover:scale-105"
       onClick={() => {
         setPid(productId)
-        open("review")
+        openModal("review")
       }}
     >
       Leave a Review
