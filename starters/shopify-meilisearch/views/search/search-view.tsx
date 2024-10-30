@@ -1,20 +1,17 @@
 import { Suspense } from "react"
 import type { PlatformCollection } from "lib/shopify/types"
-import { unstable_cache } from "next/cache"
 import { createSearchParamsCache, parseAsArrayOf, parseAsInteger, parseAsString } from "nuqs/server"
-import { meilisearch } from "clients/search"
 
 import { ComparisonOperators, FilterBuilder } from "lib/meilisearch/filter-builder"
 import { composeFilters } from "views/listing/compose-filters"
 import { FacetsDesktop } from "views/listing/facets-desktop"
 import { HitsSection } from "views/listing/hits-section"
 import { PaginationSection } from "views/listing/pagination-section"
-import { getDemoProducts, isDemoMode } from "utils/demo-utils"
-import { env } from "env.mjs"
-import { CommerceProduct, SearchParamsType } from "types"
-import { HIERARCHICAL_SEPARATOR, HITS_PER_PAGE } from "constants/index"
+import { SearchParamsType } from "types"
+import { HIERARCHICAL_SEPARATOR } from "constants/index"
 import { Controls } from "views/listing/controls"
 import { FacetsMobile } from "views/listing/facets-mobile"
+import { getFilteredProducts } from "lib/meilisearch"
 
 interface SearchViewProps {
   searchParams: SearchParamsType
@@ -56,12 +53,13 @@ export async function SearchView({ searchParams, disabledFacets, collection }: S
     filterBuilder.where("collections.handle", ComparisonOperators.Equal, collection.handle)
   }
 
-  const { facetDistribution, hits, totalPages, totalHits, independentFacetDistribution } = await searchProducts(
-    q,
-    sortBy,
-    page,
-    composeFilters(filterBuilder, rest, HIERARCHICAL_SEPARATOR).build()
-  )
+  const {
+    facetDistribution,
+    results: hits,
+    totalPages,
+    totalHits,
+    independentFacetDistribution,
+  } = await getFilteredProducts(q, sortBy, page, composeFilters(filterBuilder, rest, HIERARCHICAL_SEPARATOR).build())
 
   return (
     <div className="mx-auto w-full max-w-[1920px] p-4 md:px-12 md:pb-24 md:pt-4">
@@ -95,48 +93,3 @@ export async function SearchView({ searchParams, disabledFacets, collection }: S
     </div>
   )
 }
-
-const searchProducts = unstable_cache(
-  async (query: string, sortBy: string, page: number, filter: string) => {
-    if (isDemoMode()) return getDemoProducts()
-
-    try {
-      // use a single http request to search for products and facets, utilize separate query for facet values that should be independent from the search query
-      const res = await meilisearch?.multiSearch<CommerceProduct>({
-        queries: [
-          {
-            indexUid: env.MEILISEARCH_PRODUCTS_INDEX,
-            q: query,
-            facets: ["hierarchicalCategories.lvl0", "hierarchicalCategories.lvl1", "hierarchicalCategories.lvl2"],
-          },
-          {
-            indexUid: env.MEILISEARCH_PRODUCTS_INDEX,
-            sort: sortBy ? [sortBy] : undefined,
-            limit: HITS_PER_PAGE,
-            hitsPerPage: HITS_PER_PAGE,
-            facets: ["vendor", "variants.availableForSale", "flatOptions.Color", "minPrice", "avgRating"].concat(
-              !!env.SHOPIFY_HIERARCHICAL_NAV_HANDLE ? [`hierarchicalCategories.lvl0`, `hierarchicalCategories.lvl1`, `hierarchicalCategories.lvl2`] : []
-            ),
-            filter,
-            page,
-            attributesToRetrieve: ["id", "handle", "title", "priceRange", "featuredImage", "minPrice", "variants", "images", "avgRating", "totalReviews", "vendor"],
-          },
-        ],
-      })
-
-      const [independentFacets, results] = res || []
-
-      const hits = results?.hits || []
-      const totalPages = results?.totalPages || 0
-      const facetDistribution = results?.facetDistribution || {}
-      const totalHits = results.totalHits || 0
-      const independentFacetDistribution = independentFacets.facetDistribution || {}
-
-      return { hits, totalPages, facetDistribution, totalHits, independentFacetDistribution }
-    } catch (err) {
-      return { hits: [], totalPages: 0, facetDistribution: {}, totalHits: 0, independentFacetDistribution: {} }
-    }
-  },
-  ["products-search"],
-  { revalidate: 3600 }
-)

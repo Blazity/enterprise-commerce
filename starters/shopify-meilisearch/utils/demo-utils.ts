@@ -1,14 +1,18 @@
 import { Review } from "lib/reviews/types"
-import { PlatformCollection } from "lib/shopify/types"
+import type { PlatformCollection } from "lib/shopify/types"
+import type { CategoriesDistribution, Facet } from "meilisearch"
 import type { CommerceProduct } from "types"
 
-export function getDemoProducts() {
-  if (!isDemoMode()) return { hits: [], totalPages: 0, facetDistribution: {}, totalHits: 0, independentFacetDistribution: {} }
-
-  const allProducts = require("public/demo-data.json") as { results: CommerceProduct[]; offset: number; limit: number; total: number }
-
+export function getDemoProducts(): {
+  results: CommerceProduct[]
+  totalPages: number
+  facetDistribution: Record<Facet, CategoriesDistribution>
+  totalHits: number
+  independentFacetDistribution: Record<Facet, CategoriesDistribution>
+} {
+  const allProducts = require("public/demo-data.json")
   return {
-    hits: allProducts.results,
+    results: allProducts.results,
     totalPages: 1,
     facetDistribution: {},
     totalHits: allProducts.results.length,
@@ -17,15 +21,23 @@ export function getDemoProducts() {
 }
 
 export function getDemoSingleProduct(handle: string) {
-  return getDemoProducts().hits.find((p) => p.handle === handle) || null
+  return getDemoProducts()?.results?.find((p) => p.handle === handle) || null
 }
 
 export function getDemoCategories() {
-  return require("public/demo-categories-data.json") as PlatformCollection[]
+  const allCategories = require("public/demo-categories-data.json") as PlatformCollection[]
+
+  return {
+    results: allCategories,
+    totalPages: 1,
+    facetDistribution: {},
+    totalHits: allCategories.length,
+    independentFacetDistribution: {},
+  }
 }
 
 export function getDemoSingleCategory(handle: string) {
-  return getDemoCategories().find((c: { handle: string }) => c.handle === handle) || null
+  return getDemoCategories().results.find((c: { handle: string }) => c.handle === handle) || null
 }
 
 export function getDemoProductReviews() {

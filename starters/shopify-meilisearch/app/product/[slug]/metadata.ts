@@ -1,4 +1,4 @@
-import { getProduct } from "clients/search"
+import { getProduct } from "lib/meilisearch"
 import { env } from "env.mjs"
 import { Metadata } from "next"
 import { Product, WithContext } from "schema-dts"

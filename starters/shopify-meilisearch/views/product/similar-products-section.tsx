@@ -1,6 +1,6 @@
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "components/ui/carousel"
 import { ProductCard } from "components/product-card"
-import { getSimilarProducts } from "clients/search"
+import { getSimilarProducts } from "lib/meilisearch"
 
 interface SimilarProductsSectionProps {
   slug: string

@@ -1,12 +1,11 @@
-import { meilisearch } from "clients/search"
 import { CategoryCard } from "components/category-card"
-import { unstable_cache } from "next/cache"
-import { env } from "env.mjs"
 import { cn } from "utils/cn"
-import { getDemoCategories, isDemoMode } from "utils/demo-utils"
+import { getCategories } from "lib/meilisearch"
 
 export async function CategoriesSection() {
-  const categories = await getCategories()
+  const { results: categories } = await getCategories({
+    limit: 4,
+  })
 
   if (!categories?.length) return null
 
@@ -35,20 +34,3 @@ export async function CategoriesSection() {
     </div>
   )
 }
-
-const getCategories = unstable_cache(
-  async () => {
-    if (isDemoMode()) return getDemoCategories().slice(0, 4)
-
-    const results = await meilisearch.searchDocuments({
-      indexName: env.MEILISEARCH_CATEGORIES_INDEX,
-      options: {
-        limit: 4,
-      },
-    })
-
-    return results.hits || []
-  },
-  ["categories-section"],
-  { revalidate: 3600 }
-)

@@ -2,13 +2,12 @@ import { generateObject } from "ai"
 import z from "zod"
 import { openai } from "@ai-sdk/openai"
 import type { Review } from "lib/reviews/types"
-import type { CommerceProduct } from "types"
-import { meilisearch } from "clients/search"
 import { env } from "env.mjs"
 import { authenticate } from "utils/authenticate-api-route"
 import { isOptIn, notifyOptIn } from "utils/opt-in"
 import { unstable_noStore } from "next/cache"
 import { isDemoMode } from "utils/demo-utils"
+import { getAllProducts, getAllReviews, updateProducts } from "lib/meilisearch"
 
 const summarySchema = z.object({
   products: z.array(
@@ -46,25 +45,17 @@ export async function GET(req: Request) {
     return new Response(JSON.stringify({ message: "Sorry, something went wrong" }), { status: 500 })
   }
 
-  const [allReviews, allProducts] = await Promise.all([
-    meilisearch.getDocuments<Review>({
-      indexName: env.MEILISEARCH_REVIEWS_INDEX,
-      options: {
-        limit: 10000,
-        fields: ["body", "title", "product_handle", "rating"],
-        filter: "published=true AND hidden=false",
-      },
+  const [{ reviews }, allProducts] = await Promise.all([
+    getAllReviews({
+      fields: ["body", "title", "product_handle", "rating"],
+      filter: "published=true AND hidden=false",
     }),
-    meilisearch.getDocuments<CommerceProduct>({
-      indexName: env.MEILISEARCH_PRODUCTS_INDEX,
-      options: {
-        limit: 10000,
-        fields: ["handle", "title", "id", "totalReviews"],
-      },
+    getAllProducts({
+      fields: ["handle", "title", "id", "totalReviews"],
     }),
   ])
 
-  const mappedReviews: Record<string, Review[]> = allReviews?.results.reduce(
+  const mappedReviews: Record<string, Review[]> = reviews.reduce(
     (acc, review) => {
       const productHandle = review.product_handle
       if (acc[productHandle]) {
@@ -126,7 +117,7 @@ export async function GET(req: Request) {
     })
     .filter(Boolean)
 
-  await meilisearch.updateDocuments<CommerceProduct>({ indexName: env.MEILISEARCH_PRODUCTS_INDEX, documents: updatedProducts, options: { primaryKey: "id" } })
+  await updateProducts(updatedProducts)
 
   return new Response(JSON.stringify({ message: "Reviews synced" }), { status: 200 })
 }

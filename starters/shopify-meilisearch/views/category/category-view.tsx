@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation"
 import { SearchParamsType } from "types"
-import { getCollection } from "clients/search"
+import { getCollection } from "lib/meilisearch"
 import { SearchView } from "views/search/search-view"
 
 interface CategoryViewProps {

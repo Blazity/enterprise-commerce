@@ -8,7 +8,7 @@ import { isOptIn, notifyOptIn } from "utils/opt-in"
 import { StarIcon } from "components/icons/star-icon"
 import { cn } from "utils/cn"
 import { buttonVariants } from "components/ui/button"
-import { getProductReviews } from "clients/search"
+import { getProductReviews } from "lib/meilisearch"
 import { removeOptionsFromUrl } from "utils/product-options-utils"
 
 type ReviewsSectionProps = {
