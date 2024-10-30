@@ -5,8 +5,6 @@ import React from "react"
 import { type Modal, useModalStore } from "stores/modal-store"
 import { ReviewModal } from "./review-modal"
 
-const LoginModal = dynamic(() => import("./login-modal").then((m) => m.LoginModal), { loading: Placeholder })
-const SignupModal = dynamic(() => import("./signup-modal").then((m) => m.SignupModal), { loading: Placeholder })
 const SearchModal = dynamic(() => import("./search-modal").then((m) => m.SearchModal), { loading: Placeholder })
 
 export function Modals() {
@@ -23,10 +21,6 @@ export function Modals() {
 
 function ModalsFactory({ type }: { type: Modal }) {
   switch (type) {
-    case "login":
-      return <LoginModal />
-    case "signup":
-      return <SignupModal />
     case "search":
       return <SearchModal />
     case "review":
