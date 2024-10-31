@@ -1,10 +1,10 @@
 import { unstable_noStore } from "next/cache"
-import { reviewsClient } from "clients/reviews"
 import { env } from "env.mjs"
 import { authenticate } from "utils/authenticate-api-route"
 import { isOptIn, notifyOptIn } from "utils/opt-in"
 import { isDemoMode } from "utils/demo-utils"
 import { getAllProducts, getAllReviews, updateProducts, updateReviews } from "lib/meilisearch"
+import { getAllProductReviews } from "lib/reviews"
 
 export const maxDuration = 60
 
@@ -30,7 +30,7 @@ export async function GET(req: Request) {
   }
 
   const [allReviews, { results: allProducts }, { reviews }] = await Promise.all([
-    reviewsClient.getAllProductReviews(),
+    getAllProductReviews(),
     getAllProducts({
       fields: ["handle", "title", "avgRating", "totalReviews"],
     }),
