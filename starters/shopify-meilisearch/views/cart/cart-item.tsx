@@ -34,9 +34,9 @@ export function CartItem(props: CartItemProps) {
           <DeleteButton id={props.id} />
 
           <div className="boder-black flex h-[32px] w-[100px] justify-between border p-4 text-[14px] text-neutral-500">
-            <ChangeQuantityButton id={props.id} variantId={props.merchandise.id} quantity={props.quantity - 1} children={"-"} />
+            <ChangeQuantityButton id={props.id} variantId={props.merchandise.id} quantity={props.quantity - 1} productId={props.merchandise.product.id} children={"-"} />
             <div className="flex cursor-not-allowed items-center gap-2 text-black">{props.quantity}</div>
-            <ChangeQuantityButton id={props.id} variantId={props.merchandise.id} quantity={props.quantity + 1} children={"+"} />
+            <ChangeQuantityButton id={props.id} variantId={props.merchandise.id} quantity={props.quantity + 1} productId={props.merchandise.product.id} children={"+"} />
           </div>
         </div>
       </div>

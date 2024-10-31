@@ -8,16 +8,17 @@ interface ChangeQuantityButtonProps {
   id: string
   variantId: string
   quantity: number
+  productId: string
   children: React.ReactNode
 }
 
-export function ChangeQuantityButton({ id, variantId, quantity, children }: ChangeQuantityButtonProps) {
+export function ChangeQuantityButton({ id, variantId, quantity, productId, children }: ChangeQuantityButtonProps) {
   const refresh = useCartStore((prev) => prev.refresh)
   const [isPending, startTransition] = useTransition()
 
   const handleClick = () => {
     startTransition(async () => {
-      const { ok, message } = await updateItemQuantity(null, { itemId: id, variantId, quantity })
+      const { ok, message } = await updateItemQuantity(null, { itemId: id, variantId, quantity, productId })
 
       if (!ok && message) {
         toast.warning(message)
