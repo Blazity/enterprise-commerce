@@ -1,6 +1,6 @@
 import { notFound, redirect } from "next/navigation"
 
-import { getProduct, getProductReviews } from "clients/search"
+import { getProduct, getProductReviews } from "lib/meilisearch"
 
 import { Breadcrumbs } from "components/breadcrumbs"
 

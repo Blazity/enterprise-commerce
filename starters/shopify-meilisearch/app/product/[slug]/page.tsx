@@ -1,10 +1,6 @@
 import { Suspense } from "react"
 import { notFound } from "next/navigation"
 
-import { getProduct, meilisearch } from "clients/search"
-
-import { env } from "env.mjs"
-
 import { isDemoMode } from "utils/demo-utils"
 import { slugToName } from "utils/slug-name"
 import { CurrencyType, mapCurrencyToSign } from "utils/map-currency-to-sign"
@@ -27,6 +23,7 @@ import { ReviewsSection } from "views/product/reviews-section"
 import type { CommerceProduct } from "types"
 
 import { generateJsonLd } from "./metadata"
+import { getProduct, getProducts } from "lib/meilisearch"
 
 export const revalidate = 86400
 export const dynamic = "force-static"
@@ -39,12 +36,9 @@ interface ProductProps {
 export async function generateStaticParams() {
   if (isDemoMode()) return []
 
-  const { results } = await meilisearch.getDocuments<CommerceProduct>({
-    indexName: env.MEILISEARCH_PRODUCTS_INDEX,
-    options: {
-      limit: 50,
-      fields: ["handle"],
-    },
+  const { results } = await getProducts({
+    limit: 50,
+    fields: ["handle"],
   })
 
   return results.map(({ handle }) => ({ slug: handle }))

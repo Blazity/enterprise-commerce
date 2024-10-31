@@ -32,7 +32,6 @@ $ yarn create commerce
 - Highly Scalable SEO Redirects ([Bloom Filters](https://nextjs.org/docs/app/building-your-application/routing/redirecting#managing-redirects-at-scale-advanced))
 - Easy migration - migrate your existing solution in minutes
 - Playwright - write end-to-end tests like a pro
-- Storybook - create, test, and showcase your components
 - T3 Env - manage your environment variables with ease
 - Patch-package - fix external dependencies without losing your mind
 - Components coupling and cohesion graph - a tool for managing component relationships

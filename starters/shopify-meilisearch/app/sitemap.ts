@@ -1,76 +1,71 @@
 import { env } from "env.mjs"
 import { MetadataRoute } from "next"
-import { meilisearch } from "clients/search"
-import { getDemoCategories, getDemoProducts, isDemoMode } from "utils/demo-utils"
-import type { PlatformCollection } from "lib/shopify/types"
-import type { CommerceProduct } from "types"
-
-export const revalidate = 604800
-export const runtime = "nodejs"
-
-const BASE_URL = env.LIVE_URL
-const HITS_PER_PAGE = 24
+import { getCategories, getProducts } from "lib/meilisearch"
+import { HITS_PER_PAGE } from "constants/index"
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes: MetadataRoute.Sitemap = [
     {
-      url: `${BASE_URL}/`,
+      url: `${env.LIVE_URL}/`,
       lastModified: new Date(new Date().setHours(0, 0, 0, 0)),
       changeFrequency: "daily",
       priority: 1,
     },
     {
-      url: `${BASE_URL}/`,
+      url: `${env.LIVE_URL}/`,
       lastModified: new Date(new Date().setHours(0, 0, 0, 0)),
       changeFrequency: "daily",
       priority: 1,
     },
     {
-      url: `${BASE_URL}/terms-conditions`,
+      url: `${env.LIVE_URL}/terms-conditions`,
       lastModified: new Date(),
       priority: 0.1,
     },
     {
-      url: `${BASE_URL}/privacy-policy`,
+      url: `${env.LIVE_URL}/privacy-policy`,
       lastModified: new Date(),
       priority: 0.1,
     },
   ]
 
-  let allHits: CommerceProduct[] = []
-  let allCollections: PlatformCollection[] = []
+  const allHits = (
+    await getProducts({
+      limit: 50,
+      fields: ["handle", "updatedAt"],
+    })
+  ).results
 
-  if (!isDemoMode()) {
-    allHits = await getResults(env.MEILISEARCH_PRODUCTS_INDEX)
-    allCollections = await getResults(env.MEILISEARCH_CATEGORIES_INDEX)
-  } else {
-    allHits = getDemoProducts().hits
-    allCollections = getDemoCategories()
-  }
+  const allCollections = (
+    await getCategories({
+      limit: 50,
+      fields: ["handle", "updatedAt"],
+    })
+  ).results
 
   const paginationRoutes = Array.from({ length: allHits.length / HITS_PER_PAGE }, (_, i) => {
     const item: MetadataRoute.Sitemap[0] = {
-      url: `${BASE_URL}/search?page=${i + 1}`,
+      url: `${env.LIVE_URL}/search?page=${i + 1}`,
       priority: 0.5,
       changeFrequency: "monthly",
     }
     return item
   })
 
-  const productRoutes = allHits.map((hit) => {
+  const productRoutes = allHits.map(({ handle, updatedAt }) => {
     const item: MetadataRoute.Sitemap[0] = {
-      url: `${BASE_URL}/product/${hit.handle}`,
-      lastModified: hit.updatedAt,
+      url: `${env.LIVE_URL}/product/${handle}`,
+      lastModified: updatedAt,
       priority: 0.5,
       changeFrequency: "monthly",
     }
     return item
   })
 
-  const collectionsRoutes = allCollections.map((collection) => {
+  const collectionsRoutes = allCollections.map(({ handle, updatedAt }) => {
     const item: MetadataRoute.Sitemap[0] = {
-      url: `${BASE_URL}/category/${collection.handle}`,
-      lastModified: collection.updatedAt,
+      url: `${env.LIVE_URL}/category/${handle}`,
+      lastModified: updatedAt,
       priority: 0.5,
       changeFrequency: "monthly",
     }
@@ -78,16 +73,4 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   })
 
   return [...staticRoutes, ...paginationRoutes, ...productRoutes, ...collectionsRoutes]
-}
-
-// Pull only 100 results for the case of the demo
-async function getResults<T extends Record<string, any>>(indexName: string) {
-  const response = await meilisearch.getDocuments<T>({
-    indexName,
-    options: {
-      limit: 100,
-    },
-  })
-
-  return response.results as T[]
 }

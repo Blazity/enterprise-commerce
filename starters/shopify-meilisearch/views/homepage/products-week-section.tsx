@@ -1,12 +1,8 @@
-import { meilisearch } from "clients/search"
 import { Carousel, CarouselContent } from "components/ui/carousel"
 import { Skeleton } from "components/ui/skeleton"
-import { env } from "env.mjs"
-import { unstable_cache } from "next/cache"
 import Image from "next/image"
 import Link from "next/link"
-import { getDemoProducts, isDemoMode } from "utils/demo-utils"
-import type { CommerceProduct } from "types"
+import { getNewestProducts } from "lib/meilisearch"
 
 export async function ProductsWeekSection() {
   const items = await getNewestProducts()
@@ -41,24 +37,6 @@ export async function ProductsWeekSection() {
     </div>
   )
 }
-
-const getNewestProducts = unstable_cache(
-  async () => {
-    if (isDemoMode()) return getDemoProducts().hits.slice(0, 8)
-    const results = await meilisearch.searchDocuments<CommerceProduct>({
-      indexName: env.MEILISEARCH_PRODUCTS_INDEX,
-      options: {
-        matchingStrategy: "last",
-        limit: 8,
-        sort: ["updatedAtTimestamp:desc"],
-      },
-    })
-
-    return [...results.hits]
-  },
-  ["newest-products"],
-  { revalidate: 3600 }
-)
 
 export function ProductsWeekSectionSkeleton() {
   return (

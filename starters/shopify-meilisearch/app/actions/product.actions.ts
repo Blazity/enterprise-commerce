@@ -1,6 +1,6 @@
 "use server"
 
-import { meilisearch } from "clients/search"
+import { searchClient } from "lib/meilisearch/client"
 import { env } from "env.mjs"
 import { unstable_cache } from "next/cache"
 import type { CommerceProduct } from "types"
@@ -14,7 +14,7 @@ export const searchProducts = unstable_cache(
         hasMore: false,
       }
 
-    const { hits, estimatedTotalHits } = await meilisearch.searchDocuments<CommerceProduct>({
+    const { hits, estimatedTotalHits } = await searchClient.searchDocuments<CommerceProduct>({
       indexName: env.MEILISEARCH_PRODUCTS_INDEX,
       query,
       options: {

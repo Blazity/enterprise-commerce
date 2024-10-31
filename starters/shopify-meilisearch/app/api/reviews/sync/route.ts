@@ -1,12 +1,10 @@
 import { unstable_noStore } from "next/cache"
-import { meilisearch } from "clients/search"
 import { reviewsClient } from "clients/reviews"
 import { env } from "env.mjs"
 import { authenticate } from "utils/authenticate-api-route"
 import { isOptIn, notifyOptIn } from "utils/opt-in"
-import type { Review } from "lib/reviews/types"
-import type { CommerceProduct } from "types"
 import { isDemoMode } from "utils/demo-utils"
+import { getAllProducts, getAllReviews, updateProducts, updateReviews } from "lib/meilisearch"
 
 export const maxDuration = 60
 
@@ -31,31 +29,23 @@ export async function GET(req: Request) {
     return new Response(JSON.stringify({ message: "Sorry, something went wrong" }), { status: 500 })
   }
 
-  const [allReviews, allProducts, allIndexReviews] = await Promise.all([
+  const [allReviews, { results: allProducts }, { reviews }] = await Promise.all([
     reviewsClient.getAllProductReviews(),
-    meilisearch.getDocuments<CommerceProduct>({
-      indexName: env.MEILISEARCH_PRODUCTS_INDEX,
-      options: {
-        limit: 10000,
-        fields: ["handle", "totalReviews", "avgRating", "id"],
-      },
+    getAllProducts({
+      fields: ["handle", "title", "avgRating", "totalReviews"],
     }),
-    meilisearch.getDocuments<Review>({
-      indexName: env.MEILISEARCH_REVIEWS_INDEX,
-      options: {
-        limit: 10000,
-        fields: ["updated_at", "id"],
-      },
+    getAllReviews({
+      fields: ["updated_at", "id"],
     }),
   ])
 
   const reviewsDelta = allReviews.filter((review) => {
-    const indexReview = allIndexReviews?.results.find((r) => r.id === review.id)
+    const indexReview = reviews?.find((r) => r.id === review.id)
     return indexReview?.updated_at !== review.updated_at
   })
 
-  const productTotalReviewsDelta = allProducts?.results
-    .map((product) => {
+  const productTotalReviewsDelta = allProducts
+    ?.map((product) => {
       const productReviews = allReviews.filter((review) => review.product_handle === product.handle && review.published && !review.hidden)
       if (!!productReviews.length && productReviews.length !== product.totalReviews) {
         const avgRating = productReviews.reduce((acc, review) => acc + review.rating, 0) / productReviews.length || 0
@@ -66,32 +56,12 @@ export async function GET(req: Request) {
     })
     .filter(Boolean)
 
-  if (!reviewsDelta.length && !productTotalReviewsDelta.length) {
+  if (!reviewsDelta.length && !productTotalReviewsDelta?.length) {
     return new Response(JSON.stringify({ message: "Nothing to sync" }), { status: 200 })
   }
 
-  !!reviewsDelta.length &&
-    (async () => {
-      meilisearch.updateDocuments({
-        indexName: env.MEILISEARCH_REVIEWS_INDEX!,
-        documents: reviewsDelta,
-        options: {
-          primaryKey: "id",
-        },
-      })
-      console.log("API/sync: Reviews synced", reviewsDelta.length)
-    })()
-  !!productTotalReviewsDelta.length &&
-    (async () => {
-      meilisearch.updateDocuments({
-        indexName: env.MEILISEARCH_PRODUCTS_INDEX,
-        documents: productTotalReviewsDelta,
-        options: {
-          primaryKey: "id",
-        },
-      })
-      console.log("API/sync:Products synced", productTotalReviewsDelta.length)
-    })()
+  !!reviewsDelta.length && updateReviews(reviewsDelta)
+  !!productTotalReviewsDelta?.length && updateProducts(productTotalReviewsDelta)
 
   return new Response(JSON.stringify({ message: "All synced" }), { status: 200 })
 }

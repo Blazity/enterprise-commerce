@@ -2,7 +2,7 @@ import { makeKeywords } from "utils/make-keywords"
 import { removeOptionsFromUrl } from "utils/product-options-utils"
 import type { ProductReviewsPageProps } from "./page"
 import { Metadata } from "next"
-import { getProduct } from "clients/search"
+import { getProduct } from "lib/meilisearch"
 import { env } from "env.mjs"
 
 export async function generateMetadata({ params: { slug } }: ProductReviewsPageProps): Promise<Metadata> {
