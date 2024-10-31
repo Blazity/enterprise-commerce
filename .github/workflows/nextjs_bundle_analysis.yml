@@ -1,26 +1,20 @@
 name: "Next.js Bundle Analysis"
-
 on:
   push:
     branches:
       - main
       - develop
-    paths:
-      - "starters/**"
   pull_request:
     branches:
       - main
       - develop
-    paths:
-      - "starters/**"
   workflow_dispatch:
 
 jobs:
-  check-changes:
+  changes:
     runs-on: ubuntu-latest
     outputs:
-      meilisearch: ${{ steps.filter.outputs.meilisearch }}
-      algolia: ${{ steps.filter.outputs.algolia }}
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       - uses: actions/checkout@v4
       - uses: dorny/paths-filter@v2
@@ -32,30 +26,33 @@ jobs:
             shopify-algolia:
               - 'starters/shopify-algolia/**'
 
+      - id: set-matrix
+        run: |
+          matrix="{\"include\":["
+          if [[ "${{ steps.filter.outputs.shopify-meilisearch }}" == 'true' || "${{ github.event_name }}" == 'workflow_dispatch' ]]; then
+            matrix="$matrix{\"app\":\"shopify-meilisearch\",\"working-directory\":\"./starters/shopify-meilisearch\"}"
+          fi
+          if [[ "${{ steps.filter.outputs.shopify-algolia }}" == 'true' || "${{ github.event_name }}" == 'workflow_dispatch' ]]; then
+            if [[ "${{ steps.filter.outputs.shopify-meilisearch }}" == 'true' || "${{ github.event_name }}" == 'workflow_dispatch' ]]; then
+              matrix="$matrix,"
+            fi
+            matrix="$matrix{\"app\":\"shopify-algolia\",\"working-directory\":\"./starters/shopify-algolia\"}"
+          fi
+          matrix="$matrix]}"
+          echo "matrix=$matrix" >> $GITHUB_OUTPUT
+
   analyze:
-    needs: check-changes
+    needs: changes
+    if: ${{ needs.changes.outputs.matrix != '{"include":[]}' }}
     strategy:
-      matrix:
-        app:
-          [
-            {
-              name: shopify-meilisearch,
-              working-directory: ./starters/shopify-meilisearch,
-              should-run: needs.check-changes.outputs.shopify-meilisearch,
-            },
-            {
-              name: shopify-algolia,
-              working-directory: ./starters/shopify-algolia,
-              should-run: needs.check-changes.outputs.shopify-algolia,
-            },
-          ]
-    if: ${{ fromJson(matrix.app.should-run) }}
+      fail-fast: false
+      matrix: ${{ fromJson(needs.changes.outputs.matrix) }}
 
     environment: Production
-    name: Analyze (${{ matrix.app.name }})
+    name: Analyze (${{ matrix.app }})
     runs-on: ubuntu-latest
     concurrency:
-      group: ${{ github.workflow }}-${{ matrix.app.name }}-${{ github.ref }}
+      group: ${{ github.workflow }}-${{ matrix.app }}-${{ github.ref }}
       cancel-in-progress: true
 
     env:
@@ -80,85 +77,18 @@ jobs:
 
       - uses: actions/cache@v2
         with:
-          path: "**/node_modules"
-          key: ${{ runner.os }}-${{ matrix.app.name }}-bundle-modules-${{ hashFiles('**/yarn.lock') }}
+          path: ${{ matrix.working-directory }}/node_modules
+          key: ${{ runner.os }}-${{ matrix.app }}-bundle-modules-${{ hashFiles(format('{0}/yarn.lock', matrix.working-directory)) }}
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile --prefer-offline
-        working-directory: ${{ matrix.app.working-directory }}
+        working-directory: ${{ matrix.working-directory }}
 
       - name: Restore next build
         uses: actions/cache@v3
         id: restore-build-cache
         env:
-          cache-name: cache-next-build-${{ matrix.app.name }}
+          cache-name: cache-next-build-${{ matrix.app }}
         with:
-          path: ${{ matrix.app.working-directory }}/.next/cache
-          key: ${{ runner.os }}-build-${{ env.cache-name }}
-
-      - name: Build next.js app
-        env:
-          SKIP_BUILD_PRODUCT_REDIRECTS: 1
-        run: cd ${{ matrix.app.working-directory }} && yarn build && cd -
-
-      - name: Analyze bundle
-        working-directory: ${{ matrix.app.working-directory }}
-        run: node report-bundle-size.js
-
-      - name: Upload bundle
-        uses: actions/upload-artifact@v3
-        with:
-          name: bundle-${{ matrix.app.name }}
-          path: ${{ matrix.app.working-directory }}/.next/analyze/__bundle_analysis.json
-
-      - name: Download base branch bundle stats
-        uses: dawidd6/action-download-artifact@v2
-        if: success() && github.event.number
-        with:
-          workflow: nextjs_bundle_analysis.yml
-          branch: ${{ github.event.pull_request.base.ref }}
-          name: bundle-${{ matrix.app.name }}
-          path: ${{ matrix.app.working-directory }}/.next/analyze/base/bundle
-
-      - name: Compare with base branch bundle
-        if: success() && github.event.number
-        working-directory: ${{ matrix.app.working-directory }}
-        run: |
-          if [ -f .next/analyze/base/bundle/__bundle_analysis.json ]; then
-            npx -p nextjs-bundle-analysis compare
-          else
-            echo "Base bundle analysis file not found. Skipping comparison."
-            exit 0
-          fi
-
-      - name: Get comment body
-        id: get-comment-body
-        if: success() && github.event.number
-        working-directory: ${{ matrix.app.working-directory }}
-        run: |
-          body=$(cat .next/analyze/__bundle_analysis_comment.txt)
-          body="${body//'%'/'%25'}"
-          body="${body//$'\n'/'%0A'}"
-          body="${body//$'\r'/'%0D'}"
-          echo "::set-output name=body::$body"
-
-      - name: Find Comment
-        uses: peter-evans/find-comment@v2
-        if: success() && github.event.number
-        id: fc
-        with:
-          issue-number: ${{ github.event.number }}
-          comment-author: "github-actions[bot]"
-          body-includes: "<!-- NEXTJS_BUNDLE_${{ matrix.app.name }} -->"
-
-      - name: Create or update comment
-        uses: peter-evans/create-or-update-comment@v3
-        if: success() && github.event.number
-        with:
-          issue-number: ${{ github.event.number }}
-          body: |
-            <!-- NEXTJS_BUNDLE_${{ matrix.app.name }} -->
-            # Next.js Bundle Analysis (${{ matrix.app.name }})
-            ${{ steps.get-comment-body.outputs.body }}
-          comment-id: ${{ steps.fc.outputs.comment-id }}
-          edit-mode: replace
+          path: ${{ matrix.working-directory }}/.next/cache
+          key: ${{ runner.os }}-build-${{ env.cache_name }}

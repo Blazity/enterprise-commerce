@@ -5,19 +5,14 @@ on:
       - main
       - master
       - develop
-    paths:
-      - "starters/**"
-  pull_request:
-    paths:
-      - "starters/**"
-  workflow_dispatch:
+  pull_request: null
+  workflow_dispatch: null
 
 jobs:
-  check-changes:
+  changes:
     runs-on: ubuntu-latest
     outputs:
-      meilisearch: ${{ steps.filter.outputs.meilisearch }}
-      algolia: ${{ steps.filter.outputs.algolia }}
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       - uses: actions/checkout@v4
       - uses: dorny/paths-filter@v2
@@ -29,27 +24,30 @@ jobs:
             shopify-algolia:
               - 'starters/shopify-algolia/**'
 
+      - id: set-matrix
+        run: |
+          matrix="{\"include\":["
+          if [[ "${{ steps.filter.outputs.shopify-meilisearch }}" == 'true' || "${{ github.event_name }}" == 'workflow_dispatch' ]]; then
+            matrix="$matrix{\"app\":\"shopify-meilisearch\",\"working-directory\":\"./starters/shopify-meilisearch\"}"
+          fi
+          if [[ "${{ steps.filter.outputs.shopify-algolia }}" == 'true' || "${{ github.event_name }}" == 'workflow_dispatch' ]]; then
+            if [[ "${{ steps.filter.outputs.shopify-meilisearch }}" == 'true' || "${{ github.event_name }}" == 'workflow_dispatch' ]]; then
+              matrix="$matrix,"
+            fi
+            matrix="$matrix{\"app\":\"shopify-algolia\",\"working-directory\":\"./starters/shopify-algolia\"}"
+          fi
+          matrix="$matrix]}"
+          echo "matrix=$matrix" >> $GITHUB_OUTPUT
+
   test:
-    needs: check-changes
+    needs: changes
+    if: ${{ needs.changes.outputs.matrix != '{"include":[]}' }}
     strategy:
-      matrix:
-        app:
-          [
-            {
-              name: shopify-meilisearch,
-              working-directory: ./starters/shopify-meilisearch,
-              should-run: needs.check-changes.outputs.shopify-meilisearch,
-            },
-            {
-              name: shopify-algolia,
-              working-directory: ./starters/shopify-algolia,
-              should-run: needs.check-changes.outputs.shopify-algolia,
-            },
-          ]
-    if: ${{ fromJson(matrix.app.should-run) }}
+      fail-fast: false
+      matrix: ${{ fromJson(needs.changes.outputs.matrix) }}
 
     environment: test
-    name: E2E Tests (${{ matrix.app.name }})
+    name: E2E Tests (${{ matrix.app }})
     env:
       NODE_ENV: test
       SKIP_ENV_VALIDATION: true
@@ -66,7 +64,7 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     concurrency:
-      group: ${{ github.workflow }}-${{ matrix.app.name }}-${{ github.ref }}
+      group: ${{ github.workflow }}-${{ matrix.app }}-${{ github.ref }}
       cancel-in-progress: true
 
     steps:
@@ -76,27 +74,26 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "${{ env.node_version }}"
-
       - uses: actions/cache@v2
         with:
           path: "**/node_modules"
-          key: ${{ runner.os }}-${{ matrix.app.name }}-playwright-modules-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-${{ matrix.app }}-playwright-modules-${{ hashFiles('**/yarn.lock') }}
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile --prefer-offline
-        working-directory: ${{ matrix.app.working-directory }}
+        working-directory: ${{ matrix.working-directory }}
 
       - name: Install Playwright Browsers
         run: yarn playwright install --with-deps
-        working-directory: ${{ matrix.app.working-directory }}
+        working-directory: ${{ matrix.working-directory }}
 
       - name: Run Playwright tests
         run: yarn e2e
-        working-directory: ${{ matrix.app.working-directory }}
+        working-directory: ${{ matrix.working-directory }}
 
       - uses: actions/upload-artifact@v3
         if: always()
         with:
-          name: playwright-report-${{ matrix.app.name }}
-          path: ${{ matrix.app.working-directory }}/playwright-report/
+          name: playwright-report-${{ matrix.app }}
+          path: ${{ matrix.working-directory }}/playwright-report/
           retention-days: 30

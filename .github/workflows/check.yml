@@ -1,20 +1,15 @@
 name: Check
 on:
   push:
-    branches: ["main", "master", "develop", "preprod"]
-    paths:
-      - "starters/**"
+    branches: ["main"]
   pull_request:
     types: [opened, synchronize]
-    paths:
-      - "starters/**"
 
 jobs:
-  check-changes:
+  changes:
     runs-on: ubuntu-latest
     outputs:
-      meilisearch: ${{ steps.filter.outputs.meilisearch }}
-      algolia: ${{ steps.filter.outputs.algolia }}
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       - uses: actions/checkout@v4
       - uses: dorny/paths-filter@v2
@@ -26,31 +21,34 @@ jobs:
             shopify-algolia:
               - 'starters/shopify-algolia/**'
 
-  build:
-    needs: check-changes
+      - id: set-matrix
+        run: |
+          matrix="{\"include\":["
+          if [[ "${{ steps.filter.outputs.shopify-meilisearch }}" == 'true' ]]; then
+            matrix="$matrix{\"app\":\"shopify-meilisearch\",\"working-directory\":\"./starters/shopify-meilisearch\"}"
+          fi
+          if [[ "${{ steps.filter.outputs.shopify-algolia }}" == 'true' ]]; then
+            if [[ "${{ steps.filter.outputs.shopify-meilisearch }}" == 'true' ]]; then
+              matrix="$matrix,"
+            fi
+            matrix="$matrix{\"app\":\"shopify-algolia\",\"working-directory\":\"./starters/shopify-algolia\"}"
+          fi
+          matrix="$matrix]}"
+          echo "matrix=$matrix" >> $GITHUB_OUTPUT
+
+  build-and-test:
+    needs: changes
+    if: ${{ needs.changes.outputs.matrix != '{"include":[]}' }}
     strategy:
-      matrix:
-        app:
-          [
-            {
-              name: shopify-meilisearch,
-              working-directory: ./starters/shopify-meilisearch,
-              should-run: needs.check-changes.outputs.shopify-meilisearch,
-            },
-            {
-              name: shopify-algolia,
-              working-directory: ./starters/shopify-algolia,
-              should-run: needs.check-changes.outputs.shopify-algolia,
-            },
-          ]
-    if: ${{ fromJson(matrix.app.should-run) }}
+      fail-fast: false
+      matrix: ${{ fromJson(needs.changes.outputs.matrix) }}
 
     environment: Production
-    name: Build and Test (${{ matrix.app.name }})
+    name: Build and Test (${{ matrix.app }})
     timeout-minutes: 15
     runs-on: ubuntu-latest
     concurrency:
-      group: ${{ github.workflow }}-${{ matrix.app.name }}-${{ github.ref }}
+      group: ${{ github.workflow }}-${{ matrix.app }}-${{ github.ref }}
       cancel-in-progress: true
 
     env:
@@ -75,28 +73,13 @@ jobs:
 
       - uses: actions/cache@v2
         with:
-          path: "**/node_modules"
-          key: ${{ runner.os }}-${{ matrix.app.name }}-modules-${{ hashFiles('**/yarn.lock') }}
+          path: ${{ matrix.working-directory }}/node_modules
+          key: ${{ runner.os }}-${{ matrix.app }}-modules-${{ hashFiles(format('{0}/yarn.lock', matrix.working-directory)) }}
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile --prefer-offline
-        working-directory: ${{ matrix.app.working-directory }}
+        working-directory: ${{ matrix.working-directory }}
 
       - name: Licenses check
         run: npx --yes license-checker-rseidelsohn --production --excludePrivatePackages --onlyAllow "MPL-2.0;UNKNOWN;MIT;Apache;AAL;BSD;Artistic;CC0;ISC;ISCL;PostgreSQL License;Public Domain;Unlicense;UPL;W3C;WTFPL;Python;CC-;BlueOak"
-
-      - name: Test
-        run: yarn test
-        working-directory: ${{ matrix.app.working-directory }}
-
-      - name: Lint
-        run: yarn lint
-        working-directory: ${{ matrix.app.working-directory }}
-
-      - name: Format
-        run: yarn format
-        working-directory: ${{ matrix.app.working-directory }}
-
-      - name: Build
-        run: yarn build
-        working-directory: ${{ matrix.app.working-directory }}
+        working-directory: ${{ matrix.working-directory }}
