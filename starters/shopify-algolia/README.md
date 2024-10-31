@@ -1,4 +1,4 @@
-🚀 Shopify + Algolia Starter for your next storefront
+# 🚀 Shopify + Algolia Starter for your next storefront
 
 Run this command and let our CLI do the job or [see our documentation for manual setup instruction](https://blazity.com/r/commerce-docs).
 
