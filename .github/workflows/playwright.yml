@@ -46,7 +46,6 @@ jobs:
               should-run: needs.check-changes.outputs.shopify-algolia,
             },
           ]
-    if: ${{ fromJson(matrix.app.should-run) }}
 
     environment: test
     name: E2E Tests (${{ matrix.app.name }})
@@ -70,6 +69,15 @@ jobs:
       cancel-in-progress: true
 
     steps:
+      - name: Check if should run
+        id: should-run
+        run: |
+          should_run=${{ matrix.app.should-run }}
+          if [ "$should_run" != "true" ]; then
+            echo "Skipping job as no changes detected for ${{ matrix.app.name }}"
+            exit 1
+          fi
+
       - uses: actions/checkout@v4
       - run: echo "node_version=$(cat .github/nodejs.version)" >> $GITHUB_ENV
       - name: "use node ${{ env.node_version }}"
