@@ -44,7 +44,6 @@ export function FavoriteMarker({ handle }: { handle: string }) {
           <>
             <HeartIcon
               onAnimationEnd={() => {
-                console.log("end")
                 setIsAnimating(false)
               }}
               className={cn("mr-2 size-5 transition-all", isActive ? "text-red-500 " : "text-black", isAnimating && "animate-single-bounce")}

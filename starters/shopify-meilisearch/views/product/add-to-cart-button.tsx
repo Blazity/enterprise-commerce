@@ -25,7 +25,7 @@ export function AddToCartButton({ className, product, combination }: { className
   const [isPending, setIsPending] = useState(false)
   const [hasAnyAvailable, setHasAnyAvailable] = useState(true)
   const { setProduct, clean } = useAddProductStore()
-  const { cart, refresh } = useCartStore((s) => s)
+  const { cart, refresh, setCheckoutReady } = useCartStore((s) => s)
 
   const disabled = !hasAnyAvailable || !combination?.availableForSale || isPending
 
@@ -42,23 +42,29 @@ export function AddToCartButton({ className, product, combination }: { className
 
     setTimeout(() => clean(), 4500)
 
-    const res = await addCartItem(null, combination.id)
+    setCheckoutReady(false)
+    const res = await addCartItem(null, combination.id, product.id)
 
     if (!res.ok) toast.error("Out of stock")
 
+    setCheckoutReady(true)
     refresh()
   }
 
   useEffect(() => {
     const checkStock = async () => {
       const cartId = getCookie(COOKIE_CART_ID)
-      const itemAvailability = await getItemAvailability(cartId, combination?.id)
+      const itemAvailability = await getItemAvailability({
+        cartId,
+        productId: product.id,
+        variantId: combination?.id,
+      })
 
       itemAvailability && setHasAnyAvailable(itemAvailability.inCartQuantity < (combination?.quantityAvailable || 0))
     }
 
     checkStock()
-  }, [combination?.id, isPending, combination?.quantityAvailable, cart?.items])
+  }, [combination?.id, isPending, combination?.quantityAvailable, cart?.items, product.id])
 
   return (
     <Button

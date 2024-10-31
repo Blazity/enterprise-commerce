@@ -1,11 +1,9 @@
 "use client"
 
-import { getCart } from "app/actions/cart.actions"
-import { COOKIE_CART_ID } from "constants/index"
-import dynamic from "next/dynamic"
 import { useEffect, useTransition } from "react"
+import dynamic from "next/dynamic"
+import { getOrCreateCart } from "app/actions/cart.actions"
 import { useCartStore } from "stores/cart-store"
-import { getCookie } from "utils/get-cookie"
 
 const CartSheet = dynamic(() => import("views/cart/cart-sheet").then((mod) => mod.CartSheet))
 
@@ -17,12 +15,8 @@ export function CartView() {
 
   useEffect(() => {
     startTransition(async () => {
-      const cartId = getCookie(COOKIE_CART_ID)
-
-      if (!cartId) return
-
-      const newCart = await getCart(cartId)
-      newCart && setCart(newCart)
+      const { cart } = await getOrCreateCart()
+      cart && setCart(cart)
     })
   }, [lastUpdatedAt, setCart])
 

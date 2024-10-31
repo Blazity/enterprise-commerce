@@ -1,4 +1,4 @@
-import { getPage } from "clients/storefrontClient"
+import { getPage } from "lib/shopify"
 import { Metadata } from "next"
 
 export async function generateMetadata({ params: { slug } }: { params: { slug: string } }): Promise<Metadata> {
