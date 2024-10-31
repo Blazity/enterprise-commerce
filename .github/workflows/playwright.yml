@@ -5,22 +5,51 @@ on:
       - main
       - master
       - develop
-  pull_request: null
-  workflow_dispatch: null
+    paths:
+      - "starters/**"
+  pull_request:
+    paths:
+      - "starters/**"
+  workflow_dispatch:
 
 jobs:
+  check-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      meilisearch: ${{ steps.filter.outputs.meilisearch }}
+      algolia: ${{ steps.filter.outputs.algolia }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            shopify-meilisearch:
+              - 'starters/shopify-meilisearch/**'
+            shopify-algolia:
+              - 'starters/shopify-algolia/**'
+
   test:
+    needs: check-changes
     strategy:
       matrix:
-        app: [shopify-meilisearch, shopify-algolia]
-        include:
-          - app: shopify-meilisearch
-            working-directory: ./starters/shopify-meilisearch
-          - app: shopify-algolia
-            working-directory: ./starters/shopify-algolia
+        app:
+          [
+            {
+              name: shopify-meilisearch,
+              working-directory: ./starters/shopify-meilisearch,
+              should-run: needs.check-changes.outputs.shopify-meilisearch,
+            },
+            {
+              name: shopify-algolia,
+              working-directory: ./starters/shopify-algolia,
+              should-run: needs.check-changes.outputs.shopify-algolia,
+            },
+          ]
+    if: ${{ fromJson(matrix.app.should-run) }}
 
     environment: test
-    name: E2E Tests (${{ matrix.app }})
+    name: E2E Tests (${{ matrix.app.name }})
     env:
       NODE_ENV: test
       SKIP_ENV_VALIDATION: true
@@ -37,7 +66,7 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     concurrency:
-      group: ${{ github.workflow }}-${{ matrix.app }}-${{ github.ref }}
+      group: ${{ github.workflow }}-${{ matrix.app.name }}-${{ github.ref }}
       cancel-in-progress: true
 
     steps:
@@ -51,23 +80,23 @@ jobs:
       - uses: actions/cache@v2
         with:
           path: "**/node_modules"
-          key: ${{ runner.os }}-${{ matrix.app }}-playwright-modules-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-${{ matrix.app.name }}-playwright-modules-${{ hashFiles('**/yarn.lock') }}
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile --prefer-offline
-        working-directory: ${{ matrix.working-directory }}
+        working-directory: ${{ matrix.app.working-directory }}
 
       - name: Install Playwright Browsers
         run: yarn playwright install --with-deps
-        working-directory: ${{ matrix.working-directory }}
+        working-directory: ${{ matrix.app.working-directory }}
 
       - name: Run Playwright tests
         run: yarn e2e
-        working-directory: ${{ matrix.working-directory }}
+        working-directory: ${{ matrix.app.working-directory }}
 
       - uses: actions/upload-artifact@v3
         if: always()
         with:
-          name: playwright-report-${{ matrix.app }}
-          path: ${{ matrix.working-directory }}/playwright-report/
+          name: playwright-report-${{ matrix.app.name }}
+          path: ${{ matrix.app.working-directory }}/playwright-report/
           retention-days: 30

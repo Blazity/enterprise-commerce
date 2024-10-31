@@ -2,26 +2,55 @@ name: Check
 on:
   push:
     branches: ["main", "master", "develop", "preprod"]
+    paths:
+      - "starters/**"
   pull_request:
     types: [opened, synchronize]
+    paths:
+      - "starters/**"
 
 jobs:
+  check-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      meilisearch: ${{ steps.filter.outputs.meilisearch }}
+      algolia: ${{ steps.filter.outputs.algolia }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            shopify-meilisearch:
+              - 'starters/shopify-meilisearch/**'
+            shopify-algolia:
+              - 'starters/shopify-algolia/**'
+
   build:
+    needs: check-changes
     strategy:
       matrix:
-        app: [shopify-meilisearch, shopify-algolia]
-        include:
-          - app: shopify-meilisearch
-            working-directory: ./starters/shopify-meilisearch
-          - app: shopify-algolia
-            working-directory: ./starters/shopify-algolia
+        app:
+          [
+            {
+              name: shopify-meilisearch,
+              working-directory: ./starters/shopify-meilisearch,
+              should-run: needs.check-changes.outputs.shopify-meilisearch,
+            },
+            {
+              name: shopify-algolia,
+              working-directory: ./starters/shopify-algolia,
+              should-run: needs.check-changes.outputs.shopify-algolia,
+            },
+          ]
+    if: ${{ fromJson(matrix.app.should-run) }}
 
     environment: Production
-    name: Build and Test (${{ matrix.app }})
+    name: Build and Test (${{ matrix.app.name }})
     timeout-minutes: 15
     runs-on: ubuntu-latest
     concurrency:
-      group: ${{ github.workflow }}-${{ matrix.app }}-${{ github.ref }}
+      group: ${{ github.workflow }}-${{ matrix.app.name }}-${{ github.ref }}
       cancel-in-progress: true
 
     env:
@@ -47,27 +76,27 @@ jobs:
       - uses: actions/cache@v2
         with:
           path: "**/node_modules"
-          key: ${{ runner.os }}-${{ matrix.app }}-modules-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-${{ matrix.app.name }}-modules-${{ hashFiles('**/yarn.lock') }}
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile --prefer-offline
-        working-directory: ${{ matrix.working-directory }}
+        working-directory: ${{ matrix.app.working-directory }}
 
       - name: Licenses check
         run: npx --yes license-checker-rseidelsohn --production --excludePrivatePackages --onlyAllow "MPL-2.0;UNKNOWN;MIT;Apache;AAL;BSD;Artistic;CC0;ISC;ISCL;PostgreSQL License;Public Domain;Unlicense;UPL;W3C;WTFPL;Python;CC-;BlueOak"
 
       - name: Test
         run: yarn test
-        working-directory: ${{ matrix.working-directory }}
+        working-directory: ${{ matrix.app.working-directory }}
 
       - name: Lint
         run: yarn lint
-        working-directory: ${{ matrix.working-directory }}
+        working-directory: ${{ matrix.app.working-directory }}
 
       - name: Format
         run: yarn format
-        working-directory: ${{ matrix.working-directory }}
+        working-directory: ${{ matrix.app.working-directory }}
 
       - name: Build
         run: yarn build
-        working-directory: ${{ matrix.working-directory }}
+        working-directory: ${{ matrix.app.working-directory }}
