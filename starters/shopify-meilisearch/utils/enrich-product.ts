@@ -1,5 +1,5 @@
-import { PlatformImage, PlatformMenu, PlatformProduct } from "lib/shopify/types"
-import { replicate } from "clients/replicate"
+import { generateImageCaption } from "lib/replicate"
+import type { PlatformImage, PlatformMenu, PlatformProduct } from "lib/shopify/types"
 
 /*
  * Enrich product by attaching hierarchical categories to it
@@ -76,13 +76,7 @@ async function generateProductAltTags(product: PlatformProduct): Promise<(Platfo
   }
 
   async function mapper(image: PlatformImage) {
-    if (!replicate) return
-    const output = (await replicate.run("salesforce/blip:2e1dddc8621f72155f24cf2e0adbde548458d3cab9f00c0139eea840d0ac4746", {
-      input: {
-        task: "image_captioning",
-        image: image.url,
-      },
-    })) as unknown as string
+    const output = await generateImageCaption(image.url)
 
     return { ...image, altText: output?.replace("Caption:", "") || "" }
   }
