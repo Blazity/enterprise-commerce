@@ -8,17 +8,17 @@ import { getCombination, getOptionsFromUrl, hasValidOption, removeOptionsFromUrl
 
 import { Breadcrumbs } from "components/breadcrumbs"
 
-import { BackButton } from "views/product/back-button"
-import { FavoriteMarker } from "views/product/favorite-marker"
-import { SimilarProductsSection } from "views/product/similar-products-section"
-import { SimilarProductsSectionSkeleton } from "views/product/similar-product-section-skeleton"
-import { VariantsSection } from "views/product/variants-section"
-import { ProductTitle } from "views/product/product-title"
-import { ProductImages } from "views/product/product-images"
-import { RightSection } from "views/product/right-section"
-import { FaqSection } from "views/product/faq-section"
-import { AddToCartButton } from "views/product/add-to-cart-button"
-import { ReviewsSection } from "views/product/reviews-section"
+import { BackButton } from "components/back-button"
+import { FavoriteMarker } from "app/product/_components/favorite-marker"
+import { SimilarProductsSection } from "app/product/_components/similar-products-section"
+import { SimilarProductsSectionSkeleton } from "app/product/_components/similar-product-section-skeleton"
+import { VariantsSection } from "app/product/_components/variants-section"
+import { ProductTitle } from "app/product/_components/product-title"
+import { ProductImages } from "app/product/_components/product-images"
+import { RightSection } from "app/product/_components/right-section"
+import { FaqSection } from "app/product/_components/faq-section"
+import { AddToCartButton } from "app/product/_components/add-to-cart-button"
+import { ReviewsSection } from "app/product/_components/reviews-section"
 
 import type { CommerceProduct } from "types"
 

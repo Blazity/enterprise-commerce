@@ -1,11 +1,15 @@
-import { PlatformCart } from "lib/shopify/types"
+import { useRouter } from "next/navigation"
+
 import { Button } from "components/ui/button-old"
 import { CloseIcon } from "components/icons/close-icon"
 import { Sheet, SheetClose, SheetContent, SheetFooter, SheetHeader, SheetTitle } from "components/ui/sheet"
-import { useRouter } from "next/navigation"
-import { CartItem } from "./cart-item"
-import { cn } from "utils/cn"
 import { LoadingDots } from "components/loading-dots"
+
+import { cn } from "utils/cn"
+
+import { PlatformCart } from "lib/shopify/types"
+
+import { CartItem } from "./cart-item"
 
 interface CartSheetProps {
   cart: PlatformCart | null

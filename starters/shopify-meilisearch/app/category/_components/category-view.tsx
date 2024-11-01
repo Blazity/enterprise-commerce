@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation"
 import { SearchParamsType } from "types"
 import { getCollection } from "lib/meilisearch"
-import { SearchView } from "views/search/search-view"
+import { SearchView } from "components/search-view"
 
 interface CategoryViewProps {
   params: { slug: string; page?: string }

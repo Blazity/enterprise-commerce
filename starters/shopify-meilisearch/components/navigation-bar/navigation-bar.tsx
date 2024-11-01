@@ -16,7 +16,7 @@ import { SearchButton } from "./search-button"
 import { NavigationItem } from "./navigation-item"
 import Link from "next/link"
 
-const ProductAddedAlert = dynamic(() => import("views/product/product-added-alert").then((mod) => mod.ProductAddedAlert))
+const ProductAddedAlert = dynamic(() => import("app/product/_components/product-added-alert").then((mod) => mod.ProductAddedAlert))
 
 interface NavigationBarProps {
   items: NavItem[]

@@ -4,9 +4,9 @@ import { getProduct, getProductReviews } from "lib/meilisearch"
 
 import { Breadcrumbs } from "components/breadcrumbs"
 
-import { BackButton } from "views/product/back-button"
-import { StarRating } from "views/product/star-rating"
-import { PaginationSection } from "views/listing/pagination-section"
+import { BackButton } from "components/back-button"
+import { StarRating } from "components/star-rating"
+import { PaginationSection } from "components/filters/pagination-section"
 
 import { removeOptionsFromUrl } from "utils/product-options-utils"
 import type { CommerceProduct } from "types"

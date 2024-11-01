@@ -1,4 +1,4 @@
-import { ComparisonOperators, FilterBuilder } from "../../lib/meilisearch/filter-builder"
+import { ComparisonOperators, FilterBuilder } from "../lib/meilisearch/filter-builder"
 
 interface MakeFilterProps {
   minPrice: number | null

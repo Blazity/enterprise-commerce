@@ -9,4 +9,4 @@ for (const key in redirects) {
 }
 
 const filterJson = filter.saveAsJSON()
-writeFileSync("./redirects/bloom-filter.json", JSON.stringify(filterJson))
+writeFileSync("./lib/redirects/bloom-filter.json", JSON.stringify(filterJson))

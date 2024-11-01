@@ -1,17 +1,21 @@
 import { Suspense } from "react"
-import type { PlatformCollection } from "lib/shopify/types"
 import { createSearchParamsCache, parseAsArrayOf, parseAsInteger, parseAsString } from "nuqs/server"
 
+import type { PlatformCollection } from "lib/shopify/types"
 import { ComparisonOperators, FilterBuilder } from "lib/meilisearch/filter-builder"
-import { composeFilters } from "views/listing/compose-filters"
-import { FacetsDesktop } from "views/listing/facets-desktop"
-import { HitsSection } from "views/listing/hits-section"
-import { PaginationSection } from "views/listing/pagination-section"
-import { SearchParamsType } from "types"
-import { HIERARCHICAL_SEPARATOR } from "constants/index"
-import { Controls } from "views/listing/controls"
-import { FacetsMobile } from "views/listing/facets-mobile"
 import { getFilteredProducts } from "lib/meilisearch"
+
+import { composeFilters } from "utils/compose-filters"
+
+import { FacetsDesktop } from "components/filters/facets-desktop"
+import { HitsSection } from "components/filters/hits-section"
+import { PaginationSection } from "components/filters/pagination-section"
+import { Controls } from "components/filters/controls"
+import { FacetsMobile } from "components/filters/facets-mobile"
+
+import { SearchParamsType } from "types"
+
+import { HIERARCHICAL_SEPARATOR } from "constants/index"
 
 interface SearchViewProps {
   searchParams: SearchParamsType

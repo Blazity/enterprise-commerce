@@ -7,7 +7,7 @@ import type { CategoriesDistribution } from "meilisearch"
 import dynamic from "next/dynamic"
 import { useModalStore } from "stores/modal-store"
 
-const FacetsContent = dynamic(() => import("views/listing/facets-content").then((m) => m.FacetsContent))
+const FacetsContent = dynamic(() => import("components/filters/facets-content").then((m) => m.FacetsContent))
 const GenericModal = dynamic(() => import("components/generic-modal").then((m) => m.GenericModal), { loading: Placeholder })
 
 interface FacetsMobileProps {

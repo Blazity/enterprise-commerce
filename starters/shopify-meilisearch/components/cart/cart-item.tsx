@@ -1,8 +1,8 @@
 /* eslint-disable react/no-children-prop */
 
-import { PlatformCartItem } from "lib/shopify/types"
 import Image from "next/image"
 import Link from "next/link"
+import { PlatformCartItem } from "lib/shopify/types"
 import { cn } from "utils/cn"
 import { ChangeQuantityButton } from "./change-quantity-button"
 import { DeleteButton } from "./delete-button"

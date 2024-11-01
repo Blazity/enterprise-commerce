@@ -1,7 +1,8 @@
+import { type ChangeEvent, type KeyboardEvent, useState } from "react"
+
 import { Button } from "components/ui/button-old"
 import { Input, InputProps } from "components/ui/input"
 import { Label } from "components/ui/label"
-import { type ChangeEvent, type KeyboardEvent, useState } from "react"
 
 interface PriceFacetProps {
   initMin: number | null

@@ -5,7 +5,7 @@ import dynamic from "next/dynamic"
 import { getOrCreateCart } from "app/actions/cart.actions"
 import { useCartStore } from "stores/cart-store"
 
-const CartSheet = dynamic(() => import("views/cart/cart-sheet").then((mod) => mod.CartSheet))
+const CartSheet = dynamic(() => import("components/cart/cart-sheet").then((mod) => mod.CartSheet))
 
 export function CartView() {
   const [isPending, startTransition] = useTransition()

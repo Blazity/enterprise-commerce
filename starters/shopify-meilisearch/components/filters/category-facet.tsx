@@ -1,8 +1,9 @@
+import { usePathname } from "next/navigation"
+import type { CategoriesDistribution } from "meilisearch"
+
 import { AccordionContent, AccordionItem, AccordionTrigger } from "components/ui/accordion"
 
 import { HIERARCHICAL_ATRIBUTES, HIERARCHICAL_SEPARATOR } from "constants/index"
-import type { CategoriesDistribution } from "meilisearch"
-import { usePathname } from "next/navigation"
 import { cn } from "utils/cn"
 import { slugToName } from "utils/slug-name"
 import { type HierarchicalMenuItem, useHierarchicalMenu } from "utils/use-hierarchical-menu"
