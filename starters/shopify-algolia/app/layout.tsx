@@ -1,24 +1,21 @@
 import "./globals.css"
 
-import nextDynamic from "next/dynamic"
 import Script from "next/script"
 import { Suspense } from "react"
 import { Toaster } from "sonner"
-import { CallToAction } from "components/call-to-action"
-import { Footer } from "components/footer"
-import { Modals } from "components/modals/modals"
-import { mobileInlineScript } from "components/navigation-bar/mobile-inline-script"
-import { NavigationBar } from "components/navigation-bar/navigation-bar"
-import type { NavItem } from "components/navigation-bar/types"
-import { FlagValues } from "views/flag-values"
-import { ThirdParties } from "views/third-parties"
+import { FlagValues } from "components/flag-values"
+import { ThirdParties } from "components/third-parties"
 import { env } from "env.mjs"
 import { Metadata } from "next"
-import { GithubBadge } from "views/github-badge"
-import { DemoModeAlert } from "views/demo-mode-alert"
-import { CartView } from "views/cart/cart-view"
-
-const DraftToolbar = nextDynamic(() => import("views/draft-toolbar"), { ssr: false })
+import { GithubBadge } from "components/github-badge"
+import { DemoModeAlert } from "components/demo-mode-alert"
+import { CartView } from "components/cart/cart-view"
+import type { NavItem } from "components/navigation-bar/types"
+import { NavigationBar } from "components/navigation-bar/navigation-bar"
+import { mobileInlineScript } from "components/navigation-bar/mobile-inline-script"
+import { Footer } from "components/footer"
+import { Modals } from "components/modals/modals"
+import DraftToolbar from "components/draft-toolbar"
 
 export const revalidate = 86400
 
@@ -245,7 +242,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
         {children}
 
-        <CallToAction />
         <Footer />
         <Modals />
 
@@ -259,9 +255,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <FlagValues />
         </Suspense>
 
-        <Suspense>
-          <ThirdParties />
-        </Suspense>
+        <ThirdParties />
 
         <GithubBadge />
         <DemoModeAlert />

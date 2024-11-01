@@ -1,14 +1,18 @@
-import { Review } from "lib/reviews/types"
-import { PlatformCollection } from "lib/shopify/types"
+import type { Hit } from "algoliasearch"
+import type { Review } from "lib/reviews/types"
+import type { PlatformCollection } from "lib/shopify/types"
 import type { CommerceProduct } from "types"
 
-export function getDemoProducts() {
-  if (!isDemoMode()) return { hits: [], totalPages: 0, facetDistribution: {}, totalHits: 0, independentFacetDistribution: {} }
-
-  const allProducts = require("public/demo-data.json") as { hits: CommerceProduct[]; offset: number; limit: number; total: number }
-
+export function getDemoProducts(): {
+  hits: Hit<CommerceProduct>[]
+  totalPages: number
+  facetDistribution: Record<string, unknown>
+  totalHits: number
+  independentFacetDistribution: Record<string, unknown>
+} {
+  const allProducts = require("public/demo-data.json")
   return {
-    hits: allProducts.hits,
+    hits: allProducts.hits as Hit<CommerceProduct>[],
     totalPages: 1,
     facetDistribution: {},
     totalHits: allProducts.hits.length,
@@ -17,15 +21,23 @@ export function getDemoProducts() {
 }
 
 export function getDemoSingleProduct(handle: string) {
-  return getDemoProducts().hits.find((p) => p.handle === handle) || null
+  return getDemoProducts()?.hits?.find((p) => p.handle === handle) || null
 }
 
 export function getDemoCategories() {
-  return require("public/demo-categories-data.json") as PlatformCollection[]
+  const allCategories = require("public/demo-categories-data.json")
+
+  return {
+    hits: allCategories as Hit<PlatformCollection>[],
+    totalPages: 1,
+    facetDistribution: {},
+    totalHits: allCategories.length,
+    independentFacetDistribution: {},
+  }
 }
 
 export function getDemoSingleCategory(handle: string) {
-  return getDemoCategories().find((c: { handle: string }) => c.handle === handle) || null
+  return getDemoCategories().hits.find((c: { handle: string }) => c.handle === handle) || null
 }
 
 export function getDemoProductReviews() {
@@ -40,8 +52,8 @@ export function isDemoMode(): boolean {
     isDemoValue(process.env.SHOPIFY_STORE_DOMAIN) ||
     isDemoValue(process.env.ALGOLIA_APP_ID) ||
     isDemoValue(process.env.ALGOLIA_WRITE_API_KEY) ||
-    isDemoValue(process.env.ALGOLIA_CATEGORIES_INDEX) ||
     isDemoValue(process.env.ALGOLIA_PRODUCTS_INDEX) ||
+    isDemoValue(process.env.ALGOLIA_CATEGORIES_INDEX) ||
     !process.env.LIVE_URL ||
     process.env.IS_DEMO_MODE === "true"
   )

@@ -1,9 +1,9 @@
 import type { PlatformProduct } from "lib/shopify/types"
-import { algolia } from "clients/search"
-import { storefrontClient } from "clients/storefront"
 import { env } from "env.mjs"
 import { compareHmac } from "utils/compare-hmac"
 import { enrichProduct } from "utils/enrich-product"
+import { deleteCategories, deleteProducts, updateCategories, updateProducts } from "lib/algolia"
+import { getCollection, getHierarchicalCollections, getProduct } from "lib/shopify"
 
 type SupportedTopic = "products/update" | "products/delete" | "products/create" | "collections/update" | "collections/delete" | "collections/create"
 
@@ -49,23 +49,18 @@ async function handleCollectionTopics(topic: SupportedTopic, { id }: Record<stri
   switch (topic) {
     case "collections/update":
     case "collections/create":
-      const collection = await storefrontClient.getCollectionById(makeShopifyId(`${id}`, "Collection"))
+      const collection = await getCollection(makeShopifyId(`${id}`, "Collection"))
       if (!collection) {
         console.error(`Collection ${id} not found`)
         return new Response(JSON.stringify({ message: "Collection not found" }), { status: 404, headers: { "Content-Type": "application/json" } })
       }
-      await algolia.update({
-        indexName: env.ALGOLIA_CATEGORIES_INDEX,
-        objects: [{ ...collection, id: `${id}` }],
-      })
+
+      await updateCategories([{ ...collection, id: `${id}` }])
 
       break
 
     case "collections/delete":
-      await algolia.delete({
-        indexName: env.ALGOLIA_CATEGORIES_INDEX,
-        objectIDs: [id],
-      })
+      await deleteCategories([id])
       break
 
     default:
@@ -79,8 +74,8 @@ async function handleProductTopics(topic: SupportedTopic, { id }: Record<string,
   switch (topic) {
     case "products/update":
     case "products/create":
-      const product = await storefrontClient.getProduct(makeShopifyId(`${id}`, "Product"))
-      const items = env.SHOPIFY_HIERARCHICAL_NAV_HANDLE ? (await storefrontClient.getHierarchicalCollections(env.SHOPIFY_HIERARCHICAL_NAV_HANDLE)).items : []
+      const product = await getProduct(makeShopifyId(`${id}`, "Product"))
+      const items = env.SHOPIFY_HIERARCHICAL_NAV_HANDLE ? (await getHierarchicalCollections(env.SHOPIFY_HIERARCHICAL_NAV_HANDLE)).items : []
 
       if (!product) {
         console.error(`Product ${id} not found`)
@@ -88,17 +83,12 @@ async function handleProductTopics(topic: SupportedTopic, { id }: Record<string,
       }
 
       const enrichedProduct = await enrichProduct(product, items)
-      await algolia.update({
-        indexName: env.ALGOLIA_PRODUCTS_INDEX,
-        objects: [normalizeProduct(enrichedProduct, id)],
-      })
+
+      await updateProducts([normalizeProduct(enrichedProduct, id)])
 
       break
     case "products/delete":
-      await algolia.delete({
-        indexName: env.ALGOLIA_PRODUCTS_INDEX,
-        objectIDs: [id],
-      })
+      await deleteProducts([id])
       break
 
     default:

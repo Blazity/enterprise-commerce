@@ -2,13 +2,12 @@ import { generateObject } from "ai"
 import z from "zod"
 import { openai } from "@ai-sdk/openai"
 import type { Review } from "lib/reviews/types"
-import type { CommerceProduct } from "types"
-import { algolia } from "clients/search"
 import { env } from "env.mjs"
 import { authenticate } from "utils/authenticate-api-route"
 import { isOptIn, notifyOptIn } from "utils/opt-in"
 import { unstable_noStore } from "next/cache"
 import { isDemoMode } from "utils/demo-utils"
+import { getAllProducts, getAllReviews, updateProducts } from "lib/algolia"
 
 const summarySchema = z.object({
   products: z.array(
@@ -46,34 +45,31 @@ export async function GET(req: Request) {
     return new Response(JSON.stringify({ message: "Sorry, something went wrong" }), { status: 500 })
   }
 
-  const [{ hits: allReviews = [] }, { hits: allProducts = [] }] = await Promise.all([
-    algolia.getAllResults<Review>({
-      indexName: env.ALGOLIA_REVIEWS_INDEX,
-      browseParams: {
-        attributesToRetrieve: ["body", "title", "product_handle", "rating"],
-        filters: "published:true AND hidden:false",
-      },
+  const [{ reviews }, allProducts] = await Promise.all([
+    getAllReviews({
+      fields: ["body", "title", "product_handle", "rating"],
+      filter: "published=true AND hidden=false",
     }),
-    algolia.getAllResults<CommerceProduct>({
-      indexName: env.ALGOLIA_PRODUCTS_INDEX,
-      browseParams: {
-        attributesToRetrieve: ["handle", "title", "id", "totalReviews"],
-      },
+    getAllProducts({
+      fields: ["handle", "title", "id", "totalReviews"],
     }),
   ])
 
-  const mappedReviews: Record<string, Review[]> = allReviews.reduce((acc, review) => {
-    const productHandle = review.product_handle
-    if (acc[productHandle]) {
-      acc[productHandle].push(review)
-    } else {
-      acc[productHandle] = [review]
-    }
+  const mappedReviews: Record<string, Review[]> = reviews.reduce(
+    (acc, review) => {
+      const productHandle = review.product_handle
+      if (acc[productHandle]) {
+        acc[productHandle].push(review)
+      } else {
+        acc[productHandle] = [review]
+      }
 
-    return acc
-  }, {})
+      return acc
+    },
+    {} as Record<string, Review[]>
+  )
 
-  const productsWithNewReviews = allProducts.filter((product) => product.totalReviews !== (mappedReviews[product.handle]?.length || 0))
+  const productsWithNewReviews = allProducts?.hits.filter((product) => product.totalReviews !== (mappedReviews[product.handle]?.length || 0))
 
   if (!productsWithNewReviews.length) {
     return new Response(JSON.stringify({ message: "No new reviews to re-generate summary" }), { status: 200 })
@@ -121,7 +117,7 @@ export async function GET(req: Request) {
     })
     .filter(Boolean)
 
-  await algolia.update({ indexName: env.ALGOLIA_PRODUCTS_INDEX, objects: updatedProducts })
+  await updateProducts(updatedProducts)
 
   return new Response(JSON.stringify({ message: "Reviews synced" }), { status: 200 })
 }

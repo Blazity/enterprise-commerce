@@ -7,5 +7,4 @@ export type CommerceProduct = PlatformProduct & {
   avgRating?: number
   totalReviews?: number
   reviewsSummary?: string
-  objectID: string // algolia necessary attribute
 }

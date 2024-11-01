@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import { SearchParamsType } from "types"
-import { CategoryView } from "views/category/category-view"
+import { CategoryView } from "app/category/_components/category-view"
 
 export const runtime = "nodejs"
 
