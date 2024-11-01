@@ -6,7 +6,7 @@ module.exports = {
     React: true,
     JSX: true,
   },
-  extends: ["next", "prettier", "react-app", "react-app/jest", "plugin:storybook/recommended", "plugin:tailwindcss/recommended"],
+  extends: ["next", "prettier", "react-app", "react-app/jest", "plugin:tailwindcss/recommended"],
   parserOptions: {
     babelOptions: {
       presets: [require.resolve("next/babel")],

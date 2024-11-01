@@ -16,7 +16,7 @@ import { SearchButton } from "./search-button"
 import { NavigationItem } from "./navigation-item"
 import Link from "next/link"
 
-const ProductAddedAlert = dynamic(() => import("views/product/product-added-alert").then((mod) => mod.ProductAddedAlert))
+const ProductAddedAlert = dynamic(() => import("app/product/_components/product-added-alert").then((mod) => mod.ProductAddedAlert))
 
 interface NavigationBarProps {
   items: NavItem[]
@@ -54,7 +54,7 @@ export function NavigationBar({ items }: NavigationBarProps) {
   ))
 
   return (
-    <header className="mega-navbar sticky top-0 z-50 mx-auto my-0 flex w-full flex-wrap content-center items-center justify-between border-b border-black bg-white py-6 md:border-y ">
+    <header className="mega-navbar sticky top-0 z-50 mx-auto my-0 flex w-full flex-wrap content-center items-center justify-between border-b border-black bg-white py-6">
       <div className="flex justify-start px-4 md:mx-auto md:w-full md:max-w-container-md md:px-0">
         <Link prefetch={false} href="/" className="brand mr-20 hidden items-center text-xl font-bold md:flex">
           Acme

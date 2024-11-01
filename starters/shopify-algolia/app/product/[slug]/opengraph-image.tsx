@@ -2,9 +2,9 @@
 /* eslint-disable jsx-a11y/alt-text */
 
 import { ImageResponse } from "next/og"
-import { getProduct } from "app/actions/product.actions"
 import { removeOptionsFromUrl } from "utils/product-options-utils"
 import { env } from "env.mjs"
+import { getProduct } from "lib/algolia"
 
 export const revalidate = 86400
 

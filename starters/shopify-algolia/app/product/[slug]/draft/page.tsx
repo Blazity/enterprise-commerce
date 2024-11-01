@@ -1,22 +1,22 @@
-import { unstable_cache } from "next/cache"
 import { draftMode } from "next/headers"
 import { notFound } from "next/navigation"
-import { storefrontClient } from "clients/storefront"
 import type { CommerceProduct } from "types"
 
 import { Breadcrumbs } from "components/breadcrumbs"
 
+import { getAdminProduct, getProductByHandle } from "lib/shopify"
 import type { PlatformProduct } from "lib/shopify/types"
+
 import { getCombination, getOptionsFromUrl, hasValidOption, removeOptionsFromUrl } from "utils/product-options-utils"
-import { BackButton } from "views/product/back-button"
-import { VariantsSection } from "views/product/variants-section"
-import { ProductTitle } from "views/product/product-title"
+import { BackButton } from "components/back-button"
+import { VariantsSection } from "app/product/_components/variants-section"
+import { ProductTitle } from "app/product/_components/product-title"
 import { CurrencyType, mapCurrencyToSign } from "utils/map-currency-to-sign"
-import { ProductImages } from "views/product/product-images"
-import { RightSection } from "views/product/right-section"
-import { AddToCartButton } from "views/product/add-to-cart-button"
-import { FavoriteMarker } from "views/product/favorite-marker"
-import { FaqSection } from "views/product/faq-section"
+import { ProductImages } from "app/product/_components/product-images"
+import { RightSection } from "app/product/_components/right-section"
+import { AddToCartButton } from "app/product/_components/add-to-cart-button"
+import { FavoriteMarker } from "app/product/_components/favorite-marker"
+import { FaqSection } from "app/product/_components/faq-section"
 
 import { slugToName } from "utils/slug-name"
 
@@ -75,7 +75,7 @@ async function ProductView({ slug }: { slug: string }) {
             />
             {!hasOnlyOneVariant && <VariantsSection variants={product.variants} handle={product.handle} combination={combination} />}
             <p>{product.description}</p>
-            <AddToCartButton className="mt-4" product={{ ...product, objectID: "123" }} combination={combination} />
+            <AddToCartButton className="mt-4" product={product} combination={combination} />
             <FavoriteMarker handle={product.handle} />
             <FaqSection />
           </RightSection>
@@ -88,13 +88,11 @@ async function ProductView({ slug }: { slug: string }) {
 async function getDraftAwareProduct(slug: string) {
   const draft = draftMode()
 
-  let product = await storefrontClient.getProductByHandle(removeOptionsFromUrl(slug))
+  let product = await getProductByHandle(removeOptionsFromUrl(slug))
   if (draft.isEnabled && product) product = await getAdminProduct(product?.id)
 
   return product
 }
-
-const getAdminProduct = unstable_cache(async (id: string) => storefrontClient.getAdminProduct(id), ["admin-product-by-handle"], { revalidate: 1 })
 
 function makeBreadcrumbs(product: PlatformProduct) {
   const lastCollection = product.collections?.findLast(Boolean)

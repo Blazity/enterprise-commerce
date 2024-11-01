@@ -1,29 +1,29 @@
-import { notFound } from "next/navigation"
 import { Suspense } from "react"
-import { getProduct } from "app/actions/product.actions"
+import { notFound } from "next/navigation"
+
+import { isDemoMode } from "utils/demo-utils"
+import { slugToName } from "utils/slug-name"
+import { CurrencyType, mapCurrencyToSign } from "utils/map-currency-to-sign"
+import { getCombination, getOptionsFromUrl, hasValidOption, removeOptionsFromUrl } from "utils/product-options-utils"
+
 import { Breadcrumbs } from "components/breadcrumbs"
 
-import { getCombination, getOptionsFromUrl, hasValidOption, removeOptionsFromUrl } from "utils/product-options-utils"
-import { BackButton } from "views/product/back-button"
-import { FavoriteMarker } from "views/product/favorite-marker"
-import { SimilarProductsSection } from "views/product/similar-products-section"
-import { SimilarProductsSectionSkeleton } from "views/product/similar-product-section-skeleton"
-import { VariantsSection } from "views/product/variants-section"
-import { slugToName } from "utils/slug-name"
-
-import { generateJsonLd } from "./metadata"
-import { ReviewsSection } from "views/product/reviews-section"
+import { BackButton } from "components/back-button"
+import { FavoriteMarker } from "app/product/_components/favorite-marker"
+import { SimilarProductsSection } from "app/product/_components/similar-products-section"
+import { SimilarProductsSectionSkeleton } from "app/product/_components/similar-product-section-skeleton"
+import { VariantsSection } from "app/product/_components/variants-section"
+import { ProductTitle } from "app/product/_components/product-title"
+import { ProductImages } from "app/product/_components/product-images"
+import { RightSection } from "app/product/_components/right-section"
+import { FaqSection } from "app/product/_components/faq-section"
+import { AddToCartButton } from "app/product/_components/add-to-cart-button"
+import { ReviewsSection } from "app/product/_components/reviews-section"
 
 import type { CommerceProduct } from "types"
-import { isDemoMode } from "utils/demo-utils"
-import { algolia } from "clients/search"
-import { env } from "env.mjs"
-import { ProductTitle } from "views/product/product-title"
-import { CurrencyType, mapCurrencyToSign } from "utils/map-currency-to-sign"
-import { ProductImages } from "views/product/product-images"
-import { RightSection } from "views/product/right-section"
-import { FaqSection } from "views/product/faq-section"
-import { AddToCartButton } from "views/product/add-to-cart-button"
+
+import { generateJsonLd } from "./metadata"
+import { getProduct, getProducts } from "lib/algolia"
 
 export const revalidate = 86400
 export const dynamic = "force-static"
@@ -33,17 +33,12 @@ interface ProductProps {
   params: { slug: string }
 }
 
-export { generateMetadata } from "./metadata"
-
 export async function generateStaticParams() {
   if (isDemoMode()) return []
 
-  const { hits } = await algolia.search<CommerceProduct>({
-    indexName: env.ALGOLIA_PRODUCTS_INDEX,
-    searchParams: {
-      hitsPerPage: 50,
-      attributesToRetrieve: ["handle"],
-    },
+  const { hits } = await getProducts({
+    hitsPerPage: 50,
+    attributesToRetrieve: ["handle"],
   })
 
   return hits.map(({ handle }) => ({ slug: handle }))
@@ -67,11 +62,13 @@ export default async function Product({ params: { slug } }: ProductProps) {
   return (
     <div className="relative mx-auto max-w-container-md px-4 xl:px-0">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(generateJsonLd(product, slug)) }}></script>
-      <div className="mb:pb-8 relative w-fit py-4 md:pt-12">
-        <BackButton className="mb-8 hidden md:block" />
+      <div className="mb:pb-8 relative flex w-full items-center justify-center gap-10 py-4 md:pt-12">
+        <BackButton className="left-2 mb-8 hidden md:block xl:absolute" />
+        <div className="mx-auto w-full max-w-container-sm">
+          <Breadcrumbs className="mb-8" items={makeBreadcrumbs(product)} />
+        </div>
       </div>
       <main className="mx-auto max-w-container-sm">
-        <Breadcrumbs className="mb-8" items={makeBreadcrumbs(product)} />
         <div className="grid grid-cols-1 gap-4 md:mx-auto md:max-w-screen-xl md:grid-cols-12 md:gap-8">
           <ProductTitle
             className="md:hidden"
@@ -94,9 +91,11 @@ export default async function Product({ params: { slug } }: ProductProps) {
             <FaqSection />
           </RightSection>
         </div>
-        <ReviewsSection avgRating={product.avgRating} productHandle={product.handle} productId={product.id} summary={product.reviewsSummary} slug={slug} />
+        <Suspense>
+          <ReviewsSection avgRating={product.avgRating} productHandle={product.handle} productId={product.id} slug={slug} summary={product.reviewsSummary} />
+        </Suspense>
         <Suspense fallback={<SimilarProductsSectionSkeleton />}>
-          <SimilarProductsSection collectionHandle={lastCollection?.handle} objectID={product.objectID} />
+          <SimilarProductsSection objectID={product.objectID} slug={slug} />
         </Suspense>
       </main>
     </div>

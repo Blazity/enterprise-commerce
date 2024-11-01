@@ -1,9 +1,7 @@
-import { PlatformCollection } from "lib/shopify/types"
-import { algolia } from "clients/search"
-import { env } from "env.mjs"
 import type { Metadata } from "next"
 import { isDemoMode } from "utils/demo-utils"
-import { CategoryView } from "views/category/category-view"
+import { getCategories } from "lib/algolia"
+import { CategoryView } from "app/category/_components/category-view"
 
 export const revalidate = 86400
 export const dynamic = "force-static"
@@ -22,12 +20,9 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
 export async function generateStaticParams() {
   if (isDemoMode()) return []
 
-  const { hits } = await algolia.search<PlatformCollection>({
-    indexName: env.ALGOLIA_CATEGORIES_INDEX,
-    searchParams: {
-      hitsPerPage: 50,
-      attributesToRetrieve: ["handle"],
-    },
+  const { hits } = await getCategories({
+    hitsPerPage: 50,
+    attributesToRetrieve: ["handle"],
   })
 
   return hits.map(({ handle }) => ({ slug: handle }))

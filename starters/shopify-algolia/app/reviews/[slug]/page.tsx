@@ -1,13 +1,16 @@
 import { notFound, redirect } from "next/navigation"
-import { getProduct, getProductReviews } from "app/actions/product.actions"
+
+import { getProduct, getProductReviews } from "lib/algolia"
+
 import { Breadcrumbs } from "components/breadcrumbs"
 
-import { BackButton } from "views/product/back-button"
-import { StarRating } from "views/product/star-rating"
-import { PaginationSection } from "views/listing/pagination-section"
+import { BackButton } from "components/back-button"
+import { StarRating } from "components/star-rating"
+import { PaginationSection } from "components/filters/pagination-section"
 
 import { removeOptionsFromUrl } from "utils/product-options-utils"
 import type { CommerceProduct } from "types"
+import { HITS_PER_PAGE } from "constants/index"
 
 export { generateMetadata } from "./metadata"
 
@@ -19,20 +22,21 @@ export interface ProductReviewsPageProps {
 }
 
 export default async function ProductReviews({ params: { slug }, searchParams }: ProductReviewsPageProps) {
-  return <ProductReviewsView searchParams={searchParams} slug={slug} />
-}
-
-async function ProductReviewsView({ slug, searchParams }: { slug: string; searchParams: ProductReviewsPageProps["searchParams"] }) {
-  const limit = 20
   const page = searchParams.page ? parseInt(searchParams.page as string) : 1
 
-  const product = await getProduct(removeOptionsFromUrl(slug))
-  const { reviews, total: totalReviews } = await getProductReviews(removeOptionsFromUrl(slug), { limit, page })
+  const [product, { reviews, total: totalReviews }] = await Promise.all([
+    getProduct(removeOptionsFromUrl(slug)),
+    getProductReviews(removeOptionsFromUrl(slug), { HITS_PER_PAGE, page }),
+  ])
 
-  const totalPages = Math.ceil(totalReviews / limit)
+  const totalPages = Math.ceil(totalReviews / HITS_PER_PAGE)
 
   if (!product) {
     return notFound()
+  }
+
+  if (page > Math.ceil(totalReviews / HITS_PER_PAGE)) {
+    redirect(`/reviews/${slug}`)
   }
 
   if (totalReviews <= 0) {
@@ -41,7 +45,6 @@ async function ProductReviewsView({ slug, searchParams }: { slug: string; search
         <div className="relative w-fit py-4 md:pt-12">
           <BackButton href={`/product/${product.handle}`} className="mb-8 hidden md:block" />
         </div>
-
         <main className="container mx-auto max-w-5xl px-4 md:px-6">
           <Breadcrumbs className="mb-8" items={makeBreadcrumbs(product)} />
           <div className="my-20 text-center">
@@ -51,10 +54,6 @@ async function ProductReviewsView({ slug, searchParams }: { slug: string; search
         </main>
       </div>
     )
-  }
-
-  if (page > Math.ceil(totalReviews / limit)) {
-    redirect(`/reviews/${slug}`)
   }
 
   return (
