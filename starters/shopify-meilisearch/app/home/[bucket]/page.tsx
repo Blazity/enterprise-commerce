@@ -1,8 +1,8 @@
 import { BUCKETS } from "constants/index"
-import { AnnouncementBar } from "components/announcement-bar"
-import { HeroSection } from "views/homepage/hero-section"
-import { CategoriesSection } from "views/homepage/categories-section"
-import { FeaturedProductsSection } from "views/homepage/featured-products-section"
+import { AnnouncementBar } from "app/home/_components/announcement-bar"
+import { HeroSection } from "app/home/_components/hero-section"
+import { CategoriesSection } from "app/home/_components/categories-section"
+import { FeaturedProductsSection } from "app/home/_components/featured-products-section"
 import { getFeaturedProducts } from "lib/meilisearch"
 
 export const revalidate = 86400

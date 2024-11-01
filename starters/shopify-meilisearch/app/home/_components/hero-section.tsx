@@ -6,7 +6,7 @@ import { cn } from "utils/cn"
 export function HeroSection({ title, className }: { title: string; className?: string }) {
   return (
     <div className={cn("mx-auto my-12 flex w-full max-w-container-md flex-col-reverse items-center lg:flex-row lg:justify-center", className)}>
-      <div className="flex-shrink">
+      <div className="shrink">
         <Image
           width={650}
           height={650}
@@ -23,7 +23,7 @@ export function HeroSection({ title, className }: { title: string; className?: s
       </div>
       <div className="flex max-w-lg shrink-0 flex-col items-center space-y-4 px-8 lg:items-start lg:space-y-8">
         <h1 className="text-center text-3xl font-semibold tracking-tight lg:text-left lg:text-4xl">{"Shop the best Deals on Top Brands & Unique Finds"}</h1>
-        <p className="text-center text-lg lg:text-left">From everyday essentials to rare gems, we’ve got something for everyone.</p>
+        <p className="text-center text-lg lg:text-left">{title}</p>
         <Link href="/search" prefetch={false} aria-label="Search products">
           <Button size="lg" role="link" className="transition-transform hover:scale-105">
             Shop now

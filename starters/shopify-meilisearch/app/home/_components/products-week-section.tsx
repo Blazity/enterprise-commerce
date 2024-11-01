@@ -1,7 +1,9 @@
-import { Carousel, CarouselContent } from "components/ui/carousel"
-import { Skeleton } from "components/ui/skeleton"
 import Image from "next/image"
 import Link from "next/link"
+
+import { Carousel, CarouselContent } from "components/ui/carousel"
+import { Skeleton } from "components/ui/skeleton"
+
 import { getNewestProducts } from "lib/meilisearch"
 
 export async function ProductsWeekSection() {

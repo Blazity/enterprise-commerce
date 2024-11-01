@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import { isDemoMode } from "utils/demo-utils"
-import { CategoryView } from "views/category/category-view"
 import { getCategories } from "lib/meilisearch"
+import { CategoryView } from "app/category/_components/category-view"
 
 export const revalidate = 86400
 export const dynamic = "force-static"

@@ -1,6 +1,6 @@
 import { Skeleton } from "components/ui/skeleton"
 import type { CategoriesDistribution } from "meilisearch"
-import { FacetsContent } from "views/listing/facets-content"
+import { FacetsContent } from "components/filters/facets-content"
 
 interface FacetsDesktopProps {
   independentFacetDistribution: Record<string, CategoriesDistribution> | undefined

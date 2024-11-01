@@ -1,6 +1,6 @@
 import { HIERARCHICAL_SEPARATOR } from "../../constants"
 import { FilterBuilder } from "../../lib/meilisearch/filter-builder"
-import { composeFilters } from "./compose-filters"
+import { composeFilters } from "../../utils/compose-filters"
 
 describe("composeFilters", () => {
   test("should add a category filter when categories are present", () => {

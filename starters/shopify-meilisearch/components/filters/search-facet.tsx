@@ -1,9 +1,9 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import { parseAsInteger, useQueryState } from "nuqs"
 import { useDebounce } from "@uidotdev/usehooks"
 import { cn } from "utils/cn"
-import { useEffect, useState } from "react"
 import { CloseIcon } from "components/icons/close-icon"
 import { Button } from "components/ui/button-old"
 

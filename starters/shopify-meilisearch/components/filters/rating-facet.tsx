@@ -1,7 +1,7 @@
 import { AccordionContent, AccordionItem, AccordionTrigger } from "components/ui/accordion"
 import { Checkbox } from "components/ui/checkbox"
 import { Label } from "components/ui/label"
-import { StarRating } from "views/product/star-rating"
+import { StarRating } from "components/star-rating"
 
 interface FacetProps {
   id: string

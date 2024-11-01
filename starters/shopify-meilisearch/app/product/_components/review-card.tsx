@@ -1,5 +1,5 @@
 import { Card } from "components/ui/card"
-import { StarRating } from "./star-rating"
+import { StarRating } from "components/star-rating"
 import { ExpandableContent } from "components/expandable-content"
 
 export type ReviewCardProps = {

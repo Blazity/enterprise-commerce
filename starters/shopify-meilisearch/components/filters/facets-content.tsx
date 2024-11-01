@@ -1,7 +1,7 @@
 "use client"
 
-import { usePathname, useRouter } from "next/navigation"
 import { useEffect } from "react"
+import { usePathname, useRouter } from "next/navigation"
 import { parseAsArrayOf, parseAsInteger, parseAsString, useQueryState } from "nuqs"
 import type { CategoriesDistribution } from "meilisearch"
 
