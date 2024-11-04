@@ -13,7 +13,7 @@ import { getMenuQuery, type MenuQuery } from "./queries/menu.storefront"
 import { getPageQuery, getPagesQuery } from "./queries/page.storefront"
 import { getLatestProductFeedQuery } from "./queries/product-feed.admin"
 import { getAdminProductQuery, getProductStatusQuery } from "./queries/product.admin"
-import { getProductQuery, getProductsByHandleQuery } from "./queries/product.storefront"
+import { getProductQuery, getProductsByHandleQuery, getProductsQuery } from "./queries/product.storefront"
 
 import type {
   LatestProductFeedsQuery,
@@ -105,6 +105,8 @@ export function createShopifyClient({ storefrontAccessToken, adminAccessToken, s
     updateUser: async (accessToken: string, input: Omit<PlatformUserCreateInput, "password">) => updateUser(client!, accessToken, input),
     createUserAccessToken: async (input: Pick<PlatformUserCreateInput, "password" | "email">) => createUserAccessToken(client!, input),
     getHierarchicalCollections: async (handle: string, depth?: number) => getHierarchicalCollections(client!, handle, depth),
+    getAllProducts: async () => getAllProducts(client!),
+    getAllCollections: async () => getAllCollections(client!),
   }
 }
 
@@ -116,7 +118,7 @@ async function getMenu(client: StorefrontApiClient, handle: string = "main-menu"
   return { items: mappedItems || [] }
 }
 
-async function getHierarchicalCollections(client: StorefrontApiClient, handle: string, depth = 3): Promise<PlatformMenu> {
+async function getHierarchicalCollections(client: StorefrontApiClient, handle: string, depth = 3) {
   const query = getMenuQuery(depth)
   const response = await client.request<MenuQuery>(query, { variables: { handle } })
   const mappedItems = response.data?.menu.items.filter((item) => item.resource?.__typename === "Collection")
@@ -264,6 +266,43 @@ async function getAdminProduct(client: AdminApiClient, id: string) {
     edges: response.data?.product?.variants?.edges.map((edge) => ({ node: { ...edge.node, price: { amount: edge.node.price, currencyCode: "" as CurrencyCode } } })),
   }
   return normalizeProduct({ ...response.data?.product, variants })
+}
+
+async function getAllProducts(client: StorefrontApiClient, limit: number = 250): Promise<PlatformProduct[]> {
+  const products: PlatformProduct[] = []
+  let hasNextPage = true
+  let cursor: string | null = null
+
+  while (hasNextPage) {
+    const response = await client.request(getProductsQuery, {
+      variables: { numProducts: limit, cursor },
+    })
+
+    const fetchedProducts = response.data?.products?.edges || []
+    products.push(...fetchedProducts.map((edge) => normalizeProduct(edge.node)))
+
+    hasNextPage = response.data?.products?.pageInfo?.hasNextPage || false
+    cursor = hasNextPage ? response.data?.products?.pageInfo?.endCursor : null
+  }
+
+  return products
+}
+
+async function getAllCollections(client: StorefrontApiClient, limit?: number) {
+  const collections: PlatformCollection[] = []
+  let hasNextPage = true
+  let cursor: string | null = null
+
+  while (hasNextPage) {
+    const response = await client.request(getCollectionsQuery, { variables: { first: limit, after: cursor } })
+    const fetchedCollections = response.data?.collections?.edges || []
+    collections.push(...fetchedCollections.map((edge) => normalizeCollection(edge.node)))
+
+    hasNextPage = response.data?.collections?.pageInfo?.hasNextPage || false
+    cursor = hasNextPage ? response?.data?.collections?.pageInfo?.endCursor : null
+  }
+
+  return collections
 }
 
 export const storefrontClient = createShopifyClient({
