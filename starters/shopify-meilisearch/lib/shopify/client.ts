@@ -57,6 +57,7 @@ import {
 } from "./types"
 
 import { env } from "env.mjs"
+import { cleanShopifyId, makeShopifyId } from "./utils"
 
 interface CreateShopifyClientProps {
   storeDomain: string
@@ -129,7 +130,7 @@ async function getHierarchicalCollections(client: StorefrontApiClient, handle: s
 }
 
 async function getProduct(client: StorefrontApiClient, id: string): Promise<PlatformProduct | null> {
-  const response = await client.request<SingleProductQuery>(getProductQuery, { variables: { id } })
+  const response = await client.request<SingleProductQuery>(getProductQuery, { variables: { id: makeShopifyId(id, "Product") } })
   const product = response.data?.product
 
   return normalizeProduct(product)
@@ -178,7 +179,7 @@ async function getAllPages(client: StorefrontApiClient): Promise<PlatformPage[] 
 }
 
 async function getProductStatus(client: AdminApiClient, id: string): Promise<PlatformProductStatus | undefined | null> {
-  const status = await client.request<ProductStatusQuery>(getProductStatusQuery, { variables: { id } })
+  const status = await client.request<ProductStatusQuery>(getProductStatusQuery, { variables: { id: makeShopifyId(id, "Product") } })
 
   return status.data?.product
 }
@@ -226,7 +227,7 @@ async function getCollection(client: StorefrontApiClient, handle: string): Promi
 }
 
 async function getCollectionById(client: StorefrontApiClient, id: string): Promise<PlatformCollection | undefined | null> {
-  const collection = await client.request<SingleCollectionByIdQuery>(getCollectionByIdQuery, { variables: { id } })
+  const collection = await client.request<SingleCollectionByIdQuery>(getCollectionByIdQuery, { variables: { id: makeShopifyId(id, "Collection") } })
 
   return normalizeCollection(collection.data?.collection)
 }
@@ -257,7 +258,7 @@ async function updateUser(client: StorefrontApiClient, customerAccessToken: stri
 
 async function getAdminProduct(client: AdminApiClient, id: string) {
   const response = await client.request<SingleAdminProductQuery>(getAdminProductQuery, {
-    variables: { id: id.startsWith("gid://shopify/Product/") ? id : `gid://shopify/Product/${id}` },
+    variables: { id: makeShopifyId(id, "Product") },
   })
 
   if (!response.data?.product) return null
@@ -285,7 +286,7 @@ async function getAllProducts(client: StorefrontApiClient, limit: number = 250):
     cursor = hasNextPage ? response.data?.products?.pageInfo?.endCursor : null
   }
 
-  return products
+  return products.map((product) => ({ ...product, id: cleanShopifyId(product.id, "Product") }))
 }
 
 async function getAllCollections(client: StorefrontApiClient, limit?: number) {
@@ -302,7 +303,7 @@ async function getAllCollections(client: StorefrontApiClient, limit?: number) {
     cursor = hasNextPage ? response?.data?.collections?.pageInfo?.endCursor : null
   }
 
-  return collections
+  return collections.map((collection) => ({ ...collection, id: cleanShopifyId(collection.id, "Collection") }))
 }
 
 export const storefrontClient = createShopifyClient({

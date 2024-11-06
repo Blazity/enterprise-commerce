@@ -1,12 +1,13 @@
 import { SingleCartQuery, SingleCollectionQuery, SingleProductQuery } from "./types/storefront.generated"
 import type { PlatformCart, PlatformCartItem, PlatformCollection, PlatformProduct } from "./types"
+import { cleanShopifyId } from "./utils"
 
 export function normalizeProduct(product: SingleProductQuery["product"]): PlatformProduct | null {
   if (!product) return null
   const { id, handle, title, description, vendor, descriptionHtml, options, priceRange, variants, featuredImage, images, tags, updatedAt, createdAt, collections, seo } = product
 
   return {
-    id,
+    id: cleanShopifyId(id, "Product"),
     handle,
     title,
     description,
@@ -46,5 +47,5 @@ export function normalizeCollection(collection: SingleCollectionQuery["collectio
   if (!collection) return null
   const { id, handle, title, descriptionHtml, seo, image, updatedAt, description } = collection
 
-  return { id, handle, title, descriptionHtml, seo, image, updatedAt, description }
+  return { id: cleanShopifyId(id, "Collection"), handle, title, descriptionHtml, seo, image, updatedAt, description }
 }

@@ -20,7 +20,7 @@
     "codegen": "graphql-codegen && graphql-codegen -p admin",
     "coupling-graph": "npx madge --extensions js,jsx,ts,tsx,css,md,mdx ./ --exclude '.next|tailwind.config.js|reset.d.ts|prettier.config.js|postcss.config.js|playwright.config.ts|next.config.js|next-env.d.ts|instrumentation.ts|e2e/|README.md|eslintrc.js' --image graph.svg",
     "sync": "yarn build:scripts && node scripts/dist/sync.mjs",
-    "build:scripts": "tsup scripts/ -d scripts/dist"
+    "build:scripts": "rimraf scripts/dist && tsup scripts/ -d scripts/dist"
   },
   "dependencies": {
     "@ai-sdk/openai": "^0.0.16",
@@ -109,6 +109,7 @@
     "patch-package": "^8.0.0",
     "prettier": "3.2.5",
     "prettier-plugin-tailwindcss": "^0.5.12",
+    "rimraf": "^6.0.1",
     "server-only": "^0.0.1",
     "tailwind-merge": "^2.2.2",
     "tailwindcss": "^3.4.1",

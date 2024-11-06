@@ -1,6 +1,6 @@
 import { env } from "env.mjs"
 
-type Feature = "reviews" | "ai-reviews"
+type Feature = "reviews" | "ai-reviews" | "altTags"
 
 const features: Record<Feature, Record<"message" | "predicate", unknown>> = {
   reviews: {
@@ -10,6 +10,10 @@ const features: Record<Feature, Record<"message" | "predicate", unknown>> = {
   "ai-reviews": {
     message: "No keys provided for ai reviews summary feautre, to opt-in set envrioment variables: OpenAI API, JUDGE_API_TOKEN ",
     predicate: !!env.OPENAI_API_KEY,
+  },
+  altTags: {
+    message: "No keys provided for alt tags feature, to opt-in set environment variables: REPLICATE_API_KEY",
+    predicate: !!env.REPLICATE_API_KEY,
   },
 }
 

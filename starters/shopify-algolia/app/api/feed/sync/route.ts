@@ -1,9 +1,12 @@
-import type { PlatformProduct } from "lib/shopify/types"
 import { env } from "env.mjs"
 import { compareHmac } from "utils/compare-hmac"
-import { enrichProduct } from "utils/enrich-product"
+import { ProductEnrichmentBuilder } from "utils/enrich-product"
 import { deleteCategories, deleteProducts, updateCategories, updateProducts } from "lib/algolia"
 import { getCollection, getHierarchicalCollections, getProduct } from "lib/shopify"
+import { makeShopifyId } from "lib/shopify/utils"
+import { HIERARCHICAL_SEPARATOR } from "constants/index"
+import { isOptIn } from "utils/opt-in"
+import { getAllProductReviews } from "lib/reviews"
 
 type SupportedTopic = "products/update" | "products/delete" | "products/create" | "collections/update" | "collections/delete" | "collections/create"
 
@@ -55,7 +58,7 @@ async function handleCollectionTopics(topic: SupportedTopic, { id }: Record<stri
         return new Response(JSON.stringify({ message: "Collection not found" }), { status: 404, headers: { "Content-Type": "application/json" } })
       }
 
-      await updateCategories([{ ...collection, id: `${id}` }])
+      await updateCategories([collection])
 
       break
 
@@ -76,15 +79,16 @@ async function handleProductTopics(topic: SupportedTopic, { id }: Record<string,
     case "products/create":
       const product = await getProduct(makeShopifyId(`${id}`, "Product"))
       const items = env.SHOPIFY_HIERARCHICAL_NAV_HANDLE ? (await getHierarchicalCollections(env.SHOPIFY_HIERARCHICAL_NAV_HANDLE)).items : []
+      const allReviews = isOptIn("reviews") ? await getAllProductReviews() : []
 
       if (!product) {
         console.error(`Product ${id} not found`)
         return new Response(JSON.stringify({ message: "Product not found" }), { status: 404, headers: { "Content-Type": "application/json" } })
       }
 
-      const enrichedProduct = await enrichProduct(product, items)
+      const enrichedProduct = (await new ProductEnrichmentBuilder(product).withAltTags()).withHierarchicalCategories(items, HIERARCHICAL_SEPARATOR).withReviews(allReviews).build()
 
-      await updateProducts([normalizeProduct(enrichedProduct, id)])
+      await updateProducts([enrichedProduct])
 
       break
     case "products/delete":
@@ -96,16 +100,4 @@ async function handleProductTopics(topic: SupportedTopic, { id }: Record<string,
   }
 
   return new Response(JSON.stringify({ message: "Success" }), { status: 200, headers: { "Content-Type": "application/json" } })
-}
-
-/* Extract into utils */
-function normalizeProduct(product: PlatformProduct, originalId: string): PlatformProduct {
-  return {
-    ...product,
-    id: originalId,
-  }
-}
-
-function makeShopifyId(id: string, type: "Product" | "Collection") {
-  return id.startsWith("gid://shopify/") ? id : `gid://shopify/${type}/${id}`
 }

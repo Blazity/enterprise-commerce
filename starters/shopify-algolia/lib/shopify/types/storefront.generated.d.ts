@@ -544,7 +544,8 @@ export type SingleCollectionQuery = {
 }
 
 export type CollectionsQueryVariables = StorefrontTypes.Exact<{
-  limit?: StorefrontTypes.InputMaybe<StorefrontTypes.Scalars["Int"]["input"]>
+  first?: StorefrontTypes.InputMaybe<StorefrontTypes.Scalars["Int"]["input"]>
+  after?: StorefrontTypes.InputMaybe<StorefrontTypes.Scalars["String"]["input"]>
 }>
 
 export type CollectionsQuery = {
@@ -555,6 +556,7 @@ export type CollectionsQuery = {
         seo: Pick<StorefrontTypes.Seo, "description" | "title">
       }
     }>
+    pageInfo: Pick<StorefrontTypes.PageInfo, "hasNextPage" | "endCursor">
   }
 }
 
@@ -716,7 +718,7 @@ interface GeneratedQueryTypes {
     return: SingleCollectionQuery
     variables: SingleCollectionQueryVariables
   }
-  "#graphql\n  query Collections($limit: Int = 250) {\n    collections(first: $limit, sortKey: TITLE) {\n      edges {\n        node {\n          ...singleCollection\n        }\n      }\n    }\n  }\n  #graphql\n  fragment singleCollection on Collection {\n    handle\n    image {\n      ...singleImage\n    }\n    title\n    descriptionHtml\n    id\n    description\n    seo {\n      ...seo\n    }\n    updatedAt\n  }\n  #graphql\n  fragment seo on SEO {\n    description\n    title\n  }\n\n  #graphql\n  fragment singleImage on Image {\n    url\n    altText\n    width\n    height\n  }\n\n\n": {
+  "#graphql\n  query Collections($first: Int = 250, $after: String) {\n    collections(first: $first, after: $after, sortKey: TITLE) {\n      edges {\n        node {\n          ...singleCollection\n        }\n      }\n      pageInfo {\n        hasNextPage\n        endCursor\n      }\n    }\n  }\n  #graphql\n  fragment singleCollection on Collection {\n    handle\n    image {\n      ...singleImage\n    }\n    title\n    descriptionHtml\n    id\n    description\n    seo {\n      ...seo\n    }\n    updatedAt\n  }\n  #graphql\n  fragment seo on SEO {\n    description\n    title\n  }\n\n  #graphql\n  fragment singleImage on Image {\n    url\n    altText\n    width\n    height\n  }\n\n\n": {
     return: CollectionsQuery
     variables: CollectionsQueryVariables
   }

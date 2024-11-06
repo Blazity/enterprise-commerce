@@ -14,7 +14,7 @@ export function DemoModeAlert() {
         <p>Filtering, searching, and adding to cart is disabled.</p>
         <div className="mt-2">
           To enable,{" "}
-          <a className="underline" target="_blank" href="https://docs.commerce.blazity.com/setup#manual">
+          <a className="underline" target="_blank" rel="noreferrer" href="https://docs.commerce.blazity.com/setup#manual">
             setup environment variables
           </a>
         </div>
