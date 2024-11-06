@@ -19,12 +19,16 @@ export const getCollectionQuery = `#graphql
 `
 
 export const getCollectionsQuery = `#graphql
-  query Collections($limit: Int = 250) {
-    collections(first: $limit, sortKey: TITLE) {
+  query Collections($first: Int = 250, $after: String) {
+    collections(first: $first, after: $after, sortKey: TITLE) {
       edges {
         node {
           ...singleCollection
         }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
       }
     }
   }

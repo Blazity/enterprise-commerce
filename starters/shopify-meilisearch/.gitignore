@@ -20,3 +20,5 @@ graph.svg
 # testing
 coverage
 .vercel
+
+scripts/dist

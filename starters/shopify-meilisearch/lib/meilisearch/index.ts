@@ -81,6 +81,18 @@ export const getAllProducts = async (options?: Omit<DocumentsQuery<CommerceProdu
   })
 }
 
+export const getAllCategories = async (options?: Omit<DocumentsQuery<PlatformCollection>, "limit">) => {
+  if (isDemoMode()) return getDemoCategories()
+
+  return await meilisearch.getDocuments<PlatformCollection>({
+    indexName: env.MEILISEARCH_CATEGORIES_INDEX,
+    options: {
+      ...options,
+      limit: 10000,
+    },
+  })
+}
+
 export const getSimilarProducts = unstable_cache(
   async (handle: string, collection: string | undefined) => {
     const limit = 8
