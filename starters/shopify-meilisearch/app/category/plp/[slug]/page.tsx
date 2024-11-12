@@ -7,17 +7,20 @@ export const runtime = "nodejs"
 export const revalidate = 86400
 
 interface ProductListingPageProps {
-  searchParams: SearchParamsType
-  params: { slug: string }
+  searchParams: Promise<SearchParamsType>
+  params: Promise<{ slug: string }>
 }
 
-export async function generateMetadata({ params }: ProductListingPageProps): Promise<Metadata> {
+export async function generateMetadata(props: ProductListingPageProps): Promise<Metadata> {
+  const params = await props.params;
   return {
     title: `${params.slug} | Enterprise Commerce`,
     description: "In excepteur elit mollit in.",
   }
 }
 
-export default async function ProductListingPage({ searchParams, params }: ProductListingPageProps) {
+export default async function ProductListingPage(props: ProductListingPageProps) {
+  const params = await props.params;
+  const searchParams = await props.searchParams;
   return <CategoryView params={params} searchParams={searchParams} />
 }

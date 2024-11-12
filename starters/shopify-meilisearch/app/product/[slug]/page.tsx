@@ -30,7 +30,7 @@ export const dynamic = "force-static"
 export const dynamicParams = true
 
 interface ProductProps {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
 export async function generateStaticParams() {
@@ -44,7 +44,13 @@ export async function generateStaticParams() {
   return results.map(({ handle }) => ({ slug: handle }))
 }
 
-export default async function Product({ params: { slug } }: ProductProps) {
+export default async function Product(props: ProductProps) {
+  const params = await props.params;
+
+  const {
+    slug
+  } = params;
+
   const product = await getProduct(removeOptionsFromUrl(slug))
 
   const { color } = getOptionsFromUrl(slug)
