@@ -11,7 +11,13 @@ export const dynamic = "force-static"
 
 export const dynamicParams = true
 
-export default async function Homepage({ params: { bucket } }: { params: { bucket: string } }) {
+export default async function Homepage(props: { params: Promise<{ bucket: string }> }) {
+  const params = await props.params;
+
+  const {
+    bucket
+  } = params;
+
   const heroTitles = {
     a: "Discover Your Next Favorite Thing",
     b: "Shop the best Deals on Top Brands & Unique Finds",

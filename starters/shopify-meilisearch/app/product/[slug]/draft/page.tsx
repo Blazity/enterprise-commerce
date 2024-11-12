@@ -30,10 +30,16 @@ export const revalidate = 86400
 export const dynamicParams = true
 
 interface ProductProps {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
-export default async function Product({ params: { slug } }: ProductProps) {
+export default async function Product(props: ProductProps) {
+  const params = await props.params;
+
+  const {
+    slug
+  } = params;
+
   return <ProductView slug={slug} />
 }
 
@@ -93,7 +99,7 @@ async function ProductView({ slug }: { slug: string }) {
 }
 
 async function getDraftAwareProduct(slug: string) {
-  const draft = draftMode()
+  const draft = await draftMode()
 
   let product = await getProductByHandle(removeOptionsFromUrl(slug))
   if (draft.isEnabled && product) product = await getAdminProduct(product?.id)

@@ -24,7 +24,7 @@ export default async function Favorites() {
 
 async function FavoritesView() {
   let favoritesHandles: string[] = []
-  const favoritesCookie = cookies().get(COOKIE_FAVORITES)?.value
+  const favoritesCookie = (await cookies()).get(COOKIE_FAVORITES)?.value
 
   if (favoritesCookie) {
     favoritesHandles = JSON.parse(favoritesCookie) as string[]

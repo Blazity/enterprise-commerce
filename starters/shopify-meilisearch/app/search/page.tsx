@@ -14,10 +14,11 @@ export const revalidate = 86400
 export const runtime = "nodejs"
 
 interface SearchPageProps {
-  searchParams: SearchParamsType
+  searchParams: Promise<SearchParamsType>
 }
 
-export default async function SearchPage({ searchParams }: SearchPageProps) {
+export default async function SearchPage(props: SearchPageProps) {
+  const searchParams = await props.searchParams;
   return (
     <Suspense fallback={<PageSkeleton />}>
       <SearchView searchParams={searchParams} />

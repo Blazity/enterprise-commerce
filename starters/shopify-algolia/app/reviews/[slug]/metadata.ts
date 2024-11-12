@@ -5,7 +5,8 @@ import { Metadata } from "next"
 import { getProduct } from "lib/algolia"
 import { env } from "env.mjs"
 
-export async function generateMetadata({ params: { slug } }: ProductReviewsPageProps): Promise<Metadata> {
+export async function generateMetadata(props: ProductReviewsPageProps): Promise<Metadata> {
+  const slug = (await props.params).slug
   const product = await getProduct(removeOptionsFromUrl(slug))
 
   const originalTitle = product?.seo?.title

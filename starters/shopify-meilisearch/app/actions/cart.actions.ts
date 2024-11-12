@@ -7,13 +7,13 @@ import { isDemoMode } from "utils/demo-utils"
 import { createCart, createCartItem, deleteCartItem, getCart, getProduct, updateCartItem } from "lib/shopify"
 
 export async function getOrCreateCart() {
-  const cartId = cookies().get(COOKIE_CART_ID)?.value
+  const cartId = (await cookies()).get(COOKIE_CART_ID)?.value
   const cart = cartId ? await getCart(cartId) : await createCart()
 
   if (!cartId) {
     const newCartId = cart?.id
     if (newCartId) {
-      cookies().set(COOKIE_CART_ID, newCartId)
+      (await cookies()).set(COOKIE_CART_ID, newCartId)
       revalidateTag(TAGS.CART)
     }
   }
@@ -81,7 +81,7 @@ export async function addCartItem(prevState: any, variantId: string, productId: 
 }
 
 export async function removeCartItem(prevState: any, itemId: string) {
-  const cartId = cookies().get(COOKIE_CART_ID)?.value
+  const cartId = (await cookies()).get(COOKIE_CART_ID)?.value
   if (!cartId) return { ok: false }
 
   await deleteCartItem(cartId, [itemId])
@@ -91,7 +91,7 @@ export async function removeCartItem(prevState: any, itemId: string) {
 }
 
 export async function updateItemQuantity(prevState: any, payload: { itemId: string; variantId: string; quantity: number; productId: string }) {
-  const cartId = cookies().get(COOKIE_CART_ID)?.value
+  const cartId = (await cookies()).get(COOKIE_CART_ID)?.value
   if (!cartId) return { ok: false }
 
   const { itemId, variantId, quantity, productId } = payload

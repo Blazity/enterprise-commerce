@@ -1,7 +1,8 @@
 import { getPage } from "lib/shopify"
 import { Metadata } from "next"
 
-export async function generateMetadata({ params: { slug } }: { params: { slug: string } }): Promise<Metadata> {
+export async function generateMetadata(props: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const slug = (await props.params).slug
   const page = await getPage(slug)
 
   return {

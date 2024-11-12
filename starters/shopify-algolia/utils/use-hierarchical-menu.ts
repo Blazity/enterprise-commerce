@@ -18,7 +18,7 @@ export interface HierarchicalMenuItem {
 export const useHierarchicalMenu = ({ attributes, distribution, separator = HIERARCHICAL_SEPARATOR, transformItems }: HierarchicalMenuOptions) => {
   const { slug } = useParams()
   const normalizedSlug = Array.isArray(slug) ? slug.join(separator) : slug
-  const initialPath = slug ? findInitialPath(normalizedSlug, attributes, distribution, separator) : []
+  const initialPath = slug ? findInitialPath(normalizedSlug!, attributes, distribution, separator) : []
 
   const getCategoryChildren = (path: string[]): HierarchicalMenuItem[] => {
     const level = path.length

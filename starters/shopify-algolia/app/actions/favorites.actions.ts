@@ -8,13 +8,14 @@ export async function toggleFavoriteProduct(prevState: any, handle: string) {
   const isFavorite = handles.includes(handle)
   const newFavorites = handles.includes(handle) ? handles.filter((i) => i !== handle) : [...handles, handle]
 
-  cookies().set(COOKIE_FAVORITES, JSON.stringify(newFavorites))
+  const cookieStore = await cookies()
+  cookieStore.set(COOKIE_FAVORITES, JSON.stringify(newFavorites))
 
   return !isFavorite
 }
 
 export async function getParsedFavoritesHandles() {
-  const favoritesCookie = cookies().get(COOKIE_FAVORITES)?.value || "[]"
+  const favoritesCookie = (await cookies()).get(COOKIE_FAVORITES)?.value || "[]"
   const favoritesHandles = JSON.parse(favoritesCookie) as string[]
   return favoritesHandles
 }
