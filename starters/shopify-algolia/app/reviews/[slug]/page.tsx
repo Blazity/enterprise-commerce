@@ -17,11 +17,16 @@ export { generateMetadata } from "./metadata"
 export const revalidate = 86400
 
 export interface ProductReviewsPageProps {
-  params: { slug: string }
-  searchParams: { [key: string]: string | string[] | undefined }
+  params: Promise<{ slug: string }>
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }
 
-export default async function ProductReviews({ params: { slug }, searchParams }: ProductReviewsPageProps) {
+export default async function ProductReviews(props: ProductReviewsPageProps) {
+  const searchParams = await props.searchParams
+  const params = await props.params
+
+  const { slug } = params
+
   const page = searchParams.page ? parseInt(searchParams.page as string) : 1
 
   const [product, { reviews, total: totalReviews }] = await Promise.all([

@@ -191,8 +191,8 @@ export function FacetsContent({ independentFacetDistribution, facetDistribution,
           <AccordionTrigger className="py-2 text-base">Price</AccordionTrigger>
           <AccordionContent className="px-2">
             <PriceFacet
-              initMin={minPrice}
-              initMax={maxPrice}
+              minPrice={minPrice}
+              maxPrice={maxPrice}
               setFacet={({ minPrice, maxPrice }) => {
                 setMinPrice(minPrice)
                 setMaxPrice(maxPrice)

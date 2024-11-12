@@ -7,7 +7,11 @@ export const dynamicParams = true
 
 export { generateMetadata } from "./metadata"
 
-export default async function StaticPage({ params: { slug } }: { params: { slug: string } }) {
+export default async function StaticPage(props: { params: Promise<{ slug: string }> }) {
+  const params = await props.params
+
+  const { slug } = params
+
   const page = await getPage(slug)
 
   if (!page) return null

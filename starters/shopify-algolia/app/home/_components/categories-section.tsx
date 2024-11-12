@@ -18,6 +18,7 @@ export async function CategoriesSection() {
           {categories.map((category, index) => {
             return (
               <CategoryCard
+                key={index}
                 className={cn("bg-white shadow-md md:shadow-none", {
                   "md:border-r": index === 0 || index === 2,
                   "md:border-l": index === 1 || index === 3,
@@ -25,7 +26,6 @@ export async function CategoriesSection() {
                   "md:border-t": index === 2 || index === 3,
                 })}
                 index={index + 3}
-                key={category.id}
                 {...category}
               />
             )

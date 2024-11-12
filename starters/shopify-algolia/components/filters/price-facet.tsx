@@ -5,50 +5,74 @@ import { Input, InputProps } from "components/ui/input"
 import { Label } from "components/ui/label"
 
 interface PriceFacetProps {
-  initMin: number | null
-  initMax: number | null
+  minPrice: number | null
+  maxPrice: number | null
   setFacet: (facet: { minPrice: number | null; maxPrice: number | null }) => void
 }
 
-export const PriceFacet = ({ initMin, initMax, setFacet }: PriceFacetProps) => {
-  const [minPrice, setMinPrice] = useState(initMin)
-  const [maxPrice, setMaxPrice] = useState(initMax)
+export const PriceFacet = ({ minPrice, maxPrice, setFacet }: PriceFacetProps) => {
+  const [minInput, setMinInput] = useState(minPrice?.toString() ?? null)
+  const [maxInput, setMaxInput] = useState(maxPrice?.toString() ?? null)
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      setFacet({ minPrice, maxPrice })
+      applyPrices()
+    }
+  }
+
+  const applyPrices = () => {
+    const minValue = minInput === "" ? null : Number(minInput)
+    const maxValue = maxInput === "" ? null : Number(maxInput)
+
+    const finalMin = minValue !== null && !isNaN(minValue) ? minValue : null
+    const finalMax = maxValue !== null && !isNaN(maxValue) ? maxValue : null
+
+    // if min is greater than max or max is less than min, reset accordingly
+    if (finalMin !== null && finalMax !== null) {
+      if (finalMin > finalMax) {
+        setMaxInput("")
+        setFacet({
+          minPrice: finalMin,
+          maxPrice: null,
+        })
+        return
+      }
+    }
+
+    setFacet({
+      minPrice: finalMin,
+      maxPrice: finalMax,
+    })
+  }
+
+  const handlePriceChange = (e: ChangeEvent<HTMLInputElement>, field: "min" | "max") => {
+    const value = e.target.value
+
+    if (field === "min") {
+      const newMin = value === "" ? null : Number(value)
+      setMinInput(value)
+
+      if (newMin !== null && maxInput !== "" && newMin > Number(maxInput)) {
+        setMaxInput("")
+      }
+    } else {
+      const newMax = value === "" ? null : Number(value)
+      setMaxInput(value)
+
+      if (newMax !== null && minInput !== "" && newMax < Number(minInput)) {
+        setMinInput("")
+      }
     }
   }
 
   return (
     <div className="flex flex-col gap-1">
       <div className="flex gap-4 lg:flex-col">
-        <PriceInput
-          id="min-price"
-          label="Min price"
-          value={minPrice || undefined}
-          onChange={(e) => {
-            setMinPrice(+e.target.value)
-          }}
-          onKeyDown={handleKeyDown}
-        />
+        <PriceInput id="min-price" label="Min price" value={minInput ?? ""} onChange={(e) => handlePriceChange(e, "min")} onKeyDown={handleKeyDown} />
 
-        <PriceInput
-          id="max-price"
-          label="Max price"
-          value={maxPrice || undefined}
-          onChange={(e) => {
-            setMaxPrice(+e.target.value)
-          }}
-          onKeyDown={handleKeyDown}
-        />
+        <PriceInput id="max-price" label="Max price" value={maxInput ?? ""} onChange={(e) => handlePriceChange(e, "max")} onKeyDown={handleKeyDown} />
       </div>
-      <Button
-        className="ml-auto mt-2"
-        onClick={() => {
-          setFacet({ minPrice, maxPrice })
-        }}
-      >
+      <Button className="ml-auto mt-2" onClick={applyPrices}>
         Apply
       </Button>
     </div>
@@ -56,7 +80,7 @@ export const PriceFacet = ({ initMin, initMax, setFacet }: PriceFacetProps) => {
 }
 
 interface PriceInputProps extends InputProps {
-  value: number | undefined
+  value: string
   onChange: (e: ChangeEvent<HTMLInputElement>) => void
   label: string
 }
