@@ -40,7 +40,7 @@ export const getProducts = unstable_cache(
       hitsPerPage: 50,
     }
   ) => {
-    if (isDemoMode()) return getDemoCategories()
+    if (isDemoMode()) return getDemoProducts()
 
     return await algolia.search<PlatformCollection>({
       indexName: env.ALGOLIA_PRODUCTS_INDEX,
