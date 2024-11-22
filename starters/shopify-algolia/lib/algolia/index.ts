@@ -5,7 +5,7 @@ import { env } from "env.mjs"
 import { getDemoCategories, getDemoProductReviews, getDemoProducts, getDemoSingleCategory, getDemoSingleProduct, isDemoMode } from "utils/demo-utils"
 import { notifyOptIn } from "utils/opt-in"
 
-import { ComparisonOperators, FilterBuilder } from "lib/algolia/filter-builder"
+import { FilterBuilder } from "lib/algolia/filter-builder"
 import type { Review } from "lib/reviews/types"
 import { PlatformCollection } from "lib/shopify/types"
 
@@ -15,6 +15,7 @@ import { searchClient as algolia, SortType } from "./client"
 
 import type { CommerceProduct } from "types"
 import type { BrowseProps, SearchSingleIndexProps } from "algoliasearch"
+import { AvailableFilters } from "./filters"
 
 export const getProduct = unstable_cache(
   async (handle: string) => {
@@ -302,5 +303,20 @@ export const getFilteredProducts = unstable_cache(
     }
   },
   ["filtered-products"],
+  { revalidate: 86400 }
+)
+
+export const getFacetValues = unstable_cache(
+  async ({ indexName, facetName }: { indexName: string; facetName: keyof AvailableFilters }) => {
+    if (isDemoMode()) return []
+
+    const res = await algolia.getFacetValues({
+      indexName,
+      facetName,
+    })
+
+    return res?.facetHits.map(({ value }) => value)
+  },
+  ["facet-values"],
   { revalidate: 86400 }
 )

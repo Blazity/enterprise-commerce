@@ -1,11 +1,10 @@
 import { CategoryCard } from "components/category-card"
 import { ProductCard } from "components/product-card"
-import { getCategories, getProducts } from "lib/algolia"
 import { Carousel, CarouselContent, CarouselNext, CarouselPrevious } from "components/ui/carousel"
+import type { CommerceProduct } from "types"
+import type { PlatformCollection } from "lib/shopify/types"
 
-export const ProductResultsList = async () => {
-  const { hits: products } = await getProducts({ hitsPerPage: 12 })
-
+export const ProductResultsList = ({ products }: { products: CommerceProduct[] }) => {
   return (
     <div>
       <h2 className="mb-4 text-xl font-bold">Products</h2>
@@ -18,11 +17,7 @@ export const ProductResultsList = async () => {
   )
 }
 
-export const CategoriesResultsList = async () => {
-  const { hits: categories } = await getCategories({
-    hitsPerPage: 6,
-  })
-
+export const CategoriesResultsList = ({ categories }: { categories: PlatformCollection[] }) => {
   return (
     <div className="relative px-2">
       <h2 className="mb-4 text-xl font-bold">Categories</h2>
