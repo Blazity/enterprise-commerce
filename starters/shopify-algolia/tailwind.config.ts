@@ -58,6 +58,10 @@ const config: Omit<Config, "content"> = {
             transform: "scale(1.1)",
           },
         },
+        "typing-dot-bounce": {
+          "0%,40%": { transform: "translateY(0)" },
+          "20%": { transform: "translateY(-0.25rem)" },
+        },
       },
       animation: {
         slideOutLeft: "slideOutLeft 0.3s ease-out forwards",
@@ -66,6 +70,7 @@ const config: Omit<Config, "content"> = {
         "accordion-up": "accordion-up 0.2s ease-out",
         "single-bounce": "bounceOnce 0.5s ease-out",
         wiggle: "wiggle .2s ease-out",
+        "typing-dot-bounce": "typing-dot-bounce 1.25s ease-out infinite",
       },
       colors: {
         sidebar: {

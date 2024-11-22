@@ -1,3 +1,5 @@
+import { AvailableFilters } from "./filters"
+
 // For numeric attributes only
 export enum ComparisonOperators {
   Equal = "=",
@@ -20,7 +22,7 @@ type Value = string | number | boolean | (string | number | boolean)[]
 export class FilterBuilder {
   private expression: string[] = []
 
-  where(attribute: string, value: Value, operator?: ComparisonOperators): FilterBuilder {
+  where(attribute: keyof AvailableFilters, value: Value, operator?: ComparisonOperators): FilterBuilder {
     if (Array.isArray(value)) {
       if (value.length === 0) {
         return this
@@ -33,12 +35,12 @@ export class FilterBuilder {
     return this
   }
 
-  to(attribute: string, min: number, max: number): FilterBuilder {
+  to(attribute: keyof AvailableFilters, min: number, max: number): FilterBuilder {
     this.expression.push(`${attribute}:${min} TO ${max}`)
     return this
   }
 
-  in(attribute: string, values: (string | number | boolean)[]): FilterBuilder {
+  in(attribute: keyof AvailableFilters, values: (string | number | boolean)[]): FilterBuilder {
     if (values.length === 0) {
       return this
     }

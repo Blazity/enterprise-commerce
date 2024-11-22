@@ -9,35 +9,36 @@ describe("FilterBuilder", () => {
 
   describe("where", () => {
     it("should create a basic equality filter", () => {
-      expect(new FilterBuilder().where("price", 100).build()).toBe("price:100")
-      expect(new FilterBuilder().where("name", "test").build()).toBe('name:"test"')
-      expect(new FilterBuilder().where("isActive", true).build()).toBe("isActive:true")
+      expect(new FilterBuilder().where("minPrice", 100).build()).toBe("minPrice:100")
+      expect(new FilterBuilder().where("handle", "test").build()).toBe('handle:"test"')
     })
 
     it("should handle comparison operators", () => {
-      expect(new FilterBuilder().where("price", 100, ComparisonOperators.GreaterThan).build()).toBe("price>100")
-      expect(new FilterBuilder().where("price", 100, ComparisonOperators.LessThanOrEqual).build()).toBe("price<=100")
-      expect(new FilterBuilder().where("price", 100, ComparisonOperators.NotEqual).build()).toBe("price!=100")
+      expect(new FilterBuilder().where("minPrice", 100, ComparisonOperators.GreaterThan).build()).toBe("minPrice>100")
+      expect(new FilterBuilder().where("minPrice", 100, ComparisonOperators.LessThanOrEqual).build()).toBe("minPrice<=100")
+      expect(new FilterBuilder().where("minPrice", 100, ComparisonOperators.NotEqual).build()).toBe("minPrice!=100")
     })
 
     it("should handle array values as IN operation", () => {
-      expect(new FilterBuilder().where("category", ["books", "games"]).build()).toBe('(category:"books" OR category:"games")')
+      expect(new FilterBuilder().where("hierarchicalCategories.lvl0", ["books", "games"]).build()).toBe(
+        '(hierarchicalCategories.lvl0:"books" OR hierarchicalCategories.lvl0:"games")'
+      )
     })
   })
 
   describe("to", () => {
     it("should create a range filter", () => {
-      expect(builder.to("price", 10, 100).build()).toBe("price:10 TO 100")
+      expect(builder.to("minPrice", 10, 100).build()).toBe("minPrice:10 TO 100")
     })
   })
 
   describe("in", () => {
     it("should create an OR condition for multiple values", () => {
-      expect(builder.in("category", ["books", "games"]).build()).toBe('(category:"books" OR category:"games")')
+      expect(builder.in("hierarchicalCategories.lvl0", ["books", "games"]).build()).toBe('(hierarchicalCategories.lvl0:"books" OR hierarchicalCategories.lvl0:"games")')
     })
 
     it("should handle empty array", () => {
-      expect(builder.in("category", []).build()).toBe("")
+      expect(builder.in("hierarchicalCategories.lvl0", []).build()).toBe("")
     })
 
     it("should handle different value types", () => {
@@ -54,17 +55,17 @@ describe("FilterBuilder", () => {
   describe("logical operators", () => {
     it("should combine conditions with AND", () => {
       const builder = new FilterBuilder()
-      expect(builder.where("price", 100).and().where("category", "books").build()).toBe('price:100 AND category:"books"')
+      expect(builder.where("minPrice", 100).and().where("hierarchicalCategories.lvl0", "books").build()).toBe('minPrice:100 AND hierarchicalCategories.lvl0:"books"')
     })
 
     it("should combine conditions with OR", () => {
       const builder = new FilterBuilder()
-      expect(builder.where("price", 100).or().where("price", 200).build()).toBe("price:100 OR price:200")
+      expect(builder.where("minPrice", 100).or().where("minPrice", 200).build()).toBe("minPrice:100 OR minPrice:200")
     })
 
     it("should handle NOT operator", () => {
       const builder = new FilterBuilder()
-      expect(builder.not().where("category", "books").build()).toBe('NOT category:"books"')
+      expect(builder.not().where("hierarchicalCategories.lvl0", "books").build()).toBe('NOT hierarchicalCategories.lvl0:"books"')
     })
   })
 
@@ -73,12 +74,12 @@ describe("FilterBuilder", () => {
       expect(
         new FilterBuilder()
           .group((sub) => {
-            sub.where("price", 100).or().where("price", 200)
+            sub.where("minPrice", 100).or().where("minPrice", 200)
           })
           .and()
-          .where("category", "books")
+          .where("hierarchicalCategories.lvl0", "books")
           .build()
-      ).toBe('(price:100 OR price:200) AND category:"books"')
+      ).toBe('(minPrice:100 OR minPrice:200) AND hierarchicalCategories.lvl0:"books"')
     })
 
     it("should handle nested groups", () => {
@@ -86,14 +87,14 @@ describe("FilterBuilder", () => {
         new FilterBuilder()
           .group((sub) => {
             sub
-              .where("price", 100)
+              .where("minPrice", 100)
               .and()
               .group((inner) => {
-                inner.where("category", "books").or().where("category", "games")
+                inner.where("hierarchicalCategories.lvl0", "books").or().where("hierarchicalCategories.lvl0", "games")
               })
           })
           .build()
-      ).toBe('(price:100 AND (category:"books" OR category:"games"))')
+      ).toBe('(minPrice:100 AND (hierarchicalCategories.lvl0:"books" OR hierarchicalCategories.lvl0:"games"))')
     })
   })
 
@@ -101,17 +102,17 @@ describe("FilterBuilder", () => {
     it("should handle complex combinations of filters", () => {
       expect(
         new FilterBuilder()
-          .where("price", 100, ComparisonOperators.GreaterThanOrEqual)
+          .where("minPrice", 100, ComparisonOperators.GreaterThanOrEqual)
           .and()
-          .where("price", 200, ComparisonOperators.LessThanOrEqual)
+          .where("minPrice", 200, ComparisonOperators.LessThanOrEqual)
           .and()
           .group((sub) => {
-            sub.where("category", "books").or().where("category", "games")
+            sub.where("hierarchicalCategories.lvl0", "books").or().where("hierarchicalCategories.lvl0", "games")
           })
           .and()
           .tag("featured")
           .build()
-      ).toBe('price>=100 AND price<=200 AND (category:"books" OR category:"games") AND _tags:"featured"')
+      ).toBe('minPrice>=100 AND minPrice<=200 AND (hierarchicalCategories.lvl0:"books" OR hierarchicalCategories.lvl0:"games") AND _tags:"featured"')
     })
   })
 })

@@ -1,21 +1,14 @@
 import { ComparisonOperators, FilterBuilder } from "lib/algolia/filter-builder"
+import type { AvailableFilterParams } from "lib/algolia/filters"
 
-interface MakeFilterProps {
-  minPrice: number | null
-  maxPrice: number | null
-  categories: string[]
-  vendors: string[]
-  colors: string[]
-  rating?: number | null
-}
-export function composeFilters(filter: FilterBuilder, parsedSearchParams: MakeFilterProps, separator: string) {
+export function composeFilters(filter: FilterBuilder, parsedSearchParams: AvailableFilterParams, separator: string) {
   const filterConditions = [
     {
       predicate: parsedSearchParams.categories.length > 0,
       action: () => {
         parsedSearchParams.categories.forEach((category) => {
-          const level = category.split(separator).length - 1
-          filter.or().group((sub) => sub.in(`hierarchicalCategories.lvl${level}`, [category]))
+          const level = category.split(separator).length - 1 > 2 ? 2 : category.split(separator).length - 1
+          filter.or().group((sub) => sub.in(`hierarchicalCategories.lvl${level as 0 | 1 | 2}`, [category]))
         })
       },
     },
