@@ -1,11 +1,11 @@
-import { tool as createTool, CoreTool } from "ai"
+import { tool as createTool, type CoreTool } from "ai"
 import { getCategories, getProducts } from "lib/algolia"
 import { z } from "zod"
 
-export type AllowedTools = "productSearchTool" | "categorySearchTool"
+export type AllowedTools = "searchProducts" | "searchCategories"
 
-const productSearchTool = createTool({
-  description: "Search for a product",
+const searchProducts = createTool({
+  description: "Search for products in the shop",
   parameters: z.object({
     query: z.string({ description: "Query to search for" }).optional(),
     maxPrice: z.number({ description: "Maximum price of the product, needs to be greater than minPrice" }).min(0).max(200).optional(),
@@ -15,7 +15,6 @@ const productSearchTool = createTool({
     colors: z.array(z.string({ description: "Color of the product" })).optional(),
     rating: z.number({ description: "Rating of the product, needs to be between 1 and 5" }).min(1).max(5).optional(),
   }),
-
   execute: async function ({ query }) {
     const { hits } = await getProducts({
       query,
@@ -26,8 +25,8 @@ const productSearchTool = createTool({
   },
 })
 
-const categorySearchTool = createTool({
-  description: "Search for a category",
+const searchCategories = createTool({
+  description: "Search through categories in the shop",
   parameters: z.object({
     query: z.string({ description: "Query to search for" }),
   }),
@@ -39,6 +38,6 @@ const categorySearchTool = createTool({
 })
 
 export const tools: Record<AllowedTools, CoreTool> = {
-  productSearchTool,
-  categorySearchTool,
+  searchProducts,
+  searchCategories,
 }

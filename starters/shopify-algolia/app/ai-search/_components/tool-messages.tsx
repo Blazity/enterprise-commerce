@@ -33,16 +33,15 @@ export const ToolsUI = ({ message }: { message: Message }) => {
 
 const ToolUI = ({ toolName, result = null }: { toolName: AllowedTools; result?: any }) => {
   switch (toolName) {
-    case "productSearchTool":
+    case "searchProducts":
       return <ProductResultsList products={result} />
 
-    case "categorySearchTool":
+    case "searchCategories":
       return <CategoriesResultsList categories={result} />
     default:
       return (
         <div>
-          Unknown tool:
-          {JSON.stringify(result, null, 2)}
+          Unknown tool - {toolName}:{JSON.stringify(result, null, 2)}
         </div>
       )
   }
@@ -50,9 +49,9 @@ const ToolUI = ({ toolName, result = null }: { toolName: AllowedTools; result?: 
 
 const ToolUISkeleton = ({ toolName }: { toolName: AllowedTools }) => {
   switch (toolName) {
-    case "productSearchTool":
+    case "searchProducts":
       return <div>i am product search tool skeleton</div>
-    case "categorySearchTool":
+    case "searchCategories":
       return <div>i am category search tool skeleton</div>
   }
 }
