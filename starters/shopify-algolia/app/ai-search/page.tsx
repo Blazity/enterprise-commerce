@@ -8,6 +8,7 @@ import { ToolsUI } from "./_components/tool-messages"
 export default function AiSearchPage() {
   const { messages, setMessages, handleSubmit, input, setInput, isLoading } = useChat({
     api: "/api/search",
+    maxSteps: 5,
   })
 
   return (
