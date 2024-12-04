@@ -4,7 +4,7 @@
 import { type KeyboardEvent, useState } from "react"
 
 import Link from "next/link"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 
 import { useClickAway } from "@uidotdev/usehooks"
 
@@ -21,6 +21,10 @@ interface AutocompleteProps {
 
 export function Autocomplete({ className }: AutocompleteProps) {
   const router = useRouter()
+  const pathanme = usePathname()
+
+  const isAi = pathanme.startsWith("/ai")
+
   const [isOpen, setIsOpen] = useState(false)
   const { query, results, isPending, onChange, status } = useAutocomplete({
     callback: () => !isOpen && setIsOpen(true),
@@ -35,7 +39,7 @@ export function Autocomplete({ className }: AutocompleteProps) {
 
   function handleOnKeyDown(e: KeyboardEvent<HTMLInputElement>) {
     if (e.key === "Enter") {
-      router.push(`/search?q=${query}`)
+      router.push(`${isAi ? "/ai/search" : "/search"}?q=${query}`)
       setIsOpen(false)
     }
   }
@@ -63,7 +67,7 @@ export function Autocomplete({ className }: AutocompleteProps) {
         {hasResults &&
           results.map((singleProduct) => (
             <Link
-              href={`/product/${singleProduct.handle}`}
+              href={`${isAi ? "/ai/product" : "/product"}/${singleProduct.handle}`}
               className="flex h-[70px] cursor-pointer items-center gap-4 border-b border-neutral-200 p-4 last:rounded-b-md last:border-0 hover:bg-neutral-50"
               key={singleProduct.id}
               onClick={() => setIsOpen(false)}

@@ -26,6 +26,7 @@ interface FacetsContentProps {
 export function FacetsContent({ independentFacetDistribution, facetDistribution, className, disabledFacets }: FacetsContentProps) {
   const router = useRouter()
   const pathname = usePathname()
+  const isAiPath = pathname.startsWith("/ai/category")
   const { set: setFilterVisibilityStatus, status } = useFilterStore((s) => s)
 
   const collections: Record<string, Record<string, number>> = HIERARCHICAL_ATRIBUTES.reduce((acc, key) => {
@@ -33,7 +34,7 @@ export function FacetsContent({ independentFacetDistribution, facetDistribution,
     return acc
   }, {})
 
-  const vendors = facetDistribution?.["vendor"]
+  const vendors = independentFacetDistribution?.["vendor"]
   const colors = facetDistribution?.["flatOptions.Color"]
 
   const { set: setLastSelected, selected: lastSelected } = useFilterTransitionStore((s) => s)
@@ -126,7 +127,7 @@ export function FacetsContent({ independentFacetDistribution, facetDistribution,
             onCheckedChange={(category) => {
               const checked = selectedCategories.includes(category)
 
-              if (pathname === "/search") {
+              if (pathname === "/search" || pathname === "/ai/search") {
                 setSelectedCategories((prev) => {
                   if (checked) {
                     return prev.filter((cat) => cat !== category)
@@ -140,7 +141,7 @@ export function FacetsContent({ independentFacetDistribution, facetDistribution,
               }
 
               setLastSelected("categories")
-              router.push(`/category/${category.split(HIERARCHICAL_SEPARATOR).pop()}`)
+              router.push(`${isAiPath ? "/ai/category" : "/category"}/${category.split(HIERARCHICAL_SEPARATOR).pop()}`)
             }}
           />
         )}

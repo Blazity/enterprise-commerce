@@ -17,7 +17,7 @@ interface CategoryFacetProps {
 
 export function CategoryFacet({ id, title, distribution, isChecked, onCheckedChange }: CategoryFacetProps) {
   const pathname = usePathname()
-  const isSRP = pathname === "/search"
+  const isSRP = pathname === "/search" || pathname === "/ai/search"
 
   const { items } = useHierarchicalMenu({
     attributes: HIERARCHICAL_ATRIBUTES,

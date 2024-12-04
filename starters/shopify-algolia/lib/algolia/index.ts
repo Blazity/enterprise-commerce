@@ -15,7 +15,6 @@ import { searchClient as algolia, SortType } from "./client"
 
 import type { CommerceProduct } from "types"
 import type { BrowseProps, SearchSingleIndexProps } from "algoliasearch"
-import { AvailableFilters } from "./filters"
 
 export const getProduct = unstable_cache(
   async (handle: string) => {
@@ -84,6 +83,7 @@ export const getAllProducts = async (options?: Omit<BrowseProps["browseParams"],
 export const getSimilarProducts = unstable_cache(
   async (collection: string | undefined, objectID: string) => {
     const limit = 8
+    if (!collection) return []
 
     if (isDemoMode()) return getDemoProducts().hits.slice(0, limit)
 
@@ -105,7 +105,7 @@ export const getSimilarProducts = unstable_cache(
         indexName: env.ALGOLIA_PRODUCTS_INDEX,
         searchParams: {
           hitsPerPage: limit - results[0].hits.length,
-          filters: algolia.filterBuilder().where("collections.handle", collection!).build(),
+          filters: algolia.filterBuilder().where("collections.handle", collection).build(),
         },
       })
     }
@@ -266,29 +266,26 @@ export const getFilteredProducts = unstable_cache(
     const indexName = algolia.mapIndexToSort(env.ALGOLIA_PRODUCTS_INDEX, sortBy as SortType)
 
     try {
-      // use a single http request to search for products and facets, utilize separate query for facet values that should be independent from the search query
-      const res = await algolia?.multiSearch<CommerceProduct>({
-        requests: [
-          {
-            indexName,
+      const [results, independentFacets] = await Promise.all([
+        algolia.search<CommerceProduct>({
+          indexName,
+          searchParams: {
             query,
-            facets: ["hierarchicalCategories.lvl0", "hierarchicalCategories.lvl1", "hierarchicalCategories.lvl2"],
-            hitsPerPage: HITS_PER_PAGE,
-          },
-          {
-            indexName,
-            hitsPerPage: HITS_PER_PAGE,
-            facets: ["vendor", "variants.availableForSale", "flatOptions.Color", "minPrice", "avgRating"].concat(
-              !!env.SHOPIFY_HIERARCHICAL_NAV_HANDLE ? [`hierarchicalCategories.lvl0`, `hierarchicalCategories.lvl1`, `hierarchicalCategories.lvl2`] : []
-            ),
             filters,
             page: page - 1,
-            attributesToRetrieve: ["id", "handle", "title", "priceRange", "featuredImage", "minPrice", "variants", "images", "avgRating", "totalReviews", "vendor"],
+            hitsPerPage: HITS_PER_PAGE,
+            attributesToRetrieve: ["id", "handle", "title", "priceRange", "featuredImage", "minPrice", "variants", "images", "avgRating", "totalReviews"],
+            facets: ["flatOptions.Color", "avgRating"],
           },
-        ],
-      })
-
-      const [independentFacets, results] = res?.results || []
+        }),
+        algolia.search<CommerceProduct>({
+          indexName,
+          searchParams: {
+            facets: ["vendor"].concat(!!env.SHOPIFY_HIERARCHICAL_NAV_HANDLE ? [`hierarchicalCategories.lvl0`, `hierarchicalCategories.lvl1`, `hierarchicalCategories.lvl2`] : []),
+            hitsPerPage: HITS_PER_PAGE,
+          },
+        }),
+      ])
 
       const hits = results?.hits || []
       const totalPages = results?.nbPages || 0
@@ -307,7 +304,8 @@ export const getFilteredProducts = unstable_cache(
 )
 
 export const getFacetValues = unstable_cache(
-  async ({ indexName, facetName }: { indexName: string; facetName: keyof AvailableFilters }) => {
+  async ({ indexName, facetName }: { indexName: string; facetName: string }) => {
+    console.log("calling get facet values", facetName)
     if (isDemoMode()) return []
 
     const res = await algolia.getFacetValues({

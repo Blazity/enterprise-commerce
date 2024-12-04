@@ -94,23 +94,25 @@ function handleAbTestingMiddleware(request: NextRequest, route: Route) {
 function handleCLPMiddleware(request: NextRequest) {
   const url = request.nextUrl.clone()
   const page = request.nextUrl.searchParams.get("page")
+  const isAi = request.nextUrl.pathname.startsWith("/ai/category")
 
   if (page) {
-    url.pathname = `category/clp/${request.nextUrl.pathname.split("/")[2]}/${page}`
+    url.pathname = `${isAi ? "ai/category" : "category"}/clp/${request.nextUrl.pathname.split("/")[isAi ? 3 : 2]}/${page}`
     url.searchParams.delete("page")
 
     return NextResponse.rewrite(url)
   }
 
-  url.pathname = `category/clp/${request.nextUrl.pathname.split("/")[2]}`
+  url.pathname = `${isAi ? "ai/category" : "category"}/clp/${request.nextUrl.pathname.split("/")[isAi ? 3 : 2]}`
 
   return NextResponse.rewrite(url)
 }
 
 function handlePLPMiddleware(request: NextRequest) {
   const url = request.nextUrl.clone()
+  const isAi = request.nextUrl.pathname.startsWith("/ai/category")
 
-  url.pathname = `category/plp/${request.nextUrl.pathname.split("/")[2]}`
+  url.pathname = `${isAi ? "ai/category" : "category"}/plp/${request.nextUrl.pathname.split("/")[isAi ? 3 : 2]}`
 
   return NextResponse.rewrite(url)
 }
@@ -124,15 +126,23 @@ export const config = {
 function isCLP(request: NextRequest): boolean {
   const isCategory = request.nextUrl.pathname.startsWith("/category/")
   const isInternalRoute = request.nextUrl.pathname.startsWith("/category/clp/")
+
+  const isAiCategory = request.nextUrl.pathname.startsWith("/ai/category/")
+  const isAiInternalRoute = request.nextUrl.pathname.startsWith("/ai/category/clp/")
+
   const isFaceted = facetParams.some((param) => request.nextUrl.searchParams.has(param))
 
-  return isCategory && !isFaceted && !isInternalRoute
+  return (isCategory && !isFaceted && !isInternalRoute) || (isAiCategory && !isFaceted && !isAiInternalRoute)
 }
 
 function isPLP(request: NextRequest): boolean {
   const isCategory = request.nextUrl.pathname.startsWith("/category/")
   const isInternalRoute = request.nextUrl.pathname.startsWith("/category/plp/")
+
+  const isAiCategory = request.nextUrl.pathname.startsWith("/ai/category/")
+  const isAiInternalRoute = request.nextUrl.pathname.startsWith("/ai/category/plp/")
+
   const isFaceted = facetParams.some((param) => request.nextUrl.searchParams.has(param))
 
-  return isCategory && isFaceted && !isInternalRoute
+  return (isCategory && isFaceted && !isInternalRoute) || (isAiCategory && isFaceted && !isAiInternalRoute)
 }

@@ -1,24 +1,28 @@
-interface PromptSuggestionsProps {
-  label?: string | null
-  append: (message: { role: "user"; content: string }) => void
-  suggestions: string[]
+import type { ButtonHTMLAttributes } from "react"
+import { cn } from "utils/cn"
+import { Button } from "./button"
+
+type PromptSuggestionsProps = {
+  children: React.ReactNode
+} & React.HTMLAttributes<HTMLDivElement>
+
+export function PromptSuggestions({ children, className, ...rest }: PromptSuggestionsProps) {
+  return (
+    <div className={cn("flex flex-wrap gap-1 text-sm", className)} {...rest}>
+      {children}
+    </div>
+  )
 }
 
-export function PromptSuggestions({ label = null, append, suggestions }: PromptSuggestionsProps) {
+type PromptSuggestionProps = {
+  children: string
+  value: string
+} & ButtonHTMLAttributes<HTMLButtonElement>
+
+export function PromptSuggestion({ children, value, className, ...rest }: PromptSuggestionProps) {
   return (
-    <div>
-      {!!label && <h2 className="text-center text-2xl font-bold">{label}</h2>}
-      <div className="flex flex-wrap gap-1 text-sm">
-        {suggestions.map((suggestion) => (
-          <button
-            key={suggestion}
-            onClick={() => append({ role: "user", content: suggestion })}
-            className="flex-1 grow basis-1/3 rounded-xl border bg-background p-4 hover:bg-muted"
-          >
-            <p>{suggestion}</p>
-          </button>
-        ))}
-      </div>
-    </div>
+    <Button className={cn("flex-1 grow basis-1/3 rounded-xl p-4", className)} {...rest}>
+      {children}
+    </Button>
   )
 }

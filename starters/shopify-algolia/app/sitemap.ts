@@ -52,10 +52,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     return item
   })
 
-  const productRoutes = allHits.map(({ handle, updatedAt }) => {
+  const productRoutes = allHits.map((hit) => {
     const item: MetadataRoute.Sitemap[0] = {
-      url: `${env.LIVE_URL}/product/${handle}`,
-      lastModified: updatedAt,
+      url: `${env.LIVE_URL}/product/${hit.handle}`,
+      lastModified: hit.updatedAt ?? new Date(),
       priority: 0.5,
       changeFrequency: "monthly",
     }

@@ -6,12 +6,13 @@ import { cn } from "utils/cn"
 interface CategoryCardProps extends Pick<PlatformCollection, "title" | "image" | "handle"> {
   index: number
   className?: string
+  href?: string
 }
 
-export const CategoryCard = ({ handle, image, title, index, className }: CategoryCardProps) => {
-  const href = `/category/${handle}`
+export const CategoryCard = ({ handle, image, title, index, className, href }: CategoryCardProps) => {
+  const path = href || `/category/${handle}`
   return (
-    <Link href={href} className={cn("group relative overflow-hidden rounded-lg transition-all hover:shadow-md", className)} prefetch={false}>
+    <Link href={path} className={cn("group relative overflow-hidden rounded-lg transition-all hover:shadow-md", className)} prefetch={false}>
       <div className="relative aspect-video">
         <Image
           src={image?.url || `/category-placeholder-${index}.png`}

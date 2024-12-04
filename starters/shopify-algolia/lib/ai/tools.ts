@@ -2,42 +2,112 @@ import { tool as createTool, type CoreTool } from "ai"
 import { getCategories, getProducts } from "lib/algolia"
 import { z } from "zod"
 
-export type AllowedTools = "searchProducts" | "searchCategories"
+export type AllowedTools = "searchProducts" | "searchCategories" | "buildNavigationQuery"
 
 const searchProducts = createTool({
-  description: "Search for products in the shop",
+  description: "Search for available products to route to",
   parameters: z.object({
-    query: z.string({ description: "Query to search for" }).optional(),
-    maxPrice: z.number({ description: "Maximum price of the product, needs to be greater than minPrice" }).min(0).max(200).optional(),
-    sortBy: z.string({ description: "Sort by price, rating, etc" }).default("price:desc").optional(),
-    categories: z.array(z.string()).optional(),
-    vendors: z.array(z.string()).optional(),
-    colors: z.array(z.string({ description: "Color of the product" })).optional(),
-    rating: z.number({ description: "Rating of the product, needs to be between 1 and 5" }).min(1).max(5).optional(),
+    query: z.string({ description: " Keyword for a product" }),
   }),
   execute: async function ({ query }) {
-    const { hits } = await getProducts({
-      query,
-      hitsPerPage: 8,
-    })
+    const results = await getProducts({ query, hitsPerPage: 5 })
 
-    return hits
+    return { results: results.hits, availableFilters: results.facetDistribution }
   },
 })
 
 const searchCategories = createTool({
-  description: "Search through categories in the shop",
+  description: "Search for available categories to route to",
   parameters: z.object({
-    query: z.string({ description: "Query to search for" }),
+    query: z.string({ description: "Keyword for a category" }),
   }),
   execute: async function ({ query }) {
-    const { hits } = await getCategories({ query, hitsPerPage: 6 })
+    const results = await getCategories({ query, hitsPerPage: 5 })
 
-    return hits
+    return { results: results.hits, availableFilters: results.facetDistribution }
   },
 })
+
+const buildNavigationQuery = createTool({
+  description: "Build URL to navigate the user to",
+  parameters: z.object({
+    result: z.object({
+      handle: z.string(),
+    }),
+    resultType: z.union([z.literal("product"), z.literal("category"), z.literal("search")]),
+    filters: z
+      .object({
+        minPrice: z.number().optional(),
+        maxPrice: z.number().optional(),
+        vendors: z.array(z.string()).optional(),
+        colors: z.array(z.string()).optional(),
+        sortBy: z.string().optional(),
+      })
+      .optional(),
+  }),
+  execute: async function ({ result, resultType, ...rest }) {
+    switch (resultType) {
+      case "product":
+        return `/ai/product/${result.handle}`
+
+      case "category": {
+        if ("filters" in rest) {
+          const params = processFiltersToSearchParams(rest.filters!)
+          return `/ai/category/${result.handle}?${decodeURIComponent(params.toString())}`
+        }
+        return `/ai/category/${result.handle}`
+      }
+
+      case "search": {
+        if ("filters" in rest) {
+          const params = processFiltersToSearchParams(rest.filters!)
+          return `/ai/search?${decodeURIComponent(params.toString())}`
+        }
+        return `/ai/search/`
+      }
+    }
+  },
+})
+
+function processFiltersToSearchParams(filters: Record<string, string | string[] | number | number[]>) {
+  const params = new URLSearchParams()
+
+  for (const [key, value] of Object.entries(filters)) {
+    if (key === "sortBy") {
+      switch (value) {
+        case "price-high-to-low":
+          params.set("sortBy", "minPrice:desc")
+          break
+        case "price-low-to-high":
+          params.set("sortBy", "minPrice:asc")
+          break
+        case "customer-reviews":
+          params.set("sortBy", "avgRating:desc")
+          break
+        case "newest":
+          params.set("sortBy", "updatedAtTimestamp:asc")
+          break
+        case "oldest":
+          params.set("sortBy", "updatedAtTimestamp:desc")
+          break
+        case "relevancy":
+          params.delete("sortBy")
+          break
+        default:
+          break
+      }
+    } else if (Array.isArray(value)) {
+      params.set(key, value.join(","))
+    } else {
+      params.set(key, value.toString())
+    }
+  }
+
+  return params
+}
 
 export const tools: Record<AllowedTools, CoreTool> = {
   searchProducts,
   searchCategories,
+  buildNavigationQuery,
 }
