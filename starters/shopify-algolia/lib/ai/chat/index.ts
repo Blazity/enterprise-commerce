@@ -1,6 +1,6 @@
-// Original: https://github.com/vercel/ai-chatbot/blob/main/lib/utils.ts
+// Origin: https://github.com/vercel/ai-chatbot/blob/main/lib/utils.ts
 
-import type { CoreAssistantMessage, CoreToolMessage, Message } from "ai"
+import type { CoreAssistantMessage, CoreMessage, CoreToolMessage, Message } from "ai"
 
 export function sanitizeUIMessages(messages: Array<Message>): Array<Message> {
   const messagesBySanitizedToolInvocations = messages.map((message) => {
@@ -56,4 +56,9 @@ export function sanitizeResponseMessages(messages: Array<CoreToolMessage | CoreA
   })
 
   return messagesBySanitizedContent.filter((message) => message.content.length > 0)
+}
+
+export function getMostRecentUserMessage(messages: Array<CoreMessage>) {
+  const userMessages = messages.filter((message) => message.role === "user")
+  return userMessages.at(-1)
 }

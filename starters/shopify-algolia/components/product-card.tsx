@@ -9,16 +9,30 @@ interface ProductCardProps extends Pick<CommerceProduct, "variants" | "handle" |
   priority?: boolean
   prefetch?: boolean
   className?: string
+  href?: string
 }
 
-export const ProductCard = ({ variants, handle, title, featuredImage, minPrice, avgRating, totalReviews, className, priority, vendor, prefetch = false }: ProductCardProps) => {
+export const ProductCard = ({
+  variants,
+  handle,
+  title,
+  featuredImage,
+  minPrice,
+  avgRating,
+  totalReviews,
+  className,
+  priority,
+  vendor,
+  prefetch = false,
+  href = "",
+}: ProductCardProps) => {
   const noOfVariants = variants?.length
-  const href = `/product/${handle}`
+  const path = href || `/product/${handle}`
   const linkAria = `Visit product: ${title}`
   const variantPrice = variants?.find(Boolean)?.price
 
   return (
-    <Link className={cn("group flex h-full w-full flex-col overflow-hidden", className)} aria-label={linkAria} href={href} prefetch={prefetch}>
+    <Link className={cn("group flex h-full w-full flex-col overflow-hidden", className)} aria-label={linkAria} href={path} prefetch={prefetch}>
       <div className="relative aspect-square overflow-hidden">
         <Image
           priority={priority}
