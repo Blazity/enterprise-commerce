@@ -9,7 +9,7 @@ import { getCombination, getOptionsFromUrl, hasValidOption, removeOptionsFromUrl
 import { Breadcrumbs } from "components/breadcrumbs"
 
 import { FavoriteMarker } from "components/product/favorite-marker"
-import { SimilarProductsSection } from "components/product/similar-products-section"
+// import { SimilarProductsSection } from "components/product/similar-products-section"
 import { SimilarProductsSectionSkeleton } from "components/product/similar-product-section-skeleton"
 import { VariantsSection } from "components/product/variants-section"
 import { ProductTitle } from "components/product/product-title"
@@ -95,9 +95,7 @@ export default async function Product(props: ProductProps) {
         <Suspense>
           <ReviewsSection avgRating={product.avgRating} productHandle={product.handle} productId={product.id} slug={slug} summary={product.reviewsSummary} />
         </Suspense>
-        <Suspense fallback={<SimilarProductsSectionSkeleton />}>
-          <SimilarProductsSection objectID={product.objectID} slug={slug} />
-        </Suspense>
+        <Suspense fallback={<SimilarProductsSectionSkeleton />}>{/* <SimilarProductsSection objectID={product.objectID} slug={slug} /> */}</Suspense>
       </main>
     </div>
   )
