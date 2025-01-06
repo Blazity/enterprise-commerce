@@ -1,4 +1,6 @@
 import { usePathname } from "next/navigation"
+import * as m from "motion/react-m"
+import { LazyMotion, domAnimation } from "motion/react"
 
 import { AccordionContent, AccordionItem, AccordionTrigger } from "components/ui/accordion"
 
@@ -36,7 +38,7 @@ export function CategoryFacet({ id, title, distribution, isChecked, onCheckedCha
         {items.length === 0 ? (
           <p className="text-sm/3 text-neutral-500">No categories found</p>
         ) : (
-          <CategoryTree className="my-4 space-y-8" items={items} parent={null} level={0} onClick={handleClick} isChecked={isChecked} />
+          <CategoryTree className="" items={items} parent={null} level={0} onClick={handleClick} isChecked={isChecked} />
         )}
       </AccordionContent>
     </AccordionItem>
@@ -54,30 +56,38 @@ interface CategoryTreeProps {
 
 const CategoryTree = ({ items, level, onClick, isChecked, className, parent }: CategoryTreeProps) => {
   return (
-    <ul className={className}>
-      {items.map(({ value, isRefined, data }) => {
-        const valueWithParent = parent ? [...parent, value].join(HIERARCHICAL_SEPARATOR) : value
-        return (
-          <li key={value} className={cn("flex flex-col gap-4")}>
-            <button
-              className={cn("flex items-center bg-transparent text-left text-sm/4", isRefined || isChecked(value) ? "font-normal text-black" : "font-thin text-gray-400")}
-              onClick={() => onClick(valueWithParent)}
+    <LazyMotion features={domAnimation}>
+      <ul className={cn(className)}>
+        {items.map(({ value, isRefined, data }, index) => {
+          const valueWithParent = parent ? [...parent, value].join(HIERARCHICAL_SEPARATOR) : value
+          return (
+            <m.li
+              key={value}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.25, delay: level * 0.01 + 0.02 * (level + index) * 0.6 }}
+              className={cn("flex flex-col gap-4")}
             >
-              {slugToName(value)}
-            </button>
-            {data && data.length > 0 && (
-              <CategoryTree
-                className={cn("ml-2 flex flex-col gap-4", level > 0 && (isRefined || isChecked(value)) && "border-l border-orange-500 pl-2")}
-                items={data}
-                level={level + 1}
-                onClick={onClick}
-                isChecked={isChecked}
-                parent={parent ? [...parent, value] : [value]}
-              />
-            )}
-          </li>
-        )
-      })}
-    </ul>
+              <button
+                className={cn("flex items-center bg-transparent text-left text-sm/4", isRefined || isChecked(value) ? "font-normal text-black" : "font-thin text-gray-400")}
+                onClick={() => onClick(valueWithParent)}
+              >
+                {slugToName(value)}
+              </button>
+              {data && data.length > 0 && (
+                <CategoryTree
+                  className={cn("ml-2 flex flex-col gap-4", level > 0 && (isRefined || isChecked(value)) && "border-l border-orange-500 pl-2")}
+                  items={data}
+                  level={level + 1}
+                  onClick={onClick}
+                  isChecked={isChecked}
+                  parent={parent ? [...parent, value] : [value]}
+                />
+              )}
+            </m.li>
+          )
+        })}
+      </ul>
+    </LazyMotion>
   )
 }

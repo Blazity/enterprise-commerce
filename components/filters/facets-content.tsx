@@ -3,6 +3,8 @@
 import { useEffect } from "react"
 import { usePathname, useRouter } from "next/navigation"
 import { parseAsArrayOf, parseAsInteger, parseAsString, useQueryState } from "nuqs"
+// import * as m from "motion/react-m"
+import { AnimatePresence, motion, LazyMotion, domAnimation, LayoutGroup } from "motion/react"
 
 import { useFilterTransitionStore } from "stores/filter-transition-store"
 import { useFilterStore } from "stores/filters-store"
@@ -15,6 +17,7 @@ import { Facet } from "./facet"
 import { CategoryFacet } from "./category-facet"
 import { PriceFacet } from "./price-facet"
 import { RatingFacet } from "./rating-facet"
+import { CloseIcon } from "components/icons/close-icon"
 
 interface FacetsContentProps {
   independentFacetDistribution: Record<string, Record<string, number>> | undefined
@@ -68,7 +71,9 @@ export function FacetsContent({ independentFacetDistribution, facetDistribution,
   const [minPrice, setMinPrice] = useQueryState("minPrice", { ...parseAsInteger, shallow: false, defaultValue: 0, clearOnDefault: true })
   const [maxPrice, setMaxPrice] = useQueryState("maxPrice", { ...parseAsInteger, shallow: false, defaultValue: 0, clearOnDefault: true })
 
-  const filtersCount = [selectedCategories, selectedVendors, selectedColors, minPrice, maxPrice, selectedRating].filter((v) => (Array.isArray(v) ? v.length !== 0 : !!v)).length
+  const allFilters = [selectedCategories, selectedVendors, selectedColors, minPrice, maxPrice, selectedRating]
+
+  const filtersCount = allFilters.filter((v) => (Array.isArray(v) ? v.length !== 0 : !!v)).length
 
   const roundedRatings = Object.entries(facetDistribution?.["avgRating"] || {}).reduce(
     (acc, [key, value]) => {
@@ -89,6 +94,20 @@ export function FacetsContent({ independentFacetDistribution, facetDistribution,
     }
   )
 
+  const flattenedFilters = allFilters.flat()
+
+  function filterElement(element: string) {
+    if (selectedVendors.includes(element)) {
+      setSelectedVendors(selectedVendors.filter((v) => v !== element))
+    }
+    if (selectedCategories.includes(element)) {
+      setSelectedCategories(selectedCategories.filter((v) => v !== element))
+    }
+    if (selectedColors.includes(element)) {
+      setSelectedColors(selectedColors.filter((v) => v !== element))
+    }
+  }
+
   function resetAllFilters() {
     setSelectedCategories(null)
     setSelectedVendors(null)
@@ -105,15 +124,47 @@ export function FacetsContent({ independentFacetDistribution, facetDistribution,
   }, [pathname, setFilterVisibilityStatus])
 
   return (
-    <>
+    <LazyMotion features={domAnimation}>
       <Accordion
         className={cn(status === "hidden" && "lg:animate-slideOutLeft", status === "visible" && "lg:animate-slideInLeft", className)}
         type="multiple"
         defaultValue={lastSelected}
       >
         {!!filtersCount && (
-          <div className="mt-10 inline-flex cursor-pointer text-[15px] text-black underline" onClick={() => resetAllFilters()}>
-            Reset all filters {filtersCount}
+          <div className="flex flex-col gap-4">
+            <div className="text-sm">
+              <div className="flex max-h-[150px] flex-wrap gap-1 overflow-y-auto">
+                <LayoutGroup>
+                  <AnimatePresence initial={false}>
+                    {flattenedFilters.map((el) => {
+                      if (typeof el === "string") {
+                        return (
+                          // would be nice to use exit animations here, but that requires AnimatePresence, which makes bundle size bigger
+                          <motion.div
+                            key={el}
+                            layout
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0, transition: { duration: 0.08 } }}
+                            transition={{ duration: 0.15, ease: "easeInOut" }}
+                            className="duration-[200ms] flex cursor-pointer items-center gap-1 rounded-md border px-2 py-1 text-xs transition-colors ease-out hover:border-primary"
+                            onClick={() => filterElement(el)}
+                          >
+                            <span>
+                              <CloseIcon className="size-2" />
+                            </span>
+                            <span>{el}</span>
+                          </motion.div>
+                        )
+                      }
+                    })}
+                  </AnimatePresence>
+                </LayoutGroup>
+              </div>
+            </div>
+            <div className="mt-4 inline-flex cursor-pointer text-[15px] text-black underline" onClick={() => resetAllFilters()}>
+              Reset all filters {filtersCount}
+            </div>
           </div>
         )}
         {!disabledFacets?.includes("categories") && (
@@ -203,6 +254,6 @@ export function FacetsContent({ independentFacetDistribution, facetDistribution,
           </AccordionContent>
         </AccordionItem>
       </Accordion>
-    </>
+    </LazyMotion>
   )
 }
