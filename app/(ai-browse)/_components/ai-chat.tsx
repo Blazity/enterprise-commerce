@@ -65,7 +65,7 @@ export function AiCommerceSidebar() {
                 <span className="font-semibold">AI-Commerce</span>
               </div>
 
-              <ToggleGroup
+              {/* <ToggleGroup
                 type="single"
                 value={mode}
                 onValueChange={(value) => {
@@ -91,7 +91,7 @@ export function AiCommerceSidebar() {
                 >
                   Concierge
                 </ToggleGroupItem>
-              </ToggleGroup>
+              </ToggleGroup> */}
             </div>
           </SidebarMenuItem>
         </SidebarMenu>
@@ -133,7 +133,7 @@ export function AiCommerceSidebar() {
             />
           </div>
           <Suggestions />
-          <Alert>
+          {/* <Alert>
             <AlertCircle className="size-4" />
             <AlertTitle>Pilot vs Concierge</AlertTitle>
             <AlertDescription className="text-xs">
@@ -144,7 +144,7 @@ export function AiCommerceSidebar() {
                 <span className="font-semibold underline">Concierge mode</span> is a more passive approach where the AI serves you crafted components.
               </p>
             </AlertDescription>
-          </Alert>
+          </Alert> */}
         </form>
         <SidebarMenu className="mt-4">
           <SidebarMenuItem>

@@ -9,7 +9,6 @@ import { buildSearchFilter } from "utils/build-search-filter"
 import { FacetsDesktop } from "components/filters/facets-desktop"
 import { HitsSection } from "components/filters/hits-section"
 import { PaginationSection } from "components/filters/pagination-section"
-// import { Controls } from "components/filters/controls"
 import { FacetsMobile } from "components/filters/facets-mobile"
 
 import { SearchParamsType } from "types"
@@ -61,21 +60,11 @@ export async function SearchView({ searchParams, disabledFacets, collection, bas
 
   return (
     <div className="mx-auto w-full md:max-w-container-md">
-      {/* <div className="sticky top-[77px] z-40 flex items-center justify-between bg-white/80 py-4 backdrop-blur-lg md:top-[83px] md:-mx-12 md:px-12">
-        <h1 className="flex items-center gap-1 text-3xl font-semibold tracking-tight lg:text-4xl">
-          {makePageTitle(collection, q)}
-          <span className="hidden lg:block">({totalHits})</span>
-        </h1>
-        <Controls />
-      </div> */}
       <hr className="lg:hidden" />
       <div className="sticky top-[77px] z-40 flex items-center justify-between bg-white/80 p-4 py-4 backdrop-blur-lg lg:hidden">
-        <div className="flex items-center gap-2">
-          <h1 className="flex items-center gap-1 text-3xl font-semibold tracking-tight lg:text-4xl">
-            {makePageTitle(collection, q)}
-            <span className="">({totalHits})</span>
-          </h1>
-          {/* <span className="text-gray-500">{totalHits} results</span> */}
+        <div className="flex gap-1 text-3xl font-semibold tracking-tight lg:text-4xl">
+          <h1 className="flex-1">{makePageTitle(collection, q)}</h1>
+          <span className="flex-1 text-2xl">({totalHits})</span>
         </div>
         <FacetsMobile
           disabledFacets={disabledFacets}
@@ -85,10 +74,10 @@ export async function SearchView({ searchParams, disabledFacets, collection, bas
         />
       </div>
       <div className="flex gap-12 p-4 md:gap-12 xl:px-0">
-        <div className="sticky top-[100px] hidden max-h-[80dvh] max-w-64 px-2 lg:block lg:px-0">
-          <h1 className="flex items-center gap-1 pb-4 text-3xl font-semibold tracking-tight lg:text-4xl">
+        <div className="sticky top-[100px] hidden max-h-[90dvh] w-full max-w-64 px-2 lg:block lg:px-0">
+          <h1 className="flex gap-1 pb-4 text-3xl font-semibold tracking-tight lg:text-4xl">
             {makePageTitle(collection, q)}
-            <span className="">({totalHits})</span>
+            <span className="text-2xl">({totalHits})</span>
           </h1>
           <Suspense>
             <FacetsDesktop

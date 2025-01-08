@@ -59,3 +59,7 @@
     @apply bg-background font-sans text-foreground antialiased;
   }
 }
+
+.fade-out-mask {
+  background: linear-gradient(to bottom, rgba(249, 250, 251, 0.95) 0%, rgba(249, 250, 251, 0) 10%, rgba(249, 250, 251, 0) 90%, rgba(249, 250, 251, 0.95) 100%);
+}
