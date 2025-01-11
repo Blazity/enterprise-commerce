@@ -179,6 +179,9 @@ const config: Omit<Config, "content"> = {
       minWidth: {
         ...defaultTheme.width,
       },
+      screens: {
+        "ai-2xl": "1640px",
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],

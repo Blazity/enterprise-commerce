@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { AlertCircle, ShoppingBag, ShoppingCart } from "lucide-react"
+import { ShoppingBag, ShoppingCart, Zap } from "lucide-react"
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "components/ui/sidebar"
 import { ScrollArea } from "components/ui/scroll-area"
 import { Textarea } from "components/ui/textarea"
@@ -9,19 +9,12 @@ import { toast } from "sonner"
 import { cn } from "utils/cn"
 import { MessageList } from "components/ui/message-list"
 import { useAiCommerce } from "./ai-commerce-context"
-import { ToggleGroup, ToggleGroupItem } from "components/ui/toggle-group"
-import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { Suggestions } from "./chat-suggestions"
-import { Alert, AlertDescription, AlertTitle } from "components/ui/alert"
+import { motion } from "motion/react"
 
 export function AiCommerceSidebar() {
   const { handleSubmit, setInput, messages, isLoading, input, mode } = useAiCommerce()
   const textareaRef = React.useRef<HTMLTextAreaElement>(null)
-
-  const searchParams = useSearchParams()
-  const pathname = usePathname()
-  const router = useRouter()
-  const urlParams = new URLSearchParams(searchParams)
 
   const handleSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
     handleSubmit(e)
@@ -57,47 +50,21 @@ export function AiCommerceSidebar() {
 
   return (
     <Sidebar variant="inset">
-      <SidebarHeader className="border-b border-border px-4 py-2">
+      <SidebarHeader className="rounded-t-xl px-4 py-[29px] text-sidebar-foreground">
         <SidebarMenu>
           <SidebarMenuItem>
-            <div className="flex w-full flex-col gap-2">
+            <div className="flex w-full flex-col whitespace-nowrap">
               <div className="flex items-center gap-2 self-center">
-                <span className="font-semibold">AI-Commerce</span>
+                <Zap className="size-5" />
+                <span className={cn("font-semibold tracking-tight")}>AI-Commerce Chatbot</span>
               </div>
-
-              {/* <ToggleGroup
-                type="single"
-                value={mode}
-                onValueChange={(value) => {
-                  if (!value) return
-
-                  urlParams.set("mode", value)
-
-                  router.push(`${pathname}?${urlParams.toString()}`)
-                }}
-                className="self-center rounded-md bg-orange-100 transition-all duration-200 ease-in-out"
-              >
-                <ToggleGroupItem
-                  value="pilot"
-                  aria-label="Toggle Pilot mode"
-                  className="rounded-md transition-all duration-200 ease-in-out data-[state=on]:bg-orange-400 data-[state=on]:text-white data-[state=on]:shadow-md"
-                >
-                  Pilot
-                </ToggleGroupItem>
-                <ToggleGroupItem
-                  value="concierge"
-                  aria-label="Toggle Concierge mode"
-                  className="rounded-md transition-all duration-200 ease-in-out data-[state=on]:bg-orange-400 data-[state=on]:text-white data-[state=on]:shadow-md"
-                >
-                  Concierge
-                </ToggleGroupItem>
-              </ToggleGroup> */}
             </div>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <ScrollArea className="px-4">
+        <ScrollArea className="relative h-full rounded-xl border-black/10 px-4 py-2">
+          <div className="ai-chat-fade-out-mask pointer-events-none absolute inset-0 z-10"></div>
           <div className="flex flex-col space-y-4">
             <MessageList
               messages={messages.filter((message) => !!message.content)}
@@ -109,14 +76,15 @@ export function AiCommerceSidebar() {
         </ScrollArea>
       </SidebarContent>
       <SidebarFooter className="p-4">
+        <Suggestions />
         <form>
-          <div className="flex items-center space-x-2">
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.25, delay: 0.18 }}>
             <Textarea
               ref={textareaRef}
               placeholder="Send a message..."
               value={input}
               onChange={handleInput}
-              className={cn("max-h-[calc(50dvh)] min-h-[24px] resize-none overflow-hidden rounded-xl bg-muted text-base")}
+              className={cn("max-h-[calc(50dvh)] min-h-[24px] resize-none overflow-hidden rounded-xl bg-white text-base focus-visible:ring-gray-300")}
               rows={3}
               autoFocus
               onKeyDown={(event) => {
@@ -131,32 +99,29 @@ export function AiCommerceSidebar() {
                 }
               }}
             />
-          </div>
-          <Suggestions />
-          {/* <Alert>
-            <AlertCircle className="size-4" />
-            <AlertTitle>Pilot vs Concierge</AlertTitle>
-            <AlertDescription className="text-xs">
-              <p>
-                <span className="font-semibold underline">Pilot mode</span> is a more hands-on approach where the AI navigates you through the website.
-              </p>
-              <p>
-                <span className="font-semibold underline">Concierge mode</span> is a more passive approach where the AI serves you crafted components.
-              </p>
-            </AlertDescription>
-          </Alert> */}
+          </motion.div>
         </form>
         <SidebarMenu className="mt-4">
           <SidebarMenuItem>
-            <SidebarMenuButton className="w-full justify-start text-sidebar-foreground transition-all hover:scale-105 hover:bg-sidebar-accent hover:text-secondary-foreground">
-              <ShoppingCart className="mr-2 h-4 w-4" />
-              <span>View Cart</span>
+            <SidebarMenuButton
+              asChild
+              className="duration-[200ms] w-full cursor-pointer select-none justify-start bg-gray-100 font-medium text-sidebar-foreground transition-all hover:bg-gray-200 hover:text-secondary-foreground active:scale-[0.98] active:bg-gray-200"
+            >
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.25, delay: 0.22 }}>
+                <ShoppingCart className="mr-1 h-4 w-4" />
+                <span>View Cart</span>
+              </motion.div>
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <SidebarMenuButton className="w-full justify-start text-sidebar-foreground transition-all hover:scale-105 hover:bg-secondary hover:text-secondary-foreground">
-              <ShoppingBag className="mr-2 h-4 w-4" />
-              <span>Checkout</span>
+            <SidebarMenuButton
+              asChild
+              className="duration-[200ms] w-full cursor-pointer select-none justify-start bg-gray-100 font-medium text-sidebar-foreground transition-all hover:bg-gray-200 hover:text-secondary-foreground active:scale-[0.98] active:bg-gray-200"
+            >
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.25, delay: 0.25 }}>
+                <ShoppingBag className="mr-1 h-4 w-4" />
+                <span>Checkout</span>
+              </motion.div>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

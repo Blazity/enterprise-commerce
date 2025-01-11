@@ -1,9 +1,12 @@
+"use client"
+
 import { useEffect, useState } from "react"
-import { motion } from "framer-motion"
+import { AnimatePresence, motion } from "framer-motion"
 import { useChat } from "ai/react"
 import { toast } from "sonner"
 import { useAiCommerce } from "./ai-commerce-context"
 import { PromptSuggestion, PromptSuggestions } from "components/ui/prompt-suggestions"
+import { useSuggestionsStore } from "stores/suggestions-store"
 
 const INIT_SUGGESTIONS = ["Show me electronics under 250$", "Show me best-selling lips", "What are current products on sale?", "I'm looking for sportswear"]
 
@@ -13,6 +16,7 @@ export function Suggestions() {
   const { data: streamingData, append: appendSuggestions } = useChat({
     api: "/api/suggestions",
   })
+  const { suggestions, setSuggestions } = useSuggestionsStore()
 
   useEffect(() => {
     if (!streamingData) return
@@ -45,13 +49,36 @@ export function Suggestions() {
 
   return (
     <PromptSuggestions className="my-4">
-      {currentSuggestions.map((suggestion, index) => (
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 20 }} transition={{ delay: 0.1 * index }} key={`suggestion-${index}`}>
-          <PromptSuggestion disabled={isLoading} value={suggestion} onClick={() => handleClick(suggestion)}>
-            {suggestion}
-          </PromptSuggestion>
-        </motion.div>
-      ))}
+      <AnimatePresence>
+        {currentSuggestions.map((suggestion, index) => {
+          return (
+            <motion.div
+              key={`suggestion-${index}`}
+              initial={{ opacity: 0, y: 5 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{
+                opacity: 0,
+                y: 5,
+                pointerEvents: "none",
+
+                transition: {
+                  delay: 0.02 * index,
+                  ease: "easeOut",
+                  pointerEvents: {
+                    delay: 0,
+                  },
+                },
+              }}
+              whileTap={{ scale: 0.98, transition: { delay: 0 } }}
+              transition={{ duration: 0.25, delay: 0.02 * index, ease: "easeOut" }}
+            >
+              <PromptSuggestion disabled={isLoading} value={suggestion} className=" bg-gray-200 text-black hover:bg-gray-300" onClick={() => handleClick(suggestion)}>
+                {suggestion}
+              </PromptSuggestion>
+            </motion.div>
+          )
+        })}
+      </AnimatePresence>
     </PromptSuggestions>
   )
 }

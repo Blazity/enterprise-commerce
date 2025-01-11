@@ -63,3 +63,7 @@
 .fade-out-mask {
   background: linear-gradient(to bottom, rgba(249, 250, 251, 0.95) 0%, rgba(249, 250, 251, 0) 10%, rgba(249, 250, 251, 0) 90%, rgba(249, 250, 251, 0.95) 100%);
 }
+
+.ai-chat-fade-out-mask {
+  background: linear-gradient(to bottom, rgba(250, 250, 250, 0.96) 0%, rgba(250, 250, 250, 0) 7%, rgba(250, 250, 250, 0) 93%, rgba(250, 250, 250, 0.95) 100%);
+}

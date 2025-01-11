@@ -14,6 +14,7 @@ import { FacetsMobile } from "components/filters/facets-mobile"
 import { SearchParamsType } from "types"
 
 import { HIERARCHICAL_SEPARATOR } from "constants/index"
+import { cn } from "utils/cn"
 
 interface SearchViewProps {
   searchParams: SearchParamsType
@@ -73,7 +74,7 @@ export async function SearchView({ searchParams, disabledFacets, collection, bas
           className="lg:hidden"
         />
       </div>
-      <div className="flex gap-12 p-4 md:gap-12 xl:px-0">
+      <div className={cn("flex gap-12 p-4 md:gap-12", basePath === "ai" ? "ai-2xl:px-0" : "xl:px-0")}>
         <div className="sticky top-[100px] hidden max-h-[90dvh] w-full max-w-64 px-2 lg:block lg:px-0">
           <h1 className="flex gap-1 pb-4 text-3xl font-semibold tracking-tight lg:text-4xl">
             {makePageTitle(collection, q)}
