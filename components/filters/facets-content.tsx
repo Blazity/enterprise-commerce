@@ -63,7 +63,7 @@ export function FacetsContent({ independentFacetDistribution, facetDistribution,
   })
   const [selectedColors, setSelectedColors] = useQueryState("colors", { ...parseAsArrayOf(parseAsString), defaultValue: [], shallow: false, history: "push", clearOnDefault: true })
 
-  const [_, setPage] = useQueryState("page", { ...parseAsInteger, defaultValue: 1, shallow: false, history: "push", clearOnDefault: true })
+  const [page, setPage] = useQueryState("page", { ...parseAsInteger, defaultValue: 1, shallow: false, history: "push", clearOnDefault: true })
 
   const [minPrice, setMinPrice] = useQueryState("minPrice", { ...parseAsInteger, shallow: false, defaultValue: 0, clearOnDefault: true })
   const [maxPrice, setMaxPrice] = useQueryState("maxPrice", { ...parseAsInteger, shallow: false, defaultValue: 0, clearOnDefault: true })
@@ -102,6 +102,7 @@ export function FacetsContent({ independentFacetDistribution, facetDistribution,
     for (const [_, [selected, setter]] of Object.entries(filterActions)) {
       if (selected.includes(element)) {
         setter(selected.filter((v) => v !== element))
+        setPage(1)
         break // Exit once we've found and removed the element
       }
     }
@@ -123,24 +124,21 @@ export function FacetsContent({ independentFacetDistribution, facetDistribution,
         <div>
           <div className="flex items-baseline justify-between pb-1 tracking-tight">
             <p className="text-sm font-medium">{filtersCount === 0 ? "No filters selected" : `Active filters (${filtersCount})`}</p>
-            <AnimatePresence>
-              <motion.button
-                initial={{ opacity: 0 }}
-                animate={{ opacity: filtersActive ? 1 : 0, visibility: filtersActive ? "visible" : "hidden" }}
-                exit={{ opacity: 0, transition: { duration: 0.1, visibility: { delay: 0.1 } } }}
-                transition={{ duration: 0.2, visibility: { delay: filtersActive ? 0 : 0.2 } }}
-                className="duration-[200ms] rounded-md bg-transparent px-1.5 py-0.5 text-xs transition-colors hover:bg-gray-50"
-                onClick={() => setShowFilterTags(!showFilterTags)}
-              >
-                {showFilterTags ? "Hide" : "Show"}
-              </motion.button>
-            </AnimatePresence>
+            <motion.button
+              initial={false}
+              animate={{ opacity: filtersActive ? 1 : 0, visibility: filtersActive ? "visible" : "hidden" }}
+              transition={{ duration: 0.2, visibility: { delay: filtersActive ? 0 : 0.2 } }}
+              className="duration-[200ms] rounded-md bg-transparent px-1.5 py-0.5 text-xs transition-colors hover:bg-gray-50"
+              onClick={() => setShowFilterTags(!showFilterTags)}
+            >
+              {showFilterTags ? "Hide" : "Show"}
+            </motion.button>
           </div>
-          <motion.div initial={{ height: 0 }} animate={{ height: showFilterTags && filtersActive ? 140 : 0 }} className={cn("relative h-full max-h-[140px] overflow-clip")}>
+          <motion.div initial={false} animate={{ height: showFilterTags && filtersActive ? 140 : 0 }} className={cn("relative h-full max-h-[140px] overflow-hidden")}>
             <FadeOutMask />
-            <div className={cn("flex h-full flex-wrap content-start items-start justify-start gap-1 overflow-y-auto rounded-md bg-gray-50 p-2")}>
-              <AnimatePresence>
-                {flattenedFilters.map((el) => {
+            <motion.div className={cn("isolate flex h-full flex-wrap content-start items-start justify-start gap-1 overflow-y-auto rounded-md bg-gray-50 p-2")}>
+              <AnimatePresence mode="popLayout" initial={false} key={page}>
+                {flattenedFilters.map((el, index) => {
                   if (typeof el === "string") {
                     const isCategory = el.includes(" > ")
                     const categoryName = el.split(" > ").pop()?.trim()
@@ -149,15 +147,15 @@ export function FacetsContent({ independentFacetDistribution, facetDistribution,
                       <motion.div
                         key={el}
                         layout
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0, transition: { duration: 0.15 } }}
-                        transition={{ duration: 0.15, ease: "easeInOut" }}
-                        className="flex grow-0 cursor-pointer items-center gap-1 rounded-md border border-slate-300/60 bg-gray-100/20 py-1 pl-1.5 pr-2 text-xs transition-colors hover:border-slate-400/80 hover:bg-gray-100/70"
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.9, zIndex: -1, transition: { duration: 0.1, delay: 0 } }}
+                        transition={{ duration: 0.2, ease: "easeInOut", delay: 0.02 * index }}
+                        className="group flex grow-0 cursor-pointer items-center gap-1 whitespace-nowrap rounded-md border border-gray-300/60 bg-white py-1 pl-1.5 pr-2 text-xs transition-colors hover:border-gray-400/80 hover:bg-gray-100/70"
                         onClick={() => removeTag(el)}
                       >
-                        <span className="rounded-full border border-gray-300 p-px">
-                          <CloseIcon className="size-2" />
+                        <span className="rounded-full border border-gray-300 p-px transition-colors group-hover:border-gray-400">
+                          <CloseIcon className="size-2 fill-gray-300 transition-colors group-hover:fill-gray-400" />
                         </span>
                         <span className="font-medium tracking-tight">{isCategory && categoryName ? slugToName(categoryName) : el}</span>
                       </motion.div>
@@ -165,21 +163,18 @@ export function FacetsContent({ independentFacetDistribution, facetDistribution,
                   }
                 })}
               </AnimatePresence>
-            </div>
+            </motion.div>
           </motion.div>
         </div>
-        <AnimatePresence>
-          <motion.button
-            initial={{ opacity: 0 }}
-            animate={{ opacity: filtersActive ? 1 : 0, visibility: filtersActive ? "visible" : "hidden" }}
-            exit={{ opacity: 0, transition: { duration: 0.1, visibility: { delay: 0.1 } } }}
-            transition={{ duration: 0.2, visibility: { delay: filtersActive ? 0 : 0.2 } }}
-            className="mb-3 mt-3 inline-flex cursor-pointer bg-white text-xs text-black underline"
-            onClick={() => resetAllFilters()}
-          >
-            Clear filters
-          </motion.button>
-        </AnimatePresence>
+        <motion.button
+          initial={false}
+          animate={{ opacity: filtersActive ? 1 : 0, visibility: filtersActive ? "visible" : "hidden" }}
+          transition={{ duration: 0.2, visibility: { delay: filtersActive ? 0 : 0.2 } }}
+          className="mb-3 mt-3 inline-flex cursor-pointer bg-white text-xs text-black underline"
+          onClick={() => resetAllFilters()}
+        >
+          Clear filters
+        </motion.button>
       </div>
 
       {!disabledFacets?.includes("categories") && (
