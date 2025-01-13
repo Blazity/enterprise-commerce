@@ -42,7 +42,7 @@ export class ProductEnrichmentBuilder {
 
       this.product = {
         ...this.product,
-        avgRating,
+        avgRating: Number(avgRating.toFixed(2)),
         totalReviews: productReviews.length,
       }
     }
