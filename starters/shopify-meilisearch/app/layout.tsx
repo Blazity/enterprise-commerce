@@ -17,7 +17,7 @@ import { Footer } from "components/footer"
 import { Modals } from "components/modals/modals"
 import DraftToolbar from "components/draft-toolbar"
 
-export const revalidate = 86400
+export const revalidate = 604800
 
 const navigationItems: NavItem[] = [
   {

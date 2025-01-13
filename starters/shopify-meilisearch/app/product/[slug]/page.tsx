@@ -25,7 +25,7 @@ import type { CommerceProduct } from "types"
 import { generateJsonLd } from "./metadata"
 import { getProduct, getProducts } from "lib/meilisearch"
 
-export const revalidate = 86400
+export const revalidate = 604800
 export const dynamic = "force-static"
 export const dynamicParams = true
 
@@ -45,11 +45,9 @@ export async function generateStaticParams() {
 }
 
 export default async function Product(props: ProductProps) {
-  const params = await props.params;
+  const params = await props.params
 
-  const {
-    slug
-  } = params;
+  const { slug } = params
 
   const product = await getProduct(removeOptionsFromUrl(slug))
 

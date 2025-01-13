@@ -4,7 +4,7 @@ import { CategoryView } from "app/category/_components/category-view"
 
 export const runtime = "nodejs"
 
-export const revalidate = 86400
+export const revalidate = 604800
 
 interface ProductListingPageProps {
   searchParams: Promise<SearchParamsType>
@@ -12,7 +12,7 @@ interface ProductListingPageProps {
 }
 
 export async function generateMetadata(props: ProductListingPageProps): Promise<Metadata> {
-  const params = await props.params;
+  const params = await props.params
   return {
     title: `${params.slug} | Enterprise Commerce`,
     description: "In excepteur elit mollit in.",
@@ -20,7 +20,7 @@ export async function generateMetadata(props: ProductListingPageProps): Promise<
 }
 
 export default async function ProductListingPage(props: ProductListingPageProps) {
-  const params = await props.params;
-  const searchParams = await props.searchParams;
+  const params = await props.params
+  const searchParams = await props.searchParams
   return <CategoryView params={params} searchParams={searchParams} />
 }

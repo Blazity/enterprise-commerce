@@ -31,7 +31,7 @@ export const getProduct = unstable_cache(
     return results.find(Boolean) || null
   },
   ["product-by-handle"],
-  { revalidate: 86400 }
+  { revalidate: 604800 }
 )
 
 export const getProducts = unstable_cache(
@@ -48,7 +48,7 @@ export const getProducts = unstable_cache(
     })
   },
   ["search-products"],
-  { revalidate: 86400 }
+  { revalidate: 604800 }
 )
 
 export const getFeaturedProducts = unstable_cache(
@@ -66,7 +66,7 @@ export const getFeaturedProducts = unstable_cache(
     return results
   },
   ["featured-products"],
-  { revalidate: 86400 }
+  { revalidate: 604800 }
 )
 
 export const getAllProducts = async (options?: Omit<DocumentsQuery<CommerceProduct>, "limit">) => {
@@ -124,7 +124,7 @@ export const getSimilarProducts = unstable_cache(
     return [...similarSearchResults.hits, ...collectionSearchResults.hits]
   },
   ["product-by-handle"],
-  { revalidate: 86400 }
+  { revalidate: 604800 }
 )
 
 export const getNewestProducts = unstable_cache(
@@ -143,7 +143,7 @@ export const getNewestProducts = unstable_cache(
     return [...results.hits]
   },
   ["newest-products"],
-  { revalidate: 86400 }
+  { revalidate: 604800 }
 )
 
 export const getCollection = unstable_cache(
@@ -162,7 +162,7 @@ export const getCollection = unstable_cache(
     return results.hits.find(Boolean) || null
   },
   ["category-by-handle"],
-  { revalidate: 86400 }
+  { revalidate: 604800 }
 )
 
 export const getProductReviews = unstable_cache(
@@ -193,7 +193,7 @@ export const getProductReviews = unstable_cache(
     return { reviews: results.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()), total }
   },
   ["product-reviews-by-handle"],
-  { revalidate: 86400 }
+  { revalidate: 604800 }
 )
 
 export const getAllReviews = async (options: Omit<DocumentsQuery<Review>, "limit"> = {}) => {
@@ -253,7 +253,7 @@ export const getCategories = unstable_cache(
     })
   },
   ["search-categories"],
-  { revalidate: 86400 }
+  { revalidate: 604800 }
 )
 
 export const updateCategories = unstable_cache(
@@ -269,7 +269,7 @@ export const updateCategories = unstable_cache(
     })
   },
   ["update-categories"],
-  { revalidate: 86400 }
+  { revalidate: 604800 }
 )
 
 export const deleteCategories = async (ids: string[]) => {
@@ -327,5 +327,5 @@ export const getFilteredProducts = unstable_cache(
     return { results, totalPages, facetDistribution, totalHits, independentFacetDistribution }
   },
   ["filtered-products"],
-  { revalidate: 86400 }
+  { revalidate: 604800 }
 )
