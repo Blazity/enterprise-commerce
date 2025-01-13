@@ -8,7 +8,7 @@ $ yarn create commerce
 
 [See the live demo](https://blazity.com/r/commerce) or deploy it straight to Vercel:
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fblazity%2Fenterprise-commerce%2Ftree%2Fmain%2Fstarters%2Fshopify-algolia)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fblazity%2Fenterprise-commerce%2Ftree%2Fmain%2Fstarters%2Fshopify-algolia&envDescription=Full%20explanation%20on%20how%20to%20obtain%20keys&envLink=https%3A%2F%2Fdocs.commerce.blazity.com%2Fsetup&demo-title=Your%20Commerce&demo-description=AI-FIRST%20NEXT.JS%20STOREFRONT%20FOR%20COMPOSABLE%20COMMERCE&demo-url=https%3A%2F%2Fblazity.com%2Fr%2Fcommerce&demo-image=https%3A%2F%2Fcommerce.blazity.com%2Fopengraph-image.jpg)
 
 **Note:** To enable all features, ensure [required environment variables](https://docs.commerce.blazity.com/providers) are set in your `.env.local`
 
