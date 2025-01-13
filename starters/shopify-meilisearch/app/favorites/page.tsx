@@ -5,7 +5,7 @@ import { Skeleton } from "components/ui/skeleton"
 import { COOKIE_FAVORITES } from "constants/index"
 import { getProduct } from "lib/meilisearch"
 
-export const revalidate = 86400
+export const revalidate = 604800
 
 export const dynamicParams = true
 

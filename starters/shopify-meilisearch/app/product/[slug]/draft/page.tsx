@@ -25,7 +25,7 @@ import { slugToName } from "utils/slug-name"
 
 export const dynamic = "force-static"
 
-export const revalidate = 86400
+export const revalidate = 604800
 
 export const dynamicParams = true
 
@@ -34,11 +34,9 @@ interface ProductProps {
 }
 
 export default async function Product(props: ProductProps) {
-  const params = await props.params;
+  const params = await props.params
 
-  const {
-    slug
-  } = params;
+  const { slug } = params
 
   return <ProductView slug={slug} />
 }

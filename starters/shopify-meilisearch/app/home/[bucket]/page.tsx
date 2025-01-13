@@ -5,18 +5,16 @@ import { CategoriesSection } from "app/home/_components/categories-section"
 import { FeaturedProductsSection } from "app/home/_components/featured-products-section"
 import { getFeaturedProducts } from "lib/meilisearch"
 
-export const revalidate = 86400
+export const revalidate = 604800
 
 export const dynamic = "force-static"
 
 export const dynamicParams = true
 
 export default async function Homepage(props: { params: Promise<{ bucket: string }> }) {
-  const params = await props.params;
+  const params = await props.params
 
-  const {
-    bucket
-  } = params;
+  const { bucket } = params
 
   const heroTitles = {
     a: "Discover Your Next Favorite Thing",

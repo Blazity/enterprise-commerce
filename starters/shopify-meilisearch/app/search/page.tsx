@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description: "In excepteur elit mollit in.",
 }
 
-export const revalidate = 86400
+export const revalidate = 604800
 
 export const runtime = "nodejs"
 
@@ -18,7 +18,7 @@ interface SearchPageProps {
 }
 
 export default async function SearchPage(props: SearchPageProps) {
-  const searchParams = await props.searchParams;
+  const searchParams = await props.searchParams
   return (
     <Suspense fallback={<PageSkeleton />}>
       <SearchView searchParams={searchParams} />

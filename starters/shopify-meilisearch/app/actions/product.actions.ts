@@ -26,5 +26,5 @@ export const searchProducts = unstable_cache(
     return { hits, hasMore: estimatedTotalHits > limit }
   },
   ["autocomplete-search"],
-  { revalidate: 3600 }
+  { revalidate: 604800 }
 )

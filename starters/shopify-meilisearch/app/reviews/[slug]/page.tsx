@@ -14,7 +14,7 @@ import { HITS_PER_PAGE } from "constants/index"
 
 export { generateMetadata } from "./metadata"
 
-export const revalidate = 86400
+export const revalidate = 604800
 
 export interface ProductReviewsPageProps {
   params: Promise<{ slug: string }>
