@@ -8,7 +8,7 @@ import { searchClient } from "../lib/algolia/client"
 import { env } from "../env.mjs"
 import { isOptIn } from "utils/opt-in"
 import { reviewsClient } from "lib/reviews/client"
-import { ProductEnrichmentBuilder, buildCategoryMap } from "utils/enrich-product"
+import { ProductEnrichmentBuilder } from "utils/enrich-product"
 
 async function sync() {
   console.log("🚀 Starting sync process...")
@@ -32,7 +32,6 @@ async function sync() {
     console.log(`✓ Found ${hierarchicalCategories.items.length} hierarchical categories`)
 
     console.log("🔄 Enriching products with hierarchical data...")
-    const categoryMap = buildCategoryMap(hierarchicalCategories.items)
     const reviews = isOptIn("reviews") ? await reviewsClient.getAllProductReviews() : []
 
     const enrichedProducts = allProducts.map((product) =>
