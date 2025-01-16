@@ -20,11 +20,11 @@ export function Facet({ id, title, distribution, isChecked, onCheckedChange }: F
       <AccordionTrigger className="py-2 text-base">{title}</AccordionTrigger>
       <AccordionContent className="max-h-[250px] overflow-y-scroll">
         {hasNoResults ? (
-          <p className="text-[14px] text-neutral-500">No {title.toLowerCase()} found</p>
+          <p className="text-sm text-neutral-500">No {title.toLowerCase()} found</p>
         ) : (
           <div className="grid gap-2">
             {distributionsEntries.map(([value], index) => (
-              <Label key={value + index} className="flex items-center gap-2 font-normal">
+              <Label key={value + index} className="flex items-center gap-2">
                 <Checkbox name={value} checked={isChecked(value)} onCheckedChange={(checked) => onCheckedChange(!!checked, value)} />
                 {value}
               </Label>

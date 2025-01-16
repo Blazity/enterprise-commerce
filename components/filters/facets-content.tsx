@@ -17,8 +17,9 @@ import { CloseIcon } from "components/icons/close-icon"
 
 import { slugToName } from "utils/slug-name"
 import FadeOutMask from "components/fade-out-mask"
+import { useFilterTransitionStore } from "stores/filter-transition-store"
 
-interface FacetsContentProps {
+export interface FacetsContentProps {
   independentFacetDistribution: Record<string, Record<string, number>> | undefined
   facetDistribution: Record<string, Record<string, number>> | undefined
   className?: string
@@ -28,8 +29,9 @@ interface FacetsContentProps {
 export function FacetsContent({ independentFacetDistribution, facetDistribution, className, disabledFacets }: FacetsContentProps) {
   const router = useRouter()
   const pathname = usePathname()
-  const isAiPath = pathname.startsWith("/ai/category")
+  const isAiPath = pathname.startsWith("/ai")
   const [showFilterTags, setShowFilterTags] = useState(true)
+  const { set: setLastSelected, selected: lastSelected } = useFilterTransitionStore((s) => s)
 
   const collections: Record<string, Record<string, number>> = HIERARCHICAL_ATRIBUTES.reduce((acc, key) => {
     acc[key] = independentFacetDistribution?.[key] || {}
@@ -68,7 +70,7 @@ export function FacetsContent({ independentFacetDistribution, facetDistribution,
   const [minPrice, setMinPrice] = useQueryState("minPrice", { ...parseAsInteger, shallow: false, defaultValue: 0, clearOnDefault: true })
   const [maxPrice, setMaxPrice] = useQueryState("maxPrice", { ...parseAsInteger, shallow: false, defaultValue: 0, clearOnDefault: true })
 
-  const allFilters = [selectedCategories, selectedVendors, selectedColors, minPrice, maxPrice, selectedRating]
+  const allFilters = [selectedVendors, selectedColors, minPrice, maxPrice, selectedRating]
   const flattenedFilters = allFilters.flat().filter((v) => typeof v === "string")
   const filtersCount = flattenedFilters.length
   const filtersActive = filtersCount > 0
@@ -118,8 +120,9 @@ export function FacetsContent({ independentFacetDistribution, facetDistribution,
     setPage(1)
   }
 
+  console.log("lastSelected: ", lastSelected)
   return (
-    <Accordion className={cn(className)} type="single" collapsible>
+    <Accordion className={cn("overflow-x-hidden", className)} type="single" collapsible defaultValue={lastSelected}>
       <div className="mb-2 flex flex-col border-b border-black/5">
         <div>
           <div className="flex items-baseline justify-between pb-1 tracking-tight">
@@ -134,9 +137,9 @@ export function FacetsContent({ independentFacetDistribution, facetDistribution,
               {showFilterTags ? "Hide" : "Show"}
             </motion.button>
           </div>
-          <motion.div initial={false} animate={{ height: showFilterTags && filtersActive ? 140 : 0 }} className={cn("relative h-full max-h-[140px] overflow-hidden")}>
+          <motion.div initial={false} animate={{ height: showFilterTags && filtersActive ? 140 : 0 }} className={cn("relative h-full max-h-[140px] overflow-hidden rounded-md")}>
             <FadeOutMask />
-            <motion.div className={cn("isolate flex h-full flex-wrap content-start items-start justify-start gap-1 overflow-y-auto rounded-md bg-gray-50 p-2")}>
+            <div className={cn("isolate flex h-full flex-wrap content-start items-start justify-start gap-1 overflow-y-auto bg-gray-50 p-2")}>
               <AnimatePresence mode="popLayout" initial={false} key={page}>
                 {flattenedFilters.map((el, index) => {
                   if (typeof el === "string") {
@@ -163,7 +166,7 @@ export function FacetsContent({ independentFacetDistribution, facetDistribution,
                   }
                 })}
               </AnimatePresence>
-            </motion.div>
+            </div>
           </motion.div>
         </div>
         <motion.button
@@ -186,20 +189,7 @@ export function FacetsContent({ independentFacetDistribution, facetDistribution,
             return selectedCategories.some((el) => el.split(HIERARCHICAL_SEPARATOR).includes(category))
           }}
           onCheckedChange={(category) => {
-            const checked = selectedCategories.includes(category)
-
-            if (pathname === "/search" || pathname === "/ai/search") {
-              setSelectedCategories((prev) => {
-                if (checked) {
-                  return prev.filter((cat) => cat !== category)
-                } else {
-                  // Remove any broader or narrower categories before adding the new one
-                  const updatedCategories = prev.filter((cat) => !category.startsWith(cat) && !cat.startsWith(category))
-                  return [...updatedCategories, category]
-                }
-              })
-              return
-            }
+            setLastSelected("categories")
 
             router.push(`${isAiPath ? "/ai/category" : "/category"}/${category.split(HIERARCHICAL_SEPARATOR).pop()}`)
           }}
@@ -213,7 +203,7 @@ export function FacetsContent({ independentFacetDistribution, facetDistribution,
           isChecked={(vendor) => selectedVendors.includes(vendor)}
           onCheckedChange={(checked, vendor) => {
             setSelectedVendors((prev) => (checked ? [...prev, vendor] : prev.filter((cat) => cat !== vendor)))
-
+            setLastSelected("vendors")
             setPage(1)
           }}
         />
@@ -227,6 +217,7 @@ export function FacetsContent({ independentFacetDistribution, facetDistribution,
           isChecked={(color) => selectedColors.includes(color)}
           onCheckedChange={(checked, color) => {
             setSelectedColors((prev) => (checked ? [...prev, color] : prev.filter((cat) => cat !== color)))
+            setLastSelected("colors")
             setPage(1)
           }}
         />
@@ -240,6 +231,7 @@ export function FacetsContent({ independentFacetDistribution, facetDistribution,
           isChecked={(rating) => selectedRating === parseInt(rating)}
           onCheckedChange={(checked, rating) => {
             setSelectedRating(checked ? parseInt(rating) : 0)
+            setLastSelected("avgRating")
             setPage(1)
           }}
         />
@@ -254,6 +246,7 @@ export function FacetsContent({ independentFacetDistribution, facetDistribution,
             setFacet={({ minPrice, maxPrice }) => {
               setMinPrice(minPrice)
               setMaxPrice(maxPrice)
+              setLastSelected("price")
               setPage(1)
             }}
           />
