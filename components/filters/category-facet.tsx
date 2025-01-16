@@ -30,7 +30,7 @@ export function CategoryFacet({ id, title, distribution, isChecked, onCheckedCha
 
   return (
     <AccordionItem value={id}>
-      <AccordionTrigger className="py-1 text-base">{title}</AccordionTrigger>
+      <AccordionTrigger className="py-2 text-base">{title}</AccordionTrigger>
       <AccordionContent className="max-h-[250px] overflow-y-auto">
         {items.length === 0 ? (
           <p className="text-sm/5 text-neutral-500">No categories found</p>
@@ -61,7 +61,7 @@ const CategoryTree = ({ items, level, onClick, isChecked, className, parent }: C
             <button
               className={cn(
                 "flex items-center bg-transparent text-left text-sm/4",
-                isRefined || isChecked(value) ? "font-semibold text-black" : "font-normal text-gray-800",
+                isRefined || isChecked(value) ? "font-semibold text-black" : "font-medium text-gray-800",
                 level === 0 && "text-base font-medium"
               )}
               onClick={() => onClick(valueWithParent)}

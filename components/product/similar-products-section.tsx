@@ -14,7 +14,7 @@ export async function SimilarProductsSection({ slug, objectID, basePath }: Simil
   return (
     <section className="my-10">
       <Carousel opts={{ skipSnaps: true, align: "start" }}>
-        <CarouselPrevious className="absolute -left-20 top-[40%] hidden xl:flex" />
+        <CarouselPrevious className="absolute -left-20 top-[50%] hidden xl:flex" />
         <h2 className="mb-10 text-[26px] font-medium tracking-[-0.78px]">You might also like</h2>
 
         <CarouselContent>
@@ -24,7 +24,7 @@ export async function SimilarProductsSection({ slug, objectID, basePath }: Simil
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselNext className="absolute -right-20 top-[40%] hidden xl:flex" />
+        <CarouselNext className="absolute -right-20 top-[50%] hidden xl:flex" />
       </Carousel>
     </section>
   )

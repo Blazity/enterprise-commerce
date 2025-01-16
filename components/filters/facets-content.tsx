@@ -120,7 +120,6 @@ export function FacetsContent({ independentFacetDistribution, facetDistribution,
     setPage(1)
   }
 
-  console.log("lastSelected: ", lastSelected)
   return (
     <Accordion className={cn("overflow-x-hidden", className)} type="single" collapsible defaultValue={lastSelected}>
       <div className="mb-2 flex flex-col border-b border-black/5">
@@ -131,7 +130,7 @@ export function FacetsContent({ independentFacetDistribution, facetDistribution,
               initial={false}
               animate={{ opacity: filtersActive ? 1 : 0, visibility: filtersActive ? "visible" : "hidden" }}
               transition={{ duration: 0.2, visibility: { delay: filtersActive ? 0 : 0.2 } }}
-              className="duration-[200ms] rounded-md bg-transparent px-1.5 py-0.5 text-xs transition-colors hover:bg-gray-50"
+              className="duration-[200ms] rounded-md bg-transparent px-1.5 py-0.5 text-xs transition-colors hover:bg-gray-100"
               onClick={() => setShowFilterTags(!showFilterTags)}
             >
               {showFilterTags ? "Hide" : "Show"}

@@ -15,6 +15,7 @@ import { SearchParamsType } from "types"
 
 import { HIERARCHICAL_SEPARATOR } from "constants/index"
 import { cn } from "utils/cn"
+import { Sorter } from "./filters/sorter"
 
 interface SearchViewProps {
   searchParams: SearchParamsType
@@ -62,16 +63,20 @@ export async function SearchView({ searchParams, disabledFacets, collection, bas
   return (
     <div className="mx-auto w-full md:max-w-container-md">
       <div className="sticky top-[77px] z-40 flex items-center justify-between bg-white/80 p-4 py-4 backdrop-blur-lg lg:hidden">
-        <div className="flex gap-1 text-3xl font-semibold tracking-tight lg:text-4xl">
+        <div className="flex gap-1 text-2xl font-semibold tracking-tight lg:text-3xl">
           <h1 className="flex-1">{makePageTitle(collection, q)}</h1>
-          <span className="flex-1 text-2xl">({totalHits})</span>
+          <span className="mr-auto text-xl lg:text-2xl">({totalHits})</span>
         </div>
-        <FacetsMobile
-          disabledFacets={disabledFacets}
-          independentFacetDistribution={independentFacetDistribution as Record<string, Record<string, number>>}
-          facetDistribution={facetDistribution as Record<string, Record<string, number>>}
-          className="lg:hidden"
-        />
+        <div className="flex items-center gap-1 lg:hidden">
+          <FacetsMobile
+            disabledFacets={disabledFacets}
+            independentFacetDistribution={independentFacetDistribution as Record<string, Record<string, number>>}
+            facetDistribution={facetDistribution as Record<string, Record<string, number>>}
+          />
+          <Suspense>
+            <Sorter className="duration-[250ms] rounded-md border-none text-sm transition-colors hover:bg-gray-200" />
+          </Suspense>
+        </div>
       </div>
       <div className={cn("flex gap-12 p-4 md:gap-12", basePath === "ai" ? "ai-2xl:px-0" : "xl:px-0")}>
         <div className="sticky top-[100px] hidden max-h-[90dvh] w-full max-w-64 px-2 lg:block lg:px-0">
@@ -79,17 +84,22 @@ export async function SearchView({ searchParams, disabledFacets, collection, bas
             {makePageTitle(collection, q)}
             <span className="text-2xl">({totalHits})</span>
           </h1>
+
           <Suspense>
             <FacetsDesktop
               independentFacetDistribution={independentFacetDistribution as Record<string, Record<string, number>>}
               disabledFacets={disabledFacets}
-              className="hidden max-h-[80dvh] shrink-0 basis-[192px] overflow-y-auto lg:block"
+              className="hidden max-h-[70dvh] shrink-0 basis-[192px] overflow-y-auto lg:block"
               facetDistribution={facetDistribution as Record<string, Record<string, number>>}
             />
           </Suspense>
         </div>
         <div className="w-full">
-          <div className="px-4"></div>
+          <div className="flex justify-end pb-4">
+            <Suspense>
+              <Sorter className="duration-[200ms] hidden w-max rounded-md text-sm transition-colors hover:bg-gray-100 lg:flex" />
+            </Suspense>
+          </div>
           <HitsSection hits={hits} basePath={basePath} />
           <PaginationSection queryParams={searchParams} totalPages={totalPages} />
         </div>
