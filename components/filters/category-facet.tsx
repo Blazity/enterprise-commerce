@@ -57,7 +57,7 @@ const CategoryTree = ({ items, level, onClick, isChecked, className, parent }: C
       {items.map(({ value, isRefined, data }) => {
         const valueWithParent = parent ? [...parent, value].join(HIERARCHICAL_SEPARATOR) : value
         return (
-          <li key={value} className={cn("flex flex-col gap-2 py-1", level === 0 && "py-0")}>
+          <li key={value} className={cn("flex flex-col gap-2 py-1")}>
             <button
               className={cn(
                 "flex items-center bg-transparent text-left text-sm/4",
