@@ -3,7 +3,7 @@
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { VariantProps, cva } from "class-variance-authority"
-import { PanelLeft, Zap } from "lucide-react"
+import { PanelLeft } from "lucide-react"
 
 import { useIsMobile } from "utils/use-mobile"
 import { cn } from "utils/cn"
@@ -221,7 +221,7 @@ const SidebarTrigger = React.forwardRef<React.ElementRef<typeof Button>, React.C
     <Button
       ref={ref}
       data-sidebar="trigger"
-      // variant="ghost"
+      variant="ghost"
       size="icon"
       className={cn("h-7 w-7", className)}
       onClick={(event) => {
@@ -230,7 +230,7 @@ const SidebarTrigger = React.forwardRef<React.ElementRef<typeof Button>, React.C
       }}
       {...props}
     >
-      <Zap className="size-5" />
+      <PanelLeft className="size-5" />
       <span className="sr-only">Toggle Sidebar</span>
     </Button>
   )

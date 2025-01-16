@@ -17,6 +17,7 @@ import { SidebarInset, SidebarProvider } from "components/ui/sidebar"
 import { AiCommerceSidebar } from "./_components/ai-chat"
 import { navigationItems } from "utils/nav-items"
 import { AiCommerceProvider } from "./_components/ai-commerce-context"
+import SidebarButton from "./_components/sidebar-button"
 
 export default function AiSearchLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -39,7 +40,7 @@ export default function AiSearchLayout({ children }: { children: React.ReactNode
               <Suspense>
                 <AiCommerceSidebar />
               </Suspense>
-              <SidebarInset>
+              <SidebarInset className="w-[calc(100vw-var(--sidebar-width))] max-w-full">
                 <NavigationBar items={navigationItems} />
                 {children}
 
@@ -51,6 +52,8 @@ export default function AiSearchLayout({ children }: { children: React.ReactNode
                 <Toaster position="bottom-left" />
 
                 <DraftToolbar />
+
+                <SidebarButton />
 
                 <Suspense>
                   <FlagValues />

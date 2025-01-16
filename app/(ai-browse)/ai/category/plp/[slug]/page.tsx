@@ -27,7 +27,6 @@ export default async function ProductListingPage(props: ProductListingPageProps)
     <>
       {" "}
       <CategoryView params={params} searchParams={searchParams} basePath="ai" />
-      <SidebarButton />
     </>
   )
 }

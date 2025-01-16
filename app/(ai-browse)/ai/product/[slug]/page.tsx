@@ -99,7 +99,6 @@ export default async function Product(props: ProductProps) {
         <Suspense fallback={<SimilarProductsSectionSkeleton />}>
           <SimilarProductsSection basePath="ai" objectID={product.objectID} slug={slug} />
         </Suspense>
-        <SidebarButton />
       </main>
     </div>
   )

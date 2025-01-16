@@ -35,7 +35,6 @@ export default async function CategoryPage(props: CategoryPageProps) {
   return (
     <>
       <CategoryView params={params} basePath="ai" />
-      <SidebarButton />
     </>
   )
 }

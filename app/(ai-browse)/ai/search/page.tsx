@@ -21,7 +21,6 @@ export default async function AiSearchPage(props: { searchParams: Promise<Search
       <Suspense fallback={<PageSkeleton />}>
         <SearchView searchParams={searchParams} basePath="ai" />
       </Suspense>
-      <SidebarButton />
     </>
   )
 }
