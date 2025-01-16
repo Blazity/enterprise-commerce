@@ -109,7 +109,8 @@ export function AiCommerceSidebar() {
               asChild
               className="duration-[200ms] w-full cursor-pointer select-none justify-start bg-gray-100 font-medium text-sidebar-foreground transition-all hover:bg-gray-200 hover:text-secondary-foreground active:scale-[0.98] active:bg-gray-200"
               onClick={() => openCart()}
-              onMouseOver={preloadSheet}
+              onMouseEnter={preloadSheet}
+              onTouchStart={preloadSheet}
             >
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.25, delay: 0.22 }}>
                 <ShoppingCart className="mr-1 h-4 w-4" />
