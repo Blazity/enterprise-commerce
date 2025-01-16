@@ -10,7 +10,7 @@ const chatBubbleVariants = cva("group/message relative break-words rounded-lg p-
   variants: {
     isUser: {
       true: "bg-gray-200 text-black",
-      false: "bg-gray-500",
+      false: "bg-gray-400/70 text-black",
     },
     animation: {
       none: "",
@@ -70,7 +70,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ role, content, created
   return (
     <motion.div initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.2 }} className={cn("flex flex-col", isUser ? "items-end" : "items-start")}>
       <div className={cn(chatBubbleVariants({ isUser }))}>
-        <div className={isUser ? "text-black" : "text-foreground"}>
+        <div className="text-black/90">
           <MarkdownRenderer>{content}</MarkdownRenderer>
         </div>
 

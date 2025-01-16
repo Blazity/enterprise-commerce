@@ -17,7 +17,6 @@ export function Suggestions() {
     api: "/api/suggestions",
   })
   const { suggestions, setSuggestions } = useSuggestionsStore()
-
   useEffect(() => {
     if (!streamingData) return
 

@@ -14,52 +14,53 @@ export default function SidebarButton() {
   return (
     <motion.button
       variants={variants}
-      initial={state}
+      initial={false}
       animate={state}
+      custom={isHovered}
       whileTap={{ scale: 0.98 }}
-      whileHover={{ scale: 1.05 }}
       transition={{ bounce: 0, duration: 0.2 }}
-      className={cn("fixed bottom-4 left-4 z-50 flex items-center justify-center overflow-clip bg-black/95 px-1 py-0 font-bold text-gray-100 shadow-lg")}
+      className={cn("fixed bottom-4 left-4 z-50 flex origin-center items-center justify-center overflow-clip bg-black/95 py-2 font-bold text-gray-100 shadow-lg")}
       onClick={() => toggleSidebar()}
       onMouseOver={() => setIsHovered(true)}
       onMouseOut={() => setIsHovered(false)}
       style={{ borderRadius: 9999 }}
     >
-      {/* <SidebarTrigger className="h-full w-full rounded-full hover:bg-inherit"></SidebarTrigger> */}
-      <div className="flex items-center p-2">
-        <div className="px-0.5 py-1.5">
-          <Zap size={20} className="w-full" />
-        </div>
-        <AnimatePresence>
-          {isHovered ? (
-            <motion.span
-              initial={{ width: 0, scale: 0.8, opacity: 0 }}
-              animate={{ width: "auto", scale: 1, opacity: 1 }}
-              exit={{ width: 0, scale: 0.8, opacity: 0 }}
-              transition={{ duration: 0.2, bounce: 0.15, opacity: { duration: 0.15 } }}
-              className="inline-flex origin-left whitespace-nowrap text-base"
-              onAnimationComplete={() => {
-                if (state === "collapsed") {
-                  setButtonText("Chat with AI")
-                } else {
-                  setButtonText("Close")
-                }
-              }}
-            >
-              {buttonText}
-            </motion.span>
-          ) : null}
-        </AnimatePresence>
-      </div>
+      <Zap size={20} className="w-full" />
+      <AnimatePresence>
+        {isHovered ? (
+          <motion.span
+            initial={{ width: 0, opacity: 0 }}
+            animate={{ width: "auto", opacity: 1 }}
+            exit={{ width: 0, opacity: 0 }}
+            transition={{ duration: 0.2, bounce: 0.15, opacity: { duration: 0.15 } }}
+            className="inline-flex origin-left whitespace-nowrap text-base/3"
+            onAnimationComplete={() => {
+              if (state === "collapsed") {
+                setButtonText("Shop with AI")
+              } else {
+                setButtonText("Close")
+              }
+            }}
+          >
+            {buttonText}
+          </motion.span>
+        ) : null}
+      </AnimatePresence>
     </motion.button>
   )
 }
 
 const variants = {
-  collapsed: {
+  collapsed: (isHovered: boolean) => ({
     translateX: "0",
-  },
-  expanded: {
+    gap: isHovered ? 12 : 4,
+    paddingLeft: isHovered ? "0.75rem" : "0.5rem",
+    paddingRight: isHovered ? "1rem" : "0.5rem",
+  }),
+  expanded: (isHovered: boolean) => ({
     translateX: "20rem",
-  },
+    gap: isHovered ? 12 : 4,
+    paddingLeft: isHovered ? "0.75rem" : "0.5rem",
+    paddingRight: isHovered ? "1rem" : "0.5rem",
+  }),
 }

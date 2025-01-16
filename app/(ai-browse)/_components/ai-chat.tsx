@@ -11,10 +11,12 @@ import { MessageList } from "components/ui/message-list"
 import { useAiCommerce } from "./ai-commerce-context"
 import { Suggestions } from "./chat-suggestions"
 import { motion } from "motion/react"
+import { useCartStore } from "stores/cart-store"
 
 export function AiCommerceSidebar() {
   const { handleSubmit, setInput, messages, isLoading, input, mode } = useAiCommerce()
   const textareaRef = React.useRef<HTMLTextAreaElement>(null)
+  const { openCart, preloadSheet } = useCartStore((s) => s)
 
   const handleSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
     handleSubmit(e)
@@ -106,6 +108,8 @@ export function AiCommerceSidebar() {
             <SidebarMenuButton
               asChild
               className="duration-[200ms] w-full cursor-pointer select-none justify-start bg-gray-100 font-medium text-sidebar-foreground transition-all hover:bg-gray-200 hover:text-secondary-foreground active:scale-[0.98] active:bg-gray-200"
+              onClick={() => openCart()}
+              onMouseOver={preloadSheet}
             >
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.25, delay: 0.22 }}>
                 <ShoppingCart className="mr-1 h-4 w-4" />

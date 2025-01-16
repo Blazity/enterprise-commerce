@@ -23,6 +23,7 @@ import type { CommerceProduct } from "types"
 
 import { generateJsonLd } from "./metadata"
 import { getProduct, getProducts } from "lib/algolia"
+import SidebarButton from "app/(ai-browse)/_components/sidebar-button"
 
 export const revalidate = 86400
 export const dynamic = "force-static"
@@ -98,6 +99,7 @@ export default async function Product(props: ProductProps) {
         <Suspense fallback={<SimilarProductsSectionSkeleton />}>
           <SimilarProductsSection basePath="ai" objectID={product.objectID} slug={slug} />
         </Suspense>
+        <SidebarButton />
       </main>
     </div>
   )

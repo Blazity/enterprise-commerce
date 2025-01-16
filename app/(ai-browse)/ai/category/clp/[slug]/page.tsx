@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { isDemoMode } from "utils/demo-utils"
 import { getCategories } from "lib/algolia"
 import { CategoryView } from "components/category/category-view"
+import SidebarButton from "app/(ai-browse)/_components/sidebar-button"
 
 export const revalidate = 86400
 export const dynamic = "force-static"
@@ -31,5 +32,10 @@ export async function generateStaticParams() {
 
 export default async function CategoryPage(props: CategoryPageProps) {
   const params = await props.params
-  return <CategoryView params={params} basePath="ai" />
+  return (
+    <>
+      <CategoryView params={params} basePath="ai" />
+      <SidebarButton />
+    </>
+  )
 }
