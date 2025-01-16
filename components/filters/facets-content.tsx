@@ -168,15 +168,9 @@ export function FacetsContent({ independentFacetDistribution, facetDistribution,
             </div>
           </motion.div>
         </div>
-        <motion.button
-          initial={false}
-          animate={{ opacity: filtersActive ? 1 : 0, visibility: filtersActive ? "visible" : "hidden" }}
-          transition={{ duration: 0.2, visibility: { delay: filtersActive ? 0 : 0.2 } }}
-          className="mb-3 mt-3 inline-flex cursor-pointer bg-white text-xs text-black underline"
-          onClick={() => resetAllFilters()}
-        >
+        <button className="mb-3 mt-3 inline-flex cursor-pointer bg-white text-xs text-black underline underline-offset-2" onClick={() => resetAllFilters()}>
           Clear filters
-        </motion.button>
+        </button>
       </div>
 
       {!disabledFacets?.includes("categories") && (
