@@ -156,6 +156,17 @@
   display: inline-block;
 }
 
+.menu .menu__inner .menu__item:hover::after {
+  content: attr(data-content);
+  position: absolute;
+  bottom: -4px;
+  transform: translateX(-15px);
+  width: auto;
+  height: 40px;
+  color: transparent;
+  padding: 0 20px;
+}
+
 .menu .menu__inner .menu__item:last-child {
   padding-right: 0;
 }
@@ -224,6 +235,15 @@
   transition: all 0.25s ease-in-out;
   transform: translateX(-50%);
 }
+
+/* .submenu::before {
+  content: "";
+  position: absolute;
+  top: -35px;
+  width: 100%;
+  height: 35px;
+  background: black;
+} */
 
 @media (max-width: 767px) {
   .submenu {
