@@ -53,7 +53,7 @@ export const ProductCard = ({
             {!!avgRating && !!totalReviews && (
               <>
                 <div className="flex items-center space-x-1">
-                  <StarIcon className="size-3.5 fill-gray-800 stroke-gray-800" />
+                  <StarIcon className="size-3.5 fill-gray-800/95 stroke-gray-800/95" />
 
                   <div className="flex items-center gap-0.5 text-sm font-medium">
                     <div>{avgRating.toFixed(2)}</div>
