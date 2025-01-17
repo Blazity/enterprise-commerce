@@ -39,7 +39,7 @@ function VariantGrid({ variant, items }: { variant?: "text-grid" | "image-grid" 
 
 export function NavigationBar({ items }: NavigationBarProps) {
   const itemsMarkup = items.map((singleMenuItem) => (
-    <li data-content={singleMenuItem.text} className={cn("menu__item", { menu__dropdown: !!singleMenuItem.submenu })} key={singleMenuItem.text}>
+    <li data-content={singleMenuItem.text} className={cn("menu__item relative z-50 md:h-full", { menu__dropdown: !!singleMenuItem.submenu })} key={singleMenuItem.text}>
       <NavigationItem singleMenuItem={singleMenuItem} />
 
       <div className="submenu megamenu__text w-full border-b border-black/10 shadow-sm">
