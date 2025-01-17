@@ -33,8 +33,6 @@ export const ProductCard = ({
   const linkAria = `Visit product: ${title}`
   const variantPrice = variants?.find(Boolean)?.price
 
-  console.log(vendor)
-
   return (
     <Link className={cn("group flex h-full w-full flex-col overflow-hidden rounded-lg", className)} aria-label={linkAria} href={path} prefetch={prefetch}>
       <div className="relative aspect-square overflow-hidden">

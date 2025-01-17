@@ -25,7 +25,7 @@ export function HeroSection({ title, className }: { title: string; className?: s
         <h1 className="text-center text-3xl font-semibold tracking-tight lg:text-left lg:text-4xl">{"Shop the best Deals on Top Brands & Unique Finds"}</h1>
         <p className="text-center text-lg lg:text-left">{title}</p>
         <Link href="/search" prefetch={false} aria-label="Search products">
-          <Button size="lg" role="link" className="transition-transform hover:scale-105">
+          <Button size="lg" role="link" className="transition-[colors,transform] hover:bg-black/80 active:scale-[0.98]">
             Shop now
           </Button>
         </Link>
