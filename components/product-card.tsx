@@ -10,6 +10,7 @@ interface ProductCardProps extends Pick<CommerceProduct, "variants" | "handle" |
   prefetch?: boolean
   className?: string
   href?: string
+  highlighted?: boolean
 }
 
 export const ProductCard = ({
@@ -25,11 +26,14 @@ export const ProductCard = ({
   vendor,
   prefetch = false,
   href = "",
+  highlighted = false,
 }: ProductCardProps) => {
   const noOfVariants = variants?.length
   const path = href || `/product/${handle}`
   const linkAria = `Visit product: ${title}`
   const variantPrice = variants?.find(Boolean)?.price
+
+  console.log(vendor)
 
   return (
     <Link className={cn("group flex h-full w-full flex-col overflow-hidden rounded-lg", className)} aria-label={linkAria} href={path} prefetch={prefetch}>
@@ -45,9 +49,9 @@ export const ProductCard = ({
       </div>
       <div className="bg-size-200 bg-pos-0 hover:bg-pos-100 duration-[200ms] flex shrink-0 grow flex-col text-pretty bg-gradient-to-b from-transparent to-primary/5 p-4 transition-all">
         {/* remove first word from the title as it includes vendor (this just needs feed update and then can be removed) */}
-        <h3 className="line-clamp-2 text-base font-semibold transition-colors md:text-lg">{title.split(" ").slice(1).join(" ")}</h3>
-        <div className="flex flex-col">
-          {!!vendor && <p className="text-sm text-gray-500">{vendor}</p>}
+        <h3 className={cn("line-clamp-2 text-lg font-semibold transition-colors data-[featured]:text-2xl", highlighted && "md:text-2xl")}>{title.split(" ").slice(1).join(" ")}</h3>
+        <div className="flex flex-col pt-1">
+          {!!vendor && <p className={cn("text-sm text-gray-500", highlighted && "md:text-base")}>{vendor}</p>}
 
           <div className="flex flex-wrap items-center gap-1">
             {!!avgRating && !!totalReviews && (
@@ -70,13 +74,15 @@ export const ProductCard = ({
         {!!variantPrice && (
           <div className="mt-auto flex flex-col pt-10">
             {noOfVariants > 0 && (
-              <p className="text-sm text-gray-500">
+              <p className={cn("text-sm text-gray-500", highlighted && "md:text-base")}>
                 {noOfVariants} variant{noOfVariants > 1 ? "s" : ""}
               </p>
             )}
-            <div className="flex w-full items-baseline justify-between text-sm">
+            <div className={cn("flex w-full items-baseline justify-between text-sm", highlighted && "md:text-base")}>
               <span className="text-primary/50">From</span>
-              <span className="text-base font-semibold md:text-lg">{mapCurrencyToSign((variantPrice.currencyCode as CurrencyType) || "USD") + minPrice.toFixed(2)}</span>
+              <span className={cn("text-base font-semibold md:text-lg", highlighted && "md:text-2xl")}>
+                {mapCurrencyToSign((variantPrice.currencyCode as CurrencyType) || "USD") + minPrice.toFixed(2)}
+              </span>
             </div>
           </div>
         )}
