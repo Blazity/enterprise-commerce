@@ -20,7 +20,7 @@ export function FacetsMobile({ className, facetDistribution, disabledFacets, ind
 
   return (
     <div className={className}>
-      <Button className="border-none bg-transparent px-2 py-1.5 text-sm font-medium hover:bg-gray-200" onClick={() => openModal("facets-mobile")}>
+      <Button className="border-none bg-transparent px-2 py-1.5 text-sm font-medium hover:bg-gray-100 hover:text-inherit" onClick={() => openModal("facets-mobile")}>
         Filters
       </Button>
 
