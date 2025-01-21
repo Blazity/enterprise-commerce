@@ -73,17 +73,14 @@ export async function SearchView({ searchParams, disabledFacets, collection, bas
             independentFacetDistribution={independentFacetDistribution as Record<string, Record<string, number>>}
             facetDistribution={facetDistribution as Record<string, Record<string, number>>}
           />
-          <Suspense>
-            <Sorter className="duration-[250ms] rounded-md border-none text-sm transition-colors hover:bg-gray-200" />
-          </Suspense>
         </div>
       </div>
       <div className={cn("flex gap-12 p-4 md:gap-12", basePath === "ai" ? "ai-2xl:px-0" : "xl:px-0")}>
         <div className="sticky top-[100px] hidden max-h-[90dvh] w-full max-w-64 px-2 lg:block lg:px-0">
-          <h1 className="flex gap-1 pb-4 text-3xl font-semibold tracking-tight lg:text-4xl">
-            {makePageTitle(collection, q)}
+          <div className="flex gap-1 font-semibold tracking-tight">
+            <h1 className="w-min pb-4 text-3xl lg:text-4xl">{makePageTitle(collection, q)}</h1>
             <span className="text-2xl">({totalHits})</span>
-          </h1>
+          </div>
 
           <Suspense>
             <FacetsDesktop
@@ -97,7 +94,7 @@ export async function SearchView({ searchParams, disabledFacets, collection, bas
         <div className="w-full">
           <div className="flex justify-end pb-4">
             <Suspense>
-              <Sorter className="duration-[200ms] hidden w-max rounded-md text-sm transition-colors hover:bg-gray-100 lg:flex" />
+              <Sorter className="duration-[200ms] w-max rounded-md text-sm transition-colors hover:bg-gray-100 lg:flex" />
             </Suspense>
           </div>
           <HitsSection hits={hits} basePath={basePath} />
