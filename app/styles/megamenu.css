@@ -189,6 +189,16 @@
     opacity: 1;
     visibility: visible;
     top: 101%;
+    pointer-events: auto;
+  }
+  .menu .menu__inner .menu__item.menu__dropdown > .submenu:hover {
+    opacity: 1;
+    visibility: visible;
+    top: 101%;
+    pointer-events: auto;
+  }
+  .menu .menu__inner .menu__item.menu__dropdown > .submenu {
+    pointer-events: none;
   }
 }
 
