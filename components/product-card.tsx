@@ -41,7 +41,6 @@ export const ProductCard = ({
           src={featuredImage?.url || "/default-product-image.svg"}
           alt={featuredImage?.altText || title}
           fill
-          sizes="(max-width: 450px) 300px, 480px"
           className="object-cover transition-transform duration-300 ease-out group-hover:scale-[1.03]"
         />
       </div>

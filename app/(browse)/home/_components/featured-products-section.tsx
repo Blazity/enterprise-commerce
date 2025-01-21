@@ -1,5 +1,3 @@
-import { CompactProductCard } from "components/compact-product-card"
-import { FeaturedProductCard } from "components/featured-product-card"
 import { ProductCard } from "components/product-card"
 import { CommerceProduct } from "types"
 import { cn } from "utils/cn"
@@ -19,22 +17,6 @@ export const FeaturedProductsSection = ({
         {highlightedProducts.map((product, index) => (
           <ProductCard highlighted={index < 2} prefetch className="md:col-span-2 md:row-span-2" key={product.id} {...product} />
         ))}
-
-        {/* {products.map((product, index) => {
-          if (index === 0) {
-            return <ProductCard prefetch className="col-span-2" key={product.id} {...product} />
-          }
-          return (
-            <ProductCard
-              prefetch={index < 2}
-              key={product.id}
-              {...product}
-              className={cn({
-                "col-span-2 row-span-1 md:col-auto": index === 5,
-              })}
-            />
-          )
-        })} */}
       </div>
       <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 md:grid-rows-1">
         {restProducts.map((product) => (
