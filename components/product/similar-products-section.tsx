@@ -19,7 +19,7 @@ export async function SimilarProductsSection({ slug, objectID, basePath }: Simil
 
         <CarouselContent>
           {items.map((product, idx) => (
-            <CarouselItem className="basis-1/2 md:basis-1/4" key={"featured_" + product.id + idx}>
+            <CarouselItem className="basis-1/2 md:basis-1/3 lg:basis-1/4" key={"featured_" + product.id + idx}>
               <ProductCard href={basePath ? `/${basePath}/product/${product.handle}` : undefined} prefetch {...product} />
             </CarouselItem>
           ))}

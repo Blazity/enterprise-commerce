@@ -15,7 +15,7 @@ export const ReviewButton = ({ productId }: ReviewButtonProps) => {
   return (
     <Button
       variant="outline"
-      className="bg-white transition-all hover:scale-105"
+      className="bg-white transition-all hover:bg-gray-100 active:scale-[0.98]"
       onClick={() => {
         setPid(productId)
         openModal("review")

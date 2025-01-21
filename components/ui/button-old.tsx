@@ -49,7 +49,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(({ className, va
   const Comp = asChild ? Slot : "button"
 
   return (
-    <Comp className={cn(buttonVariants({ variant, size, className }), "duration-[250ms] text-primary transition-colors  hover:text-primary")} ref={ref} {...props}>
+    <Comp className={cn("duration-[250ms] text-primary transition-colors hover:text-primary", buttonVariants({ variant, size, className }))} ref={ref} {...props}>
       {/* {isAnimated ? <div className={cn(overlayVariants({ variant }))} /> : null} */}
       <span className="relative">{children}</span>
       {isLoading ? (
