@@ -10,7 +10,7 @@ import { cn } from "utils/cn"
 import { Button } from "components/ui/button"
 import { Input } from "components/ui/input"
 import { Separator } from "components/ui/separator"
-import { Sheet, SheetContent } from "components/ui/sheet"
+import { Sheet, SheetContent, SheetTitle } from "components/ui/sheet"
 import { Skeleton } from "components/ui/skeleton"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "components/ui/tooltip"
 
@@ -154,7 +154,7 @@ const Sidebar = React.forwardRef<
         <SheetContent
           data-sidebar="sidebar"
           data-mobile="true"
-          className="w-[--sidebar-width] bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden"
+          className="w-[--sidebar-width] rounded-r-lg bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden"
           style={
             {
               "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
@@ -162,6 +162,9 @@ const Sidebar = React.forwardRef<
           }
           side={side}
         >
+          <span className="sr-only">
+            <SheetTitle>Shop with AI</SheetTitle>
+          </span>
           <div className="flex h-full w-full flex-col">{children}</div>
         </SheetContent>
       </Sheet>

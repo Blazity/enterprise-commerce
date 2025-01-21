@@ -28,9 +28,9 @@ export function CartSheet({ cart, isOpen, onCartClose, isPending }: CartSheetPro
 
   return (
     <Sheet open={isOpen} onOpenChange={() => onCartClose()}>
-      <SheetContent className="size-full min-h-svh bg-white p-0">
+      <SheetContent className="size-full min-h-svh rounded-bl-lg rounded-tl-lg bg-white p-0">
         <SheetHeader className="flex w-full flex-row items-center justify-between">
-          <SheetTitle className="flex items-center p-4 pb-0 text-[20px] font-normal">
+          <SheetTitle className="flex items-center p-4 pb-0 text-[18px] font-medium">
             Review your cart
             {isPending ? <LoadingDots className="ml-4" /> : null}
           </SheetTitle>
