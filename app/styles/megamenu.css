@@ -219,7 +219,7 @@
 }
 
 .menu .menu__inner .menu__item .menu__link > i {
-  margin-left: 5px;
+  margin-left: 2px;
   font-size: 1.35rem;
   transform: rotate(0deg);
   transition: 0.25s;
