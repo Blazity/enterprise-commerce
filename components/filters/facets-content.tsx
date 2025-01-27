@@ -3,7 +3,6 @@
 import { useState } from "react"
 import { usePathname, useRouter } from "next/navigation"
 import { parseAsArrayOf, parseAsInteger, parseAsString, useQueryState } from "nuqs"
-import { AnimatePresence, motion } from "motion/react"
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "components/ui/accordion"
 import { HIERARCHICAL_ATRIBUTES, HIERARCHICAL_SEPARATOR } from "constants/index"
@@ -13,11 +12,8 @@ import { Facet } from "./facet"
 import { CategoryFacet } from "./category-facet"
 import { PriceFacet } from "./price-facet"
 import { RatingFacet } from "./rating-facet"
-import { CloseIcon } from "components/icons/close-icon"
-
-import { slugToName } from "utils/slug-name"
-import FadeOutMask from "components/fade-out-mask"
 import { useFilterTransitionStore } from "stores/filter-transition-store"
+import { ActiveFilters } from "./active-filters"
 
 export interface FacetsContentProps {
   independentFacetDistribution: Record<string, Record<string, number>> | undefined
@@ -123,51 +119,16 @@ export function FacetsContent({ independentFacetDistribution, facetDistribution,
   return (
     <Accordion className={cn("overflow-x-hidden", className)} type="single" collapsible defaultValue={lastSelected}>
       <div className="mb-2 flex flex-col border-b border-black/5">
-        <div>
-          <div className="flex items-baseline justify-between pb-1 tracking-tight">
-            <p className="text-sm font-medium">{filtersCount === 0 ? "No filters selected" : `Active filters (${filtersCount})`}</p>
-            <motion.button
-              initial={false}
-              animate={{ opacity: filtersActive ? 1 : 0, visibility: filtersActive ? "visible" : "hidden" }}
-              transition={{ duration: 0.2, visibility: { delay: filtersActive ? 0 : 0.2 } }}
-              className="duration-[200ms] rounded-md bg-transparent px-1.5 py-0.5 text-xs transition-colors hover:bg-gray-100"
-              onClick={() => setShowFilterTags(!showFilterTags)}
-            >
-              {showFilterTags ? "Hide" : "Show"}
-            </motion.button>
-          </div>
-          <motion.div initial={false} animate={{ height: showFilterTags && filtersActive ? 140 : 0 }} className={cn("relative h-full max-h-[140px] overflow-hidden rounded-md")}>
-            <FadeOutMask />
-            <div className={cn("isolate flex h-full flex-wrap content-start items-start justify-start gap-1 overflow-y-auto bg-gray-50 p-2")}>
-              <AnimatePresence mode="popLayout" initial={false} key={page}>
-                {flattenedFilters.map((el, index) => {
-                  if (typeof el === "string") {
-                    const isCategory = el.includes(" > ")
-                    const categoryName = el.split(" > ").pop()?.trim()
-                    return (
-                      // would be nice to use exit animations here, but that requires AnimatePresence, which makes bundle size bigger
-                      <motion.div
-                        key={el}
-                        layout
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.9, zIndex: -1, transition: { duration: 0.1, delay: 0 } }}
-                        transition={{ duration: 0.2, ease: "easeInOut", delay: 0.02 * index }}
-                        className="group flex grow-0 cursor-pointer items-center gap-1 whitespace-nowrap rounded-md border border-gray-300/60 bg-white py-1 pl-1.5 pr-2 text-xs transition-colors hover:border-gray-400/80 hover:bg-gray-100/70"
-                        onClick={() => removeTag(el)}
-                      >
-                        <span className="rounded-full border border-gray-300 p-px transition-colors group-hover:border-gray-400">
-                          <CloseIcon className="size-2 fill-gray-300 transition-colors group-hover:fill-gray-400" />
-                        </span>
-                        <span className="font-medium tracking-tight">{isCategory && categoryName ? slugToName(categoryName) : el}</span>
-                      </motion.div>
-                    )
-                  }
-                })}
-              </AnimatePresence>
-            </div>
-          </motion.div>
-        </div>
+        <ActiveFilters
+          filtersCount={filtersCount}
+          showFilterTags={showFilterTags}
+          setShowFilterTags={setShowFilterTags}
+          filtersActive={filtersActive}
+          filters={flattenedFilters}
+          page={page}
+          removeTag={removeTag}
+        />
+
         <button className="mb-3 mt-3 inline-flex cursor-pointer bg-white text-xs text-black underline underline-offset-2" onClick={() => resetAllFilters()}>
           Clear filters
         </button>
