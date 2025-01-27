@@ -1,12 +1,11 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { AnimatePresence, motion } from "framer-motion"
+import { AnimatePresence, motion } from "motion/react"
 import { useChat } from "ai/react"
 import { toast } from "sonner"
 import { useAiCommerce } from "./ai-commerce-context"
 import { PromptSuggestion, PromptSuggestions } from "components/ui/prompt-suggestions"
-import { useSuggestionsStore } from "stores/suggestions-store"
 
 const INIT_SUGGESTIONS = ["Show me electronics under 250$", "Show me best-selling lips", "What are current products on sale?", "I'm looking for sportswear"]
 
@@ -16,7 +15,6 @@ export function Suggestions() {
   const { data: streamingData, append: appendSuggestions } = useChat({
     api: "/api/suggestions",
   })
-  const { suggestions, setSuggestions } = useSuggestionsStore()
   useEffect(() => {
     if (!streamingData) return
 
