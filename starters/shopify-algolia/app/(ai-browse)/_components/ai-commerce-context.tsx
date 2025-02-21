@@ -1,49 +1,82 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import type { ChatRequestOptions, CreateMessage, Message } from "ai"
-import { useChat } from "ai/react"
+import type { ChatRequestOptions, CreateMessage, Message } from "ai";
+import { useChat, experimental_useObject as useObject } from "ai/react";
+import * as React from "react";
+import { z } from "zod";
 
 interface AiCommerceContextType {
-  messages: Message[]
-  append: (message: Message | CreateMessage, chatRequestOptions?: ChatRequestOptions) => Promise<string | null | undefined>
-  input: string
-  isLoading: boolean
-  handleSubmit: (e?: { preventDefault: () => void }) => void
-  setInput: (value: string) => void
+	messages: Message[];
+	append: (
+		message: Message | CreateMessage,
+		chatRequestOptions?: ChatRequestOptions,
+	) => Promise<string | null | undefined>;
+	input: string;
+	isLoading: boolean;
+	handleSubmit: (e?: { preventDefault: () => void }) => void;
+	setInput: (value: string) => void;
+	createNewSuggestions: (messages: Message[]) => void;
+	suggestionsStream: string[];
 }
 
-const AiCommerceContext = React.createContext<AiCommerceContextType | undefined>(undefined)
+const AiCommerceContext = React.createContext<
+	AiCommerceContextType | undefined
+>(undefined);
 
 export function useAiCommerce() {
-  const context = React.useContext(AiCommerceContext)
-  if (!context) {
-    throw new Error("useAiCommerce must be used within an AiCommerceProvider")
-  }
-  return context
+	const context = React.useContext(AiCommerceContext);
+	if (!context) {
+		throw new Error("useAiCommerce must be used within an AiCommerceProvider");
+	}
+	return context;
 }
 
 interface AiCommerceProviderProps {
-  children: React.ReactNode
+	children: React.ReactNode;
 }
 
 export function AiCommerceProvider({ children }: AiCommerceProviderProps) {
-  const { append, messages, input, handleSubmit, setInput, isLoading } = useChat({
-    api: "/api/search",
-    maxSteps: 10,
-  })
+	const { append, messages, input, handleSubmit, setInput, isLoading } =
+		useChat({
+			api: "/api/search",
+			maxSteps: 10,
+		});
 
-  const value = React.useMemo(
-    () => ({
-      messages,
-      input,
-      isLoading,
-      handleSubmit,
-      setInput,
-      append,
-    }),
-    [messages, input, isLoading, handleSubmit, setInput]
-  )
+	const { object: suggestionsStream, submit: createNewSuggestions } = useObject(
+		{
+			api: "/api/suggestions",
+			schema: z.array(z.string()),
+		},
+	);
 
-  return <AiCommerceContext.Provider value={value}>{children}</AiCommerceContext.Provider>
+	const value = React.useMemo(
+		() => ({
+			messages,
+			input,
+			isLoading,
+			handleSubmit,
+			setInput,
+			append,
+			createNewSuggestions,
+			suggestionsStream: suggestionsStream?.length
+				? suggestionsStream.filter(Boolean)
+				: [],
+		}),
+		[
+			messages,
+			input,
+			isLoading,
+			handleSubmit,
+			setInput,
+			append,
+			suggestionsStream,
+			createNewSuggestions,
+		],
+	);
+
+	return (
+		<AiCommerceContext.Provider value={value}>
+			{children}
+		</AiCommerceContext.Provider>
+	);
 }
