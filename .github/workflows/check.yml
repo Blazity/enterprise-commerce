@@ -1,0 +1,85 @@
+name: Check
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            shopify-meilisearch:
+              - 'starters/shopify-meilisearch/**'
+            shopify-algolia:
+              - 'starters/shopify-algolia/**'
+
+      - id: set-matrix
+        run: |
+          matrix="{\"include\":["
+          if [[ "${{ steps.filter.outputs.shopify-meilisearch }}" == 'true' ]]; then
+            matrix="$matrix{\"app\":\"shopify-meilisearch\",\"working-directory\":\"./starters/shopify-meilisearch\"}"
+          fi
+          if [[ "${{ steps.filter.outputs.shopify-algolia }}" == 'true' ]]; then
+            if [[ "${{ steps.filter.outputs.shopify-meilisearch }}" == 'true' ]]; then
+              matrix="$matrix,"
+            fi
+            matrix="$matrix{\"app\":\"shopify-algolia\",\"working-directory\":\"./starters/shopify-algolia\"}"
+          fi
+          matrix="$matrix]}"
+          echo "matrix=$matrix" >> $GITHUB_OUTPUT
+
+  build-and-test:
+    needs: changes
+    if: ${{ needs.changes.outputs.matrix != '{"include":[]}' }}
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJson(needs.changes.outputs.matrix) }}
+
+    environment: Production
+    name: Build and Test (${{ matrix.app }})
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.workflow }}-${{ matrix.app }}-${{ github.ref }}
+      cancel-in-progress: true
+
+    env:
+      SKIP_ENV_VALIDATION: true
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+      SHOPIFY_STOREFRONT_ACCESS_TOKEN: ${{ secrets.SHOPIFY_STOREFRONT_ACCESS_TOKEN }}
+      SHOPIFY_ADMIN_ACCESS_TOKEN: ${{ secrets.SHOPIFY_ADMIN_ACCESS_TOKEN }}
+      SHOPIFY_STORE_DOMAIN: ${{ secrets.SHOPIFY_STORE_DOMAIN }}
+      MEILISEARCH_ADMIN_KEY: ${{ secrets.MEILISEARCH_ADMIN_KEY }}
+      MEILISEARCH_HOST: ${{ secrets.MEILISEARCH_HOST }}
+      SHOPIFY_APP_API_SECRET_KEY: ${{ secrets.SHOPIFY_APP_API_SECRET_KEY }}
+      REPLICATE_API_KEY: ${{ secrets.REPLICATE_API_KEY }}
+
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "node_version=$(cat .github/nodejs.version)" >> $GITHUB_ENV
+      - name: "Use node ${{ env.node_version }}"
+        uses: actions/setup-node@v3
+        with:
+          node-version: "${{ env.node_version }}"
+
+      - uses: actions/cache@v2
+        with:
+          path: ${{ matrix.working-directory }}/node_modules
+          key: ${{ runner.os }}-${{ matrix.app }}-modules-${{ hashFiles(format('{0}/yarn.lock', matrix.working-directory)) }}
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile --prefer-offline
+        working-directory: ${{ matrix.working-directory }}
+
+      - name: Licenses check
+        run: npx --yes license-checker-rseidelsohn --production --excludePrivatePackages --onlyAllow "MPL-2.0;UNKNOWN;MIT;Apache;AAL;BSD;Artistic;CC0;ISC;ISCL;PostgreSQL License;Public Domain;Unlicense;UPL;W3C;WTFPL;Python;CC-;BlueOak;LGPL;LGPL-3.0-or-later"
+        working-directory: ${{ matrix.working-directory }}

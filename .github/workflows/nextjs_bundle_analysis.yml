@@ -1,0 +1,94 @@
+name: "Next.js Bundle Analysis"
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+  workflow_dispatch:
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            shopify-meilisearch:
+              - 'starters/shopify-meilisearch/**'
+            shopify-algolia:
+              - 'starters/shopify-algolia/**'
+
+      - id: set-matrix
+        run: |
+          matrix="{\"include\":["
+          if [[ "${{ steps.filter.outputs.shopify-meilisearch }}" == 'true' || "${{ github.event_name }}" == 'workflow_dispatch' ]]; then
+            matrix="$matrix{\"app\":\"shopify-meilisearch\",\"working-directory\":\"./starters/shopify-meilisearch\"}"
+          fi
+          if [[ "${{ steps.filter.outputs.shopify-algolia }}" == 'true' || "${{ github.event_name }}" == 'workflow_dispatch' ]]; then
+            if [[ "${{ steps.filter.outputs.shopify-meilisearch }}" == 'true' || "${{ github.event_name }}" == 'workflow_dispatch' ]]; then
+              matrix="$matrix,"
+            fi
+            matrix="$matrix{\"app\":\"shopify-algolia\",\"working-directory\":\"./starters/shopify-algolia\"}"
+          fi
+          matrix="$matrix]}"
+          echo "matrix=$matrix" >> $GITHUB_OUTPUT
+
+  analyze:
+    needs: changes
+    if: ${{ needs.changes.outputs.matrix != '{"include":[]}' }}
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJson(needs.changes.outputs.matrix) }}
+
+    environment: Production
+    name: Analyze (${{ matrix.app }})
+    runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.workflow }}-${{ matrix.app }}-${{ github.ref }}
+      cancel-in-progress: true
+
+    env:
+      SKIP_ENV_VALIDATION: true
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+      SHOPIFY_STOREFRONT_ACCESS_TOKEN: ${{ secrets.SHOPIFY_STOREFRONT_ACCESS_TOKEN }}
+      SHOPIFY_ADMIN_ACCESS_TOKEN: ${{ secrets.SHOPIFY_ADMIN_ACCESS_TOKEN }}
+      SHOPIFY_STORE_DOMAIN: ${{ secrets.SHOPIFY_STORE_DOMAIN }}
+      MEILISEARCH_ADMIN_KEY: ${{ secrets.MEILISEARCH_ADMIN_KEY }}
+      MEILISEARCH_HOST: ${{ secrets.MEILISEARCH_HOST }}
+      SHOPIFY_APP_API_SECRET_KEY: ${{ secrets.SHOPIFY_APP_API_SECRET_KEY }}
+      REPLICATE_API_KEY: ${{ secrets.REPLICATE_API_KEY }}
+
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "node_version=$(cat .github/nodejs.version)" >> $GITHUB_ENV
+      - name: "use node ${{ env.node_version }}"
+        uses: actions/setup-node@v3
+        with:
+          node-version: "${{ env.node_version }}"
+
+      - uses: actions/cache@v2
+        with:
+          path: ${{ matrix.working-directory }}/node_modules
+          key: ${{ runner.os }}-${{ matrix.app }}-bundle-modules-${{ hashFiles(format('{0}/yarn.lock', matrix.working-directory)) }}
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile --prefer-offline
+        working-directory: ${{ matrix.working-directory }}
+
+      - name: Restore next build
+        uses: actions/cache@v3
+        id: restore-build-cache
+        env:
+          cache-name: cache-next-build-${{ matrix.app }}
+        with:
+          path: ${{ matrix.working-directory }}/.next/cache
+          key: ${{ runner.os }}-build-${{ env.cache_name }}
