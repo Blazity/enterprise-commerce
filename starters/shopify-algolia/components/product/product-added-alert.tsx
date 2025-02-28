@@ -11,13 +11,17 @@ import { type CurrencyType, mapCurrencyToSign } from "utils/map-currency-to-sign
 
 export function ProductAddedAlert({ className }: { className?: string }) {
   const router = useRouter()
-  const { product, combination } = useAddProductStore()
-  const { openCart, preloadSheet, cart, checkoutReady } = useCartStore()
+  const product = useAddProductStore((s) => s.product)
+  const combination = useAddProductStore((s) => s.combination)
+  const openCart = useCartStore((s) => s.openCart)
+  const preloadSheet = useCartStore((s) => s.preloadSheet)
+  const cart = useCartStore((s) => s.cart)
+  const checkoutReady = useCartStore((s) => s.checkoutReady)
 
   if (!product || !combination) return null
 
   return (
-    <Alert className={cn("border-input absolute right-0 top-[5.5rem] z-50 w-full min-w-[220px] border bg-white transition-all md:top-[4.5rem] md:min-w-[350px]", className)}>
+    <Alert className={cn("absolute right-0 top-[5.5rem] z-50 w-full min-w-[220px] border border-input bg-white transition-all md:top-[4.5rem] md:min-w-[350px]", className)}>
       <AlertTitle>Product has been added to the cart!</AlertTitle>
       <AlertDescription className="mt-6 flex flex-col">
         <div className="mb-6 flex items-center justify-between gap-2">

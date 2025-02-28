@@ -5,7 +5,8 @@ import { FiltersIcon } from "components/icons/filters-icon"
 import { useFilterStore } from "stores/filters-store"
 
 export const HideFilters = () => {
-  const { set, status } = useFilterStore((s) => s)
+  const set = useFilterStore((s) => s.set)
+  const status = useFilterStore((s) => s.status)
 
   return (
     <Button

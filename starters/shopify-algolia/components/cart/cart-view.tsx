@@ -10,8 +10,13 @@ const CartSheet = dynamic(() => import("components/cart/cart-sheet").then((mod) 
 export function CartView() {
   const [isPending, startTransition] = useTransition()
 
-  const { isOpen, isSheetLoaded, openCart, closeCart, setCart, cart } = useCartStore()
-  const { lastUpdatedAt } = useCartStore()
+  const isOpen = useCartStore((s) => s.isOpen)
+  const isSheetLoaded = useCartStore((s) => s.isSheetLoaded)
+  const openCart = useCartStore((s) => s.openCart)
+  const closeCart = useCartStore((s) => s.closeCart)
+  const setCart = useCartStore((s) => s.setCart)
+  const cart = useCartStore((s) => s.cart)
+  const lastUpdatedAt = useCartStore((s) => s.lastUpdatedAt)
 
   useEffect(() => {
     startTransition(async () => {

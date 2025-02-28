@@ -9,7 +9,7 @@ interface ModalStore {
   closeAllModals: () => void
 }
 
-export const useModalStore = create<ModalStore>((set) => ({
+export const useModalStore = create<ModalStore>()((set) => ({
   modals: {},
 
   openModal: (modalId: Modal) =>
