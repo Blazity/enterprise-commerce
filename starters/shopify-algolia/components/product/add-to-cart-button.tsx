@@ -24,8 +24,11 @@ import { COOKIE_CART_ID } from "constants/index"
 export function AddToCartButton({ className, product, combination }: { className?: string; product: CommerceProduct; combination: Combination | PlatformVariant | undefined }) {
   const [isPending, setIsPending] = useState(false)
   const [hasAnyAvailable, setHasAnyAvailable] = useState(true)
-  const { setProduct, clean } = useAddProductStore()
-  const { cart, refresh, setCheckoutReady } = useCartStore((s) => s)
+  const setProduct = useAddProductStore((s) => s.setProduct)
+  const clean = useAddProductStore((s) => s.clean)
+  const cart = useCartStore((s) => s.cart)
+  const refresh = useCartStore((s) => s.refresh)
+  const setCheckoutReady = useCartStore((s) => s.setCheckoutReady)
 
   const disabled = !hasAnyAvailable || !combination?.availableForSale || isPending
 

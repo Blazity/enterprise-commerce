@@ -5,7 +5,7 @@ interface FilterTransitionStore {
   set: (filter: string) => void
 }
 
-export const useFilterTransitionStore = create<FilterTransitionStore>((set) => ({
+export const useFilterTransitionStore = create<FilterTransitionStore>()((set) => ({
   selected: [],
   set: (filter: string) => set((prev) => ({ selected: [...prev.selected, filter] })),
 }))

@@ -9,7 +9,7 @@ type ReviewButtonProps = {
 }
 
 export const ReviewButton = ({ productId }: ReviewButtonProps) => {
-  const { openModal } = useModalStore()
+  const openModal = useModalStore((state) => state.openModal)
   const [_, setPid] = useQueryState("pid")
 
   return (

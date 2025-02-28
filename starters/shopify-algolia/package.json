@@ -80,7 +80,7 @@
     "shiki": "^1.23.1",
     "sonner": "^1.4.41",
     "tailwindcss-animate": "^1.0.7",
-    "zustand": "^4.5.2"
+    "zustand": "^5.0.3"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "5.0.2",

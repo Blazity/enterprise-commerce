@@ -27,7 +27,8 @@ export function FacetsContent({ independentFacetDistribution, facetDistribution,
   const router = useRouter()
   const pathname = usePathname()
   const isAiPath = pathname.startsWith("/ai/category")
-  const { set: setFilterVisibilityStatus, status } = useFilterStore((s) => s)
+  const setFilterVisibilityStatus = useFilterStore((s) => s.set)
+  const status = useFilterStore((s) => s.status)
 
   const collections: Record<string, Record<string, number>> = HIERARCHICAL_ATRIBUTES.reduce((acc, key) => {
     acc[key] = independentFacetDistribution?.[key] || {}
@@ -37,7 +38,8 @@ export function FacetsContent({ independentFacetDistribution, facetDistribution,
   const vendors = independentFacetDistribution?.["vendor"]
   const colors = facetDistribution?.["flatOptions.Color"]
 
-  const { set: setLastSelected, selected: lastSelected } = useFilterTransitionStore((s) => s)
+  const setLastSelected = useFilterTransitionStore((s) => s.set)
+  const lastSelected = useFilterTransitionStore((s) => s.selected)
 
   const [selectedCategories, setSelectedCategories] = useQueryState("categories", {
     ...parseAsArrayOf(parseAsString),

@@ -17,7 +17,9 @@ interface FacetsMobileProps {
 }
 
 export function FacetsMobile({ className, facetDistribution, disabledFacets, independentFacetDistribution }: FacetsMobileProps) {
-  const { modals, openModal, closeModal } = useModalStore()
+  const closeModal = useModalStore((state) => state.closeModal)
+  const openModal = useModalStore((state) => state.openModal)
+  const modals = useModalStore((state) => state.modals)
 
   return (
     <div className={className}>
