@@ -5,7 +5,7 @@ import { ScrollArea } from "components/ui/scroll-area"
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "components/ui/sidebar"
 import { ShoppingBag, ShoppingCart } from "lucide-react"
 import * as React from "react"
-import { useAiCommerce } from "./ai-commerce-context"
+import { useAiCommerce } from "./ai-commerce-provider"
 import { Suggestions } from "./chat-suggestions"
 import { Textbox } from "./textbox"
 

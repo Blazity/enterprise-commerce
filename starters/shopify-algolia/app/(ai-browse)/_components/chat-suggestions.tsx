@@ -3,7 +3,7 @@ import { motion } from "framer-motion"
 import { useMemo } from "react"
 import { toast } from "sonner"
 import { generateUUID } from "utils/generate-uuid"
-import { useAiCommerce } from "./ai-commerce-context"
+import { useAiCommerce } from "./ai-commerce-provider"
 
 const INIT_SUGGESTIONS = ["Show me electronics under 250$", "I'm a big Vercel fan, show me black t-shirts", "I want to buy the cheapest running shoes"]
 
