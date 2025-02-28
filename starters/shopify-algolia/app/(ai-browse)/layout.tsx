@@ -16,7 +16,7 @@ import DraftToolbar from "components/draft-toolbar"
 import { SidebarInset, SidebarProvider } from "components/ui/sidebar"
 import { AiCommerceSidebar } from "./_components/ai-chat"
 import { navigationItems } from "utils/nav-items"
-import { AiCommerceProvider } from "./_components/ai-commerce-context"
+import { AiCommerceProvider } from "./_components/ai-commerce-provider"
 
 export default function AiSearchLayout({ children }: { children: React.ReactNode }) {
   return (

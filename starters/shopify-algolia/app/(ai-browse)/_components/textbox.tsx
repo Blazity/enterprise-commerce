@@ -2,7 +2,7 @@ import { useRef } from "react"
 import { toast } from "sonner"
 import { cn } from "utils/cn"
 import { Textarea } from "components/ui/textarea"
-import { useAiCommerce } from "./ai-commerce-context"
+import { useAiCommerce } from "./ai-commerce-provider"
 import { generateUUID } from "utils/generate-uuid"
 
 export const Textbox = ({ messages }) => {
