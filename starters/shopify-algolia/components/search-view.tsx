@@ -62,7 +62,7 @@ export async function SearchView({ searchParams, disabledFacets, collection, bas
 
   return (
     <div className="mx-auto w-full max-w-[1920px] p-4 md:px-12 md:pb-24 md:pt-4">
-      <ContextReporter products={hits} />
+      <ContextReporter products={hits} categories={collection ? [collection] : []} filters={facetDistribution} />
       <div className="sticky top-[77px] z-40 flex items-center justify-between bg-white py-4 md:top-[83px] md:-mx-12 md:px-12">
         <h1 className="flex items-center gap-1 text-3xl font-semibold tracking-tight lg:text-4xl">
           {makePageTitle(collection, q)}
