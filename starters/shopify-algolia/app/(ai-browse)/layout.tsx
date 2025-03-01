@@ -1,6 +1,7 @@
 import "../globals.css"
 
 import Script from "next/script"
+import { NuqsAdapter } from "nuqs/adapters/next/app"
 import { Suspense } from "react"
 import { Toaster } from "sonner"
 import { FlagValues } from "components/flag-values"
@@ -22,6 +23,8 @@ export default function AiSearchLayout({ children }: { children: React.ReactNode
   return (
     <html lang="en">
       <body>
+      <NuqsAdapter>
+
         <Script id="mobileMegaMenuLogic" strategy="lazyOnload">
           {`${mobileInlineScript}`}
         </Script>
@@ -62,6 +65,7 @@ export default function AiSearchLayout({ children }: { children: React.ReactNode
             </SidebarInset>
           </SidebarProvider>
         </AiCommerceProvider>
+        </NuqsAdapter>
       </body>
     </html>
   )
