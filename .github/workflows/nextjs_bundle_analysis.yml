@@ -75,7 +75,7 @@ jobs:
         with:
           node-version: "${{ env.node_version }}"
 
-      - uses: actions/cache@v2
+      - uses: actions/cache@v4
         with:
           path: ${{ matrix.working-directory }}/node_modules
           key: ${{ runner.os }}-${{ matrix.app }}-bundle-modules-${{ hashFiles(format('{0}/yarn.lock', matrix.working-directory)) }}
