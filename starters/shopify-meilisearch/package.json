@@ -60,12 +60,12 @@
     "meilisearch": "^0.38.0",
     "next": "15.1.2",
     "next-compose-plugins": "^2.2.1",
-    "nuqs": "^1.17.1",
+    "nuqs": "^2.4.0",
     "p-retry": "^6.2.0",
     "playwright": "^1.42.1",
     "postcss": "^8.4.38",
-    "react": "19.0.0-rc-66855b96-20241106",
-    "react-dom": "19.0.0-rc-66855b96-20241106",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
     "react-hook-form": "^7.51.1",
     "replicate": "^0.29.1",
     "schema-dts": "^1.1.2",
@@ -89,8 +89,8 @@
     "@types/jest": "^29.5.12",
     "@types/lodash.isequal": "^4.5.8",
     "@types/node": "^20.11.30",
-    "@types/react": "npm:types-react@19.0.0-rc.1",
-    "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",
+    "@types/react": "18.2.0",
+    "@types/react-dom": "18.2.0",
     "@typescript-eslint/eslint-plugin": "^7.3.1",
     "@typescript-eslint/parser": "^7.3.1",
     "@vercel/style-guide": "^5.0.0",
@@ -119,9 +119,5 @@
     "tsup": "^8.0.2",
     "typescript": "5.4.3",
     "zod": "^3.22.4"
-  },
-  "resolutions": {
-    "@types/react": "npm:types-react@19.0.0-rc.1",
-    "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1"
   }
 }
