@@ -1,6 +1,7 @@
 import "./globals.css"
 
 import Script from "next/script"
+import { NuqsAdapter } from "nuqs/adapters/next/app"
 import { Suspense } from "react"
 import { Toaster } from "sonner"
 import { FlagValues } from "components/flag-values"
@@ -236,29 +237,31 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="en">
       <body>
-        <Script id="mobileMegaMenuLogic" strategy="lazyOnload">{`${mobileInlineScript}`}</Script>
+        <NuqsAdapter>
+          <Script id="mobileMegaMenuLogic" strategy="lazyOnload">{`${mobileInlineScript}`}</Script>
 
-        <NavigationBar items={navigationItems} />
+          <NavigationBar items={navigationItems} />
 
-        {children}
+          {children}
 
-        <Footer />
-        <Modals />
+          <Footer />
+          <Modals />
 
-        <CartView />
+          <CartView />
 
-        <Toaster position="bottom-left" />
+          <Toaster position="bottom-left" />
 
-        <DraftToolbar />
+          <DraftToolbar />
 
-        <Suspense>
-          <FlagValues />
-        </Suspense>
+          <Suspense>
+            <FlagValues />
+          </Suspense>
 
-        <ThirdParties />
+          <ThirdParties />
 
-        <GithubBadge />
-        <DemoModeAlert />
+          <GithubBadge />
+          <DemoModeAlert />
+        </NuqsAdapter>
       </body>
     </html>
   )
