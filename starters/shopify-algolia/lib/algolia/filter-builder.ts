@@ -6,7 +6,6 @@ export enum ComparisonOperators {
   GreaterThanOrEqual = ">=",
   LessThan = "<",
   LessThanOrEqual = "<=",
-  To = "TO",
 }
 
 export enum LogicalOperators {
@@ -15,41 +14,26 @@ export enum LogicalOperators {
   Not = "NOT",
 }
 
-type Value = string | number | boolean | (string | number | boolean)[]
-
 export class FilterBuilder {
   private expression: string[] = []
 
-  where(attribute: string, value: Value, operator?: ComparisonOperators): FilterBuilder {
-    if (Array.isArray(value)) {
-      if (value.length === 0) {
-        return this
-      }
-      const conditions = value.map((v) => `${attribute}:${this.formatValue(v)}`)
-      this.expression.push(conditions.length === 1 ? conditions[0] : `(${conditions.join(" OR ")})`)
-    } else {
-      this.expression.push(`${attribute}${operator || ":"}${this.formatValue(value)}`)
-    }
-    return this
+  hasFilters(): boolean {
+    return this.expression.length > 0
   }
 
-  to(attribute: string, min: number, max: number): FilterBuilder {
-    this.expression.push(`${attribute}:${min} TO ${max}`)
+  // simplification to prevent raw() overuse
+  where(attribute: string, value: (string | number | boolean) | null): FilterBuilder {
+    if (!value) return this
+
+    this.expression.push(`${attribute}:${this.formatValue(value)}`)
     return this
   }
-
-  in(attribute: string, values: (string | number | boolean)[]): FilterBuilder {
-    if (values.length === 0) {
-      return this
-    }
+  // For multiple values so we don't have to chain .and().raw() etc.
+  multi(attribute: string, values: (string | number | boolean)[] | null, operator: LogicalOperators = LogicalOperators.Or): FilterBuilder {
+    if (!values || values.length === 0) return this
 
     const conditions = values.map((value) => `${attribute}:${this.formatValue(value)}`)
-    this.expression.push(conditions.length === 1 ? conditions[0] : `(${conditions.join(" OR ")})`)
-    return this
-  }
-
-  tag(value: string): FilterBuilder {
-    this.expression.push(`_tags:${this.formatValue(value)}`)
+    this.expression.push(`(${conditions.join(` ${operator} `)})`)
     return this
   }
 
@@ -68,16 +52,26 @@ export class FilterBuilder {
     return this
   }
 
-  group(fn: (builder: FilterBuilder) => void): FilterBuilder {
-    const subBuilder = new FilterBuilder()
-    fn(subBuilder)
-    const subExpression = subBuilder.build()
-    this.expression.push(`(${subExpression})`)
+  raw(expression: string): FilterBuilder {
+    this.expression.push(expression)
+    return this
+  }
+  to(attribute: string, min: number | null, max: number | null): FilterBuilder {
+    if (!min || !max) return this
+
+    this.expression.push(`${attribute}:${min} TO ${max}`)
+    return this
+  }
+  numeric(attribute: string, value: number | null, operator: ComparisonOperators = ComparisonOperators.Equal): FilterBuilder {
+    if (!value) return this
+
+    this.expression.push(`${attribute} ${operator} ${value}`)
     return this
   }
 
-  build(): string {
-    return this.expression.join(" ")
+  build(operator?: LogicalOperators): string {
+    if (this.expression.length === 0) return ""
+    return this.expression.join(operator ? ` ${operator} ` : " ").trim()
   }
 
   private formatValue(value: string | number | boolean): string {
@@ -85,9 +79,5 @@ export class FilterBuilder {
       return `"${value}"`
     }
     return value.toString()
-  }
-
-  private formatArray(values: (string | number | boolean)[]): string {
-    return `(${values.map((v) => this.formatValue(v)).join(",")})`
   }
 }

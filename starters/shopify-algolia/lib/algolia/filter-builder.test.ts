@@ -1,4 +1,4 @@
-import { FilterBuilder, ComparisonOperators } from "./filter-builder"
+import { ComparisonOperators, FilterBuilder, LogicalOperators } from "./filter-builder"
 
 describe("FilterBuilder", () => {
   let builder: FilterBuilder
@@ -7,111 +7,115 @@ describe("FilterBuilder", () => {
     builder = new FilterBuilder()
   })
 
+  describe("hasFilters", () => {
+    it("should return false when no filters are added", () => {
+      expect(builder.hasFilters()).toBe(false)
+    })
+
+    it("should return true when filters are added", () => {
+      builder.where("category", "books")
+      expect(builder.hasFilters()).toBe(true)
+    })
+  })
+
   describe("where", () => {
-    it("should create a basic equality filter", () => {
-      expect(new FilterBuilder().where("price", 100).build()).toBe("price:100")
-      expect(new FilterBuilder().where("name", "test").build()).toBe('name:"test"')
-      expect(new FilterBuilder().where("isActive", true).build()).toBe("isActive:true")
+    it("should create a basic filter", () => {
+      expect(builder.where("category", "books").build()).toBe('category:"books"')
     })
 
-    it("should handle comparison operators", () => {
-      expect(new FilterBuilder().where("price", 100, ComparisonOperators.GreaterThan).build()).toBe("price>100")
-      expect(new FilterBuilder().where("price", 100, ComparisonOperators.LessThanOrEqual).build()).toBe("price<=100")
-      expect(new FilterBuilder().where("price", 100, ComparisonOperators.NotEqual).build()).toBe("price!=100")
+    it("should handle number values", () => {
+      expect(builder.where("price", 100).build()).toBe("price:100")
     })
 
-    it("should handle array values as IN operation", () => {
-      expect(new FilterBuilder().where("category", ["books", "games"]).build()).toBe('(category:"books" OR category:"games")')
+    it("should handle boolean values", () => {
+      expect(builder.where("inStock", true).build()).toBe("inStock:true")
+    })
+
+    it("should ignore null values", () => {
+      expect(builder.where("category", null).build()).toBe("")
+    })
+  })
+
+  describe("multi", () => {
+    it("should create an OR condition for multiple values", () => {
+      expect(builder.multi("category", ["books", "games"]).build()).toBe('(category:"books" OR category:"games")')
+    })
+
+    it("should create an AND condition when specified", () => {
+      expect(builder.multi("category", ["books", "games"], LogicalOperators.And).build()).toBe('(category:"books" AND category:"games")')
+    })
+
+    it("should handle empty array", () => {
+      expect(builder.multi("category", []).build()).toBe("")
+    })
+
+    it("should handle null input", () => {
+      expect(builder.multi("category", null).build()).toBe("")
+    })
+  })
+
+  describe("numeric", () => {
+    it("should create numeric comparison", () => {
+      expect(builder.numeric("price", 100).build()).toBe("price = 100")
+    })
+
+    it("should handle different operators", () => {
+      expect(builder.numeric("price", 100, ComparisonOperators.GreaterThan).build()).toBe("price > 100")
+    })
+
+    it("should ignore null values", () => {
+      expect(builder.numeric("price", null).build()).toBe("")
     })
   })
 
   describe("to", () => {
-    it("should create a range filter", () => {
+    it("should create range filter", () => {
       expect(builder.to("price", 10, 100).build()).toBe("price:10 TO 100")
     })
-  })
 
-  describe("in", () => {
-    it("should create an OR condition for multiple values", () => {
-      expect(builder.in("category", ["books", "games"]).build()).toBe('(category:"books" OR category:"games")')
-    })
-
-    it("should handle empty array", () => {
-      expect(builder.in("category", []).build()).toBe("")
-    })
-
-    it("should handle different value types", () => {
-      expect(builder.in("mixed", ["test", 123, true]).build()).toBe('(mixed:"test" OR mixed:123 OR mixed:true)')
-    })
-  })
-
-  describe("tag", () => {
-    it("should create a tag filter", () => {
-      expect(builder.tag("featured").build()).toBe('_tags:"featured"')
+    it("should ignore if either value is null", () => {
+      expect(builder.to("price", null, 100).build()).toBe("")
+      expect(builder.to("price", 10, null).build()).toBe("")
     })
   })
 
   describe("logical operators", () => {
-    it("should combine conditions with AND", () => {
-      const builder = new FilterBuilder()
-      expect(builder.where("price", 100).and().where("category", "books").build()).toBe('price:100 AND category:"books"')
+    it("should chain conditions with AND", () => {
+      expect(builder.where("category", "books").and().where("price", 100).build()).toBe('category:"books" AND price:100')
     })
 
-    it("should combine conditions with OR", () => {
-      const builder = new FilterBuilder()
-      expect(builder.where("price", 100).or().where("price", 200).build()).toBe("price:100 OR price:200")
+    it("should chain conditions with OR", () => {
+      expect(builder.where("category", "books").or().where("category", "games").build()).toBe('category:"books" OR category:"games"')
     })
 
     it("should handle NOT operator", () => {
-      const builder = new FilterBuilder()
-      expect(builder.not().where("category", "books").build()).toBe('NOT category:"books"')
+      expect(builder.where("category", "books").and().not().where("price", 100).build()).toBe('category:"books" AND NOT price:100')
     })
   })
 
-  describe("group", () => {
-    it("should create grouped conditions", () => {
-      expect(
-        new FilterBuilder()
-          .group((sub) => {
-            sub.where("price", 100).or().where("price", 200)
-          })
-          .and()
-          .where("category", "books")
-          .build()
-      ).toBe('(price:100 OR price:200) AND category:"books"')
+  describe("raw", () => {
+    it("should add raw expression", () => {
+      expect(builder.raw('category:"books"').build()).toBe('category:"books"')
     })
 
-    it("should handle nested groups", () => {
-      expect(
-        new FilterBuilder()
-          .group((sub) => {
-            sub
-              .where("price", 100)
-              .and()
-              .group((inner) => {
-                inner.where("category", "books").or().where("category", "games")
-              })
-          })
-          .build()
-      ).toBe('(price:100 AND (category:"books" OR category:"games"))')
+    it("should combine with other filters", () => {
+      expect(builder.where("category", "books").and().raw("price:100").build()).toBe('category:"books" AND price:100')
     })
   })
 
-  describe("complex queries", () => {
-    it("should handle complex combinations of filters", () => {
-      expect(
-        new FilterBuilder()
-          .where("price", 100, ComparisonOperators.GreaterThanOrEqual)
-          .and()
-          .where("price", 200, ComparisonOperators.LessThanOrEqual)
-          .and()
-          .group((sub) => {
-            sub.where("category", "books").or().where("category", "games")
-          })
-          .and()
-          .tag("featured")
-          .build()
-      ).toBe('price>=100 AND price<=200 AND (category:"books" OR category:"games") AND _tags:"featured"')
+  describe("build", () => {
+    it("should join multiple conditions with default operator", () => {
+      builder.where("category", "books").where("price", 100)
+      expect(builder.build()).toBe('category:"books" price:100')
+    })
+
+    it("should join multiple conditions with specified operator", () => {
+      builder.where("category", "books").where("price", 100)
+      expect(builder.build(LogicalOperators.And)).toBe('category:"books" AND price:100')
+    })
+
+    it("should return empty string when no filters", () => {
+      expect(builder.build()).toBe("")
     })
   })
 })

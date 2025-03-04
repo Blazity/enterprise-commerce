@@ -16,7 +16,7 @@ import { SearchButton } from "./search-button"
 import { NavigationItem } from "./navigation-item"
 import Link from "next/link"
 
-const ProductAddedAlert = dynamic(() => import("app/product/_components/product-added-alert").then((mod) => mod.ProductAddedAlert))
+const ProductAddedAlert = dynamic(() => import("components/product/product-added-alert").then((mod) => mod.ProductAddedAlert))
 
 interface NavigationBarProps {
   items: NavItem[]
@@ -44,17 +44,12 @@ export function NavigationBar({ items }: NavigationBarProps) {
 
       <div className="submenu megamenu__text w-full border-b border-black shadow-sm">
         <VariantGrid items={singleMenuItem.submenu?.items} variant={singleMenuItem.submenu?.variant} />
-        <div className="submenu__inner flex w-full flex-col gap-4 md:hidden">
-          <a href={singleMenuItem.href || "#"}>
-            <h4 className="mb-20 text-center text-xl underline">See all {singleMenuItem.text}</h4>
-          </a>
-        </div>
       </div>
     </li>
   ))
 
   return (
-    <header className="mega-navbar sticky top-0 z-50 mx-auto my-0 flex w-full flex-wrap content-center items-center justify-between border-b border-black bg-white py-6">
+    <header className="mega-navbar sticky top-0 z-50 mx-auto my-0 flex w-full flex-wrap content-center items-center justify-between border-b border-black bg-white p-4 py-6">
       <div className="flex justify-start px-4 md:mx-auto md:w-full md:max-w-container-md md:px-0">
         <Link prefetch={false} href="/" className="brand mr-20 hidden items-center text-xl font-bold md:flex">
           Acme

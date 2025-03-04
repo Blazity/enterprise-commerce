@@ -10,7 +10,7 @@ interface AddProductStore {
   clean: () => void
 }
 
-export const useAddProductStore = create<AddProductStore>((set) => ({
+export const useAddProductStore = create<AddProductStore>()((set) => ({
   product: null,
   combination: null,
   setProduct: ({ product, combination }) => set(() => ({ product, combination })),

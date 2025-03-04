@@ -1,11 +1,17 @@
+"use client"
+
 import Link from "next/link"
 import { TextGridItem } from "../types"
+import { usePathname } from "next/navigation"
 
 interface TextGridVariantProps {
   items: TextGridItem[]
 }
 
 export function TextGridVariant({ items }: TextGridVariantProps) {
+  const pathname = usePathname()
+  const isAi = pathname.startsWith("/ai")
+
   if (!items?.length) return null
 
   return (
@@ -13,7 +19,7 @@ export function TextGridVariant({ items }: TextGridVariantProps) {
       {items.map((singleCategory) => (
         <div className="submenu__inner flex w-full flex-col gap-4" key={singleCategory.text}>
           {singleCategory.href ? (
-            <Link href={singleCategory.href} prefetch={false}>
+            <Link href={`${isAi ? "/ai" : ""}${singleCategory.href}`} prefetch={false}>
               <h4 className="submenu__title text-[22px] underline">{singleCategory.text}</h4>
             </Link>
           ) : (
@@ -22,7 +28,7 @@ export function TextGridVariant({ items }: TextGridVariantProps) {
           <ul className="submenu__list flex flex-col items-start justify-start gap-2 text-left">
             {singleCategory?.items?.map((item) => (
               <li key={item.text} className="hover:underline">
-                <Link href={item.href} prefetch={false}>
+                <Link href={`${isAi ? "/ai" : ""}${item.href}`} prefetch={false}>
                   {item.text}
                 </Link>
               </li>

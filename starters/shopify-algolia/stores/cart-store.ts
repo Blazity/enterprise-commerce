@@ -16,7 +16,7 @@ interface CartStore {
   setCheckoutReady: (payload: boolean) => void
 }
 
-export const useCartStore = create<CartStore>((set) => ({
+export const useCartStore = create<CartStore>()((set) => ({
   isOpen: false,
   lastUpdatedAt: 0,
   cart: null,

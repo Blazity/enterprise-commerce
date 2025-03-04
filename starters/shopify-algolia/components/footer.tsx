@@ -4,11 +4,11 @@ import Link from "next/link"
 
 export function Footer() {
   return (
-    <footer className="text-muted-foreground border-t bg-white">
+    <footer className="border-t bg-white text-muted-foreground">
       <div className="mx-auto max-w-container-md px-6 py-12">
         <div className="grid gap-8 sm:grid-cols-2">
           <div className="space-y-4">
-            <h3 className="text-primary text-lg font-semibold">Newsletter</h3>
+            <h3 className="text-lg font-semibold text-primary">Newsletter</h3>
             <p>Subscribe to receive updates, access to exclusive deals, and more.</p>
             <div className="space-y-2 sm:max-w-md">
               <Input type="email" placeholder="Enter your email" aria-label="Email for newsletter" />
@@ -19,7 +19,7 @@ export function Footer() {
           </div>
           <div className="flex justify-center gap-24 sm:justify-end">
             <div className="space-y-4">
-              <h3 className="text-primary text-lg font-semibold">Shop</h3>
+              <h3 className="text-lg font-semibold text-primary">Shop</h3>
               <ul className="space-y-2">
                 <li>
                   <Link href="/search" className="transition-colors hover:text-orange-500" prefetch={false}>
@@ -45,7 +45,7 @@ export function Footer() {
             </div>
 
             <div className="space-y-4">
-              <h3 className="text-primary text-lg font-semibold">Support</h3>
+              <h3 className="text-lg font-semibold text-primary">Support</h3>
               <ul className="space-y-2">
                 <li>
                   <a href="mailto:contact@blazity.com" className="transition-colors hover:text-orange-500">
@@ -61,22 +61,22 @@ export function Footer() {
             </div>
           </div>
         </div>
-        <div className="border-muted-foreground/20 mt-8 border-t pt-8">
+        <div className="mt-8 border-t border-muted-foreground/20 pt-8">
           <div className="flex flex-col items-center justify-between space-y-4 md:flex-row md:space-y-0">
             <div className="flex space-x-4">
-              <a href="https://www.facebook.com/blazity" className="text-muted-foreground hover:text-primary transition-colors" aria-label="Facebook">
+              <a href="https://www.facebook.com/blazity" className="text-muted-foreground transition-colors hover:text-primary" aria-label="Facebook">
                 <FacebookIcon className="size-6" />
               </a>
-              <a href="https://twitter.com/blazity" className="text-muted-foreground hover:text-primary transition-colors" aria-label="Twitter">
+              <a href="https://twitter.com/blazity" className="text-muted-foreground transition-colors hover:text-primary" aria-label="Twitter">
                 <TwitterIcon className="size-6" />
               </a>
-              <a href="https://instagram.com/blazitysoftware" className="text-muted-foreground hover:text-primary transition-colors" aria-label="Instagram">
+              <a href="https://instagram.com/blazitysoftware" className="text-muted-foreground transition-colors hover:text-primary" aria-label="Instagram">
                 <InstagramIcon className="size-6 text-white" />
               </a>
-              <a href="https://www.youtube.com/channel/UCYDeWaSWiOHn_lUHY-u1VYw/videos" className="text-muted-foreground hover:text-primary transition-colors" aria-label="YouTube">
+              <a href="https://www.youtube.com/channel/UCYDeWaSWiOHn_lUHY-u1VYw/videos" className="text-muted-foreground transition-colors hover:text-primary" aria-label="YouTube">
                 <YoutubeIcon className="size-6 text-white" />
               </a>
-              <a href="https://www.linkedin.com/company/blazity" className="text-muted-foreground hover:text-primary transition-colors" aria-label="YouTube">
+              <a href="https://www.linkedin.com/company/blazity" className="text-muted-foreground transition-colors hover:text-primary" aria-label="YouTube">
                 <LinkedinIcon className="size-6" />
               </a>
             </div>
@@ -87,7 +87,7 @@ export function Footer() {
               href="https://vercel.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-primary mt-4 flex items-center space-x-2 transition-colors"
+              className="mt-4 flex items-center space-x-2 text-muted-foreground transition-colors hover:text-primary"
               prefetch={false}
             >
               <svg height="20" viewBox="0 0 283 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -102,7 +102,7 @@ export function Footer() {
               href="https://v0.dev"
               target="_blank"
               rel="noopener noreferrer"
-              className="focus:ring-ring mb-4 inline-flex w-fit items-center whitespace-nowrap rounded-full border border-transparent bg-black px-2.5 py-0.5 text-xs font-semibold text-white transition-colors hover:text-orange-500 focus:outline-none focus:ring-2 focus:ring-offset-2"
+              className="mb-4 inline-flex w-fit items-center whitespace-nowrap rounded-full border border-transparent bg-black px-2.5 py-0.5 text-xs font-semibold text-white transition-colors hover:text-orange-500 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
               prefetch={false}
             >
               Designed with v0

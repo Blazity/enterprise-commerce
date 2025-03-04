@@ -1,10 +1,11 @@
 import {
-  type BatchProps,
   algoliasearch,
+  type BatchProps,
   type BrowseProps,
   type DeleteObjectsOptions,
   type GetRecommendationsParams,
   type PartialUpdateObjectsOptions,
+  type SearchForFacetValuesProps,
   type SearchMethodParams,
   type SearchResponse,
   type SearchSingleIndexProps,
@@ -31,6 +32,7 @@ export const algolia = (args: { applicationId: string; apiKey: string }) => {
     create: async (args: PartialUpdateObjectsOptions) => createObjects(args, client),
     multiSearch: async <T extends Record<string, any>>(args: SearchMethodParams) => multiSearch<T>(args, client),
     getRecommendations: async (args: GetRecommendationsParams) => getRecommendations(recommendationClient, args),
+    getFacetValues: async (args: SearchForFacetValuesProps) => getFacetValues(client, args),
     filterBuilder: () => new FilterBuilder(),
     mapIndexToSort,
   }
@@ -90,6 +92,9 @@ const getRecommendations = async (client: ReturnType<ReturnType<typeof algoliaCl
   return client.getRecommendations(args)
 }
 
+const getFacetValues = async (client: ReturnType<typeof algoliaClient>, args: SearchForFacetValuesProps) => {
+  return client.searchForFacetValues(args)
+}
 export type SortType = "minPrice:desc" | "minPrice:asc" | "avgRating:desc" | "updatedAtTimestamp:asc" | "updatedAtTimestamp:desc"
 
 const mapIndexToSort = (index: string, sortOption: SortType) => {

@@ -5,16 +5,16 @@ import { env } from "env.mjs"
 import { getDemoCategories, getDemoProductReviews, getDemoProducts, getDemoSingleCategory, getDemoSingleProduct, isDemoMode } from "utils/demo-utils"
 import { notifyOptIn } from "utils/opt-in"
 
-import { ComparisonOperators, FilterBuilder } from "lib/algolia/filter-builder"
+import { FilterBuilder } from "lib/algolia/filter-builder"
 import type { Review } from "lib/reviews/types"
-import { PlatformCollection } from "lib/shopify/types"
+import type { PlatformCollection } from "lib/shopify/types"
 
 import { HITS_PER_PAGE } from "constants/index"
 
-import { searchClient as algolia, SortType } from "./client"
+import { searchClient as algolia, type SortType } from "./client"
 
-import type { CommerceProduct } from "types"
 import type { BrowseProps, SearchSingleIndexProps } from "algoliasearch"
+import type { CommerceProduct } from "types"
 
 export const getProduct = unstable_cache(
   async (handle: string) => {
@@ -40,7 +40,7 @@ export const getProducts = unstable_cache(
       hitsPerPage: 50,
     }
   ) => {
-    if (isDemoMode()) return getDemoCategories()
+    if (isDemoMode()) return getDemoProducts()
 
     return await algolia.search<PlatformCollection>({
       indexName: env.ALGOLIA_PRODUCTS_INDEX,
@@ -83,6 +83,7 @@ export const getAllProducts = async (options?: Omit<BrowseProps["browseParams"],
 export const getSimilarProducts = unstable_cache(
   async (collection: string | undefined, objectID: string) => {
     const limit = 8
+    if (!collection) return []
 
     if (isDemoMode()) return getDemoProducts().hits.slice(0, limit)
 
@@ -104,7 +105,7 @@ export const getSimilarProducts = unstable_cache(
         indexName: env.ALGOLIA_PRODUCTS_INDEX,
         searchParams: {
           hitsPerPage: limit - results[0].hits.length,
-          filters: algolia.filterBuilder().where("collections.handle", collection!).build(),
+          filters: algolia.filterBuilder().where("collections.handle", collection).build(),
         },
       })
     }
@@ -169,7 +170,10 @@ export const getProductReviews = unstable_cache(
       },
     })
 
-    return { reviews: hits.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()), total: nbHits || 0 }
+    return {
+      reviews: hits.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()),
+      total: nbHits || 0,
+    }
   },
   ["product-reviews-by-handle"],
   { revalidate: 86400 }
@@ -190,7 +194,10 @@ export const getAllReviews = async (options: Omit<BrowseProps["browseParams"], "
     },
   })
 
-  return { reviews: hits.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()), totalPages }
+  return {
+    reviews: hits.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()),
+    totalPages,
+  }
 }
 
 export const updateProducts = async (products: Partial<CommerceProduct>[]) => {
@@ -265,29 +272,26 @@ export const getFilteredProducts = unstable_cache(
     const indexName = algolia.mapIndexToSort(env.ALGOLIA_PRODUCTS_INDEX, sortBy as SortType)
 
     try {
-      // use a single http request to search for products and facets, utilize separate query for facet values that should be independent from the search query
-      const res = await algolia?.multiSearch<CommerceProduct>({
-        requests: [
-          {
-            indexName,
+      const [results, independentFacets] = await Promise.all([
+        algolia.search<CommerceProduct>({
+          indexName,
+          searchParams: {
             query,
-            facets: ["hierarchicalCategories.lvl0", "hierarchicalCategories.lvl1", "hierarchicalCategories.lvl2"],
-            hitsPerPage: HITS_PER_PAGE,
-          },
-          {
-            indexName,
-            hitsPerPage: HITS_PER_PAGE,
-            facets: ["vendor", "variants.availableForSale", "flatOptions.Color", "minPrice", "avgRating"].concat(
-              !!env.SHOPIFY_HIERARCHICAL_NAV_HANDLE ? [`hierarchicalCategories.lvl0`, `hierarchicalCategories.lvl1`, `hierarchicalCategories.lvl2`] : []
-            ),
             filters,
             page: page - 1,
-            attributesToRetrieve: ["id", "handle", "title", "priceRange", "featuredImage", "minPrice", "variants", "images", "avgRating", "totalReviews", "vendor"],
+            hitsPerPage: HITS_PER_PAGE,
+            attributesToRetrieve: ["id", "handle", "title", "priceRange", "featuredImage", "minPrice", "variants", "images", "avgRating", "totalReviews"],
+            facets: ["flatOptions.Color", "avgRating"],
           },
-        ],
-      })
-
-      const [independentFacets, results] = res?.results || []
+        }),
+        algolia.search<CommerceProduct>({
+          indexName,
+          searchParams: {
+            facets: ["vendor"].concat(env.SHOPIFY_HIERARCHICAL_NAV_HANDLE ? ["hierarchicalCategories.lvl0", "hierarchicalCategories.lvl1", "hierarchicalCategories.lvl2"] : []),
+            hitsPerPage: HITS_PER_PAGE,
+          },
+        }),
+      ])
 
       const hits = results?.hits || []
       const totalPages = results?.nbPages || 0
@@ -295,12 +299,39 @@ export const getFilteredProducts = unstable_cache(
       const totalHits = results.nbHits || 0
       const independentFacetDistribution = independentFacets.facets || {}
 
-      return { hits, totalPages, facetDistribution, totalHits, independentFacetDistribution }
+      return {
+        hits,
+        totalPages,
+        facetDistribution,
+        totalHits,
+        independentFacetDistribution,
+      }
     } catch (err) {
       console.error(err)
-      return { hits: [], totalPages: 0, facetDistribution: {}, totalHits: 0, independentFacetDistribution: {} }
+      return {
+        hits: [],
+        totalPages: 0,
+        facetDistribution: {},
+        totalHits: 0,
+        independentFacetDistribution: {},
+      }
     }
   },
   ["filtered-products"],
+  { revalidate: 86400 }
+)
+
+export const getFacetValues = unstable_cache(
+  async ({ indexName, facetName }: { indexName: string; facetName: string }) => {
+    if (isDemoMode()) return []
+
+    const res = await algolia.getFacetValues({
+      indexName,
+      facetName,
+    })
+
+    return res?.facetHits.map(({ value }) => value)
+  },
+  ["facet-values"],
   { revalidate: 86400 }
 )
