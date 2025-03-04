@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { SearchParamsType } from "types"
 import { CategoryView } from "components/category/category-view"
+import SidebarButton from "app/(ai-browse)/_components/sidebar-button"
 
 export const runtime = "nodejs"
 
@@ -22,5 +23,10 @@ export async function generateMetadata(props: ProductListingPageProps): Promise<
 export default async function ProductListingPage(props: ProductListingPageProps) {
   const params = await props.params
   const searchParams = await props.searchParams
-  return <CategoryView params={params} searchParams={searchParams} basePath="ai" />
+  return (
+    <>
+      {" "}
+      <CategoryView params={params} searchParams={searchParams} basePath="ai" />
+    </>
+  )
 }

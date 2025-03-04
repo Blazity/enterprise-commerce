@@ -11,7 +11,7 @@ import { PlatformCart } from "lib/shopify/types"
 
 import { CartItem } from "./cart-item"
 
-interface CartSheetProps {
+export interface CartSheetProps {
   cart: PlatformCart | null
   onCartClose: () => void
   onCartOpen: () => void
@@ -28,14 +28,14 @@ export function CartSheet({ cart, isOpen, onCartClose, isPending }: CartSheetPro
 
   return (
     <Sheet open={isOpen} onOpenChange={() => onCartClose()}>
-      <SheetContent className="size-full min-h-svh bg-white p-0">
+      <SheetContent className="size-full min-h-svh rounded-bl-lg rounded-tl-lg bg-white p-0">
         <SheetHeader className="flex w-full flex-row items-center justify-between">
-          <SheetTitle className="flex items-center p-4 pb-0 text-[20px] font-normal">
+          <SheetTitle className="flex items-center p-4 pb-0 text-[18px] font-medium">
             Review your cart
             {isPending ? <LoadingDots className="ml-4" /> : null}
           </SheetTitle>
 
-          <SheetClose className="ring-offset-background focus:ring-ring data-[state=open]:bg-secondary absolute right-4 top-4 rounded-sm bg-white opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:pointer-events-none">
+          <SheetClose className="absolute right-4 top-4 rounded-sm bg-white opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary">
             <CloseIcon className="size-4" />
             <span className="sr-only">Close</span>
           </SheetClose>

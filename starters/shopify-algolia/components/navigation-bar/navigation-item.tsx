@@ -17,7 +17,7 @@ export function NavigationItem({ singleMenuItem }: { singleMenuItem: NavItem }) 
   }
 
   return (
-    <Link prefetch={false} onClick={handleClick} href={`${isAi ? "/ai" : ""}${singleMenuItem.href}`} className="menu__link text-[22px] hover:underline md:text-sm/[18px]">
+    <Link prefetch={false} onClick={handleClick} href={`${isAi ? "/ai" : ""}${singleMenuItem.href}`} className="menu__link h-full text-[22px] md:text-sm/[18px]">
       {singleMenuItem.text}
       {!!singleMenuItem.submenu && (
         <i>

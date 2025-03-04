@@ -9,13 +9,13 @@ type ReviewButtonProps = {
 }
 
 export const ReviewButton = ({ productId }: ReviewButtonProps) => {
-  const openModal = useModalStore((s) => s.openModal)
+  const { openModal } = useModalStore()
   const [_, setPid] = useQueryState("pid")
 
   return (
     <Button
       variant="outline"
-      className="bg-white transition-all hover:scale-105"
+      className="bg-white transition-all hover:bg-gray-100 active:scale-[0.98]"
       onClick={() => {
         setPid(productId)
         openModal("review")

@@ -16,7 +16,8 @@ import DraftToolbar from "components/draft-toolbar"
 import { SidebarInset, SidebarProvider } from "components/ui/sidebar"
 import { AiCommerceSidebar } from "./_components/ai-chat"
 import { navigationItems } from "utils/nav-items"
-import { AiCommerceProvider } from "./_components/ai-commerce-provider"
+import { AiCommerceProvider } from "./_components/ai-commerce-context"
+import SidebarButton from "./_components/sidebar-button"
 
 export default function AiSearchLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -26,42 +27,46 @@ export default function AiSearchLayout({ children }: { children: React.ReactNode
           {`${mobileInlineScript}`}
         </Script>
 
-        <AiCommerceProvider>
-          <SidebarProvider
-            style={
-              {
-                "--sidebar-width": "20rem",
-                "--sidebar-width-mobile": "20rem",
-              } as React.CSSProperties
-            }
-          >
-            <Suspense>
-              <AiCommerceSidebar />
-            </Suspense>
-            <SidebarInset>
-              <NavigationBar items={navigationItems} />
-              {children}
-
-              <Footer />
-              <Modals />
-
-              <CartView />
-
-              <Toaster position="bottom-left" />
-
-              <DraftToolbar />
-
+        <Suspense>
+          <AiCommerceProvider>
+            <SidebarProvider
+              style={
+                {
+                  "--sidebar-width": "20rem",
+                  "--sidebar-width-mobile": "20rem",
+                } as React.CSSProperties
+              }
+            >
               <Suspense>
-                <FlagValues />
+                <AiCommerceSidebar />
               </Suspense>
+              <SidebarInset className="w-[calc(100vw-var(--sidebar-width))] max-w-full">
+                <NavigationBar items={navigationItems} />
+                {children}
 
-              <ThirdParties />
+                <Footer />
+                <Modals />
 
-              <GithubBadge />
-              <DemoModeAlert />
-            </SidebarInset>
-          </SidebarProvider>
-        </AiCommerceProvider>
+                <CartView />
+
+                <Toaster position="bottom-left" />
+
+                <DraftToolbar />
+
+                <SidebarButton />
+
+                <Suspense>
+                  <FlagValues />
+                </Suspense>
+
+                <ThirdParties />
+
+                <GithubBadge />
+                <DemoModeAlert />
+              </SidebarInset>
+            </SidebarProvider>
+          </AiCommerceProvider>
+        </Suspense>
       </body>
     </html>
   )

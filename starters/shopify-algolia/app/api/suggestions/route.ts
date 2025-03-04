@@ -1,23 +1,64 @@
-import { openai } from "@ai-sdk/openai";
-import { type Message, convertToCoreMessages, streamObject } from "ai";
-import { z } from "zod";
+import { openai } from "@ai-sdk/openai"
+import { type Message, convertToCoreMessages, streamText, StreamData, streamObject } from "ai"
+import { generateUUID } from "utils/generate-uuid"
+import { z } from "zod"
 
-export const maxDuration = 30;
+export const maxDuration = 30
 
 export async function POST(request: Request) {
-	const messages = (await request.json()) as Message[];
-	const coreMessages = convertToCoreMessages(messages);
+  const { messages } = (await request.json()) as { id: string; messages: Array<Message>; modelId: string }
 
-	const result = streamObject({
-		model: openai("gpt-4-turbo"),
-		output: "array",
-		schema: z.string(),
-		prompt: `${prompt}, here's the current conversation context:
-${coreMessages.map((m) => m.content).join("\n")}
-Please provide a list of suggestions for the user to explore products.`,
-	});
+  const coreMessages = convertToCoreMessages(messages)
 
-	return result.toTextStreamResponse();
+  const streamingData = new StreamData()
+
+  const result = streamText({
+    model: openai("gpt-4-turbo"),
+    system: prompt,
+    messages: coreMessages,
+    maxSteps: 5,
+    tools: {
+      createSuggestions: {
+        description: "Create a list of suggestions for the user to explore products.",
+        parameters: z.object({}),
+        execute: async function () {
+          const { elementStream } = streamObject({
+            model: openai("gpt-4-turbo"),
+            system:
+              "You are a shopping assistant for an e-commerce store. Based on the current conversation context, provide maximum of 4 relevant query suggestions to guide the user effortlessly through the website and help them discover products. Your suggestions should be concise, actionable, and aimed at encouraging product exploration or purchase. Each suggestion will appear as a clickable box for the user to append to their chat.",
+            output: "array",
+            schema: z.object({
+              suggestedText: z.string({ description: "The suggested text" }),
+            }),
+          })
+
+          const suggestions: { id: string; content: string }[] = []
+
+          for await (const element of elementStream) {
+            const suggestion = {
+              id: generateUUID(),
+              content: element.suggestedText,
+            }
+
+            streamingData.append({ type: "suggestion", content: suggestion })
+
+            suggestions.push(suggestion)
+          }
+          return {
+            type: "suggestion",
+            content: suggestions,
+          }
+        },
+      },
+    },
+    onFinish: () => {
+      streamingData.close()
+    },
+  })
+
+  return result.toDataStreamResponse({
+    data: streamingData,
+  })
 }
 
 const prompt = `
@@ -27,30 +68,6 @@ Focus on the following objectives:
 	1.	Ensure suggestions are contextually relevant to the conversation.
 	2.	Present concise, actionable query suggestions.
 	3.	Encourage product discovery while guiding the user toward a purchase decision.
-    4. Currently you can only:
-        - suggest products, categories, and search queries. For example:
-        "Cheapest running shoes"
-        "Latest smartphone deals"
-        "Hoodies under 250$"
-        "Red T-shirts collection"
-        - Add to cart if the user wants to buy the product. For example:
-                "Add the red t-shirt to the cart"
-                "I want the first one"
-
-        
 
 Your suggestions will appear as clickable boxes that append text to the user’s chat for further exploration. Prioritize relevance and ease of browsing, aiming to create a seamless shopping experience.
-
-
-This is list of available filters:
-
-- price: under or over a certain price (number).
-- vendors: Filter by an array of vendor names (strings).
-- colors: Filter by an array of colors (strings).
-- sortBy: Specify the sorting order (string). Available sorting options:
-  - price-high-to-low - most expensive to least expensive
-  - price-low-to-high - least expensive to most expensive
-  - customer-reviews - most reviews to least reviews
-  - newest
-  - oldest
-`;
+`

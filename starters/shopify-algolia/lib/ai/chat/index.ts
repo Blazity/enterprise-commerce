@@ -1,4 +1,4 @@
-// Origin: https://github.com/vercel/ai-chatbot/blob/main/lib/utils.ts
+// Original: https://github.com/vercel/ai-chatbot/blob/main/lib/utils.ts
 
 import type { CoreAssistantMessage, CoreMessage, CoreToolMessage, Message } from "ai"
 

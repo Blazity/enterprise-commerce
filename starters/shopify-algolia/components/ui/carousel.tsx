@@ -159,10 +159,13 @@ const CarouselPrevious = forwardRef<HTMLButtonElement, React.ComponentProps<type
   return (
     <Button
       ref={ref}
-      variant="secondary"
+      variant="primary"
       isAnimated={false}
       size="lg"
-      className={cn("absolute flex size-10 rotate-90 items-center justify-center rounded-full p-0 transition-transform hover:scale-105 hover:text-white", className)}
+      className={cn(
+        "absolute flex size-10 rotate-90 items-center justify-center rounded-full p-0 transition-[colors,transform] hover:bg-gray-50 hover:text-inherit active:scale-[0.98]",
+        className
+      )}
       disabled={!canScrollPrev}
       onClick={scrollPrev}
       {...props}
@@ -181,9 +184,12 @@ const CarouselNext = forwardRef<HTMLButtonElement, React.ComponentProps<typeof B
     <Button
       ref={ref}
       isAnimated={false}
-      variant="secondary"
+      variant="primary"
       size="lg"
-      className={cn("absolute flex size-10 rotate-90 items-center justify-center rounded-full p-0 transition-transform hover:scale-105 hover:text-white", className)}
+      className={cn(
+        "absolute flex size-10 rotate-90 items-center justify-center rounded-full p-0 transition-[colors,transform] hover:bg-gray-50 hover:text-inherit active:scale-[0.98]",
+        className
+      )}
       disabled={!canScrollNext}
       onClick={scrollNext}
       {...props}

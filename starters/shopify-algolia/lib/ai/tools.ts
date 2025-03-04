@@ -1,188 +1,91 @@
-import { type CoreTool, tool as createTool } from "ai";
-import { addCartItem } from "app/actions/cart.actions";
-import { env } from "env.mjs";
-import {
-	getCategories,
-	getFacetValues,
-	getProduct,
-	getProducts,
-} from "lib/algolia";
-import { z } from "zod";
+import { tool as createTool, type CoreTool } from "ai"
+import { HIERARCHICAL_SEPARATOR } from "constants/index"
+import { env } from "env.mjs"
+import { searchProducts as algoliaSearchProducts, getCategories, getFacetValues } from "lib/algolia"
+import { buildSearchFilter } from "utils/build-search-filter"
+import { z } from "zod"
 
-export type AllowedTools =
-	| "searchProducts"
-	| "searchCategories"
-	| "searchFilterValues"
-	| "addToCart"
-	| "buildNavigationQuery";
+export type AllowedTools = "searchProducts" | "searchCategories" | "buildNavigationQuery"
 
 const searchProducts = createTool({
-	description: "Search for available products to route to",
-	parameters: z.object({
-		query: z.string({ description: " Keyword for a product" }),
-	}),
-	execute: async ({ query }) => {
-		console.log({ query, tool: "searchProducts" });
-		const results = await getProducts({ query, hitsPerPage: 5 });
+  description: "Search for products in the shop",
+  parameters: z.object({
+    minPrice: z.number({ description: "Minimum price of the product" }).min(1).optional(),
+    maxPrice: z.number({ description: "Maximum price of the product, needs to be greater than minPrice" }).min(1).optional(),
+    sortBy: z
+      .enum(["minPrice:asc", "minPrice:desc", "avgRating:desc", "updatedAtTimestamp:asc", "updatedAtTimestamp:desc"], { description: "Sort by price, rating, etc" })
+      .optional(),
+    categories: z.array(z.string()).optional(),
+    vendors: z.array(z.string()).optional(),
+    colors: z.array(z.string({ description: "Color of the product" })).optional(),
+    rating: z.number({ description: "Rating of the product, needs to be between 1 and 5" }).min(1).max(5).optional(),
+    noOfProducts: z.number({ description: "Number of products to return" }).min(1).max(200).optional(),
+  }),
+  execute: async function ({ sortBy, noOfProducts, ...rest }) {
+    const filter = buildSearchFilter({
+      params: {
+        categories: rest.categories || [],
+        vendors: rest.vendors || [],
+        colors: rest.colors || [],
+        minPrice: rest.minPrice || null,
+        maxPrice: rest.maxPrice || null,
+        rating: rest.rating || null,
+      },
+      separator: HIERARCHICAL_SEPARATOR,
+    })
 
-		return {
-			results: results.hits,
-		};
-	},
-});
+    return (await algoliaSearchProducts("", sortBy || "", filter, noOfProducts || 12))?.hits
+  },
+})
 
 const searchCategories = createTool({
-	description: "Search for available categories to route to",
-	parameters: z.object({
-		query: z.string({ description: "Keyword for a category" }),
-	}),
-	execute: async ({ query }) => {
-		console.log({ query, tool: "searchCategories" });
-		const results = await getCategories({ query, hitsPerPage: 5 });
-
-		return {
-			results: results.hits,
-		};
-	},
-});
-
-const searchFilterValues = createTool({
-	description: "Search for available filter values to apply",
-	parameters: z.object({
-		query: z.union([z.literal("vendor"), z.literal("flatOptions.Color")]),
-	}),
-	execute: async ({ query }) => {
-		console.log({ query, tool: "searchFilterValues" });
-		const results = await getFacetValues({
-			indexName: env.ALGOLIA_PRODUCTS_INDEX,
-			facetName: query,
-		});
-		return {
-			filterName: query,
-			availableFilterValues: results,
-		};
-	},
-});
-
-const addToCart = createTool({
-	description: "Add a product to the cart",
-	parameters: z.object({
-		productHandle: z.string(),
-		variantOptions: z.object({
-			color: z.string(),
-			material: z.string(),
-		}),
-	}),
-	execute: async ({ productHandle, variantOptions }) => {
-		const product = await getProduct(productHandle);
-		const variant = product?.variants.find(
-			(v) =>
-				v.selectedOptions.color.value === variantOptions.color &&
-				v.selectedOptions.material === variantOptions.material,
-		)!;
-
-		console.log({
-			tool: "addToCart",
-			variant,
-			product,
-			productHandle,
-			variantOptions,
-		});
-
-		await addCartItem(null, variant.id, product?.id!);
-
-		return { ok: true };
-	},
-});
+  description: "Search through categories in the shop",
+  parameters: z.object({
+    query: z.string({ description: "Query to search for" }),
+  }),
+  execute: async function ({ query }) {
+    return (await getCategories({ query }))?.hits
+  },
+})
 
 const buildNavigationQuery = createTool({
-	description: "Build URL to navigate the user to",
-	parameters: z.object({
-		result: z.object({
-			handle: z.string(),
-		}),
-		resultType: z.union([
-			z.literal("product"),
-			z.literal("category"),
-			z.literal("search"),
-		]),
-		filters: z
-			.object({
-				minPrice: z.number().optional(),
-				maxPrice: z.number().optional(),
-				vendors: z.array(z.string()).optional(),
-				colors: z.array(z.string()).optional(),
-				sortBy: z.string().optional(),
-			})
-			.optional(),
-	}),
-	execute: async ({ result, resultType, ...rest }) => {
-		switch (resultType) {
-			case "product":
-				return `/ai/product/${result.handle}`;
+  description: "Build query to navigate to a specific page",
+  parameters: z.object({
+    minPrice: z.number({ description: "Minimum price of the product" }).min(1).optional(),
+    maxPrice: z.number({ description: "Maximum price of the product, needs to be greater than minPrice" }).min(1).optional(),
+    sortBy: z
+      .enum(["minPrice:asc", "minPrice:desc", "avgRating:desc", "updatedAtTimestamp:asc", "updatedAtTimestamp:desc"], { description: "Sort by price, rating, etc" })
+      .optional(),
+    categories: z.array(z.string()).optional(),
+    vendors: z.array(z.string()).optional(),
+    colors: z.array(z.string({ description: "Color of the product" })).optional(),
+    rating: z.number({ description: "Rating of the product, needs to be between 1 and 5" }).min(1).max(5).optional(),
+    noOfProducts: z.number({ description: "Number of products to return" }).min(1).max(200).optional(),
+    slug: z.string({ description: "Slug of the product or category" }).optional(),
+    segment: z.enum(["product", "category", "search"], { description: "Navigate to a specific segment of the website either product, category or search" }),
+  }),
+  execute: async function ({ segment, slug, ...queryParams }) {
+    return { segment, slug, queryParams }
+  },
+})
 
-			case "category": {
-				if ("filters" in rest) {
-					const params = processFiltersToSearchParams(rest.filters!);
-					return `/ai/category/${result.handle}?${decodeURIComponent(params.toString())}`;
-				}
-				return `/ai/category/${result.handle}`;
-			}
+const searchFacetValues = createTool({
+  description: "Find possible filters for the given query",
+  parameters: z.object({
+    facetName: z.string({ description: "Name of the facet to search for" }),
+  }),
+  execute: async function ({ facetName }) {
+    const facets = await getFacetValues({
+      indexName: env.ALGOLIA_PRODUCTS_INDEX,
+      facetName,
+    })
 
-			case "search": {
-				if ("filters" in rest) {
-					const params = processFiltersToSearchParams(rest.filters!);
-					return `/ai/search?${decodeURIComponent(params.toString())}`;
-				}
-				return "/ai/search/";
-			}
-		}
-	},
-});
-
-function processFiltersToSearchParams(
-	filters: Record<string, string | string[] | number | number[]>,
-) {
-	const params = new URLSearchParams();
-
-	for (const [key, value] of Object.entries(filters)) {
-		if (key === "sortBy") {
-			switch (value) {
-				case "price-high-to-low":
-					params.set("sortBy", "minPrice:desc");
-					break;
-				case "price-low-to-high":
-					params.set("sortBy", "minPrice:asc");
-					break;
-				case "customer-reviews":
-					params.set("sortBy", "avgRating:desc");
-					break;
-				case "newest":
-					params.set("sortBy", "updatedAtTimestamp:asc");
-					break;
-				case "oldest":
-					params.set("sortBy", "updatedAtTimestamp:desc");
-					break;
-				case "relevancy":
-					params.delete("sortBy");
-					break;
-				default:
-					break;
-			}
-		} else if (Array.isArray(value)) {
-			params.set(key, value.join(","));
-		} else {
-			params.set(key, value.toString());
-		}
-	}
-
-	return params;
-}
+    return facets
+  },
+})
 
 export const tools: Record<AllowedTools, CoreTool> = {
-	searchProducts,
-	searchCategories,
-	searchFilterValues,
-	buildNavigationQuery,
-	addToCart,
-};
+  searchProducts,
+  searchCategories,
+  buildNavigationQuery,
+}
