@@ -119,9 +119,5 @@
     "tsup": "^8.3.5",
     "typescript": "5.4.3",
     "zod": "^3.22.4"
-  },
-  "resolutions": {
-    "@types/react": "npm:types-react@19.0.0-rc.1",
-    "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1"
   }
 }
