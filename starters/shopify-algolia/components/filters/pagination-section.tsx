@@ -33,7 +33,7 @@ export function PaginationSection({ queryParams, totalPages }: PaginationSection
   }
 
   return (
-    <Pagination className="my-32 border-t border-black py-4">
+    <Pagination className="my-24 border-t border-black/5 py-4">
       <PaginationContent className="relative gap-4">
         <PaginationItem className="hidden sm:block">
           <PaginationPrevious disabled={+page === 1} href={{ query: { ...queryParams, page: +page - 1 } }} />

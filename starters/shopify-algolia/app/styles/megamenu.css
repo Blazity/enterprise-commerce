@@ -156,6 +156,17 @@
   display: inline-block;
 }
 
+.menu .menu__inner .menu__item:hover::after {
+  content: attr(data-content);
+  position: absolute;
+  bottom: -2px;
+  transform: translateX(-15px);
+  width: auto;
+  height: 26px;
+  color: transparent;
+  padding: 0 20px;
+}
+
 .menu .menu__inner .menu__item:last-child {
   padding-right: 0;
 }
@@ -178,6 +189,16 @@
     opacity: 1;
     visibility: visible;
     top: 101%;
+    pointer-events: auto;
+  }
+  .menu .menu__inner .menu__item.menu__dropdown > .submenu:hover {
+    opacity: 1;
+    visibility: visible;
+    top: 101%;
+    pointer-events: auto;
+  }
+  .menu .menu__inner .menu__item.menu__dropdown > .submenu {
+    pointer-events: none;
   }
 }
 
@@ -198,7 +219,7 @@
 }
 
 .menu .menu__inner .menu__item .menu__link > i {
-  margin-left: 5px;
+  margin-left: 2px;
   font-size: 1.35rem;
   transform: rotate(0deg);
   transition: 0.25s;

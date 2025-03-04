@@ -35,9 +35,6 @@ export function ReviewModal() {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      rating: 5,
-    },
   })
 
   async function onSubmit(payload: z.infer<typeof formSchema>) {
@@ -65,13 +62,13 @@ export function ReviewModal() {
         closeModal("review")
       }}
     >
-      <DialogContent className="bg-white p-4 sm:max-w-[625px]">
+      <DialogContent className="bg-white p-6 sm:max-w-[625px]">
         <Form {...form}>
           {form.formState.errors.root?.message && <p className="mt-6 w-full text-[14px] leading-tight tracking-tight text-red-400">{form.formState.errors.root?.message}abc </p>}
           <form name="reviewForm" id="reviewForm" onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <DialogHeader className="border-b border-gray-500 pb-4">
-              <DialogTitle>Leave a Review</DialogTitle>
-              <DialogDescription>Share your thoughts and experience with this product.</DialogDescription>
+            <DialogHeader className="border-b border-black/10 pb-4">
+              <DialogTitle className="text-2xl">Leave a Review</DialogTitle>
+              <DialogDescription className="">Share your thoughts and experience with this product.</DialogDescription>
             </DialogHeader>
             <FormField
               key="rating"
@@ -142,10 +139,17 @@ export function ReviewModal() {
               setPid(null)
               closeModal("review")
             }}
+            className="border-none text-sm font-medium underline-offset-2 hover:underline"
           >
             Cancel
           </Button>
-          <Button className="flex items-center justify-center text-center" form="reviewForm" variant="secondary" type="submit" disabled={form.formState.isSubmitting}>
+          <Button
+            className="flex items-center justify-center border-none bg-black text-center text-sm font-medium text-white hover:bg-black/85 hover:text-white"
+            form="reviewForm"
+            variant="secondary"
+            type="submit"
+            disabled={form.formState.isSubmitting}
+          >
             Submit Review
           </Button>
         </DialogFooter>
@@ -159,7 +163,7 @@ function StarList({ name, rating, setRating, ...rest }: { name: string; rating: 
 
   return (
     <div className="p-1">
-      <fieldset className="flex items-center justify-center gap-1">
+      <fieldset className="flex items-center justify-center">
         <legend className="sr-only">Choose a rating</legend>
         {Array.from({ length: 5 }).map((_, i) => (
           <label key={i} className="relative cursor-pointer">
@@ -174,7 +178,7 @@ function StarList({ name, rating, setRating, ...rest }: { name: string; rating: 
               onMouseEnter={() => setHover(i + 1)}
               onMouseLeave={() => setHover(0)}
             />
-            <StarIcon className={cn("size-8", (hover || rating) > i ? "fill-yellow-400 stroke-yellow-500" : "text-gray-300")} />
+            <StarIcon className={cn("size-8 fill-gray-300", (hover || rating) > i ? "fill-black/90" : "text-gray-300")} />
           </label>
         ))}
       </fieldset>

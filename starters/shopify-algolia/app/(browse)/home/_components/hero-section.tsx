@@ -24,11 +24,18 @@ export function HeroSection({ title, className }: { title: string; className?: s
       <div className="flex max-w-lg shrink-0 flex-col items-center space-y-4 px-8 lg:items-start lg:space-y-8">
         <h1 className="text-center text-3xl font-semibold tracking-tight lg:text-left lg:text-4xl">{"Shop the best Deals on Top Brands & Unique Finds"}</h1>
         <p className="text-center text-lg lg:text-left">{title}</p>
-        <Link href="/search" prefetch={false} aria-label="Search products">
-          <Button size="lg" role="link" className="transition-transform hover:scale-105">
-            Shop now
-          </Button>
-        </Link>
+        <div className="flex items-center gap-2">
+          <Link href="/search" prefetch={false} aria-label="Search products">
+            <Button size="lg" role="link" className="transition-all hover:bg-black/80 active:scale-[0.98]">
+              Shop now
+            </Button>
+          </Link>
+          <Link href="/ai/search" prefetch={false} aria-label="Search products with AI">
+            <Button variant="outline" size="lg" role="link" className="transition-all hover:bg-gray-100 active:scale-[0.98]">
+              Browse with AI
+            </Button>
+          </Link>
+        </div>
       </div>
     </div>
   )

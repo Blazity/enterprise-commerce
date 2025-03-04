@@ -9,6 +9,7 @@ interface FacetProps {
   distribution: Record<string, number> | undefined
   isChecked: (value: string) => boolean
   onCheckedChange: (checked: boolean, value: string) => void
+  onClick?: () => void
 }
 
 export function RatingFacet({ id, title, distribution, isChecked, onCheckedChange }: FacetProps) {
@@ -21,7 +22,7 @@ export function RatingFacet({ id, title, distribution, isChecked, onCheckedChang
       <AccordionTrigger className="py-2 text-base">{title}</AccordionTrigger>
       <AccordionContent>
         {hasNoResults ? (
-          <p className="text-[14px] text-neutral-500">No {title.toLowerCase()} found</p>
+          <p className="text-sm text-neutral-500">No {title.toLowerCase()} found</p>
         ) : (
           <div className="grid gap-2">
             {distributionsEntries.map(([value], index) => (

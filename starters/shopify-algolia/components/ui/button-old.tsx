@@ -3,7 +3,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 import * as React from "react"
 import { cn } from "utils/cn"
 
-const buttonVariants = cva("inline-flex border border-black rounded-md text-center overflow-hidden group relative disabled:opacity-70 disabled:cursor-not-allowed", {
+const buttonVariants = cva("inline-flex border border-gray-300 rounded-md text-center overflow-hidden group relative disabled:opacity-70 disabled:cursor-not-allowed", {
   variants: {
     variant: {
       primary: "hover:text-white text-black bg-white",
@@ -24,20 +24,20 @@ const buttonVariants = cva("inline-flex border border-black rounded-md text-cent
   },
 })
 
-const overlayVariants = cva("absolute inset-0 w-0 transition-all duration-[250ms] ease-out group-hover:w-full", {
-  variants: {
-    variant: {
-      primary: "bg-black text-white",
-      secondary: "bg-white text-black",
-      ghost: "bg-white text-black",
-      outline: "bg-white text-black",
-    },
-    size: {},
-  },
-  defaultVariants: {
-    variant: "primary",
-  },
-})
+// const overlayVariants = cva("absolute inset-0 w-0 transition-all duration-[250ms] ease-out group-hover:w-full", {
+//   variants: {
+//     variant: {
+//       primary: "",
+//       secondary: "",
+//       ghost: "bg-white text-black",
+//       outline: "bg-white text-black",
+//     },
+//     size: {},
+//   },
+//   defaultVariants: {
+//     variant: "primary",
+//   },
+// })
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
   asChild?: boolean
@@ -49,8 +49,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(({ className, va
   const Comp = asChild ? Slot : "button"
 
   return (
-    <Comp className={cn(buttonVariants({ variant, size, className }))} ref={ref} {...props}>
-      {isAnimated ? <div className={cn(overlayVariants({ variant }))} /> : null}
+    <Comp className={cn("duration-[250ms] text-primary transition-colors hover:text-primary", buttonVariants({ variant, size, className }))} ref={ref} {...props}>
+      {/* {isAnimated ? <div className={cn(overlayVariants({ variant }))} /> : null} */}
       <span className="relative">{children}</span>
       {isLoading ? (
         <div className="absolute right-4 top-0 flex h-full items-center justify-center">

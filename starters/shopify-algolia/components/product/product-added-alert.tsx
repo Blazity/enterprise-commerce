@@ -15,8 +15,8 @@ export function ProductAddedAlert({ className }: { className?: string }) {
   const combination = useAddProductStore((s) => s.combination)
   const openCart = useCartStore((s) => s.openCart)
   const preloadSheet = useCartStore((s) => s.preloadSheet)
-  const cart = useCartStore((s) => s.cart)
   const checkoutReady = useCartStore((s) => s.checkoutReady)
+  const cart = useCartStore((s) => s.cart)
 
   if (!product || !combination || !cart?.checkoutUrl) return null
 

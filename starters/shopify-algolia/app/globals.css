@@ -59,3 +59,33 @@
     @apply bg-background font-sans text-foreground antialiased;
   }
 }
+
+.fade-out-mask {
+  background: linear-gradient(to bottom, rgba(249, 250, 251, 0.95) 0%, rgba(249, 250, 251, 0) 10%, rgba(249, 250, 251, 0) 90%, rgba(249, 250, 251, 0.95) 100%);
+}
+
+.ai-chat-fade-out-mask {
+  background: linear-gradient(
+    to bottom,
+    rgba(250, 250, 250, 1) 0%,
+    rgba(250, 250, 250, 0.8) 1%,
+    rgba(250, 250, 250, 0.6) 2%,
+    rgba(250, 250, 250, 0.4) 3%,
+    rgba(250, 250, 250, 0.2) 4%,
+    rgba(250, 250, 250, 0.1) 5%,
+    rgba(250, 250, 250, 0) 6%,
+    rgba(250, 250, 250, 0) 94%,
+    rgba(250, 250, 250, 0.1) 95%,
+    rgba(250, 250, 250, 0.2) 96%,
+    rgba(250, 250, 250, 0.4) 97%,
+    rgba(250, 250, 250, 0.6) 98%,
+    rgba(250, 250, 250, 0.8) 99%,
+    rgba(250, 250, 250, 1) 100%
+  );
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

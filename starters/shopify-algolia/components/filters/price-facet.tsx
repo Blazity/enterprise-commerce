@@ -66,15 +66,30 @@ export const PriceFacet = ({ minPrice, maxPrice, setFacet }: PriceFacetProps) =>
   }
 
   return (
-    <div className="flex flex-col gap-1">
-      <div className="flex gap-4 lg:flex-col">
+    <div className="flex flex-col gap-1 py-1">
+      <div className="flex gap-2 lg:flex-col">
         <PriceInput id="min-price" label="Min price" value={minInput ?? ""} onChange={(e) => handlePriceChange(e, "min")} onKeyDown={handleKeyDown} />
 
         <PriceInput id="max-price" label="Max price" value={maxInput ?? ""} onChange={(e) => handlePriceChange(e, "max")} onKeyDown={handleKeyDown} />
       </div>
-      <Button className="ml-auto mt-2" onClick={applyPrices}>
-        Apply
-      </Button>
+      <div className="flex gap-2 pt-2">
+        <Button
+          className="w-full border-none bg-gray-50 text-xs font-medium hover:underline"
+          onClick={() => {
+            setMinInput(null)
+            setMaxInput(null)
+            setFacet({
+              minPrice: null,
+              maxPrice: null,
+            })
+          }}
+        >
+          Reset
+        </Button>
+        <Button className="w-full border-none bg-gray-200 text-xs  font-medium hover:bg-gray-300" onClick={applyPrices}>
+          Apply
+        </Button>
+      </div>
     </div>
   )
 }
@@ -91,9 +106,10 @@ function PriceInput({ value, onChange, label, ...rest }: PriceInputProps) {
       {label}
       <Input
         placeholder="10.0"
-        className="block h-auto w-full rounded-md border border-neutral-300 bg-neutral-100 px-2.5 py-1.5 text-[14px] text-black focus:border-blue-500 focus:ring-blue-500"
+        className="block h-auto w-full rounded-md border border-neutral-300 bg-white px-2.5 py-1.5 text-[14px] text-black focus:border-primary focus:ring-primary"
         type="number"
         value={value}
+        inputMode="numeric"
         onChange={onChange}
         {...rest}
       />
