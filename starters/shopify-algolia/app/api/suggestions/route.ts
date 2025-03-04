@@ -1,5 +1,5 @@
 import { openai } from "@ai-sdk/openai"
-import { type Message, convertToCoreMessages, streamText, StreamData, streamObject } from "ai"
+import { convertToCoreMessages, type Message, StreamData, streamObject, streamText } from "ai"
 import { generateUUID } from "utils/generate-uuid"
 import { z } from "zod"
 

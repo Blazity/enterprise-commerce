@@ -14,10 +14,10 @@ export function ProductAddedAlert({ className }: { className?: string }) {
   const { product, combination } = useAddProductStore()
   const { openCart, preloadSheet, cart, checkoutReady } = useCartStore()
 
-  if (!product || !combination) return null
+  if (!product || !combination || !cart?.checkoutUrl) return null
 
   return (
-    <Alert className={cn("border-input absolute right-0 top-[5.5rem] z-50 w-full min-w-[220px] border bg-white transition-all md:top-[4.5rem] md:min-w-[350px]", className)}>
+    <Alert className={cn("absolute right-0 top-[5.5rem] z-50 w-full min-w-[220px] border border-input bg-white transition-all md:top-[4.5rem] md:min-w-[350px]", className)}>
       <AlertTitle>Product has been added to the cart!</AlertTitle>
       <AlertDescription className="mt-6 flex flex-col">
         <div className="mb-6 flex items-center justify-between gap-2">
@@ -44,7 +44,7 @@ export function ProductAddedAlert({ className }: { className?: string }) {
           <Button onMouseEnter={preloadSheet} onClick={openCart} variant="outline" className="bg-white transition-all hover:scale-105">
             View cart
           </Button>
-          <Button variant="default" onClick={() => router.push(cart?.checkoutUrl!)} className="rounded-md px-10 py-4 transition-all hover:scale-105" disabled={!checkoutReady}>
+          <Button variant="default" onClick={() => router.push(cart?.checkoutUrl)} className="rounded-md px-10 py-4 transition-all hover:scale-105" disabled={!checkoutReady}>
             Checkout
           </Button>
         </div>

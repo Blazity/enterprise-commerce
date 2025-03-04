@@ -1,5 +1,5 @@
 import { openai } from "@ai-sdk/openai"
-import { type Message, convertToCoreMessages, streamText } from "ai"
+import { convertToCoreMessages, type Message, streamText } from "ai"
 import { systemPrompt } from "lib/ai/prompts"
 import { type AllowedTools, tools } from "lib/ai/tools"
 import { getCategories } from "lib/algolia"

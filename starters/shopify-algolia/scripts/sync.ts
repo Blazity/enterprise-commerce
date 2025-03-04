@@ -8,7 +8,7 @@ import { searchClient } from "../lib/algolia/client"
 import { env } from "../env.mjs"
 import { isOptIn } from "utils/opt-in"
 import { reviewsClient } from "lib/reviews/client"
-import { ProductEnrichmentBuilder, buildCategoryMap } from "utils/enrich-product"
+import { buildCategoryMap, ProductEnrichmentBuilder } from "utils/enrich-product"
 
 async function sync() {
   console.log("🚀 Starting sync process...")

@@ -107,13 +107,13 @@ export function AiCommerceSidebar() {
           <SidebarMenuItem>
             <SidebarMenuButton
               asChild
-              className="duration-[200ms] w-full cursor-pointer select-none justify-start bg-gray-100 font-medium text-sidebar-foreground transition-all hover:bg-gray-200 hover:text-secondary-foreground active:scale-[0.98] active:bg-gray-200"
+              className="duration-200 w-full cursor-pointer select-none justify-start bg-gray-100 font-medium text-sidebar-foreground transition-all hover:bg-gray-200 hover:text-secondary-foreground active:scale-[0.98] active:bg-gray-200"
               onClick={() => openCart()}
               onMouseEnter={preloadSheet}
               onTouchStart={preloadSheet}
             >
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.25, delay: 0.22 }}>
-                <ShoppingCart className="mr-1 h-4 w-4" />
+                <ShoppingCart className="mr-1 size-4" />
                 <span>View Cart</span>
               </motion.div>
             </SidebarMenuButton>
@@ -121,10 +121,10 @@ export function AiCommerceSidebar() {
           <SidebarMenuItem>
             <SidebarMenuButton
               asChild
-              className="duration-[200ms] w-full cursor-pointer select-none justify-start bg-gray-100 font-medium text-sidebar-foreground transition-all hover:bg-gray-200 hover:text-secondary-foreground active:scale-[0.98] active:bg-gray-200"
+              className="duration-200 w-full cursor-pointer select-none justify-start bg-gray-100 font-medium text-sidebar-foreground transition-all hover:bg-gray-200 hover:text-secondary-foreground active:scale-[0.98] active:bg-gray-200"
             >
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.25, delay: 0.25 }}>
-                <ShoppingBag className="mr-1 h-4 w-4" />
+                <ShoppingBag className="mr-1 size-4" />
                 <span>Checkout</span>
               </motion.div>
             </SidebarMenuButton>

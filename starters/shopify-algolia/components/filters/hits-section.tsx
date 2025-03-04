@@ -24,7 +24,7 @@ export function HitsSection({ hits, basePath }: HitsSectionProps) {
         <p className="font-medium text-gray-400">Explore our full collection to find what you’re looking for</p>
         <Link
           href={isAiPath ? "/ai/search" : "/search"}
-          className="duration-[200ms] mt-3 rounded-md bg-black px-4 py-1.5 text-sm font-medium text-white transition-colors hover:bg-black/85"
+          className="duration-200 mt-3 rounded-md bg-black px-4 py-1.5 text-sm font-medium text-white transition-colors hover:bg-black/85"
         >
           See all products
         </Link>

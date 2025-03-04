@@ -1,4 +1,4 @@
-import { FilterBuilder, ComparisonOperators, LogicalOperators } from "./filter-builder"
+import { ComparisonOperators, FilterBuilder, LogicalOperators } from "./filter-builder"
 
 describe("FilterBuilder", () => {
   let builder: FilterBuilder

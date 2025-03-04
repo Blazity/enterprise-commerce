@@ -11,7 +11,7 @@ import { getHighlightedText } from "utils/highlighted-text"
 import { Input } from "components/ui/input"
 import { Button } from "components/ui/button-old"
 import { Spinner } from "components/spinner"
-import { Dialog, DialogTitle, DialogClose, DialogContent, DialogHeader } from "components/ui/dialog"
+import { Dialog, DialogClose, DialogContent, DialogHeader, DialogTitle } from "components/ui/dialog"
 import { ProductCard } from "components/product-card"
 
 export function SearchModal() {

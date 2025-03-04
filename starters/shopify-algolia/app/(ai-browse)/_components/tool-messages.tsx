@@ -1,6 +1,6 @@
 import type { Message } from "ai"
 import { AllowedTools } from "lib/ai/tools"
-import { ProductResultsList, CategoriesResultsList } from "./results"
+import { CategoriesResultsList, ProductResultsList } from "./results"
 
 export const ToolsUI = ({ message }: { message: Message }) => {
   if (!message?.toolInvocations || message?.toolInvocations?.length < 0) {

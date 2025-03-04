@@ -2,7 +2,7 @@ export function getBucket(buckets: readonly string[]) {
   // Get a random number between 0 and 1
   let n = cryptoRandom() * 100
   // Get the percentage of each bucket
-  let percentage = 100 / buckets.length
+  const percentage = 100 / buckets.length
   // Loop through the buckets and see if the random number falls
   // within the range of the bucket
   return (

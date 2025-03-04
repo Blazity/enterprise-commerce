@@ -40,7 +40,7 @@ export function hasValidOption(variants: PlatformVariant[] | null | undefined, o
 }
 
 export function createOptionfulUrl(originalUrl: string, color: string | null | undefined) {
-  let urlWithoutParams = removeOptionsFromUrl(originalUrl)
+  const urlWithoutParams = removeOptionsFromUrl(originalUrl)
 
   const newColorParam = color ? `-color_${color}` : ""
 

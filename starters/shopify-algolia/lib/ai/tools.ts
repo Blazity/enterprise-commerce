@@ -1,4 +1,4 @@
-import { tool as createTool, type CoreTool } from "ai"
+import { type CoreTool, tool as createTool } from "ai"
 import { HIERARCHICAL_SEPARATOR } from "constants/index"
 import { env } from "env.mjs"
 import { searchProducts as algoliaSearchProducts, getCategories, getFacetValues } from "lib/algolia"

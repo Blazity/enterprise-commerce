@@ -7,7 +7,7 @@ export const AiSearchView = () => {
   const { messages } = useAiCommerce()
 
   return (
-    <div className="flex-grow p-4">
+    <div className="grow p-4">
       <h1 className="mb-4 text-2xl font-bold text-foreground">AI-Assisted Shopping</h1>
       <p className="mb-4 text-foreground/80">
         Use the chat interface to interact with our AI shopping assistant. You can ask for product recommendations, compare items, or get help with your purchase.
