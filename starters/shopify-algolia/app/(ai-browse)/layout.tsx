@@ -23,48 +23,47 @@ export default function AiSearchLayout({ children }: { children: React.ReactNode
   return (
     <html lang="en">
       <body>
-      <NuqsAdapter>
+        <NuqsAdapter>
+          <Script id="mobileMegaMenuLogic" strategy="lazyOnload">
+            {`${mobileInlineScript}`}
+          </Script>
 
-        <Script id="mobileMegaMenuLogic" strategy="lazyOnload">
-          {`${mobileInlineScript}`}
-        </Script>
-
-        <AiCommerceProvider>
-          <SidebarProvider
-            style={
-              {
-                "--sidebar-width": "20rem",
-                "--sidebar-width-mobile": "20rem",
-              } as React.CSSProperties
-            }
-          >
-            <Suspense>
-              <AiCommerceSidebar />
-            </Suspense>
-            <SidebarInset>
-              <NavigationBar items={navigationItems} />
-              {children}
-
-              <Footer />
-              <Modals />
-
-              <CartView />
-
-              <Toaster position="bottom-left" />
-
-              <DraftToolbar />
-
-              <Suspense>
-                <FlagValues />
+          <AiCommerceProvider>
+            <SidebarProvider
+              style={
+                {
+                  "--sidebar-width": "20rem",
+                  "--sidebar-width-mobile": "20rem",
+                } as React.CSSProperties
+              }
+            >
+              <Suspense fallback={null}>
+                <AiCommerceSidebar />
               </Suspense>
+              <SidebarInset>
+                <NavigationBar items={navigationItems} />
+                {children}
 
-              <ThirdParties />
+                <Footer />
+                <Modals />
 
-              <GithubBadge />
-              <DemoModeAlert />
-            </SidebarInset>
-          </SidebarProvider>
-        </AiCommerceProvider>
+                <CartView />
+
+                <Toaster position="bottom-left" />
+
+                <DraftToolbar />
+
+                <Suspense>
+                  <FlagValues />
+                </Suspense>
+
+                <ThirdParties />
+
+                <GithubBadge />
+                <DemoModeAlert />
+              </SidebarInset>
+            </SidebarProvider>
+          </AiCommerceProvider>
         </NuqsAdapter>
       </body>
     </html>

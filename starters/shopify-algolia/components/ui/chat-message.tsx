@@ -100,7 +100,7 @@ const NavigationToolResult = ({ animation, result }) => {
   const router = useRouter()
   useEffect(() => {
     router.push(result)
-  }, [])
+  }, [result, router])
 
   return (
     <div className={cn("flex flex-col", "items-start")}>

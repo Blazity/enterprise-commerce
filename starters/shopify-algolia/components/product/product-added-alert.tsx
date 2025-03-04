@@ -18,7 +18,7 @@ export function ProductAddedAlert({ className }: { className?: string }) {
   const cart = useCartStore((s) => s.cart)
   const checkoutReady = useCartStore((s) => s.checkoutReady)
 
-  if (!product || !combination) return null
+  if (!product || !combination || !cart?.checkoutUrl) return null
 
   return (
     <Alert className={cn("absolute right-0 top-[5.5rem] z-50 w-full min-w-[220px] border border-input bg-white transition-all md:top-[4.5rem] md:min-w-[350px]", className)}>
@@ -48,7 +48,7 @@ export function ProductAddedAlert({ className }: { className?: string }) {
           <Button onMouseEnter={preloadSheet} onClick={openCart} variant="outline" className="bg-white transition-all hover:scale-105">
             View cart
           </Button>
-          <Button variant="default" onClick={() => router.push(cart?.checkoutUrl!)} className="rounded-md px-10 py-4 transition-all hover:scale-105" disabled={!checkoutReady}>
+          <Button variant="default" onClick={() => router.push(cart.checkoutUrl)} className="rounded-md px-10 py-4 transition-all hover:scale-105" disabled={!checkoutReady}>
             Checkout
           </Button>
         </div>

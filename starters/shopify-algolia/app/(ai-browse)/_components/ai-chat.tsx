@@ -41,13 +41,13 @@ export function AiCommerceSidebar() {
         <SidebarMenu className="mt-4">
           <SidebarMenuItem>
             <SidebarMenuButton className="w-full justify-start text-sidebar-foreground transition-all hover:scale-105 hover:bg-sidebar-accent hover:text-secondary-foreground">
-              <ShoppingCart className="mr-2 h-4 w-4" />
+              <ShoppingCart className="mr-2 size-4" />
               <span>View Cart</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
             <SidebarMenuButton className="w-full justify-start text-sidebar-foreground transition-all hover:scale-105 hover:bg-secondary hover:text-secondary-foreground">
-              <ShoppingBag className="mr-2 h-4 w-4" />
+              <ShoppingBag className="mr-2 size-4" />
               <span>Checkout</span>
             </SidebarMenuButton>
           </SidebarMenuItem>

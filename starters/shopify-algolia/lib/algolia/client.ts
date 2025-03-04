@@ -1,14 +1,14 @@
 import {
-  type BatchProps,
   algoliasearch,
+  type BatchProps,
   type BrowseProps,
   type DeleteObjectsOptions,
   type GetRecommendationsParams,
   type PartialUpdateObjectsOptions,
+  type SearchForFacetValuesProps,
   type SearchMethodParams,
   type SearchResponse,
   type SearchSingleIndexProps,
-  SearchForFacetValuesProps,
 } from "algoliasearch"
 
 import { env } from "env.mjs"

@@ -3,8 +3,7 @@
 import type { ChatRequestOptions, CreateMessage, Message } from "ai"
 import { useChat, experimental_useObject as useObject } from "ai/react"
 import { createApplicationContext } from "lib/ai/utils"
-import { mapQueryParamsToAlgoliaFacets } from "lib/algolia/utils"
-import { usePathname, useSearchParams } from "next/navigation"
+import { usePathname } from "next/navigation"
 import { createContext, type ReactNode, useContext, useMemo } from "react"
 import { useAppContextStore } from "stores/app-context-store"
 import { z } from "zod"
@@ -36,10 +35,10 @@ interface AiCommerceProviderProps {
 
 export function AiCommerceProvider({ children }: AiCommerceProviderProps) {
   const pathname = usePathname()
-  // @TODO
-  // normalize search params so that only facet params are included (no tracking bs)
-  // sanitize contexts so that only relevant fields are included to decrease token usage
-  const searchParams = useSearchParams()
+  // // @TODO
+  // // normalize search params so that only facet params are included (no tracking bs)
+  // // sanitize contexts so that only relevant fields are included to decrease token usage
+  // const searchParams = useSearchParams()
   const productsContext = useAppContextStore((s) => s.productsContext)
   const categoriesContext = useAppContextStore((s) => s.categoriesContext)
   const filtersContext = useAppContextStore((s) => s.filtersContext)
@@ -58,12 +57,12 @@ export function AiCommerceProvider({ children }: AiCommerceProviderProps) {
           categories: categoriesContext,
           filters: filtersContext,
         },
-        searchParams,
+        searchParams: null,
       }),
       productsContext,
       categoriesContext,
       filtersContext,
-      appliedFilters: mapQueryParamsToAlgoliaFacets(searchParams),
+      appliedFilters: [],
     },
   })
 

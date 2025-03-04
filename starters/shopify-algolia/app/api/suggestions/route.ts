@@ -1,23 +1,23 @@
-import { openai } from "@ai-sdk/openai";
-import { type Message, convertToCoreMessages, streamObject } from "ai";
-import { z } from "zod";
+import { openai } from "@ai-sdk/openai"
+import { convertToCoreMessages, type Message, streamObject } from "ai"
+import { z } from "zod"
 
-export const maxDuration = 30;
+export const maxDuration = 30
 
 export async function POST(request: Request) {
-	const messages = (await request.json()) as Message[];
-	const coreMessages = convertToCoreMessages(messages);
+  const messages = (await request.json()) as Message[]
+  const coreMessages = convertToCoreMessages(messages)
 
-	const result = streamObject({
-		model: openai("gpt-4-turbo"),
-		output: "array",
-		schema: z.string(),
-		prompt: `${prompt}, here's the current conversation context:
+  const result = streamObject({
+    model: openai("gpt-4-turbo"),
+    output: "array",
+    schema: z.string(),
+    prompt: `${prompt}, here's the current conversation context:
 ${coreMessages.map((m) => m.content).join("\n")}
 Please provide a list of suggestions for the user to explore products.`,
-	});
+  })
 
-	return result.toTextStreamResponse();
+  return result.toTextStreamResponse()
 }
 
 const prompt = `
@@ -53,4 +53,4 @@ This is list of available filters:
   - customer-reviews - most reviews to least reviews
   - newest
   - oldest
-`;
+`

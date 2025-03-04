@@ -5,9 +5,9 @@ export function TypingIndicator() {
     <div className="justify-left flex space-x-1">
       <div className="rounded-lg bg-muted p-3">
         <div className="flex -space-x-2.5">
-          <Dot className="animate-typing-dot-bounce h-5 w-5" />
-          <Dot className="animate-typing-dot-bounce h-5 w-5 [animation-delay:90ms]" />
-          <Dot className="animate-typing-dot-bounce h-5 w-5 [animation-delay:180ms]" />
+          <Dot className="size-5 animate-typing-dot-bounce" />
+          <Dot className="size-5 animate-typing-dot-bounce [animation-delay:90ms]" />
+          <Dot className="size-5 animate-typing-dot-bounce [animation-delay:180ms]" />
         </div>
       </div>
     </div>

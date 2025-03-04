@@ -3,7 +3,7 @@ import type { ReadonlyURLSearchParams } from "next/navigation"
 export function mapQueryParamsToAlgoliaFacets(queryParams: URLSearchParams | ReadonlyURLSearchParams) {
   const facets: Record<string, string[]> = {}
 
-  queryParams.entries().forEach(([key, value]) => {
+  Object.entries(queryParams).forEach(([key, value]) => {
     console.log({ key, value })
     const facetName = mapQueryParamKeyToFacet(key)
     if (!facets[facetName]) {

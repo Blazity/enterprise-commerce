@@ -38,7 +38,7 @@ type CreateContextArgs = {
     categories: string
     filters: string
   }
-  searchParams: ReadonlyURLSearchParams
+  searchParams: ReadonlyURLSearchParams | null
 }
 
 export function createApplicationContext({ pathname, appContext, searchParams }: CreateContextArgs) {
@@ -58,8 +58,8 @@ export function createApplicationContext({ pathname, appContext, searchParams }:
       if (!!appContext.filters.length) {
         context += `Available filters that the user can apply: ${appContext.filters}\n`
       }
-      if (searchParams.toString().length > 0) {
-        context += `Search parameters that are currently applied: ${searchParams.toString()}`
+      if (searchParams && searchParams.toString().length > 0) {
+        context += `Search parameters that are currently applied: ${searchParams?.toString()}`
       }
 
       return context
