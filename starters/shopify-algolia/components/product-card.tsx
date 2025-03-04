@@ -68,7 +68,7 @@ export const ProductCard = ({
           </div>
         </div>
 
-        {!!variantPrice && (
+        {!!variantPrice && !!minPrice && (
           <div className="mt-auto flex flex-col pt-10">
             {noOfVariants > 0 && (
               <p className={cn("text-sm text-gray-500", highlighted && "md:text-base")}>

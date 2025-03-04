@@ -47,7 +47,7 @@ type Animation = VariantProps<typeof chatBubbleVariants>["animation"]
 
 export interface Message {
   id: string
-  role: "user" | "assistant"
+  role: "user" | "assistant" | "system" | "data"
   content: string
   createdAt?: Date
   attachments?: File[]

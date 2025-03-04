@@ -11,7 +11,7 @@ import { getHighlightedText } from "utils/highlighted-text"
 import { Input } from "components/ui/input"
 import { Button } from "components/ui/button-old"
 import { Spinner } from "components/spinner"
-import { Dialog, DialogClose, DialogContent, DialogHeader } from "components/ui/dialog"
+import { Dialog, DialogClose, DialogContent, DialogHeader, DialogTitle } from "components/ui/dialog"
 import { ProductCard } from "components/product-card"
 
 export function SearchModal() {
@@ -39,16 +39,18 @@ export function SearchModal() {
       <DialogContent className="size-full content-start overflow-auto bg-white p-0 sm:max-w-[425px]">
         <DialogHeader className="bg-neutral-100">
           <div className="flex w-full flex-row items-center justify-between gap-4 px-8">
-            <Input
-              className="text-md my-4 block w-full border-0 bg-transparent px-2.5 py-3.5 font-normal text-black"
-              placeholder="Search"
-              type="search"
-              name="search"
-              onChange={onChange}
-              onKeyDown={onKeyDown}
-              autoFocus
-            />
-            <DialogClose className="ring-offset-background focus:ring-ring bg-transparent transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:pointer-events-none">
+            <DialogTitle>
+              <Input
+                className="text-md my-4 block w-full border-0 bg-transparent px-2.5 py-3.5 font-normal text-black"
+                placeholder="Search"
+                type="search"
+                name="search"
+                onChange={onChange}
+                onKeyDown={onKeyDown}
+                autoFocus
+              />
+            </DialogTitle>
+            <DialogClose className="bg-transparent ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none">
               <span className="font-bold tracking-tight text-neutral-800">Close</span>
               <span className="sr-only">Close</span>
             </DialogClose>
@@ -79,18 +81,21 @@ interface ResultsProps {
 
 function Results({ results, query, status, closeModal }: ResultsProps) {
   switch (status) {
-    case "idle":
+    case "idle": {
+      const SEARCH_TERMS = ["Black Shoes", "Makeup", "Laptop", "Smartphone"]
       return (
         <div className="flex flex-col gap-2">
           <p className="text-[18px] text-neutral-400">Popular search terms</p>
           <ul className="flex flex-col gap-1 text-[20px]">
-            <li>Black Shoes</li>
-            <li>Makeup</li>
-            <li>Laptop</li>
-            <li>Smartphone</li>
+            {SEARCH_TERMS.map((term) => (
+              <li key={term}>
+                <Link href={`/search?q=${term}`}>{term}</Link>
+              </li>
+            ))}
           </ul>
         </div>
       )
+    }
     case "loading":
       return (
         <div className="flex w-full items-center justify-center">
