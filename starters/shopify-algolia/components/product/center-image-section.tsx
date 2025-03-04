@@ -13,12 +13,12 @@ type CenterSectionProps = {
 export const CenterSection = ({ className, images, setApi }: CenterSectionProps) => {
   const hasOnlyOneImage = images.length <= 1
   return (
-    <div className={cn("flex flex-col", className)}>
+    <div className={cn("flex flex-col rounded-t-lg", className)}>
       <div className="md:sticky md:top-[100px]">
-        <Carousel setApi={setApi}>
-          <CarouselContent>
+        <Carousel className="[&>div]:rounded-lg" setApi={setApi}>
+          <CarouselContent className={cn("rounded-lg", hasOnlyOneImage ? "ml-0" : "")}>
             {images.map((image, index) => (
-              <CarouselItem className="relative aspect-square" key={image.url}>
+              <CarouselItem className={cn("relative aspect-square rounded-lg", hasOnlyOneImage && "pl-0")} key={image.url}>
                 <Image alt={image.altText || ""} src={image.url || "/default-product-image.svg"} fill priority={index === 0} sizes="(max-width: 450px) 300px, 480px" />
               </CarouselItem>
             ))}

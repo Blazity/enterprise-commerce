@@ -29,8 +29,8 @@ export const ReviewsSection = async ({ productId, productHandle, summary, avgRat
 
   if (reviews?.length <= 0) {
     return (
-      <section className={cn("relative left-1/2 w-screen -translate-x-1/2 bg-gray-50 py-12 md:my-10", className)}>
-        <div className="container mx-auto max-w-5xl px-4 md:px-6">
+      <section className={cn("rounded-lg py-12 md:my-10", className)}>
+        <div className="container mx-auto max-w-5xl px-4 md:px-6 xl:px-0">
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
             <h2 className="text-xl font-semibold sm:text-2xl">Have this product? Help others by sharing your experience</h2>
             <ReviewButton productId={productId} />
@@ -41,7 +41,7 @@ export const ReviewsSection = async ({ productId, productHandle, summary, avgRat
   }
 
   return (
-    <section className={cn("relative left-1/2 w-screen -translate-x-1/2 bg-gray-50 py-12 md:my-10", className)}>
+    <section className={cn("py-12 md:my-10", className)}>
       <div className="container mx-auto max-w-5xl px-6 xl:pl-0">
         <div className="space-y-4">
           <div className="mb-10 flex flex-col items-center justify-between gap-4 md:flex-row">

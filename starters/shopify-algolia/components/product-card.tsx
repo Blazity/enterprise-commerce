@@ -10,6 +10,7 @@ interface ProductCardProps extends Pick<CommerceProduct, "variants" | "handle" |
   prefetch?: boolean
   className?: string
   href?: string
+  highlighted?: boolean
 }
 
 export const ProductCard = ({
@@ -25,6 +26,7 @@ export const ProductCard = ({
   vendor,
   prefetch = false,
   href = "",
+  highlighted = false,
 }: ProductCardProps) => {
   const noOfVariants = variants?.length
   const path = href || `/product/${handle}`
@@ -32,43 +34,55 @@ export const ProductCard = ({
   const variantPrice = variants?.find(Boolean)?.price
 
   return (
-    <Link className={cn("group flex h-full w-full flex-col overflow-hidden", className)} aria-label={linkAria} href={path} prefetch={prefetch}>
+    <Link className={cn("group flex h-full w-full flex-col overflow-hidden rounded-lg", className)} aria-label={linkAria} href={path} prefetch={prefetch}>
       <div className="relative aspect-square overflow-hidden">
         <Image
           priority={priority}
-          className="object-cover transition-transform group-hover:scale-105"
           src={featuredImage?.url || "/default-product-image.svg"}
           alt={featuredImage?.altText || title}
           fill
+          className="object-cover transition-transform duration-300 ease-out group-hover:scale-[1.03]"
         />
       </div>
-      <div className="flex shrink-0 grow flex-col py-4">
+      <div className="bg-size-200 bg-pos-0 hover:bg-pos-100 duration-[200ms] flex shrink-0 grow flex-col text-pretty bg-gradient-to-b from-transparent to-primary/5 p-4 transition-all">
         {/* remove first word from the title as it includes vendor (this just needs feed update and then can be removed) */}
-        <h3 className="line-clamp-2 text-lg font-semibold transition-colors">{title.split(" ").slice(1).join(" ")}</h3>
-        <div className="flex flex-col gap-1">
-          {!!variantPrice && <span>From {mapCurrencyToSign((variantPrice.currencyCode as CurrencyType) || "USD") + minPrice.toFixed(2)}</span>}
+        <h3 className={cn("line-clamp-2 text-lg font-semibold transition-colors data-[featured]:text-2xl", highlighted && "md:text-2xl")}>{title.split(" ").slice(1).join(" ")}</h3>
+        <div className="flex flex-col pt-1">
+          {!!vendor && <p className={cn("text-sm text-gray-500", highlighted && "md:text-base")}>{vendor}</p>}
 
-          {!!vendor && <p className="text-sm text-gray-500">{vendor}</p>}
-          <div className="mt-1 flex flex-wrap items-center gap-1">
+          <div className="flex flex-wrap items-center gap-1">
             {!!avgRating && !!totalReviews && (
               <>
                 <div className="flex items-center space-x-1">
-                  <StarIcon className="size-4 fill-gray-400 stroke-gray-500" />
-                  <span className="text-sm">{avgRating.toFixed(2)}</span>
-                  <span className="text-xs">
-                    ({totalReviews} review{totalReviews !== 1 && "s"})
-                  </span>
+                  <StarIcon className="size-3.5 fill-gray-800/95 stroke-gray-800/95" />
+
+                  <div className="flex items-center gap-0.5 text-sm font-medium">
+                    <div>{avgRating.toFixed(2)}</div>
+                    <span className="text-xs text-gray-500">
+                      ({totalReviews} review{totalReviews !== 1 && "s"})
+                    </span>
+                  </div>
                 </div>
-                •
               </>
-            )}
-            {noOfVariants > 0 && (
-              <p className="text-sm text-gray-500">
-                {noOfVariants} variant{noOfVariants > 1 ? "s" : ""}
-              </p>
             )}
           </div>
         </div>
+
+        {!!variantPrice && !!minPrice && (
+          <div className="mt-auto flex flex-col pt-10">
+            {noOfVariants > 0 && (
+              <p className={cn("text-sm text-gray-500", highlighted && "md:text-base")}>
+                {noOfVariants} variant{noOfVariants > 1 ? "s" : ""}
+              </p>
+            )}
+            <div className={cn("flex w-full items-baseline justify-between text-sm", highlighted && "md:text-base")}>
+              <span className="text-primary/50">From</span>
+              <span className={cn("text-base font-semibold md:text-lg", highlighted && "md:text-2xl")}>
+                {mapCurrencyToSign((variantPrice.currencyCode as CurrencyType) || "USD") + minPrice.toFixed(2)}
+              </span>
+            </div>
+          </div>
+        )}
       </div>
     </Link>
   )

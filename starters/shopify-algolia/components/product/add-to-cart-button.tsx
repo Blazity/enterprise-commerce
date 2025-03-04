@@ -74,7 +74,7 @@ export function AddToCartButton({ className, product, combination }: { className
       onClick={handleClick}
       disabled={isPending || disabled}
       variant="default"
-      className={cn("mx-auto w-full rounded-md p-10 py-4 transition-all hover:scale-105 md:w-full md:rounded-md md:py-4", className)}
+      className={cn("mx-auto w-full rounded-md p-10 py-4 transition-all hover:bg-black/85 md:w-full md:rounded-md md:py-4", className)}
     >
       <BagIcon className="mr-2 size-5 text-white" />
       Add to Bag

@@ -2,7 +2,6 @@
 
 import { Button } from "components/ui/button-old"
 import { Placeholder } from "components/generic-modal"
-import { FiltersIcon } from "components/icons/filters-icon"
 import dynamic from "next/dynamic"
 import { useModalStore } from "stores/modal-store"
 
@@ -17,18 +16,18 @@ interface FacetsMobileProps {
 }
 
 export function FacetsMobile({ className, facetDistribution, disabledFacets, independentFacetDistribution }: FacetsMobileProps) {
-  const closeModal = useModalStore((state) => state.closeModal)
-  const openModal = useModalStore((state) => state.openModal)
-  const modals = useModalStore((state) => state.modals)
+  const modals = useModalStore((s) => s.modals)
+  const openModal = useModalStore((s) => s.openModal)
+  const closeModal = useModalStore((s) => s.closeModal)
 
   return (
     <div className={className}>
-      <Button className="px-1 py-2 [&>span]:flex [&>span]:items-center [&>span]:gap-2" onClick={() => openModal("facets-mobile")}>
-        <FiltersIcon className="size-4" />
-        <span className="text-sm">Filters</span>
+      <Button className="border-none bg-transparent px-2 py-1.5 text-sm font-medium hover:bg-gray-100 hover:text-inherit" onClick={() => openModal("facets-mobile")}>
+        Filters
       </Button>
+
       {!!modals["facets-mobile"] && (
-        <GenericModal className="h-full overflow-auto" title="Filters" open={!!modals["facets-mobile"]} onOpenChange={() => closeModal("facets-mobile")}>
+        <GenericModal className="h-full overflow-auto rounded-md" title="Filters" open={!!modals["facets-mobile"]} onOpenChange={() => closeModal("facets-mobile")}>
           <FacetsContent independentFacetDistribution={independentFacetDistribution} facetDistribution={facetDistribution} disabledFacets={disabledFacets} />
         </GenericModal>
       )}

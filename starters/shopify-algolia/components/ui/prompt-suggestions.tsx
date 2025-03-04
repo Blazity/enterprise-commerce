@@ -8,7 +8,7 @@ type PromptSuggestionsProps = {
 
 export function PromptSuggestions({ children, className, ...rest }: PromptSuggestionsProps) {
   return (
-    <div className={cn("grid grid-cols-1 gap-2 text-sm", className)} {...rest}>
+    <div className={cn("flex flex-wrap gap-1 text-sm", className)} {...rest}>
       {children}
     </div>
   )
@@ -19,9 +19,9 @@ type PromptSuggestionProps = {
   value: string
 } & ButtonHTMLAttributes<HTMLButtonElement>
 
-export function PromptSuggestion({ children, className, ...rest }: PromptSuggestionProps) {
+export function PromptSuggestion({ children, value, className, ...rest }: PromptSuggestionProps) {
   return (
-    <Button className={cn("flex w-full whitespace-normal rounded-none p-6", className)} {...rest}>
+    <Button className={cn("flex-1 grow basis-1/3 rounded-xl p-4", className)} {...rest}>
       {children}
     </Button>
   )

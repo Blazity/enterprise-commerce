@@ -1,21 +1,16 @@
 "use client"
 
-import React, { useEffect } from "react"
-import type { Message as SDKMessage } from "ai"
+import React from "react"
 import { cva, type VariantProps } from "class-variance-authority"
 import { MarkdownRenderer } from "./markdown-renderer"
 import { cn } from "utils/cn"
-import Link from "next/link"
-import { useRouter } from "next/navigation"
+import { motion } from "motion/react"
 
 const chatBubbleVariants = cva("group/message relative break-words rounded-lg p-3 text-sm sm:max-w-[70%]", {
   variants: {
-    role: {
-      user: "bg-primary",
-      assistant: "bg-muted",
-      data: "",
-      system: "",
-      toolInvocation: "font-bold text-sm bg-orange-700 text-orange-100", // abstract, normally tool invocations are marked as assistant role
+    isUser: {
+      true: "bg-gray-200 text-black",
+      false: "bg-gray-400/70 text-black",
     },
     animation: {
       none: "",
@@ -26,22 +21,22 @@ const chatBubbleVariants = cva("group/message relative break-words rounded-lg p-
   },
   compoundVariants: [
     {
-      role: "user",
+      isUser: true,
       animation: "slide",
       class: "slide-in-from-right",
     },
     {
-      role: "assistant",
+      isUser: false,
       animation: "slide",
       class: "slide-in-from-left",
     },
     {
-      role: "user",
+      isUser: true,
       animation: "scale",
       class: "origin-bottom-right",
     },
     {
-      role: "assistant",
+      isUser: false,
       animation: "scale",
       class: "origin-bottom-left",
     },
@@ -50,65 +45,43 @@ const chatBubbleVariants = cva("group/message relative break-words rounded-lg p-
 
 type Animation = VariantProps<typeof chatBubbleVariants>["animation"]
 
-export interface Message extends SDKMessage {
+export interface Message {
   id: string
+  role: "user" | "assistant" | "system" | "data"
   content: string
   createdAt?: Date
+  attachments?: File[]
 }
 
 export interface ChatMessageProps extends Message {
   showTimeStamp?: boolean
   animation?: Animation
+  actions?: React.ReactNode
+  showToolMessages?: boolean
 }
 
-export const ChatMessage: React.FC<ChatMessageProps> = ({ role, content, createdAt, showTimeStamp = false, animation = "scale", toolInvocations }) => {
+export const ChatMessage: React.FC<ChatMessageProps> = ({ role, content, createdAt, showTimeStamp = false, animation = "scale", actions, showToolMessages }) => {
   const isUser = role === "user"
 
   const formattedTime = createdAt?.toLocaleTimeString("en-US", {
     hour: "2-digit",
     minute: "2-digit",
   })
-
-  if (!!toolInvocations?.length) {
-    return toolInvocations.map((toolInvocation) => {
-      const { toolName, toolCallId, state } = toolInvocation
-
-      if (state === "result") {
-        if (toolName === "buildNavigationQuery") {
-          const { result } = toolInvocation
-          return <NavigationToolResult key={toolCallId} result={result} animation={animation} />
-        }
-      }
-    })
-  }
-
   return (
-    <div className={cn("flex flex-col", isUser ? "items-end" : "items-start")}>
-      <div className={chatBubbleVariants({ role, animation })}>
-        <div className={isUser ? "text-primary-foreground" : "text-foreground"}>
+    <motion.div initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.2 }} className={cn("flex flex-col", isUser ? "items-end" : "items-start")}>
+      <div className={cn(chatBubbleVariants({ isUser }))}>
+        <div className="text-black/90">
           <MarkdownRenderer>{content}</MarkdownRenderer>
         </div>
+
+        {!!(role === "assistant" && actions && showToolMessages) && (
+          <div className="absolute -bottom-4 right-2 flex space-x-1 rounded-lg border p-1 opacity-0 transition-opacity group-hover/message:opacity-100">{actions}</div>
+        )}
       </div>
+
       {showTimeStamp && createdAt ? (
         <span className={cn("mt-1 block px-1 text-xs opacity-50", animation !== "none" && "duration-500 animate-in fade-in-0")}>{formattedTime}</span>
       ) : null}
-    </div>
-  )
-}
-
-const NavigationToolResult = ({ animation, result }) => {
-  const router = useRouter()
-  useEffect(() => {
-    router.push(result)
-  }, [result, router])
-
-  return (
-    <div className={cn("flex flex-col", "items-start")}>
-      <div className={chatBubbleVariants({ role: "toolInvocation", animation })}>
-        <Link prefetch={false} href={result}>
-          Navigation result
-        </Link>
-      </div>
-    </div>
+    </motion.div>
   )
 }

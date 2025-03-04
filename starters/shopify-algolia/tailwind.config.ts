@@ -62,6 +62,10 @@ const config: Omit<Config, "content"> = {
           "0%,40%": { transform: "translateY(0)" },
           "20%": { transform: "translateY(-0.25rem)" },
         },
+        enter: {
+          "0%": { opacity: 0 },
+          "100%": { opacity: 1 },
+        },
       },
       animation: {
         slideOutLeft: "slideOutLeft 0.3s ease-out forwards",
@@ -71,6 +75,7 @@ const config: Omit<Config, "content"> = {
         "single-bounce": "bounceOnce 0.5s ease-out",
         wiggle: "wiggle .2s ease-out",
         "typing-dot-bounce": "typing-dot-bounce 1.25s ease-out infinite",
+        enter: "enter 0.2s calc(20ms * var(--stagger)) ease-out forwards",
       },
       colors: {
         sidebar: {
@@ -178,6 +183,9 @@ const config: Omit<Config, "content"> = {
       },
       minWidth: {
         ...defaultTheme.width,
+      },
+      screens: {
+        "ai-2xl": "1640px",
       },
     },
   },

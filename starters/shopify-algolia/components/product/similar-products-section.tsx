@@ -13,18 +13,23 @@ export async function SimilarProductsSection({ slug, objectID, basePath }: Simil
 
   return (
     <section className="my-10">
-      <Carousel opts={{ skipSnaps: true }}>
-        <CarouselPrevious className="absolute -left-20 top-[40%] hidden xl:flex" />
-        <h2 className="mb-10 text-[26px] font-medium tracking-[-0.78px]">You might also like</h2>
-
-        <CarouselContent>
+      <h2 className="mb-10 text-[26px] font-medium tracking-[-0.78px]">You might also like</h2>
+      <Carousel
+        opts={{
+          align: "start",
+          skipSnaps: true,
+        }}
+        className="w-full"
+      >
+        <CarouselContent className="-ml-2 md:-ml-4">
           {items.map((product, idx) => (
-            <CarouselItem className="basis-1/2 md:basis-1/4" key={"featured_" + product.id + idx}>
+            <CarouselItem className="basis-1/3 lg:basis-1/4" key={"featured_" + product.id + idx}>
               <ProductCard href={basePath ? `/${basePath}/product/${product.handle}` : undefined} prefetch {...product} />
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselNext className="absolute -right-20 top-[40%] hidden xl:flex" />
+        <CarouselPrevious className="-left-4 top-1/2 hidden shadow-sm md:flex" />
+        <CarouselNext className="-right-4 top-1/2 hidden shadow-sm md:flex" />
       </Carousel>
     </section>
   )
