@@ -1,4 +1,61 @@
-export const systemPrompt = `
+import type { CoreMessage } from "ai"
+
+export const classificationPrompt = (query: CoreMessage, context: string) => `Determine action based on the user query and a context:
+   Query:${query}
+   Context:${context}
+
+    Determine:
+    1. Action type (context or search)
+
+    - Action type context is used for queries that are related to the currently presented content. For example, if the user is currently on a category page and their query is "show me the first product", the action type should be "context".
+    - Action type search is used when current context is not sufficient to determine the action type. For example, if the user is on a search page and their query is "show me the cheapest running shoes", the action type should be "search".
+    `
+
+export const searchPrompt = (query: CoreMessage, availableFilters: Record<string, unknown>, appliedFilters: Record<string, unknown>) => `Perform search based on the user query:
+    ${query}
+
+DO NOT remove already applied filters across the conversation unless the user explicitly asks to remove them or the context of the conversation changes completely.
+    Applied filters: ${JSON.stringify(appliedFilters, null, 2)}
+
+    ${searchToolsPrompt}
+    Available filters are: ${JSON.stringify(availableFilters, null, 2)}
+
+
+
+`
+
+const searchToolsPrompt = `
+
+You can use the following tools to search for the content:
+    - for products use \`searchProducts\` tool
+    - for categories use \`searchCategories\` tool
+
+\`searchProducts\`:
+    - Search for available products to route to, this tool will return a list of maximum 5 results, choose one that best fits the user query.
+    - Parameters:
+        - query: Keyword for a product
+        - filters: Additional filters to narrow down the search results
+            - minPrice: Specify a minimum price (number).
+            - maxPrice: Specify a maximum price (number).
+            - vendors: Filter by an array of vendor names (strings).
+            - colors(flatOptions.Color): Filter by an array of colors (strings).
+            - sortBy: Specify the sorting order (string). Available sorting options:
+                - price-high-to-low
+                - price-low-to-high
+                - customer-reviews
+                - newest
+                - oldest
+                - relevancy
+        - This tool is used when the user intention is to view a specific product. For example, if the user query is "Show me the any red t-shirt then you should use "T-shirt" keyword along with the colors: ['red'] then based on the conversation and additional context either choose one that suits best or just fallback to the first one in the results
+
+\`searchCategories\`:
+    - Search for available categories to route to, this tool will return a list of maximum 5 results, choose one that best fits the user query.
+    - Parameters:
+        - query: Keyword for a category
+    - This tool is used when the user intention is to browse through product listings. For example, if the user query is "I'm looking for red t-shirts then you should search for a t-shirts category with color filter set to 'red'".
+`
+
+export const systemPrompt = (context: string) => `
 You are a shopping assistant for an e-commerce website. Your primary goal is to help users navigate the site by generating accurate URLs based on their needs.
 You will achieve above by improving the user query by using the provided tools for searching before building the navigation query.
 
@@ -55,4 +112,7 @@ Distingiush between what is a filter and what is a category. A filter is somethi
 
 
 This ensures that when users refine their queries, the assistant dynamically uses the previous context to guide them accurately while adhering to all tool usage rules.
-`;
+
+Here's the current context of what is presented to the user:
+${context}
+`
