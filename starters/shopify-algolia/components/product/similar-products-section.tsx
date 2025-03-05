@@ -1,6 +1,7 @@
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "components/ui/carousel"
 import { ProductCard } from "components/product-card"
 import { getSimilarProducts } from "lib/algolia"
+import { ContextReporter } from "app/(ai-browse)/_components/context-reporter"
 
 interface SimilarProductsSectionProps {
   slug: string
@@ -13,6 +14,7 @@ export async function SimilarProductsSection({ slug, objectID, basePath }: Simil
 
   return (
     <section className="my-10">
+      <ContextReporter similarProducts={items} />
       <h2 className="mb-10 text-[26px] font-medium tracking-[-0.78px]">Similar products</h2>
       <Carousel
         opts={{

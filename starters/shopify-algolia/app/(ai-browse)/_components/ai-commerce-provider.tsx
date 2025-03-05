@@ -40,11 +40,11 @@ export function AiCommerceProvider({ children }: AiCommerceProviderProps) {
   // // sanitize contexts so that only relevant fields are included to decrease token usage
   // const searchParams = useSearchParams()
   const productsContext = useAppContextStore((s) => s.productsContext)
+  const similarProductsContext = useAppContextStore((s) => s.similarProductsContext)
   const categoriesContext = useAppContextStore((s) => s.categoriesContext)
-  const filtersContext = useAppContextStore((s) => s.filtersContext)
+  const availableFiltersContext = useAppContextStore((s) => s.availableFiltersContext)
   //@TODO revisit once shopify's back
   // const cartContext = useCartStore((s) => s.cart)
-  // console.log({ cartContext })
 
   const { append, messages, input, handleSubmit, setInput, isLoading } = useChat({
     api: "/api/search",
@@ -54,14 +54,13 @@ export function AiCommerceProvider({ children }: AiCommerceProviderProps) {
         pathname,
         appContext: {
           products: productsContext,
+          similarProducts: similarProductsContext,
           categories: categoriesContext,
-          filters: filtersContext,
+          availableFilters: availableFiltersContext,
         },
         searchParams: null,
       }),
-      productsContext,
-      categoriesContext,
-      filtersContext,
+      availableFilters: availableFiltersContext,
       appliedFilters: [],
     },
   })

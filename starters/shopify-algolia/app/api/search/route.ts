@@ -9,13 +9,13 @@ export async function POST(request: Request) {
   const {
     messages: _messages,
     fullApplicationContext: context,
-    filtersContext: availableFilters,
+    availableFilters,
     appliedFilters,
   } = (await request.json()) as {
     messages: Array<Message>
     fullApplicationContext: string
     //@TODO: Make them consitent & prevent unnecessary mapping
-    filtersContext: Record<string, unknown>
+    availableFilters: string
     appliedFilters: Record<string, unknown>
   }
   const messages = convertToCoreMessages(_messages)
@@ -26,10 +26,8 @@ export async function POST(request: Request) {
     schema: z.object({
       type: z.enum(["context", "search"]),
     }),
-    prompt: classificationPrompt(lastUserMessage!, context),
+    prompt: classificationPrompt(lastUserMessage!, context, availableFilters),
   })
-
-  console.log({ classification })
 
   try {
     const result = streamText({

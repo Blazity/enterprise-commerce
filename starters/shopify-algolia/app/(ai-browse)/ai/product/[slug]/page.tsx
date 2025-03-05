@@ -23,6 +23,7 @@ import type { CommerceProduct } from "types"
 
 import { generateJsonLd } from "./metadata"
 import { getProduct, getProducts } from "lib/algolia"
+import { ContextReporter } from "app/(ai-browse)/_components/context-reporter"
 
 export const revalidate = 86400
 export const dynamic = "force-static"
@@ -63,6 +64,7 @@ export default async function Product(props: ProductProps) {
 
   return (
     <div className="relative px-4 md:mx-auto md:max-w-container-md xl:px-0">
+      <ContextReporter products={[product]} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(generateJsonLd(product, slug)) }}></script>
       <div className="mb:pb-8 relative flex w-full items-center justify-center gap-10 py-4 md:pt-12">
         <div className="mx-auto w-full max-w-container-sm">

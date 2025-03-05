@@ -35,8 +35,9 @@ type CreateContextArgs = {
   pathname: string
   appContext: {
     products: string
+    similarProducts: string
     categories: string
-    filters: string
+    availableFilters: string
   }
   searchParams: ReadonlyURLSearchParams | null
 }
@@ -55,21 +56,23 @@ export function createApplicationContext({ pathname, appContext, searchParams }:
       if (!!appContext.categories.length) {
         context += `Categories that the user currently sees: ${appContext.categories}\n`
       }
-      if (!!appContext.filters.length) {
-        context += `Available filters that the user can apply: ${appContext.filters}\n`
+      if (!!appContext.availableFilters.length) {
+        context += `Available filters that the user can apply: ${appContext.availableFilters}\n`
       }
       if (searchParams && searchParams.toString().length > 0) {
         context += `Search parameters that are currently applied: ${searchParams?.toString()}`
       }
-
-      return context
     }
-    case "product": {
-      if (!!appContext.products.length) {
-        context += `Product that the user currently sees: ${appContext.products}\n`
+    case "product":
+      {
+        if (!!appContext.products.length) {
+          context += `Product that the user currently sees: ${appContext.products}\n`
+        }
+        if (!!appContext.similarProducts.length) {
+          context += `Similar products to current product: ${appContext.similarProducts}\n`
+        }
       }
-    }
-    default:
+
       return context
   }
 }

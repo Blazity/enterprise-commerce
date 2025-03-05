@@ -1,13 +1,13 @@
 import type { CoreMessage } from "ai"
 
-export const classificationPrompt = (query: CoreMessage, context: string) => `Determine next action type based on the user query and a context:
-   Query:${query.content}
-   Context:${context}
+export const classificationPrompt = (query: CoreMessage, context: string, availableFilters: string) => `Determine next action type based on the provided data:
+   User query:${query.content}
+   What user currently sees:${context}
+    ${availableFilters.length ? `Available filters: ${availableFilters}` : "No available filters"}
 
-    Determine:
-    1. Action type (context or search)
-        - use \"context\" for queries that are related to the currently presented content. For example, if the user is currently on a category page and their query is "show me the first product".
-        - use \"search\" when current context is not sufficient to fulfill the user query. For example, if the user is on a electronics category page and their query is "show me the cheapest running shoes".
+    Possible action types:
+        - \"context\" for queries that are related to the currently presented content. For example, if the user is currently on a category page and their query is "show me the first product", then the action type is \"context\".
+        - \"search\" when current context is not sufficient to fulfill the user query. For example, if the user is on a electronics category page and their query is "show me the cheapest running shoes", then the action type is \"search
     `
 
 const navigateUserTool = `This tool will navigate the user to the desired page.
@@ -51,13 +51,13 @@ DO NOT remove already applied filters across the conversation unless the user ex
 
 export const searchPrompt = (
   userQuery: CoreMessage,
-  availableFilters: Record<string, unknown>,
+  availableFilters: string,
   appliedFilters: Record<string, unknown>
 ) => `Based on the provided user query, available filters and tools search through the available data sources and then navigate the user to the most relevant page by using \"navigateUser\" tool.
     Query:${userQuery.content}
 
 DO NOT remove already applied filters across the conversation unless the user explicitly asks to remove them or the context of the conversation changes completely.
-    Applied filters: ${JSON.stringify(appliedFilters, null, 2)}
+    Applied filters: ${appliedFilters}
 
     ${toolsUsageDefinition}
     Available filters are: ${JSON.stringify(availableFilters, null, 2)}`

@@ -23,7 +23,6 @@ const searchProducts = createTool({
     filters: filtersSchema.optional(),
   }),
   execute: async ({ query }) => {
-    console.log({ query, tool: "searchProducts" })
     const results = await getProducts({ query, hitsPerPage: 5 })
 
     return {
@@ -38,7 +37,6 @@ const searchCategories = createTool({
     query: z.string({ description: "Keyword for a category" }),
   }),
   execute: async ({ query }) => {
-    console.log({ query, tool: "searchCategories" })
     const results = await getCategories({ query, hitsPerPage: 5 })
 
     return {
@@ -55,7 +53,6 @@ const navigateUser = createTool({
     filters: filtersSchema.optional(),
   }),
   execute: async ({ resultSlug, pageType, ...rest }) => {
-    console.log({ resultSlug, pageType, rest, tool: "navigateUser" })
     switch (pageType) {
       case "product":
         return `/ai/product/${resultSlug}`
@@ -78,24 +75,6 @@ const navigateUser = createTool({
     }
   },
 })
-
-// const searchFilterValues = createTool({
-//   description: "Search for available filter values to apply",
-//   parameters: z.object({
-//     query: z.union([z.literal("vendor"), z.literal("flatOptions.Color")]),
-//   }),
-//   execute: async ({ query }) => {
-//     console.log({ query, tool: "searchFilterValues" })
-//     const results = await getFacetValues({
-//       indexName: env.ALGOLIA_PRODUCTS_INDEX,
-//       facetName: query,
-//     })
-//     return {
-//       filterName: query,
-//       availableFilterValues: results,
-//     }
-//   },
-// })
 
 // const addToCart = createTool({
 //   description: "Add a product to the cart",
