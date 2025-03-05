@@ -13,7 +13,7 @@ export async function SimilarProductsSection({ slug, objectID, basePath }: Simil
 
   return (
     <section className="my-10">
-      <h2 className="mb-10 text-[26px] font-medium tracking-[-0.78px]">You might also like</h2>
+      <h2 className="mb-10 text-[26px] font-medium tracking-[-0.78px]">Similar products</h2>
       <Carousel
         opts={{
           align: "start",

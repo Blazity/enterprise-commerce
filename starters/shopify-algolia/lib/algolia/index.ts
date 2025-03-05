@@ -7,6 +7,7 @@ import { notifyOptIn } from "utils/opt-in"
 
 import { FilterBuilder } from "lib/algolia/filter-builder"
 import type { Review } from "lib/reviews/types"
+
 import type { PlatformCollection } from "lib/shopify/types"
 
 import { HITS_PER_PAGE } from "constants/index"
@@ -281,7 +282,7 @@ export const getFilteredProducts = unstable_cache(
             page: page - 1,
             hitsPerPage: HITS_PER_PAGE,
             attributesToRetrieve: ["id", "handle", "title", "priceRange", "featuredImage", "minPrice", "variants", "images", "avgRating", "totalReviews"],
-            facets: ["flatOptions.Color", "avgRating"],
+            facets: ["flatOptions.Color", "avgRating", "vendor", "minPrice", "variants.availableForSale"],
           },
         }),
         algolia.search<CommerceProduct>({
