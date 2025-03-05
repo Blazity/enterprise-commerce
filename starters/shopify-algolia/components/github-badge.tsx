@@ -1,10 +1,8 @@
 "use client"
 
 import { AnimatePresence, motion } from "motion/react"
-import { useSidebar } from "./ui/sidebar"
 
-export function GithubBadge() {
-  const { open } = useSidebar()
+export function GithubBadge({ isSidebarOpen = false }: { isSidebarOpen?: boolean }) {
   return (
     !open && (
       <AnimatePresence>
