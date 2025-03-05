@@ -51,7 +51,6 @@ const navigateUser = createTool({
   description: "Navigate the user to the desired page",
   parameters: z.object({
     pageType: z.union([z.literal("product"), z.literal("category"), z.literal("search")]),
-    resultType: z.union([z.literal("product"), z.literal("category"), z.literal("search")]),
     resultSlug: z.string(),
     filters: filtersSchema.optional(),
   }),

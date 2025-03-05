@@ -1,7 +1,7 @@
 import { openai } from "@ai-sdk/openai"
 import { convertToCoreMessages, generateObject, type Message, streamText } from "ai"
 import { getMostRecentUserMessage } from "lib/ai/chat"
-import { classificationPrompt, contextPrompt, searchPrompt } from "lib/ai/prompts"
+import { classificationPrompt, contextPrompt, searchPrompt, systemPrompt } from "lib/ai/prompts"
 import { tools } from "lib/ai/tools"
 import { z } from "zod"
 
@@ -20,7 +20,6 @@ export async function POST(request: Request) {
   }
   const messages = convertToCoreMessages(_messages)
   const lastUserMessage = getMostRecentUserMessage(messages)
-  console.log({ appliedFilters, availableFilters })
 
   const { object: classification } = await generateObject({
     model: openai("gpt-4o-mini"),
@@ -35,7 +34,8 @@ export async function POST(request: Request) {
   try {
     const result = streamText({
       model: openai("gpt-4o"),
-      system: classification.type === "search" ? searchPrompt(lastUserMessage!, availableFilters, appliedFilters) : contextPrompt(context, lastUserMessage!, appliedFilters),
+      system: `${systemPrompt}\n
+${classification.type === "search" ? searchPrompt(lastUserMessage!, availableFilters, appliedFilters) : contextPrompt(context, lastUserMessage!, appliedFilters)}`,
       messages,
       maxSteps: 10,
       abortSignal: request.signal,

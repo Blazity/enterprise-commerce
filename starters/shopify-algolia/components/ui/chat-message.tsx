@@ -1,16 +1,22 @@
 "use client"
 
-import React from "react"
+import React, { useEffect } from "react"
+import type { Message as SDKMessage } from "ai"
 import { cva, type VariantProps } from "class-variance-authority"
 import { MarkdownRenderer } from "./markdown-renderer"
 import { cn } from "utils/cn"
 import { motion } from "motion/react"
+import { useRouter } from "next/navigation"
+import Link from "next/link"
 
 const chatBubbleVariants = cva("group/message relative break-words rounded-lg p-3 text-sm sm:max-w-[70%]", {
   variants: {
-    isUser: {
-      true: "bg-gray-200 text-black",
-      false: "bg-gray-400/70 text-black",
+    role: {
+      user: "bg-gray-200 text-black",
+      assistant: "bg-gray-400/70 text-black",
+      data: "",
+      system: "",
+      toolInvocation: "font-bold text-sm bg-orange-700 text-orange-100", // abstract, normally tool invocations are marked as assistant role
     },
     animation: {
       none: "",
@@ -21,22 +27,22 @@ const chatBubbleVariants = cva("group/message relative break-words rounded-lg p-
   },
   compoundVariants: [
     {
-      isUser: true,
+      role: "user",
       animation: "slide",
       class: "slide-in-from-right",
     },
     {
-      isUser: false,
+      role: "assistant",
       animation: "slide",
       class: "slide-in-from-left",
     },
     {
-      isUser: true,
+      role: "user",
       animation: "scale",
       class: "origin-bottom-right",
     },
     {
-      isUser: false,
+      role: "assistant",
       animation: "scale",
       class: "origin-bottom-left",
     },
@@ -45,12 +51,10 @@ const chatBubbleVariants = cva("group/message relative break-words rounded-lg p-
 
 type Animation = VariantProps<typeof chatBubbleVariants>["animation"]
 
-export interface Message {
+export interface Message extends SDKMessage {
   id: string
-  role: "user" | "assistant" | "system" | "data"
   content: string
   createdAt?: Date
-  attachments?: File[]
 }
 
 export interface ChatMessageProps extends Message {
@@ -59,17 +63,30 @@ export interface ChatMessageProps extends Message {
   actions?: React.ReactNode
   showToolMessages?: boolean
 }
-
-export const ChatMessage: React.FC<ChatMessageProps> = ({ role, content, createdAt, showTimeStamp = false, animation = "scale", actions, showToolMessages }) => {
+export const ChatMessage: React.FC<ChatMessageProps> = ({ role, content, createdAt, showTimeStamp = false, animation = "scale", toolInvocations, showToolMessages, actions }) => {
   const isUser = role === "user"
 
   const formattedTime = createdAt?.toLocaleTimeString("en-US", {
     hour: "2-digit",
     minute: "2-digit",
   })
+
+  if (!!toolInvocations?.length) {
+    return toolInvocations.map((toolInvocation) => {
+      const { toolName, toolCallId, state } = toolInvocation
+
+      if (state === "result") {
+        if (toolName === "navigateUser") {
+          const { result } = toolInvocation
+          return <NavigationToolResult key={toolCallId} result={result} animation={animation} />
+        }
+      }
+    })
+  }
+
   return (
     <motion.div initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.2 }} className={cn("flex flex-col", isUser ? "items-end" : "items-start")}>
-      <div className={cn(chatBubbleVariants({ isUser }))}>
+      <div className={cn(chatBubbleVariants({ role, animation }))}>
         <div className="text-black/90">
           <MarkdownRenderer>{content}</MarkdownRenderer>
         </div>
@@ -83,5 +100,23 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ role, content, created
         <span className={cn("mt-1 block px-1 text-xs opacity-50", animation !== "none" && "duration-500 animate-in fade-in-0")}>{formattedTime}</span>
       ) : null}
     </motion.div>
+  )
+}
+
+const NavigationToolResult = ({ animation, result }) => {
+  const router = useRouter()
+  useEffect(() => {
+    router.push(result)
+  }, [result, router])
+
+  return (
+    <div className={cn("flex flex-col", "items-start")}>
+      <div className={chatBubbleVariants({ role: "toolInvocation", animation })}>
+        {/* @TODO: This can be improved if AI response provides a short navigation summary too */}
+        <Link prefetch={false} href={result}>
+          Navigation result
+        </Link>
+      </div>
+    </div>
   )
 }

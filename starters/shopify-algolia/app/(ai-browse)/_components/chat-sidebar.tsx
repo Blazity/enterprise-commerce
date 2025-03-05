@@ -29,7 +29,7 @@ export function ChatSidebar() {
         {/* <ScrollArea className="relative h-full rounded-xl border-black/10 px-4 py-2"> */}
         <div className="flex flex-col space-y-4">
           <MessageList
-            messages={messages.filter((message) => !!message.content)}
+            messages={messages}
             showTimeStamps={false}
             isTyping={isLoading && messages[messages.length - 1].role === "user" && messages.length > 0}
             messageOptions={{ animation: "scale", showTimeStamp: true, showToolMessages: false }}
