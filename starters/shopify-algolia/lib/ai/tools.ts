@@ -3,7 +3,7 @@ import { addCartItem } from "app/actions/cart.actions"
 import { getCategories, getProducts } from "lib/algolia"
 import { z } from "zod"
 
-export type AllowedTools = "searchProducts" | "searchCategories" | "addToCart" | "navigateUser"
+export type AllowedTools = "searchProducts" | "searchCategories" | "addToCart" | "navigateUser" | "goToCheckout"
 
 const filtersSchema = z.object({
   minPrice: z.number().optional(),
@@ -42,12 +42,24 @@ const searchCategories = createTool({
   },
 })
 
+// this can be done better if we can retrieve the cookie and simply check the cart straight from the server, however this will slow down the actual response whilst the cart will be already provided to the user in the frotnend
+const goToCheckout = createTool({
+  description: "Navigate the user to the checkout page",
+  parameters: z.object({
+    checkoutUrl: z.string(),
+  }),
+  execute: async ({ checkoutUrl }) => {
+    return { checkoutUrl }
+  },
+})
+
 const navigateUser = createTool({
   description: "Navigate the user to the desired page",
   parameters: z.object({
     pageType: z.union([z.literal("product"), z.literal("category"), z.literal("search")]),
     resultSlug: z.string().optional(),
     query: z.string().optional(),
+    checkoutUrl: z.string().optional(),
     options: z
       .string()
       .regex(/^[a-zA-Z]+_[a-zA-Z0-9]+$/, { message: "Options must be in the format optionName_optionValue" })
@@ -86,6 +98,7 @@ const navigateUser = createTool({
 
         return "/ai/search"
       }
+
       default:
         return "/ai/search"
     }
@@ -148,4 +161,5 @@ export const tools: Record<AllowedTools, CoreTool> = {
   searchCategories,
   navigateUser,
   addToCart,
+  goToCheckout,
 }

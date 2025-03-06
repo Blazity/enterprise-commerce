@@ -43,7 +43,7 @@ ${classification.type === "search" ? searchPrompt(lastUserMessage!, availableFil
       messages,
       maxSteps: 10,
       abortSignal: request.signal,
-      experimental_activeTools: classification.type === "search" ? ["searchProducts", "searchCategories", "navigateUser"] : ["navigateUser", "addToCart"],
+      experimental_activeTools: classification.type === "search" ? ["searchProducts", "searchCategories", "navigateUser"] : ["navigateUser", "addToCart", "goToCheckout"],
       tools,
     })
 

@@ -87,6 +87,10 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ role, content, created
           const { result } = toolInvocation
           return <AddedToCart key={toolCallId} variant={result.variant} product={result.product} />
         }
+        if (toolName === "goToCheckout") {
+          const { result } = toolInvocation
+          return <MoveToCheckout key={toolCallId} checkoutUrl={result.checkoutUrl} />
+        }
       }
     })
   }
@@ -142,6 +146,15 @@ const AddedToCart = ({ variant, product }) => {
 
     refresh()
   }, [setProduct, clean, refresh, product, variant])
+
+  return null
+}
+
+const MoveToCheckout = ({ checkoutUrl }) => {
+  const router = useRouter()
+  useEffect(() => {
+    router.push(checkoutUrl)
+  }, [checkoutUrl, router])
 
   return null
 }

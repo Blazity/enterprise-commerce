@@ -19,7 +19,7 @@ const navigateUserTool = `This tool will navigate the user to the desired page.
         - category (also applicable for specific categories with product listings)
         - search (search results page - generic search results)
     - resultSlug: Specify the slug of the desired page also known as handle or unique identifier (string), you can only define this if pageType is either product or category.  
-    - optons: Specify the options to be passed to the page (string), this is only applicable for product pageType. The options should be in the format optionName_optionValue. For example, if the desired page is a product page with options \"color_red\" and \"size_10\", then the options should be \"color_red-size_10\".
+    - options: Specify the options to be passed to the page (string), this is only applicable for product pageType. The options should be in the format optionName_optionValue. For example, if the desired page is a product page with options \"color_red\" and \"size_10\", then the options should be \"color_red-size_10\".
     - query: Keyword for a search query (string). YOu can only use this if pageType is \"search\".
     - filters: Additional filters to narrow down the search results - only applicable for search and category page types
         - minPrice: Specify a minimum price (number).
@@ -51,7 +51,9 @@ DO NOT remove already applied filters across the conversation unless the user ex
         - Parameters:
             - product: Parent product
             - variant: Selected variant
-                `
+    - for checkout requests use \`goToCheckout\` - this tool will navigate the user to the checkout page.
+            - checkoutUrl: The checkout URL from the provided context
+            `
 
 export const searchPrompt = (
   userQuery: CoreMessage,

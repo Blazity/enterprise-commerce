@@ -1,6 +1,7 @@
 import type { Message } from "ai"
 import { PlatformCollection } from "lib/shopify/types"
 import { ReadonlyURLSearchParams } from "next/navigation"
+import type { CartStore } from "stores/cart-store"
 import { CommerceProduct } from "types"
 import { slugToName } from "utils/slug-name"
 
@@ -40,6 +41,7 @@ type CreateContextArgs = {
     similarProducts: string
     categories: string
     availableFilters: string
+    cart: CartStore["cart"]
   }
   searchParams: ReadonlyURLSearchParams | null
 }
@@ -48,6 +50,11 @@ export function createApplicationContext({ pathname, appContext, searchParams }:
   const pageType = getPageType(pathname)
 
   let context = `The user is currently viewing ${createPageTypeContext(pageType, pathname)}\n`
+
+  if (!!appContext.cart) {
+    context += `The user's cart: ${JSON.stringify(appContext.cart)}\n`
+    context += `The user's checkout URL: ${appContext.cart.checkoutUrl}\n`
+  }
 
   switch (pageType) {
     case "category":

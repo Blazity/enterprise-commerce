@@ -9,9 +9,12 @@ import { useAiCommerce } from "./ai-commerce-provider"
 import { Suggestions } from "./chat-suggestions"
 import { Textbox } from "./textbox"
 import { useCartStore } from "stores/cart-store"
+import { useRouter } from "next/navigation"
 
 export function ChatSidebar() {
+  const router = useRouter()
   const { messages, isLoading } = useAiCommerce()
+  const cart = useCartStore((state) => state.cart)
   const openCart = useCartStore((state) => state.openCart)
   const preloadSheet = useCartStore((state) => state.preloadSheet)
 
@@ -56,10 +59,12 @@ export function ChatSidebar() {
               asChild
               className="w-full cursor-pointer select-none justify-start bg-gray-100 font-medium text-sidebar-foreground transition-all duration-200 hover:bg-gray-200 hover:text-secondary-foreground active:scale-[0.98] active:bg-gray-200"
             >
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.25, delay: 0.25 }}>
-                <ShoppingBag className="mr-1 size-4" />
-                <span>Checkout</span>
-              </motion.div>
+              {!!cart?.checkoutUrl && (
+                <motion.button onClick={() => router.push(cart.checkoutUrl)} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.25, delay: 0.25 }}>
+                  <ShoppingBag className="mr-1 size-4" />
+                  <span>Checkout</span>
+                </motion.button>
+              )}
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
