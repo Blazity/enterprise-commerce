@@ -6,7 +6,6 @@ import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, Sid
 import { ShoppingBag, ShoppingCart, Zap } from "lucide-react"
 import * as React from "react"
 import { useAiCommerce } from "./ai-commerce-provider"
-import { Suggestions } from "./chat-suggestions"
 import { Textbox } from "./textbox"
 import { useCartStore } from "stores/cart-store"
 import { useRouter } from "next/navigation"
@@ -38,7 +37,6 @@ export function ChatSidebar() {
       </SidebarContent>
       <SidebarFooter className="p-4">
         <Textbox messages={messages} />
-        <Suggestions />
         <SidebarMenu className="mt-4">
           <SidebarMenuItem>
             <SidebarMenuButton
