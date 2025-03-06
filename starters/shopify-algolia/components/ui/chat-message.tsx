@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useState } from "react"
+import React, { useEffect } from "react"
 import type { Message as SDKMessage } from "ai"
 import { cva, type VariantProps } from "class-variance-authority"
 import { MarkdownRenderer } from "./markdown-renderer"
@@ -84,9 +84,8 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ role, content, created
         }
 
         if (toolName === "addToCart") {
-          const { variant, product } = toolInvocation.state
-          console.log({ toolInvocation })
-          return <AddedToCart key={toolCallId} variant={variant} product={product} />
+          const { result } = toolInvocation
+          return <AddedToCart key={toolCallId} variant={result.variant} product={result.product} />
         }
       }
     })

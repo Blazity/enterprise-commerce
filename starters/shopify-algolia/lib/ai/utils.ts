@@ -90,6 +90,7 @@ export function normalizeProductsContext(products: CommerceProduct[]) {
       minPrice: product.minPrice,
       collections: product.collections,
       variants: product.variants,
+      featuredImage: product.featuredImage,
     }
   })
 }
