@@ -1,5 +1,6 @@
 "use client"
 
+import { normalizeCategoriesContext, normalizeProductsContext } from "lib/ai/utils"
 import { PlatformCollection } from "lib/shopify/types"
 import { useEffect } from "react"
 
@@ -25,13 +26,13 @@ export function ContextReporter({
 
   useEffect(() => {
     if (!!products?.length) {
-      setProductsContext(JSON.stringify(products))
+      setProductsContext(JSON.stringify(normalizeProductsContext(products)))
     }
     if (!!similarProducts?.length) {
-      setSimilarProductsContext(JSON.stringify(similarProducts))
+      setSimilarProductsContext(JSON.stringify(normalizeProductsContext(similarProducts)))
     }
     if (!!categories?.length) {
-      setCategoriesContext(JSON.stringify(categories))
+      setCategoriesContext(JSON.stringify(normalizeCategoriesContext(categories)))
     }
     if (!!availableFilters && !!Object.keys(availableFilters).length) {
       setAvailableFiltersContext(JSON.stringify(availableFilters))

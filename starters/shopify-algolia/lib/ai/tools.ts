@@ -46,29 +46,48 @@ const navigateUser = createTool({
   description: "Navigate the user to the desired page",
   parameters: z.object({
     pageType: z.union([z.literal("product"), z.literal("category"), z.literal("search")]),
-    resultSlug: z.string(),
+    resultSlug: z.string().optional(),
+    query: z.string().optional(),
+    options: z
+      .string()
+      .regex(/^[a-zA-Z]+_[a-zA-Z0-9]+$/, { message: "Options must be in the format optionName_optionValue" })
+      .toLowerCase()
+      .optional(),
     filters: filtersSchema.optional(),
   }),
-  execute: async ({ resultSlug, pageType, ...rest }) => {
+  execute: async ({ pageType, query, resultSlug, options, filters }) => {
     switch (pageType) {
-      case "product":
+      case "product": {
+        if (!resultSlug) {
+          throw new Error("resultSlug is required for product pageType")
+        }
+        if (options) {
+          return `/ai/product/${resultSlug}-${options}`
+        }
         return `/ai/product/${resultSlug}`
+      }
 
       case "category": {
-        if ("filters" in rest) {
-          const params = processFiltersToSearchParams(rest.filters!)
+        if (!resultSlug) {
+          throw new Error("resultSlug is required for category pageType")
+        }
+        if (filters) {
+          const params = processFiltersToSearchParams(filters)
           return `/ai/category/${resultSlug}?${decodeURIComponent(params.toString())}`
         }
         return `/ai/category/${resultSlug}`
       }
 
       case "search": {
-        if ("filters" in rest) {
-          const params = processFiltersToSearchParams(rest.filters!)
+        if (filters) {
+          const params = processFiltersToSearchParams({ ...filters, q: query || "" })
           return `/ai/search?${decodeURIComponent(params.toString())}`
         }
+
         return "/ai/search"
       }
+      default:
+        return "/ai/search"
     }
   },
 })
@@ -90,6 +109,7 @@ function processFiltersToSearchParams(filters: Record<string, string | string[] 
   const params = new URLSearchParams()
 
   for (const [key, value] of Object.entries(filters)) {
+    if (!value) continue
     if (key === "sortBy") {
       switch (value) {
         case "price-high-to-low":

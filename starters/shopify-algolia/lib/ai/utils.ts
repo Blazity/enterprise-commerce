@@ -1,5 +1,7 @@
 import type { Message } from "ai"
+import { PlatformCollection } from "lib/shopify/types"
 import { ReadonlyURLSearchParams } from "next/navigation"
+import { CommerceProduct } from "types"
 import { slugToName } from "utils/slug-name"
 
 export function getMostRecentUserMessage(messages: Array<Message>) {
@@ -66,13 +68,38 @@ export function createApplicationContext({ pathname, appContext, searchParams }:
     case "product":
       {
         if (!!appContext.products.length) {
-          context += `Product that the user currently sees: ${appContext.products}\n`
+          context += `Product that the user currently sees: ${appContext.products}\n\n`
         }
         if (!!appContext.similarProducts.length) {
-          context += `Similar products to current product: ${appContext.similarProducts}\n`
+          context += `Similar products: ${appContext.similarProducts}\n\n`
         }
       }
 
       return context
   }
+}
+
+export function normalizeProductsContext(products: CommerceProduct[]) {
+  return products.map((product) => {
+    return {
+      id: product.id,
+      title: product.title,
+      description: product.description,
+      tags: product.tags,
+      vendor: product.vendor,
+      minPrice: product.minPrice,
+      collections: product.collections,
+      variants: product.variants,
+    }
+  })
+}
+
+export function normalizeCategoriesContext(categories: PlatformCollection[]) {
+  return categories.map((category) => {
+    return {
+      id: category.id,
+      title: category.title,
+      description: category.description,
+    }
+  })
 }

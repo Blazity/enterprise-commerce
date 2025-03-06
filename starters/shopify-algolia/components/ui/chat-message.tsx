@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import type { Message as SDKMessage } from "ai"
 import { cva, type VariantProps } from "class-variance-authority"
 import { MarkdownRenderer } from "./markdown-renderer"
@@ -8,6 +8,8 @@ import { cn } from "utils/cn"
 import { motion } from "motion/react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
+import { useAddProductStore } from "stores/add-product-store"
+import { useCartStore } from "stores/cart-store"
 
 const chatBubbleVariants = cva("group/message relative break-words rounded-lg p-3 text-sm sm:max-w-[70%]", {
   variants: {
@@ -80,6 +82,12 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ role, content, created
           const { result } = toolInvocation
           return <NavigationToolResult key={toolCallId} result={result} animation={animation} />
         }
+
+        if (toolName === "addToCart") {
+          const { variant, product } = toolInvocation.state
+          console.log({ toolInvocation })
+          return <AddedToCart key={toolCallId} variant={variant} product={product} />
+        }
       }
     })
   }
@@ -119,4 +127,22 @@ const NavigationToolResult = ({ animation, result }) => {
       </div>
     </div>
   )
+}
+
+const AddedToCart = ({ variant, product }) => {
+  const setProduct = useAddProductStore((s) => s.setProduct)
+  const clean = useAddProductStore((s) => s.clean)
+  const refresh = useCartStore((s) => s.refresh)
+
+  useEffect(() => {
+    setTimeout(() => {
+      setProduct({ product, combination: variant })
+    }, 300)
+
+    setTimeout(() => clean(), 4500)
+
+    refresh()
+  }, [setProduct, clean, refresh, product, variant])
+
+  return null
 }
