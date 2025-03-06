@@ -25,17 +25,13 @@ export function ChatSidebar() {
           </div>
         </div>
       </SidebarHeader>
-      <SidebarContent>
-        {/* <ScrollArea className="relative h-full rounded-xl border-black/10 px-4 py-2"> */}
-        <div className="flex flex-col space-y-4">
-          <MessageList
-            messages={messages}
-            showTimeStamps={false}
-            isTyping={isLoading && messages[messages.length - 1].role === "user" && messages.length > 0}
-            messageOptions={{ animation: "scale", showTimeStamp: true, showToolMessages: false }}
-          />
-        </div>
-        {/* </ScrollArea> */}
+      <SidebarContent className="p-4">
+        <MessageList
+          messages={messages}
+          showTimeStamps={false}
+          isTyping={isLoading && messages[messages.length - 1].role === "user" && messages.length > 0}
+          messageOptions={{ animation: "scale", showTimeStamp: true, showToolMessages: false }}
+        />
       </SidebarContent>
       <SidebarFooter className="p-4">
         <Textbox messages={messages} />

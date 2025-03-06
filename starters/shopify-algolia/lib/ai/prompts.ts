@@ -45,9 +45,9 @@ DO NOT remove already applied filters across the conversation unless the user ex
     - for view requests use \`navigateUser\` - ${navigateUserTool}
     - for buy requests use \`addToCart\` - this tool will add the product to the cart and return the updated cart.
         - Parameters:
-            - productId: Specify the product ID (string).
-            - quantity: Specify the quantity (number).
-            - variantId: Specify the variant ID (string).`
+            - product: Parent product
+            - variant: Selected variant
+                `
 
 export const searchPrompt = (
   userQuery: CoreMessage,

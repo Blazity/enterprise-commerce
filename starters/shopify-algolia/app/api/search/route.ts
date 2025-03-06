@@ -2,7 +2,7 @@ import { openai } from "@ai-sdk/openai"
 import { convertToCoreMessages, generateObject, type Message, streamText } from "ai"
 import { getMostRecentUserMessage } from "lib/ai/chat"
 import { classificationPrompt, contextPrompt, searchPrompt, systemPrompt } from "lib/ai/prompts"
-import { tools } from "lib/ai/tools"
+import { tools as allTools } from "lib/ai/tools"
 import { z } from "zod"
 
 export async function POST(request: Request) {
@@ -21,15 +21,18 @@ export async function POST(request: Request) {
   const messages = convertToCoreMessages(_messages)
   const lastUserMessage = getMostRecentUserMessage(messages)
 
-  const { object: classification } = await generateObject({
-    model: openai("gpt-4o-mini"),
-    schema: z.object({
-      type: z.enum(["context", "search"]),
-    }),
-    prompt: classificationPrompt(lastUserMessage!, context, availableFilters),
-  })
-
   try {
+    const { object: classification } = await generateObject({
+      model: openai("gpt-4o-mini"),
+      schema: z.object({
+        type: z.enum(["context", "search"]),
+      }),
+      prompt: classificationPrompt(lastUserMessage!, context, availableFilters),
+    })
+
+    const tools =
+      classification.type === "search" ? allTools : Object.fromEntries(Object.entries(allTools).filter(([key]) => key !== "searchProducts" && key !== "searchCategories"))
+
     const result = streamText({
       model: openai("gpt-4o"),
       system: `${systemPrompt}\n
@@ -37,7 +40,7 @@ ${classification.type === "search" ? searchPrompt(lastUserMessage!, availableFil
       messages,
       maxSteps: 10,
       abortSignal: request.signal,
-      experimental_activeTools: classification.type === "search" ? ["searchProducts", "searchCategories", "navigateUser"] : ["navigateUser"],
+      experimental_activeTools: classification.type === "search" ? ["searchProducts", "searchCategories", "navigateUser"] : ["navigateUser", "addToCart"],
       tools,
     })
 

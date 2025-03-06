@@ -1,12 +1,9 @@
 import { type CoreTool, tool as createTool } from "ai"
+import { addCartItem } from "app/actions/cart.actions"
 import { getCategories, getProducts } from "lib/algolia"
 import { z } from "zod"
 
-export type AllowedTools =
-  | "searchProducts"
-  | "searchCategories"
-  // "addToCart" |
-  | "navigateUser"
+export type AllowedTools = "searchProducts" | "searchCategories" | "addToCart" | "navigateUser"
 
 const filtersSchema = z.object({
   minPrice: z.number().optional(),
@@ -76,32 +73,18 @@ const navigateUser = createTool({
   },
 })
 
-// const addToCart = createTool({
-//   description: "Add a product to the cart",
-//   parameters: z.object({
-//     productHandle: z.string(),
-//     variantOptions: z.object({
-//       color: z.string(),
-//       material: z.string(),
-//     }),
-//   }),
-//   execute: async ({ productHandle, variantOptions }) => {
-//     const product = await getProduct(productHandle)
-//     const variant = product?.variants.find((v) => v.selectedOptions.color.value === variantOptions.color && v.selectedOptions.material === variantOptions.material)!
-//
-// 		console.log({
-// 			tool: "addToCart",
-// 			variant,
-// 			product,
-// 			productHandle,
-// 			variantOptions,
-// 		});
-//
-// 		await addCartItem(null, variant.id, product?.id!);
-//
-//     return { ok: true }
-//   },
-// })
+const addToCart = createTool({
+  description: "Add a product to the cart",
+  parameters: z.object({
+    variant: z.any({ description: "Selected variant" }),
+    product: z.any({ description: "Parent product" }),
+  }),
+  execute: async ({ variant, product }) => {
+    await addCartItem(null, variant.id, product.id)
+
+    return { variant, product }
+  },
+})
 
 function processFiltersToSearchParams(filters: Record<string, string | string[] | number | number[]>) {
   const params = new URLSearchParams()
@@ -144,5 +127,5 @@ export const tools: Record<AllowedTools, CoreTool> = {
   searchProducts,
   searchCategories,
   navigateUser,
-  // addToCart,
+  addToCart,
 }
