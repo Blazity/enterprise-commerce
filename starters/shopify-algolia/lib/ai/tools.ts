@@ -1,17 +1,25 @@
 import { type CoreTool, tool as createTool } from "ai"
-import { env } from "env.mjs"
-import { getCategories, getFacetValues, getProducts } from "lib/algolia"
+import { addCartItem } from "app/actions/cart.actions"
+import { getCategories, getProducts } from "lib/algolia"
 import { z } from "zod"
 
-export type AllowedTools = "searchProducts" | "searchCategories" | "searchFilterValues" | "buildNavigationQuery"
+export type AllowedTools = "searchProducts" | "searchCategories" | "addToCart" | "navigateUser" | "goToCheckout"
+
+const filtersSchema = z.object({
+  minPrice: z.number().optional(),
+  maxPrice: z.number().optional(),
+  vendors: z.array(z.string()).optional(),
+  colors: z.array(z.string()).optional(),
+  sortBy: z.string().optional(),
+})
 
 const searchProducts = createTool({
-  description: "Search for available products to route to",
+  description: "Search for available products",
   parameters: z.object({
-    query: z.string({ description: " Keyword for a product" }),
+    query: z.string({ description: "Keyword for a product" }),
+    filters: filtersSchema.optional(),
   }),
   execute: async ({ query }) => {
-    console.log({ query, tool: "searchProducts" })
     const results = await getProducts({ query, hitsPerPage: 5 })
 
     return {
@@ -21,12 +29,11 @@ const searchProducts = createTool({
 })
 
 const searchCategories = createTool({
-  description: "Search for available categories to route to",
+  description: "Search for available categories",
   parameters: z.object({
     query: z.string({ description: "Keyword for a category" }),
   }),
   execute: async ({ query }) => {
-    console.log({ query, tool: "searchCategories" })
     const results = await getCategories({ query, hitsPerPage: 5 })
 
     return {
@@ -35,93 +42,79 @@ const searchCategories = createTool({
   },
 })
 
-const searchFilterValues = createTool({
-  description: "Search for available filter values to apply",
+// this can be done better if we can retrieve the cookie and simply check the cart straight from the server, however this will slow down the actual response whilst the cart will be already provided to the user in the frotnend
+const goToCheckout = createTool({
+  description: "Navigate the user to the checkout page",
   parameters: z.object({
-    query: z.union([z.literal("vendor"), z.literal("flatOptions.Color")]),
+    checkoutUrl: z.string(),
   }),
-  execute: async ({ query }) => {
-    console.log({ query, tool: "searchFilterValues" })
-    const results = await getFacetValues({
-      indexName: env.ALGOLIA_PRODUCTS_INDEX,
-      facetName: query,
-    })
-    return {
-      filterName: query,
-      availableFilterValues: results,
+  execute: async ({ checkoutUrl }) => {
+    return { checkoutUrl }
+  },
+})
+
+const navigateUser = createTool({
+  description: "Navigate the user to the desired page",
+  parameters: z.object({
+    pageType: z.union([z.literal("product"), z.literal("category"), z.literal("search")]),
+    resultSlug: z.string().optional(),
+    query: z.string().optional(),
+    checkoutUrl: z.string().optional(),
+    options: z
+      .string()
+      .regex(/^[a-zA-Z]+_[a-zA-Z0-9]+$/, { message: "Options must be in the format optionName_optionValue" })
+      .toLowerCase()
+      .optional(),
+    filters: filtersSchema.optional(),
+  }),
+  execute: async ({ pageType, query, resultSlug, options, filters }) => {
+    switch (pageType) {
+      case "product": {
+        if (!resultSlug) {
+          throw new Error("resultSlug is required for product pageType")
+        }
+        if (options) {
+          return `/ai/product/${resultSlug}-${options}`
+        }
+        return `/ai/product/${resultSlug}`
+      }
+
+      case "category": {
+        if (!resultSlug) {
+          throw new Error("resultSlug is required for category pageType")
+        }
+        if (filters) {
+          const params = processFiltersToSearchParams(filters)
+          return `/ai/category/${resultSlug}?${decodeURIComponent(params.toString())}`
+        }
+        return `/ai/category/${resultSlug}`
+      }
+
+      case "search": {
+        if (filters) {
+          const params = processFiltersToSearchParams({ ...filters, q: query || "" })
+          return `/ai/search?${decodeURIComponent(params.toString())}`
+        }
+
+        return "/ai/search"
+      }
+
+      default:
+        return "/ai/search"
     }
   },
 })
 
-// const addToCart = createTool({
-// 	description: "Add a product to the cart",
-// 	parameters: z.object({
-// 		productHandle: z.string(),
-// 		variantOptions: z.object({
-// 			color: z.string(),
-// 			material: z.string(),
-// 		}),
-// 	}),
-// 	execute: async ({ productHandle, variantOptions }) => {
-// 		const product = await getProduct(productHandle);
-// 		const variant = product?.variants.find(
-// 			(v) =>
-// 				v.selectedOptions.color.value === variantOptions.color &&
-// 				v.selectedOptions.material === variantOptions.material,
-// 		)!;
-//
-// 		console.log({
-// 			tool: "addToCart",
-// 			variant,
-// 			product,
-// 			productHandle,
-// 			variantOptions,
-// 		});
-//
-// 		await addCartItem(null, variant.id, product?.id!);
-//
-// 		return { ok: true };
-// 	},
-// });
-
-const buildNavigationQuery = createTool({
-  description: "Build URL to navigate the user to",
+const addToCart = createTool({
+  description: "Add a product to the cart",
   parameters: z.object({
-    result: z.object({
-      handle: z.string(),
-    }),
-    resultType: z.union([z.literal("product"), z.literal("category"), z.literal("search")]),
-    filters: z
-      .object({
-        minPrice: z.number().optional(),
-        maxPrice: z.number().optional(),
-        vendors: z.array(z.string()).optional(),
-        colors: z.array(z.string()).optional(),
-        sortBy: z.string().optional(),
-      })
-      .optional(),
+    variant: z.any({ description: "Selected variant" }),
+    product: z.any({ description: "Parent product" }),
   }),
-  execute: async ({ result, resultType, ...rest }) => {
-    switch (resultType) {
-      case "product":
-        return `/ai/product/${result.handle}`
+  execute: async ({ variant, product }) => {
+    await addCartItem(null, variant.id, product.id)
 
-      case "category": {
-        if ("filters" in rest) {
-          const params = processFiltersToSearchParams(rest.filters!)
-          return `/ai/category/${result.handle}?${decodeURIComponent(params.toString())}`
-        }
-        return `/ai/category/${result.handle}`
-      }
-
-      case "search": {
-        if ("filters" in rest) {
-          const params = processFiltersToSearchParams(rest.filters!)
-          return `/ai/search?${decodeURIComponent(params.toString())}`
-        }
-        return "/ai/search/"
-      }
-    }
+    return { variant, product }
   },
 })
 
@@ -129,6 +122,7 @@ function processFiltersToSearchParams(filters: Record<string, string | string[] 
   const params = new URLSearchParams()
 
   for (const [key, value] of Object.entries(filters)) {
+    if (!value) continue
     if (key === "sortBy") {
       switch (value) {
         case "price-high-to-low":
@@ -165,7 +159,7 @@ function processFiltersToSearchParams(filters: Record<string, string | string[] 
 export const tools: Record<AllowedTools, CoreTool> = {
   searchProducts,
   searchCategories,
-  searchFilterValues,
-  buildNavigationQuery,
-  // addToCart,
+  navigateUser,
+  addToCart,
+  goToCheckout,
 }

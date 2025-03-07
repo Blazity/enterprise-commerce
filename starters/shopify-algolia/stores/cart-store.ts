@@ -1,7 +1,7 @@
 import { PlatformCart } from "lib/shopify/types"
 import { create } from "zustand"
 
-interface CartStore {
+export interface CartStore {
   isOpen: boolean
   isSheetLoaded: boolean
   lastUpdatedAt: number

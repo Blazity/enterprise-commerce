@@ -32,7 +32,7 @@ export default function AiSearchLayout({ children }: { children: React.ReactNode
               style={
                 {
                   "--sidebar-width": "20rem",
-                  "--sidebar-width-mobile": "16rem",
+                  "--sidebar-width-mobile": "20rem",
                 } as React.CSSProperties
               }
             >
@@ -41,7 +41,6 @@ export default function AiSearchLayout({ children }: { children: React.ReactNode
                 <NavigationBar items={navigationItems} />
                 {children}
                 <Footer />
-                <SidebarButton />
 
                 {/* Independent from the main content */}
 

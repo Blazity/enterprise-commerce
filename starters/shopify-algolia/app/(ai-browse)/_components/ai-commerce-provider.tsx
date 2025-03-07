@@ -6,6 +6,7 @@ import { createApplicationContext } from "lib/ai/utils"
 import { usePathname } from "next/navigation"
 import { createContext, type ReactNode, useContext, useMemo } from "react"
 import { useAppContextStore } from "stores/app-context-store"
+import { useCartStore } from "stores/cart-store"
 import { z } from "zod"
 
 interface AiCommerceContextType {
@@ -40,11 +41,10 @@ export function AiCommerceProvider({ children }: AiCommerceProviderProps) {
   // // sanitize contexts so that only relevant fields are included to decrease token usage
   // const searchParams = useSearchParams()
   const productsContext = useAppContextStore((s) => s.productsContext)
+  const similarProductsContext = useAppContextStore((s) => s.similarProductsContext)
   const categoriesContext = useAppContextStore((s) => s.categoriesContext)
-  const filtersContext = useAppContextStore((s) => s.filtersContext)
-  //@TODO revisit once shopify's back
-  // const cartContext = useCartStore((s) => s.cart)
-  // console.log({ cartContext })
+  const availableFiltersContext = useAppContextStore((s) => s.availableFiltersContext)
+  const cartContext = useCartStore((s) => s.cart)
 
   const { append, messages, input, handleSubmit, setInput, isLoading } = useChat({
     api: "/api/search",
@@ -54,14 +54,14 @@ export function AiCommerceProvider({ children }: AiCommerceProviderProps) {
         pathname,
         appContext: {
           products: productsContext,
+          similarProducts: similarProductsContext,
           categories: categoriesContext,
-          filters: filtersContext,
+          availableFilters: availableFiltersContext,
+          cart: cartContext,
         },
         searchParams: null,
       }),
-      productsContext,
-      categoriesContext,
-      filtersContext,
+      availableFilters: availableFiltersContext,
       appliedFilters: [],
     },
   })

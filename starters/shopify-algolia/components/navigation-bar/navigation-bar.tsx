@@ -15,7 +15,6 @@ import { CloseIcon } from "components/icons/close-icon"
 import { SearchButton } from "./search-button"
 import { NavigationItem } from "./navigation-item"
 import Link from "next/link"
-import { GithubBadge } from "components/github-badge"
 
 const ProductAddedAlert = dynamic(() => import("components/product/product-added-alert").then((mod) => mod.ProductAddedAlert))
 
@@ -40,7 +39,7 @@ function VariantGrid({ variant, items }: { variant?: "text-grid" | "image-grid" 
 
 export function NavigationBar({ items }: NavigationBarProps) {
   const itemsMarkup = items.map((singleMenuItem) => (
-    <li data-content={singleMenuItem.text} className={cn("menu__item relative md:h-full", { menu__dropdown: !!singleMenuItem.submenu })} key={singleMenuItem.text}>
+    <li data-content={singleMenuItem.text} className={cn("menu__item relative z-50 md:h-full", { menu__dropdown: !!singleMenuItem.submenu })} key={singleMenuItem.text}>
       <NavigationItem singleMenuItem={singleMenuItem} />
 
       <div className="submenu megamenu__text w-full border-b border-black/10 shadow-sm">
@@ -51,7 +50,6 @@ export function NavigationBar({ items }: NavigationBarProps) {
 
   return (
     <header className="mega-navbar sticky top-0 z-50 mx-auto my-0 flex w-full flex-wrap content-center items-center justify-between border-b border-black/10 bg-white p-4 py-6">
-      <GithubBadge />
       <div className="flex justify-start px-4 md:mx-auto md:w-full md:max-w-container-md md:px-0">
         <Link prefetch={false} href="/" className="brand mr-20 hidden items-center text-xl font-bold md:flex">
           Acme
