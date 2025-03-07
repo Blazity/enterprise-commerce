@@ -30,9 +30,6 @@ export async function POST(request: Request) {
       prompt: classificationPrompt(lastUserMessage!, context, availableFilters),
     })
 
-    console.log({ classification })
-    console.dir(context, { depth: null, maxArrayLength: null })
-
     const tools =
       classification.type === "search" ? allTools : Object.fromEntries(Object.entries(allTools).filter(([key]) => key !== "searchProducts" && key !== "searchCategories"))
 

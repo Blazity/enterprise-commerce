@@ -31,8 +31,6 @@ function addCategoryFilters(filter: FilterBuilder, categories: string[], separat
   })
 
   filter.raw(`(${categoryFilters.join(" OR ")})`)
-
-  console.log({ categoryFilters })
 }
 
 function addArrayFilters(filter: FilterBuilder, fields: Record<string, string[]>): void {
