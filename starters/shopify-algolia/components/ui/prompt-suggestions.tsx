@@ -19,7 +19,7 @@ type PromptSuggestionProps = {
   value: string
 } & ButtonHTMLAttributes<HTMLButtonElement>
 
-export function PromptSuggestion({ children, value, className, ...rest }: PromptSuggestionProps) {
+export function PromptSuggestion({ children, className, ...rest }: PromptSuggestionProps) {
   return (
     <Button className={cn("flex-1 grow basis-1/3 rounded-xl p-4", className)} {...rest}>
       {children}

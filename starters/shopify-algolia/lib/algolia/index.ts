@@ -153,7 +153,7 @@ export const getCollection = unstable_cache(
 )
 
 export const getProductReviews = unstable_cache(
-  async (handle: string, { page = 1, limit = 10 } = { page: 1, limit: 10 }) => {
+  async (handle: string, { page = 0, limit = 10 } = { page: 0, limit: 10 }) => {
     if (isDemoMode()) return getDemoProductReviews()
 
     if (!env.ALGOLIA_REVIEWS_INDEX) {

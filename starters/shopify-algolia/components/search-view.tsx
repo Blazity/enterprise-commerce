@@ -64,7 +64,7 @@ export async function SearchView({ searchParams, disabledFacets, collection, bas
   return (
     <div className="mx-auto w-full md:max-w-container-md">
       <ContextReporter products={hits} categories={collection ? [collection] : []} availableFilters={facetDistribution} />
-      <div className="sticky top-[77px] z-40 flex items-center justify-between bg-white/80 p-4 py-4 backdrop-blur-lg lg:hidden">
+      <div className="sticky top-[77px] z-40 flex items-center justify-between bg-white/80 p-4 backdrop-blur-lg lg:hidden">
         <div className="flex gap-1 text-2xl font-semibold tracking-tight lg:text-3xl">
           <h1 className="flex-1">{makePageTitle(collection, q)}</h1>
           <span className="mr-auto text-xl lg:text-2xl">({totalHits})</span>
@@ -96,7 +96,7 @@ export async function SearchView({ searchParams, disabledFacets, collection, bas
         <div className="w-full">
           <div className="flex justify-end pb-4">
             <Suspense>
-              <Sorter className="duration-[200ms] w-max rounded-md text-sm transition-colors hover:bg-gray-100 lg:flex" />
+              <Sorter className="w-max rounded-md text-sm transition-colors duration-200 hover:bg-gray-100 lg:flex" />
             </Suspense>
           </div>
           <HitsSection hits={hits} basePath={basePath} />

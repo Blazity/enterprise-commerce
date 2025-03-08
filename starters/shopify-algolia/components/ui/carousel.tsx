@@ -160,7 +160,6 @@ const CarouselPrevious = forwardRef<HTMLButtonElement, React.ComponentProps<type
     <Button
       ref={ref}
       variant="primary"
-      isAnimated={false}
       size="lg"
       className={cn(
         "absolute flex size-10 rotate-90 items-center justify-center rounded-full p-0 transition-[colors,transform] hover:bg-gray-50 hover:text-inherit active:scale-[0.98]",
@@ -183,7 +182,6 @@ const CarouselNext = forwardRef<HTMLButtonElement, React.ComponentProps<typeof B
   return (
     <Button
       ref={ref}
-      isAnimated={false}
       variant="primary"
       size="lg"
       className={cn(

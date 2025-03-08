@@ -1,5 +1,3 @@
-"use client"
-
 import { FadeOutMask } from "components/fade-out-mask"
 import { AnimatePresence, motion } from "motion/react"
 import { CloseIcon } from "components/icons/close-icon"
@@ -22,7 +20,7 @@ export function ActiveFilters({ filtersCount, setShowFilterTags, showFilterTags,
       <div className="flex items-baseline justify-between pb-1 tracking-tight">
         <p className="text-sm font-medium">{filtersCount === 0 ? "No filters selected" : `Active filters (${filtersCount})`}</p>
         <button
-          className={cn("duration-[200ms] rounded-md bg-transparent px-1.5 py-0.5 text-xs transition duration-200 hover:bg-gray-100", filtersActive ? "visible" : "hidden")}
+          className={cn("rounded-md bg-transparent px-1.5 py-0.5 text-xs transition duration-200 hover:bg-gray-100", filtersActive ? "visible" : "hidden")}
           onClick={() => setShowFilterTags(!showFilterTags)}
         >
           {showFilterTags ? "Hide" : "Show"}

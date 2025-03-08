@@ -12,6 +12,9 @@ interface SimilarProductsSectionProps {
 export async function SimilarProductsSection({ slug, objectID, basePath }: SimilarProductsSectionProps) {
   const items = await getSimilarProducts(slug, objectID)
 
+  if (items.length <= 0) {
+    return null
+  }
   return (
     <section className="my-10">
       <ContextReporter similarProducts={items} />

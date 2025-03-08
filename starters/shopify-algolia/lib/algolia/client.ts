@@ -46,21 +46,25 @@ const search = async <T extends Record<string, any>>(args: SearchSingleIndexProp
 const getAllResults = async <T extends Record<string, any>>(client: ReturnType<typeof algoliaClient>, args: BrowseProps) => {
   const allHits: T[] = []
   let totalPages: number
-  let currentPage = 0
+  let cursor: string | undefined
 
   do {
-    const { hits, nbPages } = await client.browse<T>({
+    const {
+      hits,
+      nbPages,
+      cursor: nextCursor,
+    } = await client.browse<T>({
       ...args,
       browseParams: {
         ...args.browseParams,
         hitsPerPage: 1000,
-        page: currentPage,
+        cursor,
       },
     })
     allHits.push(...hits)
     totalPages = nbPages || 0
-    currentPage++
-  } while (currentPage < totalPages)
+    cursor = nextCursor
+  } while (cursor)
 
   return { hits: allHits, totalPages }
 }

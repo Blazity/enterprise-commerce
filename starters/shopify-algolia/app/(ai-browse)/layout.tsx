@@ -17,7 +17,6 @@ import { SidebarProvider } from "components/ui/sidebar"
 import { ChatSidebar } from "./_components/chat-sidebar"
 import { navigationItems } from "utils/nav-items"
 import { AiCommerceProvider } from "./_components/ai-commerce-provider"
-import { SidebarButton } from "./_components/sidebar-button"
 
 export default function AiSearchLayout({ children }: { children: React.ReactNode }) {
   return (

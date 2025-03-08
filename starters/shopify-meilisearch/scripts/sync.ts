@@ -9,6 +9,7 @@ import { isOptIn } from "utils/opt-in"
 import { reviewsClient } from "lib/reviews/client"
 import { CommerceProduct } from "types"
 import { ProductEnrichmentBuilder } from "utils/enrich-product"
+import type { Review } from "lib/reviews/types"
 
 async function sync() {
   console.log("🚀 Starting sync process...")
@@ -32,7 +33,16 @@ async function sync() {
     console.log(`✓ Found ${hierarchicalCategories.items.length} hierarchical categories`)
 
     console.log("🔄 Enriching products with hierarchical data...")
-    const reviews = isOptIn("reviews") ? await reviewsClient.getAllProductReviews() : []
+
+    const reviews = isOptIn("reviews")
+      ? await (async () => {
+          console.log("🔄 Fetching reviews from Judge...")
+          const reviews = await reviewsClient.getAllProductReviews()
+          console.log(`✓ Found ${reviews.length} reviews`)
+
+          return reviews
+        })()
+      : []
 
     const enrichedProducts = allProducts.map((product) =>
       new ProductEnrichmentBuilder(product).withHierarchicalCategories(hierarchicalCategories.items, HIERARCHICAL_SEPARATOR).withReviews(reviews).build()
@@ -62,6 +72,19 @@ async function sync() {
 
     await updateMeilisearchDocuments(env.MEILISEARCH_PRODUCTS_INDEX, deltaProducts, "products")
     await updateMeilisearchDocuments(env.MEILISEARCH_CATEGORIES_INDEX, deltaCategories, "categories")
+
+    if (isOptIn("reviews") && env.MEILISEARCH_REVIEWS_INDEX) {
+      const { results: allIndexReviews } = await searchClient.getDocuments({
+        indexName: env.MEILISEARCH_REVIEWS_INDEX,
+        options: {
+          limit: 10000,
+        },
+      })
+      console.log(`✓ Found ${allIndexReviews.length} reviews in Meilisearch`)
+      const deltaReviews = calculateReviewDelta(reviews, allIndexReviews)
+      await updateMeilisearchDocuments(env.MEILISEARCH_REVIEWS_INDEX, deltaReviews, "reviews")
+      console.log(`✓ Updated ${deltaReviews.length} reviews in Meilisearch`)
+    }
 
     if (deltaProducts.length === 0 && deltaCategories.length === 0) {
       console.log("✨ Nothing to sync, looks like you're all set!")
@@ -105,6 +128,18 @@ function calculateCategoryDelta(categories: PlatformProduct["collections"], allI
     const existingCategory = allIndexCategoriesMap.get(category.id)
     if (!existingCategory || !isEqual(category, existingCategory)) {
       acc.push(category)
+    }
+    return acc
+  }, [])
+}
+
+function calculateReviewDelta(reviews: Review[], allIndexReviews: any[]) {
+  const allIndexReviewsMap = new Map(allIndexReviews.map((review) => [review.id, review]))
+
+  return reviews.reduce<Array<any>>((acc, review) => {
+    const existingReview = allIndexReviewsMap.get(review.id)
+    if (!existingReview || !isEqual(review, existingReview)) {
+      acc.push(review)
     }
     return acc
   }, [])

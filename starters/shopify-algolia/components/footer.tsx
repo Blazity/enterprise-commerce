@@ -12,7 +12,7 @@ export function Footer() {
             <p>Subscribe to receive updates, access to exclusive deals, and more.</p>
             <div className="space-y-2 sm:max-w-md">
               <Input type="email" placeholder="Enter your email" aria-label="Email for newsletter" />
-              <Button type="submit" className="duration-[200ms] w-full transition-[transform,background] hover:bg-black/85 active:scale-[0.99]">
+              <Button type="submit" className="w-full transition-[transform,background] duration-200 hover:bg-black/85 active:scale-[0.99]">
                 Subscribe
               </Button>
             </div>
