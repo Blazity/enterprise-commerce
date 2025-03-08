@@ -71,7 +71,7 @@ export function CartSheet({ cart, isOpen, onCartClose, isPending }: CartSheetPro
                 <p>Total</p>
                 <p className="text-right text-base text-black ">{totalFomatted}</p>
               </div>
-              <Button variant="secondary" isAnimated={false} className="w-full justify-center text-center hover:text-white" size="lg" onClick={() => router.push(cart.checkoutUrl)}>
+              <Button variant="secondary" className="w-full justify-center text-center hover:text-white" size="lg" onClick={() => router.push(cart.checkoutUrl)}>
                 Proceed to Checkout
               </Button>
             </div>
