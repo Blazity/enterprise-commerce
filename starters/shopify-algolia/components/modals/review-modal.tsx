@@ -35,6 +35,12 @@ export function ReviewModal() {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      rating: 1,
+      body: "",
+      name: "",
+      email: "",
+    },
   })
 
   async function onSubmit(payload: z.infer<typeof formSchema>) {
