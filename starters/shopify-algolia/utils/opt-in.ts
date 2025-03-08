@@ -4,7 +4,7 @@ type Feature = "reviews" | "ai-reviews" | "altTags"
 
 const features: Record<Feature, Record<"message" | "predicate", unknown>> = {
   reviews: {
-    message: "No keys provided for reviews feature, to opt-in set environment variables: JUDGE_API_TOKEN, JUDGE_BASE_URL, SHOPIFY_STORE_DOMAIN",
+    message: "No keys provided for reviews feature, to opt-in set environment variables: JUDGE_API_TOKEN, JUDGE_BASE_URL, SHOPIFY_STORE_DOMAIN, ALGOLIA_REVIEWS_INDEX",
     predicate: !!env.JUDGE_BASE_URL && !!env.JUDGE_API_TOKEN && !!env.SHOPIFY_STORE_DOMAIN && env.ALGOLIA_REVIEWS_INDEX,
   },
   "ai-reviews": {

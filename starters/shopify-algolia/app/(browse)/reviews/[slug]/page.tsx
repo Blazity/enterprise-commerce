@@ -27,7 +27,7 @@ export default async function ProductReviews(props: ProductReviewsPageProps) {
 
   const { slug } = params
 
-  const page = searchParams.page ? parseInt(searchParams.page as string) : 1
+  const page = searchParams.page ? parseInt(searchParams.page as string) : 0
 
   const [product, { reviews, total: totalReviews }] = await Promise.all([
     getProduct(removeOptionsFromUrl(slug)),
