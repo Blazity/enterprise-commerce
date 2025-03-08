@@ -125,12 +125,12 @@ export function FacetsContent({ independentFacetDistribution, facetDistribution,
           showFilterTags={showFilterTags}
           setShowFilterTags={setShowFilterTags}
           filtersActive={filtersActive}
-          filters={flattenedFilters}
+          filters={flattenedFilters as string[]}
           page={page}
           removeTag={removeTag}
         />
 
-        <button className="mb-3 mt-3 inline-flex cursor-pointer bg-white text-xs text-black underline underline-offset-2" onClick={() => resetAllFilters()}>
+        <button className="my-3 inline-flex cursor-pointer bg-white text-xs text-black underline underline-offset-2" onClick={() => resetAllFilters()}>
           Clear filters
         </button>
       </div>

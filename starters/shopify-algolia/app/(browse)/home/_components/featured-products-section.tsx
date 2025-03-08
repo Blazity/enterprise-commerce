@@ -1,6 +1,5 @@
 import { ProductCard } from "components/product-card"
 import { CommerceProduct } from "types"
-import { cn } from "utils/cn"
 
 export const FeaturedProductsSection = ({
   products,
