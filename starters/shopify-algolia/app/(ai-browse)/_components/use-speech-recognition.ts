@@ -9,17 +9,30 @@ type UseSpeechRecognitionOptions = {
   onEndOfUtterance: () => void
   onError: (message: string) => void
   silenceTimeoutMs?: number
+  maxAudioDurationMs?: number
 }
 
 type CachedToken = {
   token: string
   timestamp: number
 }
+const ERROR_MESSAGES: Record<SpeechSDK.CancellationErrorCode, string> = {
+  [SpeechSDK.CancellationErrorCode.NoError]: "No error occurred during speech recognition.",
+  [SpeechSDK.CancellationErrorCode.AuthenticationFailure]: "Authentication failed. Please try again later.",
+  [SpeechSDK.CancellationErrorCode.BadRequestParameters]: "Invalid recognition parameters provided.",
+  [SpeechSDK.CancellationErrorCode.TooManyRequests]: "Too many requests. Please wait and try again.",
+  [SpeechSDK.CancellationErrorCode.ConnectionFailure]: "Connection failed. Check your network and try again.",
+  [SpeechSDK.CancellationErrorCode.ServiceTimeout]: "Service timed out. Please try again later.",
+  [SpeechSDK.CancellationErrorCode.ServiceError]: "Service encountered an error. Please try again.",
+  [SpeechSDK.CancellationErrorCode.RuntimeError]: "An unexpected runtime error occurred.",
+  [SpeechSDK.CancellationErrorCode.Forbidden]: "Quota exceeded. Please wait and try again.",
+}
 
-export const useSpeechRecognition = ({ onTranscript, onEndOfUtterance, onError, silenceTimeoutMs = 2000 }: UseSpeechRecognitionOptions) => {
+export const useSpeechRecognition = ({ onTranscript, onEndOfUtterance, onError, silenceTimeoutMs = 2000, maxAudioDurationMs = 15000 }: UseSpeechRecognitionOptions) => {
   const [recordingState, setRecordingState] = useState<RecordingState>("idle")
   const recognizerRef = useRef<SpeechSDK.SpeechRecognizer | null>(null)
   const silenceTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const maxDurationTimeoutRef = useRef<NodeJS.Timeout | null>(null)
   const tokenRef = useRef<CachedToken | null>(null)
   const onEndOfUtteranceRef = useRef(onEndOfUtterance)
 
@@ -61,6 +74,10 @@ export const useSpeechRecognition = ({ onTranscript, onEndOfUtterance, onError, 
       clearTimeout(silenceTimeoutRef.current)
       silenceTimeoutRef.current = null
     }
+    if (maxDurationTimeoutRef.current) {
+      clearTimeout(maxDurationTimeoutRef.current)
+      maxDurationTimeoutRef.current = null
+    }
     setRecordingState("idle")
   }, [])
 
@@ -76,7 +93,7 @@ export const useSpeechRecognition = ({ onTranscript, onEndOfUtterance, onError, 
         const token = await getValidToken()
 
         const speechConfig = SpeechSDK.SpeechConfig.fromAuthorizationToken(token, env.NEXT_PUBLIC_AZURE_AI_SPEECH_REGION || "")
-        speechConfig.speechRecognitionLanguage = "en-US"
+        speechConfig.speechRecognitionLanguage = env.NEXT_PUBLIC_AZURE_AI_SPEECH_LANGUAGE
 
         const audioConfig = SpeechSDK.AudioConfig.fromDefaultMicrophoneInput()
         const recognizer = new SpeechSDK.SpeechRecognizer(speechConfig, audioConfig)
@@ -96,29 +113,38 @@ export const useSpeechRecognition = ({ onTranscript, onEndOfUtterance, onError, 
               clearTimeout(silenceTimeoutRef.current)
             }
             silenceTimeoutRef.current = setTimeout(stopRecognitionOnEndOfUtterance, silenceTimeoutMs)
-          } else if (e.result.reason === SpeechSDK.ResultReason.NoMatch) {
-            console.log("No speech could be recognized")
           }
         }
 
         recognizer.canceled = (_, e) => {
           if (e.reason === SpeechSDK.CancellationReason.Error) {
-            onError(`Couldn't recognize speech. Please try again.`)
+            onError(ERROR_MESSAGES[e.errorCode])
+            console.error(e.errorDetails)
           }
           stopRecognition()
         }
 
         recognizer.sessionStopped = stopRecognition
 
-        recognizer.startContinuousRecognitionAsync()
-        setRecordingState("recording")
+        recognizer.startContinuousRecognitionAsync(
+          () => {
+            setRecordingState("recording")
+            maxDurationTimeoutRef.current = setTimeout(() => {
+              stopRecognitionOnEndOfUtterance()
+            }, maxAudioDurationMs)
+          },
+          (err) => {
+            onError(`Failed to initiate speech recognition. Please try again. (${err})`)
+            setRecordingState("idle")
+          }
+        )
       } catch (error) {
         console.error(error)
         onError("Failed to initiate speech recognition. Please try again.")
         setRecordingState("idle")
       }
     },
-    [onTranscript, onError, silenceTimeoutMs, getValidToken, stopRecognition, stopRecognitionOnEndOfUtterance]
+    [onTranscript, onError, silenceTimeoutMs, maxAudioDurationMs, getValidToken, stopRecognition, stopRecognitionOnEndOfUtterance]
   )
 
   useEffect(() => {

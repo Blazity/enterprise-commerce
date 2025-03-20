@@ -34,6 +34,8 @@ export const env = createEnv({
   },
   client: {
     NEXT_PUBLIC_AZURE_AI_SPEECH_REGION: z.string().optional(),
+    NEXT_PUBLIC_AZURE_AI_SPEECH_ENABLED: z.enum(["true", "false"]).optional().default("false"),
+    NEXT_PUBLIC_AZURE_AI_SPEECH_LANGUAGE: z.string().optional().default("en-US"),
   },
   runtimeEnv: {
     IS_DEMO_MODE: process.env.NEXT_PUBLIC_IS_DEMO_MODE,
@@ -60,6 +62,8 @@ export const env = createEnv({
     CRON_SECRET: process.env.CRON_SECRET,
     AZURE_AI_SPEECH_BASE_URL: process.env.AZURE_AI_SPEECH_BASE_URL,
     AZURE_AI_SPEECH_KEY: process.env.AZURE_AI_SPEECH_KEY,
-    NEXT_PUBLIC_AZURE_AI_SPEECH_REGION: process.env.NEXT_PUBLIC_AZURE_AI_SPEECH_REGION
+    NEXT_PUBLIC_AZURE_AI_SPEECH_REGION: process.env.NEXT_PUBLIC_AZURE_AI_SPEECH_REGION,
+    NEXT_PUBLIC_AZURE_AI_SPEECH_ENABLED: process.env.NEXT_PUBLIC_AZURE_AI_SPEECH_ENABLED,
+    NEXT_PUBLIC_AZURE_AI_SPEECH_LANGUAGE: process.env.NEXT_PUBLIC_AZURE_AI_SPEECH_LANGUAGE || "en-US",
   },
 })

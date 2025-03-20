@@ -8,6 +8,7 @@ import { generateUUID } from "utils/generate-uuid"
 import { Mic, SendHorizontal, X } from "lucide-react"
 import type { Message } from "ai"
 import { useSpeechRecognition } from "./use-speech-recognition"
+import { env } from "env.mjs"
 
 type TextboxProps = { messages: Message[] }
 
@@ -16,6 +17,9 @@ export const Textbox: FC<TextboxProps> = ({ messages }) => {
   const formRef = useRef<HTMLFormElement>(null)
 
   const { handleSubmit, createNewSuggestions, setInput, isLoading, input } = useAiCommerce()
+
+  const isSpeechEnabled = env.NEXT_PUBLIC_AZURE_AI_SPEECH_ENABLED === "true"
+  const isInputEmpty = !input || input.trim() === ""
 
   const handleInput = useCallback(
     (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -32,33 +36,39 @@ export const Textbox: FC<TextboxProps> = ({ messages }) => {
 
   const handleSubmitForm = useCallback(
     (e?: React.FormEvent<HTMLFormElement>) => {
-      if (recordingState === "recording") {
+      if (e) e.preventDefault()
+
+      if (isSpeechEnabled && recordingState === "recording") {
         stopRecognition()
       }
-      if (e) e.preventDefault()
+
+      if (isInputEmpty) return
+
       handleSubmit(e)
       createNewSuggestions([...messages, { id: generateUUID(), role: "user", content: input }])
     },
-    [handleSubmit, createNewSuggestions, messages, input, recordingState, stopRecognition]
+    [handleSubmit, createNewSuggestions, messages, input, recordingState, stopRecognition, isSpeechEnabled, isInputEmpty]
   )
 
   const handleDiscard = useCallback(() => {
-    stopRecognition()
+    if (isSpeechEnabled) {
+      stopRecognition()
+    }
     setInput("")
-  }, [stopRecognition, setInput])
+  }, [stopRecognition, setInput, isSpeechEnabled])
 
   return (
     <form ref={formRef} onSubmit={handleSubmitForm} className="relative">
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.25, delay: 0.18 }}>
         <Textarea
           ref={textareaRef}
-          placeholder={recordingState === "recording" ? "Recording..." : "Send a message..."}
+          placeholder={isSpeechEnabled && recordingState === "recording" ? "Recording..." : "Send a message..."}
           value={input}
           onChange={handleInput}
-          disabled={recordingState === "recording"}
+          disabled={isSpeechEnabled && recordingState === "recording"}
           className={cn(
             "max-h-[calc(50dvh)] min-h-[24px] resize-none overflow-hidden rounded-xl bg-white pb-10 text-base focus-visible:ring-gray-300",
-            recordingState === "recording" && "opacity-50"
+            isSpeechEnabled && recordingState === "recording" && "opacity-50"
           )}
           rows={3}
           autoFocus
@@ -77,7 +87,7 @@ export const Textbox: FC<TextboxProps> = ({ messages }) => {
         <div className="absolute inset-x-2 bottom-2 flex items-center">
           <div className="ml-auto flex items-center gap-2">
             <AnimatePresence mode="wait">
-              {recordingState === "recording" && (
+              {isSpeechEnabled && recordingState === "recording" && (
                 <motion.button
                   key="discard"
                   type="button"
@@ -96,20 +106,24 @@ export const Textbox: FC<TextboxProps> = ({ messages }) => {
             </AnimatePresence>
 
             <motion.button
-              type={recordingState === "recording" || input.length > 0 ? "submit" : "button"}
-              onClick={recordingState === "idle" && input.length === 0 ? startRecognition : undefined}
-              className="flex size-8 items-center justify-center rounded-full p-1.5 text-gray-600 hover:bg-gray-200"
+              type="submit"
+              onClick={isSpeechEnabled && recordingState === "idle" && isInputEmpty ? startRecognition : undefined}
+              disabled={!isSpeechEnabled && isInputEmpty}
+              className={cn(
+                "flex size-8 items-center justify-center rounded-full p-1.5 text-gray-600 hover:bg-gray-200",
+                !isSpeechEnabled && isInputEmpty && "cursor-not-allowed opacity-50"
+              )}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
               <AnimatePresence mode="wait">
-                {recordingState === "recording" || input.length > 0 ? (
-                  <motion.div key="send" initial={{ opacity: 0, rotate: -45 }} animate={{ opacity: 1, rotate: 0 }} exit={{ opacity: 0, rotate: 45 }} transition={{ duration: 0.2 }}>
-                    <SendHorizontal size={18} />
-                  </motion.div>
-                ) : (
+                {isSpeechEnabled && recordingState !== "recording" && input.length === 0 ? (
                   <motion.div key="mic" initial={{ opacity: 0, rotate: -45 }} animate={{ opacity: 1, rotate: 0 }} exit={{ opacity: 0, rotate: 45 }} transition={{ duration: 0.2 }}>
                     <Mic size={18} />
+                  </motion.div>
+                ) : (
+                  <motion.div key="send" initial={{ opacity: 0, rotate: -45 }} animate={{ opacity: 1, rotate: 0 }} exit={{ opacity: 0, rotate: 45 }} transition={{ duration: 0.2 }}>
+                    <SendHorizontal size={18} />
                   </motion.div>
                 )}
               </AnimatePresence>
