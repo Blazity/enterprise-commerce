@@ -16,6 +16,7 @@ resource account 'Microsoft.CognitiveServices/accounts@2023-05-01' = {
     name: sku
   }
   tags: tags
+  properties: {}
 }
 
 
