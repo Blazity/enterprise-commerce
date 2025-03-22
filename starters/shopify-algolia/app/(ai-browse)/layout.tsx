@@ -13,10 +13,9 @@ import { mobileInlineScript } from "components/navigation-bar/mobile-inline-scri
 import { Footer } from "components/footer"
 import { Modals } from "components/modals/modals"
 import DraftToolbar from "components/draft-toolbar"
-import { SidebarProvider } from "components/ui/sidebar"
-import { ChatSidebar } from "./_components/chat-sidebar"
 import { navigationItems } from "utils/nav-items"
 import { AiCommerceProvider } from "./_components/ai-commerce-provider"
+import { FloatingChatBox } from "./_components/floating-chat-box"
 
 export default function AiSearchLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -27,33 +26,24 @@ export default function AiSearchLayout({ children }: { children: React.ReactNode
         </Script>
         <NuqsAdapter>
           <AiCommerceProvider>
-            <SidebarProvider
-              style={
-                {
-                  "--sidebar-width": "20rem",
-                  "--sidebar-width-mobile": "20rem",
-                } as React.CSSProperties
-              }
-            >
-              <ChatSidebar />
-              <div className="flex-1">
-                <NavigationBar items={navigationItems} />
-                {children}
-                <Footer />
+            <div className="relative flex-1">
+              <NavigationBar items={navigationItems} />
+              {children}
+              <Footer />
 
-                {/* Independent from the main content */}
+              {/* Independent from the main content */}
 
-                <Modals />
-                <CartView />
-                <Toaster position="bottom-left" />
-                <DraftToolbar />
-                <Suspense>
-                  <FlagValues />
-                </Suspense>
-                <ThirdParties />
-                <DemoModeAlert />
-              </div>
-            </SidebarProvider>
+              <Modals />
+              <CartView />
+              <Toaster position="bottom-left" />
+              <DraftToolbar />
+              <Suspense>
+                <FlagValues />
+              </Suspense>
+              <ThirdParties />
+              <DemoModeAlert />
+              <FloatingChatBox />
+            </div>
           </AiCommerceProvider>
         </NuqsAdapter>
       </body>
