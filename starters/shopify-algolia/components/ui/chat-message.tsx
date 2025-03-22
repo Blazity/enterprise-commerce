@@ -10,15 +10,16 @@ import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { useAddProductStore } from "stores/add-product-store"
 import { useCartStore } from "stores/cart-store"
+import { CreditCard, SearchCheck, ShoppingCart } from "lucide-react"
 
-const chatBubbleVariants = cva("group/message relative break-words rounded-lg p-3 text-sm sm:max-w-[70%]", {
+const chatBubbleVariants = cva("group/message relative break-words rounded-lg text-sm sm:max-w-[70%]", {
   variants: {
     role: {
-      user: "bg-gray-200 text-black",
-      assistant: "bg-gray-400/70 text-black",
+      user: "bg-gray-200 text-black px-3 py-2",
+      assistant: "text-black sm:max-w-[90%]",
       data: "",
       system: "",
-      toolInvocation: "font-bold text-sm bg-orange-700 text-orange-100", // abstract, normally tool invocations are marked as assistant role
+      toolInvocation: "border border-gray-300 px-3 py-2 flex items-center gap-2 hover:underline",
     },
     animation: {
       none: "",
@@ -65,6 +66,7 @@ export interface ChatMessageProps extends Message {
   actions?: React.ReactNode
   showToolMessages?: boolean
 }
+
 export const ChatMessage: React.FC<ChatMessageProps> = ({ role, content, createdAt, showTimeStamp = false, animation = "scale", toolInvocations, showToolMessages, actions }) => {
   const isUser = role === "user"
 
@@ -73,7 +75,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ role, content, created
     minute: "2-digit",
   })
 
-  if (!!toolInvocations?.length) {
+  if (toolInvocations?.length) {
     return toolInvocations.map((toolInvocation) => {
       const { toolName, toolCallId, state } = toolInvocation
 
@@ -82,57 +84,61 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ role, content, created
           const { result } = toolInvocation
           return <NavigationToolResult key={toolCallId} result={result} animation={animation} />
         }
-
         if (toolName === "addToCart") {
           const { result } = toolInvocation
-          return <AddedToCart key={toolCallId} variant={result.variant} product={result.product} />
+          return <AddedToCart key={toolCallId} variant={result.variant} product={result.product} animation={animation} />
         }
         if (toolName === "goToCheckout") {
           const { result } = toolInvocation
-          return <MoveToCheckout key={toolCallId} checkoutUrl={result.checkoutUrl} />
+          return <MoveToCheckout key={toolCallId} checkoutUrl={result.checkoutUrl} animation={animation} />
         }
       }
+      return null
     })
   }
 
   return (
     <motion.div initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.2 }} className={cn("flex flex-col", isUser ? "items-end" : "items-start")}>
       <div className={cn(chatBubbleVariants({ role, animation }))}>
-        <div className="text-black/90">
+        <motion.div className="text-black/90" animate={{ opacity: 1 }} initial={{ opacity: 0 }}>
           <MarkdownRenderer>{content}</MarkdownRenderer>
-        </div>
+        </motion.div>
 
         {!!(role === "assistant" && actions && showToolMessages) && (
           <div className="absolute -bottom-4 right-2 flex space-x-1 rounded-lg border p-1 opacity-0 transition-opacity group-hover/message:opacity-100">{actions}</div>
         )}
       </div>
 
-      {showTimeStamp && createdAt ? (
-        <span className={cn("mt-1 block px-1 text-xs opacity-50", animation !== "none" && "duration-500 animate-in fade-in-0")}>{formattedTime}</span>
-      ) : null}
+      {showTimeStamp && createdAt ? <span className={cn("mt-1 block text-xs opacity-50", role === "user" && "px-1")}>{formattedTime}</span> : null}
     </motion.div>
   )
 }
 
 const NavigationToolResult = ({ animation, result }) => {
   const router = useRouter()
+
   useEffect(() => {
     router.push(result)
   }, [result, router])
 
+  const navigationMessages = {
+    "/search": "Searched for products",
+    "/product": "Navigated to product page",
+    "/category": "Navigated to category",
+  }
+
+  const message = Object.keys(navigationMessages).reduce((defaultMessage, path) => (result.includes(path) ? navigationMessages[path] : defaultMessage), "Navigated to page")
+
   return (
     <div className={cn("flex flex-col", "items-start")}>
-      <div className={chatBubbleVariants({ role: "toolInvocation", animation })}>
-        {/* @TODO: This can be improved if AI response provides a short navigation summary too */}
-        <Link prefetch={false} href={result}>
-          Navigation result
-        </Link>
-      </div>
+      <Link prefetch={false} href={result} className={chatBubbleVariants({ role: "toolInvocation", animation })}>
+        <SearchCheck size={16} className="text-gray-400" /> {message}
+      </Link>
     </div>
   )
 }
 
-const AddedToCart = ({ variant, product }) => {
+const AddedToCart = ({ variant, product, animation }) => {
   const setProduct = useAddProductStore((s) => s.setProduct)
   const clean = useAddProductStore((s) => s.clean)
   const refresh = useCartStore((s) => s.refresh)
@@ -147,14 +153,26 @@ const AddedToCart = ({ variant, product }) => {
     refresh()
   }, [setProduct, clean, refresh, product, variant])
 
-  return null
+  return (
+    <div className={cn("flex flex-col items-start")}>
+      <div className={chatBubbleVariants({ role: "toolInvocation", animation })}>
+        <ShoppingCart size={16} className="text-gray-400" /> Added product to cart
+      </div>
+    </div>
+  )
 }
 
-const MoveToCheckout = ({ checkoutUrl }) => {
+const MoveToCheckout = ({ checkoutUrl, animation }) => {
   const router = useRouter()
   useEffect(() => {
     router.push(checkoutUrl)
   }, [checkoutUrl, router])
 
-  return null
+  return (
+    <div className={cn("flex flex-col", "items-start")}>
+      <Link prefetch={false} href={checkoutUrl} className={chatBubbleVariants({ role: "toolInvocation", animation })}>
+        <CreditCard size={16} className="text-gray-400" /> Navigated to checkout
+      </Link>
+    </div>
+  )
 }
