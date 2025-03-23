@@ -11,6 +11,7 @@ import Link from "next/link"
 import { useAddProductStore } from "stores/add-product-store"
 import { useCartStore } from "stores/cart-store"
 import { CreditCard, SearchCheck, ShoppingCart } from "lucide-react"
+import { useToolInvocationStore } from "stores/tool-invocation-store"
 
 const chatBubbleVariants = cva("group/message relative break-words rounded-lg text-sm sm:max-w-[70%]", {
   variants: {
@@ -82,15 +83,15 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ role, content, created
       if (state === "result") {
         if (toolName === "navigateUser") {
           const { result } = toolInvocation
-          return <NavigationToolResult key={toolCallId} result={result} animation={animation} />
+          return <NavigationToolResult key={toolCallId} result={result} animation={animation} toolCallId={toolCallId} />
         }
         if (toolName === "addToCart") {
           const { result } = toolInvocation
-          return <AddedToCart key={toolCallId} variant={result.variant} product={result.product} animation={animation} />
+          return <AddedToCart key={toolCallId} variant={result.variant} product={result.product} animation={animation} toolCallId={toolCallId} />
         }
         if (toolName === "goToCheckout") {
           const { result } = toolInvocation
-          return <MoveToCheckout key={toolCallId} checkoutUrl={result.checkoutUrl} animation={animation} />
+          return <MoveToCheckout key={toolCallId} checkoutUrl={result.checkoutUrl} animation={animation} toolCallId={toolCallId} />
         }
       }
       return null
@@ -114,12 +115,16 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ role, content, created
   )
 }
 
-const NavigationToolResult = ({ animation, result }) => {
+const NavigationToolResult = ({ animation, result, toolCallId }) => {
   const router = useRouter()
+  const { hasToolCallExecuted, markToolCallAsExecuted } = useToolInvocationStore()
 
   useEffect(() => {
-    router.push(result)
-  }, [result, router])
+    if (!hasToolCallExecuted(toolCallId)) {
+      router.push(result)
+      markToolCallAsExecuted(toolCallId)
+    }
+  }, [result, router, toolCallId, hasToolCallExecuted, markToolCallAsExecuted])
 
   const navigationMessages = {
     "/search": "Searched for products",
@@ -138,35 +143,44 @@ const NavigationToolResult = ({ animation, result }) => {
   )
 }
 
-const AddedToCart = ({ variant, product, animation }) => {
+const AddedToCart = ({ variant, product, animation, toolCallId }) => {
   const setProduct = useAddProductStore((s) => s.setProduct)
   const clean = useAddProductStore((s) => s.clean)
   const refresh = useCartStore((s) => s.refresh)
+  const { hasToolCallExecuted, markToolCallAsExecuted } = useToolInvocationStore()
 
   useEffect(() => {
-    setTimeout(() => {
-      setProduct({ product, combination: variant })
-    }, 300)
+    if (!hasToolCallExecuted(toolCallId)) {
+      setTimeout(() => {
+        setProduct({ product, combination: variant })
+      }, 300)
 
-    setTimeout(() => clean(), 4500)
+      setTimeout(() => clean(), 4500)
 
-    refresh()
-  }, [setProduct, clean, refresh, product, variant])
+      refresh()
+      markToolCallAsExecuted(toolCallId)
+    }
+  }, [setProduct, clean, refresh, product, variant, toolCallId, hasToolCallExecuted, markToolCallAsExecuted])
 
   return (
     <div className={cn("flex flex-col items-start")}>
-      <div className={chatBubbleVariants({ role: "toolInvocation", animation })}>
+      <div className={cn(chatBubbleVariants({ role: "toolInvocation", animation }), "hover:no-underline")}>
         <ShoppingCart size={16} className="text-gray-400" /> Added product to cart
       </div>
     </div>
   )
 }
 
-const MoveToCheckout = ({ checkoutUrl, animation }) => {
+const MoveToCheckout = ({ checkoutUrl, animation, toolCallId }) => {
   const router = useRouter()
+  const { hasToolCallExecuted, markToolCallAsExecuted } = useToolInvocationStore()
+
   useEffect(() => {
-    router.push(checkoutUrl)
-  }, [checkoutUrl, router])
+    if (!hasToolCallExecuted(toolCallId)) {
+      router.push(checkoutUrl)
+      markToolCallAsExecuted(toolCallId)
+    }
+  }, [checkoutUrl, router, toolCallId, hasToolCallExecuted, markToolCallAsExecuted])
 
   return (
     <div className={cn("flex flex-col", "items-start")}>
