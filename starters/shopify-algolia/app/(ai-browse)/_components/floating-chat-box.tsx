@@ -10,7 +10,7 @@ import { useAiCommerce } from "./ai-commerce-provider"
 import { useSpeechRecognition } from "./use-speech-recognition"
 import { env } from "env.mjs"
 import type { Message } from "ai"
-import { useMediaQuery } from "@uidotdev/usehooks"
+import { useMediaQuery } from "usehooks-ts"
 
 const SUGGESTED_PROMPTS = ["Show me all products under $100", "Go to checkout", "Add this product to cart"]
 
@@ -275,7 +275,7 @@ const ChatInput = ({ input, setInput, handleSubmit }: ChatInputProps) => {
 }
 
 export const FloatingChatBox = () => {
-  const isMobile = useMediaQuery("(max-width: 768px)")
+  const isMobile = useMediaQuery("(max-width: 768px)", { initializeWithValue: false })
   const [isOpen, setIsOpen] = useState(false)
   const { messages, isLoading, input, setInput, handleSubmit, append } = useAiCommerce()
 
