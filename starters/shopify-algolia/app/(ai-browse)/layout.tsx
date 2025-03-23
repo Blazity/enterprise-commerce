@@ -26,24 +26,22 @@ export default function AiSearchLayout({ children }: { children: React.ReactNode
         </Script>
         <NuqsAdapter>
           <AiCommerceProvider>
-            <div className="relative flex-1">
-              <NavigationBar items={navigationItems} />
-              {children}
-              <Footer />
+            <NavigationBar items={navigationItems} />
+            {children}
+            <Footer />
 
-              {/* Independent from the main content */}
+            {/* Independent from the main content */}
 
-              <Modals />
-              <CartView />
-              <Toaster position="bottom-left" />
-              <DraftToolbar />
-              <Suspense>
-                <FlagValues />
-              </Suspense>
-              <ThirdParties />
-              <DemoModeAlert />
-              <FloatingChatBox />
-            </div>
+            <Modals />
+            <CartView />
+            <Toaster position="bottom-left" />
+            <DraftToolbar />
+            <Suspense>
+              <FlagValues />
+            </Suspense>
+            <ThirdParties />
+            <DemoModeAlert />
+            <FloatingChatBox />
           </AiCommerceProvider>
         </NuqsAdapter>
       </body>
