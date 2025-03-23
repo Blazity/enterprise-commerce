@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react"
 import { AnimatePresence, motion } from "framer-motion"
-import { Mic, Minus, SendHorizontal, X, Zap } from "lucide-react"
+import { MessagesSquare, Mic, Minus, SendHorizontal, X, Zap } from "lucide-react"
 import { cn } from "utils/cn"
 import { Textarea } from "components/ui/textarea"
 import { MessageList } from "components/ui/message-list"
@@ -10,6 +10,7 @@ import { useAiCommerce } from "./ai-commerce-provider"
 import { useSpeechRecognition } from "./use-speech-recognition"
 import { env } from "env.mjs"
 import type { Message } from "ai"
+import { useMediaQuery } from "@uidotdev/usehooks"
 
 const SUGGESTED_PROMPTS = ["Show me all products under $100", "Go to checkout", "Add this product to cart"]
 
@@ -274,6 +275,7 @@ const ChatInput = ({ input, setInput, handleSubmit }: ChatInputProps) => {
 }
 
 export const FloatingChatBox = () => {
+  const isMobile = useMediaQuery("(max-width: 768px)")
   const [isOpen, setIsOpen] = useState(false)
   const { messages, isLoading, input, setInput, handleSubmit, append } = useAiCommerce()
 
@@ -286,6 +288,20 @@ export const FloatingChatBox = () => {
     open: {
       width: "360px",
       height: "450px",
+      opacity: 1,
+    },
+    mobileClosed: {
+      width: "48px",
+      height: "48px",
+      borderRadius: "24px",
+      maxWidth: "90vw",
+      opacity: 1,
+    },
+    mobileOpen: {
+      width: "500px",
+      maxWidth: "calc(100vw - 2rem)",
+      height: "450px",
+      borderRadius: "8px",
       opacity: 1,
     },
   }
@@ -301,81 +317,98 @@ export const FloatingChatBox = () => {
   )
 
   return (
-    <motion.div
-      className="fixed bottom-4 right-4 overflow-hidden rounded-lg bg-white shadow-lg md:bottom-8 md:right-8"
+    <motion.section
+      key={`chat-wrapper-${isMobile}`}
+      className="fixed bottom-4 right-4 overflow-hidden rounded-lg border border-gray-200 bg-white shadow-lg md:bottom-8 md:right-8"
       layoutId="chat-wrapper"
-      initial="closed"
-      animate={isOpen ? "open" : "closed"}
+      initial={isMobile ? "mobileClosed" : "closed"}
+      animate={isOpen ? (isMobile ? "mobileOpen" : "open") : isMobile ? "mobileClosed" : "closed"}
       variants={chatVariants}
-      transition={{
-        type: "spring",
-        duration: 0.4,
-        bounce: 0,
-      }}
+      transition={
+        isMobile
+          ? {
+              type: "spring",
+              duration: 0.6,
+              bounce: 0,
+            }
+          : {
+              type: "spring",
+              duration: 0.4,
+              bounce: 0,
+            }
+      }
     >
-      <div className="flex h-full flex-col">
-        <div className="flex shrink-0 items-center justify-between p-2">
-          <div className="flex items-center space-x-2">
-            <Zap className="size-5" />
-            <motion.span layoutId="title" className="text-sm font-medium text-gray-800">
-              Commerce Assistant
-            </motion.span>
-          </div>
-          <motion.button
-            layoutId="chatButton"
-            className={cn(isOpen ? "bg-transparent text-gray-600 hover:text-gray-800" : "rounded-md bg-black px-4 py-1 text-white transition-colors hover:bg-gray-800")}
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            <motion.span key={isOpen ? "open" : "closed"} animate={{ opacity: 1 }} initial={{ opacity: isOpen ? 1 : 0 }} transition={{ delay: 0.3 }}>
-              {isOpen ? <Minus className="size-5" /> : <span className="text-sm font-semibold">Chat</span>}
-            </motion.span>
-          </motion.button>
-        </div>
-        <AnimatePresence>
-          {isOpen && (
-            <motion.div
-              initial={{ opacity: 0, y: -32, filter: "blur(4px)" }}
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              exit={{ opacity: 0, y: 8, filter: "blur(4px)" }}
-              transition={{
-                type: "spring",
-                duration: 0.4,
-                bounce: 0,
-              }}
-              className="flex flex-1 flex-col overflow-hidden"
+      {isMobile && !isOpen ? (
+        <motion.button className="flex size-full items-center justify-center rounded-full bg-white" onClick={() => setIsOpen(true)}>
+          <motion.span animate={{ opacity: 1 }} initial={{ opacity: 0 }} transition={{ delay: 0.3 }}>
+            <MessagesSquare className="size-5 text-black" />
+          </motion.span>
+        </motion.button>
+      ) : (
+        <div className="flex h-full flex-col">
+          <div className="flex shrink-0 items-center justify-between p-2">
+            <div className="flex items-center space-x-2">
+              <Zap className="size-5" />
+              <motion.span layoutId="title" className="text-sm font-medium text-gray-800">
+                Commerce Assistant
+              </motion.span>
+            </div>
+            <motion.button
+              layoutId="chatButton"
+              className={cn(isOpen ? "bg-transparent text-gray-600 hover:text-gray-800" : "rounded-md bg-black px-4 py-1 text-white transition-colors hover:bg-gray-800")}
+              onClick={() => setIsOpen(!isOpen)}
             >
+              <motion.span key={isOpen ? "open" : "closed"} animate={{ opacity: 1 }} initial={{ opacity: isOpen ? 1 : 0 }} transition={{ delay: 0.3 }}>
+                {isOpen ? <Minus className="size-5" /> : <span className="text-sm font-semibold">Chat</span>}
+              </motion.span>
+            </motion.button>
+          </div>
+          <AnimatePresence>
+            {isOpen && (
               <motion.div
-                initial={{ scale: 0.4, opacity: 0, originX: 0.5, originY: 0.5 }}
-                animate={{ scale: 1, opacity: 1, originX: 0.5, originY: 0.5 }}
-                exit={{ scale: 0.4, opacity: 0, originX: 0.5, originY: 0.5 }}
+                initial={{ opacity: 0, y: -32, filter: "blur(4px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                exit={{ opacity: 0, y: 8, filter: "blur(4px)" }}
                 transition={{
                   type: "spring",
-                  duration: 0.3,
+                  duration: isMobile ? 0.5 : 0.4,
                   bounce: 0,
-                  delay: 0.05,
                 }}
-                className="flex-1 overflow-y-auto"
+                className="flex flex-1 flex-col overflow-hidden"
               >
-                <ChatMessages messages={messages} isLoading={isLoading} handleSuggestionSubmit={handleSuggestionSubmit} />
+                <motion.div
+                  initial={{ scale: 0.4, opacity: 0, originX: 0.5, originY: 0.5 }}
+                  animate={{ scale: 1, opacity: 1, originX: 0.5, originY: 0.5 }}
+                  exit={{ scale: 0.4, opacity: 0, originX: 0.5, originY: 0.5 }}
+                  transition={{
+                    type: "spring",
+                    duration: 0.3,
+                    bounce: 0,
+                    delay: 0.05,
+                  }}
+                  className="flex-1 overflow-y-auto"
+                >
+                  <ChatMessages messages={messages} isLoading={isLoading} handleSuggestionSubmit={handleSuggestionSubmit} />
+                </motion.div>
+                <motion.div
+                  initial={{ scale: 0.8, opacity: 0, originX: 0.5, originY: 0.5 }}
+                  animate={{ scale: 1, opacity: 1, originX: 0.5, originY: 0.5 }}
+                  exit={{ scale: 0.8, opacity: 0, originX: 0.5, originY: 0.5 }}
+                  transition={{
+                    type: "spring",
+                    duration: 0.3,
+                    bounce: 0,
+                    delay: 0.1,
+                  }}
+                  className="shrink-0"
+                >
+                  <ChatInput input={input} setInput={setInput} handleSubmit={handleSubmit} />
+                </motion.div>
               </motion.div>
-              <motion.div
-                initial={{ scale: 0.8, opacity: 0, originX: 0.5, originY: 0.5 }}
-                animate={{ scale: 1, opacity: 1, originX: 0.5, originY: 0.5 }}
-                exit={{ scale: 0.8, opacity: 0, originX: 0.5, originY: 0.5 }}
-                transition={{
-                  type: "spring",
-                  duration: 0.3,
-                  bounce: 0,
-                  delay: 0.1,
-                }}
-                className="shrink-0"
-              >
-                <ChatInput input={input} setInput={setInput} handleSubmit={handleSubmit} />
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-    </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      )}
+    </motion.section>
   )
 }
