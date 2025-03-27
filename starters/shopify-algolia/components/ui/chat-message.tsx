@@ -20,7 +20,7 @@ const chatBubbleVariants = cva("group/message relative break-words rounded-lg te
       assistant: "text-black sm:max-w-[90%]",
       data: "",
       system: "",
-      toolInvocation: "border border-gray-300 px-3 py-2 flex items-center gap-2 hover:underline",
+      toolInvocation: "border border-gray-300 px-3 py-2 md:w-full md:max-w-full flex items-center gap-2 hover:underline",
     },
     animation: {
       none: "",

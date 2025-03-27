@@ -9,7 +9,7 @@ import { useAppContextStore } from "stores/app-context-store"
 import { useCartStore } from "stores/cart-store"
 import { z } from "zod"
 
-interface AiCommerceContextType {
+export interface AiCommerceContextType {
   messages: Message[]
   append: (message: Message | CreateMessage, chatRequestOptions?: ChatRequestOptions) => Promise<string | null | undefined>
   input: string
