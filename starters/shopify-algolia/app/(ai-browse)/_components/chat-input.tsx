@@ -166,7 +166,10 @@ export const ChatInput: FC<ChatInputProps> = ({ input, setInput, handleSubmit, i
             type={recordingState !== "idle" ? "button" : "submit"}
             onClick={handleActionButtonClick}
             disabled={isChatInteractionDisabled}
-            className={cn("z-10 flex size-8 items-center justify-center rounded-full p-1.5 text-gray-700 hover:bg-gray-200", "disabled:cursor-not-allowed disabled:opacity-50")}
+            className={cn(
+              "z-10 flex size-8 items-center justify-center rounded-full bg-gray-200 p-1.5 text-gray-700 hover:bg-gray-300",
+              "disabled:cursor-not-allowed disabled:opacity-50"
+            )}
             whileHover={{ scale: recordingState === "processing" ? 1 : 1.05 }}
             whileTap={{ scale: recordingState === "processing" ? 1 : 0.95 }}
           >
