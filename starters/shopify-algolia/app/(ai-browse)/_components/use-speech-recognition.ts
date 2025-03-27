@@ -30,6 +30,7 @@ const ERROR_MESSAGES: Record<SpeechSDK.CancellationErrorCode, string> = {
 
 export const useSpeechRecognition = ({ onTranscript, onEndOfUtterance, onError, silenceTimeoutMs = 2000, maxAudioDurationMs = 15000 }: UseSpeechRecognitionOptions) => {
   const [recordingState, setRecordingState] = useState<RecordingState>("idle")
+  const [stream, setStream] = useState<MediaStream | null>(null)
   const recognizerRef = useRef<SpeechSDK.SpeechRecognizer | null>(null)
   const silenceTimeoutRef = useRef<NodeJS.Timeout | null>(null)
   const maxDurationTimeoutRef = useRef<NodeJS.Timeout | null>(null)
@@ -90,6 +91,9 @@ export const useSpeechRecognition = ({ onTranscript, onEndOfUtterance, onError, 
     async (event: React.MouseEvent<HTMLButtonElement>) => {
       event.preventDefault()
       try {
+        const mediaStream = await navigator.mediaDevices.getUserMedia({ audio: true })
+        setStream(mediaStream)
+
         const token = await getValidToken()
 
         const speechConfig = SpeechSDK.SpeechConfig.fromAuthorizationToken(token, env.NEXT_PUBLIC_AZURE_AI_SPEECH_REGION || "")
@@ -155,5 +159,6 @@ export const useSpeechRecognition = ({ onTranscript, onEndOfUtterance, onError, 
     startRecognition,
     stopRecognition,
     recordingState,
+    stream,
   }
 }
