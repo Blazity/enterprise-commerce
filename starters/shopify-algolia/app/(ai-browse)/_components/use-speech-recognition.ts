@@ -65,7 +65,14 @@ export const useSpeechRecognition = ({ onTranscript, onEndOfUtterance, onError, 
     return await fetchToken()
   }, [fetchToken])
 
-  const stopRecognition = useCallback(() => {
+  const cleanRegonizer = () => {
+    recognizerRef.current?.close()
+    recognizerRef.current = null
+    setRecordingState("idle")
+    setStream(null)
+  }
+
+  const stopRecognition = useCallback((shouldSubmit = false) => {
     if (recognizerRef.current) {
       if (silenceTimeoutRef.current) {
         clearTimeout(silenceTimeoutRef.current)
@@ -76,6 +83,10 @@ export const useSpeechRecognition = ({ onTranscript, onEndOfUtterance, onError, 
         maxDurationTimeoutRef.current = null
       }
       setRecordingState("processing")
+      if (!shouldSubmit) {
+        cleanRegonizer()
+        return
+      }
       recognizerRef.current.stopContinuousRecognitionAsync(
         () => {
           recognizerRef.current?.close()
@@ -86,10 +97,7 @@ export const useSpeechRecognition = ({ onTranscript, onEndOfUtterance, onError, 
         },
         (err) => {
           console.error("Error stopping recognition:", err)
-          recognizerRef.current?.close()
-          recognizerRef.current = null
-          setRecordingState("idle")
-          setStream(null)
+          cleanRegonizer()
         }
       )
     } else {
@@ -139,13 +147,13 @@ export const useSpeechRecognition = ({ onTranscript, onEndOfUtterance, onError, 
           stopRecognition()
         }
 
-        recognizer.sessionStopped = stopRecognition
+        recognizer.sessionStopped = () => stopRecognition()
 
         recognizer.startContinuousRecognitionAsync(
           () => {
             setRecordingState("recording")
             maxDurationTimeoutRef.current = setTimeout(() => {
-              stopRecognition()
+              stopRecognition(true)
             }, maxAudioDurationMs)
           },
           (err) => {
