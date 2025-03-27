@@ -232,7 +232,7 @@ export const FloatingChatBox = () => {
                   }}
                   className="shrink-0 p-3"
                 >
-                  <ChatInput input={input} setInput={setInput} handleSubmit={handleSubmit} />
+                  <ChatInput input={input} setInput={setInput} handleSubmit={handleSubmit} isTyping={isLoading} />
                 </motion.div>
               </motion.div>
             )}
