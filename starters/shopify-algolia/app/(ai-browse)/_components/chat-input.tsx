@@ -95,7 +95,7 @@ export const ChatInput: FC<ChatInputProps> = ({ input, setInput, handleSubmit, i
     if (isSpeechEnabled && recordingState === "idle" && !isInputEmpty) {
       return
     }
-    stopRecognition()
+    stopRecognition(true)
   }
   const isChatInteractionDisabled = (!isSpeechEnabled && isInputEmpty) || recordingState === "processing" || isTyping
   return (
