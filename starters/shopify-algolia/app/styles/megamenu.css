@@ -143,13 +143,12 @@
   }
 }
 
-.menu .menu__inner {
-  position: relative;
-  z-index: 1;
-}
+
 
 @media (max-width: 767px) {
   .menu .menu__inner {
+    position: relative;
+    z-index: 1;
     height: 100%;
     margin-top: -3rem;
     overflow-y: auto;
