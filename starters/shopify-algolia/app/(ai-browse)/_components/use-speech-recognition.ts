@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react"
 import * as SpeechSDK from "microsoft-cognitiveservices-speech-sdk"
 import { env } from "env.mjs"
 
-type RecordingState = "idle" | "recording"
+type RecordingState = "idle" | "recording" | "processing"
 
 type UseSpeechRecognitionOptions = {
   onTranscript: (text: string) => void
@@ -67,25 +67,36 @@ export const useSpeechRecognition = ({ onTranscript, onEndOfUtterance, onError, 
 
   const stopRecognition = useCallback(() => {
     if (recognizerRef.current) {
-      recognizerRef.current.stopContinuousRecognitionAsync()
-      recognizerRef.current.close()
-      recognizerRef.current = null
+      if (silenceTimeoutRef.current) {
+        clearTimeout(silenceTimeoutRef.current)
+        silenceTimeoutRef.current = null
+      }
+      if (maxDurationTimeoutRef.current) {
+        clearTimeout(maxDurationTimeoutRef.current)
+        maxDurationTimeoutRef.current = null
+      }
+      setRecordingState("processing")
+      recognizerRef.current.stopContinuousRecognitionAsync(
+        () => {
+          recognizerRef.current?.close()
+          recognizerRef.current = null
+          setRecordingState("idle")
+          setStream(null)
+          onEndOfUtteranceRef.current()
+        },
+        (err) => {
+          console.error("Error stopping recognition:", err)
+          recognizerRef.current?.close()
+          recognizerRef.current = null
+          setRecordingState("idle")
+          setStream(null)
+        }
+      )
+    } else {
+      setRecordingState("idle")
+      setStream(null)
     }
-    if (silenceTimeoutRef.current) {
-      clearTimeout(silenceTimeoutRef.current)
-      silenceTimeoutRef.current = null
-    }
-    if (maxDurationTimeoutRef.current) {
-      clearTimeout(maxDurationTimeoutRef.current)
-      maxDurationTimeoutRef.current = null
-    }
-    setRecordingState("idle")
   }, [])
-
-  const stopRecognitionOnEndOfUtterance = useCallback(() => {
-    stopRecognition()
-    onEndOfUtteranceRef.current()
-  }, [stopRecognition])
 
   const startRecognition = useCallback(
     async (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -116,7 +127,7 @@ export const useSpeechRecognition = ({ onTranscript, onEndOfUtterance, onError, 
             if (silenceTimeoutRef.current) {
               clearTimeout(silenceTimeoutRef.current)
             }
-            silenceTimeoutRef.current = setTimeout(stopRecognitionOnEndOfUtterance, silenceTimeoutMs)
+            silenceTimeoutRef.current = setTimeout(stopRecognition, silenceTimeoutMs)
           }
         }
 
@@ -134,7 +145,7 @@ export const useSpeechRecognition = ({ onTranscript, onEndOfUtterance, onError, 
           () => {
             setRecordingState("recording")
             maxDurationTimeoutRef.current = setTimeout(() => {
-              stopRecognitionOnEndOfUtterance()
+              stopRecognition()
             }, maxAudioDurationMs)
           },
           (err) => {
@@ -148,7 +159,7 @@ export const useSpeechRecognition = ({ onTranscript, onEndOfUtterance, onError, 
         setRecordingState("idle")
       }
     },
-    [onTranscript, onError, silenceTimeoutMs, maxAudioDurationMs, getValidToken, stopRecognition, stopRecognitionOnEndOfUtterance]
+    [onTranscript, onError, silenceTimeoutMs, maxAudioDurationMs, getValidToken, stopRecognition]
   )
 
   useEffect(() => {
