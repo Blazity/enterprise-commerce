@@ -147,7 +147,7 @@ export const ChatInput: FC<ChatInputProps> = ({ input, setInput, handleSubmit, i
                   disabled={isSpeechEnabled && recordingState !== "idle"}
                   className={cn(
                     "w-full resize-none rounded-md bg-gray-100 px-2 py-1 text-sm scrollbar-thin scrollbar-track-transparent scrollbar-thumb-gray-200 focus-visible:ring-gray-300",
-                    "max-h-[100px] min-h-[32px] overflow-y-auto"
+                    "max-h-[100px] min-h-[32px] overflow-y-auto text-base"
                   )}
                   style={{
                     height: BASE_HEIGHT_PX,
