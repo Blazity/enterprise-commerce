@@ -8,6 +8,7 @@
     transform: translateX(0%);
   }
 }
+
 @keyframes slideRight {
   0% {
     opacity: 1;
@@ -142,12 +143,21 @@
   }
 }
 
+.menu .menu__inner {
+  position: relative;
+  z-index: 1;
+}
+
 @media (max-width: 767px) {
   .menu .menu__inner {
     height: 100%;
     margin-top: -3rem;
     overflow-y: auto;
     overflow-x: hidden;
+  }
+
+  .menu__inner:has(.submenu.is-active) .menu__item:not(:has(.submenu.is-active)) {
+    display: none;
   }
 }
 
@@ -383,3 +393,4 @@
 .burger .burger-line:nth-child(3) {
   top: 16px;
 }
+
