@@ -15,7 +15,7 @@ export function TextGridVariant({ items }: TextGridVariantProps) {
   if (!items?.length) return null
 
   return (
-    <div className="mx-auto mb-10 mt-20 grid w-full max-w-container-md grid-cols-[repeat(_auto-fit,minmax(250px,1fr)_)] gap-8 px-4 md:my-0 md:py-14 xl:px-0">
+    <div className="mx-auto mb-10 mt-20 grid w-full max-w-container-md grid-cols-[repeat(_auto-fit,minmax(250px,1fr)_)] gap-8 @sm:px-8 @7xl:px-0 md:my-0 md:py-14">
       {items.map((singleCategory) => (
         <div className="submenu__inner flex w-full flex-col gap-4" key={singleCategory.text}>
           {singleCategory.href ? (

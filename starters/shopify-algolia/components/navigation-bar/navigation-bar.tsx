@@ -42,7 +42,7 @@ export function NavigationBar({ items }: NavigationBarProps) {
     <li data-content={singleMenuItem.text} className={cn("menu__item relative z-50 md:h-full", { menu__dropdown: !!singleMenuItem.submenu })} key={singleMenuItem.text}>
       <NavigationItem singleMenuItem={singleMenuItem} />
 
-      <div className="submenu megamenu__text w-full border-b border-black/10 shadow-sm">
+      <div className="submenu megamenu__text w-full border-b border-black/10 shadow-sm @container">
         <VariantGrid items={singleMenuItem.submenu?.items} variant={singleMenuItem.submenu?.variant} />
       </div>
     </li>

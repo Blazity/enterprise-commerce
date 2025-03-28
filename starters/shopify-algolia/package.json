@@ -85,7 +85,6 @@
     "sonner": "^1.4.41",
     "tailwind-scrollbar": "^4.0.1",
     "tailwindcss-animate": "^1.0.7",
-    "usehooks-ts": "^3.1.1",
     "zustand": "^5.0.3"
   },
   "devDependencies": {
@@ -95,6 +94,7 @@
     "@playwright/test": "^1.51.0",
     "@shopify/api-codegen-preset": "0.0.6",
     "@t3-oss/env-core": "^0.9.2",
+    "@tailwindcss/container-queries": "^0.1.1",
     "@testing-library/dom": "^10.3.2",
     "@testing-library/jest-dom": "^6.4.2",
     "@testing-library/react": "^14.2.2",
