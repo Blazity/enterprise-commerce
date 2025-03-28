@@ -189,7 +189,7 @@ const config: Omit<Config, "content"> = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate"), require("tailwind-scrollbar")],
+  plugins: [require("tailwindcss-animate"), require("tailwind-scrollbar"), require("@tailwindcss/container-queries")],
 
   future: {
     hoverOnlyWhenSupported: true,
