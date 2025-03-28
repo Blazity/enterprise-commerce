@@ -5,10 +5,8 @@ import { env } from "env.mjs"
 type RecordingState = "idle" | "recording" | "processing"
 
 type UseSpeechRecognitionOptions = {
-  onTranscript: (text: string) => void
-  onEndOfUtterance: () => void
+  onFinalTranscript: (text: string) => void
   onError: (message: string) => void
-  silenceTimeoutMs?: number
   maxAudioDurationMs?: number
 }
 
@@ -28,18 +26,13 @@ const ERROR_MESSAGES: Record<SpeechSDK.CancellationErrorCode, string> = {
   [SpeechSDK.CancellationErrorCode.Forbidden]: "Quota exceeded. Please wait and try again.",
 }
 
-export const useSpeechRecognition = ({ onTranscript, onEndOfUtterance, onError, silenceTimeoutMs = 2000, maxAudioDurationMs = 15000 }: UseSpeechRecognitionOptions) => {
+export const useSpeechRecognition = ({ onFinalTranscript, onError, maxAudioDurationMs = 15000 }: UseSpeechRecognitionOptions) => {
   const [recordingState, setRecordingState] = useState<RecordingState>("idle")
   const [stream, setStream] = useState<MediaStream | null>(null)
   const recognizerRef = useRef<SpeechSDK.SpeechRecognizer | null>(null)
-  const silenceTimeoutRef = useRef<NodeJS.Timeout | null>(null)
   const maxDurationTimeoutRef = useRef<NodeJS.Timeout | null>(null)
   const tokenRef = useRef<CachedToken | null>(null)
-  const onEndOfUtteranceRef = useRef(onEndOfUtterance)
-
-  useEffect(() => {
-    onEndOfUtteranceRef.current = onEndOfUtterance
-  }, [onEndOfUtterance])
+  const transcriptRef = useRef("")
 
   const fetchToken = useCallback(async () => {
     try {
@@ -65,46 +58,47 @@ export const useSpeechRecognition = ({ onTranscript, onEndOfUtterance, onError, 
     return await fetchToken()
   }, [fetchToken])
 
-  const cleanRegonizer = () => {
+  const cleanup = () => {
+    if (maxDurationTimeoutRef.current) {
+      clearTimeout(maxDurationTimeoutRef.current)
+      maxDurationTimeoutRef.current = null
+    }
     recognizerRef.current?.close()
     recognizerRef.current = null
     setRecordingState("idle")
     setStream(null)
+    transcriptRef.current = ""
   }
 
-  const stopRecognition = useCallback((shouldSubmit = false) => {
-    if (recognizerRef.current) {
-      if (silenceTimeoutRef.current) {
-        clearTimeout(silenceTimeoutRef.current)
-        silenceTimeoutRef.current = null
-      }
-      if (maxDurationTimeoutRef.current) {
-        clearTimeout(maxDurationTimeoutRef.current)
-        maxDurationTimeoutRef.current = null
-      }
-      setRecordingState("processing")
-      if (!shouldSubmit) {
-        cleanRegonizer()
+  const stopRecognition = useCallback(
+    (shouldSubmit = false) => {
+      if (!recognizerRef.current) {
+        setRecordingState("idle")
+        setStream(null)
         return
       }
+
+      if (!shouldSubmit) {
+        cleanup()
+        return
+      }
+
+      setRecordingState("processing")
       recognizerRef.current.stopContinuousRecognitionAsync(
         () => {
-          recognizerRef.current?.close()
-          recognizerRef.current = null
-          setRecordingState("idle")
-          setStream(null)
-          onEndOfUtteranceRef.current()
+          if (transcriptRef.current.trim().length > 0) {
+            onFinalTranscript(transcriptRef.current)
+          }
+          cleanup()
         },
         (err) => {
           console.error("Error stopping recognition:", err)
-          cleanRegonizer()
+          cleanup()
         }
       )
-    } else {
-      setRecordingState("idle")
-      setStream(null)
-    }
-  }, [])
+    },
+    [onFinalTranscript]
+  )
 
   const startRecognition = useCallback(
     async (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -117,26 +111,19 @@ export const useSpeechRecognition = ({ onTranscript, onEndOfUtterance, onError, 
 
         const speechConfig = SpeechSDK.SpeechConfig.fromAuthorizationToken(token, env.NEXT_PUBLIC_AZURE_AI_SPEECH_REGION || "")
         speechConfig.speechRecognitionLanguage = env.NEXT_PUBLIC_AZURE_AI_SPEECH_LANGUAGE
+        speechConfig.setProperty(SpeechSDK.PropertyId.SpeechServiceConnection_EndSilenceTimeoutMs, "500")
+        speechConfig.setProperty(SpeechSDK.PropertyId.Speech_SegmentationSilenceTimeoutMs, "500")
 
         const audioConfig = SpeechSDK.AudioConfig.fromDefaultMicrophoneInput()
         const recognizer = new SpeechSDK.SpeechRecognizer(speechConfig, audioConfig)
         recognizerRef.current = recognizer
 
         recognizer.recognizing = (_, e) => {
-          onTranscript(e.result.text || "")
-          if (silenceTimeoutRef.current) {
-            clearTimeout(silenceTimeoutRef.current)
-          }
+          transcriptRef.current = e.result.text
         }
 
         recognizer.recognized = (_, e) => {
-          if (e.result.reason === SpeechSDK.ResultReason.RecognizedSpeech) {
-            onTranscript(e.result.text || "")
-            if (silenceTimeoutRef.current) {
-              clearTimeout(silenceTimeoutRef.current)
-            }
-            silenceTimeoutRef.current = setTimeout(stopRecognition, silenceTimeoutMs)
-          }
+          transcriptRef.current = e.result.text
         }
 
         recognizer.canceled = (_, e) => {
@@ -147,7 +134,9 @@ export const useSpeechRecognition = ({ onTranscript, onEndOfUtterance, onError, 
           stopRecognition()
         }
 
-        recognizer.sessionStopped = () => stopRecognition()
+        recognizer.speechEndDetected = () => {
+          stopRecognition(true)
+        }
 
         recognizer.startContinuousRecognitionAsync(
           () => {
@@ -159,6 +148,7 @@ export const useSpeechRecognition = ({ onTranscript, onEndOfUtterance, onError, 
           (err) => {
             onError(`Failed to initiate speech recognition. Please try again. (${err})`)
             setRecordingState("idle")
+            throw new Error(`Failed to initiate speech recognition. Please try again. (${err})`)
           }
         )
       } catch (error) {
@@ -167,13 +157,15 @@ export const useSpeechRecognition = ({ onTranscript, onEndOfUtterance, onError, 
         setRecordingState("idle")
       }
     },
-    [onTranscript, onError, silenceTimeoutMs, maxAudioDurationMs, getValidToken, stopRecognition]
+    [onError, maxAudioDurationMs, getValidToken, stopRecognition]
   )
 
   useEffect(() => {
-    return stopRecognition
-  }, [stopRecognition])
-
+    return () => {
+      stopRecognition()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
   return {
     startRecognition,
     stopRecognition,
