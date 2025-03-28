@@ -10,7 +10,7 @@ import { ChatInput } from "./chat-input"
 type TextboxProps = { messages: Message[] }
 
 export const Textbox: FC<TextboxProps> = ({ messages }) => {
-  const { handleSubmit, createNewSuggestions, setInput, isLoading, input } = useAiCommerce()
+  const { handleSubmit, createNewSuggestions, setInput, isLoading, input, append } = useAiCommerce()
 
   const handleChatSubmit = useCallback(
     (e?: React.FormEvent<HTMLFormElement>) => {
@@ -27,7 +27,7 @@ export const Textbox: FC<TextboxProps> = ({ messages }) => {
 
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.25, delay: 0.18 }}>
-      <ChatInput input={input} setInput={setInput} handleSubmit={handleChatSubmit} isTyping={isLoading} />
+      <ChatInput input={input} setInput={setInput} handleSubmit={handleChatSubmit} isTyping={isLoading} append={append} />
     </motion.div>
   )
 }

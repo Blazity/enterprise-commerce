@@ -8,23 +8,26 @@ import { Loader2, Mic, SendHorizontal, X } from "lucide-react"
 import { env } from "env.mjs"
 import { AudioVisualizer } from "components/ui/audio-visualizer"
 import { useSpeechRecognition } from "./use-speech-recognition"
+import { AiCommerceContextType } from "./ai-commerce-provider"
 
 interface ChatInputProps {
   input: string
   setInput: (value: string) => void
   handleSubmit: (e?: React.FormEvent<HTMLFormElement>) => void
   isTyping: boolean
+  append: AiCommerceContextType["append"]
 }
 
-export const ChatInput: FC<ChatInputProps> = ({ input, setInput, handleSubmit, isTyping }) => {
+export const ChatInput: FC<ChatInputProps> = ({ input, setInput, handleSubmit, isTyping, append }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const formRef = useRef<HTMLFormElement>(null)
   const isSpeechEnabled = env.NEXT_PUBLIC_AZURE_AI_SPEECH_ENABLED === "true"
   const isInputEmpty = !input || input.trim() === ""
 
   const { startRecognition, stopRecognition, recordingState, stream } = useSpeechRecognition({
-    onTranscript: (text: string) => setInput(text),
-    onEndOfUtterance: () => handleSubmitForm(),
+    onFinalTranscript: (text: string) => {
+      append({ role: "user", content: text })
+    },
     onError: (message: string) => console.error(message),
   })
 
