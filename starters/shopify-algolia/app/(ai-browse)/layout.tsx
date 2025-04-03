@@ -37,7 +37,7 @@ export default function AiSearchLayout({ children }: { children: React.ReactNode
               }
             >
               <ChatSidebar />
-              <div className="w-full md:flex-1">
+              <div className="w-full @container md:flex-1">
                 <NavigationBar items={navigationItems} />
                 {children}
                 <Footer />

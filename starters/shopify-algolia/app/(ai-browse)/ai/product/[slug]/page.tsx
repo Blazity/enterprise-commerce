@@ -63,7 +63,7 @@ export default async function Product(props: ProductProps) {
   const combinationPrice = combination?.price?.amount || null
 
   return (
-    <div className="relative px-4 md:mx-auto md:max-w-container-md xl:px-0">
+    <div className="relative px-4 md:mx-auto md:max-w-container-md">
       <ContextReporter products={[product]} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(generateJsonLd(product, slug)) }}></script>
       <div className="mb:pb-8 relative flex w-full items-center justify-center gap-10 py-4 md:pt-12">

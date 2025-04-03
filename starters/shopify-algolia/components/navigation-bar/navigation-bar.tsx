@@ -39,10 +39,14 @@ function VariantGrid({ variant, items }: { variant?: "text-grid" | "image-grid" 
 
 export function NavigationBar({ items }: NavigationBarProps) {
   const itemsMarkup = items.map((singleMenuItem) => (
-    <li data-content={singleMenuItem.text} className={cn("menu__item relative z-50 md:h-full", { menu__dropdown: !!singleMenuItem.submenu })} key={singleMenuItem.text}>
+    <li
+      data-content={singleMenuItem.text}
+      className={cn("menu__item not-supports-[container-type]:md:h-full relative z-50 supports-[container-type]:@3xl:h-full", { menu__dropdown: !!singleMenuItem.submenu })}
+      key={singleMenuItem.text}
+    >
       <NavigationItem singleMenuItem={singleMenuItem} />
 
-      <div className="submenu megamenu__text w-full border-b border-black/10 shadow-sm @container">
+      <div className="submenu megamenu__text w-full border-b border-black/10 shadow-sm">
         <VariantGrid items={singleMenuItem.submenu?.items} variant={singleMenuItem.submenu?.variant} />
       </div>
     </li>
@@ -50,12 +54,12 @@ export function NavigationBar({ items }: NavigationBarProps) {
 
   return (
     <header className="mega-navbar sticky top-0 z-50 mx-auto my-0 flex w-full flex-wrap content-center items-center justify-between border-b border-black/10 bg-white p-4 py-6">
-      <div className="flex justify-start px-4 md:mx-auto md:w-full md:max-w-container-md md:px-0">
-        <Link prefetch={false} href="/" className="brand mr-20 hidden items-center text-xl font-bold md:flex">
+      <div className="not-supports-[container-type]:md:mx-auto not-supports-[container-type]:md:w-full not-supports-[container-type]:md:max-w-container-md not-supports-[container-type]:md:px-0 flex justify-start px-4 supports-[container-type]:@3xl:mx-auto supports-[container-type]:@3xl:w-full supports-[container-type]:@3xl:max-w-container-md supports-[container-type]:@3xl:px-0">
+        <Link prefetch={false} href="/" className="brand not-supports-[container-type]:md:flex mr-20 hidden items-center text-xl font-bold supports-[container-type]:@3xl:flex">
           Acme
         </Link>
 
-        <section className="navbar__left flex w-full justify-between md:hidden">
+        <section className="navbar__left not-supports-[container-type]:md:hidden flex w-full justify-between supports-[container-type]:@3xl:hidden">
           <button className="burger" id="burger" aria-label="open menu" aria-controls="menu">
             <span className="burger-line"></span>
             <span className="burger-line"></span>
@@ -65,15 +69,15 @@ export function NavigationBar({ items }: NavigationBarProps) {
             Acme
           </Link>
           <div className="menu-actions absolute right-4 flex items-center justify-center gap-2">
-            <Favorites className="flex md:hidden" />
+            <Favorites className="not-supports-[container-type]:md:hidden flex supports-[container-type]:@3xl:hidden" />
             <Suspense fallback={<Skeleton className="size-8" />}>
-              <Cart className="flex md:hidden" />
+              <Cart className="not-supports-[container-type]:md:hidden flex supports-[container-type]:@3xl:hidden" />
             </Suspense>
             <SearchButton />
           </div>
-          <ProductAddedAlert className="md:hidden" />
+          <ProductAddedAlert className="not-supports-[container-type]:md:hidden supports-[container-type]:@3xl:hidden" />
         </section>
-        <section className="navbar__center w-full md:justify-center">
+        <section className="navbar__center not-supports-[container-type]:md:justify-center w-full supports-[container-type]:@3xl:justify-center">
           <span className="overlay"></span>
           <div className="menu w-full" id="menu">
             <div className="menu__header">
@@ -85,16 +89,22 @@ export function NavigationBar({ items }: NavigationBarProps) {
               <span className="menu__title"></span>
             </div>
             <div className="menu__inner flex w-full justify-between">
-              <ul className="mt-10 flex w-full flex-col gap-4 px-4 md:mt-0 md:w-auto md:flex-row md:items-center md:justify-start xl:px-0">{itemsMarkup}</ul>
+              <ul className="not-supports-[container-type]:md:mt-0 not-supports-[container-type]:md:w-auto not-supports-[container-type]:md:flex-row not-supports-[container-type]:md:items-center not-supports-[container-type]:md:justify-start not-supports-[container-type]:xl:px-0 mt-10 flex w-full flex-col gap-4 px-4 supports-[container-type]:@3xl:mt-0 supports-[container-type]:@3xl:w-auto supports-[container-type]:@3xl:flex-row supports-[container-type]:@3xl:items-center supports-[container-type]:@3xl:justify-start supports-[container-type]:@7xl:px-0">
+                {itemsMarkup}
+              </ul>
               <div className="relative ml-auto flex items-center">
-                <button className="menu-close-button absolute right-3 top-0 bg-transparent md:hidden" aria-label="close menu" aria-controls="menu">
+                <button
+                  className="menu-close-button not-supports-[container-type]:md:hidden absolute right-3 top-0 bg-transparent supports-[container-type]:@3xl:hidden"
+                  aria-label="close menu"
+                  aria-controls="menu"
+                >
                   <CloseIcon className="size-5" />
                 </button>
                 <Autocomplete className="mr-6" />
                 <div className="flex gap-2">
-                  <Favorites className="hidden md:flex" />
-                  <Cart className="hidden md:flex" />
-                  <ProductAddedAlert className="hidden md:block" />
+                  <Favorites className="not-supports-[container-type]:md:flex hidden supports-[container-type]:@3xl:flex" />
+                  <Cart className="not-supports-[container-type]:md:flex hidden supports-[container-type]:@3xl:flex" />
+                  <ProductAddedAlert className="not-supports-[container-type]:md:block hidden supports-[container-type]:@3xl:block" />
                 </div>
               </div>
             </div>

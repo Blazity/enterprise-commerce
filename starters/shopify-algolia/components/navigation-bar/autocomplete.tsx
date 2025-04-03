@@ -47,7 +47,7 @@ export function Autocomplete({ className }: AutocompleteProps) {
   const hasResults = !!results && results.length > 0
 
   return (
-    <div className="relative hidden lg:block">
+    <div className="not-supports-[container-type]:md:block relative hidden supports-[container-type]:@5xl:block">
       <div className={cn("relative block w-[240px] overflow-hidden rounded-md", className)}>
         {!!isPending && <Spinner className="absolute inset-y-1.5 right-2" />}
         <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5">
