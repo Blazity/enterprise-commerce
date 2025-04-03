@@ -89,3 +89,16 @@ input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+/* Apply styles specifically for Safari/WebKit browsers to adjust for safe area */
+@supports (-webkit-touch-callout: none) {
+  .floating-chat-box {
+    bottom: calc(1rem + env(safe-area-inset-bottom));
+  }
+
+  @media (min-width: 768px) {
+    .floating-chat-box {
+      bottom: calc(2rem + env(safe-area-inset-bottom));
+    }
+  }
+}

@@ -51,8 +51,8 @@ export default function AiSearchLayout({ children }: { children: React.ReactNode
                 </Suspense>
                 <ThirdParties />
                 <DemoModeAlert />
-                <FloatingChatBox />
               </div>
+              <FloatingChatBox />
             </SidebarProvider>{" "}
           </AiCommerceProvider>
         </NuqsAdapter>

@@ -157,7 +157,7 @@ export const FloatingChatBox = () => {
   return (
     <motion.section
       key="chat-wrapper"
-      className="fixed bottom-4 right-4 overflow-hidden rounded-lg border border-gray-200 bg-white shadow-lg md:bottom-8 md:right-8 md:hidden"
+      className="floating-chat-box fixed bottom-4 right-4 overflow-hidden rounded-lg border border-gray-200 bg-white shadow-lg md:bottom-8 md:right-8 md:hidden"
       layoutId="chat-wrapper"
       initial={"closed"}
       animate={isOpen ? "open" : "closed"}
