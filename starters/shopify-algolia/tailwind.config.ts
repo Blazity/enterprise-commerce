@@ -187,6 +187,9 @@ const config: Omit<Config, "content"> = {
       screens: {
         "ai-2xl": "1640px",
       },
+      containers: {
+        "ai-2xl": "1640px",
+      },
     },
   },
   plugins: [require("tailwindcss-animate"), require("tailwind-scrollbar"), require("@tailwindcss/container-queries")],
