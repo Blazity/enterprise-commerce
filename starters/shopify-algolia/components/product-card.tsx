@@ -45,8 +45,7 @@ export const ProductCard = ({
         />
       </div>
       <div className="bg-size-200 bg-pos-0 hover:bg-pos-100 flex shrink-0 grow flex-col text-pretty bg-gradient-to-b from-transparent to-primary/5 p-4 transition-all duration-200">
-        {/* remove first word from the title as it includes vendor (this just needs feed update and then can be removed) */}
-        <h3 className={cn("line-clamp-2 text-lg font-semibold transition-colors data-[featured]:text-2xl", highlighted && "md:text-2xl")}>{title.split(" ").slice(1).join(" ")}</h3>
+        <h3 className={cn("line-clamp-2 text-lg font-semibold transition-colors data-[featured]:text-2xl", highlighted && "md:text-2xl")}>{title}</h3>
         <div className="flex flex-col pt-1">
           {!!vendor && <p className={cn("text-sm text-gray-500", highlighted && "md:text-base")}>{vendor}</p>}
 
