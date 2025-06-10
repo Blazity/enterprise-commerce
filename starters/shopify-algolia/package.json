@@ -20,7 +20,7 @@
     "codegen": "graphql-codegen && graphql-codegen -p admin",
     "coupling-graph": "npx madge --extensions js,jsx,ts,tsx,css,md,mdx ./ --exclude '.next|tailwind.config.js|reset.d.ts|prettier.config.js|postcss.config.js|playwright.config.ts|next.config.js|next-env.d.ts|instrumentation.ts|e2e/|README.md|.storybook/|.eslintrc.js' --image graph.svg",
     "sync": "yarn build:scripts && node scripts/dist/sync.mjs",
-    "build:scripts": "rimraf scripts/dist && tsup scripts/ -d scripts/dist"
+    "build:scripts": "rimraf scripts/dist && tsup scripts/**/*.ts* -d scripts/dist"
   },
   "dependencies": {
     "@ai-sdk/openai": "^1.0.1",
@@ -78,6 +78,7 @@
     "react-hook-form": "^7.51.1",
     "react-markdown": "^9.0.1",
     "remark-gfm": "^4.0.0",
+    "remeda": "^2.23.0",
     "replicate": "^1.0.1",
     "schema-dts": "^1.1.2",
     "sharp": "0.32.6",
