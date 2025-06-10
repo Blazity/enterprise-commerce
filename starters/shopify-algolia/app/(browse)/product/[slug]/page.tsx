@@ -4,7 +4,14 @@ import { notFound } from "next/navigation"
 import { isDemoMode } from "utils/demo-utils"
 import { slugToName } from "utils/slug-name"
 import { CurrencyType, mapCurrencyToSign } from "utils/map-currency-to-sign"
-import { getCombination, getOptionsFromUrl, hasValidOption, removeOptionsFromUrl } from "utils/product-options-utils"
+import { removeOptionsFromUrl } from "utils/product-options-utils"
+import {
+  filterImagesByVisualOption,
+  getCombinationByVisualOption,
+  getVisualOptionFromSlug,
+  hasValidVisualOption,
+  removeVisualOptionFromSlug,
+} from "utils/visual-variant-utils"
 
 import { Breadcrumbs } from "components/breadcrumbs"
 
@@ -48,18 +55,27 @@ export default async function Product(props: ProductProps) {
 
   const { slug } = params
 
-  const product = await getProduct(removeOptionsFromUrl(slug))
+  // Extract visual option from slug and get base handle
+  const visualValue = getVisualOptionFromSlug(slug)
+  const baseHandle = removeVisualOptionFromSlug(slug)
+  
+  // Fallback to old logic for backward compatibility
+  const product = await getProduct(baseHandle || removeOptionsFromUrl(slug))
 
-  const { color } = getOptionsFromUrl(slug)
-  const hasInvalidOptions = !hasValidOption(product?.variants, "color", color)
+  // Check if visual option is valid
+  const hasInvalidOptions = !hasValidVisualOption(product?.variants || [], visualValue)
 
   if (!product || hasInvalidOptions) {
     return notFound()
   }
 
-  const combination = getCombination(product, color)
+  // Get combination based on visual option
+  const combination = getCombinationByVisualOption(product.variants, visualValue)
   const hasOnlyOneVariant = product.variants.length <= 1
   const combinationPrice = combination?.price?.amount || null
+
+  // Filter images by visual option
+  const imagesToShow = filterImagesByVisualOption(product.images, visualValue)
 
   return (
     <div className="relative mx-auto max-w-container-md px-4 xl:px-0">
@@ -77,7 +93,10 @@ export default async function Product(props: ProductProps) {
             price={combinationPrice}
             currency={combination?.price ? mapCurrencyToSign(combination.price?.currencyCode as CurrencyType) : "$"}
           />
-          <ProductImages images={product.images} />
+          <ProductImages 
+            key={visualValue ?? "default"}
+            images={imagesToShow} 
+          />
           <RightSection className="md:col-span-6 md:col-start-8 md:mt-0">
             <ProductTitle
               className="hidden md:col-span-4 md:col-start-9 md:block"

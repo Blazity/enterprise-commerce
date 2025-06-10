@@ -5,8 +5,13 @@ import { CarouselApi } from "components/ui/carousel"
 import { CenterSection } from "./center-image-section"
 import { SideImages } from "./side-images"
 import { cn } from "utils/cn"
+import type { CommerceProduct } from "types"
 
-export const ProductImages = ({ images }) => {
+interface ProductImagesProps {
+  images: CommerceProduct["images"]
+}
+
+export const ProductImages = ({ images }: ProductImagesProps) => {
   const [api, setApi] = useState<CarouselApi>()
   const [thumbsApi, setThumbsApi] = useState<CarouselApi>()
   const [current, setCurrent] = useState(0)
