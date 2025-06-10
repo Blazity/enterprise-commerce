@@ -47,6 +47,7 @@ export function AddToCartButton({ className, product, combination }: { className
 
     setCheckoutReady(false)
     const res = await addCartItem(null, combination.id, product.id)
+    
 
     if (!res.ok) toast.error("Out of stock")
 
