@@ -2,7 +2,8 @@
 
 import { PlatformVariant } from "lib/shopify/types"
 import { cn } from "utils/cn"
-import { Combination, createOptionfulUrl, getAllCombinations } from "utils/product-options-utils"
+import { Combination, getAllCombinations } from "utils/product-options-utils"
+import { createVisualOptionSlug, getVisualOptionValueFromCombination } from "utils/visual-variant-utils"
 import { Variant } from "./variant"
 import { useCartStore } from "stores/cart-store"
 
@@ -23,11 +24,15 @@ export function VariantsSection({ variants, className, handle, combination }: Va
       <div className="relative flex w-full flex-wrap justify-center gap-2 md:justify-start">
         {combinations.map((singleCombination) => {
           const cartItem = cart?.items.find((item) => item.merchandise.id === singleCombination?.id)
+          
+          // Get the visual option value from the combination
+          const visualOptionValue = getVisualOptionValueFromCombination(singleCombination)
+          
           return (
             <Variant
               cartItem={cartItem}
               key={singleCombination.id}
-              href={createOptionfulUrl(handle, singleCombination.color)}
+              href={createVisualOptionSlug(handle, visualOptionValue)}
               singleCombination={singleCombination}
               isActive={singleCombination.id === combination?.id}
             />
