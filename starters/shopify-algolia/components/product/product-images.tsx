@@ -9,16 +9,23 @@ import type { CommerceProduct } from "types"
 
 interface ProductImagesProps {
   images: CommerceProduct["images"]
+  initialActiveIndex?: number
 }
 
-export const ProductImages = ({ images }: ProductImagesProps) => {
+export const ProductImages = ({ images, initialActiveIndex = 0 }: ProductImagesProps) => {
   const [api, setApi] = useState<CarouselApi>()
   const [thumbsApi, setThumbsApi] = useState<CarouselApi>()
-  const [current, setCurrent] = useState(0)
+  const [current, setCurrent] = useState(initialActiveIndex)
 
   useEffect(() => {
     if (!api || !thumbsApi) {
       return
+    }
+
+    // Set initial position when APIs are ready
+    if (initialActiveIndex > 0) {
+      api.scrollTo(initialActiveIndex, true)
+      thumbsApi.scrollTo(initialActiveIndex, true)
     }
 
     setCurrent(api.selectedScrollSnap())
@@ -27,7 +34,8 @@ export const ProductImages = ({ images }: ProductImagesProps) => {
       setCurrent(api.selectedScrollSnap() + 1)
       thumbsApi.scrollTo(api.selectedScrollSnap())
     })
-  }, [api, thumbsApi])
+  }, [api, thumbsApi, initialActiveIndex])
+
   return (
     <>
       <CenterSection setApi={setApi} images={images} className={cn("md:col-span-6", images.length > 1 ? "md:col-start-2" : "md:col-start-1")} />

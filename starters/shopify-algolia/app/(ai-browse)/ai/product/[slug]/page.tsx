@@ -91,7 +91,7 @@ export default async function Product(props: ProductProps) {
             <p>{product.description}</p>
             <div className="flex flex-col gap-2">
               <AddToCartButton className="mt-4" product={product} combination={combination} />
-              <FavoriteMarker handle={product.handle} />
+              <FavoriteMarker handle={slug} />
             </div>
             <FaqSection />
           </RightSection>

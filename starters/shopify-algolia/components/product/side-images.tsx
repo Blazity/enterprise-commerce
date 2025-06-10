@@ -30,7 +30,13 @@ export const SideImages = ({ className, images, api, setThumbsApi, current }: Si
               key={"thumbnail_" + image.url}
               onMouseEnter={() => onThumbClick(index)}
             >
-              <Image alt={image.altText || ""} src={image.url || `/default-product-image.svg`} width={100} height={100} sizes="100px" />
+              <Image 
+                alt={image.altText || `Product image ${index + 1}`} 
+                src={image.url || `/default-product-image.svg`} 
+                width={100} 
+                height={100} 
+                sizes="100px" 
+              />
             </div>
           ))}
         </CarouselContent>

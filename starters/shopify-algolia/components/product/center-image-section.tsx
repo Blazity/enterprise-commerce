@@ -19,7 +19,13 @@ export const CenterSection = ({ className, images, setApi }: CenterSectionProps)
           <CarouselContent className={cn("rounded-lg", hasOnlyOneImage ? "ml-0" : "")}>
             {images.map((image, index) => (
               <CarouselItem className={cn("relative aspect-square rounded-lg", hasOnlyOneImage && "pl-0")} key={image.url}>
-                <Image alt={image.altText || ""} src={image.url || "/default-product-image.svg"} fill priority={index === 0} sizes="(max-width: 450px) 300px, 480px" />
+                <Image 
+                  alt={image.altText || `Product image ${index + 1}`} 
+                  src={image.url || "/default-product-image.svg"} 
+                  fill 
+                  priority={index === 0} 
+                  sizes="(max-width: 450px) 300px, 480px" 
+                />
               </CarouselItem>
             ))}
           </CarouselContent>

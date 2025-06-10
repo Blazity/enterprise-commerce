@@ -3,7 +3,7 @@
 import { PlatformVariant } from "lib/shopify/types"
 import { cn } from "utils/cn"
 import { Combination, getAllCombinations } from "utils/product-options-utils"
-import { createVisualOptionSlug, getVisualOptionValueFromCombination } from "utils/visual-variant-utils"
+import { createMultiOptionSlug } from "utils/visual-variant-utils"
 import { Variant } from "./variant"
 import { useCartStore } from "stores/cart-store"
 
@@ -25,14 +25,22 @@ export function VariantsSection({ variants, className, handle, combination }: Va
         {combinations.map((singleCombination) => {
           const cartItem = cart?.items.find((item) => item.merchandise.id === singleCombination?.id)
           
-          // Get the visual option value from the combination
-          const visualOptionValue = getVisualOptionValueFromCombination(singleCombination)
+          // Get the actual variant to access selectedOptions
+          const variant = variants.find(v => v.id === singleCombination.id)
+          
+          // Create options object from selectedOptions for proper URL generation
+          const optionsForUrl: Record<string, string> = {}
+          if (variant?.selectedOptions) {
+            variant.selectedOptions.forEach(option => {
+              optionsForUrl[option.name] = option.value
+            })
+          }
           
           return (
             <Variant
               cartItem={cartItem}
               key={singleCombination.id}
-              href={createVisualOptionSlug(handle, visualOptionValue)}
+              href={createMultiOptionSlug(handle, optionsForUrl)}
               singleCombination={singleCombination}
               isActive={singleCombination.id === combination?.id}
             />
