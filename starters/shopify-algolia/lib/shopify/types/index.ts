@@ -15,6 +15,7 @@ export interface PlatformProduct {
   variants: PlatformVariant[]
   featuredImage: PlatformImage | undefined | null
   images: PlatformImage[]
+  productDetailsMetafield?: PlatformMetafield | null | undefined
   tags: string[]
   vendor: string
   minPrice: number
@@ -28,6 +29,12 @@ export interface PlatformProduct {
     description?: string | null | undefined
     title?: string | null | undefined
   }
+}
+
+export interface PlatformMetafield {
+  id: string
+  value: string
+  type: string
 }
 
 export interface PlatformProductOptions {

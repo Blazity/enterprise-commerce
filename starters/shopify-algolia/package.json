@@ -46,6 +46,7 @@
     "@radix-ui/react-toggle-group": "^1.0.4",
     "@radix-ui/react-tooltip": "^1.1.4",
     "@shopify/admin-api-client": "0.2.3",
+    "@shopify/hydrogen-react": "^2025.5.0",
     "@shopify/storefront-api-client": "0.2.3",
     "@t3-oss/env-nextjs": "^0.9.2",
     "@uidotdev/usehooks": "^2.4.1",

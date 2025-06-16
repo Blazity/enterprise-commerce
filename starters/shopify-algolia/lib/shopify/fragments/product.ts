@@ -48,6 +48,11 @@ const productFragment = `#graphql
         }
       }
     }
+    productDetailsMetafield: metafield(namespace: "custom", key: "product_details") {
+      value
+      type
+      id
+    }
     featuredImage {
       ...singleImage
     }
