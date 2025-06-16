@@ -23,18 +23,22 @@ export const ProductImages = ({ images, initialActiveIndex = 0 }: ProductImagesP
     }
 
     // Set initial position when APIs are ready
-    if (initialActiveIndex > 0) {
+    if (initialActiveIndex >= 0) {
       api.scrollTo(initialActiveIndex, true)
       thumbsApi.scrollTo(initialActiveIndex, true)
+      setCurrent(initialActiveIndex)
     }
 
-    setCurrent(api.selectedScrollSnap())
-
     api.on("select", () => {
-      setCurrent(api.selectedScrollSnap() + 1)
+      setCurrent(api.selectedScrollSnap())
       thumbsApi.scrollTo(api.selectedScrollSnap())
     })
   }, [api, thumbsApi, initialActiveIndex])
+
+  // Update current state when initialActiveIndex changes
+  useEffect(() => {
+    setCurrent(initialActiveIndex)
+  }, [initialActiveIndex])
 
   return (
     <>
