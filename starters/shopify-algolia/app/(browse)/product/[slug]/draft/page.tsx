@@ -26,7 +26,8 @@ import { ProductImages } from "components/product/product-images"
 import { RightSection } from "components/product/right-section"
 import { AddToCartButton } from "components/product/add-to-cart-button"
 import { FavoriteMarker } from "components/product/favorite-marker"
-import { FaqSection } from "components/product/faq-section"
+import { FaqAccordionItem, FaqSectionClient } from "components/product/faq-section/faq-section-client"
+import { ShopifyRichText } from "components/product/faq-section/shopify-rich-text"
 
 import { slugToName } from "utils/slug-name"
 
@@ -126,7 +127,36 @@ export default async function DraftProduct(props: ProductProps) {
             <p>{adminProduct.description}</p>
             <AddToCartButton className="mt-4" product={adminProduct as CommerceProduct} combination={combination} />
             <FavoriteMarker handle={slug} />
-            <FaqSection />
+
+            <FaqSectionClient defaultOpenSections={adminProduct.productDetailsMetafield?.value ??  getDefaultFaqAccordionItemValue()}>
+              <FaqAccordionItem title={getDefaultFaqAccordionItemValue()[0]}>
+                <ShopifyRichText data={adminProduct.productDetailsMetafield?.value || getDefaultFaqAccordionItemRichText()} className="prose prose-sm max-w-none" />
+              </FaqAccordionItem>
+              <FaqAccordionItem title="Size and Fit">
+                <p>
+                  Est veniam qui aute nisi occaecat ad non velit anim commodo sit proident. Labore sint officia nostrud eu est fugiat nulla velit sint commodo. Excepteur sit ut
+                  anim pariatur minim adipisicing dolore sit dolore cupidatat. Amet reprehenderit ipsum aute minim incididunt adipisicing est.
+                </p>
+              </FaqAccordionItem>
+              <FaqAccordionItem title="Free Delivery and Returns">
+                <p>
+                  Aliqua Lorem ullamco officia cupidatat cupidatat. Nostrud occaecat ex in Lorem. Et occaecat adipisicing do aliquip duis aliquip enim culpa nulla. Nulla quis aute
+                  ex eu est ullamco enim incididunt fugiat proident laboris. Laboris sint ad et nostrud velit fugiat fugiat proident enim sit irure elit. Ut amet elit labore
+                  cupidatat id consectetur sint fugiat esse excepteur pariatur. Tempor pariatur dolor eiusmod proident ad incididunt officia labore fugiat consectetur. Sunt veniam
+                  officia officia eiusmod minim incididunt est sit esse excepteur non cupidatat voluptate ea. Do excepteur sunt nostrud eu do id nisi dolore laboris ea ullamco
+                  magna eu. Eiusmod irure dolore amet velit laboris excepteur cupidatat est cupidatat minim ut anim id. Deserunt velit ex exercitation consequat quis magna pariatur
+                  laboris elit minim eiusmod anim.
+                </p>
+              </FaqAccordionItem>
+              <FaqAccordionItem title="Supplier Information">
+                <p>
+                  Aliqua ut ex irure eu officia dolore velit et occaecat pariatur excepteur nostrud ad. Ea reprehenderit sint culpa excepteur adipisicing ipsum esse excepteur
+                  officia culpa adipisicing nostrud. Nulla Lorem voluptate tempor officia id mollit do est amet dolor nulla. Sint sunt consequat non in reprehenderit Lorem velit
+                  enim cillum enim. Consequat occaecat exercitation consequat nisi veniam. Ipsum est reprehenderit cupidatat nulla minim anim deserunt consequat ipsum anim ea
+                  tempor.
+                </p>
+              </FaqAccordionItem>
+            </FaqSectionClient>
           </RightSection>
         </div>
       </main>
@@ -146,4 +176,13 @@ function makeBreadcrumbs(product: CommerceProduct) {
     [lastCollection?.handle ? slugToName(lastCollection?.handle) : "Products"]: lastCollection?.handle ? `/category/${lastCollection.handle}` : "/search",
     [product.title]: "",
   }
+}
+
+
+ function getDefaultFaqAccordionItemRichText() {
+    return "{\"type\":\"root\",\"children\":[{\"listType\":\"unordered\",\"type\":\"list\",\"children\":[{\"type\":\"list-item\",\"children\":[{\"type\":\"text\",\"value\":\"Super for the muscles\"}]},{\"type\":\"list-item\",\"children\":[{\"type\":\"text\",\"value\":\"Various types and color variants\"}]},{\"type\":\"list-item\",\"children\":[{\"type\":\"text\",\"value\":\"Outdoor, or indoor - you define the place where you want to exercise\"}]},{\"type\":\"list-item\",\"children\":[{\"type\":\"text\",\"value\":\"100% Plastic from \"},{\"type\":\"text\",\"value\":\"recycling the materials\",\"bold\":true}]}]}]}"
+}
+
+ function getDefaultFaqAccordionItemValue() {
+    return ["Product Details"]
 }
