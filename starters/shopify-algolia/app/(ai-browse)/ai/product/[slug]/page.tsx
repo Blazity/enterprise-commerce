@@ -4,14 +4,26 @@ import { notFound } from "next/navigation"
 import { isDemoMode } from "utils/demo-utils"
 import { slugToName } from "utils/slug-name"
 import { CurrencyType, mapCurrencyToSign } from "utils/map-currency-to-sign"
-import { getCombination, getOptionsFromUrl, hasValidOption, removeOptionsFromUrl } from "utils/product-options-utils"
+import { removeOptionsFromUrl } from "utils/product-options-utils"
+import {
+  getCombinationByMultiOption,
+  getCombinationByVisualOption,
+  getImagesForCarousel,
+  getMultiOptionFromSlug,
+  getOriginalOptionValue,
+  getVisualOptionFromSlug,
+  hasValidMultiOption,
+  hasValidVisualOption,
+  removeMultiOptionFromSlug,
+  removeVisualOptionFromSlug,
+} from "utils/visual-variant-utils"
 
 import { Breadcrumbs } from "components/breadcrumbs"
 
 import { FavoriteMarker } from "components/product/favorite-marker"
 import { SimilarProductsSection } from "components/product/similar-products-section"
 import { SimilarProductsSectionSkeleton } from "components/product/similar-product-section-skeleton"
-import { VariantsSection } from "components/product/variants-section"
+import { VariantDropdowns } from "components/product/variant-dropdowns"
 import { ProductTitle } from "components/product/product-title"
 import { ProductImages } from "components/product/product-images"
 import { RightSection } from "components/product/right-section"
@@ -48,19 +60,52 @@ export default async function Product(props: ProductProps) {
   const params = await props.params
 
   const { slug } = params
+  console.log(slug)
 
-  const product = await getProduct(removeOptionsFromUrl(slug))
+  const multiOptions = getMultiOptionFromSlug(slug)
+  const baseHandle = Object.keys(multiOptions).length > 0 
+    ? removeMultiOptionFromSlug(slug) 
+    : removeVisualOptionFromSlug(slug)
+  
+  const product = await getProduct(baseHandle || removeOptionsFromUrl(slug))
 
-  const { color } = getOptionsFromUrl(slug)
-  const hasInvalidOptions = !hasValidOption(product?.variants, "color", color)
-
-  if (!product || hasInvalidOptions) {
+  if (!product) {
     return notFound()
   }
 
-  const combination = getCombination(product, color)
+  let combination
+  let hasInvalidOptions = false
+
+  if (Object.keys(multiOptions).length > 0) {
+    hasInvalidOptions = !hasValidMultiOption(product.variants || [], multiOptions)
+    combination = getCombinationByMultiOption(product.variants, multiOptions)
+  } else {
+    const visualValue = getVisualOptionFromSlug(slug)
+    hasInvalidOptions = !hasValidVisualOption(product?.variants || [], visualValue)
+    combination = getCombinationByVisualOption(product.variants, visualValue)
+  }
+
+  if (hasInvalidOptions) {
+    return notFound()
+  }
+
   const hasOnlyOneVariant = product.variants.length <= 1
   const combinationPrice = combination?.price?.amount || null
+
+  let visualValue: string | null = null
+  if (Object.keys(multiOptions).length > 0) {
+    if (multiOptions.color) {
+      visualValue = getOriginalOptionValue(product.variants, 'color', multiOptions.color)
+    }
+    if (!visualValue && Object.keys(multiOptions).length > 0) {
+      const firstOption = Object.entries(multiOptions)[0]
+      visualValue = getOriginalOptionValue(product.variants, firstOption[0], firstOption[1])
+    }
+  } else {
+    visualValue = getVisualOptionFromSlug(slug)
+  }
+  
+  const { images: imagesToShow, activeIndex } = getImagesForCarousel(product.images, visualValue)
 
   return (
     <div className="relative px-4 md:mx-auto md:max-w-container-md">
@@ -79,7 +124,11 @@ export default async function Product(props: ProductProps) {
             price={combinationPrice}
             currency={combination?.price ? mapCurrencyToSign(combination.price?.currencyCode as CurrencyType) : "$"}
           />
-          <ProductImages images={product.images} />
+          <ProductImages 
+            key={slug}
+            images={imagesToShow}
+            initialActiveIndex={activeIndex}
+          />
           <RightSection className="md:col-span-6 md:col-start-8 md:mt-0">
             <ProductTitle
               className="hidden md:col-span-4 md:col-start-9 md:block"
@@ -87,7 +136,7 @@ export default async function Product(props: ProductProps) {
               price={combinationPrice}
               currency={combination?.price ? mapCurrencyToSign(combination.price?.currencyCode as CurrencyType) : "$"}
             />
-            {!hasOnlyOneVariant && <VariantsSection variants={product.variants} handle={product.handle} combination={combination} />}
+            {!hasOnlyOneVariant && <VariantDropdowns variants={product.variants} handle={product.handle} combination={combination} currentSlug={slug} />}
             <p>{product.description}</p>
             <div className="flex flex-col gap-2">
               <AddToCartButton className="mt-4" product={product} combination={combination} />

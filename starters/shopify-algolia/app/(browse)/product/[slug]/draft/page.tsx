@@ -6,8 +6,20 @@ import { Breadcrumbs } from "components/breadcrumbs"
 
 import { getAdminProduct, getProductByHandle } from "lib/shopify"
 
-import { getCombination, getOptionsFromUrl, hasValidOption, removeOptionsFromUrl } from "utils/product-options-utils"
-import { VariantsSection } from "components/product/variants-section"
+import { removeOptionsFromUrl } from "utils/product-options-utils"
+import {
+  getCombinationByMultiOption,
+  getCombinationByVisualOption,
+  getImagesForCarousel,
+  getMultiOptionFromSlug,
+  getOriginalOptionValue,
+  getVisualOptionFromSlug,
+  hasValidMultiOption,
+  hasValidVisualOption,
+  removeMultiOptionFromSlug,
+  removeVisualOptionFromSlug,
+} from "utils/visual-variant-utils"
+import { VariantDropdowns } from "components/product/variant-dropdowns"
 import { ProductTitle } from "components/product/product-title"
 import { CurrencyType, mapCurrencyToSign } from "utils/map-currency-to-sign"
 import { ProductImages } from "components/product/product-images"
@@ -36,19 +48,52 @@ export default async function DraftProduct(props: ProductProps) {
     return notFound()
   }
 
-  const { color } = getOptionsFromUrl(slug)
-  const productHandle = removeOptionsFromUrl(slug)
-
+  const multiOptions = getMultiOptionFromSlug(slug)
+  const baseHandle = Object.keys(multiOptions).length > 0 
+    ? removeMultiOptionFromSlug(slug) 
+    : removeVisualOptionFromSlug(slug)
+  
+  const productHandle = baseHandle || removeOptionsFromUrl(slug)
   const product = await getProductByHandle(productHandle)
   const adminProduct = product?.id ? await getAdminProduct(product.id) : null
 
-  if (!adminProduct || !hasValidOption(adminProduct.variants, "color", color)) {
+  if (!adminProduct) {
     return notFound()
   }
 
-  const combination = getCombination(adminProduct as CommerceProduct, color)
+  let combination
+  let hasInvalidOptions = false
+
+  if (Object.keys(multiOptions).length > 0) {
+    hasInvalidOptions = !hasValidMultiOption(adminProduct.variants || [], multiOptions)
+    combination = getCombinationByMultiOption(adminProduct.variants, multiOptions)
+  } else {
+    const visualValue = getVisualOptionFromSlug(slug)
+    hasInvalidOptions = !hasValidVisualOption(adminProduct?.variants || [], visualValue)
+    combination = getCombinationByVisualOption(adminProduct.variants, visualValue)
+  }
+
+  if (hasInvalidOptions) {
+    return notFound()
+  }
+
   const hasOnlyOneVariant = adminProduct.variants.length <= 1
   const combinationPrice = combination?.price?.amount || null
+
+  let visualValue: string | null = null
+  if (Object.keys(multiOptions).length > 0) {
+    if (multiOptions.color) {
+      visualValue = getOriginalOptionValue(adminProduct.variants, 'color', multiOptions.color)
+    }
+    if (!visualValue && Object.keys(multiOptions).length > 0) {
+      const firstOption = Object.entries(multiOptions)[0]
+      visualValue = getOriginalOptionValue(adminProduct.variants, firstOption[0], firstOption[1])
+    }
+  } else {
+    visualValue = getVisualOptionFromSlug(slug)
+  }
+  
+  const { images: imagesToShow, activeIndex } = getImagesForCarousel(adminProduct.images, visualValue)
 
   return (
     <div className="relative mx-auto max-w-container-md px-4 xl:px-0">
@@ -65,7 +110,11 @@ export default async function DraftProduct(props: ProductProps) {
             price={combinationPrice}
             currency={combination?.price ? mapCurrencyToSign(combination.price?.currencyCode as CurrencyType) : "$"}
           />
-          <ProductImages images={adminProduct.images} />
+          <ProductImages 
+            key={slug}
+            images={imagesToShow}
+            initialActiveIndex={activeIndex}
+          />
           <RightSection className="md:col-span-6 md:col-start-8 md:mt-0">
             <ProductTitle
               className="hidden md:col-span-4 md:col-start-9 md:block"
@@ -73,7 +122,7 @@ export default async function DraftProduct(props: ProductProps) {
               price={combinationPrice}
               currency={combination?.price ? mapCurrencyToSign(combination.price?.currencyCode as CurrencyType) : "$"}
             />
-            {!hasOnlyOneVariant && <VariantsSection variants={adminProduct.variants} handle={adminProduct.handle} combination={combination} />}
+            {!hasOnlyOneVariant && <VariantDropdowns variants={adminProduct.variants} handle={adminProduct.handle} combination={combination} currentSlug={slug} />}
             <p>{adminProduct.description}</p>
             <AddToCartButton className="mt-4" product={adminProduct as CommerceProduct} combination={combination} />
             <FavoriteMarker handle={slug} />
