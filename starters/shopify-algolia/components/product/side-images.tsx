@@ -26,7 +26,7 @@ export const SideImages = ({ className, images, api, setThumbsApi, current }: Si
         <CarouselContent className="mt-0 w-full flex-row justify-center gap-4 md:flex-col">
           {images.map((image, index) => (
             <div
-              className={cn("", index === (current === 0 ? current : current - 1) && "border-2 border-black")}
+              className={cn("", index === current && "border-2 border-black")}
               key={"thumbnail_" + image.url}
               onMouseEnter={() => onThumbClick(index)}
             >
