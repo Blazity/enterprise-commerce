@@ -58,7 +58,7 @@
     "date-fns": "^3.6.0",
     "embla-carousel-react": "^8.0.0",
     "meilisearch": "^0.38.0",
-    "next": "15.1.2",
+    "next": "15.2.3",
     "next-compose-plugins": "^2.2.1",
     "nuqs": "^2.4.0",
     "p-retry": "^6.2.0",
