@@ -50,6 +50,7 @@ export interface PlatformCollection {
   description?: string
   descriptionHtml: string
   updatedAt?: string
+  pageDisplayTypeMetafield?: (Omit<PlatformMetafield, "value"> & { value: "CLP" | "PLP" }) | null | undefined
   image: PlatformImage | undefined | null
   seo?:
     | {

@@ -1,19 +1,20 @@
-import { notFound } from "next/navigation"
+import { notFound, redirect } from "next/navigation"
 import { SearchParamsType } from "types"
 import { getCollection, getProductsByCollectionTag } from "lib/algolia"
-import { SearchView } from "components/search-view"
 import { CategoryLandingPage } from "./category-landing-page"
+import { SearchView } from "components/search-view"
 
-interface CategoryViewProps {
+interface CategoryCLPViewProps {
   params: { slug: string; page?: string }
   searchParams?: SearchParamsType
   basePath?: string
 }
 
-export async function CategoryView({ params, searchParams = {}, basePath }: CategoryViewProps) {
+export async function CategoryCLPView({ params, basePath, searchParams = {} }: CategoryCLPViewProps) {
   const collection = await getCollection(params.slug)
 
   if (!collection) return notFound()
+
 
   let pageDisplayType = ""
 
@@ -30,14 +31,14 @@ export async function CategoryView({ params, searchParams = {}, basePath }: Cate
   // Check if this should be a CLP based on the pageDisplayTypeMetafield
   const shouldShowCLP = pageDisplayType === "CLP"
 
-  // If it's a CLP, fetch products by collection tag and render CLP
-  if (shouldShowCLP) {
-    // Convert collection handle to tag format (e.g., "sports-outdoors" -> "sports-and-outdoors")
-    const products = await getProductsByCollectionTag(collection.handle, 20) // Get more products for CLP
+  if( !shouldShowCLP) {
 
-    return <CategoryLandingPage collection={collection} products={products} basePath={basePath} />
+  return <SearchView searchParams={searchParams} params={params} collection={collection} basePath={basePath} />
+
   }
 
-  // Default to PLP (SearchView) if metafield is null or not "CLP"
-  return <SearchView searchParams={searchParams} params={params} collection={collection} basePath={basePath} />
+  // Always render CLP - fetch products by collection tag
+  const products = await getProductsByCollectionTag(collection.handle, 20)
+
+  return <CategoryLandingPage collection={collection} products={products} basePath={basePath} />
 }
