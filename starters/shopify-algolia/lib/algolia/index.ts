@@ -142,11 +142,14 @@ export const getCollection = unstable_cache(
       searchParams: {
         filters: algolia.filterBuilder().where("handle", slug).build(),
         hitsPerPage: 1,
-        attributesToRetrieve: ["handle", "title", "seo"],
+        attributesToRetrieve: ["handle", "title", "seo", "descriptionHtml", "image", "pageDisplayTypeMetafield"],
       },
     })
 
-    return results.hits.find(Boolean) || null
+
+    const collection = results.hits.find(Boolean) || null
+    console.log({collectionFromAlgolia: collection})
+    return collection
   },
   ["category-by-handle"],
   { revalidate: 86400 }
@@ -334,5 +337,24 @@ export const getFacetValues = unstable_cache(
     return res?.facetHits.map(({ value }) => value)
   },
   ["facet-values"],
+  { revalidate: 86400 }
+)
+
+export const getProductsByCollectionTag = unstable_cache(
+  async (tag: string, limit: number = 10) => {
+    if (isDemoMode()) return getDemoProducts().hits.slice(0, limit)
+
+    const { hits } = await algolia.search<CommerceProduct>({
+      indexName: algolia.mapIndexToSort(env.ALGOLIA_PRODUCTS_INDEX, "updatedAtTimestamp:desc"),
+      searchParams: {
+        filters: algolia.filterBuilder().where("tags", tag).build(),
+        hitsPerPage: limit,
+        attributesToRetrieve: ["id", "handle", "title", "featuredImage", "minPrice", "variants", "avgRating", "totalReviews", "vendor"],
+      },
+    })
+
+    return hits
+  },
+  ["products-by-collection-tag"],
   { revalidate: 86400 }
 )
