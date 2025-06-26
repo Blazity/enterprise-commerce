@@ -4,7 +4,7 @@ import { cleanShopifyId } from "./utils"
 
 export function normalizeProduct(product: SingleProductQuery["product"]): PlatformProduct | null {
   if (!product) return null
-  const { id, handle, title, description, vendor, descriptionHtml, options, priceRange, variants, featuredImage, images, tags, updatedAt, createdAt, collections, seo } = product
+  const { id, handle, title, description, vendor, descriptionHtml, options, priceRange, variants, featuredImage, images, tags, updatedAt, createdAt, collections, seo, productDetailsMetafield } = product
 
   return {
     id: cleanShopifyId(id, "Product"),
@@ -27,6 +27,7 @@ export function normalizeProduct(product: SingleProductQuery["product"]): Platfo
     variants: variants?.edges?.map(({ node }) => node) || [],
     images: images?.edges?.map(({ node }) => node) || [],
     collections: (collections?.nodes as PlatformCollection[]) || [],
+    productDetailsMetafield,
   }
 }
 
