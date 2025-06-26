@@ -1,6 +1,6 @@
 import { SingleCartQuery, SingleCollectionQuery, SingleProductQuery } from "./types/storefront.generated"
 import type { PlatformCart, PlatformCartItem, PlatformCollection, PlatformProduct } from "./types"
-import { cleanShopifyId } from "./utils"
+import { cleanShopifyId, normalizePresetChoice } from "./utils"
 
 export function normalizeProduct(product: SingleProductQuery["product"]): PlatformProduct | null {
   if (!product) return null
@@ -57,6 +57,9 @@ export function normalizeCollection(collection: SingleCollectionQuery["collectio
     image,
     updatedAt,
     description,
-    pageDisplayTypeMetafield: pageDisplayTypeMetafield as any,
+    pageDisplayTypeMetafield: pageDisplayTypeMetafield ? {
+      ...pageDisplayTypeMetafield,
+      value: normalizePresetChoice<"CLP" | "PLP">(pageDisplayTypeMetafield.value) || "PLP"
+    } : null,
   }
 }

@@ -11,3 +11,14 @@ export function cleanShopifyId(
 ) {
 	return id.replace(`gid://shopify/${type}/`, "");
 }
+
+export function normalizePresetChoice<T extends string>(value: string | null | undefined): T | null {
+	if (!value) return null;
+	
+	const match = value.match(/^\["(.+)"\]$/);
+	if (match) {
+		return match[1] as T;
+	}
+	
+	return value as T;
+}
