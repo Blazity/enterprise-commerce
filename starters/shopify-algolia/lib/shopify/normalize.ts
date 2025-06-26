@@ -46,7 +46,7 @@ export function normalizeCart(cart: SingleCartQuery["cart"]): PlatformCart | nul
 
 export function normalizeCollection(collection: SingleCollectionQuery["collection"]): PlatformCollection | null {
   if (!collection) return null
-  const { id, handle, title, descriptionHtml, seo, image, updatedAt, description } = collection
+  const { id, handle, title, descriptionHtml, seo, image, updatedAt, description, pageDisplayTypeMetafield } = collection
 
   return {
     id: cleanShopifyId(id, "Collection"),
@@ -57,5 +57,6 @@ export function normalizeCollection(collection: SingleCollectionQuery["collectio
     image,
     updatedAt,
     description,
+    pageDisplayTypeMetafield: pageDisplayTypeMetafield as any,
   }
 }
