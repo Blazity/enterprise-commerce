@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef, useMemo, useEffect } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import { AccordionContent, AccordionItem, AccordionTrigger } from "components/ui/accordion"
 import { Checkbox } from "components/ui/checkbox"
 import { Label } from "components/ui/label"
@@ -70,7 +70,7 @@ export function VendorsFacet({ id, title, distribution, isChecked, onCheckedChan
       <AccordionContent>
         {!hasNoResults && (
           <div className="mb-3 relative">
-            <SearchIcon className="absolute left-2 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+            <SearchIcon className="absolute left-2 top-1/2 -translate-y-1/2 size-4 text-gray-400" />
             <Input
               type="text"
               placeholder="Search vendors..."
@@ -81,13 +81,13 @@ export function VendorsFacet({ id, title, distribution, isChecked, onCheckedChan
           </div>
         )}
         
-        <div className="max-h-[250px] overflow-y-scroll">
+        <div className="h-[250px] overflow-y-auto">
           {hasNoResults ? (
             <p className="text-sm text-neutral-500">No {title.toLowerCase()} found</p>
           ) : filteredVendors.length === 0 ? (
             <p className="text-sm text-neutral-500">No matching vendors found</p>
           ) : (
-            <div className="grid gap-2">
+            <div className="grid gap-2 pr-2">
               {filteredVendors.map(([value], index) => (
                 <Label key={value + index} className="flex items-center gap-2">
                   <Checkbox 

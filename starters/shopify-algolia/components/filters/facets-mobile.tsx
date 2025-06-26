@@ -13,9 +13,10 @@ interface FacetsMobileProps {
   facetDistribution: Record<string, Record<string, number>> | undefined
   independentFacetDistribution: Record<string, Record<string, number>> | undefined
   disabledFacets?: string[]
+  categoryDisplayTypes?: Record<string, "CLP" | "PLP">
 }
 
-export function FacetsMobile({ className, facetDistribution, disabledFacets, independentFacetDistribution }: FacetsMobileProps) {
+export function FacetsMobile({ className, facetDistribution, disabledFacets, independentFacetDistribution, categoryDisplayTypes }: FacetsMobileProps) {
   const modals = useModalStore((s) => s.modals)
   const openModal = useModalStore((s) => s.openModal)
   const closeModal = useModalStore((s) => s.closeModal)
@@ -28,7 +29,7 @@ export function FacetsMobile({ className, facetDistribution, disabledFacets, ind
 
       {!!modals["facets-mobile"] && (
         <GenericModal className="h-full overflow-auto rounded-md" title="Filters" open={!!modals["facets-mobile"]} onOpenChange={() => closeModal("facets-mobile")}>
-          <FacetsContent independentFacetDistribution={independentFacetDistribution} facetDistribution={facetDistribution} disabledFacets={disabledFacets} />
+          <FacetsContent independentFacetDistribution={independentFacetDistribution} facetDistribution={facetDistribution} disabledFacets={disabledFacets} categoryDisplayTypes={categoryDisplayTypes} />
         </GenericModal>
       )}
     </div>
