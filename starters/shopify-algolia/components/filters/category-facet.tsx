@@ -12,9 +12,10 @@ interface CategoryFacetProps {
   distribution: Record<string, Record<string, number>>
   isChecked: (value: string) => boolean
   onCheckedChange: (value: string) => void
+  categoryDisplayTypes?: Record<string, "CLP" | "PLP">
 }
 
-export function CategoryFacet({ id, title, distribution, isChecked, onCheckedChange }: CategoryFacetProps) {
+export function CategoryFacet({ id, title, distribution, isChecked, onCheckedChange, categoryDisplayTypes }: CategoryFacetProps) {
   const pathname = usePathname()
   const isSRP = pathname === "/search" || pathname === "/ai/search"
 

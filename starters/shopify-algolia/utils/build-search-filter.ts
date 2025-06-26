@@ -19,7 +19,17 @@ export function buildSearchFilter({ collection, params, separator }: { collectio
   addPriceFilters(filter, params.minPrice, params.maxPrice)
   addRatingFilter(filter, params.rating)
 
-  return filter.build(LogicalOperators.And)
+  const builtFilter = filter.build(LogicalOperators.And)
+  
+  // Debug logging
+  if (params.vendors?.length > 0) {
+    console.log("[Vendor Filter Debug]", {
+      vendors: params.vendors,
+      fullFilter: builtFilter
+    })
+  }
+  
+  return builtFilter
 }
 
 function addCategoryFilters(filter: FilterBuilder, categories: string[], separator: string): void {

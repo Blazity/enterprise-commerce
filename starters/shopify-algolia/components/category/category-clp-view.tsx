@@ -1,4 +1,4 @@
-import { notFound, redirect } from "next/navigation"
+import { notFound } from "next/navigation"
 import { SearchParamsType } from "types"
 import { getCollection, getProductsByCollectionTag } from "lib/algolia"
 import { CategoryLandingPage } from "./category-landing-page"

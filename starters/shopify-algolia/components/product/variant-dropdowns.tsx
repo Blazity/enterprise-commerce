@@ -129,7 +129,7 @@ export function VariantDropdowns({ variants, className, handle, combination, cur
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" className="w-full justify-between" size="sm">
                   {option.currentValue || `Select ${option.name}`}
-                  <ChevronDown className="ml-2 h-4 w-4" />
+                  <ChevronDown className="ml-2 size-4" />
                 </Button>
               </DropdownMenuTrigger>
 

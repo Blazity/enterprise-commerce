@@ -1,9 +1,8 @@
 import type { Metadata } from "next"
-import { redirect } from "next/navigation"
 import { SearchParamsType } from "types"
 import { CategoryPLPView } from "components/category/category-plp-view"
 import { isDemoMode } from "utils/demo-utils"
-import { getCategories, getCollection } from "lib/algolia"
+import { getCategories } from "lib/algolia"
 
 export const runtime = "nodejs"
 export const revalidate = 86400
