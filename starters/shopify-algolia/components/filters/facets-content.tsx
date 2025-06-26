@@ -12,6 +12,7 @@ import { Facet } from "./facet"
 import { CategoryFacet } from "./category-facet"
 import { PriceFacet } from "./price-facet"
 import { RatingFacet } from "./rating-facet"
+import { VendorsFacet } from "./vendors-facet"
 import { useFilterTransitionStore } from "stores/filter-transition-store"
 import { ActiveFilters } from "./active-filters"
 
@@ -118,7 +119,7 @@ export function FacetsContent({ independentFacetDistribution, facetDistribution,
   }
 
   return (
-    <Accordion className={cn("overflow-x-hidden", className)} type="single" collapsible defaultValue={lastSelected}>
+    <Accordion className={cn("overflow-x-hidden", className)} type="single" collapsible defaultValue={lastSelected || "categories"}>
       <div className="mb-2 flex flex-col border-b border-black/5">
         <ActiveFilters
           filtersCount={filtersCount}
@@ -151,7 +152,7 @@ export function FacetsContent({ independentFacetDistribution, facetDistribution,
         />
       )}
       {!disabledFacets?.includes("vendors") && (
-        <Facet
+        <VendorsFacet
           id="vendors"
           title="Vendors"
           distribution={vendors}
