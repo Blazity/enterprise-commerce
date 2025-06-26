@@ -16,15 +16,8 @@ export async function CategoryCLPView({ params, basePath, searchParams = {} }: C
   if (!collection) return notFound()
 
 
-  let pageDisplayType = ""
-
-  if (collection.handle === "sports-and-outdoors") {
-    // Special case for "sports-and-outdoors" collection
-    pageDisplayType = "CLP" // Force CLP for this collection
-  } else {
-    // Use the pageDisplayTypeMetafield from the collection
-    pageDisplayType = collection.pageDisplayTypeMetafield?.value || "PLP"
-  }
+  // Use the pageDisplayTypeMetafield from the collection, defaulting to PLP
+  const pageDisplayType = collection.pageDisplayTypeMetafield?.value || "PLP"
 
   console.log({pageDisplayType})
 
