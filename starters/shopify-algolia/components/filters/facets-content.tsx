@@ -12,6 +12,7 @@ import { Facet } from "./facet"
 import { CategoryFacet } from "./category-facet"
 import { PriceFacet } from "./price-facet"
 import { RatingFacet } from "./rating-facet"
+import { VendorsFacet } from "./vendors-facet"
 import { useFilterTransitionStore } from "stores/filter-transition-store"
 import { ActiveFilters } from "./active-filters"
 
@@ -20,9 +21,10 @@ export interface FacetsContentProps {
   facetDistribution: Record<string, Record<string, number>> | undefined
   className?: string
   disabledFacets?: string[]
+  categoryDisplayTypes?: Record<string, "CLP" | "PLP">
 }
 
-export function FacetsContent({ independentFacetDistribution, facetDistribution, className, disabledFacets }: FacetsContentProps) {
+export function FacetsContent({ independentFacetDistribution, facetDistribution, className, disabledFacets, categoryDisplayTypes }: FacetsContentProps) {
   const router = useRouter()
   const pathname = usePathname()
   const isAiPath = pathname.startsWith("/ai")
@@ -118,7 +120,7 @@ export function FacetsContent({ independentFacetDistribution, facetDistribution,
   }
 
   return (
-    <Accordion className={cn("overflow-x-hidden", className)} type="single" collapsible defaultValue={lastSelected}>
+    <Accordion className={cn("overflow-x-hidden", className)} type="single" collapsible defaultValue={lastSelected || "categories"}>
       <div className="mb-2 flex flex-col border-b border-black/5">
         <ActiveFilters
           filtersCount={filtersCount}
@@ -145,13 +147,22 @@ export function FacetsContent({ independentFacetDistribution, facetDistribution,
           }}
           onCheckedChange={(category) => {
             setLastSelected("categories")
-
-            router.push(`${isAiPath ? "/ai/category" : "/category"}/${category.split(HIERARCHICAL_SEPARATOR).pop()}`)
+            
+            const categoryHandle = category.split(HIERARCHICAL_SEPARATOR).pop()!
+            const displayType = categoryDisplayTypes?.[categoryHandle] || "PLP"
+            
+            // Route to /category/plp/{slug} for CLP categories to force PLP view
+            if (displayType === "CLP") {
+              router.push(`${isAiPath ? "/ai/category/plp" : "/category/plp"}/${categoryHandle}`)
+            } else {
+              router.push(`${isAiPath ? "/ai/category" : "/category"}/${categoryHandle}`)
+            }
           }}
+          categoryDisplayTypes={categoryDisplayTypes}
         />
       )}
       {!disabledFacets?.includes("vendors") && (
-        <Facet
+        <VendorsFacet
           id="vendors"
           title="Vendors"
           distribution={vendors}

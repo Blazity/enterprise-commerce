@@ -29,6 +29,7 @@ import { ProductImages } from "components/product/product-images"
 import { RightSection } from "components/product/right-section"
 import { FaqAccordionItem, FaqSectionClient } from "components/product/faq-section/faq-section-client"
 import { ShopifyRichText } from "components/product/faq-section/shopify-rich-text"
+import { nameToSlug } from "utils/slug-name"
 import { AddToCartButton } from "components/product/add-to-cart-button"
 import { ReviewsSection } from "components/product/reviews-section"
 
@@ -134,7 +135,7 @@ export default async function Product(props: ProductProps) {
             <p>{product.description}</p>
             <AddToCartButton className="mt-4" product={product} combination={combination} />
             <FavoriteMarker handle={slug} />
-            <FaqSectionClient defaultOpenSections={product.productDetailsMetafield?.value ??  getDefaultFaqAccordionItemValue()}>
+            <FaqSectionClient defaultOpenSections={[nameToSlug(getDefaultFaqAccordionItemValue()[0])]}>
               <FaqAccordionItem title={getDefaultFaqAccordionItemValue()[0]}>
                 <ShopifyRichText data={product.productDetailsMetafield?.value || getDefaultFaqAccordionItemRichText()} className="prose prose-sm max-w-none" />
               </FaqAccordionItem>

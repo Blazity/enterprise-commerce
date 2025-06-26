@@ -142,11 +142,14 @@ export const getCollection = unstable_cache(
       searchParams: {
         filters: algolia.filterBuilder().where("handle", slug).build(),
         hitsPerPage: 1,
-        attributesToRetrieve: ["handle", "title", "seo"],
+        attributesToRetrieve: ["handle", "title", "seo", "descriptionHtml", "image", "pageDisplayTypeMetafield"],
       },
     })
 
-    return results.hits.find(Boolean) || null
+
+    const collection = results.hits.find(Boolean) || null
+    console.log({collectionFromAlgolia: collection})
+    return collection
   },
   ["category-by-handle"],
   { revalidate: 86400 }
@@ -268,12 +271,12 @@ export const deleteProducts = async (ids: string[]) => {
 }
 
 export const getFilteredProducts = unstable_cache(
-  async (query: string, sortBy: string, page: number, filters: string) => {
+  async (query: string, sortBy: string, page: number, filters: string, collectionHandle?: string, hasVendorFilter: boolean = false) => {
     if (isDemoMode()) return getDemoProducts()
     const indexName = algolia.mapIndexToSort(env.ALGOLIA_PRODUCTS_INDEX, sortBy as SortType)
 
     try {
-      const [results, independentFacets] = await Promise.all([
+      const queries = [
         algolia.search<CommerceProduct>({
           indexName,
           searchParams: {
@@ -283,6 +286,7 @@ export const getFilteredProducts = unstable_cache(
             hitsPerPage: HITS_PER_PAGE,
             attributesToRetrieve: ["id", "handle", "title", "priceRange", "featuredImage", "minPrice", "variants", "images", "avgRating", "totalReviews"],
             facets: ["flatOptions.Color", "avgRating", "vendor", "minPrice", "variants.availableForSale"],
+            maxValuesPerFacet: 1000,
           },
         }),
         algolia.search<CommerceProduct>({
@@ -290,15 +294,71 @@ export const getFilteredProducts = unstable_cache(
           searchParams: {
             facets: ["vendor"].concat(env.SHOPIFY_HIERARCHICAL_NAV_HANDLE ? ["hierarchicalCategories.lvl0", "hierarchicalCategories.lvl1", "hierarchicalCategories.lvl2"] : []),
             hitsPerPage: HITS_PER_PAGE,
+            maxValuesPerFacet: 1000,
           },
         }),
-      ])
+      ]
+
+      // Add vendor-specific query only when vendor filter is active in category context
+      if (hasVendorFilter && collectionHandle) {
+        // Remove vendor filter to get all vendors in the category
+        const filtersWithoutVendor = filters
+          .split(" AND ")
+          .filter(f => !f.includes('vendor:'))
+          .join(" AND ")
+        
+        queries.push(
+          algolia.search<CommerceProduct>({
+            indexName,
+            searchParams: {
+              facets: ["vendor"],
+              hitsPerPage: 0, // We only need facets, not hits
+              filters: filtersWithoutVendor,
+              maxValuesPerFacet: 1000,
+            },
+          })
+        )
+      }
+
+      const allResults = await Promise.all(queries)
+      const [results, independentFacets, vendorFacetsWithoutFilter] = allResults
 
       const hits = results?.hits || []
       const totalPages = results?.nbPages || 0
       const facetDistribution = results?.facets || {}
       const totalHits = results.nbHits || 0
-      const independentFacetDistribution = independentFacets.facets || {}
+      
+      // Determine which vendor facets to use
+      let vendorFacets
+      if (hasVendorFilter && collectionHandle && vendorFacetsWithoutFilter) {
+        // Use vendor facets without the vendor filter applied (disjunctive behavior)
+        vendorFacets = vendorFacetsWithoutFilter.facets?.vendor
+      } else if (collectionHandle) {
+        // Use filtered vendor facets (category-scoped)
+        vendorFacets = facetDistribution.vendor
+      } else {
+        // Use independent vendor facets (all vendors for search)
+        vendorFacets = independentFacets.facets?.vendor
+      }
+      
+      const independentFacetDistribution = {
+        ...independentFacets.facets,
+        vendor: vendorFacets || {}
+      }
+      
+      // Debug logging for vendor facets
+      if (independentFacetDistribution.vendor) {
+        console.log("[Vendor Facets Debug]", {
+          vendorCount: Object.keys(independentFacetDistribution.vendor).length,
+          vendors: Object.keys(independentFacetDistribution.vendor).slice(0, 5),
+          filter: filters,
+          collectionHandle: collectionHandle || "none",
+          categoryScoped: !!collectionHandle,
+          hasVendorFilter,
+          vendorSource: hasVendorFilter && collectionHandle ? "disjunctive" : (collectionHandle ? "filtered" : "independent"),
+          totalQueries: allResults.length
+        })
+      }
 
       return {
         hits,
@@ -334,5 +394,24 @@ export const getFacetValues = unstable_cache(
     return res?.facetHits.map(({ value }) => value)
   },
   ["facet-values"],
+  { revalidate: 86400 }
+)
+
+export const getProductsByCollectionTag = unstable_cache(
+  async (tag: string, limit: number = 10) => {
+    if (isDemoMode()) return getDemoProducts().hits.slice(0, limit)
+
+    const { hits } = await algolia.search<CommerceProduct>({
+      indexName: algolia.mapIndexToSort(env.ALGOLIA_PRODUCTS_INDEX, "updatedAtTimestamp:desc"),
+      searchParams: {
+        filters: algolia.filterBuilder().where("tags", tag).build(),
+        hitsPerPage: limit,
+        attributesToRetrieve: ["id", "handle", "title", "featuredImage", "minPrice", "variants", "avgRating", "totalReviews", "vendor"],
+      },
+    })
+
+    return hits
+  },
+  ["products-by-collection-tag"],
   { revalidate: 86400 }
 )

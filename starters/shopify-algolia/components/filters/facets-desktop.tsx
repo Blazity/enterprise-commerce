@@ -6,10 +6,11 @@ interface FacetsDesktopProps {
   facetDistribution: Record<string, Record<string, number>> | undefined
   className?: string
   disabledFacets?: string[]
+  categoryDisplayTypes?: Record<string, "CLP" | "PLP">
 }
 
-export function FacetsDesktop({ independentFacetDistribution, facetDistribution, className, disabledFacets }: FacetsDesktopProps) {
-  return <FacetsContent independentFacetDistribution={independentFacetDistribution} facetDistribution={facetDistribution} className={className} disabledFacets={disabledFacets} />
+export function FacetsDesktop({ independentFacetDistribution, facetDistribution, className, disabledFacets, categoryDisplayTypes }: FacetsDesktopProps) {
+  return <FacetsContent independentFacetDistribution={independentFacetDistribution} facetDistribution={facetDistribution} className={className} disabledFacets={disabledFacets} categoryDisplayTypes={categoryDisplayTypes} />
 }
 
 export function FacetsContentSkeleton() {

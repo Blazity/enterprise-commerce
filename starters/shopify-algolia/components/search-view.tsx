@@ -2,7 +2,7 @@ import { Suspense } from "react"
 import { createSearchParamsCache, parseAsArrayOf, parseAsInteger, parseAsString } from "nuqs/server"
 
 import type { PlatformCollection } from "lib/shopify/types"
-import { getFilteredProducts } from "lib/algolia"
+import { getCategories, getFilteredProducts } from "lib/algolia"
 
 import { buildSearchFilter } from "utils/build-search-filter"
 
@@ -59,7 +59,20 @@ export async function SearchView({ searchParams, disabledFacets, collection, bas
     separator: HIERARCHICAL_SEPARATOR,
   })
 
-  const { facetDistribution, hits, totalPages, totalHits, independentFacetDistribution } = await getFilteredProducts(q, sortBy, page, filter)
+  const hasVendorFilter = rest.vendors && rest.vendors.length > 0
+  const { facetDistribution, hits, totalPages, totalHits, independentFacetDistribution } = await getFilteredProducts(q, sortBy, page, filter, collection?.handle, hasVendorFilter)
+  
+  // Fetch all categories with their CLP/PLP settings
+  const { hits: allCategories } = await getCategories({
+    hitsPerPage: 1000,
+    attributesToRetrieve: ["handle", "pageDisplayTypeMetafield"]
+  })
+  
+  // Build a map of category handles to their display type
+  const categoryDisplayTypes = allCategories.reduce((acc, category) => {
+    acc[category.handle] = category.pageDisplayTypeMetafield?.value === "CLP" ? "CLP" : "PLP"
+    return acc
+  }, {} as Record<string, "CLP" | "PLP">)
 
   return (
     <div className="mx-auto w-full md:max-w-container-md">
@@ -74,6 +87,7 @@ export async function SearchView({ searchParams, disabledFacets, collection, bas
             disabledFacets={disabledFacets}
             independentFacetDistribution={independentFacetDistribution as Record<string, Record<string, number>>}
             facetDistribution={facetDistribution as Record<string, Record<string, number>>}
+            categoryDisplayTypes={categoryDisplayTypes}
           />
         </div>
       </div>
@@ -90,6 +104,7 @@ export async function SearchView({ searchParams, disabledFacets, collection, bas
               disabledFacets={disabledFacets}
               className="hidden max-h-[70dvh] shrink-0 basis-[192px] overflow-y-auto lg:block"
               facetDistribution={facetDistribution as Record<string, Record<string, number>>}
+              categoryDisplayTypes={categoryDisplayTypes}
             />
           </Suspense>
         </div>

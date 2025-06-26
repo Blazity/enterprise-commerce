@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { CategoryView } from "components/category/category-view"
+import { CategoryCLPView } from "components/category/category-clp-view"
 
 export const revalidate = 86400
 export const dynamic = "force-static"
@@ -22,5 +22,5 @@ export async function generateStaticParams() {
 
 export default async function CategoryPage(props: CategoryPageProps) {
   const params = await props.params
-  return <CategoryView searchParams={{ page: params.page }} params={params} basePath="ai" />
+  return <CategoryCLPView searchParams={{ page: params.page }} params={params} basePath="ai" />
 }

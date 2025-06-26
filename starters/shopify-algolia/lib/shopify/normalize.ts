@@ -1,10 +1,10 @@
 import { SingleCartQuery, SingleCollectionQuery, SingleProductQuery } from "./types/storefront.generated"
 import type { PlatformCart, PlatformCartItem, PlatformCollection, PlatformProduct } from "./types"
-import { cleanShopifyId } from "./utils"
+import { cleanShopifyId, normalizePresetChoice } from "./utils"
 
 export function normalizeProduct(product: SingleProductQuery["product"]): PlatformProduct | null {
   if (!product) return null
-  const { id, handle, title, description, vendor, descriptionHtml, options, priceRange, variants, featuredImage, images, tags, updatedAt, createdAt, collections, seo } = product
+  const { id, handle, title, description, vendor, descriptionHtml, options, priceRange, variants, featuredImage, images, tags, updatedAt, createdAt, collections, seo, productDetailsMetafield } = product
 
   return {
     id: cleanShopifyId(id, "Product"),
@@ -27,6 +27,7 @@ export function normalizeProduct(product: SingleProductQuery["product"]): Platfo
     variants: variants?.edges?.map(({ node }) => node) || [],
     images: images?.edges?.map(({ node }) => node) || [],
     collections: (collections?.nodes as PlatformCollection[]) || [],
+    productDetailsMetafield,
   }
 }
 
@@ -45,7 +46,7 @@ export function normalizeCart(cart: SingleCartQuery["cart"]): PlatformCart | nul
 
 export function normalizeCollection(collection: SingleCollectionQuery["collection"]): PlatformCollection | null {
   if (!collection) return null
-  const { id, handle, title, descriptionHtml, seo, image, updatedAt, description } = collection
+  const { id, handle, title, descriptionHtml, seo, image, updatedAt, description, pageDisplayTypeMetafield } = collection
 
   return {
     id: cleanShopifyId(id, "Collection"),
@@ -56,5 +57,9 @@ export function normalizeCollection(collection: SingleCollectionQuery["collectio
     image,
     updatedAt,
     description,
+    pageDisplayTypeMetafield: pageDisplayTypeMetafield ? {
+      ...pageDisplayTypeMetafield,
+      value: normalizePresetChoice<"CLP" | "PLP">(pageDisplayTypeMetafield.value) || "PLP"
+    } : null,
   }
 }
