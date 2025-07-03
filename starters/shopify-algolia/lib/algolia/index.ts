@@ -32,7 +32,7 @@ export const getProduct = unstable_cache(
     return hits.find(Boolean) || null
   },
   ["product-by-handle"],
-  { revalidate: 86400 }
+  { revalidate: 86400, tags: ["products"] }
 )
 
 export const getProducts = unstable_cache(
@@ -49,7 +49,7 @@ export const getProducts = unstable_cache(
     })
   },
   ["search-products"],
-  { revalidate: 86400 }
+  { revalidate: 86400, tags: ["products"] }
 )
 
 export const getFeaturedProducts = unstable_cache(
@@ -67,7 +67,7 @@ export const getFeaturedProducts = unstable_cache(
     return hits
   },
   ["featured-products"],
-  { revalidate: 86400 }
+  { revalidate: 86400, tags: ["products"] }
 )
 
 export const getAllProducts = async (options?: Omit<BrowseProps["browseParams"], "hitsPerPage">) => {
@@ -113,8 +113,8 @@ export const getSimilarProducts = unstable_cache(
 
     return [...(results[0].hits as unknown as CommerceProduct[]), ...collectionSearchResults.hits]
   },
-  ["product-by-handle"],
-  { revalidate: 86400 }
+  ["similar-products"],
+  { revalidate: 86400, tags: ["products", "recommendations"] }
 )
 
 export const getNewestProducts = unstable_cache(
@@ -130,7 +130,7 @@ export const getNewestProducts = unstable_cache(
     return hits
   },
   ["newest-products"],
-  { revalidate: 86400 }
+  { revalidate: 86400, tags: ["products"] }
 )
 
 export const getCollection = unstable_cache(
@@ -152,7 +152,7 @@ export const getCollection = unstable_cache(
     return collection
   },
   ["category-by-handle"],
-  { revalidate: 86400 }
+  { revalidate: 86400, tags: ["categories"] }
 )
 
 export const getProductReviews = unstable_cache(
@@ -180,7 +180,7 @@ export const getProductReviews = unstable_cache(
     }
   },
   ["product-reviews-by-handle"],
-  { revalidate: 86400 }
+  { revalidate: 86400, tags: ["reviews"] }
 )
 
 export const getAllReviews = async (options: Omit<BrowseProps["browseParams"], "hitsPerPage"> = {}) => {
@@ -236,7 +236,7 @@ export const getCategories = unstable_cache(
     })
   },
   ["search-categories"],
-  { revalidate: 86400 }
+  { revalidate: 86400, tags: ["categories"] }
 )
 
 export const updateCategories = unstable_cache(
@@ -249,7 +249,7 @@ export const updateCategories = unstable_cache(
     })
   },
   ["update-categories"],
-  { revalidate: 86400 }
+  { revalidate: 86400, tags: ["categories"] }
 )
 
 export const deleteCategories = async (ids: string[]) => {
@@ -328,16 +328,12 @@ export const getFilteredProducts = unstable_cache(
       const facetDistribution = results?.facets || {}
       const totalHits = results.nbHits || 0
       
-      // Determine which vendor facets to use
       let vendorFacets
       if (hasVendorFilter && collectionHandle && vendorFacetsWithoutFilter) {
-        // Use vendor facets without the vendor filter applied (disjunctive behavior)
         vendorFacets = vendorFacetsWithoutFilter.facets?.vendor
       } else if (collectionHandle) {
-        // Use filtered vendor facets (category-scoped)
         vendorFacets = facetDistribution.vendor
       } else {
-        // Use independent vendor facets (all vendors for search)
         vendorFacets = independentFacets.facets?.vendor
       }
       
@@ -346,7 +342,6 @@ export const getFilteredProducts = unstable_cache(
         vendor: vendorFacets || {}
       }
       
-      // Debug logging for vendor facets
       if (independentFacetDistribution.vendor) {
         console.log("[Vendor Facets Debug]", {
           vendorCount: Object.keys(independentFacetDistribution.vendor).length,
@@ -379,7 +374,7 @@ export const getFilteredProducts = unstable_cache(
     }
   },
   ["filtered-products"],
-  { revalidate: 86400 }
+  { revalidate: 86400, tags: ["search", "products"] } 
 )
 
 export const getFacetValues = unstable_cache(
@@ -394,7 +389,7 @@ export const getFacetValues = unstable_cache(
     return res?.facetHits.map(({ value }) => value)
   },
   ["facet-values"],
-  { revalidate: 86400 }
+  { revalidate: 86400, tags: ["facets"] }
 )
 
 export const getProductsByCollectionTag = unstable_cache(
@@ -413,5 +408,5 @@ export const getProductsByCollectionTag = unstable_cache(
     return hits
   },
   ["products-by-collection-tag"],
-  { revalidate: 86400 }
+  { revalidate: 86400, tags: ["products"] }
 )
