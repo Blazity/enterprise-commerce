@@ -2,7 +2,7 @@ import { Suspense } from "react"
 import { createSearchParamsCache, parseAsArrayOf, parseAsInteger, parseAsString } from "nuqs/server"
 
 import type { PlatformCollection } from "lib/shopify/types"
-import { getCategories, getFilteredProducts } from "lib/algolia"
+import { getCategories, getFilteredProducts } from "lib/algolia/rate-limited"
 
 import { buildSearchFilter } from "utils/build-search-filter"
 

@@ -51,7 +51,11 @@ export async function middleware(request: NextRequest) {
     return handlePLPMiddleware(request)
   }
 
-  return NextResponse.next()
+  return NextResponse.next({
+    request: {
+      headers: request.headers,
+    },
+  })
 }
 
 async function handleRedirectsMiddleware(request: NextRequest) {
@@ -85,7 +89,11 @@ function handleAbTestingMiddleware(request: NextRequest, route: Route) {
   const url = request.nextUrl.clone()
   url.pathname = `${route.page}/${bucket}`
 
-  const res = NextResponse.rewrite(url)
+  const res = NextResponse.rewrite(url, {
+    request: {
+      headers: request.headers,
+    },
+  })
   !hasBucket && res.cookies.set(route.cookie, bucket)
 
   return res
@@ -100,12 +108,20 @@ function handleCLPMiddleware(request: NextRequest) {
     url.pathname = `${isAi ? "ai/category" : "category"}/clp/${request.nextUrl.pathname.split("/")[isAi ? 3 : 2]}/${page}`
     url.searchParams.delete("page")
 
-    return NextResponse.rewrite(url)
+    return NextResponse.rewrite(url, {
+      request: {
+        headers: request.headers,
+      },
+    })
   }
 
   url.pathname = `${isAi ? "ai/category" : "category"}/clp/${request.nextUrl.pathname.split("/")[isAi ? 3 : 2]}`
 
-  return NextResponse.rewrite(url)
+  return NextResponse.rewrite(url, {
+    request: {
+      headers: request.headers,
+    },
+  })
 }
 
 function handlePLPMiddleware(request: NextRequest) {
@@ -114,7 +130,11 @@ function handlePLPMiddleware(request: NextRequest) {
 
   url.pathname = `${isAi ? "ai/category" : "category"}/plp/${request.nextUrl.pathname.split("/")[isAi ? 3 : 2]}`
 
-  return NextResponse.rewrite(url)
+  return NextResponse.rewrite(url, {
+    request: {
+      headers: request.headers,
+    },
+  })
 }
 
 export const config = {

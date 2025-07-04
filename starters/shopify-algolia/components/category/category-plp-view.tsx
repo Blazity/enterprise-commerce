@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation"
 import { SearchParamsType } from "types"
-import { getCollection } from "lib/algolia"
+import { getCollection } from "lib/algolia/rate-limited"
 import { SearchView } from "components/search-view"
 
 interface CategoryPLPViewProps {
