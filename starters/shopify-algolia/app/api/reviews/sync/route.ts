@@ -4,12 +4,18 @@ import { authenticate } from "utils/authenticate-api-route"
 import { isOptIn, notifyOptIn } from "utils/opt-in"
 import { isDemoMode } from "utils/demo-utils"
 import { getAllProducts, getAllReviews, updateProducts, updateReviews } from "lib/algolia"
+import { checkApiRateLimit } from "lib/algolia/api-rate-limit"
 import { getAllProductReviews } from "lib/reviews"
 
 export const maxDuration = 60
 
 export async function GET(req: Request) {
   unstable_noStore()
+  
+  // Check rate limit first
+  const rateLimitResponse = await checkApiRateLimit("algolia-data-sync", req)
+  if (rateLimitResponse) return rateLimitResponse
+  
   if (!authenticate(req)) {
     return new Response("Unauthorized", {
       status: 401,

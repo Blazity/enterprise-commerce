@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import { isDemoMode } from "utils/demo-utils"
 import { getCategories } from "lib/algolia"
 import { CategoryCLPView } from "components/category/category-clp-view"
-import { SearchParamsType } from "types"
+import { SearchParamsType } from "types" 
 
 export const revalidate = 86400
 // Allow dynamic rendering for query parameters when showing PLP
@@ -21,16 +21,16 @@ export async function generateMetadata(props: CategoryPageProps): Promise<Metada
   }
 }
 
-export async function generateStaticParams() {
-  if (isDemoMode()) return []
+// export async function generateStaticParams() {
+//   if (isDemoMode()) return []
 
-  const { hits } = await getCategories({
-    hitsPerPage: 50,
-    attributesToRetrieve: ["handle"],
-  })
+//   const { hits } = await getCategories({
+//     hitsPerPage: 50,
+//     attributesToRetrieve: ["handle"],
+//   })
 
-  return hits.map(({ handle }) => ({ slug: handle }))
-}
+//   return hits.map(({ handle }) => ({ slug: handle }))
+// }
 
 export default async function CategoryPage(props: CategoryPageProps) {
   const params = await props.params

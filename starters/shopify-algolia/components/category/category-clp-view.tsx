@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation"
 import { SearchParamsType } from "types"
-import { getCollection, getProductsByCollectionTag } from "lib/algolia"
+import { getCollection } from "lib/algolia/rate-limited"
+import { getProductsByCollectionTag } from "lib/algolia"
 import { CategoryLandingPage } from "./category-landing-page"
 import { SearchView } from "components/search-view"
 

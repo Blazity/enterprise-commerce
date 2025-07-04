@@ -2,6 +2,7 @@ import { env } from "env.mjs"
 import { compareHmac } from "utils/compare-hmac"
 import { ProductEnrichmentBuilder } from "utils/enrich-product"
 import { deleteCategories, deleteProducts, updateCategories, updateProducts } from "lib/algolia"
+import { checkApiRateLimit } from "lib/algolia/api-rate-limit"
 import { getCollection, getHierarchicalCollections, getProduct } from "lib/shopify"
 import { makeShopifyId } from "lib/shopify/utils"
 import { HIERARCHICAL_SEPARATOR } from "constants/index"
@@ -38,6 +39,11 @@ export async function POST(req: Request) {
   if (!id) {
     return new Response(JSON.stringify({ message: "Invalid payload" }), { status: 400, headers: { "Content-Type": "application/json" } })
   }
+
+  // Check rate limit based on topic
+  const rateLimitKey = topic.startsWith("products") ? "algolia-product-update" : "algolia-category-update"
+  const rateLimitResponse = await checkApiRateLimit(rateLimitKey, req)
+  if (rateLimitResponse) return rateLimitResponse
 
   if (topic.startsWith("products")) {
     return await handleProductTopics(topic as SupportedTopic, { id })

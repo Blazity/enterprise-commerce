@@ -22,7 +22,7 @@ import { notifyOptIn } from "utils/opt-in"
 import type { CommerceProduct } from "types"
 import type { PlatformCollection } from "lib/shopify/types"
 import type { Review } from "lib/reviews/types"
-import type { BrowseProps, SearchSingleIndexProps } from "algoliasearch"
+import type { SearchSingleIndexProps } from "algoliasearch"
 
 // Rate limit keys configured in Vercel WAF dashboard
 type RateLimitKey = 
@@ -43,20 +43,77 @@ async function checkAlgoliaRateLimit(key: RateLimitKey) {
     return
   }
 
+  let shouldRedirect = false
+
   try {
     const headerData = await headers()
     
+    // For local development, create a modified headers object with x-real-ip
+    const modifiedHeaders = new Headers(headerData)
+    
+    // Debug: Log available headers
+    if (process.env.NODE_ENV === 'development') {
+      const headerEntries: Record<string, string> = {}
+      headerData.forEach((value, key) => {
+        headerEntries[key] = value
+      })
+      console.log(`[Rate Limit Debug] Original headers for ${key}:`, headerEntries)
+      
+      // Add x-real-ip for localhost if not present
+      if (!modifiedHeaders.get('x-real-ip')) {
+        // Try to get IP from various sources
+        const possibleIp = modifiedHeaders.get('x-forwarded-for') || 
+                          modifiedHeaders.get('x-forwarded-host') ||
+                          modifiedHeaders.get('host') ||
+                          '127.0.0.1'
+        
+        modifiedHeaders.set('x-real-ip', possibleIp.split(',')[0].trim())
+        console.log(`[Rate Limit Debug] Added x-real-ip header:`, possibleIp.split(',')[0].trim())
+      }
+    }
+    
+    // Extract important headers for rate limiting
+    const headersObject: Record<string, string> = {}
+    const importantHeaders = [
+      'x-real-ip',
+      'x-forwarded-for',
+      'x-forwarded-host',
+      'x-forwarded-proto',
+      'user-agent',
+      'cf-connecting-ip',
+      'x-vercel-ip-country',
+      'x-vercel-ip-city',
+      'x-vercel-forwarded-for'
+    ]
+    
+    importantHeaders.forEach(headerName => {
+      const value = modifiedHeaders.get(headerName)
+      if (value) {
+        headersObject[headerName] = value
+      }
+    })
+    
+    // If no IP headers found, try to construct one from other available data
+    if (!headersObject['x-real-ip'] && !headersObject['x-forwarded-for']) {
+      console.warn(`[Rate Limit Warning] No IP headers found for key ${key}. Available headers:`, Object.keys(headersObject))
+    }
+    
     const result = await checkRateLimit(key, { 
-      headers: headerData,
+      headers: modifiedHeaders,
       firewallHostForDevelopment: process.env.VERCEL_FIREWALL_DEV_HOST
     })
     
     if (result.rateLimited) {
-      redirect("/429")
+      shouldRedirect = true
     }
   } catch (error) {
     // Log error but don't block the request
     console.error(`Rate limit check failed for key ${key}:`, error)
+  }
+
+  // Redirect outside of try-catch block since redirect() throws internally
+  if (shouldRedirect) {
+    redirect("/429")
   }
 }
 

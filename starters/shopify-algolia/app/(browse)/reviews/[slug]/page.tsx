@@ -1,6 +1,6 @@
 import { notFound, redirect } from "next/navigation"
 
-import { getProduct, getProductReviews } from "lib/algolia"
+import { getProduct, getProductReviews } from "lib/algolia/rate-limited"
 
 import { Breadcrumbs } from "components/breadcrumbs"
 
@@ -31,7 +31,7 @@ export default async function ProductReviews(props: ProductReviewsPageProps) {
 
   const [product, { reviews, total: totalReviews }] = await Promise.all([
     getProduct(removeOptionsFromUrl(slug)),
-    getProductReviews(removeOptionsFromUrl(slug), { HITS_PER_PAGE, page }),
+    getProductReviews(removeOptionsFromUrl(slug), { limit: HITS_PER_PAGE, page }),
   ])
 
   const totalPages = Math.ceil(totalReviews / HITS_PER_PAGE)
