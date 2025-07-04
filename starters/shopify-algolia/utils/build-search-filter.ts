@@ -20,15 +20,14 @@ export function buildSearchFilter({ collection, params, separator }: { collectio
   addRatingFilter(filter, params.rating)
 
   const builtFilter = filter.build(LogicalOperators.And)
-  
-  // Debug logging
+
   if (params.vendors?.length > 0) {
     console.log("[Vendor Filter Debug]", {
       vendors: params.vendors,
-      fullFilter: builtFilter
+      fullFilter: builtFilter,
     })
   }
-  
+
   return builtFilter
 }
 

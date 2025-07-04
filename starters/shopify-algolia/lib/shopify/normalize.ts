@@ -4,7 +4,25 @@ import { cleanShopifyId, normalizePresetChoice } from "./utils"
 
 export function normalizeProduct(product: SingleProductQuery["product"]): PlatformProduct | null {
   if (!product) return null
-  const { id, handle, title, description, vendor, descriptionHtml, options, priceRange, variants, featuredImage, images, tags, updatedAt, createdAt, collections, seo, productDetailsMetafield } = product
+  const {
+    id,
+    handle,
+    title,
+    description,
+    vendor,
+    descriptionHtml,
+    options,
+    priceRange,
+    variants,
+    featuredImage,
+    images,
+    tags,
+    updatedAt,
+    createdAt,
+    collections,
+    seo,
+    productDetailsMetafield,
+  } = product
 
   return {
     id: cleanShopifyId(id, "Product"),
@@ -57,9 +75,11 @@ export function normalizeCollection(collection: SingleCollectionQuery["collectio
     image,
     updatedAt,
     description,
-    pageDisplayTypeMetafield: pageDisplayTypeMetafield ? {
-      ...pageDisplayTypeMetafield,
-      value: normalizePresetChoice<"CLP" | "PLP">(pageDisplayTypeMetafield.value) || "PLP"
-    } : null,
+    pageDisplayTypeMetafield: pageDisplayTypeMetafield
+      ? {
+          ...pageDisplayTypeMetafield,
+          value: normalizePresetChoice<"CLP" | "PLP">(pageDisplayTypeMetafield.value) || "PLP",
+        }
+      : null,
   }
 }

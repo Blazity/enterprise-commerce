@@ -146,9 +146,8 @@ export const getCollection = unstable_cache(
       },
     })
 
-
     const collection = results.hits.find(Boolean) || null
-    console.log({collectionFromAlgolia: collection})
+    console.log({ collectionFromAlgolia: collection })
     return collection
   },
   ["category-by-handle"],
@@ -299,20 +298,18 @@ export const getFilteredProducts = unstable_cache(
         }),
       ]
 
-      // Add vendor-specific query only when vendor filter is active in category context
       if (hasVendorFilter && collectionHandle) {
-        // Remove vendor filter to get all vendors in the category
         const filtersWithoutVendor = filters
           .split(" AND ")
-          .filter(f => !f.includes('vendor:'))
+          .filter((f) => !f.includes("vendor:"))
           .join(" AND ")
-        
+
         queries.push(
           algolia.search<CommerceProduct>({
             indexName,
             searchParams: {
               facets: ["vendor"],
-              hitsPerPage: 0, // We only need facets, not hits
+              hitsPerPage: 0,
               filters: filtersWithoutVendor,
               maxValuesPerFacet: 1000,
             },
@@ -327,7 +324,7 @@ export const getFilteredProducts = unstable_cache(
       const totalPages = results?.nbPages || 0
       const facetDistribution = results?.facets || {}
       const totalHits = results.nbHits || 0
-      
+
       let vendorFacets
       if (hasVendorFilter && collectionHandle && vendorFacetsWithoutFilter) {
         vendorFacets = vendorFacetsWithoutFilter.facets?.vendor
@@ -336,12 +333,12 @@ export const getFilteredProducts = unstable_cache(
       } else {
         vendorFacets = independentFacets.facets?.vendor
       }
-      
+
       const independentFacetDistribution = {
         ...independentFacets.facets,
-        vendor: vendorFacets || {}
+        vendor: vendorFacets || {},
       }
-      
+
       if (independentFacetDistribution.vendor) {
         console.log("[Vendor Facets Debug]", {
           vendorCount: Object.keys(independentFacetDistribution.vendor).length,
@@ -350,8 +347,8 @@ export const getFilteredProducts = unstable_cache(
           collectionHandle: collectionHandle || "none",
           categoryScoped: !!collectionHandle,
           hasVendorFilter,
-          vendorSource: hasVendorFilter && collectionHandle ? "disjunctive" : (collectionHandle ? "filtered" : "independent"),
-          totalQueries: allResults.length
+          vendorSource: hasVendorFilter && collectionHandle ? "disjunctive" : collectionHandle ? "filtered" : "independent",
+          totalQueries: allResults.length,
         })
       }
 
@@ -374,7 +371,7 @@ export const getFilteredProducts = unstable_cache(
     }
   },
   ["filtered-products"],
-  { revalidate: 86400, tags: ["search", "products"] } 
+  { revalidate: 86400, tags: ["search", "products"] }
 )
 
 export const getFacetValues = unstable_cache(

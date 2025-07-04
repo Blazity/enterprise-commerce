@@ -104,7 +104,7 @@ export function FacetsContent({ independentFacetDistribution, facetDistribution,
       if (selected.includes(element)) {
         setter(selected.filter((v) => v !== element))
         setPage(1)
-        break // Exit once we've found and removed the element
+        break
       }
     }
   }
@@ -147,11 +147,10 @@ export function FacetsContent({ independentFacetDistribution, facetDistribution,
           }}
           onCheckedChange={(category) => {
             setLastSelected("categories")
-            
+
             const categoryHandle = category.split(HIERARCHICAL_SEPARATOR).pop()!
             const displayType = categoryDisplayTypes?.[categoryHandle] || "PLP"
-            
-            // Route to /category/plp/{slug} for CLP categories to force PLP view
+
             if (displayType === "CLP") {
               router.push(`${isAiPath ? "/ai/category/plp" : "/category/plp"}/${categoryHandle}`)
             } else {

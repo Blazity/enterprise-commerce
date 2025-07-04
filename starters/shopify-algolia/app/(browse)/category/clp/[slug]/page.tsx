@@ -2,10 +2,10 @@ import type { Metadata } from "next"
 import { isDemoMode } from "utils/demo-utils"
 import { getCategories } from "lib/algolia"
 import { CategoryCLPView } from "components/category/category-clp-view"
-import { SearchParamsType } from "types" 
+import { SearchParamsType } from "types"
 
 export const revalidate = 86400
-// Allow dynamic rendering for query parameters when showing PLP
+
 export const dynamic = "force-dynamic"
 
 interface CategoryPageProps {
@@ -20,17 +20,6 @@ export async function generateMetadata(props: CategoryPageProps): Promise<Metada
     description: "In excepteur elit mollit in.",
   }
 }
-
-// export async function generateStaticParams() {
-//   if (isDemoMode()) return []
-
-//   const { hits } = await getCategories({
-//     hitsPerPage: 50,
-//     attributesToRetrieve: ["handle"],
-//   })
-
-//   return hits.map(({ handle }) => ({ slug: handle }))
-// }
 
 export default async function CategoryPage(props: CategoryPageProps) {
   const params = await props.params

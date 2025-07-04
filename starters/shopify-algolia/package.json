@@ -51,6 +51,7 @@
     "@t3-oss/env-nextjs": "^0.9.2",
     "@uidotdev/usehooks": "^2.4.1",
     "@vercel/analytics": "^1.2.2",
+    "@vercel/firewall": "^1.0.0",
     "@vercel/flags": "2.2.1",
     "@vercel/functions": "^1.5.0",
     "@vercel/speed-insights": "^1.0.10",

@@ -3753,6 +3753,11 @@
   dependencies:
     server-only "^0.0.1"
 
+"@vercel/firewall@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@vercel/firewall/-/firewall-1.0.0.tgz#5d4ad71d511e51cd74b43c2f4a5ccfb49a48d502"
+  integrity sha512-7umwUgTV9BvM96YDhYOGEHmDoYoqdg7hdRUe8SahtppyD9zIF6uMA8sJvM53XYIaPSmpyj1nixDioyyJThMyog==
+
 "@vercel/flags@2.2.1":
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@vercel/flags/-/flags-2.2.1.tgz#0989621c359a7def294777e974a435f637d20ca7"

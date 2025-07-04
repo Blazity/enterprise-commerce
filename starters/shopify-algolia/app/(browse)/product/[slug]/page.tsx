@@ -46,7 +46,6 @@ interface ProductProps {
   params: Promise<{ slug: string }>
 }
 
-// TODO: These must take the new params into consideration? Move the variants logic to the query parameters?
 export async function generateStaticParams() {
   if (isDemoMode()) return []
 
@@ -187,11 +186,10 @@ function makeBreadcrumbs(product: CommerceProduct) {
   }
 }
 
-
- function getDefaultFaqAccordionItemRichText() {
-    return "{\"type\":\"root\",\"children\":[{\"listType\":\"unordered\",\"type\":\"list\",\"children\":[{\"type\":\"list-item\",\"children\":[{\"type\":\"text\",\"value\":\"Super for the muscles\"}]},{\"type\":\"list-item\",\"children\":[{\"type\":\"text\",\"value\":\"Various types and color variants\"}]},{\"type\":\"list-item\",\"children\":[{\"type\":\"text\",\"value\":\"Outdoor, or indoor - you define the place where you want to exercise\"}]},{\"type\":\"list-item\",\"children\":[{\"type\":\"text\",\"value\":\"100% Plastic from \"},{\"type\":\"text\",\"value\":\"recycling the materials\",\"bold\":true}]}]}]}"
+function getDefaultFaqAccordionItemRichText() {
+  return '{"type":"root","children":[{"listType":"unordered","type":"list","children":[{"type":"list-item","children":[{"type":"text","value":"Super for the muscles"}]},{"type":"list-item","children":[{"type":"text","value":"Various types and color variants"}]},{"type":"list-item","children":[{"type":"text","value":"Outdoor, or indoor - you define the place where you want to exercise"}]},{"type":"list-item","children":[{"type":"text","value":"100% Plastic from "},{"type":"text","value":"recycling the materials","bold":true}]}]}]}'
 }
 
- function getDefaultFaqAccordionItemValue() {
-    return ["Product Details"]
+function getDefaultFaqAccordionItemValue() {
+  return ["Product Details"]
 }

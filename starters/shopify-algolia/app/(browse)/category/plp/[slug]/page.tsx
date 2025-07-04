@@ -6,7 +6,7 @@ import { getCategories } from "lib/algolia"
 
 export const runtime = "nodejs"
 export const revalidate = 86400
-// Allow dynamic rendering for query parameters
+
 export const dynamic = "force-dynamic"
 
 interface ProductListingPageProps {
@@ -36,6 +36,6 @@ export async function generateStaticParams() {
 export default async function ProductListingPage(props: ProductListingPageProps) {
   const params = await props.params
   const searchParams = await props.searchParams
-  
+
   return <CategoryPLPView params={params} searchParams={searchParams} />
 }

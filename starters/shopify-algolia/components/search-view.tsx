@@ -61,18 +61,19 @@ export async function SearchView({ searchParams, disabledFacets, collection, bas
 
   const hasVendorFilter = rest.vendors && rest.vendors.length > 0
   const { facetDistribution, hits, totalPages, totalHits, independentFacetDistribution } = await getFilteredProducts(q, sortBy, page, filter, collection?.handle, hasVendorFilter)
-  
-  // Fetch all categories with their CLP/PLP settings
+
   const { hits: allCategories } = await getCategories({
     hitsPerPage: 1000,
-    attributesToRetrieve: ["handle", "pageDisplayTypeMetafield"]
+    attributesToRetrieve: ["handle", "pageDisplayTypeMetafield"],
   })
-  
-  // Build a map of category handles to their display type
-  const categoryDisplayTypes = allCategories.reduce((acc, category) => {
-    acc[category.handle] = category.pageDisplayTypeMetafield?.value === "CLP" ? "CLP" : "PLP"
-    return acc
-  }, {} as Record<string, "CLP" | "PLP">)
+
+  const categoryDisplayTypes = allCategories.reduce(
+    (acc, category) => {
+      acc[category.handle] = category.pageDisplayTypeMetafield?.value === "CLP" ? "CLP" : "PLP"
+      return acc
+    },
+    {} as Record<string, "CLP" | "PLP">
+  )
 
   return (
     <div className="mx-auto w-full md:max-w-container-md">

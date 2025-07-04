@@ -17,14 +17,13 @@ interface CategoryLandingPageProps {
 export function CategoryLandingPage({ collection, products, basePath }: CategoryLandingPageProps) {
   const [showAllProducts, setShowAllProducts] = useState(false)
 
-  // Show initial 12 products in grid, then show more when requested
   const initialProductCount = 12
   const displayedProducts = showAllProducts ? products : products.slice(0, initialProductCount)
   const hasMoreProducts = products.length > initialProductCount
 
   return (
     <div className="mx-auto w-full md:max-w-container-md">
-      {/* Hero Section */}
+      {}
       {collection.image && (
         <div className="relative aspect-[16/9] w-full overflow-hidden rounded-lg md:aspect-[21/9]">
           <Image
@@ -43,33 +42,33 @@ export function CategoryLandingPage({ collection, products, basePath }: Category
         </div>
       )}
 
-      {/* Title for collections without hero image */}
+      {}
       {!collection.image && (
         <div className="py-8">
           <h1 className="text-3xl font-bold tracking-tight md:text-5xl lg:text-6xl">{collection.title}</h1>
         </div>
       )}
 
-      {/* Description Section */}
+      {}
       {collection.descriptionHtml && (
         <div className="py-8">
           <div className="prose prose-lg max-w-none text-gray-700" dangerouslySetInnerHTML={{ __html: collection.descriptionHtml }} />
         </div>
       )}
 
-      {/* Products Section */}
+      {}
       {products.length > 0 && (
         <div className="py-8">
           <h2 className="mb-6 text-2xl font-semibold tracking-tight md:text-3xl">Featured Products</h2>
 
-          {/* Products Grid */}
+          {}
           <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {displayedProducts.map((product) => (
               <ProductCard key={product.id} {...product} className="h-full" prefetch={false} />
             ))}
           </div>
 
-          {/* Show More Button */}
+          {}
           {!showAllProducts && hasMoreProducts && (
             <div className="mt-8 flex justify-center">
               <Button onClick={() => setShowAllProducts(true)} className="w-full md:w-auto">
@@ -78,7 +77,7 @@ export function CategoryLandingPage({ collection, products, basePath }: Category
             </div>
           )}
 
-          {/* Browse All Link */}
+          {}
           {showAllProducts && (
             <div className="mt-8 flex justify-center">
               <Link
@@ -92,7 +91,7 @@ export function CategoryLandingPage({ collection, products, basePath }: Category
         </div>
       )}
 
-      {/* No Products Message */}
+      {}
       {products.length === 0 && (
         <div className="py-16 text-center">
           <h3 className="text-lg font-medium text-gray-900">No products found</h3>

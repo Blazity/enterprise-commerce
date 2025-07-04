@@ -27,7 +27,6 @@ const ROUTES: Record<string, Route | undefined> = {
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
 
-  // Bloom filters gives false positives for `/`
   const homeAwarePathname = pathname === "/" ? "/home" : pathname
 
   if (BLOOM_FILTER.has(homeAwarePathname)) {
@@ -138,21 +137,16 @@ function handlePLPMiddleware(request: NextRequest) {
 }
 
 export const config = {
-  // https://nextjs.org/docs/messages/edge-dynamic-code-evaluation
   unstable_allowDynamic: ["**/node_modules/lodash/lodash.js", "**/node_modules/reflect-metadata/Reflect.js"],
   matcher: ["/", "/((?!api|_next|cache-healthcheck|health|_vercel|.*\\..*).*)"],
 }
 
 function isCLP(request: NextRequest): boolean {
   const isCategory = request.nextUrl.pathname.startsWith("/category/")
-  const isInternalRoute = request.nextUrl.pathname.startsWith("/category/clp/") || 
-                         request.nextUrl.pathname.includes("/clp") ||
-                         request.nextUrl.pathname.includes("/plp")
+  const isInternalRoute = request.nextUrl.pathname.startsWith("/category/clp/") || request.nextUrl.pathname.includes("/clp") || request.nextUrl.pathname.includes("/plp")
 
   const isAiCategory = request.nextUrl.pathname.startsWith("/ai/category/")
-  const isAiInternalRoute = request.nextUrl.pathname.startsWith("/ai/category/clp/") ||
-                           request.nextUrl.pathname.includes("/clp") ||
-                           request.nextUrl.pathname.includes("/plp")
+  const isAiInternalRoute = request.nextUrl.pathname.startsWith("/ai/category/clp/") || request.nextUrl.pathname.includes("/clp") || request.nextUrl.pathname.includes("/plp")
 
   const isFaceted = facetParams.some((param) => request.nextUrl.searchParams.has(param))
 
@@ -161,14 +155,10 @@ function isCLP(request: NextRequest): boolean {
 
 function isPLP(request: NextRequest): boolean {
   const isCategory = request.nextUrl.pathname.startsWith("/category/")
-  const isInternalRoute = request.nextUrl.pathname.startsWith("/category/plp/") ||
-                         request.nextUrl.pathname.includes("/clp") ||
-                         request.nextUrl.pathname.includes("/plp")
+  const isInternalRoute = request.nextUrl.pathname.startsWith("/category/plp/") || request.nextUrl.pathname.includes("/clp") || request.nextUrl.pathname.includes("/plp")
 
   const isAiCategory = request.nextUrl.pathname.startsWith("/ai/category/")
-  const isAiInternalRoute = request.nextUrl.pathname.startsWith("/ai/category/plp/") ||
-                           request.nextUrl.pathname.includes("/clp") ||
-                           request.nextUrl.pathname.includes("/plp")
+  const isAiInternalRoute = request.nextUrl.pathname.startsWith("/ai/category/plp/") || request.nextUrl.pathname.includes("/clp") || request.nextUrl.pathname.includes("/plp")
 
   const isFaceted = facetParams.some((param) => request.nextUrl.searchParams.has(param))
 
