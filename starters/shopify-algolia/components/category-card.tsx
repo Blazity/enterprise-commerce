@@ -11,7 +11,7 @@ interface CategoryCardProps {
   className?: string
 }
 
-export const CategoryCard = ({ title, handle, href, description, index, className }: CategoryCardProps) => {
+export const CategoryCard = ({ title, href, description, index, className }: CategoryCardProps) => {
   return (
     <Link 
       href={href} 
@@ -48,7 +48,7 @@ export const CategoryCard = ({ title, handle, href, description, index, classNam
             Shop Now
           </span>
           <svg
-            className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
+            className="ml-2 size-4 transition-transform duration-300 group-hover:translate-x-1"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
