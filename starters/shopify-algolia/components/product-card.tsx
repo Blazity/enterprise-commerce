@@ -11,6 +11,7 @@ interface ProductCardProps extends Pick<CommerceProduct, "variants" | "handle" |
   className?: string
   href?: string
   highlighted?: boolean
+  variant?: "default" | "hero"
 }
 
 export const ProductCard = ({
@@ -27,11 +28,48 @@ export const ProductCard = ({
   prefetch = false,
   href = "",
   highlighted = false,
+  variant = "default",
 }: ProductCardProps) => {
   const noOfVariants = variants?.length
   const path = href || `/product/${handle}`
   const linkAria = `Visit product: ${title}`
   const variantPrice = variants?.find(Boolean)?.price
+
+  if (variant === "hero") {
+    return (
+      <Link 
+        className={cn(
+          "group flex flex-col overflow-hidden rounded-lg border border-background/20 bg-background/95 p-3 shadow-xl backdrop-blur transition-all duration-300 hover:scale-105 hover:shadow-2xl",
+          className
+        )} 
+        aria-label={linkAria} 
+        href={path} 
+        prefetch={prefetch}
+      >
+        <div className="relative mb-3 aspect-square overflow-hidden rounded-md">
+          <Image
+            priority={priority}
+            src={featuredImage?.url || "/default-product-image.svg"}
+            alt={featuredImage?.altText || title}
+            fill
+            className="object-cover transition-transform duration-300 ease-out group-hover:scale-[1.05]"
+            sizes="240px"
+          />
+        </div>
+        <h3 className="mb-1 line-clamp-2 text-sm font-semibold text-foreground">
+          {title}
+        </h3>
+        {!!variantPrice && !!minPrice && (
+          <p className="text-sm font-medium text-primary">
+            {mapCurrencyToSign((variantPrice.currencyCode as CurrencyType) || "USD") + minPrice.toFixed(2)}
+          </p>
+        )}
+        <span className="mt-2 text-xs font-medium text-muted-foreground">
+          Shop Now →
+        </span>
+      </Link>
+    )
+  }
 
   return (
     <Link className={cn("group flex h-full w-full flex-col overflow-hidden rounded-lg", className)} aria-label={linkAria} href={path} prefetch={prefetch}>

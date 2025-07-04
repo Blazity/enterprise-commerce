@@ -1,42 +1,103 @@
-import { Button } from "components/ui/button"
-import Image from "next/image"
-import Link from "next/link"
+import { type HeroSlide, HomepageCarousel } from "components/homepage-carousel"
 import { cn } from "utils/cn"
+import { getProduct } from "lib/algolia"
+import { getCombinationByMultiOption, getImagesForCarousel } from "utils/visual-variant-utils"
 
-export function HeroSection({ title, className }: { title: string; className?: string }) {
+const heroConfig = [
+  {
+    id: "kayak",
+    imageUrl: "/hero-images/kayak.jpg",
+    imageAlt: "Person kayaking on calm waters",
+    title: "Adventure Awaits",
+    subtitle: "Gear up for your next outdoor expedition with premium equipment",
+    ctaText: "Shop Outdoor Gear",
+    ctaHref: "/category/outdoor-gear",
+    productHandle: "rapidrush-inflatable-whitewater-kayak",
+    variantOptions: { color: "brown" }
+  },
+  {
+    id: "parfum",
+    imageUrl: "/hero-images/parfum.jpg",
+    imageAlt: "Elegant woman holding luxury perfume",
+    title: "Signature Scents",
+    subtitle: "Discover fragrances that capture your essence",
+    ctaText: "Explore Perfumes",
+    ctaHref: "/category/perfumes",
+    productHandle: "midnight-serenade-eau-de-parfum",
+    variantOptions: { concentration: "eaudeparfum", volume: "travel" }
+  },
+  {
+    id: "lipstick",
+    imageUrl: "/hero-images/lipstick.jpg",
+    imageAlt: "Model showcasing vibrant lipstick",
+    title: "Bold & Beautiful",
+    subtitle: "Express yourself with our premium makeup collection",
+    ctaText: "Shop Lip Makeup",
+    ctaHref: "/category/lip-makeup",
+    productHandle: "luxelips-velvet-matte-lipstick",
+    variantOptions: { color: "red" }
+  },
+  {
+    id: "speaker",
+    imageUrl: "/hero-images/speaker.jpg",
+    imageAlt: "Young man with portable speaker on skateboard",
+    title: "Sound On The Go",
+    subtitle: "Premium audio that moves with your lifestyle",
+    ctaText: "Shop Speakers",
+    ctaHref: "/category/speakers",
+    productHandle: "titaniumwave-thunderblast-speaker",
+    variantOptions: { color: "black", connectivity: "bluetooth", size: "large" }
+  }
+]
+
+export async function HeroSection({ className }: { className?: string }) {
+  // Fetch all products in parallel
+  const productPromises = heroConfig.map(config => 
+    getProduct(config.productHandle).catch(() => null)
+  )
+  const products = await Promise.all(productPromises)
+  
+  // Build hero slides with actual product data and variant information
+  const heroSlides: HeroSlide[] = heroConfig.map((config, index) => {
+    const product = products[index]
+    if (!product) {
+      return {
+        ...config,
+        product: undefined
+      }
+    }
+
+    // Find the specific variant based on options
+    const variant = getCombinationByMultiOption(product.variants, config.variantOptions)
+    
+    // Get the correct image for the variant
+    let featuredImage = product.featuredImage
+    if (variant && product.images && product.images.length > 0) {
+      // Try to find image based on color option first (most common visual option)
+      const colorValue = config.variantOptions.color || Object.values(config.variantOptions)[0]
+      const { images, activeIndex } = getImagesForCarousel(product.images, colorValue, "Color")
+      if (activeIndex > 0 && images[activeIndex]) {
+        featuredImage = images[activeIndex]
+      }
+    }
+
+    // Create enhanced product object with variant-specific data
+    const enhancedProduct = {
+      ...product,
+      featuredImage,
+      selectedVariant: variant,
+      minPrice: variant?.price?.amount || product.minPrice
+    }
+
+    return {
+      ...config,
+      product: enhancedProduct
+    }
+  })
+
   return (
-    <div className={cn("mx-auto my-12 flex w-full max-w-container-md flex-col-reverse items-center lg:flex-row lg:justify-center", className)}>
-      <div className="shrink">
-        <Image
-          width={650}
-          height={650}
-          className="rounded-l-lg"
-          sizes="(max-width: 768px) 80vw, 650px"
-          alt="Homepage featured image"
-          priority
-          src="/hero.png"
-          style={{
-            color: "transparent",
-            objectFit: "cover",
-          }}
-        />
-      </div>
-      <div className="flex max-w-lg shrink-0 flex-col items-center space-y-4 px-8 lg:items-start lg:space-y-8">
-        <h1 className="text-center text-3xl font-semibold tracking-tight lg:text-left lg:text-4xl">{"Shop the best Deals on Top Brands & Unique Finds"}</h1>
-        <p className="text-center text-lg lg:text-left">{title}</p>
-        <div className="flex items-center gap-2">
-          <Link href="/search" prefetch={false} aria-label="Search products">
-            <Button size="lg" role="link" className="transition-all hover:bg-black/80 active:scale-[0.98]">
-              Shop now
-            </Button>
-          </Link>
-          <Link href="/ai/search" prefetch={false} aria-label="Search products with AI">
-            <Button variant="outline" size="lg" role="link" className="transition-all hover:bg-gray-100 active:scale-[0.98]">
-              Browse with AI
-            </Button>
-          </Link>
-        </div>
-      </div>
+    <div className={cn("w-full", className)}>
+      <HomepageCarousel slides={heroSlides} />
     </div>
   )
 }

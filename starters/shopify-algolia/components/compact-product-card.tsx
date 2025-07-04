@@ -2,13 +2,14 @@ import Image from "next/image"
 import Link from "next/link"
 import { cn } from "utils/cn"
 import { type CurrencyType, mapCurrencyToSign } from "utils/map-currency-to-sign"
+import { createMultiOptionSlug } from "utils/visual-variant-utils"
 import type { CommerceProduct } from "types"
-import { StarIcon } from "components/icons/star-icon"
 
-interface ProductCardProps extends Pick<CommerceProduct, "variants" | "handle" | "images" | "title" | "featuredImage" | "minPrice" | "avgRating" | "totalReviews" | "vendor"> {
-  priority?: boolean
-  prefetch?: boolean
+interface CompactProductCardProps extends Pick<CommerceProduct, "variants" | "handle" | "title" | "featuredImage" | "minPrice"> {
   className?: string
+  priority?: boolean
+  selectedVariant?: any
+  variantOptions?: Record<string, string>
 }
 
 export const CompactProductCard = ({
@@ -17,62 +18,61 @@ export const CompactProductCard = ({
   title,
   featuredImage,
   minPrice,
-  avgRating,
-  totalReviews,
   className,
-  priority,
-  vendor,
-  prefetch = false,
-}: ProductCardProps) => {
-  const noOfVariants = variants?.length
-  const href = `/product/${handle}`
-  const linkAria = `Visit product: ${title}`
-  const variantPrice = variants?.find(Boolean)?.price
+  priority = false,
+  selectedVariant,
+  variantOptions,
+}: CompactProductCardProps) => {
+  const variantPrice = selectedVariant?.price || variants?.find(Boolean)?.price
+  
+  // Extract numeric price value
+  let displayPrice = minPrice
+  if (selectedVariant?.price?.amount) {
+    displayPrice = typeof selectedVariant.price.amount === 'number' 
+      ? selectedVariant.price.amount 
+      : parseFloat(selectedVariant.price.amount)
+  }
+  
+  // Create href with variant options if provided
+  let href = `/product/${handle}`
+  if (variantOptions && Object.keys(variantOptions).length > 0) {
+    href = `/product/${createMultiOptionSlug(handle, variantOptions)}`
+  }
 
   return (
-    <Link
-      className={cn("group relative flex flex-col overflow-hidden rounded-lg border border-gray-100 transition-all", className)}
-      aria-label={linkAria}
+    <Link 
       href={href}
-      prefetch={prefetch}
+      className={cn(
+        "group flex w-full flex-col overflow-hidden rounded-lg border border-border bg-background shadow-sm transition-all duration-300 hover:shadow-lg hover:scale-[1.02]",
+        className
+      )}
+      aria-label={`View product: ${title}`}
     >
-      <div className="relative aspect-square overflow-hidden">
+      <div className="relative aspect-square overflow-hidden bg-secondary/10">
         <Image
-          priority={priority}
-          className="object-cover transition-transform group-hover:scale-105"
           src={featuredImage?.url || "/default-product-image.svg"}
           alt={featuredImage?.altText || title}
           fill
+          className="object-cover transition-transform duration-500 ease-out group-hover:scale-110"
+          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 240px"
+          priority={priority}
         />
       </div>
-      <div className="absolute bottom-0 flex w-full shrink-0 grow translate-y-full flex-col overflow-hidden bg-gradient-to-t from-gray-100 to-transparent p-4 transition-transform group-hover:translate-y-0">
-        {/* remove first word from the title as it includes vendor (this just needs feed update and then can be removed) */}
-        <h3 className="line-clamp-2 text-lg font-semibold">{title.split(" ").slice(1).join(" ")}</h3>
-        <div className="mt-auto flex flex-col gap-1">
-          {!!variantPrice && <span>From {mapCurrencyToSign((variantPrice.currencyCode as CurrencyType) || "USD") + minPrice.toFixed(2)}</span>}
-
-          {!!vendor && <p className="text-sm text-gray-500">{vendor}</p>}
-
-          <div className="flex items-center gap-1">
-            {!!avgRating && !!totalReviews && (
-              <>
-                <div className="flex items-center space-x-1">
-                  <StarIcon className="size-4 fill-gray-400 stroke-gray-500" />
-                  <span className="text-sm">{avgRating.toFixed(2)}</span>
-                  <span className="text-xs">
-                    ({totalReviews} review{totalReviews !== 1 && "s"})
-                  </span>
-                </div>
-                •
-              </>
-            )}
-            {noOfVariants > 0 && (
-              <p className="text-sm text-gray-500">
-                {noOfVariants} variant{noOfVariants > 1 ? "s" : ""}
-              </p>
-            )}
+      
+      <div className="flex flex-1 flex-col p-4">
+        <h3 className="mb-2 line-clamp-2 text-sm font-semibold text-foreground">
+          {title}
+        </h3>
+        
+        {variantPrice && displayPrice !== null && displayPrice !== undefined && (
+          <div className="mt-auto flex items-baseline justify-between">
+            <span className="text-xs text-muted-foreground">From</span>
+            <span className="text-base font-bold text-primary">
+              {mapCurrencyToSign((variantPrice.currencyCode as CurrencyType) || "USD")}
+              {typeof displayPrice === 'number' ? displayPrice.toFixed(2) : displayPrice}
+            </span>
           </div>
-        </div>
+        )}
       </div>
     </Link>
   )
