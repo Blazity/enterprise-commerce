@@ -11,7 +11,7 @@ export default function RateLimitPage() {
   return (
     <div className="flex min-h-[70vh] flex-col items-center justify-center px-4 py-16">
       <div className="mx-auto max-w-md text-center">
-        {/* Icon and Status */}
+        {}
         <div className="mb-8 flex justify-center">
           <div className="relative">
             <div className="flex size-24 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800">
@@ -23,24 +23,21 @@ export default function RateLimitPage() {
           </div>
         </div>
 
-        {/* Main Message */}
-        <h2 className="mb-4 text-2xl font-semibold text-gray-800 dark:text-gray-200">
-          Rate Limit Exceeded
-        </h2>
-        
-        {/* Helpful Info */}
+        {}
+        <h2 className="mb-4 text-2xl font-semibold text-gray-800 dark:text-gray-200">Rate Limit Exceeded</h2>
+
+        {}
         <div className="mb-8 rounded-lg bg-gray-50 p-6 dark:bg-gray-800/50">
           <h3 className="mb-3 flex items-center justify-center gap-2 font-semibold text-gray-800 dark:text-gray-200">
             <RocketIcon className="size-4" />
             Why am I seeing this?
           </h3>
-          <p className="text-sm text-gray-600 dark:text-gray-400 text-balance">
-            For demo purposes of <b>enterprise-commerce</b>, we limit amount of requests
-            that can be made in a short time period in order to prevent abuse.
+          <p className="text-balance text-sm text-gray-600 dark:text-gray-400">
+            For demo purposes of <b>enterprise-commerce</b>, we limit amount of requests that can be made in a short time period in order to prevent abuse.
           </p>
         </div>
 
-        {/* Actions */}
+        {}
         <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
           <Link
             href="/"
@@ -48,7 +45,7 @@ export default function RateLimitPage() {
           >
             Return to Home
           </Link>
-          
+
           <a
             href="https://docs.blazity.com"
             target="_blank"
@@ -60,16 +57,11 @@ export default function RateLimitPage() {
           </a>
         </div>
 
-        {/* Additional Help */}
+        {}
         <div className="mt-12 text-sm text-gray-500 dark:text-gray-400">
           <p>
             If you continue to experience issues, please{" "}
-            <a 
-              href="https://docs.blazity.com/contact" 
-              className="underline hover:text-gray-700 dark:hover:text-gray-300"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <a href="https://docs.blazity.com/contact" className="underline hover:text-gray-700 dark:hover:text-gray-300" target="_blank" rel="noopener noreferrer">
               contact our support team
             </a>
             .

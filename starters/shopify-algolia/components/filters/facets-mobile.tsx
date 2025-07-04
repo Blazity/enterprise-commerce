@@ -29,7 +29,12 @@ export function FacetsMobile({ className, facetDistribution, disabledFacets, ind
 
       {!!modals["facets-mobile"] && (
         <GenericModal className="h-full overflow-auto rounded-md" title="Filters" open={!!modals["facets-mobile"]} onOpenChange={() => closeModal("facets-mobile")}>
-          <FacetsContent independentFacetDistribution={independentFacetDistribution} facetDistribution={facetDistribution} disabledFacets={disabledFacets} categoryDisplayTypes={categoryDisplayTypes} />
+          <FacetsContent
+            independentFacetDistribution={independentFacetDistribution}
+            facetDistribution={facetDistribution}
+            disabledFacets={disabledFacets}
+            categoryDisplayTypes={categoryDisplayTypes}
+          />
         </GenericModal>
       )}
     </div>

@@ -10,7 +10,15 @@ interface FacetsDesktopProps {
 }
 
 export function FacetsDesktop({ independentFacetDistribution, facetDistribution, className, disabledFacets, categoryDisplayTypes }: FacetsDesktopProps) {
-  return <FacetsContent independentFacetDistribution={independentFacetDistribution} facetDistribution={facetDistribution} className={className} disabledFacets={disabledFacets} categoryDisplayTypes={categoryDisplayTypes} />
+  return (
+    <FacetsContent
+      independentFacetDistribution={independentFacetDistribution}
+      facetDistribution={facetDistribution}
+      className={className}
+      disabledFacets={disabledFacets}
+      categoryDisplayTypes={categoryDisplayTypes}
+    />
+  )
 }
 
 export function FacetsContentSkeleton() {

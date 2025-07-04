@@ -24,41 +24,35 @@ interface OptionData {
   currentValue?: string
 }
 
-/**
- * Slugify a string to make it URL-safe (matching visual-variant-utils logic)
- */
 function slugifyOptionName(str: string): string {
   return str
     .toLowerCase()
-    .replace(/\s+/g, "") // Remove spaces entirely
-    .replace(/[^a-z0-9]/g, "") // Remove all non-alphanumeric characters
+    .replace(/\s+/g, "")
+    .replace(/[^a-z0-9]/g, "")
 }
 
 function slugifyOptionValue(str: string): string {
   return str
     .toLowerCase()
-    .replace(/\s+/g, "") // Remove spaces entirely
-    .replace(/[^a-z0-9]/g, "") // Remove all non-alphanumeric characters
+    .replace(/\s+/g, "")
+    .replace(/[^a-z0-9]/g, "")
 }
 
 export function VariantDropdowns({ variants, className, handle, combination, currentSlug }: VariantDropdownsProps) {
   const router = useRouter()
   const dropdownContainerRef = useRef<HTMLDivElement>(null)
-  // Extract all unique options from variants
+
   const optionsData: OptionData[] = []
   const optionNames = new Set<string>()
 
-  // Get current selected options from slug
   const currentOptions = getMultiOptionFromSlug(currentSlug)
 
-  // Collect all option names
   variants.forEach((variant) => {
     variant.selectedOptions.forEach((option) => {
       optionNames.add(option.name)
     })
   })
 
-  // Build options data structure
   optionNames.forEach((optionName) => {
     const values = new Set<string>()
 
@@ -69,7 +63,6 @@ export function VariantDropdowns({ variants, className, handle, combination, cur
       }
     })
 
-    // Find current value for this option
     let currentValue: string | undefined
     if (combination) {
       const selectedOption = variants.find((v) => v.id === combination.id)?.selectedOptions.find((opt) => opt.name === optionName)
@@ -84,13 +77,10 @@ export function VariantDropdowns({ variants, className, handle, combination, cur
   })
 
   const handleOptionChange = (optionName: string, optionValue: string) => {
-    // Get current options and update the changed one
     const newOptions = { ...currentOptions }
 
-    // Update the changed option using proper slugification
     newOptions[slugifyOptionName(optionName)] = slugifyOptionValue(optionValue)
 
-    // Find if this combination exists
     const targetVariant = variants.find((variant) => {
       return Object.entries(newOptions).every(([slugOptionName, slugOptionValue]) => {
         return variant.selectedOptions.some((option) => {
@@ -102,7 +92,6 @@ export function VariantDropdowns({ variants, className, handle, combination, cur
     })
 
     if (targetVariant) {
-      // Create options object with original case for URL generation
       const optionsForUrl: Record<string, string> = {}
       targetVariant.selectedOptions.forEach((option) => {
         optionsForUrl[option.name] = option.value
@@ -113,7 +102,6 @@ export function VariantDropdowns({ variants, className, handle, combination, cur
     }
   }
 
-  // Don't render if only one variant or no options
   if (variants.length <= 1 || optionsData.length === 0) {
     return null
   }

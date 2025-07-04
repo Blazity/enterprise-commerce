@@ -11,11 +11,10 @@ export const maxDuration = 60
 
 export async function GET(req: Request) {
   unstable_noStore()
-  
-  // Check rate limit first
+
   const rateLimitResponse = await checkApiRateLimit("algolia-data-sync", req)
   if (rateLimitResponse) return rateLimitResponse
-  
+
   if (!authenticate(req)) {
     return new Response("Unauthorized", {
       status: 401,

@@ -11,9 +11,6 @@ import { getAllProductReviews } from "lib/reviews"
 
 type SupportedTopic = "products/update" | "products/delete" | "products/create" | "collections/update" | "collections/delete" | "collections/create"
 
-/*
- * Callback Endpoint for Shopify Webhook product updates
- */
 export async function POST(req: Request) {
   const hmac = req.headers.get("X-Shopify-Hmac-Sha256")
   const topic = req.headers.get("X-Shopify-Topic")
@@ -33,14 +30,13 @@ export async function POST(req: Request) {
   ) {
     return new Response(JSON.stringify({ message: "Could not verify request." }), { status: 401, headers: { "Content-Type": "application/json" } })
   }
-  // there is no clear docs for what the payload looks like for different topics
+
   const { id } = JSON.parse(rawPayload) as Record<string, string>
 
   if (!id) {
     return new Response(JSON.stringify({ message: "Invalid payload" }), { status: 400, headers: { "Content-Type": "application/json" } })
   }
 
-  // Check rate limit based on topic
   const rateLimitKey = topic.startsWith("products") ? "algolia-product-update" : "algolia-category-update"
   const rateLimitResponse = await checkApiRateLimit(rateLimitKey, req)
   if (rateLimitResponse) return rateLimitResponse

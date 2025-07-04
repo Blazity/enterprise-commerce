@@ -16,22 +16,16 @@ export async function CategoryCLPView({ params, basePath, searchParams = {} }: C
 
   if (!collection) return notFound()
 
-
-  // Use the pageDisplayTypeMetafield from the collection, defaulting to PLP
   const pageDisplayType = collection.pageDisplayTypeMetafield?.value || "PLP"
 
-  console.log({pageDisplayType})
+  console.log({ pageDisplayType })
 
-  // Check if this should be a CLP based on the pageDisplayTypeMetafield
   const shouldShowCLP = pageDisplayType === "CLP"
 
-  if( !shouldShowCLP) {
-
-  return <SearchView searchParams={searchParams} params={params} collection={collection} basePath={basePath} />
-
+  if (!shouldShowCLP) {
+    return <SearchView searchParams={searchParams} params={params} collection={collection} basePath={basePath} />
   }
 
-  // Always render CLP - fetch products by collection tag
   const products = await getProductsByCollectionTag(collection.handle, 20)
 
   return <CategoryLandingPage collection={collection} products={products} basePath={basePath} />

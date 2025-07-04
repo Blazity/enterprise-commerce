@@ -3,7 +3,15 @@ import { Suspense } from "react"
 import { Skeleton } from "components/ui/skeleton"
 import { COOKIE_FAVORITES } from "constants/index"
 import { getProduct } from "lib/algolia"
-import { filterImagesByVisualOption, getCombinationByMultiOption, getCombinationByVisualOption, getMultiOptionFromSlug, getVisualOptionFromSlug, removeMultiOptionFromSlug, removeVisualOptionFromSlug } from "utils/visual-variant-utils"
+import {
+  filterImagesByVisualOption,
+  getCombinationByMultiOption,
+  getCombinationByVisualOption,
+  getMultiOptionFromSlug,
+  getVisualOptionFromSlug,
+  removeMultiOptionFromSlug,
+  removeVisualOptionFromSlug,
+} from "utils/visual-variant-utils"
 import { removeOptionsFromUrl } from "utils/product-options-utils"
 import Image from "next/image"
 import Link from "next/link"
@@ -14,14 +22,13 @@ export const revalidate = 86400
 
 export const dynamicParams = true
 
-// Custom ProductCard for favorites that includes variant badges
 function FavoriteProductCard({
   product,
   variant,
   featuredImage,
   variantInfo,
   href,
-  priority = false
+  priority = false,
 }: {
   product: any
   variant: any
@@ -46,15 +53,12 @@ function FavoriteProductCard({
       </div>
       <div className="bg-size-200 bg-pos-0 hover:bg-pos-100 flex shrink-0 grow flex-col text-pretty bg-gradient-to-b from-transparent to-primary/5 p-4 transition-all duration-200">
         <h3 className="line-clamp-2 text-lg font-semibold transition-colors">{product.title}</h3>
-        
-        {/* Variant info badges */}
+
+        {}
         {variantInfo.length > 0 && (
           <div className="flex flex-wrap gap-1 pt-2">
             {variantInfo.map((info, infoIdx) => (
-              <span 
-                key={`${info.name}-${infoIdx}`}
-                className="inline-flex items-center rounded-md bg-gray-100 px-2 py-1 text-xs font-medium text-gray-900"
-              >
+              <span key={`${info.name}-${infoIdx}`} className="inline-flex items-center rounded-md bg-gray-100 px-2 py-1 text-xs font-medium text-gray-900">
                 {info.value}
               </span>
             ))}
@@ -118,7 +122,6 @@ async function FavoritesView() {
     favoritesHandles = JSON.parse(favoritesCookie) as string[]
   }
 
-  // Create an array to store variant information for each favorite
   const variantData: Array<{
     product: any
     variantHandle: string
@@ -127,21 +130,18 @@ async function FavoritesView() {
     variantInfo: Array<{ name: string; value: string }>
   }> = []
 
-  // Process each variant handle separately (no deduplication)
   for (const variantHandle of favoritesHandles) {
     let baseHandle: string
     let multiOptions: Record<string, string> = {}
     let visualValue: string | null = null
 
-    // Extract base product handle and variant options
-    if (variantHandle.includes('--')) {
+    if (variantHandle.includes("--")) {
       multiOptions = getMultiOptionFromSlug(variantHandle)
       baseHandle = removeMultiOptionFromSlug(variantHandle)
-    } else if (variantHandle.includes('-color_')) {
+    } else if (variantHandle.includes("-color_")) {
       visualValue = getVisualOptionFromSlug(variantHandle)
       baseHandle = removeVisualOptionFromSlug(variantHandle)
     } else {
-      // Fallback to legacy approach
       baseHandle = removeOptionsFromUrl(variantHandle)
     }
 
@@ -152,63 +152,54 @@ async function FavoritesView() {
       let combination
       let variantInfo: Array<{ name: string; value: string }> = []
 
-      // Find the specific variant based on the options
       if (Object.keys(multiOptions).length > 0) {
         combination = getCombinationByMultiOption(product.variants, multiOptions)
-        
-        // Extract variant info for display
+
         if (combination) {
           const variant = product.variants.find((v: any) => v.id === combination.id)
           if (variant?.selectedOptions) {
             variantInfo = variant.selectedOptions.map((opt: any) => ({
               name: opt.name,
-              value: opt.value
+              value: opt.value,
             }))
           }
         }
       } else if (visualValue) {
         combination = getCombinationByVisualOption(product.variants, visualValue)
-        
-        // Extract variant info for display
+
         if (combination) {
           const variant = product.variants.find((v: any) => v.id === combination.id)
           if (variant?.selectedOptions) {
             variantInfo = variant.selectedOptions.map((opt: any) => ({
               name: opt.name,
-              value: opt.value
+              value: opt.value,
             }))
           }
         }
       } else {
-        // Use first variant for products without specific variant options
         combination = product.variants?.[0]
         if (combination) {
           const variant = product.variants.find((v: any) => v.id === combination.id)
           if (variant?.selectedOptions) {
             variantInfo = variant.selectedOptions.map((opt: any) => ({
               name: opt.name,
-              value: opt.value
+              value: opt.value,
             }))
           }
         }
       }
 
-      // Get variant-specific image using proper filtering
       let featuredImage = product.featuredImage
       if (combination) {
         const variant = product.variants.find((v: any) => v.id === combination.id)
-        
+
         if (variant?.selectedOptions) {
-          // Try different option names that might affect images
-          const visualOptions = ['Color', 'Colour', 'color', 'colour']
+          const visualOptions = ["Color", "Colour", "color", "colour"]
           let filteredImages = product.images
-          
+
           for (const optionName of visualOptions) {
-            const option = variant.selectedOptions.find((opt: any) => 
-              opt.name.toLowerCase() === optionName.toLowerCase()
-            )
+            const option = variant.selectedOptions.find((opt: any) => opt.name.toLowerCase() === optionName.toLowerCase())
             if (option) {
-              // Use filterImagesByVisualOption to get the correct variant images
               const variantImages = filterImagesByVisualOption(product.images, option.value, option.name)
               if (variantImages.length > 0 && variantImages !== product.images) {
                 filteredImages = variantImages
@@ -216,8 +207,7 @@ async function FavoritesView() {
               }
             }
           }
-          
-          // If we found variant-specific images, use the first one
+
           if (filteredImages.length > 0) {
             featuredImage = filteredImages[0]
           }
@@ -229,9 +219,8 @@ async function FavoritesView() {
         variantHandle,
         variant: combination,
         featuredImage,
-        variantInfo
+        variantInfo,
       })
-
     } catch (error) {
       console.warn(`Failed to fetch product for handle: ${variantHandle}`, error)
     }

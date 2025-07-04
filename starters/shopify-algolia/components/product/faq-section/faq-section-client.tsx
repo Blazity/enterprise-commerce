@@ -11,13 +11,8 @@ interface FaqSectionClientProps {
 }
 
 export function FaqSectionClient({ className, defaultOpenSections, children }: FaqSectionClientProps) {
-  // Ensure the first accordion item is always open by default for SEO
-  const defaultValues = Array.isArray(defaultOpenSections) 
-    ? defaultOpenSections 
-    : defaultOpenSections 
-      ? [defaultOpenSections]
-      : ["product-details"] // Fallback to product-details if nothing provided
-  
+  const defaultValues = Array.isArray(defaultOpenSections) ? defaultOpenSections : defaultOpenSections ? [defaultOpenSections] : ["product-details"]
+
   return (
     <Accordion type="multiple" className={cn("w-full", className)} defaultValue={defaultValues}>
       {children}

@@ -25,33 +25,26 @@ export function VendorsFacet({ id, title, distribution, isChecked, onCheckedChan
   const distributionsEntries = Object.entries(distribution || {})
   const hasNoResults = distributionsEntries.length === 0
 
-  // Start loading Fuse.js when accordion opens
   useEffect(() => {
     if (isOpen && !fusePromiseRef.current) {
       fusePromiseRef.current = import("fuse.js").then((module) => module.default)
     }
   }, [isOpen])
 
-  // Filtered vendors based on search
   const filteredVendors = useMemo(() => {
     if (!searchQuery) return distributionsEntries
 
-    // If we have a search query and Fuse is loaded, use it
     if (fuseRef.current) {
       const results = fuseRef.current.search(searchQuery)
-      return results.map(result => {
+      return results.map((result) => {
         const vendor = result.item
         return [vendor, distribution?.[vendor] || 0] as [string, number]
       })
     }
 
-    // Fallback to simple filter while Fuse is loading
-    return distributionsEntries.filter(([vendor]) => 
-      vendor.toLowerCase().includes(searchQuery.toLowerCase())
-    )
+    return distributionsEntries.filter(([vendor]) => vendor.toLowerCase().includes(searchQuery.toLowerCase()))
   }, [searchQuery, distributionsEntries, distribution])
 
-  // Initialize Fuse when user starts typing
   useEffect(() => {
     if (searchQuery && fusePromiseRef.current && !fuseRef.current) {
       fusePromiseRef.current.then((FuseModule) => {
@@ -66,21 +59,17 @@ export function VendorsFacet({ id, title, distribution, isChecked, onCheckedChan
 
   return (
     <AccordionItem value={id}>
-      <AccordionTrigger className="py-2 text-base" onClick={() => setIsOpen(!isOpen)}>{title}</AccordionTrigger>
+      <AccordionTrigger className="py-2 text-base" onClick={() => setIsOpen(!isOpen)}>
+        {title}
+      </AccordionTrigger>
       <AccordionContent>
         {!hasNoResults && (
-          <div className="mb-3 relative">
-            <SearchIcon className="absolute left-2 top-1/2 -translate-y-1/2 size-4 text-gray-400" />
-            <Input
-              type="text"
-              placeholder="Search vendors..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-8 h-8 text-sm"
-            />
+          <div className="relative mb-3">
+            <SearchIcon className="absolute left-2 top-1/2 size-4 -translate-y-1/2 text-gray-400" />
+            <Input type="text" placeholder="Search vendors..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="h-8 pl-8 text-sm" />
           </div>
         )}
-        
+
         <div className="h-[250px] overflow-y-auto">
           {hasNoResults ? (
             <p className="text-sm text-neutral-500">No {title.toLowerCase()} found</p>
@@ -90,11 +79,7 @@ export function VendorsFacet({ id, title, distribution, isChecked, onCheckedChan
             <div className="grid gap-2 pr-2">
               {filteredVendors.map(([value], index) => (
                 <Label key={value + index} className="flex items-center gap-2">
-                  <Checkbox 
-                    name={value} 
-                    checked={isChecked(value)} 
-                    onCheckedChange={(checked) => onCheckedChange(!!checked, value)} 
-                  />
+                  <Checkbox name={value} checked={isChecked(value)} onCheckedChange={(checked) => onCheckedChange(!!checked, value)} />
                   {value}
                 </Label>
               ))}

@@ -14,7 +14,5 @@ export async function CategoryPLPView({ params, searchParams = {}, basePath }: C
 
   if (!collection) return notFound()
 
-  // Always render PLP (SearchView) regardless of Shopify metafield
-  // This ensures users can always access the product listing page
   return <SearchView searchParams={searchParams} params={params} collection={collection} basePath={basePath} />
 }

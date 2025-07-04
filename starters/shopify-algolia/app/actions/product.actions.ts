@@ -12,14 +12,13 @@ export const searchProducts = unstable_cache(
         hasMore: false,
       }
 
-    // Use rate-limited search function
     const result = await searchProductsBase(query, {
       hitsPerPage: limit,
       attributesToRetrieve: ["id", "handle", "title", "featuredImage", "images", "variants"],
     })
-    
-    const totalHits = 'nbHits' in result ? result.nbHits : 0
-    const hits = 'hits' in result ? result.hits : []
+
+    const totalHits = "nbHits" in result ? result.nbHits : 0
+    const hits = "hits" in result ? result.hits : []
 
     return { hits, hasMore: (totalHits || 0) > limit }
   },

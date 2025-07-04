@@ -1,11 +1,3 @@
-/**
- * Rate-limited versions of Algolia functions for SSR contexts
- * 
- * These functions are used when data is fetched on-demand (SSR)
- * and should be rate-limited. For SSG/ISR contexts, use the 
- * regular functions from lib/algolia/index.ts
- */
-
 import { unstable_cache } from "next/cache"
 import { headers } from "next/headers"
 import { redirect } from "next/navigation"
@@ -24,22 +16,17 @@ import type { PlatformCollection } from "lib/shopify/types"
 import type { Review } from "lib/reviews/types"
 import type { SearchSingleIndexProps } from "algoliasearch"
 
-// Rate limit keys configured in Vercel WAF dashboard
-type RateLimitKey = 
+type RateLimitKey =
   | "algolia-product-browse"
-  | "algolia-product-details" 
+  | "algolia-product-details"
   | "algolia-product-search"
   | "algolia-category-browse"
   | "algolia-reviews-fetch"
   | "algolia-similar-products"
   | "algolia-facet-values"
 
-/**
- * Check rate limit and redirect to 429 page if limited
- */
 async function checkAlgoliaRateLimit(key: RateLimitKey) {
-  // Skip rate limiting in development without VERCEL_FIREWALL_DEV_HOST
-  if (process.env.NODE_ENV === 'development' && !process.env.VERCEL_FIREWALL_DEV_HOST) {
+  if (process.env.NODE_ENV === "development" && !process.env.VERCEL_FIREWALL_DEV_HOST) {
     return
   }
 
@@ -47,77 +34,65 @@ async function checkAlgoliaRateLimit(key: RateLimitKey) {
 
   try {
     const headerData = await headers()
-    
-    // For local development, create a modified headers object with x-real-ip
+
     const modifiedHeaders = new Headers(headerData)
-    
-    // Debug: Log available headers
-    if (process.env.NODE_ENV === 'development') {
+
+    if (process.env.NODE_ENV === "development") {
       const headerEntries: Record<string, string> = {}
       headerData.forEach((value, key) => {
         headerEntries[key] = value
       })
       console.log(`[Rate Limit Debug] Original headers for ${key}:`, headerEntries)
-      
-      // Add x-real-ip for localhost if not present
-      if (!modifiedHeaders.get('x-real-ip')) {
-        // Try to get IP from various sources
-        const possibleIp = modifiedHeaders.get('x-forwarded-for') || 
-                          modifiedHeaders.get('x-forwarded-host') ||
-                          modifiedHeaders.get('host') ||
-                          '127.0.0.1'
-        
-        modifiedHeaders.set('x-real-ip', possibleIp.split(',')[0].trim())
-        console.log(`[Rate Limit Debug] Added x-real-ip header:`, possibleIp.split(',')[0].trim())
+
+      if (!modifiedHeaders.get("x-real-ip")) {
+        const possibleIp = modifiedHeaders.get("x-forwarded-for") || modifiedHeaders.get("x-forwarded-host") || modifiedHeaders.get("host") || "127.0.0.1"
+
+        modifiedHeaders.set("x-real-ip", possibleIp.split(",")[0].trim())
+        console.log(`[Rate Limit Debug] Added x-real-ip header:`, possibleIp.split(",")[0].trim())
       }
     }
-    
-    // Extract important headers for rate limiting
+
     const headersObject: Record<string, string> = {}
     const importantHeaders = [
-      'x-real-ip',
-      'x-forwarded-for',
-      'x-forwarded-host',
-      'x-forwarded-proto',
-      'user-agent',
-      'cf-connecting-ip',
-      'x-vercel-ip-country',
-      'x-vercel-ip-city',
-      'x-vercel-forwarded-for'
+      "x-real-ip",
+      "x-forwarded-for",
+      "x-forwarded-host",
+      "x-forwarded-proto",
+      "user-agent",
+      "cf-connecting-ip",
+      "x-vercel-ip-country",
+      "x-vercel-ip-city",
+      "x-vercel-forwarded-for",
     ]
-    
-    importantHeaders.forEach(headerName => {
+
+    importantHeaders.forEach((headerName) => {
       const value = modifiedHeaders.get(headerName)
       if (value) {
         headersObject[headerName] = value
       }
     })
-    
-    // If no IP headers found, try to construct one from other available data
-    if (!headersObject['x-real-ip'] && !headersObject['x-forwarded-for']) {
+
+    if (!headersObject["x-real-ip"] && !headersObject["x-forwarded-for"]) {
       console.warn(`[Rate Limit Warning] No IP headers found for key ${key}. Available headers:`, Object.keys(headersObject))
     }
-    
-    const result = await checkRateLimit(key, { 
+
+    const result = await checkRateLimit(key, {
       headers: modifiedHeaders,
-      firewallHostForDevelopment: process.env.VERCEL_FIREWALL_DEV_HOST
+      firewallHostForDevelopment: process.env.VERCEL_FIREWALL_DEV_HOST,
     })
-    
+
     if (result.rateLimited) {
       shouldRedirect = true
     }
   } catch (error) {
-    // Log error but don't block the request
     console.error(`Rate limit check failed for key ${key}:`, error)
   }
 
-  // Redirect outside of try-catch block since redirect() throws internally
   if (shouldRedirect) {
     redirect("/429")
   }
 }
 
-// Cached version of getProduct
 const getProductCached = unstable_cache(
   async (handle: string) => {
     if (isDemoMode()) return getDemoSingleProduct(handle)
@@ -141,7 +116,6 @@ export const getProduct = async (handle: string) => {
   return getProductCached(handle)
 }
 
-// Cached version of getProducts
 const getProductsCached = unstable_cache(
   async (
     options: SearchSingleIndexProps["searchParams"] = {
@@ -168,7 +142,6 @@ export const getProducts = async (
   return getProductsCached(options)
 }
 
-// Cached version of searchProducts
 const searchProductsCached = unstable_cache(
   async (query: string, options: SearchSingleIndexProps["searchParams"] = {}) => {
     if (isDemoMode()) return getDemoProducts()
@@ -190,7 +163,6 @@ export const searchProducts = async (query: string, options: SearchSingleIndexPr
   return searchProductsCached(query, options)
 }
 
-// Cached version of getCategories
 const getCategoriesCached = unstable_cache(
   async (
     options: SearchSingleIndexProps["searchParams"] = {
@@ -217,7 +189,6 @@ export const getCategories = async (
   return getCategoriesCached(options)
 }
 
-// Cached version of getCollection
 const getCollectionCached = unstable_cache(
   async (slug: string) => {
     if (isDemoMode()) return getDemoSingleCategory(slug)
@@ -242,7 +213,6 @@ export const getCollection = async (slug: string) => {
   return getCollectionCached(slug)
 }
 
-// Cached version of getProductReviews
 const getProductReviewsCached = unstable_cache(
   async (handle: string, { page = 0, limit = 10 } = { page: 0, limit: 10 }) => {
     if (isDemoMode()) return getDemoProductReviews()
@@ -276,7 +246,6 @@ export const getProductReviews = async (handle: string, options = { page: 0, lim
   return getProductReviewsCached(handle, options)
 }
 
-// Cached version of getSimilarProducts
 const getSimilarProductsCached = unstable_cache(
   async (collection: string | undefined, objectID: string) => {
     const limit = 8
@@ -318,11 +287,10 @@ export const getSimilarProducts = async (collection: string | undefined, objectI
   return getSimilarProductsCached(collection, objectID)
 }
 
-// Cached version of getFilteredProducts
 const getFilteredProductsCached = unstable_cache(
   async (query: string, sortBy: string, page: number, filters: string, collectionHandle?: string, hasVendorFilter: boolean = false) => {
     if (isDemoMode()) return getDemoProducts()
-    
+
     const indexName = algolia.mapIndexToSort(env.ALGOLIA_PRODUCTS_INDEX, sortBy as any)
 
     try {
@@ -349,13 +317,12 @@ const getFilteredProductsCached = unstable_cache(
         }),
       ]
 
-      // Add vendor-specific query only when vendor filter is active in category context
       if (hasVendorFilter && collectionHandle) {
         const filtersWithoutVendor = filters
           .split(" AND ")
-          .filter(f => !f.includes('vendor:'))
+          .filter((f) => !f.includes("vendor:"))
           .join(" AND ")
-        
+
         queries.push(
           algolia.search<CommerceProduct>({
             indexName,
@@ -376,7 +343,7 @@ const getFilteredProductsCached = unstable_cache(
       const totalPages = results?.nbPages || 0
       const facetDistribution = results?.facets || {}
       const totalHits = results.nbHits || 0
-      
+
       let vendorFacets
       if (hasVendorFilter && collectionHandle && vendorFacetsWithoutFilter) {
         vendorFacets = vendorFacetsWithoutFilter.facets?.vendor
@@ -385,10 +352,10 @@ const getFilteredProductsCached = unstable_cache(
       } else {
         vendorFacets = independentFacets.facets?.vendor
       }
-      
+
       const independentFacetDistribution = {
         ...independentFacets.facets,
-        vendor: vendorFacets || {}
+        vendor: vendorFacets || {},
       }
 
       return {
@@ -410,22 +377,14 @@ const getFilteredProductsCached = unstable_cache(
     }
   },
   ["rl-filtered-products"],
-  { revalidate: 86400, tags: ["search", "products"] } 
+  { revalidate: 86400, tags: ["search", "products"] }
 )
 
-export const getFilteredProducts = async (
-  query: string, 
-  sortBy: string, 
-  page: number, 
-  filters: string, 
-  collectionHandle?: string, 
-  hasVendorFilter: boolean = false
-) => {
+export const getFilteredProducts = async (query: string, sortBy: string, page: number, filters: string, collectionHandle?: string, hasVendorFilter: boolean = false) => {
   await checkAlgoliaRateLimit("algolia-product-browse")
   return getFilteredProductsCached(query, sortBy, page, filters, collectionHandle, hasVendorFilter)
 }
 
-// Cached version of getFacetValues
 const getFacetValuesCached = unstable_cache(
   async ({ indexName, facetName }: { indexName: string; facetName: string }) => {
     if (isDemoMode()) return []
