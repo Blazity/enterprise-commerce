@@ -3,7 +3,19 @@ import { cn } from "utils/cn"
 import { getProduct } from "lib/algolia"
 import { getCombinationByMultiOption, getImagesForCarousel } from "utils/visual-variant-utils"
 
-const heroConfig = [
+interface HeroConfigItem {
+  id: string
+  imageUrl: string
+  imageAlt: string
+  title: string
+  subtitle: string
+  ctaText: string
+  ctaHref: string
+  productHandle: string
+  variantOptions: Record<string, string>
+}
+
+const heroConfig: HeroConfigItem[] = [
   {
     id: "kayak",
     imageUrl: "/hero-images/kayak.jpg",
@@ -96,7 +108,7 @@ export async function HeroSection({ className }: { className?: string }) {
   })
 
   return (
-    <div className={cn("w-full", className)}>
+    <div className={cn("w-full mb-8 sm:mb-12 lg:mb-16", className)}>
       <HomepageCarousel slides={heroSlides} />
     </div>
   )
