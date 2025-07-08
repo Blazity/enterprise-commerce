@@ -10,6 +10,7 @@ interface CompactProductCardProps extends Pick<CommerceProduct, "variants" | "ha
   priority?: boolean
   selectedVariant?: any
   variantOptions?: Record<string, string>
+  loading?: "eager" | "lazy"
 }
 
 export const CompactProductCard = ({
@@ -22,6 +23,7 @@ export const CompactProductCard = ({
   priority = false,
   selectedVariant,
   variantOptions,
+  loading = "lazy",
 }: CompactProductCardProps) => {
   const variantPrice = selectedVariant?.price || variants?.find(Boolean)?.price
   
@@ -56,6 +58,7 @@ export const CompactProductCard = ({
           className="object-cover transition-transform duration-500 ease-out group-hover:scale-110"
           sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 240px"
           priority={priority}
+          loading={loading}
         />
       </div>
       

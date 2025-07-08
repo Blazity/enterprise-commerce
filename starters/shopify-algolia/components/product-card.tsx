@@ -52,7 +52,7 @@ export const ProductCard = ({
             src={featuredImage?.url || "/default-product-image.svg"}
             alt={featuredImage?.altText || title}
             fill
-            className="object-cover transition-transform duration-300 ease-out group-hover:scale-[1.05]"
+            className="object-cover transition-transform duration-300 ease-out group-hover:scale-105"
             sizes="240px"
           />
         </div>
