@@ -1,8 +1,11 @@
+"use client"
+
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "components/ui/carousel"
 import { ProductCard } from "components/product-card"
 import { Skeleton } from "components/ui/skeleton"
 import type { CommerceProduct } from "types"
 import { cn } from "utils/cn"
+import { useEffect, useRef, useState } from "react"
 
 interface CarouselSectionProps {
   title: string
@@ -11,6 +14,47 @@ interface CarouselSectionProps {
 }
 
 export function CarouselSection({ items, title, className }: CarouselSectionProps) {
+  const [visibleItems, setVisibleItems] = useState<Set<number>>(new Set())
+  const itemRefs = useRef<(HTMLDivElement | null)[]>([])
+
+  useEffect(() => {
+    const observers: IntersectionObserver[] = []
+    
+    // Preload first 4 items immediately
+    const initialVisible = new Set<number>()
+    for (let i = 0; i < Math.min(4, items.length); i++) {
+      initialVisible.add(i)
+    }
+    setVisibleItems(initialVisible)
+
+    // Set up intersection observers for remaining items
+    itemRefs.current.forEach((ref, index) => {
+      if (ref && index >= 4) {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                setVisibleItems((prev) => new Set(prev).add(index))
+                observer.disconnect()
+              }
+            })
+          },
+          { 
+            rootMargin: "100px",
+            threshold: 0.01 
+          }
+        )
+        
+        observer.observe(ref)
+        observers.push(observer)
+      }
+    })
+
+    return () => {
+      observers.forEach(observer => observer.disconnect())
+    }
+  }, [items.length])
+
   return (
     <Carousel opts={{ skipSnaps: true }}>
       <div className={cn("mx-auto flex max-w-container-md flex-col gap-4", className)}>
@@ -23,8 +67,20 @@ export function CarouselSection({ items, title, className }: CarouselSectionProp
         </div>
         <CarouselContent>
           {items.map((product, idx) => (
-            <CarouselItem key={"relevant_" + product.id + idx} className="basis-1/2 md:basis-1/4">
-              <ProductCard prefetch {...product} />
+            <CarouselItem 
+              key={"relevant_" + product.id + idx} 
+              className="basis-1/2 md:basis-1/4"
+              ref={(el) => { itemRefs.current[idx] = el }}
+            >
+              {visibleItems.has(idx) ? (
+                <ProductCard 
+                  prefetch={false} 
+                  priority={idx === 0}
+                  {...product} 
+                />
+              ) : (
+                <div className="aspect-square bg-gray-100 animate-pulse rounded" />
+              )}
             </CarouselItem>
           ))}
         </CarouselContent>

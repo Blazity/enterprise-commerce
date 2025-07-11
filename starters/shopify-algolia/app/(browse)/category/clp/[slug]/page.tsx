@@ -1,6 +1,4 @@
 import type { Metadata } from "next"
-import { isDemoMode } from "utils/demo-utils"
-import { getCategories } from "lib/algolia"
 import { CategoryCLPView } from "components/category/category-clp-view"
 import { SearchParamsType } from "types"
 
