@@ -4,7 +4,7 @@ import useEmblaCarousel from "embla-carousel-react"
 import Autoplay from "embla-carousel-autoplay"
 import Image from "next/image"
 import Link from "next/link"
-import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { cn } from "utils/cn"
 import { Button } from "./ui/button"
 import { CompactProductCard } from "./compact-product-card"
@@ -62,8 +62,8 @@ export function HomepageCarousel({ slides = [], className }: HomepageCarouselPro
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [canScrollPrev, setCanScrollPrev] = useState(false)
   const [canScrollNext, setCanScrollNext] = useState(false)
-  const [slidesInView, setSlidesInView] = useState<number[]>([0])
   const [loadedIndexes, setLoadedIndexes] = useState<Set<number>>(new Set([0]))
+  const [visibleIndexes, setVisibleIndexes] = useState<Set<number>>(new Set([0, 1]))
 
   const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi])
   const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi])
@@ -79,42 +79,53 @@ export function HomepageCarousel({ slides = [], className }: HomepageCarouselPro
     }
   }, [emblaApi])
 
-  const updateSlidesInView = useCallback(() => {
-    if (!emblaApi) return
-    setSlidesInView(emblaApi.slidesInView())
-  }, [emblaApi])
-
   useEffect(() => {
     if (!emblaApi) return
 
     onSelect()
-    updateSlidesInView()
     
     emblaApi.on("select", onSelect)
-    emblaApi.on("slidesInView", updateSlidesInView)
     emblaApi.on("reInit", onSelect)
 
     return () => {
       emblaApi.off("select", onSelect)
-      emblaApi.off("slidesInView", updateSlidesInView)
       emblaApi.off("reInit", onSelect)
     }
-  }, [emblaApi, onSelect, updateSlidesInView])
+  }, [emblaApi, onSelect])
 
 
-  // Optimized preloading strategy
+  // Optimized preloading strategy for mobile
   useEffect(() => {
     if (!emblaApi || !slides.length) return
 
-    const preloadImages = () => {
+    const updateVisibleSlides = () => {
       if (!emblaApi.selectedScrollSnap) return
       
       try {
         const current = emblaApi.selectedScrollSnap()
-        const preloadCount = 2
+        
+        // On mobile, only render current and adjacent slides
+        if (isMobile) {
+          const visibleCount = 1
+          const newVisibleIndexes = new Set<number>()
+          
+          for (let i = -visibleCount; i <= visibleCount; i++) {
+            const index = (current + i + slides.length) % slides.length
+            if (index >= 0 && index < slides.length) {
+              newVisibleIndexes.add(index)
+            }
+          }
+          
+          setVisibleIndexes(newVisibleIndexes)
+        } else {
+          // On desktop, render all slides
+          setVisibleIndexes(new Set(slides.map((_, i) => i)))
+        }
+        
+        // Preload adjacent slides
+        const preloadCount = isMobile ? 1 : 2
         const indicesToLoad = new Set<number>()
         
-        // Preload current and adjacent slides
         for (let i = -preloadCount; i <= preloadCount; i++) {
           const index = (current + i + slides.length) % slides.length
           if (index >= 0 && index < slides.length) {
@@ -124,8 +135,8 @@ export function HomepageCarousel({ slides = [], className }: HomepageCarouselPro
         
         setLoadedIndexes(prev => new Set([...Array.from(prev), ...Array.from(indicesToLoad)]))
         
-        // Use requestIdleCallback for non-critical preloading
-        if ('requestIdleCallback' in window) {
+        // Use requestIdleCallback for non-critical preloading on mobile
+        if (isMobile && 'requestIdleCallback' in window) {
           requestIdleCallback(() => {
             indicesToLoad.forEach(index => {
               if (slides[index]) {
@@ -136,22 +147,22 @@ export function HomepageCarousel({ slides = [], className }: HomepageCarouselPro
                 document.head.appendChild(link)
               }
             })
-          }, { timeout: 2000 })
+          }, { timeout: 1000 })
         }
       } catch (error) {
-        console.warn("Error preloading slides:", error)
+        console.warn("Error updating visible slides:", error)
       }
     }
 
-    emblaApi.on("select", preloadImages)
-    emblaApi.on("init", preloadImages)
-    preloadImages()
+    emblaApi.on("select", updateVisibleSlides)
+    emblaApi.on("init", updateVisibleSlides)
+    updateVisibleSlides()
 
     return () => {
-      emblaApi.off("select", preloadImages)
-      emblaApi.off("init", preloadImages)
+      emblaApi.off("select", updateVisibleSlides)
+      emblaApi.off("init", updateVisibleSlides)
     }
-  }, [emblaApi, slides])
+  }, [emblaApi, slides, isMobile])
 
   if (!slides || slides.length === 0) {
     return null
@@ -188,33 +199,52 @@ export function HomepageCarousel({ slides = [], className }: HomepageCarouselPro
             willChange: "transform"
           }}
         >
-          {slides.map((slide, index) => (
-            <div
-              key={slide.id}
-              className="relative min-w-0 flex-[0_0_100%] translate-z-0 @container"
-              role="group"
-              aria-roledescription="slide"
-              aria-label={`Slide ${index + 1} of ${slides.length}`}
-              style={{
-                contain: "layout style paint",
-                contentVisibility: loadedIndexes.has(index) ? "visible" : "auto",
-                transform: "translateZ(0)"
-              }}
-            >
+          {slides.map((slide, index) => {
+            // On mobile, only render visible slides
+            if (isMobile && !visibleIndexes.has(index)) {
+              return (
+                <div
+                  key={slide.id}
+                  className="relative min-w-0 flex-[0_0_100%]"
+                  aria-hidden="true"
+                />
+              )
+            }
+            
+            return (
+              <div
+                key={slide.id}
+                className="relative min-w-0 flex-[0_0_100%] translate-z-0 @container"
+                role="group"
+                aria-roledescription="slide"
+                aria-label={`Slide ${index + 1} of ${slides.length}`}
+                style={{
+                  contain: "layout style paint",
+                  contentVisibility: loadedIndexes.has(index) ? "visible" : "auto",
+                  transform: "translateZ(0)"
+                }}
+              >
               <div className="container mx-auto">
                 <div className="relative min-h-[500px] px-4 py-12 sm:min-h-[550px] sm:py-16 lg:min-h-0 lg:py-16 lg:grid lg:items-center lg:gap-12 lg:grid-cols-2 xl:gap-16">
                   {/* Mobile: Image as background */}
                   <div className="absolute inset-0 -z-10 lg:hidden">
                     <div className="absolute inset-0 bg-gradient-to-b from-background/90 via-background/75 to-background/90" />
-                    <Image
-                      src={slide.imageUrl}
-                      alt={slide.imageAlt}
-                      fill
-                      className="object-cover object-center opacity-25"
-                      priority={index === 0}
-                      quality={60}
-                      sizes="100vw"
-                    />
+                    {visibleIndexes.has(index) ? (
+                      <Image
+                        src={slide.imageUrl}
+                        alt={slide.imageAlt}
+                        fill
+                        className="object-cover object-center opacity-25"
+                        priority={index === 0}
+                        fetchPriority={index === 0 ? "high" : "low"}
+                        loading={index === 0 ? "eager" : "lazy"}
+                        quality={index === 0 ? 75 : 60}
+                        sizes="100vw"
+                        placeholder={index === 0 ? "empty" : undefined}
+                      />
+                    ) : (
+                      <div className="absolute inset-0 bg-secondary/10" />
+                    )}
                   </div>
                   
                   {/* Content Section */}
@@ -280,7 +310,8 @@ export function HomepageCarousel({ slides = [], className }: HomepageCarouselPro
                 </div>
               </div>
             </div>
-          ))}
+            )
+          })}
         </div>
       </div>
 

@@ -15,8 +15,8 @@ export async function EnterpriseCategoriesSection() {
   const categoryPromises = FEATURED_CATEGORY_HANDLES.map(handle => getCollection(handle))
   const categoriesData = await Promise.all(categoryPromises)
   
-  // Filter out any null results
-  const featuredCategories = categoriesData.filter((cat): cat is PlatformCollection => cat !== null)
+  // Filter out any null results  
+  const featuredCategories = categoriesData.filter((cat) => cat !== null) as PlatformCollection[]
 
   if (featuredCategories.length === 0) {
     return null

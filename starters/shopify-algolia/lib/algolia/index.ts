@@ -54,13 +54,13 @@ export const getProducts = unstable_cache(
 
 export const getFeaturedProducts = unstable_cache(
   async () => {
-    if (isDemoMode()) return getDemoProducts().hits.slice(0, 6)
+    if (isDemoMode()) return getDemoProducts().hits.slice(0, 10)
 
     const { hits } = await algolia.search<CommerceProduct>({
       indexName: env.ALGOLIA_PRODUCTS_INDEX,
       searchParams: {
         attributesToRetrieve: ["id", "title", "featuredImage", "minPrice", "variants", "avgRating", "totalReviews", "vendor", "handle"],
-        hitsPerPage: 6,
+        hitsPerPage: 10,
       },
     })
 
