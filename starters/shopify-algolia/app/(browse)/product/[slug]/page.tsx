@@ -166,7 +166,7 @@ export default async function Product(props: ProductProps) {
           </RightSection>
         </div>
         <Suspense>
-          <ReviewsSection avgRating={product.avgRating} productHandle={product.handle} productId={product.id} slug={slug} summary={product.reviewsSummary} />
+          <ReviewsSection avgRating={product.avgRating} productHandle={product.handle} productId={product.id} summary={product.reviewsSummary} />
         </Suspense>
         <Suspense fallback={<SimilarProductsSectionSkeleton />}>
           <SimilarProductsSection objectID={product.objectID} slug={slug} />
