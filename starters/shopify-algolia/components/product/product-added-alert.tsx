@@ -8,6 +8,7 @@ import { useAddProductStore } from "stores/add-product-store"
 import { useCartStore } from "stores/cart-store"
 import { cn } from "utils/cn"
 import { type CurrencyType, mapCurrencyToSign } from "utils/map-currency-to-sign"
+import { filterImagesByVisualOption, getVisualOptionValueFromCombination } from "utils/visual-variant-utils"
 
 export function ProductAddedAlert({ className }: { className?: string }) {
   const router = useRouter()
@@ -20,6 +21,13 @@ export function ProductAddedAlert({ className }: { className?: string }) {
 
   if (!product || !combination || !cart?.checkoutUrl) return null
 
+  // Get the visual option value (e.g., color) from the combination
+  const visualOptionValue = getVisualOptionValueFromCombination(combination)
+  
+  // Filter images to get variant-specific images
+  const variantImages = filterImagesByVisualOption(product.images, visualOptionValue || null)
+  const variantImage = variantImages[0] || product.featuredImage
+
   return (
     <Alert className={cn("absolute right-0 top-[5.5rem] z-50 w-full min-w-[220px] border border-input bg-white transition-all md:top-[4.5rem] md:min-w-[350px]", className)}>
       <AlertTitle>Product has been added to the cart!</AlertTitle>
@@ -29,9 +37,9 @@ export function ProductAddedAlert({ className }: { className?: string }) {
             <Image
               width={48}
               height={48}
-              alt={product?.featuredImage?.altText || product.title}
+              alt={variantImage?.altText || product.title}
               className="z-0 select-none rounded object-cover transition-transform group-hover:scale-105"
-              src={product.featuredImage?.url || "/default-product-image.svg"}
+              src={variantImage?.url || "/default-product-image.svg"}
               sizes="(max-width: 450px) 150px, 300px"
             />
             <div className="flex flex-col">
