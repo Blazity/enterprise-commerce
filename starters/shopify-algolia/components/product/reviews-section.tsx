@@ -9,7 +9,6 @@ import { StarIcon } from "components/icons/star-icon"
 import { cn } from "utils/cn"
 import { buttonVariants } from "components/ui/button"
 import { getProductReviews } from "lib/algolia"
-import { removeOptionsFromUrl } from "utils/product-options-utils"
 
 type ReviewsSectionProps = {
   productId: string
@@ -17,10 +16,9 @@ type ReviewsSectionProps = {
   avgRating: number | undefined
   summary?: string
   className?: string
-  slug: string
 }
-export const ReviewsSection = async ({ productId, productHandle, summary, avgRating, className, slug }: ReviewsSectionProps) => {
-  const { reviews, total } = await getProductReviews(removeOptionsFromUrl(slug), { limit: 16 })
+export const ReviewsSection = async ({ productId, productHandle, summary, avgRating, className }: ReviewsSectionProps) => {
+  const { reviews, total } = await getProductReviews(productHandle, { limit: 16 })
   if (!isOptIn("reviews")) {
     notifyOptIn({ feature: "reviews", source: "components/ReviewsSection" })
 
