@@ -4,6 +4,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { PlatformCartItem } from "lib/shopify/types"
 import { cn } from "utils/cn"
+import { filterImagesByVisualOption, getVisualOptionValueFromCombination } from "utils/visual-variant-utils"
 import { ChangeQuantityButton } from "./change-quantity-button"
 import { DeleteButton } from "./delete-button"
 
@@ -13,12 +14,19 @@ interface CartItemProps extends PlatformCartItem {
 }
 
 export function CartItem(props: CartItemProps) {
+  // Get the visual option value (e.g., color) from the variant
+  const visualOptionValue = getVisualOptionValueFromCombination(props.merchandise)
+  
+  // Filter images to get variant-specific images
+  const variantImages = filterImagesByVisualOption(props.merchandise.product.images, visualOptionValue || null)
+  const variantImage = variantImages[0] || props.merchandise.product.featuredImage
+
   return (
     <li className={cn("flex items-center justify-between gap-6 py-2", props.className)}>
       <div className="flex h-[115px] w-[90px] shrink-0 items-center bg-neutral-100">
         <Image
-          src={props.merchandise.product.featuredImage?.url || "/default-product-image.svg"}
-          alt={props.merchandise.product.featuredImage?.altText || ""}
+          src={variantImage?.url || "/default-product-image.svg"}
+          alt={variantImage?.altText || props.merchandise.product.title}
           width={115}
           height={90}
           sizes="100px"
