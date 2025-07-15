@@ -10,11 +10,6 @@ const collectionFragment = `#graphql
     title
     descriptionHtml
     id
-    pageDisplayTypeMetafield: metafield(namespace: "custom", key: "page_display_type") {
-      value
-      type
-      id
-    }
     description
     seo {
       ...seo
