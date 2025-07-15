@@ -198,7 +198,7 @@ const getCollectionCached = unstable_cache(
       searchParams: {
         filters: algolia.filterBuilder().where("handle", slug).build(),
         hitsPerPage: 1,
-        attributesToRetrieve: ["handle", "title", "seo", "descriptionHtml", "image", "pageDisplayTypeMetafield"],
+        attributesToRetrieve: ["handle", "title", "seo", "descriptionHtml", "image"],
       },
     })
 

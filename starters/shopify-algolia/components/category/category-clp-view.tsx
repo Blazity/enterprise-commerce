@@ -4,6 +4,7 @@ import { getCollection } from "lib/algolia/rate-limited"
 import { getProductsByCollectionTag } from "lib/algolia"
 import { CategoryLandingPage } from "./category-landing-page"
 import { SearchView } from "components/search-view"
+import { getPageDisplayTypeByHandle } from "utils/get-page-display-type"
 
 interface CategoryCLPViewProps {
   params: { slug: string; page?: string }
@@ -16,9 +17,7 @@ export async function CategoryCLPView({ params, basePath, searchParams = {} }: C
 
   if (!collection) return notFound()
 
-  const pageDisplayType = collection.pageDisplayTypeMetafield?.value || "PLP"
-
-  console.log({ pageDisplayType })
+  const pageDisplayType = getPageDisplayTypeByHandle(params.slug)
 
   const shouldShowCLP = pageDisplayType === "CLP"
 

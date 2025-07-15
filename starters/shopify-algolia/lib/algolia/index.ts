@@ -142,12 +142,11 @@ export const getCollection = unstable_cache(
       searchParams: {
         filters: algolia.filterBuilder().where("handle", slug).build(),
         hitsPerPage: 1,
-        attributesToRetrieve: ["handle", "title", "seo", "descriptionHtml", "image", "pageDisplayTypeMetafield"],
+        attributesToRetrieve: ["handle", "title", "seo", "descriptionHtml", "image"],
       },
     })
 
     const collection = results.hits.find(Boolean) || null
-    console.log({ collectionFromAlgolia: collection })
     return collection
   },
   ["category-by-handle"],

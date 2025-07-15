@@ -2,6 +2,7 @@ export interface NavItem {
   text: string
   href?: string
   submenu?: Submenu
+  pageDisplayType?: "CLP" | "PLP"
 }
 
 interface Submenu {
@@ -13,6 +14,7 @@ export interface TextGridItem {
   text: string
   href?: string
   items: Array<{ text: string; href: string }>
+  pageDisplayType?: "CLP" | "PLP"
 }
 
 export interface ImageGridItem {

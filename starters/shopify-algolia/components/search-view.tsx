@@ -62,14 +62,16 @@ export async function SearchView({ searchParams, disabledFacets, collection, bas
   const hasVendorFilter = rest.vendors && rest.vendors.length > 0
   const { facetDistribution, hits, totalPages, totalHits, independentFacetDistribution } = await getFilteredProducts(q, sortBy, page, filter, collection?.handle, hasVendorFilter)
 
+  const { getPageDisplayTypeByHandle } = await import("utils/get-page-display-type")
+  
   const { hits: allCategories } = await getCategories({
     hitsPerPage: 1000,
-    attributesToRetrieve: ["handle", "pageDisplayTypeMetafield"],
+    attributesToRetrieve: ["handle"],
   })
 
   const categoryDisplayTypes = allCategories.reduce(
     (acc, category) => {
-      acc[category.handle] = category.pageDisplayTypeMetafield?.value === "CLP" ? "CLP" : "PLP"
+      acc[category.handle] = getPageDisplayTypeByHandle(category.handle)
       return acc
     },
     {} as Record<string, "CLP" | "PLP">

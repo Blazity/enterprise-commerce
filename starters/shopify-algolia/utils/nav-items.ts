@@ -4,6 +4,7 @@ export const navigationItems: NavItem[] = [
   {
     text: "Fashion",
     href: "/category/fashion",
+    pageDisplayType: "CLP",
     submenu: {
       variant: "text-grid",
       items: [
@@ -45,6 +46,7 @@ export const navigationItems: NavItem[] = [
   {
     text: "Electronics",
     href: "/category/electronics",
+    pageDisplayType: "CLP",
     submenu: {
       variant: "text-grid",
       items: [
@@ -82,6 +84,7 @@ export const navigationItems: NavItem[] = [
   {
     text: "Sports & Outdoors",
     href: "/category/sports-and-outdoors",
+    pageDisplayType: "CLP",
     submenu: {
       variant: "text-grid",
       items: [
@@ -107,6 +110,7 @@ export const navigationItems: NavItem[] = [
   {
     text: "Beauty",
     href: "/category/beauty",
+    pageDisplayType: "CLP",
     submenu: {
       variant: "text-grid",
       items: [
@@ -151,6 +155,7 @@ export const navigationItems: NavItem[] = [
   {
     text: "Furniture",
     href: "/category/furniture",
+    pageDisplayType: "CLP",
     submenu: {
       variant: "text-grid",
       items: [
