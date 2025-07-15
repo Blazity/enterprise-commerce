@@ -26,7 +26,16 @@ export const algolia = (args: { applicationId: string; apiKey: string }) => {
   return {
     search: async <T extends Record<string, any>>(args: SearchSingleIndexProps) => search<T>(args, client),
     getAllResults: async <T extends Record<string, any>>(args: BrowseProps) => getAllResults<T>(client, args),
-    update: async (args: PartialUpdateObjectsOptions) => updateObjects(args, client),
+    update: async (args: PartialUpdateObjectsOptions) => {
+      const transformedArgs = {
+        ...args,
+        objects: args.objects.map(obj => ({
+          ...obj,
+          objectID: obj.objectID || obj.id?.toString() || obj.id
+        }))
+      }
+      return updateObjects(transformedArgs, client)
+    },
     batchUpdate: async (args: BatchProps) => batchUpdate(args, client),
     delete: async (args: DeleteObjectsOptions) => deleteObjects(args, client),
     create: async (args: PartialUpdateObjectsOptions) => createObjects(args, client),
