@@ -20,7 +20,10 @@
     "codegen": "graphql-codegen && graphql-codegen -p admin && yarn build:scripts && node scripts/dist/codegen/remove-eslint-rules.mjs",
     "coupling-graph": "npx madge --extensions js,jsx,ts,tsx,css,md,mdx ./ --exclude '.next|tailwind.config.js|reset.d.ts|prettier.config.js|postcss.config.js|playwright.config.ts|next.config.js|next-env.d.ts|instrumentation.ts|e2e/|README.md|.storybook/|.eslintrc.js' --image graph.svg",
     "sync": "yarn build:scripts && node scripts/dist/sync/sync.mjs",
-    "build:scripts": "rimraf scripts/dist && tsup scripts/**/*.ts* -d scripts/dist"
+    "build:scripts": "rimraf scripts/dist && tsup scripts/**/*.ts* -d scripts/dist",
+    "webhooks:setup": "yarn build:scripts && node scripts/dist/webhooks/setup-webhooks.mjs",
+    "webhooks:delete": "yarn build:scripts && node scripts/dist/webhooks/delete-webhooks.mjs",
+    "webhooks:list": "yarn build:scripts && node scripts/dist/webhooks/list-webhooks.mjs"
   },
   "dependencies": {
     "@ai-sdk/openai": "^1.0.1",
@@ -88,6 +91,7 @@
     "sharp": "0.32.6",
     "shiki": "^1.23.1",
     "sonner": "^1.4.41",
+    "swr": "^2.3.4",
     "tailwind-scrollbar": "^4.0.1",
     "tailwindcss-animate": "^1.0.7",
     "zustand": "^5.0.3"
