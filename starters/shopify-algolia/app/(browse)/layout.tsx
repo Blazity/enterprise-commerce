@@ -11,12 +11,12 @@ import { Metadata } from "next"
 import { GithubBadge } from "components/github-badge"
 import { DemoModeAlert } from "components/demo-mode-alert"
 import { CartView } from "components/cart/cart-view"
-import { NavigationBar } from "components/navigation-bar/navigation-bar"
+import { NavigationBarWrapper } from "components/navigation-bar/navigation-bar-wrapper"
 import { mobileInlineScript } from "components/navigation-bar/mobile-inline-script"
 import { Footer } from "components/footer"
 import { Modals } from "components/modals/modals"
 import DraftToolbar from "components/draft-toolbar"
-import { navigationItems } from "utils/nav-items"
+import { getNavigationData } from "lib/navigation"
 
 export const revalidate = 86400
 
@@ -46,13 +46,15 @@ export const metadata: Metadata = {
 }
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const navigationData = await getNavigationData()
+  
   return (
     <html lang="en">
       <body className="@container">
         <NuqsAdapter>
           <Script id="mobileMegaMenuLogic" strategy="lazyOnload">{`${mobileInlineScript}`}</Script>
 
-          <NavigationBar items={navigationItems} />
+          <NavigationBarWrapper fallbackData={navigationData} />
           {children}
 
           <Footer />
