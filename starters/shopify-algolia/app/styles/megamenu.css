@@ -319,13 +319,13 @@
   .menu .menu__inner .menu__item.menu__dropdown:hover > .submenu {
     opacity: 1;
     visibility: visible;
-    top: 101%;
+    top: 100%; /* Animate to close gap on hover */
     pointer-events: auto;
   }
   .menu .menu__inner .menu__item.menu__dropdown > .submenu:hover {
     opacity: 1;
     visibility: visible;
-    top: 101%;
+    top: 100%; /* Keep same position - fixed from 101% */
     pointer-events: auto;
   }
   .menu .menu__inner .menu__item.menu__dropdown > .submenu {
@@ -337,13 +337,13 @@
   .menu .menu__inner .menu__item.menu__dropdown:hover > .submenu {
     opacity: 1;
     visibility: visible;
-    top: 101%;
+    top: 100%; /* Animate to close gap on hover */
     pointer-events: auto;
   }
   .menu .menu__inner .menu__item.menu__dropdown > .submenu:hover {
     opacity: 1;
     visibility: visible;
-    top: 101%;
+    top: 100%; /* Keep same position - fixed from 101% */
     pointer-events: auto;
   }
   .menu .menu__inner .menu__item.menu__dropdown > .submenu {
@@ -397,7 +397,7 @@
 .submenu {
   position: absolute;
   z-index: 40;
-  top: 110%;
+  top: 100%; /* Reduced from 110% to remove gap */
   left: 50%;
   width: 100%;
   height: auto;
@@ -611,4 +611,69 @@
 
 .burger .burger-line:nth-child(3) {
   top: 16px;
+}
+
+/* Minimal hover continuity fix */
+@media (min-width: 767px) {
+  /* Create invisible bridge on menu items */
+  .menu .menu__inner .menu__item.menu__dropdown::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    height: 20px;
+    background: transparent;
+    z-index: 41;
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  .menu .menu__inner .menu__item.menu__dropdown:hover::before {
+    pointer-events: auto;
+  }
+  
+  /* Add slight overlap on submenu */
+  .menu .menu__inner .menu__item.menu__dropdown:hover > .submenu::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -10px;
+    height: 20px;
+    background: transparent;
+    pointer-events: auto;
+  }
+}
+
+@container (min-width: 48rem) {
+  /* Create invisible bridge on menu items */
+  .menu .menu__inner .menu__item.menu__dropdown::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    height: 20px;
+    background: transparent;
+    z-index: 41;
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  .menu .menu__inner .menu__item.menu__dropdown:hover::before {
+    pointer-events: auto;
+  }
+  
+  /* Add slight overlap on submenu */
+  .menu .menu__inner .menu__item.menu__dropdown:hover > .submenu::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -10px;
+    height: 20px;
+    background: transparent;
+    pointer-events: auto;
+  }
 }
