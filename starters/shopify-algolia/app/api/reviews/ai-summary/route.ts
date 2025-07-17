@@ -38,10 +38,6 @@ export async function GET(req: Request) {
   }
 
   if (isDemoMode() || !env.ALGOLIA_REVIEWS_INDEX) {
-    console.error({
-      message: "Lacking environment variables",
-      source: "api/reviews/ai-summary",
-    })
     return new Response(JSON.stringify({ message: "Sorry, something went wrong" }), { status: 500 })
   }
 

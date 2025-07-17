@@ -46,6 +46,6 @@ ${classification.type === "search" ? searchPrompt(lastUserMessage!, availableFil
 
     return result.toDataStreamResponse()
   } catch (error) {
-    console.error(error)
+    // Error handling - fail silently
   }
 }

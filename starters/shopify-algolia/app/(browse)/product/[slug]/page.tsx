@@ -61,7 +61,6 @@ export default async function Product(props: ProductProps) {
   const params = await props.params
 
   const { slug } = params
-  console.log(slug)
 
   const multiOptions = getMultiOptionFromSlug(slug)
   const baseHandle = Object.keys(multiOptions).length > 0 ? removeMultiOptionFromSlug(slug) : removeVisualOptionFromSlug(slug)

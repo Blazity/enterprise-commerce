@@ -338,18 +338,7 @@ export const getFilteredProducts = unstable_cache(
         vendor: vendorFacets || {},
       }
 
-      if (independentFacetDistribution.vendor) {
-        console.log("[Vendor Facets Debug]", {
-          vendorCount: Object.keys(independentFacetDistribution.vendor).length,
-          vendors: Object.keys(independentFacetDistribution.vendor).slice(0, 5),
-          filter: filters,
-          collectionHandle: collectionHandle || "none",
-          categoryScoped: !!collectionHandle,
-          hasVendorFilter,
-          vendorSource: hasVendorFilter && collectionHandle ? "disjunctive" : collectionHandle ? "filtered" : "independent",
-          totalQueries: allResults.length,
-        })
-      }
+      // Vendor facets debug logging removed for production
 
       return {
         hits,
@@ -359,7 +348,6 @@ export const getFilteredProducts = unstable_cache(
         independentFacetDistribution,
       }
     } catch (err) {
-      console.error(err)
       return {
         hits: [],
         totalPages: 0,

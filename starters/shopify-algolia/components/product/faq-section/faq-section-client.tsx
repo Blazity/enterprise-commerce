@@ -26,7 +26,6 @@ interface FaqAccordionItemProps {
 }
 
 export function FaqAccordionItem({ title, children }: FaqAccordionItemProps) {
-  console.log(title, nameToSlug(title))
   return (
     <AccordionItem value={nameToSlug(title)} key={nameToSlug(title)}>
       <AccordionTrigger className="py-4 text-base font-bold">{title}</AccordionTrigger>

@@ -52,7 +52,6 @@ async function handleCollectionTopics(topic: SupportedTopic, { id }: Record<stri
     case "collections/create":
       const collection = await getCollection(makeShopifyId(`${id}`, "Collection"))
       if (!collection) {
-        console.error(`Collection ${id} not found`)
         return new Response(JSON.stringify({ message: "Collection not found" }), { status: 404, headers: { "Content-Type": "application/json" } })
       }
 
@@ -80,7 +79,6 @@ async function handleProductTopics(topic: SupportedTopic, { id }: Record<string,
       const allReviews = isOptIn("reviews") ? await getAllProductReviews() : []
 
       if (!product) {
-        console.error(`Product ${id} not found`)
         return new Response(JSON.stringify({ message: "Product not found" }), { status: 404, headers: { "Content-Type": "application/json" } })
       }
 

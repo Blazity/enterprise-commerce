@@ -22,7 +22,6 @@ export async function getNavigationData(): Promise<NavigationData> {
     // Fallback to static data during build or if API fails
     return { items: navigationItems }
   } catch (error) {
-    console.error("Failed to fetch navigation data:", error)
     // Return static navigation as fallback
     return { items: navigationItems }
   }

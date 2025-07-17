@@ -61,7 +61,7 @@ export class ProductEnrichmentBuilder {
         images: images.filter(Boolean),
       }
     } catch (e) {
-      console.error(e)
+      // Failed to generate alt tags - continue without them
     }
     return this
   }
@@ -76,7 +76,6 @@ async function generateProductAltTags(product: PlatformProduct): Promise<(Platfo
     const altTagAwareImages = await Promise.all(product.images?.slice(0, 1).map(mapper).filter(Boolean))
     return [...altTagAwareImages, ...product.images?.slice(1)?.filter(Boolean)] || []
   } catch (e) {
-    console.error(e)
     return product.images // graceful exit
   }
 }

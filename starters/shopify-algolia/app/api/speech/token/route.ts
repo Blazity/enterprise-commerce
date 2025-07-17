@@ -21,7 +21,6 @@ export async function GET() {
     const token = await resp.text()
     return NextResponse.json({ token })
   } catch (error) {
-    console.error("Error fetching Azure token:", error)
     return NextResponse.json({ error: "Failed to fetch flow token" }, { status: 500 })
   }
 }
