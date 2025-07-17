@@ -1,6 +1,33 @@
 import { createAdminApiClient } from "@shopify/admin-api-client"
 import { env } from "../../env.mjs"
 
+interface WebhookNode {
+  id: string
+  topic: string
+  createdAt: string
+  updatedAt: string
+  endpoint?: {
+    __typename: string
+    callbackUrl?: string
+  }
+}
+
+interface WebhookEdge {
+  node: WebhookNode
+}
+
+interface WebhookSubscriptionsResponse {
+  data?: {
+    webhookSubscriptions?: {
+      edges: WebhookEdge[]
+      pageInfo: {
+        hasNextPage: boolean
+        endCursor: string | null
+      }
+    }
+  }
+}
+
 const LIST_WEBHOOKS_QUERY = `#graphql
   query listAllWebhooks($first: Int!, $after: String) {
     webhookSubscriptions(first: $first, after: $after) {
@@ -47,9 +74,9 @@ async function listWebhooks() {
 
   try {
     // Fetch all webhooks with pagination
-    const allWebhooks = []
+    const allWebhooks: WebhookEdge[] = []
     let hasNextPage = true
-    let cursor = null
+    let cursor: string | null = null
 
     while (hasNextPage) {
       const response = await client.request(LIST_WEBHOOKS_QUERY, {
@@ -57,13 +84,13 @@ async function listWebhooks() {
           first: 50,
           after: cursor
         }
-      })
+      }) as WebhookSubscriptionsResponse
 
       const webhooks = response.data?.webhookSubscriptions?.edges || []
       allWebhooks.push(...webhooks)
 
       hasNextPage = response.data?.webhookSubscriptions?.pageInfo?.hasNextPage || false
-      cursor = response.data?.webhookSubscriptions?.pageInfo?.endCursor
+      cursor = response.data?.webhookSubscriptions?.pageInfo?.endCursor || null
     }
 
     if (allWebhooks.length === 0) {
@@ -80,7 +107,7 @@ async function listWebhooks() {
       if (!acc[url]) acc[url] = []
       acc[url].push(webhook.node)
       return acc
-    }, {} as Record<string, any[]>)
+    }, {} as Record<string, WebhookNode[]>)
 
     // Display grouped webhooks
     Object.entries(groupedByUrl).forEach(([url, webhooks]) => {
@@ -100,7 +127,7 @@ async function listWebhooks() {
 
     // Summary
     const topics = allWebhooks.map(w => w.node.topic)
-    const uniqueTopics = [...new Set(topics)]
+    const uniqueTopics = Array.from(new Set(topics))
     
     console.log("📈 Summary:")
     console.log(`   Total webhooks: ${allWebhooks.length}`)

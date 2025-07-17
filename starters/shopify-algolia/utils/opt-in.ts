@@ -18,10 +18,7 @@ const features: Record<Feature, Record<"message" | "predicate", unknown>> = {
 }
 
 const optInNotification = ({ message, source }: { message: string; source?: string }) => {
-  console.warn({
-    message,
-    source,
-  })
+  // Silent opt-in notification - no console output
 }
 
 export const isOptIn = (feature: Feature) => {

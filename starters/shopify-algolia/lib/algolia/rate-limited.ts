@@ -42,13 +42,12 @@ async function checkAlgoliaRateLimit(key: RateLimitKey) {
       headerData.forEach((value, key) => {
         headerEntries[key] = value
       })
-      console.log(`[Rate Limit Debug] Original headers for ${key}:`, headerEntries)
+      // Debug logging removed for production
 
       if (!modifiedHeaders.get("x-real-ip")) {
         const possibleIp = modifiedHeaders.get("x-forwarded-for") || modifiedHeaders.get("x-forwarded-host") || modifiedHeaders.get("host") || "127.0.0.1"
 
         modifiedHeaders.set("x-real-ip", possibleIp.split(",")[0].trim())
-        console.log(`[Rate Limit Debug] Added x-real-ip header:`, possibleIp.split(",")[0].trim())
       }
     }
 
@@ -73,7 +72,7 @@ async function checkAlgoliaRateLimit(key: RateLimitKey) {
     })
 
     if (!headersObject["x-real-ip"] && !headersObject["x-forwarded-for"]) {
-      console.warn(`[Rate Limit Warning] No IP headers found for key ${key}. Available headers:`, Object.keys(headersObject))
+      // No IP headers found for rate limiting
     }
 
     const result = await checkRateLimit(key, {
@@ -85,7 +84,7 @@ async function checkAlgoliaRateLimit(key: RateLimitKey) {
       shouldRedirect = true
     }
   } catch (error) {
-    console.error(`Rate limit check failed for key ${key}:`, error)
+    // Rate limit check failed - continue without rate limiting
   }
 
   if (shouldRedirect) {
@@ -366,7 +365,6 @@ const getFilteredProductsCached = unstable_cache(
         independentFacetDistribution,
       }
     } catch (err) {
-      console.error(err)
       return {
         hits: [],
         totalPages: 0,

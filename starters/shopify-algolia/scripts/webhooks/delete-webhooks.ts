@@ -43,6 +43,31 @@ interface DeleteWebhooksOptions {
   force?: boolean
 }
 
+interface WebhookNode {
+  id: string
+  topic: string
+  endpoint?: {
+    __typename: string
+    callbackUrl?: string
+  }
+}
+
+interface WebhookEdge {
+  node: WebhookNode
+}
+
+interface WebhookSubscriptionsResponse {
+  data?: {
+    webhookSubscriptions?: {
+      edges: WebhookEdge[]
+      pageInfo: {
+        hasNextPage: boolean
+        endCursor: string | null
+      }
+    }
+  }
+}
+
 async function deleteWebhooks(options: DeleteWebhooksOptions = {}) {
   const {
     filter,
@@ -74,9 +99,9 @@ async function deleteWebhooks(options: DeleteWebhooksOptions = {}) {
   try {
     // Fetch all webhooks with pagination
     console.log("\n📋 Fetching all webhooks...")
-    const allWebhooks = []
+    const allWebhooks: WebhookEdge[] = []
     let hasNextPage = true
-    let cursor = null
+    let cursor: string | null = null
 
     while (hasNextPage) {
       const response = await client.request(LIST_WEBHOOKS_QUERY, {
@@ -84,13 +109,13 @@ async function deleteWebhooks(options: DeleteWebhooksOptions = {}) {
           first: 50,
           after: cursor
         }
-      })
+      }) as WebhookSubscriptionsResponse
 
       const webhooks = response.data?.webhookSubscriptions?.edges || []
       allWebhooks.push(...webhooks)
 
       hasNextPage = response.data?.webhookSubscriptions?.pageInfo?.hasNextPage || false
-      cursor = response.data?.webhookSubscriptions?.pageInfo?.endCursor
+      cursor = response.data?.webhookSubscriptions?.pageInfo?.endCursor || null
     }
 
     if (allWebhooks.length === 0) {

@@ -222,7 +222,7 @@ async function FavoritesView() {
         variantInfo,
       })
     } catch (error) {
-      console.warn(`Failed to fetch product for handle: ${variantHandle}`, error)
+      // Failed to fetch product - skip this favorite
     }
   }
 

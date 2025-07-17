@@ -21,13 +21,6 @@ export function buildSearchFilter({ collection, params, separator }: { collectio
 
   const builtFilter = filter.build(LogicalOperators.And)
 
-  if (params.vendors?.length > 0) {
-    console.log("[Vendor Filter Debug]", {
-      vendors: params.vendors,
-      fullFilter: builtFilter,
-    })
-  }
-
   return builtFilter
 }
 
