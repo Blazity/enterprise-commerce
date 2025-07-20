@@ -6,6 +6,7 @@ import { Suspense } from "react"
 import { Toaster } from "sonner"
 import { FlagValues } from "components/flag-values"
 import { ThirdParties } from "components/third-parties"
+import { Metadata } from "next"
 import { DemoModeAlert } from "components/demo-mode-alert"
 import { CartView } from "components/cart/cart-view"
 import { NavigationBarWrapper } from "components/navigation-bar/navigation-bar-wrapper"
@@ -18,6 +19,12 @@ import { AiCommerceProvider } from "./_components/ai-commerce-provider"
 import { FloatingChatBox } from "./_components/floating-chat-box"
 import { SidebarProvider } from "components/ui/sidebar"
 import { ChatSidebar } from "./_components/chat-sidebar"
+
+export const revalidate = 86400
+
+export const metadata: Metadata = {
+  // Inherits metadataBase from root layout
+}
 
 export default async function AiSearchLayout({ children }: { children: React.ReactNode }) {
   const navigationData = await getNavigationData()
