@@ -16,14 +16,15 @@
     "e2e:ui": "playwright test --ui",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "postinstall": "npx patch-package -y",
-    "generate-bloom-filter": "ts-node redirects/generate-bloom-filter.ts",
     "codegen": "graphql-codegen && graphql-codegen -p admin && yarn build:scripts && node scripts/dist/codegen/remove-eslint-rules.mjs",
     "coupling-graph": "npx madge --extensions js,jsx,ts,tsx,css,md,mdx ./ --exclude '.next|tailwind.config.js|reset.d.ts|prettier.config.js|postcss.config.js|playwright.config.ts|next.config.js|next-env.d.ts|instrumentation.ts|e2e/|README.md|.storybook/|.eslintrc.js' --image graph.svg",
     "sync": "yarn build:scripts && node scripts/dist/sync/sync.mjs",
     "build:scripts": "rimraf scripts/dist && tsup scripts/**/*.ts* -d scripts/dist",
     "webhooks:setup": "yarn build:scripts && node scripts/dist/webhooks/setup-webhooks.mjs",
     "webhooks:delete": "yarn build:scripts && node scripts/dist/webhooks/delete-webhooks.mjs",
-    "webhooks:list": "yarn build:scripts && node scripts/dist/webhooks/list-webhooks.mjs"
+    "webhooks:list": "yarn build:scripts && node scripts/dist/webhooks/list-webhooks.mjs",
+    "redirects:generate-test": "yarn build:scripts && node scripts/dist/redirects/generate-test-redirects.mjs",
+    "redirects:generate-bloom": "yarn build:scripts && node scripts/dist/redirects/generate-bloom-filter.mjs"
   },
   "dependencies": {
     "@ai-sdk/openai": "^1.0.1",
