@@ -38,7 +38,7 @@ async function generateBloomFilter(options: GenerateOptions) {
   let redirects: Record<string, RedirectEntry>
   try {
     const content = readFileSync(inputFullPath, "utf-8")
-    redirects = JSON.parse(content)
+    redirects = JSON.parse(content) as Record<string, RedirectEntry>
   } catch (error) {
     console.error("❌ Failed to parse redirects JSON:", error)
     process.exit(1)
