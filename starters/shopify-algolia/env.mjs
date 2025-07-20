@@ -29,14 +29,8 @@ export const env = createEnv({
     JUDGE_BASE_URL: z.string().optional(),
     JUDGE_API_TOKEN: z.string().optional(),
     CRON_SECRET: z.string().optional(),
-    AZURE_AI_SPEECH_BASE_URL: z.string().optional(),
-    AZURE_AI_SPEECH_KEY: z.string().optional(),
   },
-  client: {
-    NEXT_PUBLIC_AZURE_AI_SPEECH_REGION: z.string().optional(),
-    NEXT_PUBLIC_AZURE_AI_SPEECH_ENABLED: z.enum(["true", "false"]).optional().default("false"),
-    NEXT_PUBLIC_AZURE_AI_SPEECH_LANGUAGE: z.string().optional().default("en-US"),
-  },
+  client: {},
   runtimeEnv: {
     IS_DEMO_MODE: process.env.NEXT_PUBLIC_IS_DEMO_MODE,
     SHOPIFY_STOREFRONT_ACCESS_TOKEN: process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN || "demo",
@@ -60,10 +54,5 @@ export const env = createEnv({
     JUDGE_BASE_URL: process.env.JUDGE_BASE_URL || "https://judge.me/api/v1",
     JUDGE_API_TOKEN: process.env.JUDGE_API_TOKEN,
     CRON_SECRET: process.env.CRON_SECRET,
-    AZURE_AI_SPEECH_BASE_URL: process.env.AZURE_AI_SPEECH_BASE_URL,
-    AZURE_AI_SPEECH_KEY: process.env.AZURE_AI_SPEECH_KEY,
-    NEXT_PUBLIC_AZURE_AI_SPEECH_REGION: process.env.NEXT_PUBLIC_AZURE_AI_SPEECH_REGION,
-    NEXT_PUBLIC_AZURE_AI_SPEECH_ENABLED: process.env.NEXT_PUBLIC_AZURE_AI_SPEECH_ENABLED,
-    NEXT_PUBLIC_AZURE_AI_SPEECH_LANGUAGE: process.env.NEXT_PUBLIC_AZURE_AI_SPEECH_LANGUAGE || "en-US",
   },
 })
