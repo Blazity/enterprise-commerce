@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { env } from "env.mjs"
 import { isDemoMode } from "utils/demo-utils"
 import { getCategories } from "lib/algolia"
 import { CategoryCLPView } from "components/category/category-clp-view"
@@ -13,6 +14,7 @@ interface CategoryPageProps {
 export async function generateMetadata(props: CategoryPageProps): Promise<Metadata> {
   const params = await props.params
   return {
+    metadataBase: new URL(env.LIVE_URL!),
     title: `${params.slug} | Enterprise Commerce`,
     description: "In excepteur elit mollit in.",
   }

@@ -6,8 +6,8 @@ import { Suspense } from "react"
 import { Toaster } from "sonner"
 import { FlagValues } from "components/flag-values"
 import { ThirdParties } from "components/third-parties"
-import { env } from "env.mjs"
 import { Metadata } from "next"
+import { sharedMetadata } from "../shared-metadata"
 import { GithubBadge } from "components/github-badge"
 import { DemoModeAlert } from "components/demo-mode-alert"
 import { CartView } from "components/cart/cart-view"
@@ -21,21 +21,11 @@ import { getNavigationData } from "lib/navigation"
 export const revalidate = 86400
 
 export const metadata: Metadata = {
+  metadataBase: sharedMetadata.metadataBase,
   title: "Next.js Enterprise Commerce | Blazity",
   description: "AI-FIRST NEXT.JS STOREFRONT FOR COMPOSABLE COMMERCE",
-  metadataBase: new URL(env.LIVE_URL!),
-  openGraph: {
-    title: "Next.js Enterprise Commerce | Blazity",
-    description: "AI-FIRST NEXT.JS STOREFRONT FOR COMPOSABLE COMMERCE",
-    images: ["/opengraph-image.jpg"],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Next.js Enterprise Commerce | Blazity",
-    description: "AI-FIRST NEXT.JS STOREFRONT FOR COMPOSABLE COMMERCE",
-    creator: "@blazity",
-    images: ["/opengraph-image.jpg"],
-  },
+  openGraph: sharedMetadata.openGraph,
+  twitter: sharedMetadata.twitter,
   verification: {
     google: "google",
     yandex: "yandex",
