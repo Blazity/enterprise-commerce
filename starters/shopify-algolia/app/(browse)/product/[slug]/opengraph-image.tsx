@@ -1,6 +1,3 @@
-
-
-
 import { ImageResponse } from "next/og"
 import { removeOptionsFromUrl } from "utils/product-options-utils"
 import { env } from "env.mjs"
@@ -65,7 +62,12 @@ export default async function Image({ params: { slug } }: { params: { slug: stri
             ?.map((image, idx) => (
               <img
                 key={idx}
-                style={{ marginLeft: idx !== 0 ? "10px" : "0px", backgroundColor: "#eaeaea", border: "1px solid black", padding: "5px" }}
+                style={{
+                  marginLeft: idx !== 0 ? "10px" : "0px",
+                  backgroundColor: "#eaeaea",
+                  border: "1px solid black",
+                  padding: "5px",
+                }}
                 src={image.url}
                 width={85}
                 height={80}
@@ -105,7 +107,18 @@ export default async function Image({ params: { slug } }: { params: { slug: stri
         >
           {product?.description}
         </div>
-        <div style={{ fontSize: "70px", fontWeight: 900, lineHeight: 1, position: "absolute", left: 600, bottom: 60, textAlign: "left", letterSpacing: "-0.05em" }}>
+        <div
+          style={{
+            fontSize: "70px",
+            fontWeight: 900,
+            lineHeight: 1,
+            position: "absolute",
+            left: 600,
+            bottom: 60,
+            textAlign: "left",
+            letterSpacing: "-0.05em",
+          }}
+        >
           {product?.priceRange.minVariantPrice.amount + " " + product?.priceRange.minVariantPrice.currencyCode}
         </div>
       </div>

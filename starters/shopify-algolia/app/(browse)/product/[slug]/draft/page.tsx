@@ -50,7 +50,8 @@ export default async function DraftProduct(props: ProductProps) {
   }
 
   const multiOptions = getMultiOptionFromSlug(slug)
-  const baseHandle = Object.keys(multiOptions).length > 0 ? removeMultiOptionFromSlug(slug) : removeVisualOptionFromSlug(slug)
+  const baseHandle =
+    Object.keys(multiOptions).length > 0 ? removeMultiOptionFromSlug(slug) : removeVisualOptionFromSlug(slug)
 
   const productHandle = baseHandle || removeOptionsFromUrl(slug)
   const product = await getProductByHandle(productHandle)
@@ -117,37 +118,54 @@ export default async function DraftProduct(props: ProductProps) {
               price={combinationPrice}
               currency={combination?.price ? mapCurrencyToSign(combination.price?.currencyCode as CurrencyType) : "$"}
             />
-            {!hasOnlyOneVariant && <VariantDropdowns variants={adminProduct.variants} handle={adminProduct.handle} combination={combination} currentSlug={slug} />}
+            {!hasOnlyOneVariant && (
+              <VariantDropdowns
+                variants={adminProduct.variants}
+                handle={adminProduct.handle}
+                combination={combination}
+                currentSlug={slug}
+              />
+            )}
             <p>{adminProduct.description}</p>
             <AddToCartButton className="mt-4" product={adminProduct as CommerceProduct} combination={combination} />
             <FavoriteMarker handle={slug} />
 
-            <FaqSectionClient defaultOpenSections={adminProduct.productDetailsMetafield?.value ?? getDefaultFaqAccordionItemValue()}>
+            <FaqSectionClient
+              defaultOpenSections={adminProduct.productDetailsMetafield?.value ?? getDefaultFaqAccordionItemValue()}
+            >
               <FaqAccordionItem title={getDefaultFaqAccordionItemValue()[0]}>
-                <ShopifyRichText data={adminProduct.productDetailsMetafield?.value || getDefaultFaqAccordionItemRichText()} className="prose prose-sm max-w-none" />
+                <ShopifyRichText
+                  data={adminProduct.productDetailsMetafield?.value || getDefaultFaqAccordionItemRichText()}
+                  className="prose prose-sm max-w-none"
+                />
               </FaqAccordionItem>
               <FaqAccordionItem title="Size and Fit">
                 <p>
-                  Est veniam qui aute nisi occaecat ad non velit anim commodo sit proident. Labore sint officia nostrud eu est fugiat nulla velit sint commodo. Excepteur sit ut
-                  anim pariatur minim adipisicing dolore sit dolore cupidatat. Amet reprehenderit ipsum aute minim incididunt adipisicing est.
+                  Est veniam qui aute nisi occaecat ad non velit anim commodo sit proident. Labore sint officia nostrud
+                  eu est fugiat nulla velit sint commodo. Excepteur sit ut anim pariatur minim adipisicing dolore sit
+                  dolore cupidatat. Amet reprehenderit ipsum aute minim incididunt adipisicing est.
                 </p>
               </FaqAccordionItem>
               <FaqAccordionItem title="Free Delivery and Returns">
                 <p>
-                  Aliqua Lorem ullamco officia cupidatat cupidatat. Nostrud occaecat ex in Lorem. Et occaecat adipisicing do aliquip duis aliquip enim culpa nulla. Nulla quis aute
-                  ex eu est ullamco enim incididunt fugiat proident laboris. Laboris sint ad et nostrud velit fugiat fugiat proident enim sit irure elit. Ut amet elit labore
-                  cupidatat id consectetur sint fugiat esse excepteur pariatur. Tempor pariatur dolor eiusmod proident ad incididunt officia labore fugiat consectetur. Sunt veniam
-                  officia officia eiusmod minim incididunt est sit esse excepteur non cupidatat voluptate ea. Do excepteur sunt nostrud eu do id nisi dolore laboris ea ullamco
-                  magna eu. Eiusmod irure dolore amet velit laboris excepteur cupidatat est cupidatat minim ut anim id. Deserunt velit ex exercitation consequat quis magna pariatur
-                  laboris elit minim eiusmod anim.
+                  Aliqua Lorem ullamco officia cupidatat cupidatat. Nostrud occaecat ex in Lorem. Et occaecat
+                  adipisicing do aliquip duis aliquip enim culpa nulla. Nulla quis aute ex eu est ullamco enim
+                  incididunt fugiat proident laboris. Laboris sint ad et nostrud velit fugiat fugiat proident enim sit
+                  irure elit. Ut amet elit labore cupidatat id consectetur sint fugiat esse excepteur pariatur. Tempor
+                  pariatur dolor eiusmod proident ad incididunt officia labore fugiat consectetur. Sunt veniam officia
+                  officia eiusmod minim incididunt est sit esse excepteur non cupidatat voluptate ea. Do excepteur sunt
+                  nostrud eu do id nisi dolore laboris ea ullamco magna eu. Eiusmod irure dolore amet velit laboris
+                  excepteur cupidatat est cupidatat minim ut anim id. Deserunt velit ex exercitation consequat quis
+                  magna pariatur laboris elit minim eiusmod anim.
                 </p>
               </FaqAccordionItem>
               <FaqAccordionItem title="Supplier Information">
                 <p>
-                  Aliqua ut ex irure eu officia dolore velit et occaecat pariatur excepteur nostrud ad. Ea reprehenderit sint culpa excepteur adipisicing ipsum esse excepteur
-                  officia culpa adipisicing nostrud. Nulla Lorem voluptate tempor officia id mollit do est amet dolor nulla. Sint sunt consequat non in reprehenderit Lorem velit
-                  enim cillum enim. Consequat occaecat exercitation consequat nisi veniam. Ipsum est reprehenderit cupidatat nulla minim anim deserunt consequat ipsum anim ea
-                  tempor.
+                  Aliqua ut ex irure eu officia dolore velit et occaecat pariatur excepteur nostrud ad. Ea reprehenderit
+                  sint culpa excepteur adipisicing ipsum esse excepteur officia culpa adipisicing nostrud. Nulla Lorem
+                  voluptate tempor officia id mollit do est amet dolor nulla. Sint sunt consequat non in reprehenderit
+                  Lorem velit enim cillum enim. Consequat occaecat exercitation consequat nisi veniam. Ipsum est
+                  reprehenderit cupidatat nulla minim anim deserunt consequat ipsum anim ea tempor.
                 </p>
               </FaqAccordionItem>
             </FaqSectionClient>
@@ -167,7 +185,9 @@ function makeBreadcrumbs(product: CommerceProduct) {
 
   return {
     Home: "/",
-    [lastCollection?.handle ? slugToName(lastCollection?.handle) : "Products"]: lastCollection?.handle ? `/category/${lastCollection.handle}` : "/search",
+    [lastCollection?.handle ? slugToName(lastCollection?.handle) : "Products"]: lastCollection?.handle
+      ? `/category/${lastCollection.handle}`
+      : "/search",
     [product.title]: "",
   }
 }

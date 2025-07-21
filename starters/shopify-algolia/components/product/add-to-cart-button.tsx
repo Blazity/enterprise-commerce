@@ -21,7 +21,15 @@ import type { CommerceProduct } from "types"
 
 import { COOKIE_CART_ID } from "constants/index"
 
-export function AddToCartButton({ className, product, combination }: { className?: string; product: CommerceProduct; combination: Combination | PlatformVariant | undefined }) {
+export function AddToCartButton({
+  className,
+  product,
+  combination,
+}: {
+  className?: string
+  product: CommerceProduct
+  combination: Combination | PlatformVariant | undefined
+}) {
   const [isPending, setIsPending] = useState(false)
   const [hasAnyAvailable, setHasAnyAvailable] = useState(true)
   const setProduct = useAddProductStore((s) => s.setProduct)
@@ -32,7 +40,6 @@ export function AddToCartButton({ className, product, combination }: { className
 
   const disabled = !hasAnyAvailable || !combination?.availableForSale || isPending
 
-  
   const handleClick = async () => {
     if (!combination?.id) return
 
@@ -74,7 +81,10 @@ export function AddToCartButton({ className, product, combination }: { className
       onClick={handleClick}
       disabled={isPending || disabled}
       variant="default"
-      className={cn("mx-auto w-full rounded-md p-10 py-4 transition-all hover:bg-black/85 md:w-full md:rounded-md md:py-4", className)}
+      className={cn(
+        "mx-auto w-full rounded-md p-10 py-4 transition-all hover:bg-black/85 md:w-full md:rounded-md md:py-4",
+        className
+      )}
     >
       <BagIcon className="mr-2 size-5 text-white" />
       Add to Bag

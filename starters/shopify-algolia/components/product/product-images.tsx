@@ -22,7 +22,6 @@ export const ProductImages = ({ images, initialActiveIndex = 0 }: ProductImagesP
       return
     }
 
-    
     if (initialActiveIndex >= 0) {
       api.scrollTo(initialActiveIndex, true)
       thumbsApi.scrollTo(initialActiveIndex, true)
@@ -35,15 +34,26 @@ export const ProductImages = ({ images, initialActiveIndex = 0 }: ProductImagesP
     })
   }, [api, thumbsApi, initialActiveIndex])
 
-  
   useEffect(() => {
     setCurrent(initialActiveIndex)
   }, [initialActiveIndex])
 
   return (
     <>
-      <CenterSection setApi={setApi} images={images} className={cn("md:col-span-6", images.length > 1 ? "md:col-start-2" : "md:col-start-1")} />
-      {images.length > 1 && <SideImages setThumbsApi={setThumbsApi} current={current} api={api} images={images} className="md:-order-1 md:col-span-1" />}
+      <CenterSection
+        setApi={setApi}
+        images={images}
+        className={cn("md:col-span-6", images.length > 1 ? "md:col-start-2" : "md:col-start-1")}
+      />
+      {images.length > 1 && (
+        <SideImages
+          setThumbsApi={setThumbsApi}
+          current={current}
+          api={api}
+          images={images}
+          className="md:-order-1 md:col-span-1"
+        />
+      )}
     </>
   )
 }

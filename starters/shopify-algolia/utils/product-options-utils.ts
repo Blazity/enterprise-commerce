@@ -19,7 +19,13 @@ export function getAllCombinations(variants: PlatformVariant[]): Combination[] {
     price: variant.price,
     title: variant.title,
     quantityAvailable: variant.quantityAvailable,
-    ...variant.selectedOptions.reduce((accumulator, option) => ({ ...accumulator, [option.name.toLowerCase()]: decodeURIComponent(option.value.toLowerCase()) }), {}),
+    ...variant.selectedOptions.reduce(
+      (accumulator, option) => ({
+        ...accumulator,
+        [option.name.toLowerCase()]: decodeURIComponent(option.value.toLowerCase()),
+      }),
+      {}
+    ),
   }))
 }
 
@@ -28,10 +34,16 @@ export function getCombination(product: CommerceProduct, color: string | null) {
 
   const defaultColor = product.flatOptions?.["Color"]?.find(Boolean)?.toLowerCase() ?? undefined
 
-  return hasOnlyOneVariant ? product.variants.find(Boolean) : getAllCombinations(product.variants).find((combination) => combination.color === (color ?? defaultColor))
+  return hasOnlyOneVariant
+    ? product.variants.find(Boolean)
+    : getAllCombinations(product.variants).find((combination) => combination.color === (color ?? defaultColor))
 }
 
-export function hasValidOption(variants: PlatformVariant[] | null | undefined, optionName: Option, optionValue: string | null): boolean {
+export function hasValidOption(
+  variants: PlatformVariant[] | null | undefined,
+  optionName: Option,
+  optionValue: string | null
+): boolean {
   const combinations = getAllCombinations(variants || [])
     .flatMap((combination) => combination?.[optionName])
     .filter(Boolean)

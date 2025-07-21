@@ -19,7 +19,12 @@ export async function ProductsWeekSection() {
           <Carousel opts={{ skipSnaps: true }}>
             <CarouselContent className="ml-0 justify-start gap-8">
               {items.map((product, idx) => (
-                <Link aria-label={`Go to ${product.title}`} key={"newest_" + product.id + idx} href={`/product/${product.handle}`} prefetch={false}>
+                <Link
+                  aria-label={`Go to ${product.title}`}
+                  key={"newest_" + product.id + idx}
+                  href={`/product/${product.handle}`}
+                  prefetch={false}
+                >
                   <div className="flex h-[224px] min-w-[224px] max-w-[224px] items-center justify-center overflow-hidden rounded-full border border-black">
                     <Image
                       alt={product.featuredImage?.altText || ""}
@@ -51,7 +56,10 @@ export function ProductsWeekSectionSkeleton() {
           <Carousel opts={{ containScroll: "keepSnaps", dragFree: true }}>
             <CarouselContent className="ml-0 justify-start gap-8">
               {Array.from({ length: 8 }, (_, idx) => (
-                <Skeleton key={idx} className="flex h-[224px] min-w-[224px] max-w-[224px] items-center justify-center overflow-hidden rounded-full border border-black" />
+                <Skeleton
+                  key={idx}
+                  className="flex h-[224px] min-w-[224px] max-w-[224px] items-center justify-center overflow-hidden rounded-full border border-black"
+                />
               ))}
             </CarouselContent>
           </Carousel>

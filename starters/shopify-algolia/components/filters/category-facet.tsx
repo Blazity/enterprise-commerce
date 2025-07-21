@@ -71,7 +71,10 @@ const CategoryTree = ({ items, level, onClick, isChecked, className, parent }: C
             </button>
             {data && data.length > 0 && (
               <CategoryTree
-                className={cn("ml-2 flex flex-col gap-1", level > 0 && (isRefined || isChecked(value)) && "border-l border-primary pl-2")}
+                className={cn(
+                  "ml-2 flex flex-col gap-1",
+                  level > 0 && (isRefined || isChecked(value)) && "border-l border-primary pl-2"
+                )}
                 items={data}
                 level={level + 1}
                 onClick={onClick}

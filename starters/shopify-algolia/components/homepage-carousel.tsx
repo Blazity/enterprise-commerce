@@ -31,7 +31,6 @@ interface HomepageCarouselProps {
 export function HomepageCarousel({ slides = [], className }: HomepageCarouselProps) {
   const isMobile = useIsMobile()
 
-  
   const plugins = useMemo(() => {
     if (isMobile) {
       return [
@@ -96,7 +95,6 @@ export function HomepageCarousel({ slides = [], className }: HomepageCarouselPro
     }
   }, [emblaApi, onSelect])
 
-  
   useEffect(() => {
     if (!emblaApi || !slides.length) return
 
@@ -106,7 +104,6 @@ export function HomepageCarousel({ slides = [], className }: HomepageCarouselPro
       try {
         const current = emblaApi.selectedScrollSnap()
 
-        
         if (isMobile) {
           const visibleCount = 1
           const newVisibleIndexes = new Set<number>()
@@ -120,11 +117,9 @@ export function HomepageCarousel({ slides = [], className }: HomepageCarouselPro
 
           setVisibleIndexes(newVisibleIndexes)
         } else {
-          
           setVisibleIndexes(new Set(slides.map((_, i) => i)))
         }
 
-        
         const preloadCount = isMobile ? 1 : 2
         const indicesToLoad = new Set<number>()
 
@@ -137,7 +132,6 @@ export function HomepageCarousel({ slides = [], className }: HomepageCarouselPro
 
         setLoadedIndexes((prev) => new Set([...Array.from(prev), ...Array.from(indicesToLoad)]))
 
-        
         if (isMobile && "requestIdleCallback" in window) {
           requestIdleCallback(
             () => {
@@ -173,7 +167,6 @@ export function HomepageCarousel({ slides = [], className }: HomepageCarouselPro
     return null
   }
 
-  
   if (isMobile === undefined) {
     return <div className={cn("relative bg-secondary/5", className)} style={{ minHeight: "500px" }} />
   }
@@ -205,7 +198,6 @@ export function HomepageCarousel({ slides = [], className }: HomepageCarouselPro
           }}
         >
           {slides.map((slide, index) => {
-            
             if (isMobile && !visibleIndexes.has(index)) {
               return <div key={slide.id} className="relative min-w-0 flex-[0_0_100%]" aria-hidden="true" />
             }
@@ -249,15 +241,24 @@ export function HomepageCarousel({ slides = [], className }: HomepageCarouselPro
                     {}
                     <div className="relative flex flex-col justify-center space-y-6 text-center lg:px-4 lg:text-left">
                       <div className="space-y-4">
-                        <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-5xl xl:text-6xl">{slide.title}</h2>
-                        <p className="mx-auto max-w-md text-balance text-base text-muted-foreground sm:text-lg md:text-pretty lg:mx-0 lg:text-xl">{slide.subtitle}</p>
+                        <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-5xl xl:text-6xl">
+                          {slide.title}
+                        </h2>
+                        <p className="mx-auto max-w-md text-balance text-base text-muted-foreground sm:text-lg md:text-pretty lg:mx-0 lg:text-xl">
+                          {slide.subtitle}
+                        </p>
                       </div>
 
                       <div className="flex flex-col gap-3 sm:flex-row sm:justify-center lg:justify-start">
                         <Button size="default" asChild className="w-full sm:w-auto lg:px-8 lg:py-6 lg:text-lg">
                           <Link href={slide.ctaHref}>{slide.ctaText}</Link>
                         </Button>
-                        <Button variant="outline" size="default" asChild className="w-full sm:w-auto lg:px-8 lg:py-6 lg:text-lg">
+                        <Button
+                          variant="outline"
+                          size="default"
+                          asChild
+                          className="w-full sm:w-auto lg:px-8 lg:py-6 lg:text-lg"
+                        >
                           <Link href="/search">Browse All Categories</Link>
                         </Button>
                       </div>
@@ -330,7 +331,9 @@ export function HomepageCarousel({ slides = [], className }: HomepageCarouselPro
               <button
                 className={cn(
                   "translate-z-0 flex h-10 w-10 items-center justify-center rounded-full border border-border bg-background/80 backdrop-blur transition-all duration-300 will-change-[transform,opacity]",
-                  canScrollPrev ? "hover:scale-110 hover:bg-background hover:shadow-md" : "cursor-not-allowed opacity-50"
+                  canScrollPrev
+                    ? "hover:scale-110 hover:bg-background hover:shadow-md"
+                    : "cursor-not-allowed opacity-50"
                 )}
                 onClick={scrollPrev}
                 disabled={!canScrollPrev}
@@ -343,7 +346,9 @@ export function HomepageCarousel({ slides = [], className }: HomepageCarouselPro
               <button
                 className={cn(
                   "translate-z-0 flex h-10 w-10 items-center justify-center rounded-full border border-border bg-background/80 backdrop-blur transition-all duration-300 will-change-[transform,opacity]",
-                  canScrollNext ? "hover:scale-110 hover:bg-background hover:shadow-md" : "cursor-not-allowed opacity-50"
+                  canScrollNext
+                    ? "hover:scale-110 hover:bg-background hover:shadow-md"
+                    : "cursor-not-allowed opacity-50"
                 )}
                 onClick={scrollNext}
                 disabled={!canScrollNext}

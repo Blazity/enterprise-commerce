@@ -62,7 +62,11 @@ export function SearchModal() {
 
         {status === "done" && hasMore && (
           <div className="relative bottom-0 flex size-full items-center justify-center bg-white p-4">
-            <Button variant="secondary" className="w-3/4 items-center justify-center text-sm" onClick={handleButtonClick}>
+            <Button
+              variant="secondary"
+              className="w-3/4 items-center justify-center text-sm"
+              onClick={handleButtonClick}
+            >
               See more
             </Button>
           </div>

@@ -17,7 +17,13 @@ type ReviewsSectionProps = {
   summary?: string
   className?: string
 }
-export const ReviewsSection = async ({ productId, productHandle, summary, avgRating, className }: ReviewsSectionProps) => {
+export const ReviewsSection = async ({
+  productId,
+  productHandle,
+  summary,
+  avgRating,
+  className,
+}: ReviewsSectionProps) => {
   const { reviews, total } = await getProductReviews(productHandle, { limit: 16 })
   if (!isOptIn("reviews")) {
     notifyOptIn({ feature: "reviews", source: "components/ReviewsSection" })
@@ -30,7 +36,9 @@ export const ReviewsSection = async ({ productId, productHandle, summary, avgRat
       <section className={cn("rounded-lg py-12 md:my-10", className)}>
         <div className="container mx-auto max-w-5xl px-4 md:px-6 xl:px-0">
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-            <h2 className="text-xl font-semibold sm:text-2xl">Have this product? Help others by sharing your experience</h2>
+            <h2 className="text-xl font-semibold sm:text-2xl">
+              Have this product? Help others by sharing your experience
+            </h2>
             <ReviewButton productId={productId} />
           </div>
         </div>
@@ -77,7 +85,11 @@ export const ReviewsSection = async ({ productId, productHandle, summary, avgRat
           </Carousel>
         </div>
         <div className="mt-10 flex justify-center md:justify-end">
-          <Link href={`/reviews/${productHandle}`} className={cn(buttonVariants({ variant: "outline" }), "w-full bg-white transition-all hover:scale-105")} prefetch={false}>
+          <Link
+            href={`/reviews/${productHandle}`}
+            className={cn(buttonVariants({ variant: "outline" }), "w-full bg-white transition-all hover:scale-105")}
+            prefetch={false}
+          >
             See all reviews
           </Link>
         </div>

@@ -48,7 +48,11 @@ const HighlightedPre = React.memo(async ({ children, language, ...props }: Highl
                 const style = typeof token.htmlStyle === "string" ? undefined : token.htmlStyle
 
                 return (
-                  <span key={tokenIndex} className="text-shiki-light bg-shiki-light-bg dark:text-shiki-dark dark:bg-shiki-dark-bg" style={style}>
+                  <span
+                    key={tokenIndex}
+                    className="text-shiki-light bg-shiki-light-bg dark:text-shiki-dark dark:bg-shiki-dark-bg"
+                    style={style}
+                  >
                     {token.content}
                   </span>
                 )
@@ -72,7 +76,10 @@ interface CodeBlockProps extends React.HTMLAttributes<HTMLPreElement> {
 const CodeBlock = ({ children, className, language, ...restProps }: CodeBlockProps) => {
   const code = typeof children === "string" ? children : childrenTakeAllStringContents(children)
 
-  const preClass = cn("overflow-x-scroll rounded-md border bg-background/50 p-4 font-mono text-sm [scrollbar-width:none]", className)
+  const preClass = cn(
+    "overflow-x-scroll rounded-md border bg-background/50 p-4 font-mono text-sm [scrollbar-width:none]",
+    className
+  )
 
   return (
     <div className="group/code relative mb-4">
@@ -129,7 +136,12 @@ const COMPONENTS = {
         {children}
       </CodeBlock>
     ) : (
-      <code className={cn("font-mono [:not(pre)>&]:rounded-md [:not(pre)>&]:bg-background/50 [:not(pre)>&]:px-1 [:not(pre)>&]:py-0.5")} {...rest}>
+      <code
+        className={cn(
+          "font-mono [:not(pre)>&]:rounded-md [:not(pre)>&]:bg-background/50 [:not(pre)>&]:px-1 [:not(pre)>&]:py-0.5"
+        )}
+        {...rest}
+      >
         {children}
       </code>
     )
@@ -139,8 +151,14 @@ const COMPONENTS = {
   ul: withClass("ul", "list-disc space-y-2 pl-6"),
   li: withClass("li", "my-1.5"),
   table: withClass("table", "w-full border-collapse overflow-y-auto rounded-md border border-foreground/20"),
-  th: withClass("th", "border border-foreground/20 px-4 py-2 text-left font-bold [&[align=center]]:text-center [&[align=right]]:text-right"),
-  td: withClass("td", "border border-foreground/20 px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right"),
+  th: withClass(
+    "th",
+    "border border-foreground/20 px-4 py-2 text-left font-bold [&[align=center]]:text-center [&[align=right]]:text-right"
+  ),
+  td: withClass(
+    "td",
+    "border border-foreground/20 px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right"
+  ),
   tr: withClass("tr", "m-0 border-t p-0 even:bg-muted"),
   p: withClass("p", "whitespace-pre-wrap"),
   hr: withClass("hr", "border-foreground/20"),

@@ -27,7 +27,6 @@ export const PriceFacet = ({ minPrice, maxPrice, setFacet }: PriceFacetProps) =>
     const finalMin = minValue !== null && !isNaN(minValue) ? minValue : null
     const finalMax = maxValue !== null && !isNaN(maxValue) ? maxValue : null
 
-    
     if (finalMin !== null && finalMax !== null) {
       if (finalMin > finalMax) {
         setMaxInput("")
@@ -68,9 +67,21 @@ export const PriceFacet = ({ minPrice, maxPrice, setFacet }: PriceFacetProps) =>
   return (
     <div className="flex flex-col gap-1 py-1">
       <div className="flex gap-2 lg:flex-col">
-        <PriceInput id="min-price" label="Min price" value={minInput ?? ""} onChange={(e) => handlePriceChange(e, "min")} onKeyDown={handleKeyDown} />
+        <PriceInput
+          id="min-price"
+          label="Min price"
+          value={minInput ?? ""}
+          onChange={(e) => handlePriceChange(e, "min")}
+          onKeyDown={handleKeyDown}
+        />
 
-        <PriceInput id="max-price" label="Max price" value={maxInput ?? ""} onChange={(e) => handlePriceChange(e, "max")} onKeyDown={handleKeyDown} />
+        <PriceInput
+          id="max-price"
+          label="Max price"
+          value={maxInput ?? ""}
+          onChange={(e) => handlePriceChange(e, "max")}
+          onKeyDown={handleKeyDown}
+        />
       </div>
       <div className="flex gap-2 pt-2">
         <Button

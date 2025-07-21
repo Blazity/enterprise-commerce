@@ -4,7 +4,15 @@ import type { PlatformCollection } from "lib/shopify/types"
 
 type SearchParams = Omit<Awaited<ReturnType<typeof searchParamsCache.parse>>, "page" | "sortBy" | "q">
 
-export function buildSearchFilter({ collection, params, separator }: { collection?: PlatformCollection | undefined; params: SearchParams; separator: string }): string {
+export function buildSearchFilter({
+  collection,
+  params,
+  separator,
+}: {
+  collection?: PlatformCollection | undefined
+  params: SearchParams
+  separator: string
+}): string {
   const filter = new FilterBuilder()
 
   if (collection) {

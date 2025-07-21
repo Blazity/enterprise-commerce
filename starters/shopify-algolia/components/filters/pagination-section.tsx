@@ -1,4 +1,11 @@
-import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "components/ui/pagination"
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "components/ui/pagination"
 
 const PAGE_OFFSET = 2
 
@@ -40,7 +47,11 @@ export function PaginationSection({ queryParams, totalPages }: PaginationSection
         </PaginationItem>
         {pages.map((singlePage, idx) => (
           <PaginationItem key={"pagination_item" + idx + singlePage}>
-            <PaginationLink aria-label={`Go to ${singlePage} page`} isActive={singlePage === +page} href={{ query: { ...queryParams, page: singlePage } }}>
+            <PaginationLink
+              aria-label={`Go to ${singlePage} page`}
+              isActive={singlePage === +page}
+              href={{ query: { ...queryParams, page: singlePage } }}
+            >
               {singlePage}
             </PaginationLink>
           </PaginationItem>

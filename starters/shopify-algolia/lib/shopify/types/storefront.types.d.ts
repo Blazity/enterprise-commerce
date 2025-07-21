@@ -551,7 +551,11 @@ export type CartCompletionActionRequired = {
   id: Scalars["String"]["output"]
 }
 
-export type CartCompletionAttemptResult = CartCompletionActionRequired | CartCompletionFailed | CartCompletionProcessing | CartCompletionSuccess
+export type CartCompletionAttemptResult =
+  | CartCompletionActionRequired
+  | CartCompletionFailed
+  | CartCompletionProcessing
+  | CartCompletionSuccess
 
 export type CartCompletionFailed = {
   __typename?: "CartCompletionFailed"
@@ -4032,9 +4036,29 @@ export type MetafieldFilter = {
   value: Scalars["String"]["input"]
 }
 
-export type MetafieldParentResource = Article | Blog | Cart | Collection | Customer | Location | Market | Order | Page | Product | ProductVariant | Shop
+export type MetafieldParentResource =
+  | Article
+  | Blog
+  | Cart
+  | Collection
+  | Customer
+  | Location
+  | Market
+  | Order
+  | Page
+  | Product
+  | ProductVariant
+  | Shop
 
-export type MetafieldReference = Collection | GenericFile | MediaImage | Metaobject | Page | Product | ProductVariant | Video
+export type MetafieldReference =
+  | Collection
+  | GenericFile
+  | MediaImage
+  | Metaobject
+  | Page
+  | Product
+  | ProductVariant
+  | Video
 
 export type MetafieldReferenceConnection = {
   __typename?: "MetafieldReferenceConnection"
@@ -5888,7 +5912,10 @@ export type SellingPlanPriceAdjustment = {
   orderCount?: Maybe<Scalars["Int"]["output"]>
 }
 
-export type SellingPlanPriceAdjustmentValue = SellingPlanFixedAmountPriceAdjustment | SellingPlanFixedPriceAdjustment | SellingPlanPercentagePriceAdjustment
+export type SellingPlanPriceAdjustmentValue =
+  | SellingPlanFixedAmountPriceAdjustment
+  | SellingPlanFixedPriceAdjustment
+  | SellingPlanPercentagePriceAdjustment
 
 export type ShippingRate = {
   __typename?: "ShippingRate"

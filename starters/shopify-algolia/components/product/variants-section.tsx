@@ -25,10 +25,8 @@ export function VariantsSection({ variants, className, handle, combination }: Va
         {combinations.map((singleCombination) => {
           const cartItem = cart?.items.find((item) => item.merchandise.id === singleCombination?.id)
 
-          
           const variant = variants.find((v) => v.id === singleCombination.id)
 
-          
           const optionsForUrl: Record<string, string> = {}
           if (variant?.selectedOptions) {
             variant.selectedOptions.forEach((option) => {

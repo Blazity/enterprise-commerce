@@ -21,7 +21,9 @@ const nextMetaRoot = path.join(process.cwd(), BUILD_OUTPUT_DIRECTORY)
 try {
   fs.accessSync(nextMetaRoot, fs.constants.R_OK)
 } catch (err) {
-  console.error(`No build output found at "${nextMetaRoot}" - you may not have your working directory set correctly, or not have run "next build".`)
+  console.error(
+    `No build output found at "${nextMetaRoot}" - you may not have your working directory set correctly, or not have run "next build".`
+  )
   process.exit(1)
 }
 

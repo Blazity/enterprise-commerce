@@ -25,7 +25,11 @@ export function Facet({ id, title, distribution, isChecked, onCheckedChange }: F
           <div className="grid gap-2">
             {distributionsEntries.map(([value], index) => (
               <Label key={value + index} className="flex items-center gap-2">
-                <Checkbox name={value} checked={isChecked(value)} onCheckedChange={(checked) => onCheckedChange(!!checked, value)} />
+                <Checkbox
+                  name={value}
+                  checked={isChecked(value)}
+                  onCheckedChange={(checked) => onCheckedChange(!!checked, value)}
+                />
                 {value}
               </Label>
             ))}

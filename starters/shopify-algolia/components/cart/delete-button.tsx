@@ -25,7 +25,11 @@ export function DeleteButton({ id }: DeleteButtonProps) {
 
   return (
     <div className={cn("flex w-fit gap-2", { "pointer-events-none": isPending })}>
-      <button className="bg-transparent text-[13px] text-neutral-500 underline hover:no-underline" onClick={handleClick} disabled={isPending}>
+      <button
+        className="bg-transparent text-[13px] text-neutral-500 underline hover:no-underline"
+        onClick={handleClick}
+        disabled={isPending}
+      >
         Delete
       </button>
       {isPending && <LoadingDots />}

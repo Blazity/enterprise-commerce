@@ -9,7 +9,13 @@ interface FacetsDesktopProps {
   categoryDisplayTypes?: Record<string, "CLP" | "PLP">
 }
 
-export function FacetsDesktop({ independentFacetDistribution, facetDistribution, className, disabledFacets, categoryDisplayTypes }: FacetsDesktopProps) {
+export function FacetsDesktop({
+  independentFacetDistribution,
+  facetDistribution,
+  className,
+  disabledFacets,
+  categoryDisplayTypes,
+}: FacetsDesktopProps) {
   return (
     <FacetsContent
       independentFacetDistribution={independentFacetDistribution}

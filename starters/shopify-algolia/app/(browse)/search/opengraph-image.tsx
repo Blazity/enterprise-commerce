@@ -1,6 +1,3 @@
-
-
-
 import { env } from "env.mjs"
 import { ImageResponse } from "next/og"
 
@@ -46,7 +43,14 @@ export default async function Image() {
             borderRadius: "999px",
           }}
         >
-          <svg width="64" height="64" style={{ marginLeft: "64px" }} viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg
+            width="64"
+            height="64"
+            style={{ marginLeft: "64px" }}
+            viewBox="0 0 21 21"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
             <path
               fill-rule="evenodd"
               clip-rule="evenodd"
@@ -55,9 +59,18 @@ export default async function Image() {
             />
           </svg>
 
-          <p style={{ fontSize: "48px", marginLeft: "48px", maxWidth: "700px", maxHeight: "50px", overflow: "hidden" }}>Search products...</p>
+          <p style={{ fontSize: "48px", marginLeft: "48px", maxWidth: "700px", maxHeight: "50px", overflow: "hidden" }}>
+            Search products...
+          </p>
 
-          <svg style={{ marginLeft: "auto", marginRight: "64px" }} width="55.5" height="19.5" viewBox="0 0 37 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg
+            style={{ marginLeft: "auto", marginRight: "64px" }}
+            width="55.5"
+            height="19.5"
+            viewBox="0 0 37 13"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
             <g opacity="0.56">
               <rect x="0.256836" y="4.81604" width="7.6979" height="7.6979" rx="3.84895" fill="#595959" />
               <rect x="14.2092" y="0.48584" width="7.6979" height="7.6979" rx="3.84895" fill="#9C9C9C" />

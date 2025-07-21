@@ -4,7 +4,19 @@ import { CommerceProduct } from "types"
 export const FeaturedProductsSection = ({
   products,
 }: {
-  products: Pick<CommerceProduct, "id" | "variants" | "handle" | "images" | "title" | "featuredImage" | "minPrice" | "avgRating" | "totalReviews" | "vendor">[]
+  products: Pick<
+    CommerceProduct,
+    | "id"
+    | "variants"
+    | "handle"
+    | "images"
+    | "title"
+    | "featuredImage"
+    | "minPrice"
+    | "avgRating"
+    | "totalReviews"
+    | "vendor"
+  >[]
 }) => {
   const highlightedProducts = products.slice(0, 2)
   const restProducts = products.slice(2)
@@ -14,7 +26,13 @@ export const FeaturedProductsSection = ({
       <h2 className="mb-8 text-4xl font-semibold">New Arrivals</h2>
       <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4 md:grid-rows-1">
         {highlightedProducts.map((product, index) => (
-          <ProductCard highlighted={index < 2} prefetch className="md:col-span-2 md:row-span-2" key={product.id} {...product} />
+          <ProductCard
+            highlighted={index < 2}
+            prefetch
+            className="md:col-span-2 md:row-span-2"
+            key={product.id}
+            {...product}
+          />
         ))}
       </div>
       <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 md:grid-rows-1">

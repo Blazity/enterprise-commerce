@@ -6,16 +6,25 @@ import { ButtonProps, buttonVariants } from "./button-old"
 import { ChevronIcon } from "../icons/chevron-icon"
 
 const Pagination = ({ className, ...props }: React.ComponentProps<"nav">) => (
-  <nav role="navigation" aria-label="pagination" className={cn("mx-auto flex w-full justify-center", className)} {...props} />
+  <nav
+    role="navigation"
+    aria-label="pagination"
+    className={cn("mx-auto flex w-full justify-center", className)}
+    {...props}
+  />
 )
 Pagination.displayName = "Pagination"
 
-const PaginationContent = React.forwardRef<HTMLUListElement, React.ComponentProps<"ul">>(({ className, ...props }, ref) => (
-  <ul ref={ref} className={cn("flex flex-row items-center gap-6", className)} {...props} />
-))
+const PaginationContent = React.forwardRef<HTMLUListElement, React.ComponentProps<"ul">>(
+  ({ className, ...props }, ref) => (
+    <ul ref={ref} className={cn("flex flex-row items-center gap-6", className)} {...props} />
+  )
+)
 PaginationContent.displayName = "PaginationContent"
 
-const PaginationItem = React.forwardRef<HTMLLIElement, React.ComponentProps<"li">>(({ className, ...props }, ref) => <li ref={ref} className={cn("", className)} {...props} />)
+const PaginationItem = React.forwardRef<HTMLLIElement, React.ComponentProps<"li">>(({ className, ...props }, ref) => (
+  <li ref={ref} className={cn("", className)} {...props} />
+))
 PaginationItem.displayName = "PaginationItem"
 
 type PaginationLinkProps = {
@@ -27,10 +36,16 @@ type PaginationLinkProps = {
 } & Pick<ButtonProps, "size"> &
   LinkProps
 
-const PaginationLink = ({ className, isActive, children, href, disabled, "aria-label": ariaLabel }: PaginationLinkProps) => (
+const PaginationLink = ({
+  className,
+  isActive,
+  children,
+  href,
+  disabled,
+  "aria-label": ariaLabel,
+}: PaginationLinkProps) => (
   <Link
     prefetch={false}
-    
     aria-current={isActive ? "page" : undefined}
     aria-label={ariaLabel}
     className={cn(
@@ -53,7 +68,10 @@ const PaginationPrevious = ({ className, disabled, ...props }: React.ComponentPr
   <PaginationLink
     aria-label="Go to previous page"
     size="default"
-    className={cn("flex size-8 items-center justify-center border-0 px-0 py-0 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50", className)}
+    className={cn(
+      "flex size-8 items-center justify-center border-0 px-0 py-0 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50",
+      className
+    )}
     disabled={disabled}
     {...props}
   >

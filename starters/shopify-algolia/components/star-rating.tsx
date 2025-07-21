@@ -7,7 +7,10 @@ export const StarRating = ({ rating }: { rating: number }) => {
   return (
     <div className="flex items-center">
       {stars.map((star) => (
-        <StarIcon key={star} className={cn("size-4", star <= rating ? "fill-gray-800/95 stroke-gray-800/95" : "stroke-gray-800")} />
+        <StarIcon
+          key={star}
+          className={cn("size-4", star <= rating ? "fill-gray-800/95 stroke-gray-800/95" : "stroke-gray-800")}
+        />
       ))}
     </div>
   )

@@ -22,7 +22,6 @@ export function NavigationBarWrapper({ fallbackData }: NavigationBarWrapperProps
     refreshInterval: 10000,
   })
 
-  
   const items = navigationData?.items || fallbackData.items
 
   return <NavigationBar items={items} />

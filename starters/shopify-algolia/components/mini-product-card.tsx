@@ -4,14 +4,26 @@ import { cn } from "utils/cn"
 import { type CurrencyType, mapCurrencyToSign } from "utils/map-currency-to-sign"
 import type { CommerceProduct } from "types"
 
-interface MiniProductCardProps extends Pick<CommerceProduct, "variants" | "handle" | "images" | "title" | "featuredImage" | "minPrice" | "vendor"> {
+interface MiniProductCardProps
+  extends Pick<CommerceProduct, "variants" | "handle" | "images" | "title" | "featuredImage" | "minPrice" | "vendor"> {
   priority?: boolean
   prefetch?: boolean
   className?: string
   loading?: "eager" | "lazy"
 }
 
-export const MiniProductCard = ({ variants, handle, title, featuredImage, minPrice, className, priority, vendor, prefetch = false, loading = "lazy" }: MiniProductCardProps) => {
+export const MiniProductCard = ({
+  variants,
+  handle,
+  title,
+  featuredImage,
+  minPrice,
+  className,
+  priority,
+  vendor,
+  prefetch = false,
+  loading = "lazy",
+}: MiniProductCardProps) => {
   const variantPrice = variants?.find(Boolean)?.price
   const currencySymbol = variantPrice ? mapCurrencyToSign((variantPrice.currencyCode as CurrencyType) || "USD") : "$"
 

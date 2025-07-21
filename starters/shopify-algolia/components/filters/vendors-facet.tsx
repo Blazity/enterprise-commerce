@@ -66,7 +66,13 @@ export function VendorsFacet({ id, title, distribution, isChecked, onCheckedChan
         {!hasNoResults && (
           <div className="relative mb-3">
             <SearchIcon className="absolute left-2 top-1/2 size-4 -translate-y-1/2 text-gray-400" />
-            <Input type="text" placeholder="Search vendors..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="h-8 pl-8 text-sm" />
+            <Input
+              type="text"
+              placeholder="Search vendors..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="h-8 pl-8 text-sm"
+            />
           </div>
         )}
 
@@ -79,7 +85,11 @@ export function VendorsFacet({ id, title, distribution, isChecked, onCheckedChan
             <div className="grid gap-2 pr-2">
               {filteredVendors.map(([value], index) => (
                 <Label key={value + index} className="flex items-center gap-2">
-                  <Checkbox name={value} checked={isChecked(value)} onCheckedChange={(checked) => onCheckedChange(!!checked, value)} />
+                  <Checkbox
+                    name={value}
+                    checked={isChecked(value)}
+                    onCheckedChange={(checked) => onCheckedChange(!!checked, value)}
+                  />
                   {value}
                 </Label>
               ))}

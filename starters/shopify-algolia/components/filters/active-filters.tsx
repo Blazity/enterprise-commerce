@@ -14,21 +14,42 @@ interface ActiveFiltersProps {
   removeTag: (value: string) => void
 }
 
-export function ActiveFilters({ filtersCount, setShowFilterTags, showFilterTags, filtersActive, page, filters, removeTag }: ActiveFiltersProps) {
+export function ActiveFilters({
+  filtersCount,
+  setShowFilterTags,
+  showFilterTags,
+  filtersActive,
+  page,
+  filters,
+  removeTag,
+}: ActiveFiltersProps) {
   return (
     <>
       <div className="flex items-baseline justify-between pb-1 tracking-tight">
-        <p className="text-sm font-medium">{filtersCount === 0 ? "No filters selected" : `Active filters (${filtersCount})`}</p>
+        <p className="text-sm font-medium">
+          {filtersCount === 0 ? "No filters selected" : `Active filters (${filtersCount})`}
+        </p>
         <button
-          className={cn("rounded-md bg-transparent px-1.5 py-0.5 text-xs transition duration-200 hover:bg-gray-100", filtersActive ? "visible" : "hidden")}
+          className={cn(
+            "rounded-md bg-transparent px-1.5 py-0.5 text-xs transition duration-200 hover:bg-gray-100",
+            filtersActive ? "visible" : "hidden"
+          )}
           onClick={() => setShowFilterTags(!showFilterTags)}
         >
           {showFilterTags ? "Hide" : "Show"}
         </button>
       </div>
-      <motion.div initial={false} animate={{ height: showFilterTags && filtersActive ? 140 : 0 }} className={cn("relative h-full max-h-[140px] overflow-hidden rounded-md")}>
+      <motion.div
+        initial={false}
+        animate={{ height: showFilterTags && filtersActive ? 140 : 0 }}
+        className={cn("relative h-full max-h-[140px] overflow-hidden rounded-md")}
+      >
         <FadeOutMask />
-        <div className={cn("isolate flex h-full flex-wrap content-start items-start justify-start gap-1 overflow-y-auto bg-gray-50 p-2")}>
+        <div
+          className={cn(
+            "isolate flex h-full flex-wrap content-start items-start justify-start gap-1 overflow-y-auto bg-gray-50 p-2"
+          )}
+        >
           <AnimatePresence mode="popLayout" initial={false} key={page}>
             {filters.map((el, index) => {
               if (typeof el === "string") {
@@ -48,7 +69,9 @@ export function ActiveFilters({ filtersCount, setShowFilterTags, showFilterTags,
                     <span className="rounded-full border border-gray-300 p-px transition-colors group-hover:border-gray-400">
                       <CloseIcon className="size-2 fill-gray-300 transition-colors group-hover:fill-gray-400" />
                     </span>
-                    <span className="font-medium tracking-tight">{isCategory && categoryName ? slugToName(categoryName) : el}</span>
+                    <span className="font-medium tracking-tight">
+                      {isCategory && categoryName ? slugToName(categoryName) : el}
+                    </span>
                   </motion.div>
                 )
               }

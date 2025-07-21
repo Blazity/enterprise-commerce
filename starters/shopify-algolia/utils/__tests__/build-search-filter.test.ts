@@ -154,6 +154,8 @@ describe("buildSearchFilter", () => {
       separator,
     })
 
-    expect(result).toBe('collections.handle:"test-collection" AND (vendor:"Vendor1") AND minPrice >= 10 AND minPrice <= 100 AND avgRating >= 4')
+    expect(result).toBe(
+      'collections.handle:"test-collection" AND (vendor:"Vendor1") AND minPrice >= 10 AND minPrice <= 100 AND avgRating >= 4'
+    )
   })
 })

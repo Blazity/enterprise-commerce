@@ -5,7 +5,11 @@ import { type CurrencyType, mapCurrencyToSign } from "utils/map-currency-to-sign
 import type { CommerceProduct } from "types"
 import { StarIcon } from "components/icons/star-icon"
 
-interface ProductCardProps extends Pick<CommerceProduct, "variants" | "handle" | "images" | "title" | "featuredImage" | "minPrice" | "avgRating" | "totalReviews" | "vendor"> {
+interface ProductCardProps
+  extends Pick<
+    CommerceProduct,
+    "variants" | "handle" | "images" | "title" | "featuredImage" | "minPrice" | "avgRating" | "totalReviews" | "vendor"
+  > {
   priority?: boolean
   prefetch?: boolean
   className?: string
@@ -58,7 +62,9 @@ export const ProductCard = ({
         </div>
         <h3 className="mb-1 line-clamp-2 text-sm font-semibold text-foreground">{title}</h3>
         {!!variantPrice && !!minPrice && (
-          <p className="text-sm font-medium text-primary">{mapCurrencyToSign((variantPrice.currencyCode as CurrencyType) || "USD") + minPrice.toFixed(2)}</p>
+          <p className="text-sm font-medium text-primary">
+            {mapCurrencyToSign((variantPrice.currencyCode as CurrencyType) || "USD") + minPrice.toFixed(2)}
+          </p>
         )}
         <span className="mt-2 text-xs font-medium text-muted-foreground">Shop Now →</span>
       </Link>
@@ -66,7 +72,12 @@ export const ProductCard = ({
   }
 
   return (
-    <Link className={cn("group flex h-full w-full flex-col overflow-hidden rounded-lg", className)} aria-label={linkAria} href={path} prefetch={prefetch}>
+    <Link
+      className={cn("group flex h-full w-full flex-col overflow-hidden rounded-lg", className)}
+      aria-label={linkAria}
+      href={path}
+      prefetch={prefetch}
+    >
       <div className="relative aspect-square overflow-hidden">
         <Image
           priority={priority}
@@ -77,7 +88,14 @@ export const ProductCard = ({
         />
       </div>
       <div className="bg-size-200 bg-pos-0 hover:bg-pos-100 flex shrink-0 grow flex-col text-pretty bg-gradient-to-b from-transparent to-primary/5 p-4 transition-all duration-200">
-        <h3 className={cn("line-clamp-2 text-lg font-semibold transition-colors data-[featured]:text-2xl", highlighted && "md:text-2xl")}>{title}</h3>
+        <h3
+          className={cn(
+            "line-clamp-2 text-lg font-semibold transition-colors data-[featured]:text-2xl",
+            highlighted && "md:text-2xl"
+          )}
+        >
+          {title}
+        </h3>
         <div className="flex flex-col pt-1">
           {!!vendor && <p className={cn("text-sm text-gray-500", highlighted && "md:text-base")}>{vendor}</p>}
 

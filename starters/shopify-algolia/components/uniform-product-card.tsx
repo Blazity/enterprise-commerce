@@ -6,7 +6,10 @@ import type { CommerceProduct } from "types"
 import { StarIcon } from "components/icons/star-icon"
 
 interface UniformProductCardProps
-  extends Pick<CommerceProduct, "variants" | "handle" | "images" | "title" | "featuredImage" | "minPrice" | "avgRating" | "totalReviews" | "vendor"> {
+  extends Pick<
+    CommerceProduct,
+    "variants" | "handle" | "images" | "title" | "featuredImage" | "minPrice" | "avgRating" | "totalReviews" | "vendor"
+  > {
   priority?: boolean
   prefetch?: boolean
   className?: string
@@ -32,7 +35,10 @@ export const UniformProductCard = ({
 
   return (
     <Link
-      className={cn("group relative flex h-full flex-col overflow-hidden rounded-lg border border-border bg-background transition-all duration-300 hover:shadow-lg", className)}
+      className={cn(
+        "group relative flex h-full flex-col overflow-hidden rounded-lg border border-border bg-background transition-all duration-300 hover:shadow-lg",
+        className
+      )}
       href={`/product/${handle}`}
       prefetch={prefetch}
     >
@@ -47,7 +53,11 @@ export const UniformProductCard = ({
           sizes={featured ? "(max-width: 640px) 100vw, 350px" : "(max-width: 640px) 50vw, 250px"}
         />
 
-        {featured && <div className="absolute left-3 top-3 rounded-full bg-foreground px-3 py-1 text-xs font-medium text-background">Featured</div>}
+        {featured && (
+          <div className="absolute left-3 top-3 rounded-full bg-foreground px-3 py-1 text-xs font-medium text-background">
+            Featured
+          </div>
+        )}
       </div>
 
       <div className="flex min-h-0 flex-1 flex-col p-4">
@@ -73,7 +83,9 @@ export const UniformProductCard = ({
               {minPrice.toFixed(2)}
             </p>
           )}
-          {variants && variants.length > 1 && <p className="text-xs text-muted-foreground">{variants.length} variants</p>}
+          {variants && variants.length > 1 && (
+            <p className="text-xs text-muted-foreground">{variants.length} variants</p>
+          )}
         </div>
       </div>
     </Link>

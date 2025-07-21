@@ -14,20 +14,41 @@ export type SingleCartFragment = Pick<StorefrontTypes.Cart, "id" | "checkoutUrl"
             merchandise: Pick<StorefrontTypes.ProductVariant, "id" | "title" | "quantityAvailable"> & {
               price: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
               selectedOptions: Array<Pick<StorefrontTypes.SelectedOption, "name" | "value">>
-              product: Pick<StorefrontTypes.Product, "id" | "handle" | "title" | "description" | "descriptionHtml" | "vendor" | "tags" | "updatedAt" | "createdAt"> & {
+              product: Pick<
+                StorefrontTypes.Product,
+                | "id"
+                | "handle"
+                | "title"
+                | "description"
+                | "descriptionHtml"
+                | "vendor"
+                | "tags"
+                | "updatedAt"
+                | "createdAt"
+              > & {
                 options: Array<Pick<StorefrontTypes.ProductOption, "id" | "name" | "values">>
-                priceRange: { maxVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">; minVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode"> }
+                priceRange: {
+                  maxVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
+                  minVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
+                }
                 collections: { nodes: Array<Pick<StorefrontTypes.Collection, "handle" | "id">> }
                 variants: {
                   edges: Array<{
-                    node: Pick<StorefrontTypes.ProductVariant, "id" | "title" | "quantityAvailable" | "availableForSale"> & {
+                    node: Pick<
+                      StorefrontTypes.ProductVariant,
+                      "id" | "title" | "quantityAvailable" | "availableForSale"
+                    > & {
                       selectedOptions: Array<Pick<StorefrontTypes.SelectedOption, "name" | "value">>
                       price: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
                     }
                   }>
                 }
-                productDetailsMetafield?: StorefrontTypes.Maybe<Pick<StorefrontTypes.Metafield, "value" | "type" | "id">>
-                featuredImage?: StorefrontTypes.Maybe<Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height">>
+                productDetailsMetafield?: StorefrontTypes.Maybe<
+                  Pick<StorefrontTypes.Metafield, "value" | "type" | "id">
+                >
+                featuredImage?: StorefrontTypes.Maybe<
+                  Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height">
+                >
                 images: { edges: Array<{ node: Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height"> }> }
                 seo: Pick<StorefrontTypes.Seo, "description" | "title">
               }
@@ -38,20 +59,41 @@ export type SingleCartFragment = Pick<StorefrontTypes.Cart, "id" | "checkoutUrl"
             merchandise: Pick<StorefrontTypes.ProductVariant, "id" | "title" | "quantityAvailable"> & {
               price: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
               selectedOptions: Array<Pick<StorefrontTypes.SelectedOption, "name" | "value">>
-              product: Pick<StorefrontTypes.Product, "id" | "handle" | "title" | "description" | "descriptionHtml" | "vendor" | "tags" | "updatedAt" | "createdAt"> & {
+              product: Pick<
+                StorefrontTypes.Product,
+                | "id"
+                | "handle"
+                | "title"
+                | "description"
+                | "descriptionHtml"
+                | "vendor"
+                | "tags"
+                | "updatedAt"
+                | "createdAt"
+              > & {
                 options: Array<Pick<StorefrontTypes.ProductOption, "id" | "name" | "values">>
-                priceRange: { maxVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">; minVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode"> }
+                priceRange: {
+                  maxVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
+                  minVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
+                }
                 collections: { nodes: Array<Pick<StorefrontTypes.Collection, "handle" | "id">> }
                 variants: {
                   edges: Array<{
-                    node: Pick<StorefrontTypes.ProductVariant, "id" | "title" | "quantityAvailable" | "availableForSale"> & {
+                    node: Pick<
+                      StorefrontTypes.ProductVariant,
+                      "id" | "title" | "quantityAvailable" | "availableForSale"
+                    > & {
                       selectedOptions: Array<Pick<StorefrontTypes.SelectedOption, "name" | "value">>
                       price: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
                     }
                   }>
                 }
-                productDetailsMetafield?: StorefrontTypes.Maybe<Pick<StorefrontTypes.Metafield, "value" | "type" | "id">>
-                featuredImage?: StorefrontTypes.Maybe<Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height">>
+                productDetailsMetafield?: StorefrontTypes.Maybe<
+                  Pick<StorefrontTypes.Metafield, "value" | "type" | "id">
+                >
+                featuredImage?: StorefrontTypes.Maybe<
+                  Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height">
+                >
                 images: { edges: Array<{ node: Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height"> }> }
                 seo: Pick<StorefrontTypes.Seo, "description" | "title">
               }
@@ -61,25 +103,46 @@ export type SingleCartFragment = Pick<StorefrontTypes.Cart, "id" | "checkoutUrl"
   }
 }
 
-export type SingleCollectionFragment = Pick<StorefrontTypes.Collection, "handle" | "title" | "descriptionHtml" | "id" | "description" | "updatedAt"> & {
+export type SingleCollectionFragment = Pick<
+  StorefrontTypes.Collection,
+  "handle" | "title" | "descriptionHtml" | "id" | "description" | "updatedAt"
+> & {
   image?: StorefrontTypes.Maybe<Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height">>
   seo: Pick<StorefrontTypes.Seo, "description" | "title">
 }
 
 export type SingleCustomerFragment = Pick<
   StorefrontTypes.Customer,
-  "acceptsMarketing" | "createdAt" | "updatedAt" | "displayName" | "email" | "firstName" | "lastName" | "id" | "phone" | "tags"
+  | "acceptsMarketing"
+  | "createdAt"
+  | "updatedAt"
+  | "displayName"
+  | "email"
+  | "firstName"
+  | "lastName"
+  | "id"
+  | "phone"
+  | "tags"
 >
 
 export type SingleImageFragment = Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height">
 
-export type SinglePageFragment = Pick<StorefrontTypes.Page, "id" | "title" | "handle" | "body" | "bodySummary" | "createdAt" | "updatedAt"> & {
+export type SinglePageFragment = Pick<
+  StorefrontTypes.Page,
+  "id" | "title" | "handle" | "body" | "bodySummary" | "createdAt" | "updatedAt"
+> & {
   seo?: StorefrontTypes.Maybe<Pick<StorefrontTypes.Seo, "description" | "title">>
 }
 
-export type SingleProductFragment = Pick<StorefrontTypes.Product, "id" | "handle" | "title" | "description" | "descriptionHtml" | "vendor" | "tags" | "updatedAt" | "createdAt"> & {
+export type SingleProductFragment = Pick<
+  StorefrontTypes.Product,
+  "id" | "handle" | "title" | "description" | "descriptionHtml" | "vendor" | "tags" | "updatedAt" | "createdAt"
+> & {
   options: Array<Pick<StorefrontTypes.ProductOption, "id" | "name" | "values">>
-  priceRange: { maxVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">; minVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode"> }
+  priceRange: {
+    maxVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
+    minVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
+  }
   collections: { nodes: Array<Pick<StorefrontTypes.Collection, "handle" | "id">> }
   variants: {
     edges: Array<{
@@ -119,7 +182,18 @@ export type CreateCartItemMutation = {
                   merchandise: Pick<StorefrontTypes.ProductVariant, "id" | "title" | "quantityAvailable"> & {
                     price: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
                     selectedOptions: Array<Pick<StorefrontTypes.SelectedOption, "name" | "value">>
-                    product: Pick<StorefrontTypes.Product, "id" | "handle" | "title" | "description" | "descriptionHtml" | "vendor" | "tags" | "updatedAt" | "createdAt"> & {
+                    product: Pick<
+                      StorefrontTypes.Product,
+                      | "id"
+                      | "handle"
+                      | "title"
+                      | "description"
+                      | "descriptionHtml"
+                      | "vendor"
+                      | "tags"
+                      | "updatedAt"
+                      | "createdAt"
+                    > & {
                       options: Array<Pick<StorefrontTypes.ProductOption, "id" | "name" | "values">>
                       priceRange: {
                         maxVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
@@ -128,15 +202,24 @@ export type CreateCartItemMutation = {
                       collections: { nodes: Array<Pick<StorefrontTypes.Collection, "handle" | "id">> }
                       variants: {
                         edges: Array<{
-                          node: Pick<StorefrontTypes.ProductVariant, "id" | "title" | "quantityAvailable" | "availableForSale"> & {
+                          node: Pick<
+                            StorefrontTypes.ProductVariant,
+                            "id" | "title" | "quantityAvailable" | "availableForSale"
+                          > & {
                             selectedOptions: Array<Pick<StorefrontTypes.SelectedOption, "name" | "value">>
                             price: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
                           }
                         }>
                       }
-                      productDetailsMetafield?: StorefrontTypes.Maybe<Pick<StorefrontTypes.Metafield, "value" | "type" | "id">>
-                      featuredImage?: StorefrontTypes.Maybe<Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height">>
-                      images: { edges: Array<{ node: Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height"> }> }
+                      productDetailsMetafield?: StorefrontTypes.Maybe<
+                        Pick<StorefrontTypes.Metafield, "value" | "type" | "id">
+                      >
+                      featuredImage?: StorefrontTypes.Maybe<
+                        Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height">
+                      >
+                      images: {
+                        edges: Array<{ node: Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height"> }>
+                      }
                       seo: Pick<StorefrontTypes.Seo, "description" | "title">
                     }
                   }
@@ -146,7 +229,18 @@ export type CreateCartItemMutation = {
                   merchandise: Pick<StorefrontTypes.ProductVariant, "id" | "title" | "quantityAvailable"> & {
                     price: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
                     selectedOptions: Array<Pick<StorefrontTypes.SelectedOption, "name" | "value">>
-                    product: Pick<StorefrontTypes.Product, "id" | "handle" | "title" | "description" | "descriptionHtml" | "vendor" | "tags" | "updatedAt" | "createdAt"> & {
+                    product: Pick<
+                      StorefrontTypes.Product,
+                      | "id"
+                      | "handle"
+                      | "title"
+                      | "description"
+                      | "descriptionHtml"
+                      | "vendor"
+                      | "tags"
+                      | "updatedAt"
+                      | "createdAt"
+                    > & {
                       options: Array<Pick<StorefrontTypes.ProductOption, "id" | "name" | "values">>
                       priceRange: {
                         maxVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
@@ -155,15 +249,24 @@ export type CreateCartItemMutation = {
                       collections: { nodes: Array<Pick<StorefrontTypes.Collection, "handle" | "id">> }
                       variants: {
                         edges: Array<{
-                          node: Pick<StorefrontTypes.ProductVariant, "id" | "title" | "quantityAvailable" | "availableForSale"> & {
+                          node: Pick<
+                            StorefrontTypes.ProductVariant,
+                            "id" | "title" | "quantityAvailable" | "availableForSale"
+                          > & {
                             selectedOptions: Array<Pick<StorefrontTypes.SelectedOption, "name" | "value">>
                             price: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
                           }
                         }>
                       }
-                      productDetailsMetafield?: StorefrontTypes.Maybe<Pick<StorefrontTypes.Metafield, "value" | "type" | "id">>
-                      featuredImage?: StorefrontTypes.Maybe<Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height">>
-                      images: { edges: Array<{ node: Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height"> }> }
+                      productDetailsMetafield?: StorefrontTypes.Maybe<
+                        Pick<StorefrontTypes.Metafield, "value" | "type" | "id">
+                      >
+                      featuredImage?: StorefrontTypes.Maybe<
+                        Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height">
+                      >
+                      images: {
+                        edges: Array<{ node: Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height"> }>
+                      }
                       seo: Pick<StorefrontTypes.Seo, "description" | "title">
                     }
                   }
@@ -196,7 +299,18 @@ export type CreateCartMutation = {
                   merchandise: Pick<StorefrontTypes.ProductVariant, "id" | "title" | "quantityAvailable"> & {
                     price: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
                     selectedOptions: Array<Pick<StorefrontTypes.SelectedOption, "name" | "value">>
-                    product: Pick<StorefrontTypes.Product, "id" | "handle" | "title" | "description" | "descriptionHtml" | "vendor" | "tags" | "updatedAt" | "createdAt"> & {
+                    product: Pick<
+                      StorefrontTypes.Product,
+                      | "id"
+                      | "handle"
+                      | "title"
+                      | "description"
+                      | "descriptionHtml"
+                      | "vendor"
+                      | "tags"
+                      | "updatedAt"
+                      | "createdAt"
+                    > & {
                       options: Array<Pick<StorefrontTypes.ProductOption, "id" | "name" | "values">>
                       priceRange: {
                         maxVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
@@ -205,15 +319,24 @@ export type CreateCartMutation = {
                       collections: { nodes: Array<Pick<StorefrontTypes.Collection, "handle" | "id">> }
                       variants: {
                         edges: Array<{
-                          node: Pick<StorefrontTypes.ProductVariant, "id" | "title" | "quantityAvailable" | "availableForSale"> & {
+                          node: Pick<
+                            StorefrontTypes.ProductVariant,
+                            "id" | "title" | "quantityAvailable" | "availableForSale"
+                          > & {
                             selectedOptions: Array<Pick<StorefrontTypes.SelectedOption, "name" | "value">>
                             price: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
                           }
                         }>
                       }
-                      productDetailsMetafield?: StorefrontTypes.Maybe<Pick<StorefrontTypes.Metafield, "value" | "type" | "id">>
-                      featuredImage?: StorefrontTypes.Maybe<Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height">>
-                      images: { edges: Array<{ node: Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height"> }> }
+                      productDetailsMetafield?: StorefrontTypes.Maybe<
+                        Pick<StorefrontTypes.Metafield, "value" | "type" | "id">
+                      >
+                      featuredImage?: StorefrontTypes.Maybe<
+                        Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height">
+                      >
+                      images: {
+                        edges: Array<{ node: Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height"> }>
+                      }
                       seo: Pick<StorefrontTypes.Seo, "description" | "title">
                     }
                   }
@@ -223,7 +346,18 @@ export type CreateCartMutation = {
                   merchandise: Pick<StorefrontTypes.ProductVariant, "id" | "title" | "quantityAvailable"> & {
                     price: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
                     selectedOptions: Array<Pick<StorefrontTypes.SelectedOption, "name" | "value">>
-                    product: Pick<StorefrontTypes.Product, "id" | "handle" | "title" | "description" | "descriptionHtml" | "vendor" | "tags" | "updatedAt" | "createdAt"> & {
+                    product: Pick<
+                      StorefrontTypes.Product,
+                      | "id"
+                      | "handle"
+                      | "title"
+                      | "description"
+                      | "descriptionHtml"
+                      | "vendor"
+                      | "tags"
+                      | "updatedAt"
+                      | "createdAt"
+                    > & {
                       options: Array<Pick<StorefrontTypes.ProductOption, "id" | "name" | "values">>
                       priceRange: {
                         maxVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
@@ -232,15 +366,24 @@ export type CreateCartMutation = {
                       collections: { nodes: Array<Pick<StorefrontTypes.Collection, "handle" | "id">> }
                       variants: {
                         edges: Array<{
-                          node: Pick<StorefrontTypes.ProductVariant, "id" | "title" | "quantityAvailable" | "availableForSale"> & {
+                          node: Pick<
+                            StorefrontTypes.ProductVariant,
+                            "id" | "title" | "quantityAvailable" | "availableForSale"
+                          > & {
                             selectedOptions: Array<Pick<StorefrontTypes.SelectedOption, "name" | "value">>
                             price: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
                           }
                         }>
                       }
-                      productDetailsMetafield?: StorefrontTypes.Maybe<Pick<StorefrontTypes.Metafield, "value" | "type" | "id">>
-                      featuredImage?: StorefrontTypes.Maybe<Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height">>
-                      images: { edges: Array<{ node: Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height"> }> }
+                      productDetailsMetafield?: StorefrontTypes.Maybe<
+                        Pick<StorefrontTypes.Metafield, "value" | "type" | "id">
+                      >
+                      featuredImage?: StorefrontTypes.Maybe<
+                        Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height">
+                      >
+                      images: {
+                        edges: Array<{ node: Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height"> }>
+                      }
                       seo: Pick<StorefrontTypes.Seo, "description" | "title">
                     }
                   }
@@ -274,7 +417,18 @@ export type UpdateCartItemsMutation = {
                   merchandise: Pick<StorefrontTypes.ProductVariant, "id" | "title" | "quantityAvailable"> & {
                     price: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
                     selectedOptions: Array<Pick<StorefrontTypes.SelectedOption, "name" | "value">>
-                    product: Pick<StorefrontTypes.Product, "id" | "handle" | "title" | "description" | "descriptionHtml" | "vendor" | "tags" | "updatedAt" | "createdAt"> & {
+                    product: Pick<
+                      StorefrontTypes.Product,
+                      | "id"
+                      | "handle"
+                      | "title"
+                      | "description"
+                      | "descriptionHtml"
+                      | "vendor"
+                      | "tags"
+                      | "updatedAt"
+                      | "createdAt"
+                    > & {
                       options: Array<Pick<StorefrontTypes.ProductOption, "id" | "name" | "values">>
                       priceRange: {
                         maxVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
@@ -283,15 +437,24 @@ export type UpdateCartItemsMutation = {
                       collections: { nodes: Array<Pick<StorefrontTypes.Collection, "handle" | "id">> }
                       variants: {
                         edges: Array<{
-                          node: Pick<StorefrontTypes.ProductVariant, "id" | "title" | "quantityAvailable" | "availableForSale"> & {
+                          node: Pick<
+                            StorefrontTypes.ProductVariant,
+                            "id" | "title" | "quantityAvailable" | "availableForSale"
+                          > & {
                             selectedOptions: Array<Pick<StorefrontTypes.SelectedOption, "name" | "value">>
                             price: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
                           }
                         }>
                       }
-                      productDetailsMetafield?: StorefrontTypes.Maybe<Pick<StorefrontTypes.Metafield, "value" | "type" | "id">>
-                      featuredImage?: StorefrontTypes.Maybe<Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height">>
-                      images: { edges: Array<{ node: Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height"> }> }
+                      productDetailsMetafield?: StorefrontTypes.Maybe<
+                        Pick<StorefrontTypes.Metafield, "value" | "type" | "id">
+                      >
+                      featuredImage?: StorefrontTypes.Maybe<
+                        Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height">
+                      >
+                      images: {
+                        edges: Array<{ node: Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height"> }>
+                      }
                       seo: Pick<StorefrontTypes.Seo, "description" | "title">
                     }
                   }
@@ -301,7 +464,18 @@ export type UpdateCartItemsMutation = {
                   merchandise: Pick<StorefrontTypes.ProductVariant, "id" | "title" | "quantityAvailable"> & {
                     price: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
                     selectedOptions: Array<Pick<StorefrontTypes.SelectedOption, "name" | "value">>
-                    product: Pick<StorefrontTypes.Product, "id" | "handle" | "title" | "description" | "descriptionHtml" | "vendor" | "tags" | "updatedAt" | "createdAt"> & {
+                    product: Pick<
+                      StorefrontTypes.Product,
+                      | "id"
+                      | "handle"
+                      | "title"
+                      | "description"
+                      | "descriptionHtml"
+                      | "vendor"
+                      | "tags"
+                      | "updatedAt"
+                      | "createdAt"
+                    > & {
                       options: Array<Pick<StorefrontTypes.ProductOption, "id" | "name" | "values">>
                       priceRange: {
                         maxVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
@@ -310,15 +484,24 @@ export type UpdateCartItemsMutation = {
                       collections: { nodes: Array<Pick<StorefrontTypes.Collection, "handle" | "id">> }
                       variants: {
                         edges: Array<{
-                          node: Pick<StorefrontTypes.ProductVariant, "id" | "title" | "quantityAvailable" | "availableForSale"> & {
+                          node: Pick<
+                            StorefrontTypes.ProductVariant,
+                            "id" | "title" | "quantityAvailable" | "availableForSale"
+                          > & {
                             selectedOptions: Array<Pick<StorefrontTypes.SelectedOption, "name" | "value">>
                             price: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
                           }
                         }>
                       }
-                      productDetailsMetafield?: StorefrontTypes.Maybe<Pick<StorefrontTypes.Metafield, "value" | "type" | "id">>
-                      featuredImage?: StorefrontTypes.Maybe<Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height">>
-                      images: { edges: Array<{ node: Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height"> }> }
+                      productDetailsMetafield?: StorefrontTypes.Maybe<
+                        Pick<StorefrontTypes.Metafield, "value" | "type" | "id">
+                      >
+                      featuredImage?: StorefrontTypes.Maybe<
+                        Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height">
+                      >
+                      images: {
+                        edges: Array<{ node: Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height"> }>
+                      }
                       seo: Pick<StorefrontTypes.Seo, "description" | "title">
                     }
                   }
@@ -352,7 +535,18 @@ export type DeleteCartItemsMutation = {
                   merchandise: Pick<StorefrontTypes.ProductVariant, "id" | "title" | "quantityAvailable"> & {
                     price: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
                     selectedOptions: Array<Pick<StorefrontTypes.SelectedOption, "name" | "value">>
-                    product: Pick<StorefrontTypes.Product, "id" | "handle" | "title" | "description" | "descriptionHtml" | "vendor" | "tags" | "updatedAt" | "createdAt"> & {
+                    product: Pick<
+                      StorefrontTypes.Product,
+                      | "id"
+                      | "handle"
+                      | "title"
+                      | "description"
+                      | "descriptionHtml"
+                      | "vendor"
+                      | "tags"
+                      | "updatedAt"
+                      | "createdAt"
+                    > & {
                       options: Array<Pick<StorefrontTypes.ProductOption, "id" | "name" | "values">>
                       priceRange: {
                         maxVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
@@ -361,15 +555,24 @@ export type DeleteCartItemsMutation = {
                       collections: { nodes: Array<Pick<StorefrontTypes.Collection, "handle" | "id">> }
                       variants: {
                         edges: Array<{
-                          node: Pick<StorefrontTypes.ProductVariant, "id" | "title" | "quantityAvailable" | "availableForSale"> & {
+                          node: Pick<
+                            StorefrontTypes.ProductVariant,
+                            "id" | "title" | "quantityAvailable" | "availableForSale"
+                          > & {
                             selectedOptions: Array<Pick<StorefrontTypes.SelectedOption, "name" | "value">>
                             price: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
                           }
                         }>
                       }
-                      productDetailsMetafield?: StorefrontTypes.Maybe<Pick<StorefrontTypes.Metafield, "value" | "type" | "id">>
-                      featuredImage?: StorefrontTypes.Maybe<Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height">>
-                      images: { edges: Array<{ node: Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height"> }> }
+                      productDetailsMetafield?: StorefrontTypes.Maybe<
+                        Pick<StorefrontTypes.Metafield, "value" | "type" | "id">
+                      >
+                      featuredImage?: StorefrontTypes.Maybe<
+                        Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height">
+                      >
+                      images: {
+                        edges: Array<{ node: Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height"> }>
+                      }
                       seo: Pick<StorefrontTypes.Seo, "description" | "title">
                     }
                   }
@@ -379,7 +582,18 @@ export type DeleteCartItemsMutation = {
                   merchandise: Pick<StorefrontTypes.ProductVariant, "id" | "title" | "quantityAvailable"> & {
                     price: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
                     selectedOptions: Array<Pick<StorefrontTypes.SelectedOption, "name" | "value">>
-                    product: Pick<StorefrontTypes.Product, "id" | "handle" | "title" | "description" | "descriptionHtml" | "vendor" | "tags" | "updatedAt" | "createdAt"> & {
+                    product: Pick<
+                      StorefrontTypes.Product,
+                      | "id"
+                      | "handle"
+                      | "title"
+                      | "description"
+                      | "descriptionHtml"
+                      | "vendor"
+                      | "tags"
+                      | "updatedAt"
+                      | "createdAt"
+                    > & {
                       options: Array<Pick<StorefrontTypes.ProductOption, "id" | "name" | "values">>
                       priceRange: {
                         maxVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
@@ -388,15 +602,24 @@ export type DeleteCartItemsMutation = {
                       collections: { nodes: Array<Pick<StorefrontTypes.Collection, "handle" | "id">> }
                       variants: {
                         edges: Array<{
-                          node: Pick<StorefrontTypes.ProductVariant, "id" | "title" | "quantityAvailable" | "availableForSale"> & {
+                          node: Pick<
+                            StorefrontTypes.ProductVariant,
+                            "id" | "title" | "quantityAvailable" | "availableForSale"
+                          > & {
                             selectedOptions: Array<Pick<StorefrontTypes.SelectedOption, "name" | "value">>
                             price: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
                           }
                         }>
                       }
-                      productDetailsMetafield?: StorefrontTypes.Maybe<Pick<StorefrontTypes.Metafield, "value" | "type" | "id">>
-                      featuredImage?: StorefrontTypes.Maybe<Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height">>
-                      images: { edges: Array<{ node: Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height"> }> }
+                      productDetailsMetafield?: StorefrontTypes.Maybe<
+                        Pick<StorefrontTypes.Metafield, "value" | "type" | "id">
+                      >
+                      featuredImage?: StorefrontTypes.Maybe<
+                        Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height">
+                      >
+                      images: {
+                        edges: Array<{ node: Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height"> }>
+                      }
                       seo: Pick<StorefrontTypes.Seo, "description" | "title">
                     }
                   }
@@ -474,7 +697,18 @@ export type SingleCartQuery = {
                 merchandise: Pick<StorefrontTypes.ProductVariant, "id" | "title" | "quantityAvailable"> & {
                   price: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
                   selectedOptions: Array<Pick<StorefrontTypes.SelectedOption, "name" | "value">>
-                  product: Pick<StorefrontTypes.Product, "id" | "handle" | "title" | "description" | "descriptionHtml" | "vendor" | "tags" | "updatedAt" | "createdAt"> & {
+                  product: Pick<
+                    StorefrontTypes.Product,
+                    | "id"
+                    | "handle"
+                    | "title"
+                    | "description"
+                    | "descriptionHtml"
+                    | "vendor"
+                    | "tags"
+                    | "updatedAt"
+                    | "createdAt"
+                  > & {
                     options: Array<Pick<StorefrontTypes.ProductOption, "id" | "name" | "values">>
                     priceRange: {
                       maxVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
@@ -483,15 +717,24 @@ export type SingleCartQuery = {
                     collections: { nodes: Array<Pick<StorefrontTypes.Collection, "handle" | "id">> }
                     variants: {
                       edges: Array<{
-                        node: Pick<StorefrontTypes.ProductVariant, "id" | "title" | "quantityAvailable" | "availableForSale"> & {
+                        node: Pick<
+                          StorefrontTypes.ProductVariant,
+                          "id" | "title" | "quantityAvailable" | "availableForSale"
+                        > & {
                           selectedOptions: Array<Pick<StorefrontTypes.SelectedOption, "name" | "value">>
                           price: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
                         }
                       }>
                     }
-                    productDetailsMetafield?: StorefrontTypes.Maybe<Pick<StorefrontTypes.Metafield, "value" | "type" | "id">>
-                    featuredImage?: StorefrontTypes.Maybe<Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height">>
-                    images: { edges: Array<{ node: Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height"> }> }
+                    productDetailsMetafield?: StorefrontTypes.Maybe<
+                      Pick<StorefrontTypes.Metafield, "value" | "type" | "id">
+                    >
+                    featuredImage?: StorefrontTypes.Maybe<
+                      Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height">
+                    >
+                    images: {
+                      edges: Array<{ node: Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height"> }>
+                    }
                     seo: Pick<StorefrontTypes.Seo, "description" | "title">
                   }
                 }
@@ -501,7 +744,18 @@ export type SingleCartQuery = {
                 merchandise: Pick<StorefrontTypes.ProductVariant, "id" | "title" | "quantityAvailable"> & {
                   price: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
                   selectedOptions: Array<Pick<StorefrontTypes.SelectedOption, "name" | "value">>
-                  product: Pick<StorefrontTypes.Product, "id" | "handle" | "title" | "description" | "descriptionHtml" | "vendor" | "tags" | "updatedAt" | "createdAt"> & {
+                  product: Pick<
+                    StorefrontTypes.Product,
+                    | "id"
+                    | "handle"
+                    | "title"
+                    | "description"
+                    | "descriptionHtml"
+                    | "vendor"
+                    | "tags"
+                    | "updatedAt"
+                    | "createdAt"
+                  > & {
                     options: Array<Pick<StorefrontTypes.ProductOption, "id" | "name" | "values">>
                     priceRange: {
                       maxVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
@@ -510,15 +764,24 @@ export type SingleCartQuery = {
                     collections: { nodes: Array<Pick<StorefrontTypes.Collection, "handle" | "id">> }
                     variants: {
                       edges: Array<{
-                        node: Pick<StorefrontTypes.ProductVariant, "id" | "title" | "quantityAvailable" | "availableForSale"> & {
+                        node: Pick<
+                          StorefrontTypes.ProductVariant,
+                          "id" | "title" | "quantityAvailable" | "availableForSale"
+                        > & {
                           selectedOptions: Array<Pick<StorefrontTypes.SelectedOption, "name" | "value">>
                           price: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
                         }
                       }>
                     }
-                    productDetailsMetafield?: StorefrontTypes.Maybe<Pick<StorefrontTypes.Metafield, "value" | "type" | "id">>
-                    featuredImage?: StorefrontTypes.Maybe<Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height">>
-                    images: { edges: Array<{ node: Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height"> }> }
+                    productDetailsMetafield?: StorefrontTypes.Maybe<
+                      Pick<StorefrontTypes.Metafield, "value" | "type" | "id">
+                    >
+                    featuredImage?: StorefrontTypes.Maybe<
+                      Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height">
+                    >
+                    images: {
+                      edges: Array<{ node: Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height"> }>
+                    }
                     seo: Pick<StorefrontTypes.Seo, "description" | "title">
                   }
                 }
@@ -563,7 +826,10 @@ export type CollectionsQueryVariables = StorefrontTypes.Exact<{
 export type CollectionsQuery = {
   collections: {
     edges: Array<{
-      node: Pick<StorefrontTypes.Collection, "handle" | "title" | "descriptionHtml" | "id" | "description" | "updatedAt"> & {
+      node: Pick<
+        StorefrontTypes.Collection,
+        "handle" | "title" | "descriptionHtml" | "id" | "description" | "updatedAt"
+      > & {
         image?: StorefrontTypes.Maybe<Pick<StorefrontTypes.Image, "url" | "altText" | "width" | "height">>
         seo: Pick<StorefrontTypes.Seo, "description" | "title">
       }
@@ -578,7 +844,19 @@ export type SingleCustomerQueryVariables = StorefrontTypes.Exact<{
 
 export type SingleCustomerQuery = {
   customer?: StorefrontTypes.Maybe<
-    Pick<StorefrontTypes.Customer, "acceptsMarketing" | "createdAt" | "updatedAt" | "displayName" | "email" | "firstName" | "lastName" | "id" | "phone" | "tags">
+    Pick<
+      StorefrontTypes.Customer,
+      | "acceptsMarketing"
+      | "createdAt"
+      | "updatedAt"
+      | "displayName"
+      | "email"
+      | "firstName"
+      | "lastName"
+      | "id"
+      | "phone"
+      | "tags"
+    >
   >
 }
 
@@ -599,7 +877,10 @@ export type PagesQueryVariables = StorefrontTypes.Exact<{ [key: string]: never }
 export type PagesQuery = {
   pages: {
     edges: Array<{
-      node: Pick<StorefrontTypes.Page, "id" | "title" | "handle" | "body" | "bodySummary" | "createdAt" | "updatedAt"> & {
+      node: Pick<
+        StorefrontTypes.Page,
+        "id" | "title" | "handle" | "body" | "bodySummary" | "createdAt" | "updatedAt"
+      > & {
         seo?: StorefrontTypes.Maybe<Pick<StorefrontTypes.Seo, "description" | "title">>
       }
     }>
@@ -612,9 +893,15 @@ export type SingleProductQueryVariables = StorefrontTypes.Exact<{
 
 export type SingleProductQuery = {
   product?: StorefrontTypes.Maybe<
-    Pick<StorefrontTypes.Product, "id" | "handle" | "title" | "description" | "descriptionHtml" | "vendor" | "tags" | "updatedAt" | "createdAt"> & {
+    Pick<
+      StorefrontTypes.Product,
+      "id" | "handle" | "title" | "description" | "descriptionHtml" | "vendor" | "tags" | "updatedAt" | "createdAt"
+    > & {
       options: Array<Pick<StorefrontTypes.ProductOption, "id" | "name" | "values">>
-      priceRange: { maxVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">; minVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode"> }
+      priceRange: {
+        maxVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
+        minVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
+      }
       collections: { nodes: Array<Pick<StorefrontTypes.Collection, "handle" | "id">> }
       variants: {
         edges: Array<{
@@ -639,9 +926,15 @@ export type ProductsByHandleQueryVariables = StorefrontTypes.Exact<{
 export type ProductsByHandleQuery = {
   products: {
     edges: Array<{
-      node: Pick<StorefrontTypes.Product, "id" | "handle" | "title" | "description" | "descriptionHtml" | "vendor" | "tags" | "updatedAt" | "createdAt"> & {
+      node: Pick<
+        StorefrontTypes.Product,
+        "id" | "handle" | "title" | "description" | "descriptionHtml" | "vendor" | "tags" | "updatedAt" | "createdAt"
+      > & {
         options: Array<Pick<StorefrontTypes.ProductOption, "id" | "name" | "values">>
-        priceRange: { maxVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">; minVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode"> }
+        priceRange: {
+          maxVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
+          minVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
+        }
         collections: { nodes: Array<Pick<StorefrontTypes.Collection, "handle" | "id">> }
         variants: {
           edges: Array<{
@@ -671,9 +964,15 @@ export type ProductsQueryVariables = StorefrontTypes.Exact<{
 export type ProductsQuery = {
   products: {
     edges: Array<{
-      node: Pick<StorefrontTypes.Product, "id" | "handle" | "title" | "description" | "descriptionHtml" | "vendor" | "tags" | "updatedAt" | "createdAt"> & {
+      node: Pick<
+        StorefrontTypes.Product,
+        "id" | "handle" | "title" | "description" | "descriptionHtml" | "vendor" | "tags" | "updatedAt" | "createdAt"
+      > & {
         options: Array<Pick<StorefrontTypes.ProductOption, "id" | "name" | "values">>
-        priceRange: { maxVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">; minVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode"> }
+        priceRange: {
+          maxVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
+          minVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
+        }
         collections: { nodes: Array<Pick<StorefrontTypes.Collection, "handle" | "id">> }
         variants: {
           edges: Array<{
@@ -700,9 +999,15 @@ export type ProductRecommendationsQueryVariables = StorefrontTypes.Exact<{
 export type ProductRecommendationsQuery = {
   productRecommendations?: StorefrontTypes.Maybe<
     Array<
-      Pick<StorefrontTypes.Product, "id" | "handle" | "title" | "description" | "descriptionHtml" | "vendor" | "tags" | "updatedAt" | "createdAt"> & {
+      Pick<
+        StorefrontTypes.Product,
+        "id" | "handle" | "title" | "description" | "descriptionHtml" | "vendor" | "tags" | "updatedAt" | "createdAt"
+      > & {
         options: Array<Pick<StorefrontTypes.ProductOption, "id" | "name" | "values">>
-        priceRange: { maxVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">; minVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode"> }
+        priceRange: {
+          maxVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
+          minVariantPrice: Pick<StorefrontTypes.MoneyV2, "amount" | "currencyCode">
+        }
         collections: { nodes: Array<Pick<StorefrontTypes.Collection, "handle" | "id">> }
         variants: {
           edges: Array<{

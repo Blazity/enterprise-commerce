@@ -12,7 +12,10 @@ export function Footer() {
             <p>Subscribe to receive updates, access to exclusive deals, and more.</p>
             <div className="space-y-2 sm:max-w-md">
               <Input type="email" placeholder="Enter your email" aria-label="Email for newsletter" />
-              <Button type="submit" className="w-full transition-[transform,background] duration-200 hover:bg-black/85 active:scale-[0.99]">
+              <Button
+                type="submit"
+                className="w-full transition-[transform,background] duration-200 hover:bg-black/85 active:scale-[0.99]"
+              >
                 Subscribe
               </Button>
             </div>
@@ -64,19 +67,39 @@ export function Footer() {
         <div className="mt-8 border-t border-muted-foreground/20 pt-8">
           <div className="flex flex-col items-center justify-between space-y-4 md:flex-row md:space-y-0">
             <div className="flex space-x-4">
-              <a href="https://www.facebook.com/blazity" className="text-muted-foreground transition-colors hover:text-primary" aria-label="Facebook">
+              <a
+                href="https://www.facebook.com/blazity"
+                className="text-muted-foreground transition-colors hover:text-primary"
+                aria-label="Facebook"
+              >
                 <FacebookIcon className="size-6" />
               </a>
-              <a href="https://x.com/blazity" className="text-muted-foreground transition-colors hover:text-primary" aria-label="X.com">
+              <a
+                href="https://x.com/blazity"
+                className="text-muted-foreground transition-colors hover:text-primary"
+                aria-label="X.com"
+              >
                 <TwitterIcon className="size-6" />
               </a>
-              <a href="https://instagram.com/blazitysoftware" className="text-muted-foreground transition-colors hover:text-primary" aria-label="Instagram">
+              <a
+                href="https://instagram.com/blazitysoftware"
+                className="text-muted-foreground transition-colors hover:text-primary"
+                aria-label="Instagram"
+              >
                 <InstagramIcon className="size-6 text-white" />
               </a>
-              <a href="https://www.youtube.com/channel/UCYDeWaSWiOHn_lUHY-u1VYw/videos" className="text-muted-foreground transition-colors hover:text-primary" aria-label="YouTube">
+              <a
+                href="https://www.youtube.com/channel/UCYDeWaSWiOHn_lUHY-u1VYw/videos"
+                className="text-muted-foreground transition-colors hover:text-primary"
+                aria-label="YouTube"
+              >
                 <YoutubeIcon className="-mt-1 size-8 text-white" />
               </a>
-              <a href="https://www.linkedin.com/company/blazity" className="text-muted-foreground transition-colors hover:text-primary" aria-label="YouTube">
+              <a
+                href="https://www.linkedin.com/company/blazity"
+                className="text-muted-foreground transition-colors hover:text-primary"
+                aria-label="YouTube"
+              >
                 <LinkedinIcon className="size-6" />
               </a>
             </div>
@@ -116,7 +139,17 @@ export function Footer() {
 
 function FacebookIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
-    <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="black" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="black"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
       <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
     </svg>
   )
@@ -145,7 +178,17 @@ function InstagramIcon(props: React.SVGProps<SVGSVGElement>) {
 
 function LinkedinIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
-    <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="black" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="black"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
       <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
       <rect width="4" height="12" x="2" y="9" />
       <circle cx="4" cy="4" r="2" />
@@ -166,7 +209,14 @@ function TwitterIcon(props: React.SVGProps<SVGSVGElement>) {
 
 function YoutubeIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" xmlSpace="preserve" width={800} height={800} viewBox="0 0 461.001 461.001" {...props}>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      xmlSpace="preserve"
+      width={800}
+      height={800}
+      viewBox="0 0 461.001 461.001"
+      {...props}
+    >
       <path
         fill="black"
         d="M365.257 67.393H95.744C42.866 67.393 0 110.259 0 163.137v134.728c0 52.878 42.866 95.744 95.744 95.744h269.513c52.878 0 95.744-42.866 95.744-95.744V163.137c0-52.878-42.866-95.744-95.744-95.744zm-64.751 169.663-126.06 60.123c-3.359 1.602-7.239-.847-7.239-4.568V168.607c0-3.774 3.982-6.22 7.348-4.514l126.06 63.881c3.748 1.899 3.683 7.274-.109 9.082z"

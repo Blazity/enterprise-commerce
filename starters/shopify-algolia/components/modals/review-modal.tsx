@@ -70,7 +70,11 @@ export function ReviewModal() {
     >
       <DialogContent className="bg-white p-6 sm:max-w-[625px]">
         <Form {...form}>
-          {form.formState.errors.root?.message && <p className="mt-6 w-full text-[14px] leading-tight tracking-tight text-red-400">{form.formState.errors.root?.message}abc </p>}
+          {form.formState.errors.root?.message && (
+            <p className="mt-6 w-full text-[14px] leading-tight tracking-tight text-red-400">
+              {form.formState.errors.root?.message}abc{" "}
+            </p>
+          )}
           <form name="reviewForm" id="reviewForm" onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <DialogHeader className="border-b border-black/10 pb-4">
               <DialogTitle className="text-2xl">Leave a Review</DialogTitle>
@@ -100,7 +104,14 @@ export function ReviewModal() {
                   <FormLabel>Your review</FormLabel>
                   <FormMessage className="text-xs font-normal text-red-400" />
                   <FormControl>
-                    <Textarea autoFocus className="max-h-96 text-base" id="review" placeholder="Share your thoughts..." rows={4} {...field} />
+                    <Textarea
+                      autoFocus
+                      className="max-h-96 text-base"
+                      id="review"
+                      placeholder="Share your thoughts..."
+                      rows={4}
+                      {...field}
+                    />
                   </FormControl>
                 </FormItem>
               )}
@@ -131,7 +142,9 @@ export function ReviewModal() {
                     <FormControl>
                       <Input type="text" placeholder="contact@blazity.com" {...field} />
                     </FormControl>
-                    <FormDescription className="text-xs text-gray-400">We will never share your email with anyone else.</FormDescription>
+                    <FormDescription className="text-xs text-gray-400">
+                      We will never share your email with anyone else.
+                    </FormDescription>
                   </FormItem>
                 )}
               />
@@ -164,7 +177,16 @@ export function ReviewModal() {
   )
 }
 
-function StarList({ name, rating, setRating, ...rest }: { name: string; rating: number; setRating: (rating: number) => void }) {
+function StarList({
+  name,
+  rating,
+  setRating,
+  ...rest
+}: {
+  name: string
+  rating: number
+  setRating: (rating: number) => void
+}) {
   const [hover, setHover] = useState(0)
 
   return (
@@ -184,7 +206,9 @@ function StarList({ name, rating, setRating, ...rest }: { name: string; rating: 
               onMouseEnter={() => setHover(i + 1)}
               onMouseLeave={() => setHover(0)}
             />
-            <StarIcon className={cn("size-8 fill-gray-300", (hover || rating) > i ? "fill-black/90" : "text-gray-300")} />
+            <StarIcon
+              className={cn("size-8 fill-gray-300", (hover || rating) > i ? "fill-black/90" : "text-gray-300")}
+            />
           </label>
         ))}
       </fieldset>

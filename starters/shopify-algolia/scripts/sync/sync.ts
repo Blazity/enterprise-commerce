@@ -25,13 +25,18 @@ async function sync() {
       console.warn("⚠️ No products or categories found, aborting sync")
       return
     }
-    const hierarchicalCategories = await storefrontClient.getHierarchicalCollections(env.SHOPIFY_HIERARCHICAL_NAV_HANDLE)
+    const hierarchicalCategories = await storefrontClient.getHierarchicalCollections(
+      env.SHOPIFY_HIERARCHICAL_NAV_HANDLE
+    )
     console.log(`🌳 Fetched ${hierarchicalCategories.items.length} hierarchical categories`)
     const reviewsEnabled = isOptIn("reviews") && !!env.ALGOLIA_REVIEWS_INDEX
     const reviews: Review[] = reviewsEnabled ? await reviewsClient.getAllProductReviews() : []
     if (reviewsEnabled) console.log(`💬 Fetched ${reviews.length} reviews`)
     const enrichedProducts = allProducts.map((product) =>
-      new ProductEnrichmentBuilder(product).withHierarchicalCategories(hierarchicalCategories.items, HIERARCHICAL_SEPARATOR).withReviews(reviews).build()
+      new ProductEnrichmentBuilder(product)
+        .withHierarchicalCategories(hierarchicalCategories.items, HIERARCHICAL_SEPARATOR)
+        .withReviews(reviews)
+        .build()
     )
     const { hits: algoliaProducts } = await searchClient.getAllResults({
       indexName: env.ALGOLIA_PRODUCTS_INDEX,

@@ -79,7 +79,10 @@ export function createMultiOptionSlug(baseSlug: string, options: Record<string, 
   return optionParts ? `${clean}--${optionParts}` : clean
 }
 
-export function getVisualOptionValueFromCombination(combination: any, optionName = DEFAULT_VISUAL_OPTION): string | undefined {
+export function getVisualOptionValueFromCombination(
+  combination: any,
+  optionName = DEFAULT_VISUAL_OPTION
+): string | undefined {
   if (optionName.toLowerCase() === "color" && combination?.color) {
     return combination.color
   }
@@ -119,7 +122,11 @@ export function getAllOptionValuesFromCombination(combination: any): Record<stri
   return options
 }
 
-export function getOriginalOptionValue(variants: any[], slugifiedOptionName: string, slugifiedOptionValue: string): string | null {
+export function getOriginalOptionValue(
+  variants: any[],
+  slugifiedOptionName: string,
+  slugifiedOptionValue: string
+): string | null {
   for (const variant of variants) {
     if (!variant.selectedOptions) continue
 
@@ -136,14 +143,22 @@ export function getOriginalOptionValue(variants: any[], slugifiedOptionName: str
   return null
 }
 
-export function filterImagesByVisualOption<T extends { url: string }>(images: T[], value: string | null, optionName = DEFAULT_VISUAL_OPTION): T[] {
+export function filterImagesByVisualOption<T extends { url: string }>(
+  images: T[],
+  value: string | null,
+  optionName = DEFAULT_VISUAL_OPTION
+): T[] {
   if (!value) return images
   const needle = `-${optionName}-`.toLowerCase() + value.toLowerCase()
   const matches = images.filter((img) => img.url.toLowerCase().includes(needle))
   return matches.length > 0 ? matches : images
 }
 
-export function getImagesForCarousel<T extends { url: string }>(images: T[], value: string | null, optionName = DEFAULT_VISUAL_OPTION): { images: T[]; activeIndex: number } {
+export function getImagesForCarousel<T extends { url: string }>(
+  images: T[],
+  value: string | null,
+  optionName = DEFAULT_VISUAL_OPTION
+): { images: T[]; activeIndex: number } {
   if (!value || images.length <= 1) {
     return { images, activeIndex: 0 }
   }
@@ -159,13 +174,21 @@ export function getImagesForCarousel<T extends { url: string }>(images: T[], val
   return { images, activeIndex: 0 }
 }
 
-export function getCombinationByVisualOption(variants: any[], visualValue: string | null, optionName = DEFAULT_VISUAL_OPTION): any {
+export function getCombinationByVisualOption(
+  variants: any[],
+  visualValue: string | null,
+  optionName = DEFAULT_VISUAL_OPTION
+): any {
   if (!visualValue || variants.length <= 1) {
     return variants.find(Boolean)
   }
 
   return variants.find((variant) =>
-    variant.selectedOptions.some((option: any) => option.name.toLowerCase() === optionName.toLowerCase() && option.value.toLowerCase() === visualValue.toLowerCase())
+    variant.selectedOptions.some(
+      (option: any) =>
+        option.name.toLowerCase() === optionName.toLowerCase() &&
+        option.value.toLowerCase() === visualValue.toLowerCase()
+    )
   )
 }
 
@@ -188,11 +211,19 @@ export function getCombinationByMultiOption(variants: any[], slugOptions: Record
   })
 }
 
-export function hasValidVisualOption(variants: any[], visualValue: string | null, optionName = DEFAULT_VISUAL_OPTION): boolean {
+export function hasValidVisualOption(
+  variants: any[],
+  visualValue: string | null,
+  optionName = DEFAULT_VISUAL_OPTION
+): boolean {
   if (!visualValue) return true
 
   return variants.some((variant) =>
-    variant.selectedOptions.some((option: any) => option.name.toLowerCase() === optionName.toLowerCase() && option.value.toLowerCase() === visualValue.toLowerCase())
+    variant.selectedOptions.some(
+      (option: any) =>
+        option.name.toLowerCase() === optionName.toLowerCase() &&
+        option.value.toLowerCase() === visualValue.toLowerCase()
+    )
   )
 }
 

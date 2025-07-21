@@ -13,7 +13,11 @@ export type ProductFullSyncMutationVariables = AdminTypes.Exact<{
   id: AdminTypes.Scalars["ID"]["input"]
 }>
 
-export type ProductFullSyncMutation = { productFullSync?: AdminTypes.Maybe<{ userErrors: Array<Pick<AdminTypes.ProductFullSyncUserError, "field" | "message">> }> }
+export type ProductFullSyncMutation = {
+  productFullSync?: AdminTypes.Maybe<{
+    userErrors: Array<Pick<AdminTypes.ProductFullSyncUserError, "field" | "message">>
+  }>
+}
 
 export type WebhookSubscriptionCreateMutationVariables = AdminTypes.Exact<{
   topic: AdminTypes.WebhookSubscriptionTopic
@@ -29,7 +33,9 @@ export type WebhookSubscriptionCreateMutation = {
 
 export type LatestProductFeedsQueryVariables = AdminTypes.Exact<{ [key: string]: never }>
 
-export type LatestProductFeedsQuery = { productFeeds: { nodes: Array<Pick<AdminTypes.ProductFeed, "id" | "country" | "status">> } }
+export type LatestProductFeedsQuery = {
+  productFeeds: { nodes: Array<Pick<AdminTypes.ProductFeed, "id" | "country" | "status">> }
+}
 
 export type SingleAdminProductQueryVariables = AdminTypes.Exact<{
   id: AdminTypes.Scalars["ID"]["input"]
@@ -37,7 +43,10 @@ export type SingleAdminProductQueryVariables = AdminTypes.Exact<{
 
 export type SingleAdminProductQuery = {
   product?: AdminTypes.Maybe<
-    Pick<AdminTypes.Product, "id" | "handle" | "title" | "description" | "descriptionHtml" | "vendor" | "tags" | "updatedAt" | "createdAt"> & {
+    Pick<
+      AdminTypes.Product,
+      "id" | "handle" | "title" | "description" | "descriptionHtml" | "vendor" | "tags" | "updatedAt" | "createdAt"
+    > & {
       options: Array<Pick<AdminTypes.ProductOption, "id" | "name" | "values">>
       collections: {
         nodes: Array<
@@ -47,10 +56,15 @@ export type SingleAdminProductQuery = {
           }
         >
       }
-      priceRange: { maxVariantPrice: Pick<AdminTypes.MoneyV2, "amount" | "currencyCode">; minVariantPrice: Pick<AdminTypes.MoneyV2, "amount" | "currencyCode"> }
+      priceRange: {
+        maxVariantPrice: Pick<AdminTypes.MoneyV2, "amount" | "currencyCode">
+        minVariantPrice: Pick<AdminTypes.MoneyV2, "amount" | "currencyCode">
+      }
       variants: {
         edges: Array<{
-          node: Pick<AdminTypes.ProductVariant, "id" | "title" | "price" | "availableForSale"> & { selectedOptions: Array<Pick<AdminTypes.SelectedOption, "name" | "value">> }
+          node: Pick<AdminTypes.ProductVariant, "id" | "title" | "price" | "availableForSale"> & {
+            selectedOptions: Array<Pick<AdminTypes.SelectedOption, "name" | "value">>
+          }
         }>
       }
       featuredImage?: AdminTypes.Maybe<Pick<AdminTypes.Image, "url" | "altText" | "width" | "height">>

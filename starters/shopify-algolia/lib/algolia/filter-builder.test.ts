@@ -42,7 +42,9 @@ describe("FilterBuilder", () => {
     })
 
     it("should create an AND condition when specified", () => {
-      expect(builder.multi("category", ["books", "games"], LogicalOperators.And).build()).toBe('(category:"books" AND category:"games")')
+      expect(builder.multi("category", ["books", "games"], LogicalOperators.And).build()).toBe(
+        '(category:"books" AND category:"games")'
+      )
     })
 
     it("should handle empty array", () => {
@@ -81,15 +83,21 @@ describe("FilterBuilder", () => {
 
   describe("logical operators", () => {
     it("should chain conditions with AND", () => {
-      expect(builder.where("category", "books").and().where("price", 100).build()).toBe('category:"books" AND price:100')
+      expect(builder.where("category", "books").and().where("price", 100).build()).toBe(
+        'category:"books" AND price:100'
+      )
     })
 
     it("should chain conditions with OR", () => {
-      expect(builder.where("category", "books").or().where("category", "games").build()).toBe('category:"books" OR category:"games"')
+      expect(builder.where("category", "books").or().where("category", "games").build()).toBe(
+        'category:"books" OR category:"games"'
+      )
     })
 
     it("should handle NOT operator", () => {
-      expect(builder.where("category", "books").and().not().where("price", 100).build()).toBe('category:"books" AND NOT price:100')
+      expect(builder.where("category", "books").and().not().where("price", 100).build()).toBe(
+        'category:"books" AND NOT price:100'
+      )
     })
   })
 

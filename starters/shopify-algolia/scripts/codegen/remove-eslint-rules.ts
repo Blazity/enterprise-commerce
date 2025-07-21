@@ -31,7 +31,10 @@ async function cleanupEslintLines(filePath: string): Promise<boolean> {
   try {
     const content = await fs.readFile(filePath, "utf8")
 
-    const linesToRemove = new Set(["/* eslint-disable eslint-comments/disable-enable-pair */", "/* eslint-disable eslint-comments/no-unlimited-disable */"])
+    const linesToRemove = new Set([
+      "/* eslint-disable eslint-comments/disable-enable-pair */",
+      "/* eslint-disable eslint-comments/no-unlimited-disable */",
+    ])
 
     const lines = content.split("\n")
     const filteredLines = lines.filter((line) => !linesToRemove.has(line.trim()))

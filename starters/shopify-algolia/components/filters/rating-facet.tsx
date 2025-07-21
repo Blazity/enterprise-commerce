@@ -27,7 +27,11 @@ export function RatingFacet({ id, title, distribution, isChecked, onCheckedChang
           <div className="grid gap-2">
             {distributionsEntries.map(([value], index) => (
               <Label key={value + index} className="flex items-center gap-2 font-normal">
-                <Checkbox name={value} checked={isChecked(value)} onCheckedChange={(checked) => onCheckedChange(!!checked, value)} />
+                <Checkbox
+                  name={value}
+                  checked={isChecked(value)}
+                  onCheckedChange={(checked) => onCheckedChange(!!checked, value)}
+                />
                 <StarRating rating={parseInt(value)} /> {parseInt(value) !== 5 && `& up`}{" "}
               </Label>
             ))}

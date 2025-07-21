@@ -31,7 +31,11 @@ export function ChangeQuantityButton({ id, variantId, quantity, productId, child
 
   return (
     <div className="relative flex h-full w-fit items-center">
-      <button className="flex cursor-pointer items-center gap-2 bg-transparent transition-transform hover:scale-150" onClick={handleClick} disabled={isPending}>
+      <button
+        className="flex cursor-pointer items-center gap-2 bg-transparent transition-transform hover:scale-150"
+        onClick={handleClick}
+        disabled={isPending}
+      >
         {isPending ? <Spinner className="size-2" /> : children}
       </button>
     </div>

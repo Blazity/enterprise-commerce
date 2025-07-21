@@ -35,7 +35,9 @@ export const CategoryCard = ({ title, href, description, index, className }: Cat
 
       <div className="flex flex-1 flex-col justify-between p-6">
         <div>
-          <h3 className="text-lg font-semibold tracking-tight text-foreground transition-colors duration-300 group-hover:text-primary">{title}</h3>
+          <h3 className="text-lg font-semibold tracking-tight text-foreground transition-colors duration-300 group-hover:text-primary">
+            {title}
+          </h3>
           <p className="mt-2 line-clamp-2 text-sm text-muted-foreground">{description}</p>
         </div>
 
@@ -43,7 +45,13 @@ export const CategoryCard = ({ title, href, description, index, className }: Cat
           <span className="relative after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-foreground after:transition-all after:duration-300 group-hover:after:w-full">
             Shop Now
           </span>
-          <svg className="ml-2 size-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <svg
+            className="ml-2 size-4 transition-transform duration-300 group-hover:translate-x-1"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2}
+          >
             <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
           </svg>
         </div>

@@ -6,7 +6,13 @@ import { create } from "zustand"
 interface AddProductStore {
   product: CommerceProduct | null
   combination: Combination | null
-  setProduct: ({ product, combination }: { product: CommerceProduct; combination: Combination | PlatformVariant }) => void
+  setProduct: ({
+    product,
+    combination,
+  }: {
+    product: CommerceProduct
+    combination: Combination | PlatformVariant
+  }) => void
   clean: () => void
 }
 

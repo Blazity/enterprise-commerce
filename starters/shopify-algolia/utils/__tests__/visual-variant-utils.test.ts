@@ -24,7 +24,9 @@ describe("Visual Variant Utils", () => {
     })
 
     test("should remove visual option from slug", () => {
-      expect(removeVisualOptionFromSlug("sunrise-silk-shampoo-conditioner-set-color_red")).toBe("sunrise-silk-shampoo-conditioner-set")
+      expect(removeVisualOptionFromSlug("sunrise-silk-shampoo-conditioner-set-color_red")).toBe(
+        "sunrise-silk-shampoo-conditioner-set"
+      )
       expect(removeVisualOptionFromSlug("my-shirt-color_blue")).toBe("my-shirt")
       expect(removeVisualOptionFromSlug("simple-product")).toBe("simple-product")
     })
@@ -39,7 +41,9 @@ describe("Visual Variant Utils", () => {
   describe("Multi-option URL handling", () => {
     test("should remove multi-option from slug", () => {
       expect(removeMultiOptionFromSlug("my-shirt--color_blue-size_large-material_cotton")).toBe("my-shirt")
-      expect(removeMultiOptionFromSlug("extremecore-ab-roller--color_purple-type_gym-prousage_advanced")).toBe("extremecore-ab-roller")
+      expect(removeMultiOptionFromSlug("extremecore-ab-roller--color_purple-type_gym-prousage_advanced")).toBe(
+        "extremecore-ab-roller"
+      )
       expect(removeMultiOptionFromSlug("simple-product")).toBe("simple-product")
     })
 
@@ -57,18 +61,28 @@ describe("Visual Variant Utils", () => {
     })
 
     test("should create multi-option slug", () => {
-      expect(createMultiOptionSlug("my-shirt", { color: "blue", size: "large" })).toBe("my-shirt--color_blue-size_large")
-      expect(createMultiOptionSlug("ab-roller", { Color: "Purple", Type: "Gym", "Pro Usage": "Advanced" })).toBe("ab-roller--color_purple-prousage_advanced-type_gym")
+      expect(createMultiOptionSlug("my-shirt", { color: "blue", size: "large" })).toBe(
+        "my-shirt--color_blue-size_large"
+      )
+      expect(createMultiOptionSlug("ab-roller", { Color: "Purple", Type: "Gym", "Pro Usage": "Advanced" })).toBe(
+        "ab-roller--color_purple-prousage_advanced-type_gym"
+      )
       expect(createMultiOptionSlug("simple-product", {})).toBe("simple-product")
     })
 
     test("should handle option names and values with spaces", () => {
-      expect(createMultiOptionSlug("product", { "Pro Usage": "Very Advanced", "Size Category": "Large Size" })).toBe("product--prousage_veryadvanced-sizecategory_largesize")
+      expect(createMultiOptionSlug("product", { "Pro Usage": "Very Advanced", "Size Category": "Large Size" })).toBe(
+        "product--prousage_veryadvanced-sizecategory_largesize"
+      )
     })
   })
 
   describe("Image filtering", () => {
-    const mockImages = [{ url: "product-image-1.jpg" }, { url: "product-Color-Red-image.jpg" }, { url: "product-Color-Blue-image.jpg" }]
+    const mockImages = [
+      { url: "product-image-1.jpg" },
+      { url: "product-Color-Red-image.jpg" },
+      { url: "product-Color-Blue-image.jpg" },
+    ]
 
     test("should filter images by visual option", () => {
       expect(filterImagesByVisualOption(mockImages, "red")).toEqual([{ url: "product-Color-Red-image.jpg" }])

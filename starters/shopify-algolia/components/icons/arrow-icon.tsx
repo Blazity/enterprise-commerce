@@ -1,6 +1,13 @@
 export function ArrowIcon({ className }: { className?: string }) {
   return (
-    <svg className={className} width="30" height="21" viewBox="0 0 30 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      className={className}
+      width="30"
+      height="21"
+      viewBox="0 0 30 21"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <path
         fillRule="evenodd"
         clipRule="evenodd"

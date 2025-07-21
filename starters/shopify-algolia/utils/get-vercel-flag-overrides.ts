@@ -2,7 +2,10 @@ import { decrypt, type FlagOverridesType } from "@vercel/flags"
 import { env } from "env.mjs"
 import { cookies } from "next/headers"
 
-type Flags = Record<Partial<"isVercelAnalyticsEnabled" | "isGoogleTagManagerEnabled" | "isSpeedInsightsEnabled">, boolean>
+type Flags = Record<
+  Partial<"isVercelAnalyticsEnabled" | "isGoogleTagManagerEnabled" | "isSpeedInsightsEnabled">,
+  boolean
+>
 
 export async function getVercelFlagOverrides(): Promise<Flags | null> {
   const overridesCookieValue = (await cookies()).get("vercel-flag-overrides")?.value

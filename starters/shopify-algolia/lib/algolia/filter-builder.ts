@@ -27,7 +27,11 @@ export class FilterBuilder {
     return this
   }
 
-  multi(attribute: string, values: (string | number | boolean)[] | null, operator: LogicalOperators = LogicalOperators.Or): FilterBuilder {
+  multi(
+    attribute: string,
+    values: (string | number | boolean)[] | null,
+    operator: LogicalOperators = LogicalOperators.Or
+  ): FilterBuilder {
     if (!values || values.length === 0) return this
 
     const conditions = values.map((value) => `${attribute}:${this.formatValue(value)}`)
@@ -60,7 +64,11 @@ export class FilterBuilder {
     this.expression.push(`${attribute}:${min} TO ${max}`)
     return this
   }
-  numeric(attribute: string, value: number | null, operator: ComparisonOperators = ComparisonOperators.Equal): FilterBuilder {
+  numeric(
+    attribute: string,
+    value: number | null,
+    operator: ComparisonOperators = ComparisonOperators.Equal
+  ): FilterBuilder {
     if (!value) return this
 
     this.expression.push(`${attribute} ${operator} ${value}`)
