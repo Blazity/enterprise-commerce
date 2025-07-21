@@ -1,64 +1,123 @@
-<a href="https://blazity.com/r/commerce">
+# Enterprise Commerce
 
-![HERO](https://github.com/Blazity/enterprise-commerce/assets/28964599/1ff1a75d-30ea-41dd-aa9a-b530b2baed51)
 
-</a>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="/assets/blazity-logo-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="/assets/blazity-logo-light.svg">
+  <img alt="Logo" align="right" height="80" src="/assets/blazity-logo-light.svg">
+</picture>
 
-[![GitHub Actions Workflow Status][check-workflow-badge]][check-workflow-badge-link] [![GitHub License][github-license-badge]][github-license-badge-link] [![GitHub contributors][github-contributors-badge]][github-contributors-badge-link] [![Discord][discord-badge]][discord-badge-link] [![Blazity][made-by-blazity-badge]][made-by-blazity-badge-link] [![Blazity][made-with-v0-badge]][made-with-v0-link]
+### Introduction
 
-🚀 Launch your high-performance Shopify storefront in minutes, not weeks, with this Next.js commerce starter. Leverage the power of Vector Search and AI to deliver a superior online shopping experience without the development headaches.
+Enterprise Commerce by [Blazity](https://blazity.com) is a open source enterprise-grade template of a Next.js project using Shopify as the e-commerce platform (product data, categories) and Algolia as the middle layer (data fetching, searching, faceting and recommendations).
 
-Run this command and let our CLI do the job or [see our documentation for manual setup instruction](https://blazity.com/r/commerce-docs).
 
-```bash
-$ yarn create commerce
-```
+[![GitHub License][github-license-badge]][github-license-badge-link] [![Docs][check-the-docs]][check-the-docs-link] [![Blazity][made-by-blazity-badge]][made-by-blazity-badge-link] [![Blazity][made-with-v0-badge]][made-with-v0-link] [![Live Demo][view-live-demo-badge]][view-live-demo-link]
 
-[See the live demo](https://blazity.com/r/commerce)
 
-## Starters
+### Installation 
 
-Each starter is a combination of commerce platform and search engine. While each starter follows very similar features crucial for every storefront, they may be different therefore we recommend checking the documentation for each starter.
+For detailed steps how to setup the whole application, please check [docs.blazity.com "Setup & Configuration"](https://docs.blazity.com/enterprise-commerce/setup).
 
-- [Shopify + Algolia Starter](https://github.com/Blazity/enterprise-commerce/tree/main/starters/shopify-algolia)
-- [Shopify + Meilisearch Starter](https://github.com/Blazity/enterprise-commerce/tree/main/starters/shopify-meilisearch)
+You can also deploy the project to Vercel with one click the button below  
+  
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Blazity/enterprise-commerce)  
 
-## Architecture
+### Philosophy & motivation
 
-In Enterprise Commerce high-level architecture, Search Engine serves as the primary source for all product data and potentially other types of data in the future. The system is designed to easily integrate AI personalization tools without needing to modify any frontend code. While we are integrated with Shopify by default, we are not tightly bound to it, you can use any commerce platform and adapt data to our format.
+Building e-commerce platform is a tough topic. Creating one that has all the features that enterprise companies want is hard, way harder than implementing Headless CMS. There are bunch of templates out there that struggle with couple areas, while they may be a great choice for a small or medium-sized businesses, the huge needs for e.g. crawling budget optimization, SEO, excellent browsing journey, simplicity of the implementation are way more than can be expected from other projects.
 
-<img width="1841" alt="architecture diagram" src="https://github.com/Blazity/enterprise-commerce/assets/28964599/c5d3a0b3-6c3e-47df-9c45-4ecb583f5a64">
+### The browsing journey
 
-## Performance
+A monolithic commerce platform will never beat the speed of a fast-lookup system like Algolia, Constructor, or other enterprise search systems. What if you cache your platform's responses? Even still, the combinatorics of search terms, filters, and sort options create endless unique queries. A fast source-of-truth is table-stakes for speedy browsing UX.
 
-At Blazity, we prioritize speed. Enterprise Commerce is meticulously crafted to deliver top-notch performance for your online store.
+| 🐌 Slow (traditional e-commerce platforms)  | 🚀 Fast (enterprise-grade e-commerce platform)  |
+|------|------|
+| <img width="710" height="1700" alt="slow" src="https://github.com/user-attachments/assets/f0c6fcd2-751d-44c4-af40-7ab3e3a65606" /> | <img width="800" height="1950" alt="fast" src="https://github.com/user-attachments/assets/c773f653-0ef1-4cc6-a73b-8f4d431cda14" /> |
 
-Lighthouse scores offer a valuable comparison tool, but they don’t directly translate to SEO or user experience (UX).
-For a true picture, prioritize real user data. Tools like CrUX or Vercel Speed Insights provide user-based performance metrics, ensuring your online store delivers a seamless experience for your customers.
+### Architecture diagram
 
-![performance diagram](https://github.com/Blazity/enterprise-commerce/assets/28964599/8aba9b68-38d6-41c9-81a8-234003e7e1b0)
+Simple, winning e-commerce architecture. Take a closer look at the arrow colors as they represent the times between high-level user's browsing journey interactions and network latencies in the lower level.
 
-## 🤝 Contribution
+<img width="4763" height="3137" alt="detailed" src="https://github.com/user-attachments/assets/d1a66375-a573-43aa-98d5-efdd97c64c30" />
 
-Contributions are always welcome! To contribute, please follow these steps:
+## Media preview
 
-1. Fork the repository.
-2. Create a new branch with a descriptive name.
-3. Make your changes, and commit them using the [Conventional Commits](https://www.conventionalcommits.org/) format.
-4. Push your changes to the forked repository.
-5. Create a pull request, and we'll review your changes.
 
-## Support
 
-If you're looking for help or simply want to share your thoughts about the project, we encourage you to join our Discord community. Here's the link: [https://blazity.com/discord](https://blazity.com/discord). It's a space where we exchange ideas and help one another. Everyone's input is appreciated, and we look forward to welcoming you.
 
-<br />
-<a href="https://discord.gg/fyWtyNKmfX" style="width: 100%; display: flex; justify-content: center;">
-  <img src="https://discordapp.com/api/guilds/1111676875782234175/widget.png?style=banner2" alt="Blazity Discord Banner"/>
-</a>
-<br />
+https://github.com/user-attachments/assets/ec3a3a7d-2118-4367-950c-dd31022768f1
 
-## 📜 License
+
+
+
+
+## Storefront features
+
+- Shopify as e-commerce backend, Algolia as the data middle-layer
+- Instant search, faceting and filtering experience through thousands (most likely will also work with millions) products with sophisticated filters, typo tolerance and word similarity
+- Enterprise-grade redirects handling through tens of thousands redirects without latency overhead (implemented on Bloom Filters)
+- Fast builds regardless of the e-commerce specific data volume
+- Platform-agnostic hierarchical categories
+- Analytics (Vercel Analytics / Google Analytics) with easy provider switch
+- Uncomplicated A/B testing setup
+- Perfect performance scores
+- SEO optimized, with crawling budget concept in mind
+  - Crucial pages displaying critical contents and data without JavaScript execution needed
+- Follows the best practices regarding building e-commerce storefronts with simplicity in mind
+- Next.js App Router with implementation using all of the features (as we believe Next.js is the king for e-commerce)
+- ISR MegaNav updates with seamless client-side hot-reload (SWR)
+- Browsing journey setup with mind of high conversion rates & maximizing the user's experience
+  - Instant navigation between pages with carefully picked rendering strategies ([HP][hp], [PDP][pdp], [CLP][clp], [PLP][plp], [SRP][plp])
+  - Breadcrumbs on every crucial e-commerce page
+  - Filtering helpers such as tiny vendor facet values search
+- Hosted on [Vercel][vercel]
+- Designed using [v0][v0]
+
+## Page specific features                                          
+
+### HP (Home Page)
+- Super optimized above-the-fold category carousel with CTA buttons forwarding to CLPs/PLPs
+- SSG for best possible performance
+- A/B testing out of the box with simple implementation
+- Sales banner
+
+### CLP (Category Landing Page)
+- Optimized Headless CMS driven CLP cover images and descriptions
+- Showcase of products from the particular category
+- "Show all products" button navigating to the actual [PLP][plp]
+- Tightly bound to the categories user in the e-commerce provider configured (default: Shopify)
+- Possibility to declare category to be viewable as [PLP][plp] or [CLP][clp], depending on the hierarchical level after clicking it in the MegaNav
+
+  
+### PLP (Product Listing Page)
+- Sub-second search experience built on Algolia, with infinite scaling capabilities
+- Intelligent values faceting through multiple filters, such as:
+  - Product's copywriting content
+  - Average rating and reviews
+  - Vendors
+  - Variants (e.g. Color)
+  - Minimum/maximum price
+- Sorting of the [PLP][plp] output display
+- Efficient and battle-tested pagination without fancy infinite loading sections
+- Query params driven, easily shareable links
+- Browsing journey helpers, such as tiny vendors' list search
+  
+### PDP (Product Details Page)
+
+- Multiple variants configurations with robust variants' combinations handling
+- Image variants carousel with auto-changing the preview based on the selected variant
+- FAQ sections driven by headless CMS
+- Product reviews panel with "View all reviews" subpage
+- Recommended products at the bottom of the page
+- Above the fold content visible with JavaScript disabled (SEO-optimized)
+- Base product generated as SSG + variants SSR
+
+## Documentation
+
+We also created a comprehensive documentation [docs.blazity.com/enterprise-commerce](docs.blazity.com) serving purpose of explaining our architectural decisions, containing in-details features descriptions and read-worthy guidelines. Everything with focus on the business values and theirs impact on the implementations. 
+
+## License
 
 This project is licensed under the MIT License. For more information, see the [LICENSE](./LICENSE) file.
 
@@ -66,11 +125,21 @@ This project is licensed under the MIT License. For more information, see the [L
 [github-license-badge]: https://img.shields.io/github/license/blazity/enterprise-commerce?link=https%3A%2F%2Fgithub.com%2FBlazity%2Fenterprise-commerce%2Fblob%2Fmain%2FLICENSE
 [github-contributors-badge]: https://img.shields.io/github/contributors/blazity/enterprise-commerce?link=https%3A%2F%2Fgithub.com%2FBlazity%2Fenterprise-commerce%2Fgraphs%2Fcontributors
 [discord-badge]: https://img.shields.io/discord/1111676875782234175?color=7b8dcd&link=https%3A%2F%2Fblazity.com%2Fdiscord
+[check-the-docs]: https://img.shields.io/badge/check-the_docs-blue
+[check-the-docs-link]: https://docs.blazity.com/enterprise-commerce
 [made-by-blazity-badge]: https://img.shields.io/badge/made_by-Blazity-blue?color=FF782B&link=https://blazity.com/
 [made-with-v0-badge]: https://img.shields.io/badge/designed_with-v0-red?color=black&link=https://blazity.com/
+[view-live-demo-badge]: https://img.shields.io/badge/view-live_demo-purple?link=https://commerce.blazity.com/
+[view-live-demo-link]: https://commerce.blazity.com/
 [check-workflow-badge-link]: https://github.com/Blazity/enterprise-commerce/actions/workflows/check.yml
 [github-license-badge-link]: https://github.com/Blazity/enterprise-commerce/blob/main/LICENSE
 [github-contributors-badge-link]: https://github.com/Blazity/enterprise-commerce/graphs/contributors
 [discord-badge-link]: https://blazity.com/discord
 [made-by-blazity-badge-link]: https://blazity.com/?utm_source=nextenterprise&utm_medium=github
 [made-with-v0-link]: https://v0.dev/
+[v0]: https://v0.dev/
+[vercel]: https://vercel.com/
+[plp]: https://docs.blazity.com/enterprise-commerce/browsing-journey/plp
+[clp]: https://docs.blazity.com/enterprise-commerce/browsing-journey/clp
+[pdp]: https://docs.blazity.com/enterprise-commerce/browsing-journey/pdp
+[hp]: https://docs.blazity.com/enterprise-commerce/browsing-journey/hp
