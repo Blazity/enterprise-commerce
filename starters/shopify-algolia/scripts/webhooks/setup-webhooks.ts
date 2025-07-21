@@ -1,7 +1,14 @@
 import { createAdminApiClient } from "@shopify/admin-api-client"
 import { env } from "../../env.mjs"
 
-const WEBHOOK_TOPICS = ["PRODUCTS_CREATE", "PRODUCTS_UPDATE", "PRODUCTS_DELETE", "COLLECTIONS_CREATE", "COLLECTIONS_UPDATE", "COLLECTIONS_DELETE"] as const
+const WEBHOOK_TOPICS = [
+  "PRODUCTS_CREATE",
+  "PRODUCTS_UPDATE",
+  "PRODUCTS_DELETE",
+  "COLLECTIONS_CREATE",
+  "COLLECTIONS_UPDATE",
+  "COLLECTIONS_DELETE",
+] as const
 
 const CREATE_WEBHOOK_MUTATION = `#graphql
   mutation webhookSubscriptionCreate($topic: WebhookSubscriptionTopic!, $webhookSubscription: WebhookSubscriptionInput!) {
@@ -82,7 +89,9 @@ async function setupWebhooks(options: SetupWebhooksOptions = {}) {
       },
     })
 
-    const existingTopics = new Set(existingWebhooks.data?.webhookSubscriptions?.edges?.map((edge: any) => edge.node.topic) || [])
+    const existingTopics = new Set(
+      existingWebhooks.data?.webhookSubscriptions?.edges?.map((edge: any) => edge.node.topic) || []
+    )
 
     if (existingTopics.size > 0) {
       console.log("ℹ️  Found existing webhooks for topics:")

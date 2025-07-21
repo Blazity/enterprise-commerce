@@ -5,7 +5,11 @@ import { type CurrencyType, mapCurrencyToSign } from "utils/map-currency-to-sign
 import type { CommerceProduct } from "types"
 import { StarIcon } from "components/icons/star-icon"
 
-interface ProductCardProps extends Pick<CommerceProduct, "variants" | "handle" | "images" | "title" | "featuredImage" | "minPrice" | "avgRating" | "totalReviews" | "vendor"> {
+interface ProductCardProps
+  extends Pick<
+    CommerceProduct,
+    "variants" | "handle" | "images" | "title" | "featuredImage" | "minPrice" | "avgRating" | "totalReviews" | "vendor"
+  > {
   priority?: boolean
   prefetch?: boolean
   className?: string
@@ -30,7 +34,12 @@ export const FeaturedProductCard = ({
   const variantPrice = variants?.find(Boolean)?.price
 
   return (
-    <Link className={cn("group flex flex-col overflow-hidden rounded-lg border border-gray-100 transition-all", className)} aria-label={linkAria} href={href} prefetch={prefetch}>
+    <Link
+      className={cn("group flex flex-col overflow-hidden rounded-lg border border-gray-100 transition-all", className)}
+      aria-label={linkAria}
+      href={href}
+      prefetch={prefetch}
+    >
       <div className="relative aspect-square overflow-hidden">
         <Image
           priority={priority}
@@ -44,7 +53,11 @@ export const FeaturedProductCard = ({
         <div className="flex flex-col gap-1">
           {}
           <h3 className="line-clamp-2 text-lg font-semibold">{title.split(" ").slice(1).join(" ")}</h3>
-          {!!variantPrice && <span className="block sm:hidden">From {mapCurrencyToSign((variantPrice.currencyCode as CurrencyType) || "USD") + minPrice.toFixed(2)}</span>}
+          {!!variantPrice && (
+            <span className="block sm:hidden">
+              From {mapCurrencyToSign((variantPrice.currencyCode as CurrencyType) || "USD") + minPrice.toFixed(2)}
+            </span>
+          )}
 
           <div className="mt-auto flex flex-col gap-1">
             {!!vendor && <p className="text-sm text-gray-500">{vendor}</p>}
@@ -69,7 +82,11 @@ export const FeaturedProductCard = ({
             </div>
           </div>
         </div>
-        {!!variantPrice && <span className="hidden sm:block">From {mapCurrencyToSign((variantPrice.currencyCode as CurrencyType) || "USD") + minPrice.toFixed(2)}</span>}
+        {!!variantPrice && (
+          <span className="hidden sm:block">
+            From {mapCurrencyToSign((variantPrice.currencyCode as CurrencyType) || "USD") + minPrice.toFixed(2)}
+          </span>
+        )}
       </div>
     </Link>
   )

@@ -24,7 +24,13 @@ export interface FacetsContentProps {
   categoryDisplayTypes?: Record<string, "CLP" | "PLP">
 }
 
-export function FacetsContent({ independentFacetDistribution, facetDistribution, className, disabledFacets, categoryDisplayTypes }: FacetsContentProps) {
+export function FacetsContent({
+  independentFacetDistribution,
+  facetDistribution,
+  className,
+  disabledFacets,
+  categoryDisplayTypes,
+}: FacetsContentProps) {
   const router = useRouter()
   const pathname = usePathname()
   const isAiPath = pathname.startsWith("/ai")
@@ -62,12 +68,34 @@ export function FacetsContent({ independentFacetDistribution, facetDistribution,
     history: "push",
     clearOnDefault: true,
   })
-  const [selectedColors, setSelectedColors] = useQueryState("colors", { ...parseAsArrayOf(parseAsString), defaultValue: [], shallow: false, history: "push", clearOnDefault: true })
+  const [selectedColors, setSelectedColors] = useQueryState("colors", {
+    ...parseAsArrayOf(parseAsString),
+    defaultValue: [],
+    shallow: false,
+    history: "push",
+    clearOnDefault: true,
+  })
 
-  const [page, setPage] = useQueryState("page", { ...parseAsInteger, defaultValue: 1, shallow: false, history: "push", clearOnDefault: true })
+  const [page, setPage] = useQueryState("page", {
+    ...parseAsInteger,
+    defaultValue: 1,
+    shallow: false,
+    history: "push",
+    clearOnDefault: true,
+  })
 
-  const [minPrice, setMinPrice] = useQueryState("minPrice", { ...parseAsInteger, shallow: false, defaultValue: 0, clearOnDefault: true })
-  const [maxPrice, setMaxPrice] = useQueryState("maxPrice", { ...parseAsInteger, shallow: false, defaultValue: 0, clearOnDefault: true })
+  const [minPrice, setMinPrice] = useQueryState("minPrice", {
+    ...parseAsInteger,
+    shallow: false,
+    defaultValue: 0,
+    clearOnDefault: true,
+  })
+  const [maxPrice, setMaxPrice] = useQueryState("maxPrice", {
+    ...parseAsInteger,
+    shallow: false,
+    defaultValue: 0,
+    clearOnDefault: true,
+  })
 
   const allFilters = [selectedVendors, selectedColors, minPrice, maxPrice, selectedRating]
   const flattenedFilters = allFilters.flat().filter((v) => typeof v === "string")
@@ -120,7 +148,12 @@ export function FacetsContent({ independentFacetDistribution, facetDistribution,
   }
 
   return (
-    <Accordion className={cn("overflow-x-hidden", className)} type="single" collapsible defaultValue={lastSelected || "categories"}>
+    <Accordion
+      className={cn("overflow-x-hidden", className)}
+      type="single"
+      collapsible
+      defaultValue={lastSelected || "categories"}
+    >
       <div className="mb-2 flex flex-col border-b border-black/5">
         <ActiveFilters
           filtersCount={filtersCount}
@@ -132,7 +165,10 @@ export function FacetsContent({ independentFacetDistribution, facetDistribution,
           removeTag={removeTag}
         />
 
-        <button className="my-3 inline-flex cursor-pointer bg-white text-xs text-black underline underline-offset-2" onClick={() => resetAllFilters()}>
+        <button
+          className="my-3 inline-flex cursor-pointer bg-white text-xs text-black underline underline-offset-2"
+          onClick={() => resetAllFilters()}
+        >
           Clear filters
         </button>
       </div>

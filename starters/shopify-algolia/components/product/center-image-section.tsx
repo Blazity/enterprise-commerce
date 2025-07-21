@@ -2,7 +2,14 @@ import type { Dispatch, SetStateAction } from "react"
 import Image from "next/image"
 import type { CommerceProduct } from "types"
 import { cn } from "utils/cn"
-import { Carousel, type CarouselApi, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "components/ui/carousel"
+import {
+  Carousel,
+  type CarouselApi,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "components/ui/carousel"
 
 type CenterSectionProps = {
   images: CommerceProduct["images"]
@@ -18,7 +25,10 @@ export const CenterSection = ({ className, images, setApi }: CenterSectionProps)
         <Carousel className="[&>div]:rounded-lg" setApi={setApi}>
           <CarouselContent className={cn("rounded-lg", hasOnlyOneImage ? "ml-0" : "")}>
             {images.map((image, index) => (
-              <CarouselItem className={cn("relative aspect-square rounded-lg", hasOnlyOneImage && "pl-0")} key={image.url}>
+              <CarouselItem
+                className={cn("relative aspect-square rounded-lg", hasOnlyOneImage && "pl-0")}
+                key={image.url}
+              >
                 <Image
                   alt={image.altText || `Product image ${index + 1}`}
                   src={image.url || "/default-product-image.svg"}

@@ -20,7 +20,8 @@ const chatBubbleVariants = cva("group/message relative break-words rounded-lg te
       assistant: "text-black sm:max-w-[90%]",
       data: "",
       system: "",
-      toolInvocation: "border border-gray-300 px-3 py-2 md:w-full md:max-w-full flex items-center gap-2 hover:underline",
+      toolInvocation:
+        "border border-gray-300 px-3 py-2 md:w-full md:max-w-full flex items-center gap-2 hover:underline",
     },
     animation: {
       none: "",
@@ -68,7 +69,16 @@ export interface ChatMessageProps extends Message {
   showToolMessages?: boolean
 }
 
-export const ChatMessage: React.FC<ChatMessageProps> = ({ role, content, createdAt, showTimeStamp = false, animation = "scale", toolInvocations, showToolMessages, actions }) => {
+export const ChatMessage: React.FC<ChatMessageProps> = ({
+  role,
+  content,
+  createdAt,
+  showTimeStamp = false,
+  animation = "scale",
+  toolInvocations,
+  showToolMessages,
+  actions,
+}) => {
   const isUser = role === "user"
 
   const formattedTime = createdAt?.toLocaleTimeString("en-US", {
@@ -87,11 +97,26 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ role, content, created
         }
         if (toolName === "addToCart") {
           const { result } = toolInvocation
-          return <AddedToCart key={toolCallId} variant={result.variant} product={result.product} animation={animation} toolCallId={toolCallId} />
+          return (
+            <AddedToCart
+              key={toolCallId}
+              variant={result.variant}
+              product={result.product}
+              animation={animation}
+              toolCallId={toolCallId}
+            />
+          )
         }
         if (toolName === "goToCheckout") {
           const { result } = toolInvocation
-          return <MoveToCheckout key={toolCallId} checkoutUrl={result.checkoutUrl} animation={animation} toolCallId={toolCallId} />
+          return (
+            <MoveToCheckout
+              key={toolCallId}
+              checkoutUrl={result.checkoutUrl}
+              animation={animation}
+              toolCallId={toolCallId}
+            />
+          )
         }
       }
       return null
@@ -99,18 +124,27 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ role, content, created
   }
 
   return (
-    <motion.div initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.2 }} className={cn("flex flex-col", isUser ? "items-end" : "items-start")}>
+    <motion.div
+      initial={{ opacity: 0, y: 5 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.2 }}
+      className={cn("flex flex-col", isUser ? "items-end" : "items-start")}
+    >
       <div className={cn(chatBubbleVariants({ role, animation }))}>
         <motion.div className="text-black/90" animate={{ opacity: 1 }} initial={{ opacity: 0 }}>
           <MarkdownRenderer>{content}</MarkdownRenderer>
         </motion.div>
 
         {!!(role === "assistant" && actions && showToolMessages) && (
-          <div className="absolute -bottom-4 right-2 flex space-x-1 rounded-lg border p-1 opacity-0 transition-opacity group-hover/message:opacity-100">{actions}</div>
+          <div className="absolute -bottom-4 right-2 flex space-x-1 rounded-lg border p-1 opacity-0 transition-opacity group-hover/message:opacity-100">
+            {actions}
+          </div>
         )}
       </div>
 
-      {showTimeStamp && createdAt ? <span className={cn("mt-1 block text-xs opacity-50", role === "user" && "px-1")}>{formattedTime}</span> : null}
+      {showTimeStamp && createdAt ? (
+        <span className={cn("mt-1 block text-xs opacity-50", role === "user" && "px-1")}>{formattedTime}</span>
+      ) : null}
     </motion.div>
   )
 }
@@ -132,7 +166,10 @@ const NavigationToolResult = ({ animation, result, toolCallId }) => {
     "/category": "Navigated to category",
   }
 
-  const message = Object.keys(navigationMessages).reduce((defaultMessage, path) => (result.includes(path) ? navigationMessages[path] : defaultMessage), "Navigated to page")
+  const message = Object.keys(navigationMessages).reduce(
+    (defaultMessage, path) => (result.includes(path) ? navigationMessages[path] : defaultMessage),
+    "Navigated to page"
+  )
 
   return (
     <div className={cn("flex flex-col", "items-start")}>

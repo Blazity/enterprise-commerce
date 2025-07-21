@@ -11,7 +11,11 @@ interface FaqSectionClientProps {
 }
 
 export function FaqSectionClient({ className, defaultOpenSections, children }: FaqSectionClientProps) {
-  const defaultValues = Array.isArray(defaultOpenSections) ? defaultOpenSections : defaultOpenSections ? [defaultOpenSections] : ["product-details"]
+  const defaultValues = Array.isArray(defaultOpenSections)
+    ? defaultOpenSections
+    : defaultOpenSections
+      ? [defaultOpenSections]
+      : ["product-details"]
 
   return (
     <Accordion type="multiple" className={cn("w-full", className)} defaultValue={defaultValues}>

@@ -1,6 +1,13 @@
 export function FiltersIcon({ className }: { className?: string }) {
   return (
-    <svg className={className} width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      className={className}
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <path
         d="M5.37859 8.11254C4.07582 8.10548 2.78338 8.08958 1.4806 8.08253C1.28478 8.08012 1.32052 7.81129 1.38573 7.70439C1.45417 7.54367 1.62052 7.38415 1.81635 7.38656L3.24587 7.40415C3.42575 7.40637 5.12842 7.33089 5.34587 7.33357C6.63819 7.34947 7.9412 7.35652 9.24385 7.36357L9.39792 7.57191C9.37466 7.79601 9.19152 8.072 8.91736 8.06863L7.48784 8.05104C6.97331 8.04471 5.60932 8.11378 5.37859 8.11254Z"
         fill="currentColor"

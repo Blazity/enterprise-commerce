@@ -58,7 +58,10 @@ export function normalizeCart(cart: SingleCartQuery["cart"]): PlatformCart | nul
     checkoutUrl,
     cost,
     totalQuantity,
-    items: lines.edges.map(({ node }) => ({ ...node, merchandise: { ...node.merchandise, product: { ...normalizeProduct(node.merchandise.product) } } })) as PlatformCartItem[],
+    items: lines.edges.map(({ node }) => ({
+      ...node,
+      merchandise: { ...node.merchandise, product: { ...normalizeProduct(node.merchandise.product) } },
+    })) as PlatformCartItem[],
   }
 }
 

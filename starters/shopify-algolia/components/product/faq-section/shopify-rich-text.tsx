@@ -29,7 +29,11 @@ export function ShopifyRichText({ data, className }: ShopifyRichTextProps) {
             6: "text-sm font-medium mb-1 last:mb-0",
           }
 
-          return createElement(tagName, { className: headingClasses[node.level as keyof typeof headingClasses] }, node.children)
+          return createElement(
+            tagName,
+            { className: headingClasses[node.level as keyof typeof headingClasses] },
+            node.children
+          )
         },
         text({ node }) {
           let className = ""
@@ -45,7 +49,10 @@ export function ShopifyRichText({ data, className }: ShopifyRichTextProps) {
         },
         list({ node }) {
           const ListTag = node.listType === "ordered" ? "ol" : "ul"
-          const listClasses = node.listType === "ordered" ? cn("list-decimal list-outside mb-4 last:mb-0 pl-6") : cn("list-disc list-outside mb-4 last:mb-0 pl-6")
+          const listClasses =
+            node.listType === "ordered"
+              ? cn("list-decimal list-outside mb-4 last:mb-0 pl-6")
+              : cn("list-disc list-outside mb-4 last:mb-0 pl-6")
 
           return <ListTag className={cn(listClasses, "text-balance")}>{node.children}</ListTag>
         },

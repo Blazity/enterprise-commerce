@@ -52,7 +52,10 @@ export function CategoryLandingPage({ collection, products, basePath }: Category
       {}
       {collection.descriptionHtml && (
         <div className="py-8">
-          <div className="prose prose-lg max-w-none text-gray-700" dangerouslySetInnerHTML={{ __html: collection.descriptionHtml }} />
+          <div
+            className="prose prose-lg max-w-none text-gray-700"
+            dangerouslySetInnerHTML={{ __html: collection.descriptionHtml }}
+          />
         </div>
       )}
 
@@ -95,7 +98,9 @@ export function CategoryLandingPage({ collection, products, basePath }: Category
       {products.length === 0 && (
         <div className="py-16 text-center">
           <h3 className="text-lg font-medium text-gray-900">No products found</h3>
-          <p className="mt-2 text-gray-500">We&apos;re working on adding products to this collection. Check back soon!</p>
+          <p className="mt-2 text-gray-500">
+            We&apos;re working on adding products to this collection. Check back soon!
+          </p>
         </div>
       )}
     </div>

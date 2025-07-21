@@ -33,13 +33,27 @@ export function HitsSection({ hits, basePath }: HitsSectionProps) {
   }
 
   return (
-    <div className={cn("-px-4 grid w-full auto-rows-fr grid-cols-2 items-start gap-2 gap-y-4 sm:grid-cols-3 sm:gap-4 xl:grid-cols-3", isAiPath && "sm:grid-cols-2")}>
+    <div
+      className={cn(
+        "-px-4 grid w-full auto-rows-fr grid-cols-2 items-start gap-2 gap-y-4 sm:grid-cols-3 sm:gap-4 xl:grid-cols-3",
+        isAiPath && "sm:grid-cols-2"
+      )}
+    >
       {hits.map((singleResult, idx) => {
         const priority = isMobile ? [0, 1, 2, 3].includes(idx) : [0, 1, 2, 3, 4, 5].includes(idx)
 
         return (
-          <div key={singleResult.id} data-index={idx} className="h-full lg:animate-enter lg:opacity-0" style={{ "--stagger": idx } as React.CSSProperties}>
-            <ProductCard priority={priority} {...singleResult} href={basePath ? `/${basePath}/product/${singleResult.handle}` : undefined} />
+          <div
+            key={singleResult.id}
+            data-index={idx}
+            className="h-full lg:animate-enter lg:opacity-0"
+            style={{ "--stagger": idx } as React.CSSProperties}
+          >
+            <ProductCard
+              priority={priority}
+              {...singleResult}
+              href={basePath ? `/${basePath}/product/${singleResult.handle}` : undefined}
+            />
           </div>
         )
       })}

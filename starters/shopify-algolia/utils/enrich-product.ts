@@ -95,7 +95,11 @@ export function buildCategoryMap(items: PlatformMenu["items"]): Map<string, stri
   return categoryMap
 }
 
-export function generateHierarchicalCategories(collections: PlatformProduct["tags"], categoryMap: Map<string, string[]>, separator: string = " > ") {
+export function generateHierarchicalCategories(
+  collections: PlatformProduct["tags"],
+  categoryMap: Map<string, string[]>,
+  separator: string = " > "
+) {
   const hierarchicalCategories: { lvl0: string[]; lvl1: string[]; lvl2: string[] } = { lvl0: [], lvl1: [], lvl2: [] }
 
   collections.forEach((tag) => {

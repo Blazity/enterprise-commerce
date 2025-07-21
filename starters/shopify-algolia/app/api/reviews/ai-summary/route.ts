@@ -62,7 +62,9 @@ export async function GET(req: Request) {
     {} as Record<string, Review[]>
   )
 
-  const productsWithNewReviews = allProducts?.hits.filter((product) => product.totalReviews !== (mappedReviews[product.handle]?.length || 0))
+  const productsWithNewReviews = allProducts?.hits.filter(
+    (product) => product.totalReviews !== (mappedReviews[product.handle]?.length || 0)
+  )
 
   if (!productsWithNewReviews.length) {
     return new Response(JSON.stringify({ message: "No new reviews to re-generate summary" }), { status: 200 })

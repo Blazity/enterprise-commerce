@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from "react"
 
-
 const AUDIO_CONFIG = {
   FFT_SIZE: 512,
   SMOOTHING: 0.8,
@@ -10,9 +9,9 @@ const AUDIO_CONFIG = {
   MIN_BAR_WIDTH: 2,
   BAR_SPACING: 1,
   COLOR: {
-    MIN_INTENSITY: 100, 
-    MAX_INTENSITY: 255, 
-    INTENSITY_RANGE: 155, 
+    MIN_INTENSITY: 100,
+    MAX_INTENSITY: 255,
+    INTENSITY_RANGE: 155,
   },
 } as const
 
@@ -48,7 +47,6 @@ export function AudioVisualizer({ stream, isRecording, onClick }: AudioVisualize
     } else {
       cleanup()
     }
-    
   }, [stream, isRecording])
 
   useEffect(() => {
@@ -99,11 +97,19 @@ export function AudioVisualizer({ stream, isRecording, onClick }: AudioVisualize
   }
 
   const getBarColor = (normalizedHeight: number) => {
-    const intensity = Math.floor(normalizedHeight * AUDIO_CONFIG.COLOR.INTENSITY_RANGE) + AUDIO_CONFIG.COLOR.MIN_INTENSITY
+    const intensity =
+      Math.floor(normalizedHeight * AUDIO_CONFIG.COLOR.INTENSITY_RANGE) + AUDIO_CONFIG.COLOR.MIN_INTENSITY
     return `rgb(${intensity}, ${intensity}, ${intensity})`
   }
 
-  const drawBar = (ctx: CanvasRenderingContext2D, x: number, centerY: number, width: number, height: number, color: string) => {
+  const drawBar = (
+    ctx: CanvasRenderingContext2D,
+    x: number,
+    centerY: number,
+    width: number,
+    height: number,
+    color: string
+  ) => {
     ctx.fillStyle = color
     ctx.fillRect(x, centerY - height, width, height)
     ctx.fillRect(x, centerY, width, height)
@@ -130,7 +136,10 @@ export function AudioVisualizer({ stream, isRecording, onClick }: AudioVisualize
 
       ctx.clearRect(0, 0, canvas.width / dpr, canvas.height / dpr)
 
-      const barWidth = Math.max(AUDIO_CONFIG.MIN_BAR_WIDTH, canvas.width / dpr / bufferLength - AUDIO_CONFIG.BAR_SPACING)
+      const barWidth = Math.max(
+        AUDIO_CONFIG.MIN_BAR_WIDTH,
+        canvas.width / dpr / bufferLength - AUDIO_CONFIG.BAR_SPACING
+      )
       const centerY = canvas.height / dpr / 2
       let x = 0
 

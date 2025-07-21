@@ -32,7 +32,12 @@ export function Sorter({ className }: SorterProps) {
     shallow: false,
     history: "push",
   })
-  const [page, setPage] = useQueryState("page", { ...parseAsInteger, shallow: false, history: "push", clearOnDefault: true })
+  const [page, setPage] = useQueryState("page", {
+    ...parseAsInteger,
+    shallow: false,
+    history: "push",
+    clearOnDefault: true,
+  })
 
   return (
     <div className={className}>
@@ -43,7 +48,10 @@ export function Sorter({ className }: SorterProps) {
             <ChevronIcon />
           </div>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-[240px] rounded-md border-none bg-white p-0 text-sm font-medium tracking-tight text-primary shadow-2xl ring-1 ring-black/10" align="end">
+        <DropdownMenuContent
+          className="w-[240px] rounded-md border-none bg-white p-0 text-sm font-medium tracking-tight text-primary shadow-2xl ring-1 ring-black/10"
+          align="end"
+        >
           {Object.entries(LABELS).map(([key, label]) => (
             <DropdownMenuItem
               key={label}

@@ -16,13 +16,21 @@ import { SearchButton } from "./search-button"
 import { NavigationItem } from "./navigation-item"
 import Link from "next/link"
 
-const ProductAddedAlert = dynamic(() => import("components/product/product-added-alert").then((mod) => mod.ProductAddedAlert))
+const ProductAddedAlert = dynamic(() =>
+  import("components/product/product-added-alert").then((mod) => mod.ProductAddedAlert)
+)
 
 interface NavigationBarProps {
   items: NavItem[]
 }
 
-function VariantGrid({ variant, items }: { variant?: "text-grid" | "image-grid" | "text-image-grid"; items?: TextGridItem[] | ImageGridItem[] | TextImageGridItem[] }) {
+function VariantGrid({
+  variant,
+  items,
+}: {
+  variant?: "text-grid" | "image-grid" | "text-image-grid"
+  items?: TextGridItem[] | ImageGridItem[] | TextImageGridItem[]
+}) {
   if (!items) return null
 
   switch (variant) {
@@ -41,7 +49,10 @@ export function NavigationBar({ items }: NavigationBarProps) {
   const itemsMarkup = items.map((singleMenuItem) => (
     <li
       data-content={singleMenuItem.text}
-      className={cn("menu__item not-supports-[container-type]:md:h-full relative z-50 supports-[container-type]:@3xl:h-full", { menu__dropdown: !!singleMenuItem.submenu })}
+      className={cn(
+        "menu__item not-supports-[container-type]:md:h-full relative z-50 supports-[container-type]:@3xl:h-full",
+        { menu__dropdown: !!singleMenuItem.submenu }
+      )}
       key={singleMenuItem.text}
     >
       <NavigationItem singleMenuItem={singleMenuItem} />
@@ -55,7 +66,11 @@ export function NavigationBar({ items }: NavigationBarProps) {
   return (
     <header className="mega-navbar sticky top-0 z-50 mx-auto my-0 flex w-full flex-wrap content-center items-center justify-between border-b border-black/10 bg-white p-4 py-6">
       <div className="not-supports-[container-type]:md:mx-auto not-supports-[container-type]:md:w-full not-supports-[container-type]:md:max-w-container-md not-supports-[container-type]:md:px-0 flex justify-start px-4 supports-[container-type]:@3xl:mx-auto supports-[container-type]:@3xl:w-full supports-[container-type]:@3xl:max-w-container-md supports-[container-type]:@3xl:px-0">
-        <Link prefetch={false} href="/" className="brand not-supports-[container-type]:md:flex mr-20 hidden items-center text-xl font-bold supports-[container-type]:@3xl:flex">
+        <Link
+          prefetch={false}
+          href="/"
+          className="brand not-supports-[container-type]:md:flex mr-20 hidden items-center text-xl font-bold supports-[container-type]:@3xl:flex"
+        >
           Acme
         </Link>
 

@@ -20,14 +20,12 @@ export function CarouselSection({ items, title, className }: CarouselSectionProp
   useEffect(() => {
     const observers: IntersectionObserver[] = []
 
-    
     const initialVisible = new Set<number>()
     for (let i = 0; i < Math.min(4, items.length); i++) {
       initialVisible.add(i)
     }
     setVisibleItems(initialVisible)
 
-    
     itemRefs.current.forEach((ref, index) => {
       if (ref && index >= 4) {
         const observer = new IntersectionObserver(
@@ -74,7 +72,11 @@ export function CarouselSection({ items, title, className }: CarouselSectionProp
                 itemRefs.current[idx] = el
               }}
             >
-              {visibleItems.has(idx) ? <ProductCard prefetch={false} priority={idx === 0} {...product} /> : <div className="aspect-square animate-pulse rounded bg-gray-100" />}
+              {visibleItems.has(idx) ? (
+                <ProductCard prefetch={false} priority={idx === 0} {...product} />
+              ) : (
+                <div className="aspect-square animate-pulse rounded bg-gray-100" />
+              )}
             </CarouselItem>
           ))}
         </CarouselContent>

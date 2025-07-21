@@ -1,4 +1,3 @@
-
 "use client"
 
 import { type KeyboardEvent, useState } from "react"
@@ -63,7 +62,10 @@ export function Autocomplete({ className }: AutocompleteProps) {
         />
       </div>
 
-      <div className={cn("absolute top-10 z-50 w-[240px] rounded-b-md bg-white shadow-lg", { hidden: !isOpen })} ref={ref}>
+      <div
+        className={cn("absolute top-10 z-50 w-[240px] rounded-b-md bg-white shadow-lg", { hidden: !isOpen })}
+        ref={ref}
+      >
         {hasResults &&
           results.map((singleProduct) => (
             <Link
@@ -75,7 +77,9 @@ export function Autocomplete({ className }: AutocompleteProps) {
               <p className="line-clamp-2 text-xs">{getHighlightedText(singleProduct.title, query)}</p>
             </Link>
           ))}
-        {status === "error" && <p className="p-4 text-xs text-red-500">Sorry, something went wrong, please try again later</p>}
+        {status === "error" && (
+          <p className="p-4 text-xs text-red-500">Sorry, something went wrong, please try again later</p>
+        )}
       </div>
     </div>
   )

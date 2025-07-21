@@ -3721,7 +3721,10 @@ export enum CollectionRuleColumn {
   Vendor = "VENDOR",
 }
 
-export type CollectionRuleConditionObject = CollectionRuleMetafieldCondition | CollectionRuleProductCategoryCondition | CollectionRuleTextCondition
+export type CollectionRuleConditionObject =
+  | CollectionRuleMetafieldCondition
+  | CollectionRuleProductCategoryCondition
+  | CollectionRuleTextCondition
 
 export type CollectionRuleConditions = {
   __typename?: "CollectionRuleConditions"
@@ -8476,7 +8479,11 @@ export enum DiscountApplicationTargetType {
   ShippingLine = "SHIPPING_LINE",
 }
 
-export type DiscountAutomatic = DiscountAutomaticApp | DiscountAutomaticBasic | DiscountAutomaticBxgy | DiscountAutomaticFreeShipping
+export type DiscountAutomatic =
+  | DiscountAutomaticApp
+  | DiscountAutomaticBasic
+  | DiscountAutomaticBxgy
+  | DiscountAutomaticFreeShipping
 
 export type DiscountAutomaticActivatePayload = {
   __typename?: "DiscountAutomaticActivatePayload"
@@ -17416,7 +17423,15 @@ export enum MetafieldOwnerType {
   Validation = "VALIDATION",
 }
 
-export type MetafieldReference = Collection | GenericFile | MediaImage | Metaobject | OnlineStorePage | Product | ProductVariant | Video
+export type MetafieldReference =
+  | Collection
+  | GenericFile
+  | MediaImage
+  | Metaobject
+  | OnlineStorePage
+  | Product
+  | ProductVariant
+  | Video
 
 export type MetafieldReferenceConnection = {
   __typename?: "MetafieldReferenceConnection"
@@ -34292,7 +34307,10 @@ export type SubscriptionCyclePriceAdjustment = {
   computedPrice: MoneyV2
 }
 
-export type SubscriptionDeliveryMethod = SubscriptionDeliveryMethodLocalDelivery | SubscriptionDeliveryMethodPickup | SubscriptionDeliveryMethodShipping
+export type SubscriptionDeliveryMethod =
+  | SubscriptionDeliveryMethodLocalDelivery
+  | SubscriptionDeliveryMethodPickup
+  | SubscriptionDeliveryMethodShipping
 
 export type SubscriptionDeliveryMethodInput = {
   localDelivery?: InputMaybe<SubscriptionDeliveryMethodLocalDeliveryInput>
@@ -34427,9 +34445,14 @@ export type SubscriptionDeliveryMethodShippingOptionInput = {
   title?: InputMaybe<Scalars["String"]["input"]>
 }
 
-export type SubscriptionDeliveryOption = SubscriptionLocalDeliveryOption | SubscriptionPickupOption | SubscriptionShippingOption
+export type SubscriptionDeliveryOption =
+  | SubscriptionLocalDeliveryOption
+  | SubscriptionPickupOption
+  | SubscriptionShippingOption
 
-export type SubscriptionDeliveryOptionResult = SubscriptionDeliveryOptionResultFailure | SubscriptionDeliveryOptionResultSuccess
+export type SubscriptionDeliveryOptionResult =
+  | SubscriptionDeliveryOptionResultFailure
+  | SubscriptionDeliveryOptionResultSuccess
 
 export type SubscriptionDeliveryOptionResultFailure = {
   __typename?: "SubscriptionDeliveryOptionResultFailure"
@@ -35179,7 +35202,9 @@ export type SubscriptionShippingOption = {
   title: Scalars["String"]["output"]
 }
 
-export type SubscriptionShippingOptionResult = SubscriptionShippingOptionResultFailure | SubscriptionShippingOptionResultSuccess
+export type SubscriptionShippingOptionResult =
+  | SubscriptionShippingOptionResultFailure
+  | SubscriptionShippingOptionResultSuccess
 
 export type SubscriptionShippingOptionResultFailure = {
   __typename?: "SubscriptionShippingOptionResultFailure"

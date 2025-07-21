@@ -47,7 +47,9 @@ export async function GET(req: Request) {
 
   const productTotalReviewsDelta = allProducts
     ?.map((product) => {
-      const productReviews = allReviews.filter((review) => review.product_handle === product.handle && review.published && !review.hidden)
+      const productReviews = allReviews.filter(
+        (review) => review.product_handle === product.handle && review.published && !review.hidden
+      )
       if (!!productReviews.length && productReviews.length !== product.totalReviews) {
         const avgRating = productReviews.reduce((acc, review) => acc + review.rating, 0) / productReviews.length || 0
         return { ...product, avgRating, totalReviews: productReviews.length }

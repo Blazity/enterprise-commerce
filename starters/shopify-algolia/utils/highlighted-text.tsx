@@ -18,5 +18,5 @@ export function getHighlightedText(text: string, highlight: string) {
 }
 
 function escapeRegExp(value: string) {
-  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") 
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
 }

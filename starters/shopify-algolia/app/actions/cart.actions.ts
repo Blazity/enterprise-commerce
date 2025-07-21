@@ -37,7 +37,8 @@ export async function getItemAvailability({
 
   if (!cartId) {
     const product = await getProduct(productId!)
-    const inStockQuantity = product?.variants?.find((variant) => variant.id === variantId)?.quantityAvailable ?? Number.POSITIVE_INFINITY
+    const inStockQuantity =
+      product?.variants?.find((variant) => variant.id === variantId)?.quantityAvailable ?? Number.POSITIVE_INFINITY
     return {
       inCartQuantity: 0,
       inStockQuantity,

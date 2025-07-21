@@ -65,7 +65,9 @@ export function VariantDropdowns({ variants, className, handle, combination, cur
 
     let currentValue: string | undefined
     if (combination) {
-      const selectedOption = variants.find((v) => v.id === combination.id)?.selectedOptions.find((opt) => opt.name === optionName)
+      const selectedOption = variants
+        .find((v) => v.id === combination.id)
+        ?.selectedOptions.find((opt) => opt.name === optionName)
       currentValue = selectedOption?.value
     }
 

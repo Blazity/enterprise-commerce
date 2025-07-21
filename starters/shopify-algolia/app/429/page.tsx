@@ -33,7 +33,8 @@ export default function RateLimitPage() {
             Why am I seeing this?
           </h3>
           <p className="text-balance text-sm text-gray-600 dark:text-gray-400">
-            For demo purposes of <b>enterprise-commerce</b>, we limit amount of requests that can be made in a short time period in order to prevent abuse.
+            For demo purposes of <b>enterprise-commerce</b>, we limit amount of requests that can be made in a short
+            time period in order to prevent abuse.
           </p>
         </div>
 
@@ -61,7 +62,12 @@ export default function RateLimitPage() {
         <div className="mt-12 text-sm text-gray-500 dark:text-gray-400">
           <p>
             If you continue to experience issues, please{" "}
-            <a href="https://docs.blazity.com/contact" className="underline hover:text-gray-700 dark:hover:text-gray-300" target="_blank" rel="noopener noreferrer">
+            <a
+              href="https://docs.blazity.com/contact"
+              className="underline hover:text-gray-700 dark:hover:text-gray-300"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               contact our support team
             </a>
             .

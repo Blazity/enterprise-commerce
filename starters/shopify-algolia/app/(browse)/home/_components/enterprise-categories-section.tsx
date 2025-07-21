@@ -2,15 +2,12 @@ import { getCollection } from "lib/algolia/rate-limited"
 import { EnterpriseCategoryCard } from "components/enterprise-category-card"
 import { PlatformCollection } from "lib/shopify/types"
 
-
 const FEATURED_CATEGORY_HANDLES = ["fashion", "electronics", "sports-and-outdoors", "furniture"]
 
 export async function EnterpriseCategoriesSection() {
-  
   const categoryPromises = FEATURED_CATEGORY_HANDLES.map((handle) => getCollection(handle))
   const categoriesData = await Promise.all(categoryPromises)
 
-  
   const featuredCategories = categoriesData.filter((cat) => cat !== null) as PlatformCollection[]
 
   if (featuredCategories.length === 0) {

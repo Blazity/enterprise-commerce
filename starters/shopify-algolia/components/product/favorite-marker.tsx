@@ -35,7 +35,13 @@ export function FavoriteMarker({ handle }: { handle: string }) {
 
   return (
     <>
-      <Button aria-label="Favorite this item" type="submit" onClick={handleClick} variant="outline" className="group w-full bg-white transition-all hover:bg-gray-100">
+      <Button
+        aria-label="Favorite this item"
+        type="submit"
+        onClick={handleClick}
+        variant="outline"
+        className="group w-full bg-white transition-all hover:bg-gray-100"
+      >
         {isPending ? (
           <div className="flex items-center justify-center">
             <Spinner className="size-4 bg-transparent" />
@@ -46,7 +52,11 @@ export function FavoriteMarker({ handle }: { handle: string }) {
               onAnimationEnd={() => {
                 setIsAnimating(false)
               }}
-              className={cn("mr-2 size-5 transition-all", isActive ? "text-red-500 " : "text-gray-300", isAnimating && "animate-single-bounce")}
+              className={cn(
+                "mr-2 size-5 transition-all",
+                isActive ? "text-red-500 " : "text-gray-300",
+                isAnimating && "animate-single-bounce"
+              )}
             />
             {isActive ? "Saved to Favorites" : "Add to Favorites"}
           </>

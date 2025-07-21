@@ -1,6 +1,10 @@
 import { checkRateLimit } from "@vercel/firewall"
 
-type ApiRateLimitKey = "algolia-data-sync" | "algolia-product-update" | "algolia-review-update" | "algolia-category-update"
+type ApiRateLimitKey =
+  | "algolia-data-sync"
+  | "algolia-product-update"
+  | "algolia-review-update"
+  | "algolia-category-update"
 
 export async function checkApiRateLimit(key: ApiRateLimitKey, request: Request): Promise<Response | null> {
   if (process.env.NODE_ENV === "development" && !process.env.VERCEL_FIREWALL_DEV_HOST) {

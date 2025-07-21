@@ -118,7 +118,14 @@ const Carousel = forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>
           canScrollNext,
         }}
       >
-        <div ref={ref} onKeyDownCapture={handleKeyDown} className={cn("relative", className)} role="region" aria-roledescription="carousel" {...props}>
+        <div
+          ref={ref}
+          onKeyDownCapture={handleKeyDown}
+          className={cn("relative", className)}
+          role="region"
+          aria-roledescription="carousel"
+          {...props}
+        >
           {children}
         </div>
       </CarouselContext.Provider>
@@ -127,76 +134,88 @@ const Carousel = forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>
 )
 Carousel.displayName = "Carousel"
 
-const CarouselContent = forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(({ className, ...props }, ref) => {
-  const { carouselRef, orientation } = useCarousel()
+const CarouselContent = forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+  ({ className, ...props }, ref) => {
+    const { carouselRef, orientation } = useCarousel()
 
-  return (
-    <div ref={carouselRef} className="overflow-hidden">
-      <div ref={ref} className={cn("flex", orientation === "horizontal" ? "-ml-4" : "-mt-4 flex-col", className)} {...props} />
-    </div>
-  )
-})
+    return (
+      <div ref={carouselRef} className="overflow-hidden">
+        <div
+          ref={ref}
+          className={cn("flex", orientation === "horizontal" ? "-ml-4" : "-mt-4 flex-col", className)}
+          {...props}
+        />
+      </div>
+    )
+  }
+)
 CarouselContent.displayName = "CarouselContent"
 
-const CarouselItem = forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(({ className, ...props }, ref) => {
-  const { orientation } = useCarousel()
+const CarouselItem = forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+  ({ className, ...props }, ref) => {
+    const { orientation } = useCarousel()
 
-  return (
-    <div
-      ref={ref}
-      role="group"
-      aria-roledescription="slide"
-      className={cn("min-w-0 shrink-0 grow-0 basis-full", orientation === "horizontal" ? "pl-4" : "pt-4", className)}
-      {...props}
-    />
-  )
-})
+    return (
+      <div
+        ref={ref}
+        role="group"
+        aria-roledescription="slide"
+        className={cn("min-w-0 shrink-0 grow-0 basis-full", orientation === "horizontal" ? "pl-4" : "pt-4", className)}
+        {...props}
+      />
+    )
+  }
+)
 CarouselItem.displayName = "CarouselItem"
 
-const CarouselPrevious = forwardRef<HTMLButtonElement, React.ComponentProps<typeof Button>>(({ className, ...props }, ref) => {
-  const { scrollPrev, canScrollPrev } = useCarousel()
+const CarouselPrevious = forwardRef<HTMLButtonElement, React.ComponentProps<typeof Button>>(
+  ({ className, ...props }, ref) => {
+    const { scrollPrev, canScrollPrev } = useCarousel()
 
-  return (
-    <Button
-      ref={ref}
-      variant="primary"
-      size="lg"
-      className={cn(
-        "absolute flex size-10 rotate-90 items-center justify-center rounded-full p-0 transition-[colors,transform] hover:bg-gray-50 hover:text-inherit active:scale-[0.98]",
-        className
-      )}
-      disabled={!canScrollPrev}
-      onClick={scrollPrev}
-      {...props}
-    >
-      <ChevronIcon className="size-4" />
-      <span className="sr-only">Previous slide</span>
-    </Button>
-  )
-})
+    return (
+      <Button
+        ref={ref}
+        variant="primary"
+        size="lg"
+        className={cn(
+          "absolute flex size-10 rotate-90 items-center justify-center rounded-full p-0 transition-[colors,transform] hover:bg-gray-50 hover:text-inherit active:scale-[0.98]",
+          className
+        )}
+        disabled={!canScrollPrev}
+        onClick={scrollPrev}
+        {...props}
+      >
+        <ChevronIcon className="size-4" />
+        <span className="sr-only">Previous slide</span>
+      </Button>
+    )
+  }
+)
 CarouselPrevious.displayName = "CarouselPrevious"
 
-const CarouselNext = forwardRef<HTMLButtonElement, React.ComponentProps<typeof Button>>(({ className, ...props }, ref) => {
-  const { scrollNext, canScrollNext } = useCarousel()
+const CarouselNext = forwardRef<HTMLButtonElement, React.ComponentProps<typeof Button>>(
+  ({ className, ...props }, ref) => {
+    const { scrollNext, canScrollNext } = useCarousel()
 
-  return (
-    <Button
-      ref={ref}
-      variant="primary"
-      size="lg"
-      className={cn(
-        "absolute flex size-10 rotate-90 items-center justify-center rounded-full p-0 transition-[colors,transform] hover:bg-gray-50 hover:text-inherit active:scale-[0.98]",
-        className
-      )}
-      disabled={!canScrollNext}
-      onClick={scrollNext}
-      {...props}
-    >
-      <ChevronIcon className="size-4 rotate-180" />
-      <span className="sr-only">Next slide</span>
-    </Button>
-  )
-})
+    return (
+      <Button
+        ref={ref}
+        variant="primary"
+        size="lg"
+        className={cn(
+          "absolute flex size-10 rotate-90 items-center justify-center rounded-full p-0 transition-[colors,transform] hover:bg-gray-50 hover:text-inherit active:scale-[0.98]",
+          className
+        )}
+        disabled={!canScrollNext}
+        onClick={scrollNext}
+        {...props}
+      >
+        <ChevronIcon className="size-4 rotate-180" />
+        <span className="sr-only">Next slide</span>
+      </Button>
+    )
+  }
+)
 CarouselNext.displayName = "CarouselNext"
 
 export { type CarouselApi, Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext }

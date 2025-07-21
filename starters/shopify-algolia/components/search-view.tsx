@@ -59,7 +59,14 @@ export async function SearchView({ searchParams, disabledFacets, collection, bas
   })
 
   const hasVendorFilter = rest.vendors && rest.vendors.length > 0
-  const { facetDistribution, hits, totalPages, totalHits, independentFacetDistribution } = await getFilteredProducts(q, sortBy, page, filter, collection?.handle, hasVendorFilter)
+  const { facetDistribution, hits, totalPages, totalHits, independentFacetDistribution } = await getFilteredProducts(
+    q,
+    sortBy,
+    page,
+    filter,
+    collection?.handle,
+    hasVendorFilter
+  )
 
   const { getPageDisplayTypeByHandle } = await import("utils/get-page-display-type")
 

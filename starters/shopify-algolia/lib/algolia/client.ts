@@ -47,11 +47,17 @@ export const algolia = (args: { applicationId: string; apiKey: string }) => {
   }
 }
 
-const search = async <T extends Record<string, any>>(args: SearchSingleIndexProps, client: ReturnType<typeof algoliaClient>) => {
+const search = async <T extends Record<string, any>>(
+  args: SearchSingleIndexProps,
+  client: ReturnType<typeof algoliaClient>
+) => {
   return client.searchSingleIndex<T>(args)
 }
 
-const getAllResults = async <T extends Record<string, any>>(client: ReturnType<typeof algoliaClient>, args: BrowseProps) => {
+const getAllResults = async <T extends Record<string, any>>(
+  client: ReturnType<typeof algoliaClient>,
+  args: BrowseProps
+) => {
   const allHits: T[] = []
   let totalPages: number
   let cursor: string | undefined
@@ -96,18 +102,29 @@ const createObjects = async (args: PartialUpdateObjectsOptions, client: ReturnTy
   })
 }
 
-const multiSearch = async <T extends Record<string, any>>(args: SearchMethodParams, client: ReturnType<typeof algoliaClient>) => {
+const multiSearch = async <T extends Record<string, any>>(
+  args: SearchMethodParams,
+  client: ReturnType<typeof algoliaClient>
+) => {
   return client.search<T>(args) as Promise<{ results: SearchResponse<T>[] }>
 }
 
-const getRecommendations = async (client: ReturnType<ReturnType<typeof algoliaClient>["initRecommend"]>, args: GetRecommendationsParams) => {
+const getRecommendations = async (
+  client: ReturnType<ReturnType<typeof algoliaClient>["initRecommend"]>,
+  args: GetRecommendationsParams
+) => {
   return client.getRecommendations(args)
 }
 
 const getFacetValues = async (client: ReturnType<typeof algoliaClient>, args: SearchForFacetValuesProps) => {
   return client.searchForFacetValues(args)
 }
-export type SortType = "minPrice:desc" | "minPrice:asc" | "avgRating:desc" | "updatedAtTimestamp:asc" | "updatedAtTimestamp:desc"
+export type SortType =
+  | "minPrice:desc"
+  | "minPrice:asc"
+  | "avgRating:desc"
+  | "updatedAtTimestamp:asc"
+  | "updatedAtTimestamp:desc"
 
 const mapIndexToSort = (index: string, sortOption: SortType) => {
   switch (sortOption) {

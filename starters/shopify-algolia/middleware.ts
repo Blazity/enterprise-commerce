@@ -141,7 +141,10 @@ export const config = {
 
 function isCLP(request: NextRequest): boolean {
   const isCategory = request.nextUrl.pathname.startsWith("/category/")
-  const isInternalRoute = request.nextUrl.pathname.startsWith("/category/clp/") || request.nextUrl.pathname.includes("/clp") || request.nextUrl.pathname.includes("/plp")
+  const isInternalRoute =
+    request.nextUrl.pathname.startsWith("/category/clp/") ||
+    request.nextUrl.pathname.includes("/clp") ||
+    request.nextUrl.pathname.includes("/plp")
 
   const isFaceted = facetParams.some((param) => request.nextUrl.searchParams.has(param))
 
@@ -150,7 +153,10 @@ function isCLP(request: NextRequest): boolean {
 
 function isPLP(request: NextRequest): boolean {
   const isCategory = request.nextUrl.pathname.startsWith("/category/")
-  const isInternalRoute = request.nextUrl.pathname.startsWith("/category/plp/") || request.nextUrl.pathname.includes("/clp") || request.nextUrl.pathname.includes("/plp")
+  const isInternalRoute =
+    request.nextUrl.pathname.startsWith("/category/plp/") ||
+    request.nextUrl.pathname.includes("/clp") ||
+    request.nextUrl.pathname.includes("/plp")
 
   const isFaceted = facetParams.some((param) => request.nextUrl.searchParams.has(param))
 

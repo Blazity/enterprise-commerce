@@ -7,7 +7,19 @@ import { useEffect, useRef, useState } from "react"
 export const ModernNewArrivalsSection = ({
   products,
 }: {
-  products: Pick<CommerceProduct, "id" | "variants" | "handle" | "images" | "title" | "featuredImage" | "minPrice" | "avgRating" | "totalReviews" | "vendor">[]
+  products: Pick<
+    CommerceProduct,
+    | "id"
+    | "variants"
+    | "handle"
+    | "images"
+    | "title"
+    | "featuredImage"
+    | "minPrice"
+    | "avgRating"
+    | "totalReviews"
+    | "vendor"
+  >[]
 }) => {
   const [visibleProducts, setVisibleProducts] = useState<Set<number>>(new Set())
   const productRefs = useRef<(HTMLDivElement | null)[]>([])
@@ -15,10 +27,8 @@ export const ModernNewArrivalsSection = ({
   useEffect(() => {
     const observers: IntersectionObserver[] = []
 
-    
     setVisibleProducts(new Set([0, 1, 2, 3]))
 
-    
     productRefs.current.forEach((ref, index) => {
       if (ref && index >= 4) {
         const observer = new IntersectionObserver(
@@ -46,7 +56,6 @@ export const ModernNewArrivalsSection = ({
     }
   }, [products.length])
 
-  
   if (products.length < 8) return null
 
   return (
@@ -54,7 +63,9 @@ export const ModernNewArrivalsSection = ({
       <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8">
         {}
         <div className="mb-12">
-          <h2 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl lg:text-5xl">New Arrivals</h2>
+          <h2 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl lg:text-5xl">
+            New Arrivals
+          </h2>
           <p className="mt-2 text-base text-muted-foreground lg:text-lg">Fresh styles, just dropped</p>
         </div>
 
@@ -70,11 +81,18 @@ export const ModernNewArrivalsSection = ({
             >
               {visibleProducts.has(index) ? (
                 <div className="relative overflow-hidden rounded-lg bg-secondary/5 transition-all duration-300 hover:bg-secondary/10">
-                  <ProductCard {...product} prefetch={false} priority={index < 4} className="border-0 bg-transparent hover:bg-transparent" />
+                  <ProductCard
+                    {...product}
+                    prefetch={false}
+                    priority={index < 4}
+                    className="border-0 bg-transparent hover:bg-transparent"
+                  />
                   {}
                   {index < 3 && (
                     <div className="absolute left-3 top-3 z-10">
-                      <span className="inline-flex items-center rounded-full bg-foreground px-2 py-1 text-xs font-medium text-background">NEW</span>
+                      <span className="inline-flex items-center rounded-full bg-foreground px-2 py-1 text-xs font-medium text-background">
+                        NEW
+                      </span>
                     </div>
                   )}
                 </div>
@@ -87,9 +105,18 @@ export const ModernNewArrivalsSection = ({
 
         {}
         <div className="mt-12 text-center">
-          <a href="/search?sort=created_at_desc" className="inline-flex items-center gap-2 text-sm font-medium text-foreground underline-offset-4 transition-all hover:underline">
+          <a
+            href="/search?sort=created_at_desc"
+            className="inline-flex items-center gap-2 text-sm font-medium text-foreground underline-offset-4 transition-all hover:underline"
+          >
             View all new arrivals
-            <svg className="size-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <svg
+              className="size-4 transition-transform group-hover:translate-x-1"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
               <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
             </svg>
           </a>

@@ -41,7 +41,12 @@ function FavoriteProductCard({
   const variantPrice = variant?.price
 
   return (
-    <Link className="group flex size-full flex-col overflow-hidden rounded-lg" aria-label={linkAria} href={href} prefetch={false}>
+    <Link
+      className="group flex size-full flex-col overflow-hidden rounded-lg"
+      aria-label={linkAria}
+      href={href}
+      prefetch={false}
+    >
       <div className="relative aspect-square overflow-hidden">
         <Image
           priority={priority}
@@ -58,7 +63,10 @@ function FavoriteProductCard({
         {variantInfo.length > 0 && (
           <div className="flex flex-wrap gap-1 pt-2">
             {variantInfo.map((info, infoIdx) => (
-              <span key={`${info.name}-${infoIdx}`} className="inline-flex items-center rounded-md bg-gray-100 px-2 py-1 text-xs font-medium text-gray-900">
+              <span
+                key={`${info.name}-${infoIdx}`}
+                className="inline-flex items-center rounded-md bg-gray-100 px-2 py-1 text-xs font-medium text-gray-900"
+              >
                 {info.value}
               </span>
             ))}
@@ -91,7 +99,8 @@ function FavoriteProductCard({
             <div className="flex w-full items-baseline justify-between text-sm">
               <span className="text-primary/50">Price</span>
               <span className="text-base font-semibold md:text-lg">
-                {mapCurrencyToSign((variantPrice.currencyCode as CurrencyType) || "USD") + Number(variantPrice.amount).toFixed(2)}
+                {mapCurrencyToSign((variantPrice.currencyCode as CurrencyType) || "USD") +
+                  Number(variantPrice.amount).toFixed(2)}
               </span>
             </div>
           </div>
@@ -198,7 +207,9 @@ async function FavoritesView() {
           let filteredImages = product.images
 
           for (const optionName of visualOptions) {
-            const option = variant.selectedOptions.find((opt: any) => opt.name.toLowerCase() === optionName.toLowerCase())
+            const option = variant.selectedOptions.find(
+              (opt: any) => opt.name.toLowerCase() === optionName.toLowerCase()
+            )
             if (option) {
               const variantImages = filterImagesByVisualOption(product.images, option.value, option.name)
               if (variantImages.length > 0 && variantImages !== product.images) {
@@ -221,14 +232,16 @@ async function FavoritesView() {
         featuredImage,
         variantInfo,
       })
-    } catch (error) {
-      
-    }
+    } catch (error) {}
   }
 
   return (
     <>
-      {variantData.length === 0 ? <p className="text-lg tracking-tight">No favorite products. You can add them by clicking on a heart icon on product page</p> : null}
+      {variantData.length === 0 ? (
+        <p className="text-lg tracking-tight">
+          No favorite products. You can add them by clicking on a heart icon on product page
+        </p>
+      ) : null}
       <div className="grid w-full grid-cols-[repeat(_auto-fill,minmax(140px,1fr)_)] items-start gap-4 gap-y-8 md:grid-cols-[repeat(_auto-fill,minmax(280px,1fr)_)]">
         {variantData.map((item, idx) => (
           <FavoriteProductCard

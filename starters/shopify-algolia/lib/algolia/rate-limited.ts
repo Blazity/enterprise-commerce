@@ -8,7 +8,14 @@ import { searchClient as algolia } from "./client"
 import { FilterBuilder } from "./filter-builder"
 import { HITS_PER_PAGE } from "constants/index"
 
-import { getDemoCategories, getDemoProductReviews, getDemoProducts, getDemoSingleCategory, getDemoSingleProduct, isDemoMode } from "utils/demo-utils"
+import {
+  getDemoCategories,
+  getDemoProductReviews,
+  getDemoProducts,
+  getDemoSingleCategory,
+  getDemoSingleProduct,
+  isDemoMode,
+} from "utils/demo-utils"
 import { notifyOptIn } from "utils/opt-in"
 
 import type { CommerceProduct } from "types"
@@ -44,7 +51,11 @@ async function checkAlgoliaRateLimit(key: RateLimitKey) {
       })
 
       if (!modifiedHeaders.get("x-real-ip")) {
-        const possibleIp = modifiedHeaders.get("x-forwarded-for") || modifiedHeaders.get("x-forwarded-host") || modifiedHeaders.get("host") || "127.0.0.1"
+        const possibleIp =
+          modifiedHeaders.get("x-forwarded-for") ||
+          modifiedHeaders.get("x-forwarded-host") ||
+          modifiedHeaders.get("host") ||
+          "127.0.0.1"
 
         modifiedHeaders.set("x-real-ip", possibleIp.split(",")[0].trim())
       }
@@ -220,10 +231,26 @@ const getProductReviewsCached = unstable_cache(
     const { hits, nbHits } = await algolia.search<Review>({
       indexName: env.ALGOLIA_REVIEWS_INDEX,
       searchParams: {
-        filters: algolia.filterBuilder().where("product_handle", handle).and().where("published", "true").and().where("hidden", "false").build(),
+        filters: algolia
+          .filterBuilder()
+          .where("product_handle", handle)
+          .and()
+          .where("published", "true")
+          .and()
+          .where("hidden", "false")
+          .build(),
         hitsPerPage: limit,
         page,
-        attributesToRetrieve: ["body", "rating", "verified", "reviewer", "published", "created_at", "hidden", "featured"],
+        attributesToRetrieve: [
+          "body",
+          "rating",
+          "verified",
+          "reviewer",
+          "published",
+          "created_at",
+          "hidden",
+          "featured",
+        ],
       },
     })
 
@@ -283,7 +310,14 @@ export const getSimilarProducts = async (collection: string | undefined, objectI
 }
 
 const getFilteredProductsCached = unstable_cache(
-  async (query: string, sortBy: string, page: number, filters: string, collectionHandle?: string, hasVendorFilter: boolean = false) => {
+  async (
+    query: string,
+    sortBy: string,
+    page: number,
+    filters: string,
+    collectionHandle?: string,
+    hasVendorFilter: boolean = false
+  ) => {
     if (isDemoMode()) return getDemoProducts()
 
     const indexName = algolia.mapIndexToSort(env.ALGOLIA_PRODUCTS_INDEX, sortBy as any)
@@ -297,7 +331,18 @@ const getFilteredProductsCached = unstable_cache(
             filters,
             page: page - 1,
             hitsPerPage: HITS_PER_PAGE,
-            attributesToRetrieve: ["id", "handle", "title", "priceRange", "featuredImage", "minPrice", "variants", "images", "avgRating", "totalReviews"],
+            attributesToRetrieve: [
+              "id",
+              "handle",
+              "title",
+              "priceRange",
+              "featuredImage",
+              "minPrice",
+              "variants",
+              "images",
+              "avgRating",
+              "totalReviews",
+            ],
             facets: ["flatOptions.Color", "avgRating", "vendor", "minPrice", "variants.availableForSale"],
             maxValuesPerFacet: 1000,
           },
@@ -305,7 +350,11 @@ const getFilteredProductsCached = unstable_cache(
         algolia.search<CommerceProduct>({
           indexName,
           searchParams: {
-            facets: ["vendor"].concat(env.SHOPIFY_HIERARCHICAL_NAV_HANDLE ? ["hierarchicalCategories.lvl0", "hierarchicalCategories.lvl1", "hierarchicalCategories.lvl2"] : []),
+            facets: ["vendor"].concat(
+              env.SHOPIFY_HIERARCHICAL_NAV_HANDLE
+                ? ["hierarchicalCategories.lvl0", "hierarchicalCategories.lvl1", "hierarchicalCategories.lvl2"]
+                : []
+            ),
             hitsPerPage: HITS_PER_PAGE,
             maxValuesPerFacet: 1000,
           },
@@ -374,7 +423,14 @@ const getFilteredProductsCached = unstable_cache(
   { revalidate: 86400, tags: ["search", "products"] }
 )
 
-export const getFilteredProducts = async (query: string, sortBy: string, page: number, filters: string, collectionHandle?: string, hasVendorFilter: boolean = false) => {
+export const getFilteredProducts = async (
+  query: string,
+  sortBy: string,
+  page: number,
+  filters: string,
+  collectionHandle?: string,
+  hasVendorFilter: boolean = false
+) => {
   await checkAlgoliaRateLimit("algolia-product-browse")
   return getFilteredProductsCached(query, sortBy, page, filters, collectionHandle, hasVendorFilter)
 }

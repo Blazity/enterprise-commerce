@@ -1,5 +1,12 @@
 import { isOptIn, notifyOptIn } from "utils/opt-in"
-import type { GetProductReviewsOpts, GetProductReviewsResponse, JudgeMeWebhookKey, ProductReviewArgs, ProductReviewBody, Review } from "./types"
+import type {
+  GetProductReviewsOpts,
+  GetProductReviewsResponse,
+  JudgeMeWebhookKey,
+  ProductReviewArgs,
+  ProductReviewBody,
+  Review,
+} from "./types"
 import { env } from "env.mjs"
 
 type CreateJudgeClientArgs = {
@@ -40,7 +47,10 @@ async function getProductReviews(
   const reviewsCount = await fetch(reviewsCountUrl)
   const { count } = (await reviewsCount.json()) as { count: number }
 
-  const reviews = (await fetch(url).then((res) => res.json())) as Pick<GetProductReviewsResponse, "per_page" | "reviews" | "current_page">
+  const reviews = (await fetch(url).then((res) => res.json())) as Pick<
+    GetProductReviewsResponse,
+    "per_page" | "reviews" | "current_page"
+  >
 
   return { ...reviews, total: count, totalPages: Math.ceil(count / reviews.per_page) }
 }

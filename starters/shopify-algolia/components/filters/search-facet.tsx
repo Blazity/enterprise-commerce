@@ -10,7 +10,13 @@ import { Button } from "components/ui/button-old"
 export function SearchFacet({ className }: { className?: string }) {
   const [query, setQuery] = useQueryState("q", { shallow: false })
   const [localQuery, setLocalQuery] = useState(query)
-  const [_, setPage] = useQueryState("page", { ...parseAsInteger, defaultValue: 1, shallow: false, history: "push", clearOnDefault: true })
+  const [_, setPage] = useQueryState("page", {
+    ...parseAsInteger,
+    defaultValue: 1,
+    shallow: false,
+    history: "push",
+    clearOnDefault: true,
+  })
 
   const debouncedQuery = useDebounce(localQuery, 500)
 

@@ -5,7 +5,8 @@ import { type CurrencyType, mapCurrencyToSign } from "utils/map-currency-to-sign
 import { createMultiOptionSlug } from "utils/visual-variant-utils"
 import type { CommerceProduct } from "types"
 
-interface CompactProductCardProps extends Pick<CommerceProduct, "variants" | "handle" | "title" | "featuredImage" | "minPrice"> {
+interface CompactProductCardProps
+  extends Pick<CommerceProduct, "variants" | "handle" | "title" | "featuredImage" | "minPrice"> {
   className?: string
   priority?: boolean
   selectedVariant?: any
@@ -27,13 +28,14 @@ export const CompactProductCard = ({
 }: CompactProductCardProps) => {
   const variantPrice = selectedVariant?.price || variants?.find(Boolean)?.price
 
-  
   let displayPrice = minPrice
   if (selectedVariant?.price?.amount) {
-    displayPrice = typeof selectedVariant.price.amount === "number" ? selectedVariant.price.amount : parseFloat(selectedVariant.price.amount)
+    displayPrice =
+      typeof selectedVariant.price.amount === "number"
+        ? selectedVariant.price.amount
+        : parseFloat(selectedVariant.price.amount)
   }
 
-  
   let href = `/product/${handle}`
   if (variantOptions && Object.keys(variantOptions).length > 0) {
     href = `/product/${createMultiOptionSlug(handle, variantOptions)}`

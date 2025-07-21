@@ -63,11 +63,9 @@ const heroConfig: HeroConfigItem[] = [
 ]
 
 export async function HeroSection({ className }: { className?: string }) {
-  
   const productPromises = heroConfig.map((config) => getProduct(config.productHandle).catch(() => null))
   const products = await Promise.all(productPromises)
 
-  
   const heroSlides: HeroSlide[] = heroConfig.map((config, index) => {
     const product = products[index]
     if (!product) {
@@ -77,13 +75,10 @@ export async function HeroSection({ className }: { className?: string }) {
       }
     }
 
-    
     const variant = getCombinationByMultiOption(product.variants, config.variantOptions)
 
-    
     let featuredImage = product.featuredImage
     if (variant && product.images && product.images.length > 0) {
-      
       const colorValue = config.variantOptions.color || Object.values(config.variantOptions)[0]
       const { images, activeIndex } = getImagesForCarousel(product.images, colorValue, "Color")
       if (activeIndex > 0 && images[activeIndex]) {
@@ -91,7 +86,6 @@ export async function HeroSection({ className }: { className?: string }) {
       }
     }
 
-    
     const enhancedProduct = {
       ...product,
       featuredImage,
