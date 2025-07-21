@@ -1,4 +1,4 @@
-/* eslint-disable react/no-children-prop */
+
 
 import Image from "next/image"
 import Link from "next/link"
@@ -14,23 +14,17 @@ interface CartItemProps extends PlatformCartItem {
 }
 
 export function CartItem(props: CartItemProps) {
-  // Get the visual option value (e.g., color) from the variant
-  const visualOptionValue = getVisualOptionValueFromCombination(props.merchandise)
   
-  // Filter images to get variant-specific images
+  const visualOptionValue = getVisualOptionValueFromCombination(props.merchandise)
+
+  
   const variantImages = filterImagesByVisualOption(props.merchandise.product.images, visualOptionValue || null)
   const variantImage = variantImages[0] || props.merchandise.product.featuredImage
 
   return (
     <li className={cn("flex items-center justify-between gap-6 py-2", props.className)}>
       <div className="flex h-[115px] w-[90px] shrink-0 items-center bg-neutral-100">
-        <Image
-          src={variantImage?.url || "/default-product-image.svg"}
-          alt={variantImage?.altText || props.merchandise.product.title}
-          width={115}
-          height={90}
-          sizes="100px"
-        />
+        <Image src={variantImage?.url || "/default-product-image.svg"} alt={variantImage?.altText || props.merchandise.product.title} width={115} height={90} sizes="100px" />
       </div>
       <div className="flex flex-1 flex-col items-start justify-around gap-0.5 text-[13px]">
         <Link href={`/product/${props.merchandise.product.handle}`} onClick={props.onProductClick}>

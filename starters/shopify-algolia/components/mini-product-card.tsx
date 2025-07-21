@@ -11,31 +11,20 @@ interface MiniProductCardProps extends Pick<CommerceProduct, "variants" | "handl
   loading?: "eager" | "lazy"
 }
 
-export const MiniProductCard = ({
-  variants,
-  handle,
-  title,
-  featuredImage,
-  minPrice,
-  className,
-  priority,
-  vendor,
-  prefetch = false,
-  loading = "lazy",
-}: MiniProductCardProps) => {
+export const MiniProductCard = ({ variants, handle, title, featuredImage, minPrice, className, priority, vendor, prefetch = false, loading = "lazy" }: MiniProductCardProps) => {
   const variantPrice = variants?.find(Boolean)?.price
   const currencySymbol = variantPrice ? mapCurrencyToSign((variantPrice.currencyCode as CurrencyType) || "USD") : "$"
 
   return (
-    <Link 
+    <Link
       className={cn(
-        "group relative flex h-full flex-col overflow-hidden rounded-lg border border-border/50 bg-background transition-all duration-300 hover:shadow-sm hover:border-border",
+        "group relative flex h-full flex-col overflow-hidden rounded-lg border border-border/50 bg-background transition-all duration-300 hover:border-border hover:shadow-sm",
         className
-      )} 
-      href={`/product/${handle}`} 
+      )}
+      href={`/product/${handle}`}
       prefetch={prefetch}
     >
-      {/* Ultra compact square image */}
+      {}
       <div className="relative aspect-[4/3] overflow-hidden bg-secondary/5">
         <Image
           priority={priority}
@@ -47,21 +36,18 @@ export const MiniProductCard = ({
           sizes="(max-width: 640px) 50vw, 180px"
         />
       </div>
-      
-      {/* Ultra minimal content */}
+
+      {}
       <div className="flex flex-1 flex-col p-2">
-        <h3 className="text-xs font-semibold line-clamp-1">
-          {title}
-        </h3>
-        
-        {vendor && (
-          <p className="text-[10px] text-muted-foreground line-clamp-1">{vendor}</p>
-        )}
-        
+        <h3 className="line-clamp-1 text-xs font-semibold">{title}</h3>
+
+        {vendor && <p className="line-clamp-1 text-[10px] text-muted-foreground">{vendor}</p>}
+
         <div className="mt-auto pt-1">
           {minPrice && (
             <p className="text-xs font-bold">
-              {currencySymbol}{minPrice.toFixed(2)}
+              {currencySymbol}
+              {minPrice.toFixed(2)}
             </p>
           )}
         </div>

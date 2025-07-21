@@ -24,18 +24,18 @@ export function VariantsSection({ variants, className, handle, combination }: Va
       <div className="relative flex w-full flex-wrap justify-center gap-2 md:justify-start">
         {combinations.map((singleCombination) => {
           const cartItem = cart?.items.find((item) => item.merchandise.id === singleCombination?.id)
+
           
-          // Get the actual variant to access selectedOptions
-          const variant = variants.find(v => v.id === singleCombination.id)
+          const variant = variants.find((v) => v.id === singleCombination.id)
+
           
-          // Create options object from selectedOptions for proper URL generation
           const optionsForUrl: Record<string, string> = {}
           if (variant?.selectedOptions) {
-            variant.selectedOptions.forEach(option => {
+            variant.selectedOptions.forEach((option) => {
               optionsForUrl[option.name] = option.value
             })
           }
-          
+
           return (
             <Variant
               cartItem={cartItem}

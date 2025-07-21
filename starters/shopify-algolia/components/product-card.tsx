@@ -37,13 +37,13 @@ export const ProductCard = ({
 
   if (variant === "hero") {
     return (
-      <Link 
+      <Link
         className={cn(
           "group flex flex-col overflow-hidden rounded-lg border border-background/20 bg-background/95 p-3 shadow-xl backdrop-blur transition-all duration-300 hover:scale-105 hover:shadow-2xl",
           className
-        )} 
-        aria-label={linkAria} 
-        href={path} 
+        )}
+        aria-label={linkAria}
+        href={path}
         prefetch={prefetch}
       >
         <div className="relative mb-3 aspect-square overflow-hidden rounded-md">
@@ -56,17 +56,11 @@ export const ProductCard = ({
             sizes="240px"
           />
         </div>
-        <h3 className="mb-1 line-clamp-2 text-sm font-semibold text-foreground">
-          {title}
-        </h3>
+        <h3 className="mb-1 line-clamp-2 text-sm font-semibold text-foreground">{title}</h3>
         {!!variantPrice && !!minPrice && (
-          <p className="text-sm font-medium text-primary">
-            {mapCurrencyToSign((variantPrice.currencyCode as CurrencyType) || "USD") + minPrice.toFixed(2)}
-          </p>
+          <p className="text-sm font-medium text-primary">{mapCurrencyToSign((variantPrice.currencyCode as CurrencyType) || "USD") + minPrice.toFixed(2)}</p>
         )}
-        <span className="mt-2 text-xs font-medium text-muted-foreground">
-          Shop Now →
-        </span>
+        <span className="mt-2 text-xs font-medium text-muted-foreground">Shop Now →</span>
       </Link>
     )
   }

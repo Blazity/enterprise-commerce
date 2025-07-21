@@ -5,10 +5,6 @@ import { useDebounce } from "@uidotdev/usehooks"
 import type { CommerceProduct } from "types"
 import { searchProducts } from "app/actions/product.actions"
 
-/*
- * Callback is optional to be called every time the query changes
- */
-
 type AutocompleteArgs = {
   callback?: (e: ChangeEvent<HTMLInputElement>) => void
   debounce?: number

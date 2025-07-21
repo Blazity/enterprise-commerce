@@ -1,13 +1,3 @@
-/* 
-
-  This file manages the logic for the mobile mega menu.
-  It employs native events and remains outside the React/Next.js lifecycle to avoid adding unnecessary JavaScript...
-   for components situated at the top of the tree. 
-
-  Thanks to the behavior of next/script, route changes do not result in multiple subscriptions to the same events.
-
-*/
-
 export const mobileInlineScript = `
 const menu = document.querySelector(".menu")
 const menuInner = menu?.querySelector(".menu__inner")

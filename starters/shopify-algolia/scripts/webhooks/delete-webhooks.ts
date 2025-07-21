@@ -1,7 +1,6 @@
 import { createAdminApiClient } from "@shopify/admin-api-client"
 import { env } from "../../env.mjs"
 
-// GraphQL queries and mutations
 const LIST_WEBHOOKS_QUERY = `#graphql
   query listAllWebhooks($first: Int!, $after: String) {
     webhookSubscriptions(first: $first, after: $after) {
@@ -69,13 +68,8 @@ interface WebhookSubscriptionsResponse {
 }
 
 async function deleteWebhooks(options: DeleteWebhooksOptions = {}) {
-  const {
-    filter,
-    dryRun = false,
-    force = false
-  } = options
+  const { filter, dryRun = false, force = false } = options
 
-  // Validate required environment variables
   if (!env.SHOPIFY_STORE_DOMAIN || !env.SHOPIFY_ADMIN_ACCESS_TOKEN) {
     console.error("❌ Missing required environment variables:")
     console.error("   - SHOPIFY_STORE_DOMAIN")
@@ -83,33 +77,31 @@ async function deleteWebhooks(options: DeleteWebhooksOptions = {}) {
     process.exit(1)
   }
 
-  // Create admin client
   const client = createAdminApiClient({
     storeDomain: env.SHOPIFY_STORE_DOMAIN,
     accessToken: env.SHOPIFY_ADMIN_ACCESS_TOKEN,
-    apiVersion: "2024-10"
+    apiVersion: "2024-10",
   })
 
   console.log("🗑️  Deleting webhooks for Shopify store:", env.SHOPIFY_STORE_DOMAIN)
-  
+
   if (dryRun) {
     console.log("⚠️  DRY RUN MODE - No webhooks will be deleted")
   }
 
   try {
-    // Fetch all webhooks with pagination
     console.log("\n📋 Fetching all webhooks...")
     const allWebhooks: WebhookEdge[] = []
     let hasNextPage = true
     let cursor: string | null = null
 
     while (hasNextPage) {
-      const response = await client.request(LIST_WEBHOOKS_QUERY, {
+      const response = (await client.request(LIST_WEBHOOKS_QUERY, {
         variables: {
           first: 50,
-          after: cursor
-        }
-      }) as WebhookSubscriptionsResponse
+          after: cursor,
+        },
+      })) as WebhookSubscriptionsResponse
 
       const webhooks = response.data?.webhookSubscriptions?.edges || []
       allWebhooks.push(...webhooks)
@@ -125,14 +117,12 @@ async function deleteWebhooks(options: DeleteWebhooksOptions = {}) {
 
     console.log(`📊 Found ${allWebhooks.length} webhook(s)`)
 
-    // Apply filter if provided
     let webhooksToDelete = allWebhooks
     if (filter) {
-      webhooksToDelete = allWebhooks.filter(webhook => {
+      webhooksToDelete = allWebhooks.filter((webhook) => {
         const topic = webhook.node.topic
         const url = webhook.node.endpoint?.callbackUrl || ""
-        return topic.toLowerCase().includes(filter.toLowerCase()) || 
-               url.toLowerCase().includes(filter.toLowerCase())
+        return topic.toLowerCase().includes(filter.toLowerCase()) || url.toLowerCase().includes(filter.toLowerCase())
       })
       console.log(`🔍 Filtered to ${webhooksToDelete.length} webhook(s) matching "${filter}"`)
     }
@@ -142,7 +132,6 @@ async function deleteWebhooks(options: DeleteWebhooksOptions = {}) {
       return
     }
 
-    // Display webhooks to be deleted
     console.log("\n📝 Webhooks to delete:")
     webhooksToDelete.forEach((webhook, index) => {
       console.log(`\n${index + 1}. Topic: ${webhook.node.topic}`)
@@ -150,20 +139,17 @@ async function deleteWebhooks(options: DeleteWebhooksOptions = {}) {
       console.log(`   URL: ${webhook.node.endpoint?.callbackUrl || "N/A"}`)
     })
 
-    // Confirm deletion if not forced
     if (!force && !dryRun) {
       console.log(`\n⚠️  This will delete ${webhooksToDelete.length} webhook(s).`)
       console.log("   Use --force to skip this confirmation.")
       console.log("   Press Ctrl+C to cancel.\n")
-      
-      // Simple confirmation
-      await new Promise(resolve => {
+
+      await new Promise((resolve) => {
         console.log("Waiting 5 seconds before proceeding...")
         setTimeout(resolve, 5000)
       })
     }
 
-    // Delete webhooks
     if (!dryRun) {
       console.log("\n🚀 Deleting webhooks...")
       let deletedCount = 0
@@ -173,8 +159,8 @@ async function deleteWebhooks(options: DeleteWebhooksOptions = {}) {
         try {
           const response = await client.request(DELETE_WEBHOOK_MUTATION, {
             variables: {
-              id: webhook.node.id
-            }
+              id: webhook.node.id,
+            },
           })
 
           if (response.data?.webhookSubscriptionDelete?.userErrors?.length > 0) {
@@ -197,20 +183,17 @@ async function deleteWebhooks(options: DeleteWebhooksOptions = {}) {
     } else {
       console.log("\n✅ DRY RUN complete - no webhooks were deleted")
     }
-
   } catch (error) {
     console.error("❌ Failed to delete webhooks:", error)
     process.exit(1)
   }
 }
 
-// Parse command line arguments
 const args = process.argv.slice(2)
-const filter = args.find(arg => arg.startsWith("--filter="))?.split("=")[1]
+const filter = args.find((arg) => arg.startsWith("--filter="))?.split("=")[1]
 const dryRun = args.includes("--dry-run")
 const force = args.includes("--force")
 
-// Show help if requested
 if (args.includes("--help")) {
   console.log(`
 Shopify Webhook Deletion Script
@@ -242,5 +225,4 @@ Examples:
   process.exit(0)
 }
 
-// Run the deletion
 deleteWebhooks({ filter, dryRun, force })

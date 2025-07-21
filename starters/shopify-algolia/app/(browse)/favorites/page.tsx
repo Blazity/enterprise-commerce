@@ -222,7 +222,7 @@ async function FavoritesView() {
         variantInfo,
       })
     } catch (error) {
-      // Failed to fetch product - skip this favorite
+      
     }
   }
 

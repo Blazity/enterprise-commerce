@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react"
 
-// Configuration constants for the audio analyzer
+
 const AUDIO_CONFIG = {
   FFT_SIZE: 512,
   SMOOTHING: 0.8,
@@ -10,9 +10,9 @@ const AUDIO_CONFIG = {
   MIN_BAR_WIDTH: 2,
   BAR_SPACING: 1,
   COLOR: {
-    MIN_INTENSITY: 100, // Minimum gray value (darker)
-    MAX_INTENSITY: 255, // Maximum gray value (brighter)
-    INTENSITY_RANGE: 155, // MAX_INTENSITY - MIN_INTENSITY
+    MIN_INTENSITY: 100, 
+    MAX_INTENSITY: 255, 
+    INTENSITY_RANGE: 155, 
   },
 } as const
 
@@ -48,7 +48,7 @@ export function AudioVisualizer({ stream, isRecording, onClick }: AudioVisualize
     } else {
       cleanup()
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    
   }, [stream, isRecording])
 
   useEffect(() => {

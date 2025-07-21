@@ -12,7 +12,6 @@ interface GenerateOptions {
   seed?: number
 }
 
-// Common e-commerce paths for realistic test data
 const PATH_PATTERNS = [
   "/products/",
   "/collections/",
@@ -41,19 +40,76 @@ const PATH_PATTERNS = [
   "/account/",
   "/orders/",
   "/checkout/",
-  "/cart/"
+  "/cart/",
 ]
 
 const SLUG_WORDS = [
-  "classic", "modern", "vintage", "premium", "deluxe", "essential", "basic",
-  "professional", "casual", "formal", "sporty", "elegant", "luxury", "budget",
-  "eco", "sustainable", "organic", "handmade", "limited", "exclusive", "new",
-  "summer", "winter", "spring", "autumn", "holiday", "special", "clearance",
-  "black", "white", "red", "blue", "green", "yellow", "purple", "pink",
-  "small", "medium", "large", "xlarge", "xxlarge", "plus", "petite",
-  "cotton", "wool", "silk", "leather", "denim", "polyester", "linen",
-  "shirt", "pants", "dress", "skirt", "jacket", "coat", "sweater", "shoes",
-  "bag", "wallet", "belt", "hat", "scarf", "gloves", "socks", "underwear"
+  "classic",
+  "modern",
+  "vintage",
+  "premium",
+  "deluxe",
+  "essential",
+  "basic",
+  "professional",
+  "casual",
+  "formal",
+  "sporty",
+  "elegant",
+  "luxury",
+  "budget",
+  "eco",
+  "sustainable",
+  "organic",
+  "handmade",
+  "limited",
+  "exclusive",
+  "new",
+  "summer",
+  "winter",
+  "spring",
+  "autumn",
+  "holiday",
+  "special",
+  "clearance",
+  "black",
+  "white",
+  "red",
+  "blue",
+  "green",
+  "yellow",
+  "purple",
+  "pink",
+  "small",
+  "medium",
+  "large",
+  "xlarge",
+  "xxlarge",
+  "plus",
+  "petite",
+  "cotton",
+  "wool",
+  "silk",
+  "leather",
+  "denim",
+  "polyester",
+  "linen",
+  "shirt",
+  "pants",
+  "dress",
+  "skirt",
+  "jacket",
+  "coat",
+  "sweater",
+  "shoes",
+  "bag",
+  "wallet",
+  "belt",
+  "hat",
+  "scarf",
+  "gloves",
+  "socks",
+  "underwear",
 ]
 
 function generateSlug(words: number = 3): string {
@@ -70,103 +126,89 @@ function generateSlug(words: number = 3): string {
 function generatePath(): string {
   const pattern = PATH_PATTERNS[Math.floor(Math.random() * PATH_PATTERNS.length)]
   const slug = generateSlug(Math.floor(Math.random() * 3) + 1)
-  
-  // Sometimes add an ID or SKU
+
   if (Math.random() > 0.7) {
     const id = Math.floor(Math.random() * 99999) + 1000
     return `${pattern}${slug}-${id}`
   }
-  
+
   return `${pattern}${slug}`
 }
 
 function generateRedirect(from: string): RedirectEntry {
-  // Generate a different path for the destination
   let destination = generatePath()
-  
-  // Ensure destination is different from source
+
   while (destination === from) {
     destination = generatePath()
   }
-  
-  // 80% temporary redirects, 20% permanent
+
   const permanent = Math.random() > 0.8
-  
+
   return {
     destination,
-    permanent
+    permanent,
   }
 }
 
 async function generateTestRedirects(options: GenerateOptions) {
   const { count, outputPath, seed } = options
-  
-  // Set random seed for reproducibility if provided
+
   if (seed !== undefined) {
-    // Note: JavaScript doesn't have built-in seeded random, but this gives consistent ordering
     console.log(`📌 Using seed value: ${seed} (for consistent path generation order)`)
   }
-  
+
   console.log(`🔧 Generating ${count} test redirects...`)
-  
+
   const redirects: Record<string, RedirectEntry> = {}
   const startTime = Date.now()
-  
-  // Progress reporting
+
   const reportInterval = Math.floor(count / 10)
   let generated = 0
-  
+
   while (Object.keys(redirects).length < count) {
     const from = generatePath()
-    
-    // Skip if we already have this source path
+
     if (redirects[from]) {
       continue
     }
-    
+
     redirects[from] = generateRedirect(from)
     generated++
-    
-    // Report progress
+
     if (generated % reportInterval === 0) {
       const progress = Math.floor((generated / count) * 100)
       console.log(`   📊 Progress: ${progress}% (${generated}/${count})`)
     }
   }
-  
-  // Write to file
+
   const outputFullPath = join(process.cwd(), outputPath)
   writeFileSync(outputFullPath, JSON.stringify(redirects, null, 2))
-  
+
   const endTime = Date.now()
   const duration = ((endTime - startTime) / 1000).toFixed(2)
-  
-  // Statistics
-  const permanentCount = Object.values(redirects).filter(r => r.permanent).length
+
+  const permanentCount = Object.values(redirects).filter((r) => r.permanent).length
   const temporaryCount = count - permanentCount
-  
+
   console.log(`\n✅ Generated ${count} redirects in ${duration}s`)
   console.log(`📁 Output: ${outputFullPath}`)
   console.log(`\n📊 Statistics:`)
-  console.log(`   - Permanent redirects (308): ${permanentCount} (${Math.floor(permanentCount/count*100)}%)`)
-  console.log(`   - Temporary redirects (307): ${temporaryCount} (${Math.floor(temporaryCount/count*100)}%)`)
+  console.log(`   - Permanent redirects (308): ${permanentCount} (${Math.floor((permanentCount / count) * 100)}%)`)
+  console.log(`   - Temporary redirects (307): ${temporaryCount} (${Math.floor((temporaryCount / count) * 100)}%)`)
   console.log(`   - File size: ${(JSON.stringify(redirects).length / 1024 / 1024).toFixed(2)} MB`)
-  
-  // Sample entries
+
   console.log(`\n📝 Sample entries:`)
   const samples = Object.entries(redirects).slice(0, 3)
   samples.forEach(([from, redirect]) => {
-    console.log(`   ${from} → ${redirect.destination} (${redirect.permanent ? '308' : '307'})`)
+    console.log(`   ${from} → ${redirect.destination} (${redirect.permanent ? "308" : "307"})`)
   })
 }
 
-// Parse command line arguments
 const args = process.argv.slice(2)
-const count = parseInt(args.find(arg => arg.startsWith("--count="))?.split("=")[1] || "50000")
-const outputPath = args.find(arg => arg.startsWith("--output="))?.split("=")[1] || "lib/redirects/test-redirects.json"
-const seed = args.find(arg => arg.startsWith("--seed="))?.split("=")[1]
+const count = parseInt(args.find((arg) => arg.startsWith("--count="))?.split("=")[1] || "50000")
+const outputPath = args.find((arg) => arg.startsWith("--output="))?.split("=")[1] || "lib/redirects/test-redirects.json"
+const seed = args.find((arg) => arg.startsWith("--seed="))?.split("=")[1]
 
-// Show help if requested
 if (args.includes("--help")) {
   console.log(`
 Generate Test Redirects Script
@@ -188,15 +230,13 @@ Examples:
   process.exit(0)
 }
 
-// Validate arguments
 if (count < 1 || count > 1000000) {
   console.error("❌ Count must be between 1 and 1,000,000")
   process.exit(1)
 }
 
-// Run generation
 generateTestRedirects({
   count,
   outputPath,
-  seed: seed ? parseInt(seed) : undefined
+  seed: seed ? parseInt(seed) : undefined,
 })

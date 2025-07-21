@@ -8,11 +8,7 @@ export async function CategoriesSection() {
         <h2 className="mb-8 text-left text-4xl font-semibold">Featured Categories</h2>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {categoryItems.map((category, index) => (
-            <CategoryCard
-              key={category.handle}
-              {...category}
-              index={index}
-            />
+            <CategoryCard key={category.handle} {...category} index={index} />
           ))}
         </div>
       </div>

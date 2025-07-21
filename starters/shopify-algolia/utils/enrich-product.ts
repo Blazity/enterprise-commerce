@@ -4,11 +4,6 @@ import type { PlatformImage, PlatformMenu, PlatformProduct } from "lib/shopify/t
 import { CommerceProduct } from "types"
 import { isOptIn } from "./opt-in"
 
-/*
- * Enrich product by attaching hierarchical categories to it
- * Takes in all tags, and tries to find hierarchy against it
- */
-
 export class ProductEnrichmentBuilder {
   private product: CommerceProduct
 
@@ -60,9 +55,7 @@ export class ProductEnrichmentBuilder {
         ...this.product,
         images: images.filter(Boolean),
       }
-    } catch (e) {
-      // Failed to generate alt tags - continue without them
-    }
+    } catch (e) {}
     return this
   }
 
@@ -76,7 +69,7 @@ async function generateProductAltTags(product: PlatformProduct): Promise<(Platfo
     const altTagAwareImages = await Promise.all(product.images?.slice(0, 1).map(mapper).filter(Boolean))
     return [...altTagAwareImages, ...product.images?.slice(1)?.filter(Boolean)] || []
   } catch (e) {
-    return product.images // graceful exit
+    return product.images
   }
 }
 

@@ -36,7 +36,6 @@ export async function POST(req: Request) {
     return new Response(JSON.stringify({ message: "Invalid payload" }), { status: 400, headers: { "Content-Type": "application/json" } })
   }
 
-
   if (topic.startsWith("products")) {
     return await handleProductTopics(topic as SupportedTopic, { id })
   } else if (topic.startsWith("collections")) {

@@ -1,17 +1,8 @@
 import { createAdminApiClient } from "@shopify/admin-api-client"
 import { env } from "../../env.mjs"
 
-// Webhook topics that need to be registered
-const WEBHOOK_TOPICS = [
-  "PRODUCTS_CREATE",
-  "PRODUCTS_UPDATE", 
-  "PRODUCTS_DELETE",
-  "COLLECTIONS_CREATE",
-  "COLLECTIONS_UPDATE",
-  "COLLECTIONS_DELETE"
-] as const
+const WEBHOOK_TOPICS = ["PRODUCTS_CREATE", "PRODUCTS_UPDATE", "PRODUCTS_DELETE", "COLLECTIONS_CREATE", "COLLECTIONS_UPDATE", "COLLECTIONS_DELETE"] as const
 
-// GraphQL mutations
 const CREATE_WEBHOOK_MUTATION = `#graphql
   mutation webhookSubscriptionCreate($topic: WebhookSubscriptionTopic!, $webhookSubscription: WebhookSubscriptionInput!) {
     webhookSubscriptionCreate(topic: $topic, webhookSubscription: $webhookSubscription) {
@@ -58,12 +49,8 @@ interface SetupWebhooksOptions {
 }
 
 async function setupWebhooks(options: SetupWebhooksOptions = {}) {
-  const {
-    apiDomain = process.env.WEBHOOK_API_DOMAIN || "http://localhost:3000",
-    dryRun = false
-  } = options
+  const { apiDomain = process.env.WEBHOOK_API_DOMAIN || "http://localhost:3000", dryRun = false } = options
 
-  // Validate required environment variables
   if (!env.SHOPIFY_STORE_DOMAIN || !env.SHOPIFY_ADMIN_ACCESS_TOKEN || !env.SHOPIFY_APP_API_SECRET_KEY) {
     console.error("❌ Missing required environment variables:")
     console.error("   - SHOPIFY_STORE_DOMAIN")
@@ -72,43 +59,36 @@ async function setupWebhooks(options: SetupWebhooksOptions = {}) {
     process.exit(1)
   }
 
-  // Create admin client
   const client = createAdminApiClient({
     storeDomain: env.SHOPIFY_STORE_DOMAIN,
     accessToken: env.SHOPIFY_ADMIN_ACCESS_TOKEN,
-    apiVersion: "2024-10"
+    apiVersion: "2024-10",
   })
 
   console.log("🔧 Setting up webhooks for Shopify store:", env.SHOPIFY_STORE_DOMAIN)
   console.log("📍 API Domain:", apiDomain)
   console.log("🔐 Using secret from SHOPIFY_APP_API_SECRET_KEY")
-  
+
   if (dryRun) {
     console.log("⚠️  DRY RUN MODE - No webhooks will be created")
   }
 
-  // Check existing webhooks
   console.log("\n📋 Checking existing webhooks...")
   try {
     const existingWebhooks = await client.request(LIST_WEBHOOKS_QUERY, {
       variables: {
         first: 50,
-        topics: WEBHOOK_TOPICS as any
-      }
+        topics: WEBHOOK_TOPICS as any,
+      },
     })
 
-    const existingTopics = new Set(
-      existingWebhooks.data?.webhookSubscriptions?.edges?.map(
-        (edge: any) => edge.node.topic
-      ) || []
-    )
+    const existingTopics = new Set(existingWebhooks.data?.webhookSubscriptions?.edges?.map((edge: any) => edge.node.topic) || [])
 
     if (existingTopics.size > 0) {
       console.log("ℹ️  Found existing webhooks for topics:")
-      existingTopics.forEach(topic => console.log(`   - ${topic}`))
+      existingTopics.forEach((topic) => console.log(`   - ${topic}`))
     }
 
-    // Register webhooks
     console.log("\n🚀 Registering webhooks...")
     const callbackUrl = `${apiDomain}/api/feed/sync`
 
@@ -129,9 +109,9 @@ async function setupWebhooks(options: SetupWebhooksOptions = {}) {
             topic,
             webhookSubscription: {
               callbackUrl,
-              format: "JSON"
-            }
-          }
+              format: "JSON",
+            },
+          },
         })
 
         if (response.data?.webhookSubscriptionCreate?.userErrors?.length > 0) {
@@ -154,19 +134,16 @@ async function setupWebhooks(options: SetupWebhooksOptions = {}) {
     console.log("- Webhooks will be validated using HMAC with your SHOPIFY_APP_API_SECRET_KEY")
     console.log("- Make sure your endpoint is accessible from the internet in production")
     console.log("- Use ngrok or similar for local development testing")
-
   } catch (error) {
     console.error("❌ Failed to setup webhooks:", error)
     process.exit(1)
   }
 }
 
-// Parse command line arguments
 const args = process.argv.slice(2)
-const apiDomain = args.find(arg => arg.startsWith("--domain="))?.split("=")[1]
+const apiDomain = args.find((arg) => arg.startsWith("--domain="))?.split("=")[1]
 const dryRun = args.includes("--dry-run")
 
-// Show help if requested
 if (args.includes("--help")) {
   console.log(`
 Shopify Webhook Setup Script
@@ -186,5 +163,4 @@ Examples:
   process.exit(0)
 }
 
-// Run the setup
 setupWebhooks({ apiDomain, dryRun })

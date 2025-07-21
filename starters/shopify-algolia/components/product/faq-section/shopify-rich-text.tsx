@@ -4,7 +4,7 @@ import { RichText } from "@shopify/hydrogen-react"
 import { cn } from "utils/cn"
 
 interface ShopifyRichTextProps {
-  data: string 
+  data: string
   className?: string
 }
 
@@ -16,7 +16,7 @@ export function ShopifyRichText({ data, className }: ShopifyRichTextProps) {
       className={className}
       components={{
         paragraph({ node }) {
-          return <p className="mb-4 last:mb-0 text-gray-800">{node.children}</p>
+          return <p className="mb-4 text-gray-800 last:mb-0">{node.children}</p>
         },
         heading({ node }) {
           const tagName = `h${node.level}` as keyof JSX.IntrinsicElements
@@ -29,11 +29,7 @@ export function ShopifyRichText({ data, className }: ShopifyRichTextProps) {
             6: "text-sm font-medium mb-1 last:mb-0",
           }
 
-          return createElement(
-            tagName,
-            { className: headingClasses[node.level as keyof typeof headingClasses] },
-            node.children
-          )
+          return createElement(tagName, { className: headingClasses[node.level as keyof typeof headingClasses] }, node.children)
         },
         text({ node }) {
           let className = ""
@@ -49,9 +45,7 @@ export function ShopifyRichText({ data, className }: ShopifyRichTextProps) {
         },
         list({ node }) {
           const ListTag = node.listType === "ordered" ? "ol" : "ul"
-          const listClasses = node.listType === "ordered" 
-            ? cn("list-decimal list-outside mb-4 last:mb-0 pl-6") 
-            : cn("list-disc list-outside mb-4 last:mb-0 pl-6")
+          const listClasses = node.listType === "ordered" ? cn("list-decimal list-outside mb-4 last:mb-0 pl-6") : cn("list-disc list-outside mb-4 last:mb-0 pl-6")
 
           return <ListTag className={cn(listClasses, "text-balance")}>{node.children}</ListTag>
         },

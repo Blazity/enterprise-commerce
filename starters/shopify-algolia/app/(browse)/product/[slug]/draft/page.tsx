@@ -50,10 +50,8 @@ export default async function DraftProduct(props: ProductProps) {
   }
 
   const multiOptions = getMultiOptionFromSlug(slug)
-  const baseHandle = Object.keys(multiOptions).length > 0 
-    ? removeMultiOptionFromSlug(slug) 
-    : removeVisualOptionFromSlug(slug)
-  
+  const baseHandle = Object.keys(multiOptions).length > 0 ? removeMultiOptionFromSlug(slug) : removeVisualOptionFromSlug(slug)
+
   const productHandle = baseHandle || removeOptionsFromUrl(slug)
   const product = await getProductByHandle(productHandle)
   const adminProduct = product?.id ? await getAdminProduct(product.id) : null
@@ -84,7 +82,7 @@ export default async function DraftProduct(props: ProductProps) {
   let visualValue: string | null = null
   if (Object.keys(multiOptions).length > 0) {
     if (multiOptions.color) {
-      visualValue = getOriginalOptionValue(adminProduct.variants, 'color', multiOptions.color)
+      visualValue = getOriginalOptionValue(adminProduct.variants, "color", multiOptions.color)
     }
     if (!visualValue && Object.keys(multiOptions).length > 0) {
       const firstOption = Object.entries(multiOptions)[0]
@@ -93,7 +91,7 @@ export default async function DraftProduct(props: ProductProps) {
   } else {
     visualValue = getVisualOptionFromSlug(slug)
   }
-  
+
   const { images: imagesToShow, activeIndex } = getImagesForCarousel(adminProduct.images, visualValue)
 
   return (
@@ -111,11 +109,7 @@ export default async function DraftProduct(props: ProductProps) {
             price={combinationPrice}
             currency={combination?.price ? mapCurrencyToSign(combination.price?.currencyCode as CurrencyType) : "$"}
           />
-          <ProductImages 
-            key={slug}
-            images={imagesToShow}
-            initialActiveIndex={activeIndex}
-          />
+          <ProductImages key={slug} images={imagesToShow} initialActiveIndex={activeIndex} />
           <RightSection className="md:col-span-6 md:col-start-8 md:mt-0">
             <ProductTitle
               className="hidden md:col-span-4 md:col-start-9 md:block"
@@ -128,7 +122,7 @@ export default async function DraftProduct(props: ProductProps) {
             <AddToCartButton className="mt-4" product={adminProduct as CommerceProduct} combination={combination} />
             <FavoriteMarker handle={slug} />
 
-            <FaqSectionClient defaultOpenSections={adminProduct.productDetailsMetafield?.value ??  getDefaultFaqAccordionItemValue()}>
+            <FaqSectionClient defaultOpenSections={adminProduct.productDetailsMetafield?.value ?? getDefaultFaqAccordionItemValue()}>
               <FaqAccordionItem title={getDefaultFaqAccordionItemValue()[0]}>
                 <ShopifyRichText data={adminProduct.productDetailsMetafield?.value || getDefaultFaqAccordionItemRichText()} className="prose prose-sm max-w-none" />
               </FaqAccordionItem>
@@ -178,11 +172,10 @@ function makeBreadcrumbs(product: CommerceProduct) {
   }
 }
 
-
- function getDefaultFaqAccordionItemRichText() {
-    return "{\"type\":\"root\",\"children\":[{\"listType\":\"unordered\",\"type\":\"list\",\"children\":[{\"type\":\"list-item\",\"children\":[{\"type\":\"text\",\"value\":\"Super for the muscles\"}]},{\"type\":\"list-item\",\"children\":[{\"type\":\"text\",\"value\":\"Various types and color variants\"}]},{\"type\":\"list-item\",\"children\":[{\"type\":\"text\",\"value\":\"Outdoor, or indoor - you define the place where you want to exercise\"}]},{\"type\":\"list-item\",\"children\":[{\"type\":\"text\",\"value\":\"100% Plastic from \"},{\"type\":\"text\",\"value\":\"recycling the materials\",\"bold\":true}]}]}]}"
+function getDefaultFaqAccordionItemRichText() {
+  return '{"type":"root","children":[{"listType":"unordered","type":"list","children":[{"type":"list-item","children":[{"type":"text","value":"Super for the muscles"}]},{"type":"list-item","children":[{"type":"text","value":"Various types and color variants"}]},{"type":"list-item","children":[{"type":"text","value":"Outdoor, or indoor - you define the place where you want to exercise"}]},{"type":"list-item","children":[{"type":"text","value":"100% Plastic from "},{"type":"text","value":"recycling the materials","bold":true}]}]}]}'
 }
 
- function getDefaultFaqAccordionItemValue() {
-    return ["Product Details"]
+function getDefaultFaqAccordionItemValue() {
+  return ["Product Details"]
 }

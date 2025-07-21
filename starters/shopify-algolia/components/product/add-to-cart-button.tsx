@@ -32,7 +32,7 @@ export function AddToCartButton({ className, product, combination }: { className
 
   const disabled = !hasAnyAvailable || !combination?.availableForSale || isPending
 
-  // Mimic delay and display optimistic UI due to shopify API being slow
+  
   const handleClick = async () => {
     if (!combination?.id) return
 
@@ -47,7 +47,6 @@ export function AddToCartButton({ className, product, combination }: { className
 
     setCheckoutReady(false)
     const res = await addCartItem(null, combination.id, product.id)
-    
 
     if (!res.ok) toast.error("Out of stock")
 

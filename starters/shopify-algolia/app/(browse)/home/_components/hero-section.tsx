@@ -25,7 +25,7 @@ const heroConfig: HeroConfigItem[] = [
     ctaText: "Shop Outdoor Gear",
     ctaHref: "/category/outdoor-gear",
     productHandle: "rapidrush-inflatable-whitewater-kayak",
-    variantOptions: { color: "brown" }
+    variantOptions: { color: "brown" },
   },
   {
     id: "parfum",
@@ -36,7 +36,7 @@ const heroConfig: HeroConfigItem[] = [
     ctaText: "Explore Perfumes",
     ctaHref: "/category/perfumes",
     productHandle: "midnight-serenade-eau-de-parfum",
-    variantOptions: { concentration: "eaudeparfum", volume: "travel" }
+    variantOptions: { concentration: "eaudeparfum", volume: "travel" },
   },
   {
     id: "lipstick",
@@ -47,7 +47,7 @@ const heroConfig: HeroConfigItem[] = [
     ctaText: "Shop Lip Makeup",
     ctaHref: "/category/lip-makeup",
     productHandle: "luxelips-velvet-matte-lipstick",
-    variantOptions: { color: "red" }
+    variantOptions: { color: "red" },
   },
   {
     id: "speaker",
@@ -58,34 +58,32 @@ const heroConfig: HeroConfigItem[] = [
     ctaText: "Shop Speakers",
     ctaHref: "/category/speakers",
     productHandle: "titaniumwave-thunderblast-speaker",
-    variantOptions: { color: "black", connectivity: "bluetooth", size: "large" }
-  }
+    variantOptions: { color: "black", connectivity: "bluetooth", size: "large" },
+  },
 ]
 
 export async function HeroSection({ className }: { className?: string }) {
-  // Fetch all products in parallel
-  const productPromises = heroConfig.map(config => 
-    getProduct(config.productHandle).catch(() => null)
-  )
-  const products = await Promise.all(productPromises)
   
-  // Build hero slides with actual product data and variant information
+  const productPromises = heroConfig.map((config) => getProduct(config.productHandle).catch(() => null))
+  const products = await Promise.all(productPromises)
+
+  
   const heroSlides: HeroSlide[] = heroConfig.map((config, index) => {
     const product = products[index]
     if (!product) {
       return {
         ...config,
-        product: undefined
+        product: undefined,
       }
     }
 
-    // Find the specific variant based on options
-    const variant = getCombinationByMultiOption(product.variants, config.variantOptions)
     
-    // Get the correct image for the variant
+    const variant = getCombinationByMultiOption(product.variants, config.variantOptions)
+
+    
     let featuredImage = product.featuredImage
     if (variant && product.images && product.images.length > 0) {
-      // Try to find image based on color option first (most common visual option)
+      
       const colorValue = config.variantOptions.color || Object.values(config.variantOptions)[0]
       const { images, activeIndex } = getImagesForCarousel(product.images, colorValue, "Color")
       if (activeIndex > 0 && images[activeIndex]) {
@@ -93,22 +91,22 @@ export async function HeroSection({ className }: { className?: string }) {
       }
     }
 
-    // Create enhanced product object with variant-specific data
+    
     const enhancedProduct = {
       ...product,
       featuredImage,
       selectedVariant: variant,
-      minPrice: variant?.price?.amount || product.minPrice
+      minPrice: variant?.price?.amount || product.minPrice,
     }
 
     return {
       ...config,
-      product: enhancedProduct
+      product: enhancedProduct,
     }
   })
 
   return (
-    <div className={cn("w-full mb-8 sm:mb-12 lg:mb-16", className)}>
+    <div className={cn("mb-8 w-full sm:mb-12 lg:mb-16", className)}>
       <HomepageCarousel slides={heroSlides} />
     </div>
   )

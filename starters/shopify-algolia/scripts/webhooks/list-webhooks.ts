@@ -54,7 +54,6 @@ const LIST_WEBHOOKS_QUERY = `#graphql
 `
 
 async function listWebhooks() {
-  // Validate required environment variables
   if (!env.SHOPIFY_STORE_DOMAIN || !env.SHOPIFY_ADMIN_ACCESS_TOKEN) {
     console.error("❌ Missing required environment variables:")
     console.error("   - SHOPIFY_STORE_DOMAIN")
@@ -62,29 +61,27 @@ async function listWebhooks() {
     process.exit(1)
   }
 
-  // Create admin client
   const client = createAdminApiClient({
     storeDomain: env.SHOPIFY_STORE_DOMAIN,
     accessToken: env.SHOPIFY_ADMIN_ACCESS_TOKEN,
-    apiVersion: "2024-10"
+    apiVersion: "2024-10",
   })
 
   console.log("📋 Listing webhooks for:", env.SHOPIFY_STORE_DOMAIN)
-  console.log("=" .repeat(60))
+  console.log("=".repeat(60))
 
   try {
-    // Fetch all webhooks with pagination
     const allWebhooks: WebhookEdge[] = []
     let hasNextPage = true
     let cursor: string | null = null
 
     while (hasNextPage) {
-      const response = await client.request(LIST_WEBHOOKS_QUERY, {
+      const response = (await client.request(LIST_WEBHOOKS_QUERY, {
         variables: {
           first: 50,
-          after: cursor
-        }
-      }) as WebhookSubscriptionsResponse
+          after: cursor,
+        },
+      })) as WebhookSubscriptionsResponse
 
       const webhooks = response.data?.webhookSubscriptions?.edges || []
       allWebhooks.push(...webhooks)
@@ -101,20 +98,21 @@ async function listWebhooks() {
 
     console.log(`\n📊 Found ${allWebhooks.length} webhook(s):\n`)
 
-    // Group by endpoint URL
-    const groupedByUrl = allWebhooks.reduce((acc, webhook) => {
-      const url = webhook.node.endpoint?.callbackUrl || "No URL"
-      if (!acc[url]) acc[url] = []
-      acc[url].push(webhook.node)
-      return acc
-    }, {} as Record<string, WebhookNode[]>)
+    const groupedByUrl = allWebhooks.reduce(
+      (acc, webhook) => {
+        const url = webhook.node.endpoint?.callbackUrl || "No URL"
+        if (!acc[url]) acc[url] = []
+        acc[url].push(webhook.node)
+        return acc
+      },
+      {} as Record<string, WebhookNode[]>
+    )
 
-    // Display grouped webhooks
     Object.entries(groupedByUrl).forEach(([url, webhooks]) => {
       console.log(`🔗 Endpoint: ${url}`)
       console.log(`   Webhooks (${webhooks.length}):`)
-      
-      webhooks.forEach(webhook => {
+
+      webhooks.forEach((webhook) => {
         console.log(`   - ${webhook.topic}`)
         console.log(`     ID: ${webhook.id}`)
         console.log(`     Created: ${new Date(webhook.createdAt).toLocaleString()}`)
@@ -125,22 +123,19 @@ async function listWebhooks() {
       console.log("")
     })
 
-    // Summary
-    const topics = allWebhooks.map(w => w.node.topic)
+    const topics = allWebhooks.map((w) => w.node.topic)
     const uniqueTopics = Array.from(new Set(topics))
-    
+
     console.log("📈 Summary:")
     console.log(`   Total webhooks: ${allWebhooks.length}`)
     console.log(`   Unique topics: ${uniqueTopics.length}`)
     console.log(`   Endpoints: ${Object.keys(groupedByUrl).length}`)
-
   } catch (error) {
     console.error("❌ Failed to list webhooks:", error)
     process.exit(1)
   }
 }
 
-// Show help if requested
 const args = process.argv.slice(2)
 if (args.includes("--help")) {
   console.log(`
@@ -156,5 +151,4 @@ are separate and will not be shown here.
   process.exit(0)
 }
 
-// Run the listing
 listWebhooks()

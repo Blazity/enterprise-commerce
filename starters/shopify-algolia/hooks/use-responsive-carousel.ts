@@ -55,8 +55,7 @@ export function useResponsiveCarousel(customConfig?: Partial<ResponsiveCarouselC
     }
 
     updateViewport()
-    
-    // Debounced resize handler
+
     let timeout: NodeJS.Timeout
     const handleResize = () => {
       clearTimeout(timeout)
