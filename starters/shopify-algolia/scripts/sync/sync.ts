@@ -10,9 +10,6 @@ import { reviewsClient } from "lib/reviews/client"
 import { ProductEnrichmentBuilder } from "utils/enrich-product"
 import type { Review } from "lib/reviews/types"
 
-/**
- * Main function to synchronize Shopify data with Algolia.
- */
 async function sync() {
   console.log("🚀 Starting sync process...")
 
@@ -31,15 +28,10 @@ async function sync() {
     const hierarchicalCategories = await storefrontClient.getHierarchicalCollections(env.SHOPIFY_HIERARCHICAL_NAV_HANDLE)
     console.log(`🌳 Fetched ${hierarchicalCategories.items.length} hierarchical categories`)
     const reviewsEnabled = isOptIn("reviews") && !!env.ALGOLIA_REVIEWS_INDEX
-    const reviews: Review[] = reviewsEnabled
-      ? await reviewsClient.getAllProductReviews()
-      : []
+    const reviews: Review[] = reviewsEnabled ? await reviewsClient.getAllProductReviews() : []
     if (reviewsEnabled) console.log(`💬 Fetched ${reviews.length} reviews`)
     const enrichedProducts = allProducts.map((product) =>
-      new ProductEnrichmentBuilder(product)
-        .withHierarchicalCategories(hierarchicalCategories.items, HIERARCHICAL_SEPARATOR)
-        .withReviews(reviews)
-        .build()
+      new ProductEnrichmentBuilder(product).withHierarchicalCategories(hierarchicalCategories.items, HIERARCHICAL_SEPARATOR).withReviews(reviews).build()
     )
     const { hits: algoliaProducts } = await searchClient.getAllResults({
       indexName: env.ALGOLIA_PRODUCTS_INDEX,
@@ -53,8 +45,14 @@ async function sync() {
     console.log(`🔍 Delta - products: ${deltaProducts.length}, categories: ${deltaCategories.length}`)
     await updateAlgolia(env.ALGOLIA_PRODUCTS_INDEX, deltaProducts)
     await updateAlgolia(env.ALGOLIA_CATEGORIES_INDEX, deltaCategories)
-    await deleteObsolete(env.ALGOLIA_PRODUCTS_INDEX, allProducts.map((p) => p.id))
-    await deleteObsolete(env.ALGOLIA_CATEGORIES_INDEX, allCategories.map((c) => c.id))
+    await deleteObsolete(
+      env.ALGOLIA_PRODUCTS_INDEX,
+      allProducts.map((p) => p.id)
+    )
+    await deleteObsolete(
+      env.ALGOLIA_CATEGORIES_INDEX,
+      allCategories.map((c) => c.id)
+    )
     if (reviewsEnabled) {
       const { hits: algoliaReviews } = await searchClient.getAllResults({
         indexName: env.ALGOLIA_REVIEWS_INDEX!,
@@ -63,7 +61,10 @@ async function sync() {
       const deltaReviews = calculateDelta(reviews, algoliaReviews, (item: any) => item.id.toString())
       console.log(`🔍 Delta - reviews: ${deltaReviews.length}`)
       await updateAlgolia(env.ALGOLIA_REVIEWS_INDEX!, deltaReviews)
-      await deleteObsolete(env.ALGOLIA_REVIEWS_INDEX!, reviews.map((r) => r.id.toString()))
+      await deleteObsolete(
+        env.ALGOLIA_REVIEWS_INDEX!,
+        reviews.map((r) => r.id.toString())
+      )
     }
     console.log("🎉 Sync completed successfully!")
   } catch (error) {

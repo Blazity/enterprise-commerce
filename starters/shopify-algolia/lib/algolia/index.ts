@@ -338,8 +338,6 @@ export const getFilteredProducts = unstable_cache(
         vendor: vendorFacets || {},
       }
 
-      // Vendor facets debug logging removed for production
-
       return {
         hits,
         totalPages,

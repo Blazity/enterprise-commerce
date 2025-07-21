@@ -1,4 +1,3 @@
-// Do not add any other lines of code to this file!
 import "@total-typescript/ts-reset/array-includes"
 import "@total-typescript/ts-reset/array-index-of"
 import "@total-typescript/ts-reset/dom"

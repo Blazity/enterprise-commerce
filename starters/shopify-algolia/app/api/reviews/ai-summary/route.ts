@@ -21,9 +21,6 @@ const summarySchema = z.object({
 
 export const maxDuration = 60
 
-/*
- * This API route will be used for cron job, running once a week to re-generate AI summary based on all user reviews, tweak to your needs
- */
 export async function GET(req: Request) {
   unstable_noStore()
   if (!authenticate(req)) {

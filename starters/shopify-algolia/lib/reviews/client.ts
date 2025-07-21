@@ -69,7 +69,7 @@ async function createProductReview({ baseUrl, body }: ProductReviewArgs) {
     body: JSON.stringify({
       ...body,
       shop_domain: baseUrl.searchParams.get("shop_domain"),
-      platform: "shopify", // needs to be dynamic later on
+      platform: "shopify",
     }),
   })
 

@@ -1,4 +1,3 @@
-// For numeric attributes only
 export enum ComparisonOperators {
   Equal = "=",
   NotEqual = "!=",
@@ -21,14 +20,13 @@ export class FilterBuilder {
     return this.expression.length > 0
   }
 
-  // simplification to prevent raw() overuse
   where(attribute: string, value: (string | number | boolean) | null): FilterBuilder {
     if (!value) return this
 
     this.expression.push(`${attribute}:${this.formatValue(value)}`)
     return this
   }
-  // For multiple values so we don't have to chain .and().raw() etc.
+
   multi(attribute: string, values: (string | number | boolean)[] | null, operator: LogicalOperators = LogicalOperators.Or): FilterBuilder {
     if (!values || values.length === 0) return this
 

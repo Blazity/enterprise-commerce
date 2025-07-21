@@ -25,18 +25,8 @@ export const SideImages = ({ className, images, api, setThumbsApi, current }: Si
       <Carousel className="my-4 md:sticky md:top-[100px]" orientation="vertical" setApi={setThumbsApi} opts={{ skipSnaps: true, watchDrag: false }}>
         <CarouselContent className="mt-0 w-full flex-row justify-center gap-4 md:flex-col">
           {images.map((image, index) => (
-            <div
-              className={cn("", index === current && "border-2 border-black")}
-              key={"thumbnail_" + image.url}
-              onMouseEnter={() => onThumbClick(index)}
-            >
-              <Image 
-                alt={image.altText || `Product image ${index + 1}`} 
-                src={image.url || `/default-product-image.svg`} 
-                width={100} 
-                height={100} 
-                sizes="100px" 
-              />
+            <div className={cn("", index === current && "border-2 border-black")} key={"thumbnail_" + image.url} onMouseEnter={() => onThumbClick(index)}>
+              <Image alt={image.altText || `Product image ${index + 1}`} src={image.url || `/default-product-image.svg`} width={100} height={100} sizes="100px" />
             </div>
           ))}
         </CarouselContent>

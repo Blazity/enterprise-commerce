@@ -30,7 +30,6 @@ export async function checkApiRateLimit(key: ApiRateLimitKey, request: Request):
 
     return null
   } catch (error) {
-    // API rate limit check failed - continue without rate limiting
     return null
   }
 }

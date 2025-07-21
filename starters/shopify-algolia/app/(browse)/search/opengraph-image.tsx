@@ -1,5 +1,5 @@
-/* eslint-disable @next/next/no-img-element */
-/* eslint-disable jsx-a11y/alt-text */
+
+
 
 import { env } from "env.mjs"
 import { ImageResponse } from "next/og"

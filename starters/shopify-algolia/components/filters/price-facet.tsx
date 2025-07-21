@@ -27,7 +27,7 @@ export const PriceFacet = ({ minPrice, maxPrice, setFacet }: PriceFacetProps) =>
     const finalMin = minValue !== null && !isNaN(minValue) ? minValue : null
     const finalMax = maxValue !== null && !isNaN(maxValue) ? maxValue : null
 
-    // if min is greater than max or max is less than min, reset accordingly
+    
     if (finalMin !== null && finalMax !== null) {
       if (finalMin > finalMax) {
         setMaxInput("")

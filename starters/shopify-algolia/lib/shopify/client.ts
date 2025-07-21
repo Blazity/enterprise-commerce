@@ -79,8 +79,6 @@ export function createShopifyClient({ storefrontAccessToken, adminAccessToken, s
     apiVersion: "2024-10",
   })
 
-  // To prevent prettier from wrapping pretty one liners and making them unreadable
-  // prettier-ignore
   return {
     getMenu: async (handle?: string, depth?: number) => getMenu(client!, handle, depth),
     getProduct: async (id: string) => getProduct(client!, id),
@@ -94,8 +92,8 @@ export function createShopifyClient({ storefrontAccessToken, adminAccessToken, s
     getProductStatus: async (id: string) => getProductStatus(adminClient!, id),
     getAdminProduct: async (id: string) => getAdminProduct(adminClient, id),
     createCart: async (items: PlatformItemInput[]) => createCart(client!, items),
-    createCartItem: async (cartId: string, items: PlatformItemInput[]) => createCartItem(client!,cartId, items),
-    updateCartItem: async (cartId: string, items: PlatformItemInput[]) => updateCartItem(client!,cartId, items),
+    createCartItem: async (cartId: string, items: PlatformItemInput[]) => createCartItem(client!, cartId, items),
+    updateCartItem: async (cartId: string, items: PlatformItemInput[]) => updateCartItem(client!, cartId, items),
     deleteCartItem: async (cartId: string, itemIds: string[]) => deleteCartItem(client!, cartId, itemIds),
     getCart: async (cartId: string) => getCart(client!, cartId),
     getCollections: async (limit?: number) => getCollections(client!, limit),

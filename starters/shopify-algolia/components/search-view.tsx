@@ -62,7 +62,7 @@ export async function SearchView({ searchParams, disabledFacets, collection, bas
   const { facetDistribution, hits, totalPages, totalHits, independentFacetDistribution } = await getFilteredProducts(q, sortBy, page, filter, collection?.handle, hasVendorFilter)
 
   const { getPageDisplayTypeByHandle } = await import("utils/get-page-display-type")
-  
+
   const { hits: allCategories } = await getCategories({
     hitsPerPage: 1000,
     attributesToRetrieve: ["handle"],

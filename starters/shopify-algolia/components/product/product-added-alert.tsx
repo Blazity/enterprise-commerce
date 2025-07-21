@@ -21,10 +21,10 @@ export function ProductAddedAlert({ className }: { className?: string }) {
 
   if (!product || !combination || !cart?.checkoutUrl) return null
 
-  // Get the visual option value (e.g., color) from the combination
-  const visualOptionValue = getVisualOptionValueFromCombination(combination)
   
-  // Filter images to get variant-specific images
+  const visualOptionValue = getVisualOptionValueFromCombination(combination)
+
+  
   const variantImages = filterImagesByVisualOption(product.images, visualOptionValue || null)
   const variantImage = variantImages[0] || product.featuredImage
 

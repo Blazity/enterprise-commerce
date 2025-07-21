@@ -29,10 +29,10 @@ export const algolia = (args: { applicationId: string; apiKey: string }) => {
     update: async (args: PartialUpdateObjectsOptions) => {
       const transformedArgs = {
         ...args,
-        objects: args.objects.map(obj => ({
+        objects: args.objects.map((obj) => ({
           ...obj,
-          objectID: obj.objectID || obj.id?.toString() || obj.id
-        }))
+          objectID: obj.objectID || obj.id?.toString() || obj.id,
+        })),
       }
       return updateObjects(transformedArgs, client)
     },
@@ -51,7 +51,6 @@ const search = async <T extends Record<string, any>>(args: SearchSingleIndexProp
   return client.searchSingleIndex<T>(args)
 }
 
-// agregator as temp fix for now
 const getAllResults = async <T extends Record<string, any>>(client: ReturnType<typeof algoliaClient>, args: BrowseProps) => {
   const allHits: T[] = []
   let totalPages: number
@@ -130,6 +129,6 @@ const mapIndexToSort = (index: string, sortOption: SortType) => {
 
 export const searchClient: ReturnType<typeof algolia> = algolia({
   applicationId: env.ALGOLIA_APP_ID || "",
-  // Make sure write api key never leaks to the client
+
   apiKey: env.ALGOLIA_WRITE_API_KEY || "",
 })

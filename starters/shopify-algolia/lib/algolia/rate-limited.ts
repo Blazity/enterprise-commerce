@@ -42,7 +42,6 @@ async function checkAlgoliaRateLimit(key: RateLimitKey) {
       headerData.forEach((value, key) => {
         headerEntries[key] = value
       })
-      // Debug logging removed for production
 
       if (!modifiedHeaders.get("x-real-ip")) {
         const possibleIp = modifiedHeaders.get("x-forwarded-for") || modifiedHeaders.get("x-forwarded-host") || modifiedHeaders.get("host") || "127.0.0.1"
@@ -72,7 +71,6 @@ async function checkAlgoliaRateLimit(key: RateLimitKey) {
     })
 
     if (!headersObject["x-real-ip"] && !headersObject["x-forwarded-for"]) {
-      // No IP headers found for rate limiting
     }
 
     const result = await checkRateLimit(key, {
@@ -83,9 +81,7 @@ async function checkAlgoliaRateLimit(key: RateLimitKey) {
     if (result.rateLimited) {
       shouldRedirect = true
     }
-  } catch (error) {
-    // Rate limit check failed - continue without rate limiting
-  }
+  } catch (error) {}
 
   if (shouldRedirect) {
     redirect("/429")

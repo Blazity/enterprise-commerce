@@ -42,7 +42,7 @@ export const FeaturedProductCard = ({
       </div>
       <div className="flex shrink-0 grow items-start  justify-between p-4 transition-colors group-hover:bg-gradient-to-t group-hover:from-gray-100 group-hover:to-transparent">
         <div className="flex flex-col gap-1">
-          {/* remove first word from the title as it includes vendor (this just needs feed update and then can be removed) */}
+          {}
           <h3 className="line-clamp-2 text-lg font-semibold">{title.split(" ").slice(1).join(" ")}</h3>
           {!!variantPrice && <span className="block sm:hidden">From {mapCurrencyToSign((variantPrice.currencyCode as CurrencyType) || "USD") + minPrice.toFixed(2)}</span>}
 

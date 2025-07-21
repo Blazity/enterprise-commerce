@@ -1,4 +1,4 @@
-/* eslint-disable @next/next/no-img-element */
+
 "use client"
 
 import { type KeyboardEvent, useState } from "react"
