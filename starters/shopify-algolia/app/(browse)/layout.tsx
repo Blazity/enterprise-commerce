@@ -23,7 +23,7 @@ export const revalidate = 86400
 export const metadata: Metadata = {
   metadataBase: sharedMetadata.metadataBase,
   title: "Next.js Enterprise Commerce | Blazity",
-  description: "AI-FIRST NEXT.JS STOREFRONT FOR COMPOSABLE COMMERCE",
+  description: sharedMetadata.openGraph.description,
   openGraph: sharedMetadata.openGraph,
   twitter: sharedMetadata.twitter,
   verification: {
