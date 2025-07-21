@@ -16,6 +16,8 @@ import { SearchParamsType } from "types"
 import { HIERARCHICAL_SEPARATOR } from "constants/index"
 import { cn } from "utils/cn"
 import { Sorter } from "./filters/sorter"
+import { Breadcrumbs } from "./breadcrumbs"
+import { slugToName } from "utils/slug-name"
 
 interface SearchViewProps {
   searchParams: SearchParamsType
@@ -47,6 +49,21 @@ function makePageTitle(collection: PlatformCollection | undefined, query: string
   }
 
   return "Search"
+}
+
+function makeBreadcrumbs(collection?: PlatformCollection) {
+  if (collection) {
+    return {
+      Home: "/",
+      [slugToName(collection.handle)]: "",
+    }
+  }
+
+  // Fallback when no specific collection context is provided
+  return {
+    Home: "/",
+    Search: "/search",
+  }
 }
 
 export async function SearchView({ searchParams, disabledFacets, collection, basePath }: SearchViewProps) {
@@ -85,6 +102,11 @@ export async function SearchView({ searchParams, disabledFacets, collection, bas
 
   return (
     <div className="mx-auto w-full md:max-w-container-md">
+            <div className="mb:pb-2 p-4 md:px-0 relative flex w-full items-center justify-center gap-10 md:pt-8">
+        <div className="mx-auto w-full">
+          <Breadcrumbs items={makeBreadcrumbs(collection)} />
+        </div>
+      </div>
       <div className="sticky top-[77px] z-40 flex items-center justify-between bg-white/80 p-4 backdrop-blur-lg lg:hidden">
         <div className="flex gap-1 text-2xl font-semibold tracking-tight lg:text-3xl">
           <h1 className="flex-1">{makePageTitle(collection, q)}</h1>
