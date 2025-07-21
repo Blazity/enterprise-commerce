@@ -34,9 +34,7 @@ export const navigationItems: NavItem[] = [
           text: "Kids",
           href: "/category/kids",
           items: [
-            { text: "Clothing", href: "/category/clothing" },
             { text: "Activewear", href: "/category/activewear" },
-            { text: "Accessories", href: "/category/kids-accessories" },
             { text: "Footwear", href: "/category/footwear" },
           ],
         },

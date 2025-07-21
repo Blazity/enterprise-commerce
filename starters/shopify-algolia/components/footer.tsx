@@ -40,8 +40,8 @@ export function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/category/Retro" className="transition-colors hover:text-gray-700" prefetch={false}>
-                    Retro
+                  <Link href="/category/sports-and-outdoors" className="transition-colors hover:text-gray-700" prefetch={false}>
+                  Sports &amp; Outdoors
                   </Link>
                 </li>
               </ul>
