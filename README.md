@@ -31,10 +31,6 @@ Building e-commerce platform is a tough topic. Creating one that has all the fea
 
 A monolithic commerce platform will never beat the speed of a fast-lookup system like Algolia, Constructor, or other enterprise search systems. What if you cache your platform's responses? Even still, the combinatorics of search terms, filters, and sort options create endless unique queries. A fast source-of-truth is table-stakes for speedy browsing UX.
 
-| 🐌 Slow (traditional e-commerce platforms)  | 🚀 Fast (enterprise-grade e-commerce platform)  |
-|------|------|
-| <img width="710" height="1700" alt="slow" src="https://github.com/user-attachments/assets/f0c6fcd2-751d-44c4-af40-7ab3e3a65606" /> | <img width="800" height="1950" alt="fast" src="https://github.com/user-attachments/assets/c773f653-0ef1-4cc6-a73b-8f4d431cda14" /> |
-
 ### Architecture diagram
 
 Simple, winning e-commerce architecture. Take a closer look at the arrow colors as they represent the times between high-level user's browsing journey interactions and network latencies in the lower level.
@@ -59,14 +55,14 @@ https://github.com/user-attachments/assets/ec3a3a7d-2118-4367-950c-dd31022768f1
 - Enterprise-grade redirects handling through tens of thousands redirects without latency overhead (implemented on Bloom Filters)
 - Fast builds regardless of the e-commerce specific data volume
 - Platform-agnostic hierarchical categories
-- Analytics (Vercel Analytics / Google Analytics) with easy provider switch
-- Uncomplicated A/B testing setup
+- Analytics ([Vercel Analytics](vercel-analytics) / Google Analytics) with easy provider switch
+- Uncomplicated [A/B testing](https://github.com/Blazity/enterprise-commerce/blob/17726a77d22ecee81dc9268518a3d41e7c0861d3/starters/shopify-algolia/middleware.ts#L41-L43) setup
 - Perfect performance scores
 - SEO optimized, with crawling budget concept in mind
   - Crucial pages displaying critical contents and data without JavaScript execution needed
 - Follows the best practices regarding building e-commerce storefronts with simplicity in mind
 - Next.js App Router with implementation using all of the features (as we believe Next.js is the king for e-commerce)
-- ISR MegaNav updates with seamless client-side hot-reload (SWR)
+- [ISR MegaNav](https://github.com/vercel-solutions/meganav-demo) updates with seamless client-side hot-reload (SWR)
 - Browsing journey setup with mind of high conversion rates & maximizing the user's experience
   - Instant navigation between pages with carefully picked rendering strategies ([HP][hp], [PDP][pdp], [CLP][clp], [PLP][plp], [SRP][plp])
   - Breadcrumbs on every crucial e-commerce page
@@ -113,9 +109,20 @@ https://github.com/user-attachments/assets/ec3a3a7d-2118-4367-950c-dd31022768f1
 - Above the fold content visible with JavaScript disabled (SEO-optimized)
 - Base product generated as SSG + variants SSR
 
-## Documentation
+### Documentation
 
 We also created a comprehensive documentation [docs.blazity.com/enterprise-commerce](docs.blazity.com) serving purpose of explaining our architectural decisions, containing in-details features descriptions and read-worthy guidelines. Everything with focus on the business values and theirs impact on the implementations. 
+
+### Frontend architecture
+
+| Term    | Full Name                                      | Rendering Strategy                                                                                         | Caching Strategy                                                                                                       | A/B Testing or Personalization                                                         |
+| ------- | ---------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| **HP**  | Home Page                                      | **ISR**/**SSG**/**PPR**                                                                                    | **Static**                                                                                                             | **ISR** variants above the fold and **CSR** below the fold or **PPR**                  |
+| **CLP** | Category Landing Page (products + CMS content) | **ISR**/**SSG**/**PPR**                                                                                    | **Static**                                                                                                             | **ISR** variants above the fold and **CSR** below the fold or **PPR**                  |
+| **PLP** | Product Listing Page (products only)           | **ISR** for main categories with pagination **PPR**/**CSR**/**SSR**/**ISR** for filtering/faceting/sorting | 1. **Static** for all SEO indexable URL<br/>2. **Dynamic** for the faceting/filtering/sorting and long tail pagination | Ideally **PPR**/**ISR** variants for SEO indexable URLs. **CSR**/**SSR** for long tail |
+| **SRP** | Search Results Page                            | **SSR**/**ISR**/**CSR**                                                                                    | **Dynamic**                                                                                                            | **PPR** or **CSR**                                                                     |
+| **PDP** | Product Details Page                           | Pareto rule 80/20. **SSG** for the bestsellers. **ISR** for the long tail.                                 | 1. **Static** for above the fold line<br/>2. **Dynamic** below the fold line                                           | **ISR** variants above the fold and **CSR** below the fold or **PPR**                  |
+
 
 ## License
 
@@ -139,6 +146,7 @@ This project is licensed under the MIT License. For more information, see the [L
 [made-with-v0-link]: https://v0.dev/
 [v0]: https://v0.dev/
 [vercel]: https://vercel.com/
+[vercel-analytics]: https://vercel.com/analytics
 [plp]: https://docs.blazity.com/enterprise-commerce/browsing-journey/plp
 [clp]: https://docs.blazity.com/enterprise-commerce/browsing-journey/clp
 [pdp]: https://docs.blazity.com/enterprise-commerce/browsing-journey/pdp
