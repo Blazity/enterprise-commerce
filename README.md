@@ -123,6 +123,7 @@ We also created a comprehensive documentation [docs.blazity.com/enterprise-comme
 | **SRP** | Search Results Page                            | **SSR**/**ISR**/**CSR**                                                                                    | **Dynamic**                                                                                                            | **PPR** or **CSR**                                                                     |
 | **PDP** | Product Details Page                           | Pareto rule 80/20. **SSG** for the bestsellers. **ISR** for the long tail.                                 | 1. **Static** for above the fold line<br/>2. **Dynamic** below the fold line                                           | **ISR** variants above the fold and **CSR** below the fold or **PPR**                  |
 
+[_Reference: post 'Enterprise e-commerce migration cheat-sheet: essential terms and definitions' by Dom Sipowicz on Vercel Community ↩_](https://community.vercel.com/t/enterprise-e-commerce-migration-cheat-sheet-essential-terms-and-definitions/586)
 
 ## License
 
