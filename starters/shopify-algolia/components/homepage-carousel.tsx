@@ -110,7 +110,7 @@ export function HomepageCarousel({ slides = [], className }: HomepageCarouselPro
                       className="size-full object-cover object-center opacity-25"
                       priority={index === 0}
                       quality={30}
-                      sizes="(max-width: 1023px) 100vw, 0vw"
+                      sizes="(max-width: 768px) 50vw, 100vw"
                     />
                   </div>
 
