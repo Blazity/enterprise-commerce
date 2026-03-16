@@ -60,7 +60,7 @@
     "@vercel/functions": "^1.5.0",
     "@vercel/speed-insights": "^1.0.10",
     "@vercel/toolbar": "0.1.10",
-    "ai": "^4.0.1",
+    "ai": "^5.0.0",
     "algoliasearch": "^5.12.0",
     "autoprefixer": "^10.4.19",
     "bloom-filters": "^3.0.1",
