@@ -33,10 +33,10 @@ export async function GET(req: Request) {
   const [allReviews, { hits: allProducts }, { reviews }] = await Promise.all([
     getAllProductReviews(),
     getAllProducts({
-      fields: ["handle", "title", "avgRating", "totalReviews"],
+      attributesToRetrieve: ["handle", "title", "avgRating", "totalReviews"],
     }),
     getAllReviews({
-      fields: ["updated_at", "id"],
+      attributesToRetrieve: ["updated_at", "id"],
     }),
   ])
 

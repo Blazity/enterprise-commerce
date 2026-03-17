@@ -3,7 +3,6 @@
 import { Alert, AlertDescription, AlertTitle } from "components/ui/alert"
 import { Button } from "components/ui/button"
 import Image from "next/image"
-import { useRouter } from "next/navigation"
 import { useAddProductStore } from "stores/add-product-store"
 import { useCartStore } from "stores/cart-store"
 import { cn } from "utils/cn"
@@ -11,7 +10,6 @@ import { type CurrencyType, mapCurrencyToSign } from "utils/map-currency-to-sign
 import { filterImagesByVisualOption, getVisualOptionValueFromCombination } from "utils/visual-variant-utils"
 
 export function ProductAddedAlert({ className }: { className?: string }) {
-  const router = useRouter()
   const product = useAddProductStore((s) => s.product)
   const combination = useAddProductStore((s) => s.combination)
   const openCart = useCartStore((s) => s.openCart)
@@ -66,7 +64,7 @@ export function ProductAddedAlert({ className }: { className?: string }) {
           </Button>
           <Button
             variant="default"
-            onClick={() => router.push(cart.checkoutUrl)}
+            onClick={() => window.location.href = cart.checkoutUrl}
             className="rounded-md px-10 py-4 transition-all hover:scale-105"
             disabled={!checkoutReady}
           >

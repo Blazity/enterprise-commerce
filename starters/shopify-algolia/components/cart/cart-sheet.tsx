@@ -1,5 +1,3 @@
-import { useRouter } from "next/navigation"
-
 import { Button } from "components/ui/button-old"
 import { CloseIcon } from "components/icons/close-icon"
 import { Sheet, SheetClose, SheetContent, SheetFooter, SheetHeader, SheetTitle } from "components/ui/sheet"
@@ -20,7 +18,6 @@ export interface CartSheetProps {
 }
 
 export function CartSheet({ cart, isOpen, onCartClose, isPending }: CartSheetProps) {
-  const router = useRouter()
 
   const hasAnyItems = (cart?.items?.length || 0) > 0
   const subtotalFormatted = cart?.cost?.subtotalAmount?.amount + " " + cart?.cost?.subtotalAmount?.currencyCode
@@ -75,7 +72,7 @@ export function CartSheet({ cart, isOpen, onCartClose, isPending }: CartSheetPro
                 variant="secondary"
                 className="w-full justify-center text-center hover:text-white"
                 size="lg"
-                onClick={() => router.push(cart.checkoutUrl)}
+                onClick={() => window.location.href = cart.checkoutUrl}
               >
                 Proceed to Checkout
               </Button>

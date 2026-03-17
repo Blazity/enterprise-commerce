@@ -64,7 +64,7 @@ async function listWebhooks() {
   const client = createAdminApiClient({
     storeDomain: env.SHOPIFY_STORE_DOMAIN,
     accessToken: env.SHOPIFY_ADMIN_ACCESS_TOKEN,
-    apiVersion: "2024-10",
+    apiVersion: "2025-10",
   })
 
   console.log("📋 Listing webhooks for:", env.SHOPIFY_STORE_DOMAIN)

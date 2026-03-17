@@ -82,14 +82,14 @@ export function createShopifyClient({
   const client = createStorefrontApiClient({
     storeDomain,
     privateAccessToken: storefrontAccessToken || "_BOGUS_TOKEN_",
-    apiVersion: "2024-10",
+    apiVersion: "2025-10",
     customFetchApi: (url, init) => fetch(url, init as never) as never,
   })
 
   const adminClient = createAdminApiClient({
     storeDomain,
     accessToken: adminAccessToken || "",
-    apiVersion: "2024-10",
+    apiVersion: "2025-10",
   })
 
   return {

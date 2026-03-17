@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useEffect } from "react"
-import type { Message as SDKMessage } from "ai"
+import type { UIMessage as SDKMessage } from "ai"
 import { cva, type VariantProps } from "class-variance-authority"
 import { MarkdownRenderer } from "./markdown-renderer"
 import { cn } from "utils/cn"
@@ -12,6 +12,17 @@ import { useAddProductStore } from "stores/add-product-store"
 import { useCartStore } from "stores/cart-store"
 import { CreditCard, SearchCheck, ShoppingCart } from "lucide-react"
 import { useToolInvocationStore } from "stores/tool-invocation-store"
+
+type Part = SDKMessage["parts"][number]
+type ToolPart = Part & { toolName: string; toolCallId: string; state: string; output?: unknown }
+
+function isToolPart(part: Part): part is ToolPart {
+  return part.type === "dynamic-tool" || part.type.startsWith("tool-")
+}
+
+function getTextFromParts(parts: Part[]): string {
+  return parts.filter((p) => p.type === "text").map((p) => (p as { text: string }).text).join("")
+}
 
 const chatBubbleVariants = cva("group/message relative break-words rounded-lg text-sm sm:max-w-[70%]", {
   variants: {
@@ -57,8 +68,6 @@ const chatBubbleVariants = cva("group/message relative break-words rounded-lg te
 type Animation = VariantProps<typeof chatBubbleVariants>["animation"]
 
 export interface Message extends SDKMessage {
-  id: string
-  content: string
   createdAt?: Date
 }
 
@@ -71,11 +80,10 @@ export interface ChatMessageProps extends Message {
 
 export const ChatMessage: React.FC<ChatMessageProps> = ({
   role,
-  content,
+  parts,
   createdAt,
   showTimeStamp = false,
   animation = "scale",
-  toolInvocations,
   showToolMessages,
   actions,
 }) => {
@@ -86,33 +94,36 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
     minute: "2-digit",
   })
 
-  if (toolInvocations?.length) {
-    return toolInvocations.map((toolInvocation) => {
-      const { toolName, toolCallId, state } = toolInvocation
+  const toolParts = parts.filter(isToolPart)
 
-      if (state === "result") {
+  if (toolParts.length) {
+    return toolParts.map((toolPart) => {
+      const { toolName, toolCallId, state } = toolPart as { toolName: string; toolCallId: string; state: string; output?: unknown }
+
+      if (state === "output-available") {
+        const output = (toolPart as { output: unknown }).output
+
         if (toolName === "navigateUser") {
-          const { result } = toolInvocation
-          return <NavigationToolResult key={toolCallId} result={result} animation={animation} toolCallId={toolCallId} />
+          return <NavigationToolResult key={toolCallId} result={output as string} animation={animation} toolCallId={toolCallId} />
         }
         if (toolName === "addToCart") {
-          const { result } = toolInvocation
+          const { variant, product } = output as { variant: unknown; product: unknown }
           return (
             <AddedToCart
               key={toolCallId}
-              variant={result.variant}
-              product={result.product}
+              variant={variant}
+              product={product}
               animation={animation}
               toolCallId={toolCallId}
             />
           )
         }
         if (toolName === "goToCheckout") {
-          const { result } = toolInvocation
+          const { checkoutUrl } = output as { checkoutUrl: string }
           return (
             <MoveToCheckout
               key={toolCallId}
-              checkoutUrl={result.checkoutUrl}
+              checkoutUrl={checkoutUrl}
               animation={animation}
               toolCallId={toolCallId}
             />
@@ -122,6 +133,8 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
       return null
     })
   }
+
+  const content = getTextFromParts(parts)
 
   return (
     <motion.div
@@ -209,15 +222,14 @@ const AddedToCart = ({ variant, product, animation, toolCallId }) => {
 }
 
 const MoveToCheckout = ({ checkoutUrl, animation, toolCallId }) => {
-  const router = useRouter()
   const { hasToolCallExecuted, markToolCallAsExecuted } = useToolInvocationStore()
 
   useEffect(() => {
     if (!hasToolCallExecuted(toolCallId)) {
-      router.push(checkoutUrl)
       markToolCallAsExecuted(toolCallId)
+      window.location.href = checkoutUrl
     }
-  }, [checkoutUrl, router, toolCallId, hasToolCallExecuted, markToolCallAsExecuted])
+  }, [checkoutUrl, toolCallId, hasToolCallExecuted, markToolCallAsExecuted])
 
   return (
     <div className={cn("flex flex-col", "items-start")}>
