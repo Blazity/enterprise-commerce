@@ -222,15 +222,14 @@ const AddedToCart = ({ variant, product, animation, toolCallId }) => {
 }
 
 const MoveToCheckout = ({ checkoutUrl, animation, toolCallId }) => {
-  const router = useRouter()
   const { hasToolCallExecuted, markToolCallAsExecuted } = useToolInvocationStore()
 
   useEffect(() => {
     if (!hasToolCallExecuted(toolCallId)) {
-      router.push(checkoutUrl)
       markToolCallAsExecuted(toolCallId)
+      window.location.href = checkoutUrl
     }
-  }, [checkoutUrl, router, toolCallId, hasToolCallExecuted, markToolCallAsExecuted])
+  }, [checkoutUrl, toolCallId, hasToolCallExecuted, markToolCallAsExecuted])
 
   return (
     <div className={cn("flex flex-col", "items-start")}>
