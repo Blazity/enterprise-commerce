@@ -27,7 +27,7 @@
     "redirects:generate-bloom": "yarn build:scripts && node scripts/dist/redirects/generate-bloom-filter.mjs"
   },
   "dependencies": {
-    "@ai-sdk/openai": "^1.0.1",
+    "@ai-sdk/openai": "^3.0.41",
     "@hookform/resolvers": "^3.3.4",
     "@next/bundle-analyzer": "15.0.3",
     "@next/third-parties": "15.0.3",
@@ -60,7 +60,7 @@
     "@vercel/functions": "^1.5.0",
     "@vercel/speed-insights": "^1.0.10",
     "@vercel/toolbar": "0.1.10",
-    "ai": "^4.3.19",
+    "ai": "^6.0.116",
     "algoliasearch": "^5.12.0",
     "autoprefixer": "^10.4.19",
     "bloom-filters": "^3.0.1",

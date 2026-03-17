@@ -69,7 +69,7 @@ async function setupWebhooks(options: SetupWebhooksOptions = {}) {
   const client = createAdminApiClient({
     storeDomain: env.SHOPIFY_STORE_DOMAIN,
     accessToken: env.SHOPIFY_ADMIN_ACCESS_TOKEN,
-    apiVersion: "2024-10",
+    apiVersion: "2025-10",
   })
 
   console.log("🔧 Setting up webhooks for Shopify store:", env.SHOPIFY_STORE_DOMAIN)

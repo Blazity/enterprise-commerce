@@ -1,4 +1,4 @@
-import { generateObject } from "ai"
+import { generateText, Output } from "ai"
 import z from "zod"
 import { openai } from "@ai-sdk/openai"
 import type { Review } from "lib/reviews/types"
@@ -40,11 +40,11 @@ export async function GET(req: Request) {
 
   const [{ reviews }, allProducts] = await Promise.all([
     getAllReviews({
-      fields: ["body", "title", "product_handle", "rating"],
-      filter: "published=true AND hidden=false",
+      attributesToRetrieve: ["body", "title", "product_handle", "rating"],
+      filters: "published:true AND hidden:false",
     }),
     getAllProducts({
-      fields: ["handle", "title", "id", "totalReviews"],
+      attributesToRetrieve: ["handle", "title", "id", "totalReviews"],
     }),
   ])
 
@@ -152,13 +152,12 @@ const instructions = `
                 `
 
 async function generateBatchSummaries(batch: Batch) {
-  const { object } = await generateObject({
+  const { output } = await generateText({
     model: openai("gpt-4o"),
     system: instructions,
     prompt: JSON.stringify(batch),
-    schema: summarySchema,
-    mode: "json",
+    output: Output.object({ schema: summarySchema }),
   })
 
-  return object.products
+  return output.products
 }
