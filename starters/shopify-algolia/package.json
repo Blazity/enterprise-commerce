@@ -101,7 +101,7 @@
     "minimatch": ">=9.0.7",
     "jsondiffpatch": ">=0.7.2",
     "@tootallnate/once": ">=3.0.1",
-    "ajv": ">=6.14.0"
+    "ajv": "^6.14.0"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "5.0.2",

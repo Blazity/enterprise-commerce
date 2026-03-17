@@ -45,7 +45,9 @@ export default async function Image({ params: { slug } }: { params: { slug: stri
             backgroundColor: "#eaeaea",
           }}
         >
-          <img src={product?.featuredImage?.url} width={280} height={280} style={{ objectFit: "contain" }} />
+          {product?.featuredImage?.url ? (
+            <img src={product.featuredImage.url} width={280} height={280} style={{ objectFit: "contain" }} />
+          ) : null}
         </div>
         <div
           style={{
@@ -59,6 +61,7 @@ export default async function Image({ params: { slug } }: { params: { slug: stri
         >
           {product?.images
             ?.slice(0, 4)
+            ?.filter((image) => !!image.url)
             ?.map((image, idx) => (
               <img
                 key={idx}
