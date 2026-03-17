@@ -122,7 +122,7 @@ export default async function Image({ params: { slug } }: { params: { slug: stri
             letterSpacing: "-0.05em",
           }}
         >
-          {product?.priceRange.minVariantPrice.amount + " " + product?.priceRange.minVariantPrice.currencyCode}
+          {product?.priceRange?.minVariantPrice ? `${product.priceRange.minVariantPrice.amount} ${product.priceRange.minVariantPrice.currencyCode}` : null}
         </div>
       </div>
     ),
