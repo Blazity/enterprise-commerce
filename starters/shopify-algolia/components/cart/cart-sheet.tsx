@@ -75,7 +75,7 @@ export function CartSheet({ cart, isOpen, onCartClose, isPending }: CartSheetPro
                 variant="secondary"
                 className="w-full justify-center text-center hover:text-white"
                 size="lg"
-                onClick={() => (window.location.href = cart.checkoutUrl)}
+                onClick={() => router.push(cart.checkoutUrl)}
               >
                 Proceed to Checkout
               </Button>
