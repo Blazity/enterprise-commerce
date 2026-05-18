@@ -111,7 +111,7 @@ https://github.com/user-attachments/assets/ec3a3a7d-2118-4367-950c-dd31022768f1
 
 ### Documentation
 
-We also created a comprehensive documentation [docs.blazity.com/enterprise-commerce](docs.blazity.com) serving purpose of explaining our architectural decisions, containing in-details features descriptions and read-worthy guidelines. Everything with focus on the business values and theirs impact on the implementations. 
+We also created a comprehensive documentation [docs.blazity.com/enterprise-commerce](https://docs.blazity.com/enterprise-commerce) serving purpose of explaining our architectural decisions, containing in-details features descriptions and read-worthy guidelines. Everything with focus on the business values and theirs impact on the implementations. 
 
 ### Frontend architecture
 
