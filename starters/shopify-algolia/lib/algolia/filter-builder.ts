@@ -13,6 +13,10 @@ export enum LogicalOperators {
   Not = "NOT",
 }
 
+export function escapeFilterValue(value: string): string {
+  return value.replace(/\\/g, "\\\\").replace(/"/g, '\\"')
+}
+
 export class FilterBuilder {
   private expression: string[] = []
 
@@ -82,7 +86,7 @@ export class FilterBuilder {
 
   private formatValue(value: string | number | boolean): string {
     if (typeof value === "string") {
-      return `"${value}"`
+      return `"${escapeFilterValue(value)}"`
     }
     return value.toString()
   }

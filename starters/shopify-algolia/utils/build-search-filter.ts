@@ -1,5 +1,5 @@
 import { searchParamsCache } from "components/search-view"
-import { ComparisonOperators, FilterBuilder, LogicalOperators } from "lib/algolia/filter-builder"
+import { ComparisonOperators, escapeFilterValue, FilterBuilder, LogicalOperators } from "lib/algolia/filter-builder"
 import type { PlatformCollection } from "lib/shopify/types"
 
 type SearchParams = Omit<Awaited<ReturnType<typeof searchParamsCache.parse>>, "page" | "sortBy" | "q">
@@ -37,7 +37,7 @@ function addCategoryFilters(filter: FilterBuilder, categories: string[], separat
 
   const categoryFilters = categories.map((category) => {
     const level = Math.min(category.split(separator).length - 1, 2)
-    return `hierarchicalCategories.lvl${level}:"${category}"`
+    return `hierarchicalCategories.lvl${level}:"${escapeFilterValue(category)}"`
   })
 
   filter.raw(`(${categoryFilters.join(" OR ")})`)
